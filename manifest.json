@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Saul Goodman",
+  "description": "Extensão sarcástica que monitora domínios e calcula seu índice de procrastinação.",
+  "version": "0.1.0",
+  "icons": {
+    "16": "src/img/logotipo_saul_goodman.ico",
+    "32": "src/img/logotipo_saul_goodman.png",
+    "48": "src/img/logotipo_saul_goodman.png",
+    "128": "src/img/logotipo_saul_goodman.png"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Saul Goodman",
+    "default_icon": {
+      "16": "src/img/logotipo_saul_goodman.ico",
+      "32": "src/img/logotipo_saul_goodman.png"
+    }
+  },
+  "options_page": "src/options/options.html",
+  "background": {
+    "service_worker": "dist/background/index.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content/activity-listener.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
