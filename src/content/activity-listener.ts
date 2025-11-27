@@ -51,7 +51,15 @@ async function sendPing(): Promise<void> {
     });
   } catch (error) {
     cleanup();
-    const normalized = String((error as Error | string | undefined)?.toString?.() ?? error ?? '').toLowerCase();
+    let normalized = '';
+    if (error instanceof Error && typeof error.message === 'string') {
+      normalized = error.message.toLowerCase();
+    } else if (typeof error === 'string') {
+      normalized = error.toLowerCase();
+    } else if (typeof error === 'object' && error && 'message' in error) {
+      normalized = String((error as { message: string }).message).toLowerCase();
+    }
+
     if (normalized.includes('extension context invalidated')) {
       console.debug('Saul Goodman: ping interrompido (contexto inválido).');
       return;

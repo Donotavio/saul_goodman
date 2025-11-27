@@ -95,23 +95,32 @@ h1 {
   font-weight: 500;
 }
 
-.status {
-  margin-top: 10px;
-  padding: 8px 12px;
-  border-radius: 8px;
+.status-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 18px;
   background: #111;
   color: #ffe434;
-  font-weight: 600;
+  border-radius: 12px;
+  border: 2px solid #fff9d9;
+  box-shadow: 6px 6px 0 #d7b247;
+  font-weight: 700;
+  font-size: 0.9rem;
   opacity: 0;
-  transition: opacity 0.2s;
+  transform: translateY(20px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 50;
 }
 
-.status.visible {
+.status-toast.visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
-.status.error {
-  background: #d00000;
+.status-toast.error {
+  background: #c80700;
   color: #fff;
 }
 
