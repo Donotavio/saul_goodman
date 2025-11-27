@@ -1,3 +1,4 @@
+"use strict";
 const INACTIVITY_PING_MS = 15000;
 let lastEventTimestamp = Date.now();
 let intervalId = null;
@@ -29,4 +30,3 @@ async function sendPing() {
     }
 }
 setupActivityTracking();
-export {};

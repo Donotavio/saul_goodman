@@ -1,5 +1,3 @@
-import { RuntimeMessageType } from '../shared/types.js';
-
 const INACTIVITY_PING_MS = 15000;
 
 let lastEventTimestamp = Date.now();
@@ -24,7 +22,7 @@ function setupActivityTracking(): void {
 async function sendPing(): Promise<void> {
   try {
     chrome.runtime.sendMessage({
-      type: 'activity-ping' satisfies RuntimeMessageType,
+      type: 'activity-ping',
       payload: { timestamp: lastEventTimestamp }
     });
   } catch (error) {
