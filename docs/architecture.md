@@ -59,6 +59,11 @@ interface ExtensionSettings {
 - Badge e popup usam o valor arredondado.
 - Detalhes completos estão em [`docs/indicators.md`](./indicators.md).
 
+## Buckets horários e timeline
+- Durante `accumulateSlice`, cada fatia é distribuída por hora (`splitDurationByHour`). O objeto `DailyMetrics.hourly` mantém 24 buckets com os tempos produtivo/procrastinação/inatividade/neutral.
+- Também é armazenado um `timeline` onde cada entrada descreve início, fim, domínio e categoria (incluindo períodos inativos). O array é limitado a 2.000 segmentos por dia.
+- Esses dados alimentam o relatório detalhado (`src/report/report.html`) com gráficos stacked e storytelling minuto a minuto.
+
 ## KPIs derivados no popup
 Sem gravar dados extras, `popup.ts` calcula indicadores adicionais com base nas métricas já recebidas:
 - **Foco ativo**: `%` de tempo produtivo sobre o total rastreado.

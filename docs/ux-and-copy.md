@@ -12,7 +12,7 @@
 - **Disclaimers**: cada card/resumo e KPI possui ícone `i` para explicar a métrica; tooltips devem aparecer sem extrapolar o popup incluso quando alinhados à direita.
 - **Gráfico**: barras Produtivo x Procrastinação, sempre no mesmo tamanho — não deve fazer a tela rolar.
 - **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
-- **Exportações**: seção “Defenda seu foco” com texto breve e dois botões (ghost e primário) convidando o usuário a baixar CSV ou gerar PDF “para se defender”.
+- **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
 - **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
 - **CTA**:
   - `Atualizar`: força `metrics-request`.
@@ -25,6 +25,13 @@
 - Formulário de pesos exige soma ≈ 1.0; exibir feedback em `statusMessage` por 4s.
 - Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
 - "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
+
+## Relatório detalhado (`src/report/report.html`)
+- Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
+- Gráfico principal: barras empilhadas por hora (produtivo, procrastinação, inatividade) e doughnut com composição do dia.
+- Lista “Campeões e vilões” resume top domínios e maior período ocioso.
+- Narrativa minuto a minuto mostra trechos >5 min com horário formatado.
+- Botão “Exportar PDF” gera documento paisagem com gráficos e narrativa.
 
 ## Conteúdo e mensagens
 - **Sucesso**: “Cliente de ouro! Continue assim…”

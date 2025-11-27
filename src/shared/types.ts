@@ -6,6 +6,22 @@ export interface DomainStats {
   category: DomainCategory;
 }
 
+export interface HourlyBucket {
+  hour: number;
+  productiveMs: number;
+  procrastinationMs: number;
+  inactiveMs: number;
+  neutralMs: number;
+}
+
+export interface TimelineEntry {
+  startTime: number;
+  endTime: number;
+  durationMs: number;
+  domain: string;
+  category: DomainCategory | 'inactive';
+}
+
 export interface DailyMetrics {
   dateKey: string;
   productiveMs: number;
@@ -15,6 +31,8 @@ export interface DailyMetrics {
   domains: Record<string, DomainStats>;
   currentIndex: number;
   lastUpdated: number;
+  hourly: HourlyBucket[];
+  timeline: TimelineEntry[];
 }
 
 export interface WeightConfig {

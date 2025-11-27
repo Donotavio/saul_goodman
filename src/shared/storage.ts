@@ -1,4 +1,4 @@
-import { DailyMetrics, ExtensionSettings } from './types.js';
+import { DailyMetrics, ExtensionSettings, HourlyBucket, TimelineEntry } from './types.js';
 import { getTodayKey } from './utils/time.js';
 
 export enum StorageKeys {
@@ -75,16 +75,34 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   locale: 'pt-BR'
 };
 
-const DEFAULT_METRICS: DailyMetrics = {
-  dateKey: getTodayKey(),
-  productiveMs: 0,
-  procrastinationMs: 0,
-  inactiveMs: 0,
-  tabSwitches: 0,
-  domains: {},
-  currentIndex: 0,
-  lastUpdated: Date.now()
-};
+function createEmptyHourly(): HourlyBucket[] {
+  return Array.from({ length: 24 }).map((_, hour) => ({
+    hour,
+    productiveMs: 0,
+    procrastinationMs: 0,
+    inactiveMs: 0,
+    neutralMs: 0
+  }));
+}
+
+export function createEmptyTimeline(): TimelineEntry[] {
+  return [];
+}
+
+export function createDefaultMetrics(): DailyMetrics {
+  return {
+    dateKey: getTodayKey(),
+    productiveMs: 0,
+    procrastinationMs: 0,
+    inactiveMs: 0,
+    tabSwitches: 0,
+    domains: {},
+    currentIndex: 0,
+    lastUpdated: Date.now(),
+    hourly: createEmptyHourly(),
+    timeline: createEmptyTimeline()
+  };
+}
 
 export function getDefaultSettings(): ExtensionSettings {
   return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -114,8 +132,9 @@ export async function getDailyMetrics(): Promise<DailyMetrics> {
     }
   }
 
-  await chrome.storage.local.set({ [StorageKeys.METRICS]: DEFAULT_METRICS });
-  return { ...DEFAULT_METRICS };
+  const defaults = createDefaultMetrics();
+  await chrome.storage.local.set({ [StorageKeys.METRICS]: defaults });
+  return defaults;
 }
 
 export async function saveDailyMetrics(metrics: DailyMetrics): Promise<void> {
@@ -123,7 +142,7 @@ export async function saveDailyMetrics(metrics: DailyMetrics): Promise<void> {
 }
 
 export async function clearDailyMetrics(): Promise<DailyMetrics> {
-  const freshMetrics = { ...DEFAULT_METRICS, dateKey: getTodayKey(), lastUpdated: Date.now() };
+  const freshMetrics = createDefaultMetrics();
   await saveDailyMetrics(freshMetrics);
   return freshMetrics;
 }

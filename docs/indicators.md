@@ -10,6 +10,8 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `inactiveMs` | Período em que o navegador ficou sem interação além do `inactivityThresholdMs`. | Incrementado quando `trackingState.isIdle === true`. |
 | `tabSwitches` | Número de vezes que o usuário trocou de aba enquanto era rastreado. | Incrementado em `incrementTabSwitches`. |
 | `domains` | Mapa domínio → `{milliseconds, category}`. | Atualizado a cada slice ativo. |
+| `hourly` | 24 buckets com tempos por hora (`productiveMs`, `procrastinationMs`, `inactiveMs`, `neutralMs`). | Gerado via `splitDurationByHour` a cada slice. |
+| `timeline` | Lista `{startTime, endTime, durationMs, domain, category}` (até 2.000 entradas). | Populada em `recordTimelineSegment` para contar a história do dia. |
 | `currentIndex` | Índice de procrastinação mostrado no badge/popup. | `calculateProcrastinationIndex`. |
 
 ### Índice de procrastinação
@@ -46,7 +48,10 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 ## Apresentação
 - **Popup**: cartões no painel “Indicadores extras” e resumos com tooltips explicativos.
 - **CSV**: inclui seções "Resumo geral", "Indicadores extras" e "Top domínios". Valores numéricos são convertidos para minutos (`ms/60000`) ou porcentagem através das funções `formatPercentage`, `formatRate` e `formatProductivityRatio`.
-- **PDF**: gera texto com os mesmos KPIs, adiciona o gráfico atual (imagens produzidas via `Chart.toBase64Image`) e lista os 5 principais domínios.
+- **PDFs**:
+  - Popup: resumo rápido com gráfico Produtivo vs Procrastinação.
+  - Relatório: usa os buckets horários e a narrativa (`timeline`) para montar imagens adicionais e texto detalhado.
+- **Relatório detalhado** (`src/report/report.html`): gráficos stacked por hora, doughnut de composição e lista narrativa baseada na timeline.
 
 ## Atualização / extensões futuras
 - Novos KPIs devem ser adicionados a este documento com fórmula clara e campo de origem.

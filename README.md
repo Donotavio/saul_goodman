@@ -10,7 +10,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
 - **Tooltips educativos**: cada métrica possui um ícone de informação que explica como o número foi calculado.
-- **Exportação**: o usuário pode baixar um CSV completo ou gerar um PDF com resumo, KPIs e gráfico para “se defender” com o advogado.
+- **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário + PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
 
 ## Stack e arquitetura
@@ -45,7 +45,8 @@ saul_goodman/
 ├─ dist/ (gerado pelo TypeScript)
 └─ docs/
    ├─ architecture.md
-   └─ ux-and-copy.md
+   ├─ ux-and-copy.md
+   └─ indicators.md
 ```
 
 ## Pré-requisitos
@@ -79,9 +80,9 @@ Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai d
 
 ## Documentação complementar
 - [`docs/architecture.md`](docs/architecture.md): detalha o fluxo do background, content script, storage e cálculo do índice.
-- [`docs/ux-and-copy.md`](docs/ux-and-copy.md): guia de experiência, tom de voz e expectativas para popup/options.
-- [`docs/indicators.md`](docs/indicators.md): descrição formal do índice de procrastinação, métricas base e KPIs usados no popup, CSV e PDF.
-- Exportações estão disponíveis no popup em “Defenda seu foco”; o CSV traz métricas e KPIs, enquanto o PDF é gerado usando jsPDF com o gráfico atual.
+- [`docs/ux-and-copy.md`](docs/ux-and-copy.md): guia de experiência, tom de voz e expectativas para popup/options/report.
+- [`docs/indicators.md`](docs/indicators.md): descrição formal do índice de procrastinação, métricas base, buckets horários e KPIs usados no popup, relatório, CSV e PDFs.
+- Exportações estão disponíveis no popup em “Defenda seu foco” (CSV/PDF rápido) e na página `src/report/report.html`, acessível pelo botão “Abrir relatório”. Lá existe outro PDF completo com storytelling do dia.
 - **Assets**: logotipo oficial em PNG/ICO dentro de `src/img/`, já referenciado pelo manifest/action.
 
 Contribuições futuras podem seguir o estilo modular existente e manter o humor ágil de Saul — sempre deixando claro o que é rastreado e mantendo todo o processamento local.

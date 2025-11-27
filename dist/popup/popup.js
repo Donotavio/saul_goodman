@@ -12,6 +12,7 @@ const optionsButton = document.getElementById('optionsButton');
 const chartCanvas = document.getElementById('productivityChart');
 const csvExportButton = document.getElementById('csvExportButton');
 const pdfExportButton = document.getElementById('pdfExportButton');
+const reportButton = document.getElementById('reportButton');
 const focusRateEl = document.getElementById('focusRateValue');
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue');
 const inactivePercentEl = document.getElementById('inactivePercentValue');
@@ -45,6 +46,9 @@ function attachListeners() {
     });
     csvExportButton.addEventListener('click', () => handleCsvExport());
     pdfExportButton.addEventListener('click', () => void handlePdfExport());
+    reportButton.addEventListener('click', () => {
+        void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
+    });
 }
 async function hydrate() {
     try {

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saul Goodman - Relatório do dia</title>
+    <link rel="icon" type="image/png" href="../img/logotipo_saul_goodman.png" />
+    <link rel="stylesheet" href="report.css" />
+    <script src="../vendor/chart.umd.js" defer></script>
+    <script src="../vendor/jspdf.umd.min.js" defer></script>
+    <script type="module" src="../../dist/report/report.js" defer></script>
+  </head>
+  <body>
+    <header class="report-hero">
+      <div class="hero-text">
+        <span class="tagline">Diário oficial do foco</span>
+        <h1>Relatório detalhado</h1>
+        <p class="subtitle">Resumo do dia <span id="reportDate">--</span></p>
+        <p id="heroMessage" class="hero-message">
+          Saul ainda está coletando provas para contar como foi o seu dia.
+        </p>
+        <div class="hero-metrics">
+          <article>
+            <span class="label">Índice</span>
+            <strong id="heroIndex">--</strong>
+          </article>
+          <article>
+            <span class="label">Foco ativo</span>
+            <strong id="heroFocus">--</strong>
+          </article>
+          <article>
+            <span class="label">Trocas de abas</span>
+            <strong id="heroSwitches">--</strong>
+          </article>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button id="pdfReportButton" class="primary-button">Exportar PDF</button>
+        <button id="backButton" class="ghost-button">Voltar ao popup</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Fluxo horário</h2>
+          <p>Produtividade versus tentações ao longo do dia.</p>
+        </div>
+               <div class="chart-wrapper">
+          <canvas id="hourlyChart" height="220"></canvas>
+          <p id="hourlyEmpty" class="empty-state hidden">
+            Ainda não registramos minutos suficientes para montar o fluxo.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel duo">
+        <div class="panel-block">
+          <h2>Composição do dia</h2>
+          <canvas id="compositionChart" height="240"></canvas>
+        </div>
+        <div class="panel-block">
+          <h2>Campeões e vilões</h2>
+          <ul id="storyList" class="story-list">
+            <li>Os dados ainda estão sendo carregados...</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel duo ranking-section">
+        <div class="panel-block">
+          <h2>Top produtivos</h2>
+          <table class="ranking-table" id="productiveRanking">
+            <thead>
+              <tr>
+                <th>Domínio</th>
+                <th>Tempo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2">Aguardando dados...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-block">
+          <h2>Top procrastinação</h2>
+          <table class="ranking-table" id="procrastinationRanking">
+            <thead>
+              <tr>
+                <th>Domínio</th>
+                <th>Tempo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2">Aguardando dados...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Narrativa minuto a minuto</h2>
+          <p>Principais trechos que contam a história do seu expediente.</p>
+        </div>
+        <ol id="timelineList" class="timeline-list">
+          <li>Aguardando registros...</li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>

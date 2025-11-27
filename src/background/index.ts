@@ -2,6 +2,7 @@ import { calculateProcrastinationIndex } from '../shared/score.js';
 import {
   StorageKeys,
   clearDailyMetrics,
+  createDefaultMetrics,
   getDailyMetrics,
   getSettings,
   saveDailyMetrics
@@ -9,17 +10,21 @@ import {
 import {
   ActivityPingPayload,
   DailyMetrics,
+  DomainCategory,
   ExtensionSettings,
+  HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
   RuntimeMessageType
 } from '../shared/types.js';
 import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
-import { getTodayKey } from '../shared/utils/time.js';
+import { getTodayKey, splitDurationByHour } from '../shared/utils/time.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
 const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
+const MAX_TIMELINE_SEGMENTS = 2000;
+const INACTIVE_LABEL = 'Sem atividade detectada';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -221,7 +226,8 @@ async function handleActivityPing(payload: ActivityPingPayload): Promise<void> {
 
 async function accumulateSlice(): Promise<void> {
   const now = Date.now();
-  const elapsed = now - trackingState.lastTimestamp;
+  const sliceStart = trackingState.lastTimestamp;
+  const elapsed = now - sliceStart;
 
   if (elapsed <= 0) {
     return;
@@ -233,30 +239,49 @@ async function accumulateSlice(): Promise<void> {
 
   if (trackingState.isIdle) {
     metrics.inactiveMs += elapsed;
-  } else if (trackingState.currentDomain) {
-    const settings = await getSettingsCache();
-    const category = classifyDomain(trackingState.currentDomain, settings);
-
-    const stats = metrics.domains[trackingState.currentDomain] ?? {
-      domain: trackingState.currentDomain,
-      milliseconds: 0,
-      category
-    };
-
-    stats.milliseconds += elapsed;
-    stats.category = category;
-    metrics.domains[trackingState.currentDomain] = stats;
-
-    if (category === 'productive') {
-      metrics.productiveMs += elapsed;
-    } else if (category === 'procrastination') {
-      metrics.procrastinationMs += elapsed;
-    }
-  }
-
-  if (!trackingState.isIdle && !trackingState.currentDomain) {
+    recordTimelineSegment(metrics, {
+      category: 'inactive',
+      domain: INACTIVE_LABEL,
+      durationMs: elapsed,
+      startTime: sliceStart,
+      endTime: now
+    });
+    recordHourlyContribution(metrics, 'inactive', sliceStart, elapsed);
+    await persistMetrics();
     return;
   }
+
+  if (!trackingState.currentDomain) {
+    return;
+  }
+
+  const settings = await getSettingsCache();
+  const category = classifyDomain(trackingState.currentDomain, settings);
+
+  const stats = metrics.domains[trackingState.currentDomain] ?? {
+    domain: trackingState.currentDomain,
+    milliseconds: 0,
+    category
+  };
+
+  stats.milliseconds += elapsed;
+  stats.category = category;
+  metrics.domains[trackingState.currentDomain] = stats;
+
+  if (category === 'productive') {
+    metrics.productiveMs += elapsed;
+  } else if (category === 'procrastination') {
+    metrics.procrastinationMs += elapsed;
+  }
+
+  recordTimelineSegment(metrics, {
+    category,
+    domain: trackingState.currentDomain,
+    durationMs: elapsed,
+    startTime: sliceStart,
+    endTime: now
+  });
+  recordHourlyContribution(metrics, category, sliceStart, elapsed);
 
   await persistMetrics();
 }
@@ -304,11 +329,16 @@ async function refreshScore(): Promise<void> {
 async function ensureDailyCache(): Promise<void> {
   if (!metricsCache) {
     metricsCache = await getDailyMetrics();
-    return;
+  } else if (metricsCache.dateKey !== getTodayKey()) {
+    metricsCache = await clearDailyMetrics();
   }
 
-  if (metricsCache.dateKey !== getTodayKey()) {
-    metricsCache = await clearDailyMetrics();
+  if (!metricsCache.hourly || metricsCache.hourly.length !== 24) {
+    metricsCache.hourly = createDefaultMetrics().hourly;
+  }
+
+  if (!metricsCache.timeline) {
+    metricsCache.timeline = createDefaultMetrics().timeline;
   }
 }
 
@@ -350,6 +380,53 @@ async function clearTodayData(): Promise<void> {
   trackingState.lastTimestamp = Date.now();
   await updateBadgeText(metricsCache.currentIndex);
   await hydrateActiveTab();
+}
+
+function recordHourlyContribution(
+  metrics: DailyMetrics,
+  category: DomainCategory | 'inactive',
+  sliceStart: number,
+  durationMs: number
+): void {
+  const keyMap: Record<DomainCategory | 'inactive', keyof HourlyBucket> = {
+    productive: 'productiveMs',
+    procrastination: 'procrastinationMs',
+    neutral: 'neutralMs',
+    inactive: 'inactiveMs'
+  };
+
+  const segments = splitDurationByHour(sliceStart, durationMs);
+  for (const segment of segments) {
+    const bucket = metrics.hourly[segment.hour];
+    if (!bucket) {
+      continue;
+    }
+    const field = keyMap[category];
+    bucket[field] += segment.milliseconds;
+  }
+}
+
+function recordTimelineSegment(
+  metrics: DailyMetrics,
+  entry: {
+    category: DomainCategory | 'inactive';
+    domain: string;
+    durationMs: number;
+    startTime: number;
+    endTime: number;
+  }
+): void {
+  metrics.timeline.push({
+    startTime: entry.startTime,
+    endTime: entry.endTime,
+    durationMs: entry.durationMs,
+    domain: entry.domain,
+    category: entry.category
+  });
+
+  if (metrics.timeline.length > MAX_TIMELINE_SEGMENTS) {
+    metrics.timeline.splice(0, metrics.timeline.length - MAX_TIMELINE_SEGMENTS);
+  }
 }
 
 void initialize();
