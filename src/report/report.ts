@@ -13,6 +13,12 @@ const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
+const productiveRankingBody = document
+  .getElementById('productiveRanking')
+  ?.querySelector('tbody') as HTMLTableSectionElement | null;
+const procrastinationRankingBody = document
+  .getElementById('procrastinationRanking')
+  ?.querySelector('tbody') as HTMLTableSectionElement | null;
 const pdfButton = document.getElementById('pdfReportButton') as HTMLButtonElement;
 const backButton = document.getElementById('backButton') as HTMLButtonElement;
 const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement;
@@ -80,6 +86,7 @@ function renderReport(metrics: DailyMetrics): void {
   renderHourlyChart(metrics);
   renderCompositionChart(metrics);
   renderStoryList(metrics, kpis);
+  renderRankings(metrics.domains);
   renderTimeline(metrics.timeline);
 }
 
@@ -246,6 +253,59 @@ function renderStoryList(metrics: DailyMetrics, kpis: CalculatedKpis): void {
     li.appendChild(strong);
     li.appendChild(document.createTextNode(item.body));
     storyListEl.appendChild(li);
+  });
+}
+
+function renderRankings(domains: Record<string, DomainStats>): void {
+  if (!productiveRankingBody || !procrastinationRankingBody) {
+    return;
+  }
+
+  const sorted = Object.values(domains).sort((a, b) => b.milliseconds - a.milliseconds);
+  const topProductive = sorted.filter((d) => d.category === 'productive').slice(0, 5);
+  const topProcrastination = sorted.filter((d) => d.category === 'procrastination').slice(0, 5);
+
+  fillRankingTable(productiveRankingBody, topProductive);
+  fillRankingTable(procrastinationRankingBody, topProcrastination);
+}
+
+function fillRankingTable(tbody: HTMLTableSectionElement, entries: DomainStats[]): void {
+  tbody.innerHTML = '';
+  if (!entries.length) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 2;
+    cell.textContent = 'Sem registros.';
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    return;
+  }
+
+  const maxMs = entries[0]?.milliseconds ?? 1;
+
+  entries.forEach((entry) => {
+    const row = document.createElement('tr');
+    const domainCell = document.createElement('td');
+    const durationCell = document.createElement('td');
+
+    const bar = document.createElement('div');
+    bar.className = 'ranking-bar';
+    bar.style.width = `${(entry.milliseconds / maxMs) * 100}%`;
+
+    const domainSpan = document.createElement('span');
+    domainSpan.textContent = entry.domain;
+    const durationSpan = document.createElement('span');
+    durationSpan.textContent = formatDuration(entry.milliseconds);
+
+    const domainBar = bar.cloneNode() as HTMLDivElement;
+
+    domainCell.appendChild(domainBar);
+    domainCell.appendChild(domainSpan);
+    durationCell.appendChild(durationSpan);
+
+    row.appendChild(domainCell);
+    row.appendChild(durationCell);
+    tbody.appendChild(row);
   });
 }
 

@@ -161,6 +161,48 @@ main {
   font-size: 1rem;
 }
 
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fffdf5;
+  box-shadow: inset 0 0 0 1px #f0d87c;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f5e6b7;
+  text-align: left;
+  position: relative;
+}
+
+.ranking-bar {
+  position: absolute;
+  inset: 0;
+  background: rgba(240, 216, 124, 0.6);
+  border-radius: 4px;
+  transform-origin: left center;
+  pointer-events: none;
+  z-index: 0;
+  height: 100%;
+}
+
+.ranking-table td span {
+  position: relative;
+  z-index: 1;
+}
+
+.ranking-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #6a553f;
+}
+
+.ranking-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 .timeline-list {
   list-style: decimal;
   padding-left: 18px;
