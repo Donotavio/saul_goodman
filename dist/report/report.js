@@ -515,12 +515,17 @@ async function requestAiNarrative(payload) {
 function formatAiNarrative(text) {
     const paragraphs = text
         .split(/\n\s*\n/)
-        .map((chunk) => chunk.trim())
+        .map((chunk) => chunk.replace(/\s+/g, ' ').trim())
         .filter(Boolean);
     if (!paragraphs.length) {
-        return escapeHtml(text);
+        return formatParagraph(escapeHtml(text));
     }
-    return paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+    return paragraphs.map((p) => formatParagraph(escapeHtml(p))).join('');
+}
+function formatParagraph(content) {
+    const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+    const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
+    return `<p>${italic}</p>`;
 }
 function escapeHtml(value) {
     return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

@@ -640,14 +640,20 @@ interface MetricsResponse {
 function formatAiNarrative(text: string): string {
   const paragraphs = text
     .split(/\n\s*\n/)
-    .map((chunk) => chunk.trim())
+    .map((chunk) => chunk.replace(/\s+/g, ' ').trim())
     .filter(Boolean);
 
   if (!paragraphs.length) {
-    return escapeHtml(text);
+    return formatParagraph(escapeHtml(text));
   }
 
-  return paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+  return paragraphs.map((p) => formatParagraph(escapeHtml(p))).join('');
+}
+
+function formatParagraph(content: string): string {
+  const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+  const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
+  return `<p>${italic}</p>`;
 }
 
 function escapeHtml(value: string): string {
