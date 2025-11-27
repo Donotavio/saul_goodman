@@ -46,8 +46,14 @@
           </label>
 
           <label>
-            Tempo máximo ocioso antes de considerar inatividade (segundos)
-            <input type="number" id="inactivityThreshold" min="10" max="600" step="10" required />
+          Tempo máximo ocioso antes de considerar inatividade (segundos)
+          <input type="number" id="inactivityThreshold" min="10" max="600" step="10" required />
+          </label>
+
+          <label>
+              Chave OpenAI (opcional)
+                <input type="password" id="openAiKey" placeholder="sk-..." />
+            <small class="hint">Guardamos apenas localmente para gerar narrativas no relatório.</small>
           </label>
 
           <button type="submit" class="primary">Salvar pesos</button>

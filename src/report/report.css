@@ -223,3 +223,32 @@ main {
   font-size: 0.85rem;
   color: #6d5945;
 }
+
+.ai-narrative {
+  border: 1px dashed #c9a860;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fffdf5;
+  min-height: 80px;
+  font-size: 1rem;
+  color: #2b1a11;
+  line-height: 1.4;
+}
+
+.ai-narrative p {
+  margin: 0 0 10px;
+}
+
+.ai-narrative p:last-child {
+  margin-bottom: 0;
+}
+
+.ai-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.ai-actions .hidden {
+  display: none;
+}

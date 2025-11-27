@@ -15,6 +15,7 @@ const procrastinationWeightEl = document.getElementById('procrastinationWeight')
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
 const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLInputElement;
 const inactivityThresholdEl = document.getElementById('inactivityThreshold') as HTMLInputElement;
+const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 
@@ -80,7 +81,8 @@ function renderForms(): void {
   tabSwitchWeightEl.value = currentSettings.weights.tabSwitchWeight.toString();
   inactivityWeightEl.value = currentSettings.weights.inactivityWeight.toString();
   inactivityThresholdEl.value = Math.round(currentSettings.inactivityThresholdMs / 1000).toString();
-
+   openAiKeyInput.value = currentSettings.openAiKey ?? '';
+  
   renderDomainList('productiveDomains', productiveListEl);
   renderDomainList('procrastinationDomains', procrastinationListEl);
 }
@@ -134,6 +136,7 @@ async function handleWeightsSubmit(): Promise<void> {
 
   const thresholdSeconds = Math.max(10, parseInt(inactivityThresholdEl.value, 10));
   currentSettings.inactivityThresholdMs = thresholdSeconds * 1000;
+  currentSettings.openAiKey = openAiKeyInput.value.trim();
   await persistSettings('Pesos atualizados.');
 }
 

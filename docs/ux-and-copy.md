@@ -25,12 +25,15 @@
 - Formulário de pesos exige soma ≈ 1.0; exibir feedback em `statusMessage` por 4s.
 - Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
 - "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
+- Campo "Chave OpenAI" opcional: explique que o valor fica salvo localmente e habilita o storytelling na página de relatório.
 
 ## Relatório detalhado (`src/report/report.html`)
 - Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
 - Gráfico principal: barras empilhadas por hora (produtivo, procrastinação, inatividade) e doughnut com composição do dia.
 - Lista “Campeões e vilões” resume top domínios e maior período ocioso.
+- Ranking mostra top produtivos e procrastinação com barras de progresso.
 - Narrativa minuto a minuto mostra trechos >5 min com horário formatado.
+- Bloco “Argumento do Saul” chama a OpenAI (quando chave configurada) para gerar texto sarcástico.
 - Botão “Exportar PDF” gera documento paisagem com gráficos e narrativa.
 
 ## Conteúdo e mensagens

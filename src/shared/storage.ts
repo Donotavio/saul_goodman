@@ -72,7 +72,8 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
     inactivityWeight: 0.15
   },
   inactivityThresholdMs: 60000,
-  locale: 'pt-BR'
+  locale: 'pt-BR',
+  openAiKey: ''
 };
 
 function createEmptyHourly(): HourlyBucket[] {

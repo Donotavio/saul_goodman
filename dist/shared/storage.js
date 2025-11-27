@@ -70,7 +70,8 @@ const DEFAULT_SETTINGS = {
         inactivityWeight: 0.15
     },
     inactivityThresholdMs: 60000,
-    locale: 'pt-BR'
+    locale: 'pt-BR',
+    openAiKey: ''
 };
 function createEmptyHourly() {
     return Array.from({ length: 24 }).map((_, hour) => ({

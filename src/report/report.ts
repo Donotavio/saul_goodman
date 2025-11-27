@@ -21,6 +21,9 @@ const procrastinationRankingBody = document
   ?.querySelector('tbody') as HTMLTableSectionElement | null;
 const pdfButton = document.getElementById('pdfReportButton') as HTMLButtonElement;
 const backButton = document.getElementById('backButton') as HTMLButtonElement;
+const aiNarrativeEl = document.getElementById('aiNarrative') as HTMLElement;
+const aiGenerateButton = document.getElementById('aiGenerateButton') as HTMLButtonElement;
+const aiRetryButton = document.getElementById('aiRetryButton') as HTMLButtonElement;
 const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement;
 const compositionCanvas = document.getElementById('compositionChart') as HTMLCanvasElement;
 const hourlyEmptyEl = document.getElementById('hourlyEmpty');
@@ -48,11 +51,14 @@ let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
+let openAiKey = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
   pdfButton.addEventListener('click', () => void exportPdf());
   backButton.addEventListener('click', () => window.close());
+  aiGenerateButton.addEventListener('click', () => void generateNarrative());
+  aiRetryButton.addEventListener('click', () => void generateNarrative());
 });
 
 async function hydrate(): Promise<void> {
@@ -63,6 +69,7 @@ async function hydrate(): Promise<void> {
     }
     latestMetrics = response.metrics;
     locale = response.settings?.locale ?? 'pt-BR';
+    openAiKey = response.settings?.openAiKey ?? '';
     renderReport(latestMetrics);
   } catch (error) {
     console.error(error);
@@ -88,6 +95,8 @@ function renderReport(metrics: DailyMetrics): void {
   renderStoryList(metrics, kpis);
   renderRankings(metrics.domains);
   renderTimeline(metrics.timeline);
+  aiNarrativeEl.innerHTML =
+    'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
 }
 
 function renderHourlyChart(metrics: DailyMetrics): void {
@@ -383,6 +392,13 @@ async function exportPdf(): Promise<void> {
     cursorY += 6;
   });
 
+  const aiText = aiNarrativeEl.textContent?.trim();
+  if (aiText) {
+    doc.text('Argumento do Saul:', 205, 140);
+    const wrapped = doc.splitTextToSize(aiText, 90);
+    doc.text(wrapped, 205, 148);
+  }
+
   doc.save(`relatorio-saul-goodman-${metrics.dateKey}.pdf`);
 }
 
@@ -496,7 +512,144 @@ interface CalculatedKpis {
   topProcrastination: DomainStats | null;
 }
 
+async function generateNarrative(): Promise<void> {
+  if (!latestMetrics) {
+    aiNarrativeEl.textContent = 'Sem métricas para contar uma história hoje.';
+    return;
+  }
+
+  if (!openAiKey) {
+    aiNarrativeEl.textContent = 'Configure sua chave OpenAI nas opções antes de gerar a narrativa.';
+    aiRetryButton.classList.remove('hidden');
+    return;
+  }
+
+  aiGenerateButton.disabled = true;
+  aiRetryButton.classList.add('hidden');
+  aiNarrativeEl.textContent = 'Saul está analisando as provas...';
+
+  try {
+    const payload = buildAiPayload(latestMetrics);
+    const narrative = await requestAiNarrative(payload);
+    if (!narrative) {
+      throw new Error('Resposta vazia da IA');
+    }
+    aiNarrativeEl.innerHTML = formatAiNarrative(narrative);
+  } catch (error) {
+    console.error('Erro na narrativa IA', error);
+    aiNarrativeEl.textContent =
+      'Saul não conseguiu convencer o juiz digital. Tente novamente mais tarde.';
+    aiRetryButton.classList.remove('hidden');
+  } finally {
+    aiGenerateButton.disabled = false;
+  }
+}
+
+function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
+  const kpis = calculateKpis(metrics);
+  const timelineSnippets = metrics.timeline
+    .sort((a, b) => a.startTime - b.startTime)
+    .slice(0, 10)
+    .map((entry) => ({
+      domain: entry.domain,
+      category: entry.category,
+      duration: formatDuration(entry.durationMs),
+      range: formatTimeRange(entry.startTime, entry.endTime, locale)
+    }));
+
+  return {
+    date: reportDateEl.textContent ?? metrics.dateKey,
+    index: metrics.currentIndex,
+    focusRate: formatPercentage(kpis.focusRate),
+    tabSwitches: metrics.tabSwitches,
+    topProductive: getTopEntries(metrics.domains, 'productive'),
+    topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
+    timeline: timelineSnippets
+  };
+}
+
+function getTopEntries(
+  domains: Record<string, DomainStats>,
+  category: DomainStats['category']
+): Array<{ domain: string; duration: string }> {
+  return Object.values(domains)
+    .filter((d) => d.category === category)
+    .sort((a, b) => b.milliseconds - a.milliseconds)
+    .slice(0, 5)
+    .map((entry) => ({ domain: entry.domain, duration: formatDuration(entry.milliseconds) }));
+}
+
+async function requestAiNarrative(payload: AiPromptPayload): Promise<string> {
+  const apiKey = openAiKey;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY não configurada.');
+  }
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      temperature: 0.6,
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Você é Saul Goodman, advogado com humor sarcástico e vendedor nato. Conte a história do dia do usuário usando os dados fornecidos, como se estivesse defendendo o cliente.'
+        },
+        {
+          role: 'user',
+          content: `Conte uma narrativa curta (2 parágrafos) com os dados:\n${JSON.stringify(payload)}`
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI falhou: ${response.statusText}`);
+  }
+
+  const json = (await response.json()) as OpenAiResponse;
+  return json.choices?.[0]?.message?.content?.trim() ?? '';
+}
+
+interface AiPromptPayload {
+  date: string;
+  index: number;
+  focusRate: string;
+  tabSwitches: number;
+  topProductive: Array<{ domain: string; duration: string }>;
+  topProcrastination: Array<{ domain: string; duration: string }>;
+  timeline: Array<{ domain: string; category: string; duration: string; range: string }>;
+}
+
+interface OpenAiResponse {
+  choices: Array<{
+    message?: { content?: string };
+  }>;
+}
+
 interface MetricsResponse {
   metrics: DailyMetrics;
-  settings?: { locale?: string };
+  settings?: { locale?: string; openAiKey?: string };
+}
+
+function formatAiNarrative(text: string): string {
+  const paragraphs = text
+    .split(/\n\s*\n/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean);
+
+  if (!paragraphs.length) {
+    return escapeHtml(text);
+  }
+
+  return paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

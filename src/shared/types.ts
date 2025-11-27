@@ -47,6 +47,7 @@ export interface ExtensionSettings {
   weights: WeightConfig;
   inactivityThresholdMs: number;
   locale: 'pt-BR';
+  openAiKey?: string;
 }
 
 export interface ActivityPingPayload {
@@ -85,4 +86,5 @@ export interface OptionsFormState {
   procrastinationDomains: string[];
   weights: WeightConfig;
   inactivityThresholdMs: number;
+  openAiKey?: string;
 }

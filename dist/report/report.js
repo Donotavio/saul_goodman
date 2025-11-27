@@ -14,6 +14,9 @@ const procrastinationRankingBody = document
     ?.querySelector('tbody');
 const pdfButton = document.getElementById('pdfReportButton');
 const backButton = document.getElementById('backButton');
+const aiNarrativeEl = document.getElementById('aiNarrative');
+const aiGenerateButton = document.getElementById('aiGenerateButton');
+const aiRetryButton = document.getElementById('aiRetryButton');
 const hourlyCanvas = document.getElementById('hourlyChart');
 const compositionCanvas = document.getElementById('compositionChart');
 const hourlyEmptyEl = document.getElementById('hourlyEmpty');
@@ -39,10 +42,13 @@ let hourlyChart = null;
 let compositionChart = null;
 let latestMetrics = null;
 let locale = 'pt-BR';
+let openAiKey = '';
 document.addEventListener('DOMContentLoaded', () => {
     void hydrate();
     pdfButton.addEventListener('click', () => void exportPdf());
     backButton.addEventListener('click', () => window.close());
+    aiGenerateButton.addEventListener('click', () => void generateNarrative());
+    aiRetryButton.addEventListener('click', () => void generateNarrative());
 });
 async function hydrate() {
     try {
@@ -52,6 +58,7 @@ async function hydrate() {
         }
         latestMetrics = response.metrics;
         locale = response.settings?.locale ?? 'pt-BR';
+        openAiKey = response.settings?.openAiKey ?? '';
         renderReport(latestMetrics);
     }
     catch (error) {
@@ -75,6 +82,8 @@ function renderReport(metrics) {
     renderStoryList(metrics, kpis);
     renderRankings(metrics.domains);
     renderTimeline(metrics.timeline);
+    aiNarrativeEl.innerHTML =
+        'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
 }
 function renderHourlyChart(metrics) {
     const totalMinutes = metrics.hourly.reduce((acc, bucket) => {
@@ -320,6 +329,12 @@ async function exportPdf() {
         doc.text(line, 14, cursorY);
         cursorY += 6;
     });
+    const aiText = aiNarrativeEl.textContent?.trim();
+    if (aiText) {
+        doc.text('Argumento do Saul:', 205, 140);
+        const wrapped = doc.splitTextToSize(aiText, 90);
+        doc.text(wrapped, 205, 148);
+    }
     doc.save(`relatorio-saul-goodman-${metrics.dateKey}.pdf`);
 }
 function calculateKpis(metrics) {
@@ -405,4 +420,108 @@ async function sendRuntimeMessage(type, payload) {
             }
         });
     });
+}
+async function generateNarrative() {
+    if (!latestMetrics) {
+        aiNarrativeEl.textContent = 'Sem métricas para contar uma história hoje.';
+        return;
+    }
+    if (!openAiKey) {
+        aiNarrativeEl.textContent = 'Configure sua chave OpenAI nas opções antes de gerar a narrativa.';
+        aiRetryButton.classList.remove('hidden');
+        return;
+    }
+    aiGenerateButton.disabled = true;
+    aiRetryButton.classList.add('hidden');
+    aiNarrativeEl.textContent = 'Saul está analisando as provas...';
+    try {
+        const payload = buildAiPayload(latestMetrics);
+        const narrative = await requestAiNarrative(payload);
+        if (!narrative) {
+            throw new Error('Resposta vazia da IA');
+        }
+        aiNarrativeEl.innerHTML = formatAiNarrative(narrative);
+    }
+    catch (error) {
+        console.error('Erro na narrativa IA', error);
+        aiNarrativeEl.textContent =
+            'Saul não conseguiu convencer o juiz digital. Tente novamente mais tarde.';
+        aiRetryButton.classList.remove('hidden');
+    }
+    finally {
+        aiGenerateButton.disabled = false;
+    }
+}
+function buildAiPayload(metrics) {
+    const kpis = calculateKpis(metrics);
+    const timelineSnippets = metrics.timeline
+        .sort((a, b) => a.startTime - b.startTime)
+        .slice(0, 10)
+        .map((entry) => ({
+        domain: entry.domain,
+        category: entry.category,
+        duration: formatDuration(entry.durationMs),
+        range: formatTimeRange(entry.startTime, entry.endTime, locale)
+    }));
+    return {
+        date: reportDateEl.textContent ?? metrics.dateKey,
+        index: metrics.currentIndex,
+        focusRate: formatPercentage(kpis.focusRate),
+        tabSwitches: metrics.tabSwitches,
+        topProductive: getTopEntries(metrics.domains, 'productive'),
+        topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
+        timeline: timelineSnippets
+    };
+}
+function getTopEntries(domains, category) {
+    return Object.values(domains)
+        .filter((d) => d.category === category)
+        .sort((a, b) => b.milliseconds - a.milliseconds)
+        .slice(0, 5)
+        .map((entry) => ({ domain: entry.domain, duration: formatDuration(entry.milliseconds) }));
+}
+async function requestAiNarrative(payload) {
+    const apiKey = openAiKey;
+    if (!apiKey) {
+        throw new Error('OPENAI_API_KEY não configurada.');
+    }
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            temperature: 0.6,
+            messages: [
+                {
+                    role: 'system',
+                    content: 'Você é Saul Goodman, advogado com humor sarcástico e vendedor nato. Conte a história do dia do usuário usando os dados fornecidos, como se estivesse defendendo o cliente.'
+                },
+                {
+                    role: 'user',
+                    content: `Conte uma narrativa curta (2 parágrafos) com os dados:\n${JSON.stringify(payload)}`
+                }
+            ]
+        })
+    });
+    if (!response.ok) {
+        throw new Error(`OpenAI falhou: ${response.statusText}`);
+    }
+    const json = (await response.json());
+    return json.choices?.[0]?.message?.content?.trim() ?? '';
+}
+function formatAiNarrative(text) {
+    const paragraphs = text
+        .split(/\n\s*\n/)
+        .map((chunk) => chunk.trim())
+        .filter(Boolean);
+    if (!paragraphs.length) {
+        return escapeHtml(text);
+    }
+    return paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+}
+function escapeHtml(value) {
+    return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

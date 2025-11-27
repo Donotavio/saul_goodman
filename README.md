@@ -10,6 +10,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
 - **Tooltips educativos**: cada métrica possui um ícone de informação que explica como o número foi calculado.
+- **Storytelling IA**: configure sua chave OpenAI nas opções para gerar narrativas sarcásticas no relatório em tom Saul Goodman.
 - **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário + PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
 
@@ -59,7 +60,8 @@ saul_goodman/
    npm install
    npm run build   # ou npm run watch para rebuild automático
    ```
-2. Carregue a extensão:
+2. (Opcional) Abra as Configurações do Escritório e informe sua chave `sk-...` da OpenAI para habilitar a narrativa.
+3. Carregue a extensão:
    - Abra `chrome://extensions`
    - Ative "Modo do desenvolvedor"
    - Clique em **Carregar sem compactação** e selecione a pasta `saul_goodman`
