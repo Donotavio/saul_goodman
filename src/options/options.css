@@ -33,16 +33,17 @@ body {
 }
 
 .hero-text {
-  max-width: 60%;
+  max-width: 62%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .promise {
   margin: 0;
-  font-weight: 600;
-  color: #822305;
+  font-weight: 700;
+  color: #600a03;
+  font-size: 1rem;
 }
 
 .logo-frame {
@@ -66,27 +67,32 @@ body {
 .logo-caption {
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: #333;
   text-transform: uppercase;
 }
 
 .tagline {
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
-  color: #a0102b;
-  font-weight: 700;
+  letter-spacing: 0.18em;
+  font-size: 0.9rem;
+  color: #761021;
+  font-weight: 800;
 }
 
 h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  color: #140d07;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08);
 }
 
 .subtitle {
-  margin-top: 4px;
-  color: #333;
+  margin-top: 0;
+  color: #2d221a;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .status {
