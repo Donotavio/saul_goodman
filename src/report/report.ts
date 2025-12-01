@@ -183,6 +183,7 @@ function renderReport(metrics: DailyMetrics): void {
   aiNarrativeEl.innerHTML =
     'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
+  updateHeroLogo(metrics.currentIndex >= criticalThreshold);
   toggleCriticalBanner(metrics.currentIndex >= criticalThreshold);
 }
 
@@ -995,6 +996,17 @@ function toggleCriticalBanner(isCritical: boolean): void {
   }
 }
 
+function updateHeroLogo(isCritical: boolean): void {
+  if (!heroLogoEl) {
+    return;
+  }
+  const imagePath = isCritical ? 'src/img/saul_incredulo.png' : 'src/img/logotipo_saul_goodman.png';
+  heroLogoEl.src = chrome.runtime.getURL(imagePath);
+  heroLogoEl.alt = isCritical
+    ? 'Saul Goodman incrédulo com o seu foco'
+    : 'Logotipo Saul Goodman';
+}
+
 function startBannerCountdown(): void {
   if (!criticalBannerCountdownEl) {
     return;
@@ -1069,3 +1081,4 @@ function closeReportTab(): void {
 
   window.close();
 }
+const heroLogoEl = document.querySelector('.logo-frame img') as HTMLImageElement | null;
