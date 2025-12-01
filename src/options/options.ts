@@ -18,9 +18,11 @@ const inactivityThresholdEl = document.getElementById('inactivityThreshold') as 
 const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
+const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
 
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
+let procrastinationHighlightDone = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -65,11 +67,20 @@ function attachListeners(): void {
     void persistSettings('Padrões restaurados.');
     renderForms();
   });
+
+  backToPopupButton?.addEventListener('click', () => {
+    returnToPopup();
+  });
+
 }
 
 async function hydrate(): Promise<void> {
   currentSettings = await getSettings();
   renderForms();
+  if (window.location.hash === '#vilains' && !procrastinationHighlightDone) {
+    focusProcrastinationSection();
+    procrastinationHighlightDone = true;
+  }
 }
 
 function renderForms(): void {
@@ -205,4 +216,47 @@ function showStatus(message: string, isError = false): void {
   statusTimeout = window.setTimeout(() => {
     statusMessageEl.classList.remove('visible');
   }, 4000);
+}
+
+function focusProcrastinationSection(): void {
+  procrastinationListEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  procrastinationListEl.classList.add('highlighted');
+  window.setTimeout(() => {
+    procrastinationListEl.classList.remove('highlighted');
+  }, 3000);
+}
+
+function returnToPopup(): void {
+  const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
+  chrome.tabs.create({ url: popupUrl }, () => {
+    if (chrome.runtime.lastError) {
+      window.location.href = popupUrl;
+      return;
+    }
+    closeCurrentTab();
+  });
+}
+
+function closeCurrentTab(): void {
+  if (!chrome?.tabs?.getCurrent) {
+    window.close();
+    return;
+  }
+
+  chrome.tabs.getCurrent((tab) => {
+    if (chrome.runtime.lastError) {
+      window.close();
+      return;
+    }
+
+    if (tab?.id) {
+      chrome.tabs.remove(tab.id, () => {
+        if (chrome.runtime.lastError) {
+          window.close();
+        }
+      });
+    } else {
+      window.close();
+    }
+  });
 }

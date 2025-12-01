@@ -193,5 +193,26 @@
       <button id="clearButton" class="danger-button">Limpar dados de hoje</button>
       <p class="privacy">Todos os dados ficam no navegador. Saul honra o sigilo profissional.</p>
     </footer>
+
+    <div id="criticalOverlay" class="critical-overlay hidden" role="alert" aria-live="assertive">
+      <div class="critical-card">
+        <div class="critical-card-header">
+          <strong>Saul em modo terremoto</strong>
+          <button id="criticalCloseButton" class="close-button" aria-label="Fechar alerta">×</button>
+        </div>
+        <p id="criticalMessage" class="critical-message">
+          Cliente, com índice 90 nem eu consigo te defender. Vai custar caro!
+        </p>
+        <p class="critical-plan">
+          Plano de ação: feche 3 abas vilãs em
+          <span id="criticalCountdown" class="critical-countdown">45</span>s.
+        </p>
+        <div class="critical-actions">
+          <button id="criticalSoundButton" class="primary-button">Ativar alerta sonoro</button>
+          <button id="criticalReportButton" class="ghost-button wide">Abrir relatório</button>
+          <button id="criticalOptionsButton" class="ghost-button wide">Revisar domínios</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

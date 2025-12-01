@@ -27,6 +27,12 @@ const aiRetryButton = document.getElementById('aiRetryButton') as HTMLButtonElem
 const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement;
 const compositionCanvas = document.getElementById('compositionChart') as HTMLCanvasElement;
 const hourlyEmptyEl = document.getElementById('hourlyEmpty');
+const criticalBannerEl = document.getElementById('criticalBanner') as HTMLElement | null;
+const criticalBannerMessageEl = document.getElementById('criticalBannerMessage') as HTMLElement | null;
+const criticalBannerCountdownEl = document.getElementById(
+  'criticalBannerCountdown'
+) as HTMLElement | null;
+const criticalBannerAction = document.getElementById('criticalBannerAction') as HTMLButtonElement | null;
 
 const messageTemplates: Array<{ max: number; text: string }> = [
   {
@@ -47,11 +53,20 @@ const messageTemplates: Array<{ max: number; text: string }> = [
   }
 ];
 
+const criticalMessages = [
+  'Nem eu consigo convencer o júri com esse índice. Hora de cortar as distrações!',
+  'Se continuar assim, mando um outdoor avisando o seu chefe.',
+  'Este terremoto é o eco das suas abas procrastinatórias. Feche-as já.',
+  'A conta está aumentando: foco agora ou cobramos honorários extras.'
+];
+
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
 let openAiKey = '';
+let bannerCountdownTimer: number | null = null;
+let bannerCountdownValue = 45;
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
@@ -59,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
   backButton.addEventListener('click', () => closeReportTab());
   aiGenerateButton.addEventListener('click', () => void generateNarrative());
   aiRetryButton.addEventListener('click', () => void generateNarrative());
+  criticalBannerAction?.addEventListener('click', () => {
+    const url = chrome.runtime.getURL('src/options/options.html#vilains');
+    void chrome.tabs.create({ url });
+  });
 });
 
 async function hydrate(): Promise<void> {
@@ -98,6 +117,7 @@ function renderReport(metrics: DailyMetrics): void {
   renderTimeline(metrics.timeline);
   aiNarrativeEl.innerHTML =
     'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
+  toggleCriticalBanner(metrics.currentIndex);
 }
 
 function renderHourlyChart(metrics: DailyMetrics): void {
@@ -659,6 +679,54 @@ function formatParagraph(content: string): string {
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function toggleCriticalBanner(score: number): void {
+  if (!criticalBannerEl) {
+    return;
+  }
+  if (score >= 90) {
+    document.body.classList.add('earthquake');
+    criticalBannerEl.classList.remove('hidden');
+    const message = criticalMessages[Math.floor(Math.random() * criticalMessages.length)];
+    if (criticalBannerMessageEl) {
+      criticalBannerMessageEl.textContent = message;
+    }
+    startBannerCountdown();
+  } else {
+    document.body.classList.remove('earthquake');
+    criticalBannerEl.classList.add('hidden');
+    stopBannerCountdown();
+  }
+}
+
+function startBannerCountdown(): void {
+  if (!criticalBannerCountdownEl) {
+    return;
+  }
+  if (bannerCountdownTimer) {
+    return;
+  }
+  bannerCountdownValue = 45;
+  criticalBannerCountdownEl.textContent = bannerCountdownValue.toString();
+  bannerCountdownTimer = window.setInterval(() => {
+    bannerCountdownValue = Math.max(0, bannerCountdownValue - 1);
+    criticalBannerCountdownEl.textContent = bannerCountdownValue.toString();
+    if (bannerCountdownValue === 0) {
+      stopBannerCountdown();
+      if (criticalBannerMessageEl) {
+        criticalBannerMessageEl.textContent =
+          'Hora de agir: feche as abas vilãs e volte quando estiver no controle.';
+      }
+    }
+  }, 1000);
+}
+
+function stopBannerCountdown(): void {
+  if (bannerCountdownTimer) {
+    window.clearInterval(bannerCountdownTimer);
+    bannerCountdownTimer = null;
+  }
 }
 
 function parseDateKey(dateKey: string): Date {

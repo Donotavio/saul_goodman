@@ -221,6 +221,23 @@ button {
   padding: 8px 10px;
 }
 
+.domain-list.highlighted {
+  animation: pulse 0.8s ease-in-out 3;
+  border-color: #e50914;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 rgba(229, 9, 20, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(229, 9, 20, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(229, 9, 20, 0);
+  }
+}
+
 .domain-list button {
   background: #fff;
   border: 1px solid #111;
@@ -248,6 +265,16 @@ footer {
   border-top: 1px solid #ddd;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.ghost {
+  background: transparent;
+  border: 2px solid #111;
+  color: #111;
+}
+
+.ghost:hover {
+  background: #ffe434;
 }
 
 .danger {

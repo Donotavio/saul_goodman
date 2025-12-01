@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "watch": "tsc -w -p tsconfig.json"
+    "watch": "tsc -w -p tsconfig.json",
+    "test:critical": "npm run build && node dist/tests/preferences-check.js"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.246",

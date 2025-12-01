@@ -20,9 +20,11 @@
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
+   - Estado crítico (`score >= 90`): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (persistida via `shared/preferences.ts`).
 4. **Options (`options.ts`)**
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.
+   - Responde ao hash `#vilains` rolando até a lista de domínios procrastinatórios para fluxos vindos do alerta crítico.
 
 ## Estrutura dos dados
 ```ts
@@ -88,6 +90,7 @@ Esses KPIs são renderizados em cartões e não exigem persistência adicional.
 - **Novas métricas**: adicionar campos em `DailyMetrics` e atualizar `score.ts` + popup.
 - **Novos modos**: `shared/types.ts` concentra tipos; edite ali e compartilhe nos módulos.
 - **Internacionalização**: o idioma atual é `pt-BR`, mas `ExtensionSettings.locale` permite futura expansão.
+- **Preferências compartilhadas**: `shared/preferences.ts` encapsula leitura/escrita no `chrome.storage.local` com fallback para testes; use-o para qualquer nova opção que precise ser lembrada entre sessões (como o alerta sonoro).
 
 ## Segurança & privacidade
 - Não há chamadas de rede; permissões mínimas: `storage`, `tabs`, `alarms`, `activeTab` e host `<all_urls>` apenas para saber URL.

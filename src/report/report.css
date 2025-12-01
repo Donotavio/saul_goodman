@@ -10,6 +10,31 @@ body {
   color: #1b120a;
 }
 
+body.earthquake {
+  animation: quake 0.6s linear infinite;
+}
+
+@keyframes quake {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3px, 1px) rotate(-0.4deg);
+  }
+  40% {
+    transform: translate(4px, -2px) rotate(0.4deg);
+  }
+  60% {
+    transform: translate(-4px, 2px) rotate(-0.3deg);
+  }
+  80% {
+    transform: translate(2px, -2px) rotate(0.3deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 .report-hero {
   display: flex;
   justify-content: space-between;
@@ -253,4 +278,36 @@ main {
 
 .ai-actions .hidden {
   display: none;
+}
+
+.critical-banner {
+  border: 2px solid #7a0500;
+  border-radius: 14px;
+  padding: 16px;
+  background: #ffe0e0;
+  box-shadow: 4px 4px 0 #ff8f8f;
+  margin-bottom: 20px;
+}
+
+.critical-banner.hidden {
+  display: none;
+}
+
+.critical-banner strong {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #7a0500;
+}
+
+.critical-banner .plan {
+  color: #7a0500;
+  font-weight: 600;
+}
+
+.critical-banner .plan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }

@@ -1,4 +1,9 @@
 import { DailyMetrics, DomainStats, PopupData, RuntimeMessageType } from '../shared/types.js';
+import {
+  CRITICAL_SOUND_PREFERENCE_KEY,
+  loadBooleanPreference,
+  saveBooleanPreference
+} from '../shared/preferences.js';
 import { formatDuration } from '../shared/utils/time.js';
 
 declare const Chart: any;
@@ -40,9 +45,22 @@ const topProcrastinationDomainEl = document.getElementById(
 const topProcrastinationTimeEl = document.getElementById(
   'topProcrastinationTime'
 ) as HTMLElement;
+const criticalOverlayEl = document.getElementById('criticalOverlay') as HTMLDivElement | null;
+const criticalMessageEl = document.getElementById('criticalMessage') as HTMLParagraphElement | null;
+const criticalCountdownEl = document.getElementById('criticalCountdown') as HTMLSpanElement | null;
+const criticalCloseButton = document.getElementById('criticalCloseButton') as HTMLButtonElement | null;
+const criticalSoundButton = document.getElementById('criticalSoundButton') as HTMLButtonElement | null;
+const criticalReportButton = document.getElementById('criticalReportButton') as HTMLButtonElement | null;
+const criticalOptionsButton = document.getElementById('criticalOptionsButton') as HTMLButtonElement | null;
 
 let productivityChart: ChartInstance = null;
 let latestData: PopupData | null = null;
+let criticalCountdownTimer: number | null = null;
+let criticalCountdownValue = 45;
+let criticalOverlayDismissed = false;
+let criticalSoundEnabled = false;
+let criticalAudioContext: AudioContext | null = null;
+let lastCriticalState = false;
 
 const messageTemplates: Array<{ max: number; text: string }> = [
   { max: 25, text: 'Cliente de ouro! Continue assim que eu consigo cobrar cache cheio.' },
@@ -51,9 +69,17 @@ const messageTemplates: Array<{ max: number; text: string }> = [
   { max: 100, text: 'Você está brincando com fogo. E eu cobro por hora para apagar incêndios.' }
 ];
 
+const criticalMessages = [
+  'Cliente, com índice 90 nem eu consigo te defender. Vai custar honorários de risco!',
+  'Esse tremor? É o juiz batendo o martelo na sua produtividade.',
+  'Pare de procrastinar ou preparo um comercial no horário nobre contando sua história.',
+  'Me ajuda a te defender: fecha essas abas antes que eu cobre em dólar.'
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
   void hydrate();
+  void loadCriticalSoundPreference();
 });
 
 function attachListeners(): void {
@@ -71,6 +97,25 @@ function attachListeners(): void {
   pdfExportButton.addEventListener('click', () => void handlePdfExport());
   reportButton.addEventListener('click', () => {
     void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
+  });
+  criticalCloseButton?.addEventListener('click', () => {
+    criticalOverlayEl?.classList.add('hidden');
+    criticalOverlayDismissed = true;
+  });
+  criticalSoundButton?.addEventListener('click', () => {
+  criticalSoundEnabled = true;
+  void saveCriticalSoundPreference(true);
+    playCriticalSound();
+    if (criticalSoundButton) {
+      criticalSoundButton.textContent = 'Sirene ativada';
+    }
+  });
+  criticalReportButton?.addEventListener('click', () => {
+    void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
+  });
+  criticalOptionsButton?.addEventListener('click', () => {
+    const url = chrome.runtime.getURL('src/options/options.html#vilains');
+    void chrome.tabs.create({ url });
   });
 }
 
@@ -130,6 +175,7 @@ function renderScore(score: number): void {
   scoreValueEl.textContent = score.toString();
   scoreMessageEl.textContent = pickScoreMessage(score);
   scoreValueEl.classList.toggle('alert', score >= 70);
+  toggleCriticalMode(score >= 90);
 }
 
 function pickScoreMessage(score: number): string {
@@ -474,4 +520,113 @@ async function handlePdfExport(): Promise<void> {
     });
 
   doc.save(`saul-goodman-${metrics.dateKey}.pdf`);
+}
+
+function toggleCriticalMode(isCritical: boolean): void {
+  if (isCritical) {
+    document.body.classList.add('earthquake');
+    if (!lastCriticalState) {
+      criticalOverlayDismissed = false;
+    }
+    if (!criticalOverlayDismissed) {
+      showCriticalOverlay();
+    }
+    startCriticalCountdown();
+    if (criticalSoundEnabled) {
+      playCriticalSound();
+    }
+  } else {
+    document.body.classList.remove('earthquake');
+    hideCriticalOverlay();
+    stopCriticalCountdown();
+    criticalOverlayDismissed = false;
+  }
+  lastCriticalState = isCritical;
+}
+
+function showCriticalOverlay(): void {
+  if (!criticalOverlayEl) {
+    return;
+  }
+  const message = criticalMessages[Math.floor(Math.random() * criticalMessages.length)];
+  if (criticalMessageEl) {
+    criticalMessageEl.textContent = message;
+  }
+  criticalOverlayEl.classList.remove('hidden');
+}
+
+function hideCriticalOverlay(): void {
+  criticalOverlayEl?.classList.add('hidden');
+}
+
+function startCriticalCountdown(): void {
+  if (!criticalCountdownEl) {
+    return;
+  }
+  if (criticalCountdownTimer) {
+    return;
+  }
+  criticalCountdownValue = 45;
+  criticalCountdownEl.textContent = criticalCountdownValue.toString();
+  criticalCountdownTimer = window.setInterval(() => {
+    criticalCountdownValue = Math.max(0, criticalCountdownValue - 1);
+    if (criticalCountdownEl) {
+      criticalCountdownEl.textContent = criticalCountdownValue.toString();
+    }
+    if (criticalCountdownValue === 0) {
+      stopCriticalCountdown();
+      if (criticalMessageEl) {
+        criticalMessageEl.textContent =
+          'Sem desculpas: quero três abas procrastinatórias fechadas imediatamente!';
+      }
+    }
+  }, 1000);
+}
+
+function stopCriticalCountdown(): void {
+  if (criticalCountdownTimer) {
+    window.clearInterval(criticalCountdownTimer);
+    criticalCountdownTimer = null;
+  }
+}
+
+function playCriticalSound(): void {
+  if (!criticalSoundEnabled) {
+    return;
+  }
+  if (!criticalAudioContext) {
+    criticalAudioContext = new AudioContext();
+  }
+  if (criticalAudioContext.state === 'suspended') {
+    void criticalAudioContext.resume();
+  }
+  const duration = 0.6;
+  const oscillator = criticalAudioContext.createOscillator();
+  const gain = criticalAudioContext.createGain();
+  oscillator.type = 'square';
+  oscillator.frequency.value = 460;
+  gain.gain.setValueAtTime(0.2, criticalAudioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, criticalAudioContext.currentTime + duration);
+  oscillator.connect(gain);
+  gain.connect(criticalAudioContext.destination);
+  oscillator.start();
+  oscillator.stop(criticalAudioContext.currentTime + duration);
+}
+
+async function loadCriticalSoundPreference(): Promise<void> {
+  try {
+    const stored = await loadBooleanPreference(CRITICAL_SOUND_PREFERENCE_KEY);
+    if (typeof stored === 'boolean') {
+      criticalSoundEnabled = stored;
+      if (criticalSoundEnabled && criticalSoundButton) {
+        criticalSoundButton.textContent = 'Sirene ativada';
+      }
+    }
+  } catch (error) {
+    console.warn('Falha ao carregar preferência da sirene crítica:', error);
+  }
+}
+
+function saveCriticalSoundPreference(enabled: boolean): Promise<void> {
+  return saveBooleanPreference(CRITICAL_SOUND_PREFERENCE_KEY, enabled);
 }

@@ -14,6 +14,7 @@
 - **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
 - **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
 - **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
+- **Modo terremoto (≥ 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Ativar alerta sonoro”). A sirene só toca se o usuário consentir e a escolha fica persistida. Ao fechar o overlay ele só volta quando o score continua crítico.
 - **CTA**:
   - `Atualizar`: força `metrics-request`.
   - `Configurar`: abre options.
@@ -26,6 +27,7 @@
 - Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
 - "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
 - Campo "Chave OpenAI" opcional: explique que o valor fica salvo localmente e habilita o storytelling na página de relatório.
+- Hash `#vilains`: quando aberto a partir do modo crítico/relatório, rolar suavemente até o bloco de domínios procrastinatórios e destacá-lo (animação pulsante) por alguns segundos para guiar a ação.
 
 ## Relatório detalhado (`src/report/report.html`)
 - Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
@@ -35,6 +37,7 @@
 - Narrativa minuto a minuto mostra trechos >5 min com horário formatado.
 - Bloco “Argumento do Saul” chama a OpenAI (quando chave configurada) para gerar texto sarcástico.
 - Botão “Exportar PDF” gera documento paisagem com gráficos e narrativa.
+- Banner crítico (score ≥ 90) reaproveita as mensagens do modo terremoto, exibe contador e CTA “Revisar vilões” que abre `options.html#vilains`.
 
 ## Conteúdo e mensagens
 - **Sucesso**: “Cliente de ouro! Continue assim…”
