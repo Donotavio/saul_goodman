@@ -20,7 +20,7 @@
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
-   - Estado crítico (`score >= 90`): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (persistida via `shared/preferences.ts`).
+   - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (persistida via `shared/preferences.ts`).
 4. **Options (`options.ts`)**
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.

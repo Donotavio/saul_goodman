@@ -13,7 +13,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Storytelling IA**: configure sua chave OpenAI nas opções para gerar narrativas sarcásticas no relatório em tom Saul Goodman.
 - **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário + PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
-- **Modo terremoto**: ao atingir índice ≥ 90 o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; o alerta sonoro é opcional e fica salvo nas preferências.
+- **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; o alerta sonoro é opcional e fica salvo nas preferências.
 
 ## Stack e arquitetura
 - **Manifest V3** com service worker modular e ES Modules.

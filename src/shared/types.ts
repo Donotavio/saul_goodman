@@ -48,6 +48,7 @@ export interface ExtensionSettings {
   inactivityThresholdMs: number;
   locale: 'pt-BR';
   openAiKey?: string;
+  criticalScoreThreshold?: number;
 }
 
 export interface ActivityPingPayload {
@@ -87,4 +88,5 @@ export interface OptionsFormState {
   weights: WeightConfig;
   inactivityThresholdMs: number;
   openAiKey?: string;
+  criticalScoreThreshold?: number;
 }

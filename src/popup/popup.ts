@@ -175,7 +175,8 @@ function renderScore(score: number): void {
   scoreValueEl.textContent = score.toString();
   scoreMessageEl.textContent = pickScoreMessage(score);
   scoreValueEl.classList.toggle('alert', score >= 70);
-  toggleCriticalMode(score >= 90);
+  const threshold = latestData?.settings?.criticalScoreThreshold ?? 90;
+  toggleCriticalMode(score >= threshold);
 }
 
 function pickScoreMessage(score: number): string {

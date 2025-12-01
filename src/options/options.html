@@ -81,6 +81,17 @@
           <ul id="procrastinationList" class="domain-list"></ul>
         </div>
       </section>
+
+      <section class="panel">
+        <h2>Modo terremoto</h2>
+        <p class="hint">
+          Quando o índice alcança este valor, Saul entra em modo terremoto (tremor, overlay e alertas).
+        </p>
+        <label>
+          Limiar do alerta crítico (0–100)
+          <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
+        </label>
+      </section>
     </main>
 
     <div id="statusMessage" class="status-toast">Tudo certo.</div>

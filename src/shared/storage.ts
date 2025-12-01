@@ -73,7 +73,8 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   },
   inactivityThresholdMs: 60000,
   locale: 'pt-BR',
-  openAiKey: ''
+  openAiKey: '',
+  criticalScoreThreshold: 90
 };
 
 function createEmptyHourly(): HourlyBucket[] {

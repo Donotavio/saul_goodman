@@ -65,6 +65,8 @@ let compositionChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
 let openAiKey = '';
+let latestSettings: { locale?: string; openAiKey?: string; criticalScoreThreshold?: number } | null =
+  null;
 let bannerCountdownTimer: number | null = null;
 let bannerCountdownValue = 45;
 
@@ -87,8 +89,9 @@ async function hydrate(): Promise<void> {
       throw new Error('Sem métricas disponíveis.');
     }
     latestMetrics = response.metrics;
-    locale = response.settings?.locale ?? 'pt-BR';
-    openAiKey = response.settings?.openAiKey ?? '';
+    latestSettings = response.settings ?? null;
+    locale = latestSettings?.locale ?? 'pt-BR';
+    openAiKey = latestSettings?.openAiKey ?? '';
     renderReport(latestMetrics);
   } catch (error) {
     console.error(error);
@@ -117,7 +120,8 @@ function renderReport(metrics: DailyMetrics): void {
   renderTimeline(metrics.timeline);
   aiNarrativeEl.innerHTML =
     'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
-  toggleCriticalBanner(metrics.currentIndex);
+  const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
+  toggleCriticalBanner(metrics.currentIndex >= criticalThreshold);
 }
 
 function renderHourlyChart(metrics: DailyMetrics): void {
@@ -681,11 +685,11 @@ function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function toggleCriticalBanner(score: number): void {
+function toggleCriticalBanner(isCritical: boolean): void {
   if (!criticalBannerEl) {
     return;
   }
-  if (score >= 90) {
+  if (isCritical) {
     document.body.classList.add('earthquake');
     criticalBannerEl.classList.remove('hidden');
     const message = criticalMessages[Math.floor(Math.random() * criticalMessages.length)];
