@@ -48,6 +48,10 @@ const criticalCloseButton = document.getElementById('criticalCloseButton') as HT
 const criticalSoundButton = document.getElementById('criticalSoundButton') as HTMLButtonElement | null;
 const criticalReportButton = document.getElementById('criticalReportButton') as HTMLButtonElement | null;
 const criticalOptionsButton = document.getElementById('criticalOptionsButton') as HTMLButtonElement | null;
+const saulToastEl = document.getElementById('saulToast') as HTMLDivElement | null;
+const saulToastImageEl = document.getElementById('saulToastImage') as HTMLImageElement | null;
+const saulToastTitleEl = document.getElementById('saulToastTitle') as HTMLElement | null;
+const saulToastMessageEl = document.getElementById('saulToastMessage') as HTMLParagraphElement | null;
 if (criticalSoundButton) {
   criticalSoundButton.textContent = 'Tocar sirene agora';
 }
@@ -62,6 +66,9 @@ let lastCriticalState = false;
 let lastCriticalScoreNotified = -Infinity;
 let currentCriticalThreshold = 90;
 const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
+let lastScoreMessage = '';
+let toastTimeout: number | null = null;
+let toastAudioContext: AudioContext | null = null;
 
 const messageTemplates: Array<{ max: number; text: string }> = [
   { max: 25, text: 'Cliente de ouro! Continue assim que eu consigo cobrar cache cheio.' },
@@ -170,7 +177,13 @@ function renderKpis(metrics: DailyMetrics): void {
 
 function renderScore(score: number): void {
   scoreValueEl.textContent = score.toString();
-  scoreMessageEl.textContent = pickScoreMessage(score);
+  const nextMessage = pickScoreMessage(score);
+  scoreMessageEl.textContent = nextMessage;
+  if (nextMessage !== lastScoreMessage) {
+    lastScoreMessage = nextMessage;
+    const mood = isScorePositive(score) ? 'positive' : 'negative';
+    showSaulToast(mood, nextMessage);
+  }
   scoreValueEl.classList.toggle('alert', score >= 70);
   const threshold = latestData?.settings?.criticalScoreThreshold ?? 90;
   currentCriticalThreshold = threshold;
@@ -188,6 +201,72 @@ function pickScoreMessage(score: number): string {
     }
   }
   return messageTemplates[messageTemplates.length - 1].text;
+}
+
+function isScorePositive(score: number): boolean {
+  return score <= 50;
+}
+
+function showSaulToast(mood: 'positive' | 'negative', message: string): void {
+  if (!saulToastEl || !saulToastImageEl || !saulToastTitleEl || !saulToastMessageEl) {
+    return;
+  }
+
+  const imagePath =
+    mood === 'positive' ? 'src/img/saul_like.png' : 'src/img/saul_incredulo.png';
+  saulToastImageEl.src = chrome.runtime.getURL(imagePath);
+  saulToastImageEl.alt = mood === 'positive' ? 'Saul comemorando' : 'Saul inconformado';
+  saulToastTitleEl.textContent = mood === 'positive' ? 'Uhul!' : 'Ei, cliente...';
+  saulToastMessageEl.textContent = message;
+  saulToastEl.classList.toggle('negative', mood === 'negative');
+  saulToastEl.classList.remove('hidden');
+  saulToastEl.classList.add('visible');
+
+  if (toastTimeout) {
+    window.clearTimeout(toastTimeout);
+  }
+
+  if (mood === 'positive') {
+    void playToastCelebrationSound();
+  }
+
+  toastTimeout = window.setTimeout(() => {
+    hideSaulToast();
+  }, 2600);
+}
+
+function hideSaulToast(): void {
+  if (!saulToastEl) {
+    return;
+  }
+  saulToastEl.classList.remove('visible');
+  saulToastEl.classList.add('hidden');
+  toastTimeout = null;
+}
+
+async function playToastCelebrationSound(): Promise<void> {
+  if (typeof AudioContext === 'undefined') {
+    return;
+  }
+  if (!toastAudioContext) {
+    toastAudioContext = new AudioContext();
+  }
+  if (toastAudioContext.state === 'suspended') {
+    await toastAudioContext.resume();
+  }
+
+  const oscillator = toastAudioContext.createOscillator();
+  const gain = toastAudioContext.createGain();
+  const now = toastAudioContext.currentTime;
+  oscillator.type = 'triangle';
+  oscillator.frequency.setValueAtTime(550, now);
+  oscillator.frequency.exponentialRampToValueAtTime(880, now + 0.3);
+  gain.gain.setValueAtTime(0.18, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+  oscillator.connect(gain);
+  gain.connect(toastAudioContext.destination);
+  oscillator.start(now);
+  oscillator.stop(now + 0.5);
 }
 
 function renderTopDomains(domains: Record<string, DomainStats>): void {
