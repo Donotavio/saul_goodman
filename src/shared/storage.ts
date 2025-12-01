@@ -1,4 +1,12 @@
-import { DailyMetrics, ExtensionSettings, HourlyBucket, TimelineEntry, WorkInterval } from './types.js';
+import {
+  DailyMetrics,
+  ExtensionSettings,
+  HourlyBucket,
+  TabSwitchBreakdown,
+  TabSwitchHourlyBucket,
+  TimelineEntry,
+  WorkInterval
+} from './types.js';
 import { getTodayKey } from './utils/time.js';
 
 export enum StorageKeys {
@@ -105,6 +113,8 @@ export function createDefaultMetrics(): DailyMetrics {
     procrastinationMs: 0,
     inactiveMs: 0,
     tabSwitches: 0,
+    tabSwitchBreakdown: createDefaultTabSwitchBreakdown(),
+    tabSwitchHourly: createEmptyTabSwitchHourly(),
     domains: {},
     currentIndex: 0,
     lastUpdated: Date.now(),
@@ -112,6 +122,27 @@ export function createDefaultMetrics(): DailyMetrics {
     timeline: createEmptyTimeline(),
     overtimeProductiveMs: 0
   };
+}
+
+export function createDefaultTabSwitchBreakdown(): TabSwitchBreakdown {
+  return {
+    productiveToProductive: 0,
+    productiveToProcrastination: 0,
+    productiveToNeutral: 0,
+    procrastinationToProductive: 0,
+    procrastinationToProcrastination: 0,
+    procrastinationToNeutral: 0,
+    neutralToProductive: 0,
+    neutralToProcrastination: 0,
+    neutralToNeutral: 0
+  };
+}
+
+export function createEmptyTabSwitchHourly(): TabSwitchHourlyBucket[] {
+  return Array.from({ length: 24 }, (_, hour) => ({
+    hour,
+    ...createDefaultTabSwitchBreakdown()
+  }));
 }
 
 export function getDefaultSettings(): ExtensionSettings {

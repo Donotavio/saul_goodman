@@ -60,6 +60,7 @@ let criticalOverlayDismissed = false;
 let criticalSoundEnabledSetting = false;
 let lastCriticalState = false;
 let lastCriticalScoreNotified = -Infinity;
+let currentCriticalThreshold = 90;
 const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
 
 const messageTemplates: Array<{ max: number; text: string }> = [
@@ -69,11 +70,12 @@ const messageTemplates: Array<{ max: number; text: string }> = [
   { max: 100, text: 'Você está brincando com fogo. E eu cobro por hora para apagar incêndios.' }
 ];
 
-const criticalMessages = [
-  'Cliente, com índice 90 nem eu consigo te defender. Vai custar honorários de risco!',
-  'Esse tremor? É o juiz batendo o martelo na sua produtividade.',
-  'Pare de procrastinar ou preparo um comercial no horário nobre contando sua história.',
-  'Me ajuda a te defender: fecha essas abas antes que eu cobre em dólar.'
+const criticalMessages: Array<(threshold: number) => string> = [
+  (threshold) =>
+    `Cliente, com índice ${threshold} nem eu consigo te defender. Vai custar honorários de risco!`,
+  () => 'Esse tremor? É o juiz batendo o martelo na sua produtividade.',
+  () => 'Pare de procrastinar ou preparo um comercial no horário nobre contando sua história.',
+  () => 'Me ajuda a te defender: fecha essas abas antes que eu cobre em dólar.'
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -171,6 +173,7 @@ function renderScore(score: number): void {
   scoreMessageEl.textContent = pickScoreMessage(score);
   scoreValueEl.classList.toggle('alert', score >= 70);
   const threshold = latestData?.settings?.criticalScoreThreshold ?? 90;
+  currentCriticalThreshold = threshold;
   if (score >= threshold && score > lastCriticalScoreNotified) {
     criticalOverlayDismissed = false;
   }
@@ -479,7 +482,10 @@ function showCriticalOverlay(): void {
   if (!criticalOverlayEl) {
     return;
   }
-  const message = criticalMessages[Math.floor(Math.random() * criticalMessages.length)];
+  const message =
+    criticalMessages[Math.floor(Math.random() * criticalMessages.length)](
+      currentCriticalThreshold
+    );
   if (criticalMessageEl) {
     criticalMessageEl.textContent = message;
   }

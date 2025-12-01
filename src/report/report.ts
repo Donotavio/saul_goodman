@@ -13,6 +13,7 @@ import {
   formatRate,
   formatProductivityRatio
 } from '../shared/metrics.js';
+import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -45,6 +46,8 @@ const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement
 const compositionCanvas = document.getElementById('compositionChart') as HTMLCanvasElement;
 const domainBreakdownCanvas = document.getElementById('domainBreakdownChart') as HTMLCanvasElement;
 const hourlyEmptyEl = document.getElementById('hourlyEmpty');
+const tabSwitchCanvas = document.getElementById('tabSwitchChart') as HTMLCanvasElement;
+const tabSwitchEmptyEl = document.getElementById('tabSwitchEmpty');
 const criticalBannerEl = document.getElementById('criticalBanner') as HTMLElement | null;
 const criticalBannerMessageEl = document.getElementById('criticalBannerMessage') as HTMLElement | null;
 const criticalBannerCountdownEl = document.getElementById(
@@ -71,16 +74,18 @@ const messageTemplates: Array<{ max: number; text: string }> = [
   }
 ];
 
-const criticalMessages = [
-  'Nem eu consigo convencer o júri com esse índice. Hora de cortar as distrações!',
-  'Se continuar assim, mando um outdoor avisando o seu chefe.',
-  'Este terremoto é o eco das suas abas procrastinatórias. Feche-as já.',
-  'A conta está aumentando: foco agora ou cobramos honorários extras.'
+const criticalMessages: Array<(threshold: number) => string> = [
+  (threshold) =>
+    `Nem eu consigo convencer o júri com índice ${threshold}. Hora de cortar as distrações!`,
+  () => 'Se continuar assim, mando um outdoor avisando o seu chefe.',
+  () => 'Este terremoto é o eco das suas abas procrastinatórias. Feche-as já.',
+  () => 'A conta está aumentando: foco agora ou cobramos honorários extras.'
 ];
 
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
 let domainBreakdownChart: ChartInstance = null;
+let tabSwitchChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
 let openAiKey = '';
@@ -167,6 +172,7 @@ function renderReport(metrics: DailyMetrics): void {
   heroSwitchesEl.textContent = `${metrics.tabSwitches}`;
 
   renderHourlyChart(metrics);
+  renderTabSwitchChart(metrics);
   renderCompositionChart(metrics);
   renderStoryList(metrics, kpis);
   renderRankings(metrics.domains);
@@ -243,6 +249,59 @@ function renderHourlyChart(metrics: DailyMetrics): void {
             display: true,
             text: 'Minutos'
           }
+        }
+      }
+    }
+  });
+}
+
+function renderTabSwitchChart(metrics: DailyMetrics): void {
+  if (!tabSwitchCanvas) {
+    return;
+  }
+  const buckets = metrics.tabSwitchHourly ?? [];
+  const hasData = buckets.some((bucket) =>
+    TAB_SWITCH_SERIES.some((series) => bucket[series.key] > 0)
+  );
+
+  if (!hasData) {
+    tabSwitchCanvas.style.display = 'none';
+    tabSwitchEmptyEl?.classList.remove('hidden');
+    return;
+  }
+
+  tabSwitchCanvas.style.display = 'block';
+  tabSwitchEmptyEl?.classList.add('hidden');
+
+  const labels = buckets.map((bucket) => `${bucket.hour.toString().padStart(2, '0')}h`);
+  const datasets = TAB_SWITCH_SERIES.map((series) => ({
+    label: series.label,
+    data: buckets.map((bucket) => bucket[series.key] ?? 0),
+    backgroundColor: series.color,
+    stack: 'tabSwitches'
+  }));
+
+  if (tabSwitchChart) {
+    tabSwitchChart.destroy();
+  }
+
+  tabSwitchChart = new Chart(tabSwitchCanvas, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      scales: {
+        x: { stacked: true },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          title: { display: true, text: 'Trocas de abas' }
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { boxWidth: 12 }
         }
       }
     }
@@ -922,7 +981,9 @@ function toggleCriticalBanner(isCritical: boolean): void {
   if (isCritical) {
     document.body.classList.add('earthquake');
     criticalBannerEl.classList.remove('hidden');
-    const message = criticalMessages[Math.floor(Math.random() * criticalMessages.length)];
+    const threshold = latestSettings?.criticalScoreThreshold ?? 90;
+    const message =
+      criticalMessages[Math.floor(Math.random() * criticalMessages.length)](threshold);
     if (criticalBannerMessageEl) {
       criticalBannerMessageEl.textContent = message;
     }

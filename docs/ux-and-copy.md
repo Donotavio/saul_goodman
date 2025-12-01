@@ -37,6 +37,7 @@
 
 - Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
 - Gráfico principal: barras empilhadas por hora (produtivo, procrastinação, inatividade) e doughnut com composição do dia.
+- Gráfico secundário: “Trocas de abas por hora” com barras empilhadas para cada tipo de transição (Prod↔Proc↔Neutro). Exibir legenda abaixo e mensagem de empty-state quando não houver trocas.
 - Lista “Campeões e vilões” resume top domínios e maior período ocioso.
 - Ranking mostra top produtivos e procrastinação com barras de progresso.
 - Narrativa minuto a minuto mostra trechos >5 min com horário formatado.

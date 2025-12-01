@@ -3,6 +3,7 @@ import {
   StorageKeys,
   clearDailyMetrics,
   createDefaultMetrics,
+  createDefaultTabSwitchBreakdown,
   getDailyMetrics,
   getSettings,
   saveDailyMetrics
@@ -19,6 +20,8 @@ import {
 } from '../shared/types.js';
 import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { recordTabSwitchCounts } from '../shared/tab-switch.js';
+import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -219,7 +222,7 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
   if (previousDomain && (domainChanged || tabChanged)) {
     await finalizeCurrentDomainSlice();
     if (countSwitch) {
-      await incrementTabSwitches();
+      await incrementTabSwitches(previousDomain, domain, Date.now());
     }
   }
 
@@ -315,9 +318,29 @@ async function finalizeCurrentDomainSlice(): Promise<void> {
   await accumulateSlice();
 }
 
-async function incrementTabSwitches(): Promise<void> {
+async function incrementTabSwitches(
+  fromDomain: string,
+  toDomain: string,
+  timestamp: number
+): Promise<void> {
   const metrics = await getMetricsCache();
+  const settings = await getSettingsCache();
   metrics.tabSwitches += 1;
+
+  if (!metrics.tabSwitchBreakdown) {
+    metrics.tabSwitchBreakdown = createDefaultTabSwitchBreakdown();
+  }
+
+  const fromCategory = classifyDomain(fromDomain, settings);
+  const toCategory = classifyDomain(toDomain, settings);
+  recordTabSwitchCounts(
+    metrics.tabSwitchBreakdown,
+    metrics.tabSwitchHourly ?? [],
+    timestamp,
+    fromCategory,
+    toCategory
+  );
+
   await persistMetrics();
 }
 
@@ -365,6 +388,14 @@ async function ensureDailyCache(): Promise<void> {
 
   if (typeof metricsCache.overtimeProductiveMs !== 'number') {
     metricsCache.overtimeProductiveMs = 0;
+  }
+
+  if (!metricsCache.tabSwitchBreakdown) {
+    metricsCache.tabSwitchBreakdown = createDefaultMetrics().tabSwitchBreakdown;
+  }
+
+  if (!metricsCache.tabSwitchHourly || metricsCache.tabSwitchHourly.length !== 24) {
+    metricsCache.tabSwitchHourly = createDefaultMetrics().tabSwitchHourly;
   }
 }
 
@@ -513,7 +544,7 @@ function sendCriticalMessageToTab(
   settings: ExtensionSettings,
   active: boolean
 ): Promise<void> {
-  const shouldTrigger = active && shouldBroadcastToTab(tab, settings);
+  const shouldTrigger = active && shouldTriggerCriticalForUrl(tab.url, settings);
   const payload = {
     type: CRITICAL_MESSAGE,
     payload: {
@@ -528,16 +559,4 @@ function sendCriticalMessageToTab(
       resolve();
     });
   });
-}
-
-function shouldBroadcastToTab(tab: chrome.tabs.Tab, settings: ExtensionSettings): boolean {
-  if (!tab.url) {
-    return false;
-  }
-  const domain = extractDomain(tab.url);
-  if (!domain) {
-    return false;
-  }
-  const category = classifyDomain(domain, settings);
-  return category !== 'productive';
 }

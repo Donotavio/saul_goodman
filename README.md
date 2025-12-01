@@ -19,7 +19,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
 - **Tooltips educativos**: cada métrica possui um ícone de informação que explica como o número foi calculado.
 - **Storytelling IA**: configure sua chave OpenAI nas opções para gerar narrativas sarcásticas no relatório em tom Saul Goodman.
-- **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário + PDF próprio).
+- **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário, gráfico de trocas de abas por hora e PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
 - **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; a sirene opcional é configurada nas opções e apenas abas não productivas (procrastinação/indefinidas) recebem o travamento/alerta, permitindo que o usuário continue usando abas classificadas como produtivas para recuperar o foco.
 
@@ -89,7 +89,7 @@ saul_goodman/
 
 ## Métricas & índice
 
-- `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas e minutos produtivos fora do expediente configurado.
+- `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas (com breakdown Prod⇄Proc⇄Neutro) e minutos produtivos fora do expediente configurado.
 - `score.ts` converte esses números em um índice ponderado (pesos configuráveis nas opções). Cada minuto produtivo fora dos horários cadastrados entra com peso dobrado no cálculo.
 - Reset automático diariamente via alarme de meia-noite; botão "Limpar dados" apaga o dia corrente.
 

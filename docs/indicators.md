@@ -10,6 +10,7 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `procrastinationMs` | Tempo total em domínios procrastinatórios. | Soma dos slices com categoria `procrastination`. |
 | `inactiveMs` | Período em que o navegador ficou sem interação além do `inactivityThresholdMs`. | Incrementado quando `trackingState.isIdle === true`. |
 | `tabSwitches` | Número de vezes que o usuário trocou de aba enquanto era rastreado. | Incrementado em `incrementTabSwitches`. |
+| `tabSwitchBreakdown` | Estrutura com a contagem de trocas agrupadas por categoria origem/destino (ex.: `productiveToProcrastination`). | Atualizada em `incrementTabSwitches`, usando `classifyDomain` para identificar a categoria de cada domínio. |
 | `domains` | Mapa domínio → `{milliseconds, category}`. | Atualizado a cada slice ativo. |
 | `hourly` | 24 buckets com tempos por hora (`productiveMs`, `procrastinationMs`, `inactiveMs`, `neutralMs`). | Gerado via `splitDurationByHour` a cada slice. |
 | `timeline` | Lista `{startTime, endTime, durationMs, domain, category}` (até 2.000 entradas). | Populada em `recordTimelineSegment` para contar a história do dia. |

@@ -28,12 +28,30 @@ export interface DailyMetrics {
   procrastinationMs: number;
   inactiveMs: number;
   tabSwitches: number;
+  tabSwitchBreakdown: TabSwitchBreakdown;
+  tabSwitchHourly: TabSwitchHourlyBucket[];
   domains: Record<string, DomainStats>;
   currentIndex: number;
   lastUpdated: number;
   hourly: HourlyBucket[];
   timeline: TimelineEntry[];
   overtimeProductiveMs?: number;
+}
+
+export interface TabSwitchBreakdown {
+  productiveToProductive: number;
+  productiveToProcrastination: number;
+  productiveToNeutral: number;
+  procrastinationToProductive: number;
+  procrastinationToProcrastination: number;
+  procrastinationToNeutral: number;
+  neutralToProductive: number;
+  neutralToProcrastination: number;
+  neutralToNeutral: number;
+}
+
+export interface TabSwitchHourlyBucket extends TabSwitchBreakdown {
+  hour: number;
 }
 
 export interface WeightConfig {

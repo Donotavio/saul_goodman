@@ -4,7 +4,15 @@ import assert from 'node:assert/strict';
 import { isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { classifyDomain } from '../shared/utils/domain.js';
 import { calculateProcrastinationIndex } from '../shared/score.js';
-import type { DailyMetrics, ExtensionSettings, WorkInterval } from '../shared/types.js';
+import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
+import { getTabSwitchKey, recordTabSwitchCounts } from '../shared/tab-switch.js';
+import type {
+  DailyMetrics,
+  ExtensionSettings,
+  TabSwitchBreakdown,
+  TabSwitchHourlyBucket,
+  WorkInterval
+} from '../shared/types.js';
 
 const baseSchedule: WorkInterval[] = [
   { start: '08:00', end: '12:00' },
@@ -27,15 +35,36 @@ const defaultSettings: ExtensionSettings = {
   criticalSoundEnabled: false
 };
 
-function createMetrics(
-  overrides: Partial<DailyMetrics> = {}
-): DailyMetrics {
+function createEmptyBreakdown(): TabSwitchBreakdown {
+  return {
+    productiveToProductive: 0,
+    productiveToProcrastination: 0,
+    productiveToNeutral: 0,
+    procrastinationToProductive: 0,
+    procrastinationToProcrastination: 0,
+    procrastinationToNeutral: 0,
+    neutralToProductive: 0,
+    neutralToProcrastination: 0,
+    neutralToNeutral: 0
+  };
+}
+
+function createEmptyTabSwitchHourly(): TabSwitchHourlyBucket[] {
+  return Array.from({ length: 24 }, (_, hour) => ({
+    hour,
+    ...createEmptyBreakdown()
+  }));
+}
+
+function createMetrics(overrides: Partial<DailyMetrics> = {}): DailyMetrics {
   return {
     dateKey: '2024-01-01',
     productiveMs: 0,
     procrastinationMs: 0,
     inactiveMs: 0,
     tabSwitches: 0,
+    tabSwitchBreakdown: createEmptyBreakdown(),
+    tabSwitchHourly: createEmptyTabSwitchHourly(),
     domains: {},
     currentIndex: 0,
     lastUpdated: Date.now(),
@@ -89,4 +118,38 @@ test('calculateProcrastinationIndex awards overtime bonus', () => {
   });
   const score = calculateProcrastinationIndex(metrics, defaultSettings);
   assert.ok(score < 30, 'overtime produtivo deveria diminuir o índice');
+});
+
+test('recordTabSwitchCounts increments breakdown and hourly buckets', () => {
+  const breakdown = createEmptyBreakdown();
+  const hourly = createEmptyTabSwitchHourly();
+  const timestamp = new Date('2024-03-20T15:10:00').getTime();
+
+  const key = recordTabSwitchCounts(
+    breakdown,
+    hourly,
+    timestamp,
+    'productive',
+    'procrastination'
+  );
+
+  assert.equal(key, 'productiveToProcrastination');
+  assert.equal(breakdown.productiveToProcrastination, 1);
+  assert.equal(hourly[15].productiveToProcrastination, 1);
+  assert.equal(hourly[10].productiveToProcrastination, 0);
+
+  const nullKey = getTabSwitchKey('productive', 'productive');
+  assert.equal(nullKey, 'productiveToProductive');
+});
+
+test('shouldTriggerCriticalForUrl ignores productive tabs', () => {
+  assert.equal(
+    shouldTriggerCriticalForUrl('https://docs.google.com/document/d/foo', defaultSettings),
+    false
+  );
+  assert.equal(
+    shouldTriggerCriticalForUrl('https://www.youtube.com/watch?v=abc', defaultSettings),
+    true
+  );
+  assert.equal(shouldTriggerCriticalForUrl(undefined, defaultSettings), false);
 });
