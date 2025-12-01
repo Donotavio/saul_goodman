@@ -16,7 +16,7 @@
 - **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
 - **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
 - **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
-- **Modo terremoto (limiar configurável, padrão 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Tocar sirene”). A sirene só toca se o usuário consentir e a escolha fica persistida; o overlay só aparece em abas cujo domínio é classificado como procrastinatório (deixar explícito na copy para incentivar migração a uma aba produtiva). Ao fechar o overlay ele só volta quando o score continua crítico.
+- **Modo terremoto (limiar configurável, padrão 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Tocar sirene”). A sirene só toca se o usuário consentir e a escolha fica persistida; o overlay aparece em qualquer aba que não esteja marcada como produtiva (procrastinação ou neutro), reforçando na copy que mudar para uma aba produtiva libera o usuário para recuperar o score. Ao fechar o overlay ele só volta quando o score continua crítico.
 - **CTA**:
   - `Atualizar`: força `metrics-request`.
   - `Configurar`: abre options.

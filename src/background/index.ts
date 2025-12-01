@@ -539,5 +539,5 @@ function shouldBroadcastToTab(tab: chrome.tabs.Tab, settings: ExtensionSettings)
     return false;
   }
   const category = classifyDomain(domain, settings);
-  return category === 'procrastination';
+  return category !== 'productive';
 }
