@@ -1,9 +1,5 @@
 import { DailyMetrics, DomainStats, PopupData, RuntimeMessageType } from '../shared/types.js';
-import {
-  CRITICAL_SOUND_PREFERENCE_KEY,
-  loadBooleanPreference,
-  saveBooleanPreference
-} from '../shared/preferences.js';
+import { CriticalSirenPlayer } from '../shared/critical-audio.js';
 import { formatDuration } from '../shared/utils/time.js';
 
 declare const Chart: any;
@@ -52,15 +48,18 @@ const criticalCloseButton = document.getElementById('criticalCloseButton') as HT
 const criticalSoundButton = document.getElementById('criticalSoundButton') as HTMLButtonElement | null;
 const criticalReportButton = document.getElementById('criticalReportButton') as HTMLButtonElement | null;
 const criticalOptionsButton = document.getElementById('criticalOptionsButton') as HTMLButtonElement | null;
+if (criticalSoundButton) {
+  criticalSoundButton.textContent = 'Tocar sirene agora';
+}
 
 let productivityChart: ChartInstance = null;
 let latestData: PopupData | null = null;
 let criticalCountdownTimer: number | null = null;
 let criticalCountdownValue = 45;
 let criticalOverlayDismissed = false;
-let criticalSoundEnabled = false;
-let criticalAudioContext: AudioContext | null = null;
+let criticalSoundEnabledSetting = false;
 let lastCriticalState = false;
+const sirenPlayer = new CriticalSirenPlayer();
 
 const messageTemplates: Array<{ max: number; text: string }> = [
   { max: 25, text: 'Cliente de ouro! Continue assim que eu consigo cobrar cache cheio.' },
@@ -79,7 +78,6 @@ const criticalMessages = [
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
   void hydrate();
-  void loadCriticalSoundPreference();
 });
 
 function attachListeners(): void {
@@ -103,12 +101,7 @@ function attachListeners(): void {
     criticalOverlayDismissed = true;
   });
   criticalSoundButton?.addEventListener('click', () => {
-  criticalSoundEnabled = true;
-  void saveCriticalSoundPreference(true);
-    playCriticalSound();
-    if (criticalSoundButton) {
-      criticalSoundButton.textContent = 'Sirene ativada';
-    }
+    sirenPlayer.playBursts(4).catch(() => {});
   });
   criticalReportButton?.addEventListener('click', () => {
     void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
@@ -126,6 +119,7 @@ async function hydrate(): Promise<void> {
       throw new Error('Sem dados disponíveis');
     }
     latestData = data;
+    criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
     renderKpis(data.metrics);
@@ -533,13 +527,14 @@ function toggleCriticalMode(isCritical: boolean): void {
       showCriticalOverlay();
     }
     startCriticalCountdown();
-    if (criticalSoundEnabled) {
-      playCriticalSound();
+    if (criticalSoundEnabledSetting) {
+      void sirenPlayer.playBursts(4);
     }
   } else {
     document.body.classList.remove('earthquake');
     hideCriticalOverlay();
     stopCriticalCountdown();
+    sirenPlayer.stop();
     criticalOverlayDismissed = false;
   }
   lastCriticalState = isCritical;
@@ -589,45 +584,4 @@ function stopCriticalCountdown(): void {
     window.clearInterval(criticalCountdownTimer);
     criticalCountdownTimer = null;
   }
-}
-
-function playCriticalSound(): void {
-  if (!criticalSoundEnabled) {
-    return;
-  }
-  if (!criticalAudioContext) {
-    criticalAudioContext = new AudioContext();
-  }
-  if (criticalAudioContext.state === 'suspended') {
-    void criticalAudioContext.resume();
-  }
-  const duration = 0.6;
-  const oscillator = criticalAudioContext.createOscillator();
-  const gain = criticalAudioContext.createGain();
-  oscillator.type = 'square';
-  oscillator.frequency.value = 460;
-  gain.gain.setValueAtTime(0.2, criticalAudioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.0001, criticalAudioContext.currentTime + duration);
-  oscillator.connect(gain);
-  gain.connect(criticalAudioContext.destination);
-  oscillator.start();
-  oscillator.stop(criticalAudioContext.currentTime + duration);
-}
-
-async function loadCriticalSoundPreference(): Promise<void> {
-  try {
-    const stored = await loadBooleanPreference(CRITICAL_SOUND_PREFERENCE_KEY);
-    if (typeof stored === 'boolean') {
-      criticalSoundEnabled = stored;
-      if (criticalSoundEnabled && criticalSoundButton) {
-        criticalSoundButton.textContent = 'Sirene ativada';
-      }
-    }
-  } catch (error) {
-    console.warn('Falha ao carregar preferência da sirene crítica:', error);
-  }
-}
-
-function saveCriticalSoundPreference(enabled: boolean): Promise<void> {
-  return saveBooleanPreference(CRITICAL_SOUND_PREFERENCE_KEY, enabled);
 }

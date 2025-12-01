@@ -56,6 +56,7 @@ export interface ExtensionSettings {
   openAiKey?: string;
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
+  criticalSoundEnabled?: boolean;
 }
 
 export interface ActivityPingPayload {

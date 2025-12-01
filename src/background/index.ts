@@ -25,6 +25,7 @@ const MIDNIGHT_ALARM = 'sg:midnight-reset';
 const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
 const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
+const CRITICAL_MESSAGE = 'sg:critical-state';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -45,6 +46,8 @@ const trackingState: TrackingState = {
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
 let initializing = false;
+let globalCriticalState = false;
+let lastCriticalSoundPref = false;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -90,6 +93,7 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 
 chrome.tabs.onActivated.addListener(({ tabId }) => {
   void updateActiveTabContext(tabId, true);
+  void syncCriticalStateToTab(tabId);
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -173,6 +177,7 @@ async function hydrateActiveTab(): Promise<void> {
     const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (activeTab?.id) {
       await updateActiveTabContext(activeTab.id, true, activeTab);
+      void syncCriticalStateToTab(activeTab.id);
     } else {
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
@@ -326,6 +331,7 @@ async function persistMetrics(): Promise<void> {
 
   await saveDailyMetrics(metricsCache);
   await updateBadgeText(metricsCache.currentIndex);
+  await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
 
 async function refreshScore(): Promise<void> {
@@ -338,6 +344,7 @@ async function refreshScore(): Promise<void> {
 
   await saveDailyMetrics(metricsCache);
   await updateBadgeText(metricsCache.currentIndex);
+  await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
 
 async function ensureDailyCache(): Promise<void> {
@@ -399,6 +406,7 @@ async function clearTodayData(): Promise<void> {
   trackingState.lastTimestamp = Date.now();
   await updateBadgeText(metricsCache.currentIndex);
   await hydrateActiveTab();
+  await broadcastCriticalState(false, settingsCache ?? (await getSettingsCache()));
 }
 
 function recordHourlyContribution(
@@ -449,3 +457,58 @@ function recordTimelineSegment(
 }
 
 void initialize();
+
+async function ensureCriticalBroadcast(score: number, settings: ExtensionSettings): Promise<void> {
+  const threshold = settings.criticalScoreThreshold ?? 90;
+  const soundPref = Boolean(settings.criticalSoundEnabled);
+  const nextState = score >= threshold;
+  const soundChanged = soundPref !== lastCriticalSoundPref;
+  const stateChanged = nextState !== globalCriticalState;
+  lastCriticalSoundPref = soundPref;
+  if (!stateChanged && !(nextState && soundChanged)) {
+    return;
+  }
+  await broadcastCriticalState(nextState, settings);
+}
+
+async function broadcastCriticalState(active: boolean, settings: ExtensionSettings): Promise<void> {
+  globalCriticalState = active;
+  const payload = {
+    type: CRITICAL_MESSAGE,
+    payload: {
+      active,
+      soundEnabled: Boolean(settings.criticalSoundEnabled)
+    }
+  };
+
+  const tabs = await chrome.tabs.query({ active: true });
+  await Promise.all(
+    tabs
+      .filter((tab): tab is chrome.tabs.Tab & { id: number } => typeof tab.id === 'number')
+      .map(
+        (tab) =>
+          new Promise<void>((resolve) => {
+            chrome.tabs.sendMessage(tab.id, payload, () => {
+              void chrome.runtime.lastError;
+              resolve();
+            });
+          })
+      )
+  );
+}
+
+function syncCriticalStateToTab(tabId: number): void {
+  if (!tabId) {
+    return;
+  }
+  const payload = {
+    type: CRITICAL_MESSAGE,
+    payload: {
+      active: globalCriticalState,
+      soundEnabled: lastCriticalSoundPref
+    }
+  };
+  chrome.tabs.sendMessage(tabId, payload, () => {
+    void chrome.runtime.lastError;
+  });
+}

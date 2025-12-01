@@ -174,6 +174,7 @@ label {
   flex-direction: column;
   font-weight: 600;
   color: #333;
+  gap: 6px;
 }
 
 input[type='number'],
@@ -182,6 +183,34 @@ input[type='text'] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #bbb;
+}
+
+label.toggle {
+  gap: 8px;
+}
+
+label.toggle input[type='checkbox'] {
+  align-self: flex-start;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #111;
+  border-radius: 6px;
+  appearance: none;
+  position: relative;
+}
+
+label.toggle input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 4px;
+  background: #ffe434;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+label.toggle input[type='checkbox']:checked::after {
+  opacity: 1;
 }
 
 button {

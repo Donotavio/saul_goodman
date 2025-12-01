@@ -17,6 +17,7 @@ const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLIn
 const inactivityThresholdEl = document.getElementById('inactivityThreshold') as HTMLInputElement;
 const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
+const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
@@ -109,6 +110,7 @@ function renderForms(): void {
   criticalThresholdEl.value = (
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
+  criticalSoundEnabledEl.checked = Boolean(currentSettings.criticalSoundEnabled);
   renderWorkSchedule();
 
   renderDomainList('productiveDomains', productiveListEl);
@@ -169,6 +171,7 @@ async function handleWeightsSubmit(): Promise<void> {
     100,
     Math.max(0, parseInt(criticalThresholdEl.value, 10))
   );
+  currentSettings.criticalSoundEnabled = criticalSoundEnabledEl.checked;
   currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   await persistSettings('Pesos atualizados.');
 }

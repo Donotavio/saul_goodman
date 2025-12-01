@@ -80,7 +80,8 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   locale: 'pt-BR',
   openAiKey: '',
   criticalScoreThreshold: 90,
-  workSchedule: DEFAULT_WORK_SCHEDULE
+  workSchedule: DEFAULT_WORK_SCHEDULE,
+  criticalSoundEnabled: false
 };
 
 function createEmptyHourly(): HourlyBucket[] {
