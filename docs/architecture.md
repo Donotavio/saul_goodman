@@ -22,7 +22,7 @@
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
-   - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`).
+  - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`). O background só envia o alerta para abas cujo domínio atual esteja na lista de procrastinação; abas produtivas permanecem livres para o usuário recuperar o score.
 4. **Options (`options.ts`)**
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.
