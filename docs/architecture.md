@@ -20,7 +20,7 @@
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
-   - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (persistida via `shared/preferences.ts`).
+  - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`).
 4. **Options (`options.ts`)**
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.
@@ -91,7 +91,7 @@ Esses KPIs são renderizados em cartões e não exigem persistência adicional.
 - **Novas métricas**: adicionar campos em `DailyMetrics` e atualizar `score.ts` + popup.
 - **Novos modos**: `shared/types.ts` concentra tipos; edite ali e compartilhe nos módulos.
 - **Internacionalização**: o idioma atual é `pt-BR`, mas `ExtensionSettings.locale` permite futura expansão.
-- **Preferências compartilhadas**: `shared/preferences.ts` encapsula leitura/escrita no `chrome.storage.local` com fallback para testes; use-o para qualquer nova opção que precise ser lembrada entre sessões (como o alerta sonoro).
+- **Preferências compartilhadas**: ajustes persistem diretamente em `ExtensionSettings` via `shared/storage.ts` (ex.: alerta sonoro do modo terremoto). Não há um wrapper separado; sempre arque para `saveSettings/getSettings`.
 - **Horário de trabalho**: `ExtensionSettings.workSchedule` guarda os intervalos que definem o expediente. O background aplica peso dobrado aos minutos produtivos fora desses intervalos, e `calculateProcrastinationIndex` usa `metrics.overtimeProductiveMs` para refletir essa bonificação.
 
 ## Segurança & privacidade

@@ -34,7 +34,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["dist/content/activity-listener.js"],
+      "js": ["src/shared/critical-siren.js", "dist/content/activity-listener.js"],
       "run_at": "document_idle"
     }
   ]

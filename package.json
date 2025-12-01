@@ -6,7 +6,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json",
-    "test:critical": "npm run build && node dist/tests/preferences-check.js",
     "test": "npm run build && node --test dist/tests/**/*.test.js"
   },
   "devDependencies": {

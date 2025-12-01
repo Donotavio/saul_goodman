@@ -6,6 +6,13 @@ import {
   WorkInterval
 } from '../shared/types.js';
 import { formatDuration, formatTimeRange, isWithinWorkSchedule } from '../shared/utils/time.js';
+import {
+  calculateKpis,
+  CalculatedKpis,
+  formatPercentage,
+  formatRate,
+  formatProductivityRatio
+} from '../shared/metrics.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -503,43 +510,6 @@ async function exportPdf(): Promise<void> {
   doc.save(`relatorio-saul-goodman-${metrics.dateKey}.pdf`);
 }
 
-function calculateKpis(metrics: DailyMetrics): CalculatedKpis {
-  const totalTracked = metrics.productiveMs + metrics.procrastinationMs + metrics.inactiveMs;
-  const focusRate = totalTracked > 0 ? (metrics.productiveMs / totalTracked) * 100 : null;
-  const inactivePercent = totalTracked > 0 ? (metrics.inactiveMs / totalTracked) * 100 : null;
-  const trackedHours = totalTracked / 3600000;
-  const tabSwitchRate = trackedHours > 0 ? metrics.tabSwitches / trackedHours : null;
-  const productivityRatio =
-    metrics.productiveMs > 0
-      ? metrics.procrastinationMs === 0
-        ? Infinity
-        : metrics.productiveMs / metrics.procrastinationMs
-      : null;
-
-  const topFocus = getTopDomainByCategory(metrics.domains, 'productive');
-  const topProcrastination = getTopDomainByCategory(metrics.domains, 'procrastination');
-
-  return {
-    focusRate,
-    inactivePercent,
-    tabSwitchRate,
-    productivityRatio,
-    topFocus,
-    topProcrastination
-  };
-}
-
-function getTopDomainByCategory(
-  domains: Record<string, DomainStats>,
-  category: DomainStats['category']
-): DomainStats | null {
-  const filtered = Object.values(domains).filter((domain) => domain.category === category);
-  if (!filtered.length) {
-    return null;
-  }
-  return filtered.sort((a, b) => b.milliseconds - a.milliseconds)[0];
-}
-
 function findLongestSegment(
   timeline: TimelineEntry[],
   category: TimelineEntry['category']
@@ -549,13 +519,6 @@ function findLongestSegment(
     return null;
   }
   return filtered.sort((a, b) => b.durationMs - a.durationMs)[0];
-}
-
-function formatPercentage(value: number | null): string {
-  if (value === null || Number.isNaN(value)) {
-    return '--';
-  }
-  return `${value.toFixed(0)}%`;
 }
 
 function pickScoreMessage(score: number): string {
@@ -602,15 +565,6 @@ async function sendRuntimeMessage<T>(type: string, payload?: unknown): Promise<T
       }
     });
   });
-}
-
-interface CalculatedKpis {
-  focusRate: number | null;
-  inactivePercent: number | null;
-  tabSwitchRate: number | null;
-  productivityRatio: number | null;
-  topFocus: DomainStats | null;
-  topProcrastination: DomainStats | null;
 }
 
 async function generateNarrative(): Promise<void> {
