@@ -190,6 +190,8 @@ main {
 .ranking-table td span {
   position: relative;
   z-index: 1;
+  display: block;
+  overflow-wrap: anywhere;
 }
 
 .ranking-table th {

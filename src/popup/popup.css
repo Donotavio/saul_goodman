@@ -347,10 +347,13 @@ p {
   justify-content: space-between;
   border-bottom: 1px dashed #eee;
   padding-bottom: 4px;
+  gap: 8px;
 }
 
 .domains-list li span {
   font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .domains-list li em {
