@@ -65,16 +65,22 @@
       if (!this.context) {
         return;
       }
-      const oscillator = this.context.createOscillator();
-      const gain = this.context.createGain();
-      oscillator.type = 'square';
-      oscillator.frequency.value = 480;
-      gain.gain.setValueAtTime(0.22, this.context.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + 0.6);
-      oscillator.connect(gain);
-      gain.connect(this.context.destination);
-      oscillator.start();
-      oscillator.stop(this.context.currentTime + 0.6);
+      try {
+        const oscillator = this.context.createOscillator();
+        const gain = this.context.createGain();
+        oscillator.type = 'square';
+        oscillator.frequency.value = 480;
+        gain.gain.setValueAtTime(0.22, this.context.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + 0.6);
+        oscillator.connect(gain);
+        gain.connect(this.context.destination);
+        oscillator.start();
+        oscillator.stop(this.context.currentTime + 0.6);
+      } catch (error) {
+        console.warn('Saul sirene não pôde tocar o burst:', error);
+        this.enabled = false;
+        this.stop();
+      }
     }
   }
 
