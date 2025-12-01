@@ -56,6 +56,12 @@
             <small class="hint">Guardamos apenas localmente para gerar narrativas no relatório.</small>
           </label>
 
+          <label>
+            Limiar do modo terremoto (0–100)
+            <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
+            <small class="hint">Quando o índice atingir esse valor, Saul ativa o alerta crítico.</small>
+          </label>
+
           <button type="submit" class="primary">Salvar pesos</button>
         </form>
       </section>
@@ -82,16 +88,6 @@
         </div>
       </section>
 
-      <section class="panel">
-        <h2>Modo terremoto</h2>
-        <p class="hint">
-          Quando o índice alcança este valor, Saul entra em modo terremoto (tremor, overlay e alertas).
-        </p>
-        <label>
-          Limiar do alerta crítico (0–100)
-          <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
-        </label>
-      </section>
     </main>
 
     <div id="statusMessage" class="status-toast">Tudo certo.</div>
