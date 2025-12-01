@@ -1,3 +1,5 @@
+import type { WorkInterval } from '../types.js';
+
 export function getTodayKey(): string {
   const now = new Date();
   return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
@@ -56,4 +58,48 @@ export function formatTimeRange(start: number, end: number, locale = 'pt-BR'): s
     minute: '2-digit'
   });
   return `${formatter.format(startDate)} – ${formatter.format(endDate)}`;
+}
+
+export function isWithinWorkSchedule(date: Date, schedule?: WorkInterval[]): boolean {
+  if (!schedule || !schedule.length) {
+    return true;
+  }
+
+  const minutesOfDay = date.getHours() * 60 + date.getMinutes();
+
+  return schedule.some(({ start, end }) => {
+    const startMinutes = parseTimeToMinutes(start);
+    const endMinutes = parseTimeToMinutes(end);
+    if (startMinutes === null || endMinutes === null) {
+      return false;
+    }
+
+    if (startMinutes === endMinutes) {
+      return true;
+    }
+
+    if (startMinutes < endMinutes) {
+      return minutesOfDay >= startMinutes && minutesOfDay < endMinutes;
+    }
+
+    return minutesOfDay >= startMinutes || minutesOfDay < endMinutes;
+  });
+}
+
+function parseTimeToMinutes(value: string | undefined): number | null {
+  if (!value) {
+    return null;
+  }
+  const [hours, minutes] = value.split(':').map((chunk) => Number.parseInt(chunk, 10));
+  if (
+    Number.isNaN(hours) ||
+    Number.isNaN(minutes) ||
+    hours < 0 ||
+    hours > 23 ||
+    minutes < 0 ||
+    minutes > 59
+  ) {
+    return null;
+  }
+  return hours * 60 + minutes;
 }

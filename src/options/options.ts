@@ -1,5 +1,5 @@
-import { ExtensionSettings } from '../shared/types.js';
-import { getDefaultSettings, getSettings, saveSettings } from '../shared/storage.js';
+import { ExtensionSettings, WorkInterval } from '../shared/types.js';
+import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings } from '../shared/storage.js';
 import { normalizeDomain } from '../shared/utils/domain.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
@@ -20,6 +20,8 @@ const criticalThresholdEl = document.getElementById('criticalThreshold') as HTML
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
+const workScheduleListEl = document.getElementById('workScheduleList') as HTMLDivElement;
+const addWorkIntervalButton = document.getElementById('addWorkIntervalButton') as HTMLButtonElement;
 
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
@@ -72,7 +74,16 @@ function attachListeners(): void {
   backToPopupButton?.addEventListener('click', () => {
     returnToPopup();
   });
-
+  addWorkIntervalButton.addEventListener('click', () => {
+    if (!currentSettings) {
+      return;
+    }
+    const schedule = currentSettings.workSchedule ?? [];
+    const nextStart = schedule.length ? schedule[schedule.length - 1].end : '09:00';
+    const nextEnd = '10:00';
+    currentSettings.workSchedule = [...schedule, { start: nextStart, end: nextEnd }];
+    renderWorkSchedule();
+  });
 }
 
 async function hydrate(): Promise<void> {
@@ -97,7 +108,8 @@ function renderForms(): void {
   criticalThresholdEl.value = (
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
-  
+  renderWorkSchedule();
+
   renderDomainList('productiveDomains', productiveListEl);
   renderDomainList('procrastinationDomains', procrastinationListEl);
 }
@@ -156,6 +168,7 @@ async function handleWeightsSubmit(): Promise<void> {
     100,
     Math.max(0, parseInt(criticalThresholdEl.value, 10))
   );
+  currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   await persistSettings('Pesos atualizados.');
 }
 
@@ -232,6 +245,89 @@ function focusProcrastinationSection(): void {
   window.setTimeout(() => {
     procrastinationListEl.classList.remove('highlighted');
   }, 3000);
+}
+
+function renderWorkSchedule(): void {
+  if (!currentSettings) {
+    return;
+  }
+
+  if (!currentSettings.workSchedule || !currentSettings.workSchedule.length) {
+    currentSettings.workSchedule = getDefaultWorkSchedule();
+  }
+
+  const schedule = currentSettings.workSchedule;
+  workScheduleListEl.innerHTML = '';
+
+  schedule.forEach((interval, index) => {
+    const row = document.createElement('div');
+    row.className = 'schedule-row';
+
+    const startInput = document.createElement('input');
+    startInput.type = 'time';
+    startInput.value = interval.start ?? '08:00';
+    startInput.addEventListener('change', () => {
+      updateScheduleInterval(index, { start: startInput.value, end: endInput.value });
+    });
+
+    const endInput = document.createElement('input');
+    endInput.type = 'time';
+    endInput.value = interval.end ?? '10:00';
+    endInput.addEventListener('change', () => {
+      updateScheduleInterval(index, { start: startInput.value, end: endInput.value });
+    });
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.textContent = 'Remover';
+    removeButton.disabled = schedule.length <= 1;
+    removeButton.addEventListener('click', () => {
+      removeScheduleInterval(index);
+    });
+
+    row.appendChild(startInput);
+    row.appendChild(document.createTextNode('até'));
+    row.appendChild(endInput);
+    row.appendChild(removeButton);
+    workScheduleListEl.appendChild(row);
+  });
+}
+
+function updateScheduleInterval(index: number, interval: WorkInterval): void {
+  if (!currentSettings?.workSchedule) {
+    return;
+  }
+  currentSettings.workSchedule[index] = interval;
+}
+
+function removeScheduleInterval(index: number): void {
+  if (!currentSettings?.workSchedule) {
+    return;
+  }
+  if (currentSettings.workSchedule.length <= 1) {
+    return;
+  }
+  currentSettings.workSchedule.splice(index, 1);
+  renderWorkSchedule();
+}
+
+function sanitizeWorkSchedule(schedule?: WorkInterval[]): WorkInterval[] {
+  const normalized = (schedule ?? [])
+    .map((interval) => ({
+      start: interval.start ?? '',
+      end: interval.end ?? ''
+    }))
+    .filter((interval) => isValidTime(interval.start) && isValidTime(interval.end));
+
+  if (!normalized.length) {
+    return getDefaultWorkSchedule();
+  }
+
+  return normalized;
+}
+
+function isValidTime(value: string): boolean {
+  return /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
 }
 
 function returnToPopup(): void {

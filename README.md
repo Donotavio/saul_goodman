@@ -1,4 +1,13 @@
+<p align="center">
+  <img src="src/img/logotipo_saul_goodman.png" alt="Logotipo Saul Goodman" width="160" />
+</p>
+
 # Saul Goodman — Extensão anti-procrastinação
+
+![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.5-ff6384?logo=chartdotjs&logoColor=white)
+![License](https://img.shields.io/badge/License-Private-important)
 
 Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodman para monitorar quanto tempo você passa em sites produtivos versus procrastinatórios. Os scripts em TypeScript acompanham domínios, inatividade, trocas frenéticas de abas e calculam um Índice de Procrastinação (0–100) exibido no badge e no popup com gráficos e mensagens sarcásticas.
 
@@ -6,7 +15,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Service Worker** monitora domínio ativo, soma tempo produtivo x procrastinação, detecta inatividade e conta troca de abas.
 - **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
-- **Options page** permite ajustar pesos do cálculo, threshold de inatividade e listas de domínios produtivos ou vilões.
+- **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do “modo terremoto” e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
 - **Tooltips educativos**: cada métrica possui um ícone de informação que explica como o número foi calculado.
@@ -74,8 +83,8 @@ saul_goodman/
 - **Vendor:** se atualizar o Chart.js local, substitua `src/vendor/chart.umd.js` (e mantenha o manifesto sem CSP extra).
 
 ## Métricas & índice
-- `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado e trocas de abas.
-- `score.ts` converte esses números em um índice ponderado (pesos configuráveis nas opções).
+- `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas e minutos produtivos fora do expediente configurado.
+- `score.ts` converte esses números em um índice ponderado (pesos configuráveis nas opções). Cada minuto produtivo fora dos horários cadastrados entra com peso dobrado no cálculo.
 - Reset automático diariamente via alarme de meia-noite; botão "Limpar dados" apaga o dia corrente.
 
 ## Privacidade
@@ -87,5 +96,50 @@ Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai d
 - [`docs/indicators.md`](docs/indicators.md): descrição formal do índice de procrastinação, métricas base, buckets horários e KPIs usados no popup, relatório, CSV e PDFs.
 - Exportações estão disponíveis no popup em “Defenda seu foco” (CSV/PDF rápido) e na página `src/report/report.html`, acessível pelo botão “Abrir relatório”. Lá existe outro PDF completo com storytelling do dia.
 - **Assets**: logotipo oficial em PNG/ICO dentro de `src/img/`, já referenciado pelo manifest/action.
+
+```mermaid
+flowchart TD
+
+    %% UI
+    subgraph UI [Camada UI]
+        P1[Popup - HTML TS Chartjs]
+        P2[Options Page - HTML TS]
+    end
+
+    %% Content Script
+    CS[Content Script activity-listener captura atividade envia pings]
+
+    %% Service Worker
+    subgraph SW [Service Worker Background]
+        SW1[Eventos Chrome onMessage onTabActivated onTabUpdated onAlarm]
+        SW2[Tracking Engine rastreamento de dominio e tempo]
+        SW3[Aggregation Engine agregacao diaria + overtime]
+        SW4[Score Engine indice 0 a 100 com bonus fora do expediente]
+    end
+
+    %% Shared Layer
+    subgraph SH [Shared Layer]
+        SH1[types.ts modelos compartilhados]
+        SH2[storage.ts acesso ao chrome.storage.local]
+        SH3[utils funcoes auxiliares tempo e cronogramas]
+    end
+
+    %% Storage
+    DB[(chrome.storage.local mini banco KV)]
+
+    %% Fluxos
+    CS -->|activity ping| SW1
+    SW1 --> SW2
+    SW2 --> SW3
+    SW3 -->|save daily metrics| SH2
+    SH2 --> DB
+
+    P1 -->|get metrics/settings| SH2
+    P1 -->|score e gráficos| SW4
+
+    P2 -->|save settings| SH2
+
+    SW4 -->|badge update| UI
+```
 
 Contribuições futuras podem seguir o estilo modular existente e manter o humor ágil de Saul — sempre deixando claro o que é rastreado e mantendo todo o processamento local.

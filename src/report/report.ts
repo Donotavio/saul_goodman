@@ -659,7 +659,7 @@ interface OpenAiResponse {
 
 interface MetricsResponse {
   metrics: DailyMetrics;
-  settings?: { locale?: string; openAiKey?: string };
+  settings?: { locale?: string; openAiKey?: string; criticalScoreThreshold?: number };
 }
 
 function formatAiNarrative(text: string): string {

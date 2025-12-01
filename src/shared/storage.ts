@@ -1,10 +1,15 @@
-import { DailyMetrics, ExtensionSettings, HourlyBucket, TimelineEntry } from './types.js';
+import { DailyMetrics, ExtensionSettings, HourlyBucket, TimelineEntry, WorkInterval } from './types.js';
 import { getTodayKey } from './utils/time.js';
 
 export enum StorageKeys {
   METRICS = 'sg:metrics',
   SETTINGS = 'sg:settings'
 }
+
+const DEFAULT_WORK_SCHEDULE: WorkInterval[] = [
+  { start: '08:00', end: '12:00' },
+  { start: '14:00', end: '18:00' }
+];
 
 const DEFAULT_SETTINGS: ExtensionSettings = {
   productiveDomains: [
@@ -74,7 +79,8 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   inactivityThresholdMs: 60000,
   locale: 'pt-BR',
   openAiKey: '',
-  criticalScoreThreshold: 90
+  criticalScoreThreshold: 90,
+  workSchedule: DEFAULT_WORK_SCHEDULE
 };
 
 function createEmptyHourly(): HourlyBucket[] {
@@ -102,7 +108,8 @@ export function createDefaultMetrics(): DailyMetrics {
     currentIndex: 0,
     lastUpdated: Date.now(),
     hourly: createEmptyHourly(),
-    timeline: createEmptyTimeline()
+    timeline: createEmptyTimeline(),
+    overtimeProductiveMs: 0
   };
 }
 
@@ -110,10 +117,24 @@ export function getDefaultSettings(): ExtensionSettings {
   return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
 }
 
+export function getDefaultWorkSchedule(): WorkInterval[] {
+  return JSON.parse(JSON.stringify(DEFAULT_WORK_SCHEDULE));
+}
+
 export async function getSettings(): Promise<ExtensionSettings> {
   const stored = (await chrome.storage.local.get(StorageKeys.SETTINGS))[StorageKeys.SETTINGS];
   if (stored) {
-    return stored as ExtensionSettings;
+    const defaults = getDefaultSettings();
+
+    return {
+      ...defaults,
+      ...stored,
+      weights: stored.weights ?? defaults.weights,
+      workSchedule:
+        Array.isArray(stored.workSchedule) && stored.workSchedule.length
+          ? stored.workSchedule
+          : defaults.workSchedule
+    };
   }
 
   const defaults = getDefaultSettings();

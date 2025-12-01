@@ -7,7 +7,9 @@ export function calculateProcrastinationIndex(
   metrics: DailyMetrics,
   settings: ExtensionSettings
 ): number {
-  const totalTracked = metrics.productiveMs + metrics.procrastinationMs;
+  const overtimeBonus = metrics.overtimeProductiveMs ?? 0;
+  const effectiveProductive = metrics.productiveMs + overtimeBonus;
+  const totalTracked = effectiveProductive + metrics.procrastinationMs;
   const procrastinationRatio = totalTracked === 0 ? 0 : metrics.procrastinationMs / totalTracked;
   const tabSwitchRatio = Math.min(metrics.tabSwitches / MAX_TAB_SWITCHES, 1);
   const inactivityRatio = Math.min(metrics.inactiveMs / MAX_INACTIVE_MS, 1);

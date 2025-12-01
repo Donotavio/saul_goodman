@@ -33,12 +33,18 @@ export interface DailyMetrics {
   lastUpdated: number;
   hourly: HourlyBucket[];
   timeline: TimelineEntry[];
+  overtimeProductiveMs?: number;
 }
 
 export interface WeightConfig {
   procrastinationWeight: number;
   tabSwitchWeight: number;
   inactivityWeight: number;
+}
+
+export interface WorkInterval {
+  start: string;
+  end: string;
 }
 
 export interface ExtensionSettings {
@@ -49,6 +55,7 @@ export interface ExtensionSettings {
   locale: 'pt-BR';
   openAiKey?: string;
   criticalScoreThreshold?: number;
+  workSchedule?: WorkInterval[];
 }
 
 export interface ActivityPingPayload {
@@ -89,4 +96,5 @@ export interface OptionsFormState {
   inactivityThresholdMs: number;
   openAiKey?: string;
   criticalScoreThreshold?: number;
+  workSchedule?: WorkInterval[];
 }

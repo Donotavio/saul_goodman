@@ -25,6 +25,7 @@
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.
    - Responde ao hash `#vilains` rolando até a lista de domínios procrastinatórios para fluxos vindos do alerta crítico.
+   - Gerencia os blocos de horários de trabalho (`workSchedule`). Usuário pode adicionar/remover intervalos e o background usa esses dados para detectar expediente/oferta de horas extras.
 
 ## Estrutura dos dados
 ```ts
@@ -91,6 +92,7 @@ Esses KPIs são renderizados em cartões e não exigem persistência adicional.
 - **Novos modos**: `shared/types.ts` concentra tipos; edite ali e compartilhe nos módulos.
 - **Internacionalização**: o idioma atual é `pt-BR`, mas `ExtensionSettings.locale` permite futura expansão.
 - **Preferências compartilhadas**: `shared/preferences.ts` encapsula leitura/escrita no `chrome.storage.local` com fallback para testes; use-o para qualquer nova opção que precise ser lembrada entre sessões (como o alerta sonoro).
+- **Horário de trabalho**: `ExtensionSettings.workSchedule` guarda os intervalos que definem o expediente. O background aplica peso dobrado aos minutos produtivos fora desses intervalos, e `calculateProcrastinationIndex` usa `metrics.overtimeProductiveMs` para refletir essa bonificação.
 
 ## Segurança & privacidade
 - Não há chamadas de rede; permissões mínimas: `storage`, `tabs`, `alarms`, `activeTab` e host `<all_urls>` apenas para saber URL.

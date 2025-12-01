@@ -13,11 +13,12 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `hourly` | 24 buckets com tempos por hora (`productiveMs`, `procrastinationMs`, `inactiveMs`, `neutralMs`). | Gerado via `splitDurationByHour` a cada slice. |
 | `timeline` | Lista `{startTime, endTime, durationMs, domain, category}` (até 2.000 entradas). | Populada em `recordTimelineSegment` para contar a história do dia. |
 | `currentIndex` | Índice de procrastinação mostrado no badge/popup. | `calculateProcrastinationIndex`. |
+| `overtimeProductiveMs` | Minutos produtivos acumulados fora dos horários cadastrados na options page. | Incrementado em `accumulateSlice` quando `classifyDomain` retorna `productive` e o timestamp está fora do expediente configurado (padrão: 08h–12h e 14h–18h). |
 
 ### Índice de procrastinação
 O score final (`currentIndex`) combina três componentes normalizados entre 0 e 1:
 
-1. **Procrastinação**: `metrics.procrastinationMs / (productiveMs + procrastinationMs)` (0 quando não há tempo improdutivo).
+1. **Procrastinação**: `metrics.procrastinationMs / (productiveMs + overtimeBonus + procrastinationMs)` (0 quando não há tempo improdutivo). `overtimeBonus = metrics.overtimeProductiveMs` garante que minutos produtivos fora do expediente entrem com peso dobrado e influenciem positivamente o índice.
 2. **Trocas de abas**: `min(tabSwitches / 50, 1)` — considera até 50 trocas/dia como limite.
 3. **Inatividade**: `min(inactiveMs / (3h em ms), 1)` — penaliza até 3 horas de ociosidade.
 
@@ -57,3 +58,4 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 - Novos KPIs devem ser adicionados a este documento com fórmula clara e campo de origem.
 - Se o cálculo exigir novos campos em `DailyMetrics`, descreva os campos na tabela inicial.
 - Quando alterar pesos ou thresholds (options page), lembre-se de atualizar os exemplos do CSV se necessário.
+- Os horários de trabalho podem ser editados em `options.html`. Pelo menos um intervalo precisa existir; intervalos podem ser removidos ou adicionados conforme necessário. O default é 08h–12h e 14h–18h.

@@ -18,7 +18,7 @@ import {
   RuntimeMessageType
 } from '../shared/types.js';
 import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
-import { getTodayKey, splitDurationByHour } from '../shared/utils/time.js';
+import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -268,8 +268,13 @@ async function accumulateSlice(): Promise<void> {
   stats.category = category;
   metrics.domains[trackingState.currentDomain] = stats;
 
+  const isOvertime =
+    category === 'productive' &&
+    !isWithinWorkSchedule(new Date(sliceStart), settings.workSchedule ?? []);
+
   if (category === 'productive') {
     metrics.productiveMs += elapsed;
+    metrics.overtimeProductiveMs = (metrics.overtimeProductiveMs ?? 0) + (isOvertime ? elapsed : 0);
   } else if (category === 'procrastination') {
     metrics.procrastinationMs += elapsed;
   }
@@ -339,6 +344,10 @@ async function ensureDailyCache(): Promise<void> {
 
   if (!metricsCache.timeline) {
     metricsCache.timeline = createDefaultMetrics().timeline;
+  }
+
+  if (typeof metricsCache.overtimeProductiveMs !== 'number') {
+    metricsCache.overtimeProductiveMs = 0;
   }
 }
 

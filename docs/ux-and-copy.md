@@ -28,6 +28,7 @@
 - "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
 - Campo "Chave OpenAI" opcional: explique que o valor fica salvo localmente e habilita o storytelling na página de relatório.
 - Hash `#vilains`: quando aberto a partir do modo crítico/relatório, rolar suavemente até o bloco de domínios procrastinatórios e destacá-lo (animação pulsante) por alguns segundos para guiar a ação. O formulário inclui campo para ajustar o limiar do modo terremoto (0–100).
+- Seção “Horários de trabalho”: permitir adicionar/remover intervalos (`input type="time"`) que representam o expediente oficial. Copy reforça que minutos produtivos fora desses blocos contam em dobro. Manter ao menos um intervalo cadastrado.
 
 ## Relatório detalhado (`src/report/report.html`)
 - Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
