@@ -59,6 +59,7 @@ let criticalCountdownValue = 45;
 let criticalOverlayDismissed = false;
 let criticalSoundEnabledSetting = false;
 let lastCriticalState = false;
+let lastCriticalScoreNotified = -Infinity;
 const sirenPlayer = new CriticalSirenPlayer();
 
 const messageTemplates: Array<{ max: number; text: string }> = [
@@ -170,7 +171,11 @@ function renderScore(score: number): void {
   scoreMessageEl.textContent = pickScoreMessage(score);
   scoreValueEl.classList.toggle('alert', score >= 70);
   const threshold = latestData?.settings?.criticalScoreThreshold ?? 90;
+  if (score >= threshold && score > lastCriticalScoreNotified) {
+    criticalOverlayDismissed = false;
+  }
   toggleCriticalMode(score >= threshold);
+  lastCriticalScoreNotified = score >= threshold ? score : -Infinity;
 }
 
 function pickScoreMessage(score: number): string {

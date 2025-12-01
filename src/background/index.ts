@@ -48,6 +48,7 @@ let metricsCache: DailyMetrics | null = null;
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
+let lastCriticalScore = -Infinity;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -464,11 +465,21 @@ async function ensureCriticalBroadcast(score: number, settings: ExtensionSetting
   const nextState = score >= threshold;
   const soundChanged = soundPref !== lastCriticalSoundPref;
   const stateChanged = nextState !== globalCriticalState;
-  lastCriticalSoundPref = soundPref;
-  if (!stateChanged && !(nextState && soundChanged)) {
-    return;
+  const scoreBump = nextState && score > lastCriticalScore;
+
+  let shouldNotify = false;
+  if (stateChanged) {
+    shouldNotify = true;
+  } else if (nextState && (scoreBump || soundChanged)) {
+    shouldNotify = true;
   }
-  await broadcastCriticalState(nextState, settings);
+
+  if (shouldNotify) {
+    await broadcastCriticalState(nextState, settings);
+  }
+
+  lastCriticalSoundPref = soundPref;
+  lastCriticalScore = nextState ? score : -Infinity;
 }
 
 async function broadcastCriticalState(active: boolean, settings: ExtensionSettings): Promise<void> {
