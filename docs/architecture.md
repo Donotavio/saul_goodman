@@ -1,11 +1,13 @@
 # Arquitetura da extensão Saul Goodman
 
 ## Visão geral
+
 - **Manifest V3**: service worker em `dist/background/index.js`, popup/options HTML em `src/popup` e `src/options`, content script em `dist/content/activity-listener.js`.
 - **ES Modules**: TypeScript compila para módulos ES nativos, o que mantém o worker organizado em funções.
 - **Sem backend**: todo armazenamento fica em `chrome.storage.local` e o badge reflete o estado atual.
 
 ## Fluxo de dados
+
 1. **Content script (`activity-listener.ts`)**
    - Captura movimentos de mouse, teclado, scroll e envia `activity-ping` com o timestamp.
    - Ping periódico (15s) garante que o background saiba que ainda existe atividade mesmo sem eventos.
@@ -20,7 +22,7 @@
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
-  - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`).
+   - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`).
 4. **Options (`options.ts`)**
    - Carrega settings, permite alterar pesos, threshold e listas de domínio.
    - Atualiza storage e notifica o background via `settings-updated`.
@@ -28,6 +30,7 @@
    - Gerencia os blocos de horários de trabalho (`workSchedule`). Usuário pode adicionar/remover intervalos e o background usa esses dados para detectar expediente/oferta de horas extras.
 
 ## Estrutura dos dados
+
 ```ts
 interface DailyMetrics {
   dateKey: string; // YYYY-M-D
@@ -54,6 +57,7 @@ interface ExtensionSettings {
 ```
 
 ## Cálculo do índice
+
 - `score.ts` normaliza cada métrica:
   - `procrastinationRatio` = `procrastinationMs / (productiveMs + procrastinationMs)`
   - `tabSwitchRatio` limitado a 50 trocas/dia.
@@ -63,12 +67,15 @@ interface ExtensionSettings {
 - Detalhes completos estão em [`docs/indicators.md`](./indicators.md).
 
 ## Buckets horários e timeline
+
 - Durante `accumulateSlice`, cada fatia é distribuída por hora (`splitDurationByHour`). O objeto `DailyMetrics.hourly` mantém 24 buckets com os tempos produtivo/procrastinação/inatividade/neutral.
 - Também é armazenado um `timeline` onde cada entrada descreve início, fim, domínio e categoria (incluindo períodos inativos). O array é limitado a 2.000 segmentos por dia.
 - Esses dados alimentam o relatório detalhado (`src/report/report.html`) com gráficos stacked e storytelling minuto a minuto.
 
 ## KPIs derivados no popup
+
 Sem gravar dados extras, `popup.ts` calcula indicadores adicionais com base nas métricas já recebidas:
+
 - **Foco ativo**: `%` de tempo produtivo sobre o total rastreado.
 - **Trocas por hora**: `tabSwitches` dividido pelo número de horas monitoradas no dia.
 - **Tempo ocioso %**: percentual de `inactiveMs` sobre o dia.
@@ -78,16 +85,19 @@ Sem gravar dados extras, `popup.ts` calcula indicadores adicionais com base nas 
 Todos os cartões exibem um tooltip descrevendo a métrica.
 
 ## Exportações
+
 - **CSV**: gerado diretamente no popup convertendo métricas e KPIs em linhas (`downloadTextFile`). Inclui resumo diário, indicadores extras e top 10 domínios.
 - **PDF**: usa `jspdf` vendorizado (`src/vendor/jspdf.umd.min.js`). O popup monta um relatório com textos, KPIs e a imagem do gráfico (via `Chart.toBase64Image`). O arquivo é salvo localmente com `jsPDF#save`.
 Esses KPIs são renderizados em cartões e não exigem persistência adicional.
 
 ## Build & distribuição
+
 - `npm run build` → `tsc -p tsconfig.json` gera `dist/**`. Não há bundler; HTML referencia `../../dist/...` diretamente.
 - Chart.js fica vendorizado em `src/vendor/chart.umd.js` (carregado pelo popup antes do módulo TS).
 - Para empacotar: após compilar, compacte a pasta raiz (sem `node_modules` se não quiser) e importe em `chrome://extensions`.
 
 ## Pontos de extensão
+
 - **Novas métricas**: adicionar campos em `DailyMetrics` e atualizar `score.ts` + popup.
 - **Novos modos**: `shared/types.ts` concentra tipos; edite ali e compartilhe nos módulos.
 - **Internacionalização**: o idioma atual é `pt-BR`, mas `ExtensionSettings.locale` permite futura expansão.
@@ -95,6 +105,7 @@ Esses KPIs são renderizados em cartões e não exigem persistência adicional.
 - **Horário de trabalho**: `ExtensionSettings.workSchedule` guarda os intervalos que definem o expediente. O background aplica peso dobrado aos minutos produtivos fora desses intervalos, e `calculateProcrastinationIndex` usa `metrics.overtimeProductiveMs` para refletir essa bonificação.
 
 ## Segurança & privacidade
+
 - Não há chamadas de rede; permissões mínimas: `storage`, `tabs`, `alarms`, `activeTab` e host `<all_urls>` apenas para saber URL.
 - Manifest não inclui CSP customizado além do padrão; todos scripts são locais.
 - Documentação e UI lembram que os dados ficam no navegador do usuário.

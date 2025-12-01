@@ -1,11 +1,13 @@
 # Guia de UX, tom de voz e microcopy
 
 ## Identidade
+
 - Inspiração em Saul Goodman como advogado-vendedor carismático.
 - Humor sarcástico, persuasivo, sem referências protegidas (nomes de episódios, imagens da série etc.).
 - Linguagem 100% em **pt-BR**, informal porém clara sobre o que está sendo rastreado.
 
 ## Popup
+
 - **Badge**: `ÍNDICE` + número atual (cálculo descrito em `docs/indicators.md`). Quando ≥ 70, valor fica em vermelho.
 - **Mensagem**: textos curtos que mudam conforme faixas de score (0–25, 26–50, 51–75, 76–100). Destaque o usuário como cliente e incentive/alerta com humor.
 - **Resumo**: cards "Produtivo / Procrastinação / Inatividade" exibem duração formatada com `formatDuration`.
@@ -22,6 +24,7 @@
 - **Disclaimer**: “Todos os dados ficam no navegador. Saul honra o sigilo profissional.”
 
 ## Options page
+
 - Texto guia lembra que tudo é local e incentiva o usuário a registrar sites produtivos/vilões.
 - Formulário de pesos exige soma ≈ 1.0; exibir feedback em `statusMessage` por 4s.
 - Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
@@ -31,6 +34,7 @@
 - Seção “Horários de trabalho”: permitir adicionar/remover intervalos (`input type="time"`) que representam o expediente oficial. Copy reforça que minutos produtivos fora desses blocos contam em dobro. Manter ao menos um intervalo cadastrado.
 
 ## Relatório detalhado (`src/report/report.html`)
+
 - Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
 - Gráfico principal: barras empilhadas por hora (produtivo, procrastinação, inatividade) e doughnut com composição do dia.
 - Lista “Campeões e vilões” resume top domínios e maior período ocioso.
@@ -41,6 +45,7 @@
 - Banner crítico (score ≥ 90) reaproveita as mensagens do modo terremoto, exibe contador e CTA “Revisar vilões” que abre `options.html#vilains`.
 
 ## Conteúdo e mensagens
+
 - **Sucesso**: “Cliente de ouro! Continue assim…”
 - **Alerta moderado**: “Vejo sinais de fuga de responsabilidade…”
 - **Alerta severo**: “Você está brincando com fogo…”
@@ -48,12 +53,14 @@
 - **Confirm dialogs**: diretos e sem exageros ("Tem certeza? Isso zera apenas o dia atual.").
 
 ## Acessibilidade & responsividade
+
 - Layout pensado para 360×600 px.
 - Contraste forte (preto/amarelo/branco) e textos ≥ 0.9rem.
 - Botões com `cursor: pointer` e foco visual (border).
 - Canvas dentro de `.chart-wrapper` com altura fixa para evitar scroll.
 
 ## Boas práticas futuras
+
 - Se adicionar novas mensagens, mantenha o tom vendedor-irônico.
 - Caso suporte inglês, mantenha ambos os idiomas no storage (ex.: `locale`), mas não misture no mesmo texto.
 - Sempre informe o usuário ao alterar dados sensíveis (limpar métricas, resetar listas).

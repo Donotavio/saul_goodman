@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="src/img/logotipo_saul_goodman.png" alt="Logotipo Saul Goodman" width="160" />
-</p>
-
 # Saul Goodman — Extensão anti-procrastinação
+
+![Logotipo Saul Goodman](src/img/logotipo_saul_goodman.png "Logotipo Saul Goodman")
 
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
@@ -12,6 +10,7 @@
 Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodman para monitorar quanto tempo você passa em sites produtivos versus procrastinatórios. Os scripts em TypeScript acompanham domínios, inatividade, trocas frenéticas de abas e calculam um Índice de Procrastinação (0–100) exibido no badge e no popup com gráficos e mensagens sarcásticas.
 
 ## Funcionalidades principais
+
 - **Service Worker** monitora domínio ativo, soma tempo produtivo x procrastinação, detecta inatividade e conta troca de abas.
 - **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
@@ -25,13 +24,14 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; o alerta sonoro é opcional e fica salvo nas preferências.
 
 ## Stack e arquitetura
+
 - **Manifest V3** com service worker modular e ES Modules.
 - **TypeScript** compilado via `tsc` para `dist/` (sem bundler adicional).
 - **Chart.js** vendorizado (UMD local em `src/vendor/chart.umd.js`).
 - **chrome.storage.local** para métricas diárias e configurações.
 - **Sem frameworks**: todo HTML/CSS escrito manualmente.
 
-```
+```text
 saul_goodman/
 ├─ manifest.json
 ├─ src/img/
@@ -61,36 +61,44 @@ saul_goodman/
 ```
 
 ## Pré-requisitos
+
 - Node.js 18+
 - Chrome/Chromium baseado em Manifest V3
 
 ## Como rodar
+
 1. Instale dependências e gere os JS:
+
    ```bash
    npm install
    npm run build   # ou npm run watch para rebuild automático
    ```
+
 2. (Opcional) Abra as Configurações do Escritório e informe sua chave `sk-...` da OpenAI para habilitar a narrativa.
 3. Carregue a extensão:
    - Abra `chrome://extensions`
    - Ative "Modo do desenvolvedor"
    - Clique em **Carregar sem compactação** e selecione a pasta `saul_goodman`
-3. Fixe o ícone na barra e abra o popup para validar o gráfico e o badge.
+4. Fixe o ícone na barra e abra o popup para validar o gráfico e o badge.
 
 ## Fluxo de desenvolvimento
+
 - **Editar TypeScript:** os arquivos em `src/**.ts` compilam para `dist/`. Sempre rode `npm run build` após ajustar lógica.
 - **Popup/Options HTML & CSS:** vivem em `src/popup` e `src/options`. Não precisam de build além do TypeScript.
 - **Vendor:** se atualizar o Chart.js local, substitua `src/vendor/chart.umd.js` (e mantenha o manifesto sem CSP extra).
 
 ## Métricas & índice
+
 - `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas e minutos produtivos fora do expediente configurado.
 - `score.ts` converte esses números em um índice ponderado (pesos configuráveis nas opções). Cada minuto produtivo fora dos horários cadastrados entra com peso dobrado no cálculo.
 - Reset automático diariamente via alarme de meia-noite; botão "Limpar dados" apaga o dia corrente.
 
 ## Privacidade
+
 Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai do `chrome.storage.local` e não existe comunicação com servidores externos por padrão. Se você informar uma chave da OpenAI nas opções, apenas o relatório detalhado enviará o resumo diário (índice, métricas agregadas, top domínios e trechos da timeline) para a API da OpenAI com a finalidade de gerar a narrativa em tom Saul Goodman. Sem chave, nenhuma chamada externa acontece. Preferências locais (como o alerta sonoro do modo terremoto) também ficam somente no `chrome.storage.local`. O README e os docs explicam claramente o que é medido e como alterar listas/pesos.
 
 ## Documentação complementar
+
 - [`docs/architecture.md`](docs/architecture.md): detalha o fluxo do background, content script, storage e cálculo do índice.
 - [`docs/ux-and-copy.md`](docs/ux-and-copy.md): guia de experiência, tom de voz e expectativas para popup/options/report.
 - [`docs/indicators.md`](docs/indicators.md): descrição formal do índice de procrastinação, métricas base, buckets horários e KPIs usados no popup, relatório, CSV e PDFs.
