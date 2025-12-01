@@ -28,6 +28,7 @@ const INACTIVE_LABEL = 'Sem atividade detectada';
 
 interface TrackingState {
   currentDomain: string | null;
+  currentTabId: number | null;
   lastTimestamp: number;
   lastActivity: number;
   isIdle: boolean;
@@ -35,6 +36,7 @@ interface TrackingState {
 
 const trackingState: TrackingState = {
   currentDomain: null,
+  currentTabId: null,
   lastTimestamp: Date.now(),
   lastActivity: Date.now(),
   isIdle: false
@@ -173,6 +175,7 @@ async function hydrateActiveTab(): Promise<void> {
       await updateActiveTabContext(activeTab.id, true, activeTab);
     } else {
       trackingState.currentDomain = null;
+      trackingState.currentTabId = null;
     }
   } catch (error) {
     console.warn('Unable to hydrate active tab', error);
@@ -187,23 +190,27 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
 
   const domain = tab.url ? extractDomain(tab.url) : null;
   const previousDomain = trackingState.currentDomain;
+  const previousTabId = trackingState.currentTabId;
+  const domainChanged = previousDomain !== domain;
+  const tabChanged = previousTabId !== tabId;
 
   if (!domain) {
     if (previousDomain) {
       await finalizeCurrentDomainSlice();
     }
     trackingState.currentDomain = null;
+    trackingState.currentTabId = null;
     trackingState.lastTimestamp = Date.now();
     return;
   }
 
-  if (previousDomain === domain && !trackingState.isIdle) {
+  if (!domainChanged && !tabChanged && !trackingState.isIdle) {
     return;
   }
 
   trackingState.lastActivity = Date.now();
 
-  if (previousDomain && previousDomain !== domain) {
+  if (previousDomain && (domainChanged || tabChanged)) {
     await finalizeCurrentDomainSlice();
     if (countSwitch) {
       await incrementTabSwitches();
@@ -211,6 +218,7 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
   }
 
   trackingState.currentDomain = domain;
+  trackingState.currentTabId = tabId;
   trackingState.isIdle = false;
   trackingState.lastTimestamp = Date.now();
 }
@@ -294,6 +302,7 @@ async function accumulateSlice(): Promise<void> {
 async function finalizeCurrentDomainSlice(): Promise<void> {
   if (!trackingState.currentDomain) {
     trackingState.lastTimestamp = Date.now();
+    trackingState.currentTabId = null;
     return;
   }
 
@@ -384,6 +393,7 @@ async function updateBadgeText(score: number): Promise<void> {
 async function clearTodayData(): Promise<void> {
   metricsCache = await clearDailyMetrics();
   trackingState.currentDomain = null;
+  trackingState.currentTabId = null;
   trackingState.isIdle = false;
   trackingState.lastActivity = Date.now();
   trackingState.lastTimestamp = Date.now();

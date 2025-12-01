@@ -397,7 +397,7 @@ function renderTimeline(entries: TimelineEntry[]): void {
   latestTimelineNarrative = [];
 
   const filteredEntries = entries.filter((entry) =>
-    isHourInFilter(new Date(entry.startTime).getHours(), timelineFilter.start, timelineFilter.end)
+    isEntryWithinFilter(entry, timelineFilter.start, timelineFilter.end)
   );
 
   const consolidated = consolidateTimelineEntries(filteredEntries);
@@ -416,7 +416,8 @@ function renderTimeline(entries: TimelineEntry[]): void {
 
     const hourHeader = document.createElement('div');
     hourHeader.className = 'timeline-hour';
-    hourHeader.textContent = `${block.hour.toString().padStart(2, '0')}h`;
+    const hourLabel = `${block.hour.toString().padStart(2, '0')}h`;
+    hourHeader.textContent = hourLabel;
 
     const summary = document.createElement('span');
     summary.className = 'timeline-hour-summary';
@@ -434,9 +435,9 @@ function renderTimeline(entries: TimelineEntry[]): void {
       if (latestTimelineNarrative.length < 12) {
         const overtimeNote = isSegmentOvertime(segment) ? ' (overtime)' : '';
         latestTimelineNarrative.push(
-          `${hourHeader.textContent} ${segment.domain} ${formatDurationFriendly(
-            segment.durationMs
-          )} ${describeCategory(segment.category)}${overtimeNote}`
+          `${hourLabel} ${segment.domain} ${formatDurationFriendly(segment.durationMs)} ${describeCategory(
+            segment.category
+          )}${overtimeNote}`
         );
       }
     });
@@ -933,15 +934,31 @@ function formatDurationFriendly(ms: number): string {
   return formatDuration(ms);
 }
 
-function isHourInFilter(hour: number, start: number, end: number): boolean {
-  return hour >= start && hour <= end;
-}
-
 function clampHour(value: number): number {
   if (Number.isNaN(value)) {
     return 0;
   }
   return Math.min(23, Math.max(0, value));
+}
+
+function isEntryWithinFilter(entry: TimelineEntry, startHour: number, endHour: number): boolean {
+  if (startHour === 0 && endHour === 23) {
+    return true;
+  }
+
+  const startDate = new Date(entry.startTime);
+  const endDate = new Date(entry.endTime);
+  const entryStartMinutes = startDate.getHours() * 60 + startDate.getMinutes();
+  let entryEndMinutes = endDate.getHours() * 60 + endDate.getMinutes();
+
+  if (entryEndMinutes < entryStartMinutes) {
+    entryEndMinutes = entryStartMinutes;
+  }
+
+  const filterStartMinutes = startHour * 60;
+  const filterEndMinutes = (endHour + 1) * 60;
+
+  return entryStartMinutes < filterEndMinutes && entryEndMinutes > filterStartMinutes;
 }
 
 function toggleCriticalBanner(isCritical: boolean): void {

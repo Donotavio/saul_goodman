@@ -129,7 +129,10 @@ export async function getSettings(): Promise<ExtensionSettings> {
     return {
       ...defaults,
       ...stored,
-      weights: stored.weights ?? defaults.weights,
+      weights: {
+        ...defaults.weights,
+        ...(stored.weights ?? {})
+      },
       workSchedule:
         Array.isArray(stored.workSchedule) && stored.workSchedule.length
           ? stored.workSchedule

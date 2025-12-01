@@ -16,14 +16,32 @@ export function normalizeDomain(domain: string): string {
   return domain.trim().toLowerCase();
 }
 
-export function classifyDomain(domain: string, settings: ExtensionSettings): DomainCategory {
-  const normalized = normalizeDomain(domain);
+function domainMatches(host: string, candidate: string): boolean {
+  const normalizedCandidate = normalizeDomain(candidate);
+  if (!normalizedCandidate) {
+    return false;
+  }
 
-  if (settings.productiveDomains.some((d) => normalized.endsWith(normalizeDomain(d)))) {
+  if (host === normalizedCandidate) {
+    return true;
+  }
+
+  return host.endsWith(`.${normalizedCandidate}`);
+}
+
+export function classifyDomain(domain: string, settings: ExtensionSettings): DomainCategory {
+  const normalizedHost = normalizeDomain(domain);
+  if (!normalizedHost) {
+    return 'neutral';
+  }
+
+  if (settings.productiveDomains.some((candidate) => domainMatches(normalizedHost, candidate))) {
     return 'productive';
   }
 
-  if (settings.procrastinationDomains.some((d) => normalized.endsWith(normalizeDomain(d)))) {
+  if (
+    settings.procrastinationDomains.some((candidate) => domainMatches(normalizedHost, candidate))
+  ) {
     return 'procrastination';
   }
 
