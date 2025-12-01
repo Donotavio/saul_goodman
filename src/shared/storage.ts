@@ -92,7 +92,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   criticalSoundEnabled: false
 };
 
-function createEmptyHourly(): HourlyBucket[] {
+export function createEmptyHourly(): HourlyBucket[] {
   return Array.from({ length: 24 }).map((_, hour) => ({
     hour,
     productiveMs: 0,

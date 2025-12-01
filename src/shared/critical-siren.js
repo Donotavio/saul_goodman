@@ -4,6 +4,7 @@
       this.context = null;
       this.timeoutId = null;
       this.active = false;
+      this.enabled = true;
     }
 
     async playBursts(repeats = 3) {
@@ -11,12 +12,28 @@
         return;
       }
 
+      if (!this.enabled) {
+        return;
+      }
+
       if (!this.context) {
-        this.context = new AudioContext();
+        try {
+          this.context = new AudioContext();
+        } catch (error) {
+          console.warn('Saul sirene indisponível (AudioContext bloqueado):', error);
+          this.enabled = false;
+          return;
+        }
       }
 
       if (this.context.state === 'suspended') {
-        await this.context.resume();
+        try {
+          await this.context.resume();
+        } catch (error) {
+          console.warn('Saul sirene não pôde retomar o contexto de áudio:', error);
+          this.enabled = false;
+          return;
+        }
       }
 
       this.active = true;

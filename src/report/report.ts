@@ -536,6 +536,15 @@ async function exportPdf(): Promise<void> {
   doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 40);
   doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 46);
 
+  const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
+  if (metrics.currentIndex >= criticalThreshold) {
+    const logoPath = chrome.runtime.getURL('src/img/saul_incredulo.png');
+    const img = await loadImageBase64(logoPath);
+    if (img) {
+      doc.addImage(img, 'PNG', 205, 18, 24, 24);
+    }
+  }
+
   if (hourlyChart) {
     const img = hourlyChart.toBase64Image();
     doc.addImage(img, 'PNG', 14, 52, 180, 75);
@@ -1082,3 +1091,27 @@ function closeReportTab(): void {
   window.close();
 }
 const heroLogoEl = document.querySelector('.logo-frame img') as HTMLImageElement | null;
+async function loadImageBase64(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return null;
+    }
+    const blob = await response.blob();
+    return await blobToBase64(blob);
+  } catch (error) {
+    console.warn('Falha ao carregar imagem para PDF:', error);
+    return null;
+  }
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(typeof reader.result === 'string' ? reader.result : '');
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}

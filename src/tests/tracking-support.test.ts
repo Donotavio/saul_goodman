@@ -142,7 +142,7 @@ test('recordTabSwitchCounts increments breakdown and hourly buckets', () => {
   assert.equal(nullKey, 'productiveToProductive');
 });
 
-test('shouldTriggerCriticalForUrl ignores productive tabs', () => {
+test('shouldTriggerCriticalForUrl ignora produtivos e alerta casos desconhecidos', () => {
   assert.equal(
     shouldTriggerCriticalForUrl('https://docs.google.com/document/d/foo', defaultSettings),
     false
@@ -151,5 +151,5 @@ test('shouldTriggerCriticalForUrl ignores productive tabs', () => {
     shouldTriggerCriticalForUrl('https://www.youtube.com/watch?v=abc', defaultSettings),
     true
   );
-  assert.equal(shouldTriggerCriticalForUrl(undefined, defaultSettings), false);
+  assert.equal(shouldTriggerCriticalForUrl(undefined, defaultSettings), true);
 });

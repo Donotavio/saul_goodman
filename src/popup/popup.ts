@@ -88,6 +88,11 @@ const criticalMessages: Array<(threshold: number) => string> = [
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
   void hydrate();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      hideSaulToast();
+    }
+  });
 });
 
 function attachListeners(): void {
@@ -224,10 +229,11 @@ function showSaulToast(mood: 'positive' | 'negative', message: string): void {
 
   if (toastTimeout) {
     window.clearTimeout(toastTimeout);
+    toastTimeout = null;
   }
 
   if (mood === 'positive') {
-    void playToastCelebrationSound();
+    void playToastCelebrationSound().catch(() => {});
   }
 
   toastTimeout = window.setTimeout(() => {
@@ -236,37 +242,45 @@ function showSaulToast(mood: 'positive' | 'negative', message: string): void {
 }
 
 function hideSaulToast(): void {
+  if (toastTimeout) {
+    window.clearTimeout(toastTimeout);
+    toastTimeout = null;
+  }
   if (!saulToastEl) {
     return;
   }
   saulToastEl.classList.remove('visible');
   saulToastEl.classList.add('hidden');
-  toastTimeout = null;
 }
 
 async function playToastCelebrationSound(): Promise<void> {
   if (typeof AudioContext === 'undefined') {
     return;
   }
-  if (!toastAudioContext) {
-    toastAudioContext = new AudioContext();
-  }
-  if (toastAudioContext.state === 'suspended') {
-    await toastAudioContext.resume();
-  }
 
-  const oscillator = toastAudioContext.createOscillator();
-  const gain = toastAudioContext.createGain();
-  const now = toastAudioContext.currentTime;
-  oscillator.type = 'triangle';
-  oscillator.frequency.setValueAtTime(550, now);
-  oscillator.frequency.exponentialRampToValueAtTime(880, now + 0.3);
-  gain.gain.setValueAtTime(0.18, now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
-  oscillator.connect(gain);
-  gain.connect(toastAudioContext.destination);
-  oscillator.start(now);
-  oscillator.stop(now + 0.5);
+  try {
+    if (!toastAudioContext) {
+      toastAudioContext = new AudioContext();
+    }
+    if (toastAudioContext.state === 'suspended') {
+      await toastAudioContext.resume();
+    }
+
+    const oscillator = toastAudioContext.createOscillator();
+    const gain = toastAudioContext.createGain();
+    const now = toastAudioContext.currentTime;
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(550, now);
+    oscillator.frequency.exponentialRampToValueAtTime(880, now + 0.3);
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+    oscillator.connect(gain);
+    gain.connect(toastAudioContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now + 0.5);
+  } catch (error) {
+    console.warn('Toast audio indisponível:', error);
+  }
 }
 
 function renderTopDomains(domains: Record<string, DomainStats>): void {

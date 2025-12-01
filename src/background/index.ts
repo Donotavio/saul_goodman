@@ -4,6 +4,9 @@ import {
   clearDailyMetrics,
   createDefaultMetrics,
   createDefaultTabSwitchBreakdown,
+  createEmptyHourly,
+  createEmptyTabSwitchHourly,
+  createEmptyTimeline,
   getDailyMetrics,
   getSettings,
   saveDailyMetrics
@@ -330,6 +333,9 @@ async function incrementTabSwitches(
   if (!metrics.tabSwitchBreakdown) {
     metrics.tabSwitchBreakdown = createDefaultTabSwitchBreakdown();
   }
+  if (!metrics.tabSwitchHourly || metrics.tabSwitchHourly.length !== 24) {
+    metrics.tabSwitchHourly = createEmptyTabSwitchHourly();
+  }
 
   const fromCategory = classifyDomain(fromDomain, settings);
   const toCategory = classifyDomain(toDomain, settings);
@@ -379,11 +385,11 @@ async function ensureDailyCache(): Promise<void> {
   }
 
   if (!metricsCache.hourly || metricsCache.hourly.length !== 24) {
-    metricsCache.hourly = createDefaultMetrics().hourly;
+    metricsCache.hourly = createEmptyHourly();
   }
 
   if (!metricsCache.timeline) {
-    metricsCache.timeline = createDefaultMetrics().timeline;
+    metricsCache.timeline = createEmptyTimeline();
   }
 
   if (typeof metricsCache.overtimeProductiveMs !== 'number') {
@@ -395,7 +401,7 @@ async function ensureDailyCache(): Promise<void> {
   }
 
   if (!metricsCache.tabSwitchHourly || metricsCache.tabSwitchHourly.length !== 24) {
-    metricsCache.tabSwitchHourly = createDefaultMetrics().tabSwitchHourly;
+    metricsCache.tabSwitchHourly = createEmptyTabSwitchHourly();
   }
 }
 
