@@ -1,6 +1,6 @@
 # Saul Goodman — Extensão anti-procrastinação
 
-![Logotipo Saul Goodman](src/img/logotipo_saul_goodman.png "Logotipo Saul Goodman")
+![Logotipo Saul Goodman](src/img/logotipo_saul_goodman.ico "Logotipo Saul Goodman")
 
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
