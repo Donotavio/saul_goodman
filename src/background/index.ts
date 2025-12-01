@@ -484,42 +484,60 @@ async function ensureCriticalBroadcast(score: number, settings: ExtensionSetting
 
 async function broadcastCriticalState(active: boolean, settings: ExtensionSettings): Promise<void> {
   globalCriticalState = active;
-  const payload = {
-    type: CRITICAL_MESSAGE,
-    payload: {
-      active,
-      soundEnabled: Boolean(settings.criticalSoundEnabled)
-    }
-  };
-
   const tabs = await chrome.tabs.query({ active: true });
   await Promise.all(
     tabs
       .filter((tab): tab is chrome.tabs.Tab & { id: number } => typeof tab.id === 'number')
-      .map(
-        (tab) =>
-          new Promise<void>((resolve) => {
-            chrome.tabs.sendMessage(tab.id, payload, () => {
-              void chrome.runtime.lastError;
-              resolve();
-            });
-          })
-      )
+      .map((tab) => sendCriticalMessageToTab(tab, settings, active))
   );
 }
 
-function syncCriticalStateToTab(tabId: number): void {
+async function syncCriticalStateToTab(tabId: number): Promise<void> {
   if (!tabId) {
     return;
   }
+  try {
+    const tab = await chrome.tabs.get(tabId);
+    if (!tab || typeof tab.id !== 'number') {
+      return;
+    }
+    const settings = await getSettingsCache();
+    await sendCriticalMessageToTab(tab as chrome.tabs.Tab & { id: number }, settings, globalCriticalState);
+  } catch {
+    // ignore errors (tab might have closed)
+  }
+}
+
+function sendCriticalMessageToTab(
+  tab: chrome.tabs.Tab & { id: number },
+  settings: ExtensionSettings,
+  active: boolean
+): Promise<void> {
+  const shouldTrigger = active && shouldBroadcastToTab(tab, settings);
   const payload = {
     type: CRITICAL_MESSAGE,
     payload: {
-      active: globalCriticalState,
-      soundEnabled: lastCriticalSoundPref
+      active: shouldTrigger,
+      soundEnabled: shouldTrigger && Boolean(settings.criticalSoundEnabled)
     }
   };
-  chrome.tabs.sendMessage(tabId, payload, () => {
-    void chrome.runtime.lastError;
+
+  return new Promise((resolve) => {
+    chrome.tabs.sendMessage(tab.id, payload, () => {
+      void chrome.runtime.lastError;
+      resolve();
+    });
   });
+}
+
+function shouldBroadcastToTab(tab: chrome.tabs.Tab, settings: ExtensionSettings): boolean {
+  if (!tab.url) {
+    return false;
+  }
+  const domain = extractDomain(tab.url);
+  if (!domain) {
+    return false;
+  }
+  const category = classifyDomain(domain, settings);
+  return category === 'procrastination';
 }
