@@ -27,85 +27,94 @@
     </header>
 
     <main>
-      <section class="panel">
-        <h2>Limiares e Pesos</h2>
-        <form id="weightsForm">
-          <label>
-            Tempo improdutivo (peso)
-            <input type="number" id="procrastinationWeight" min="0" max="1" step="0.05" required />
-          </label>
+      <section class="panel-grid">
+        <div class="panel">
+          <h2>Limiares e Pesos</h2>
+          <form id="weightsForm">
+            <label>
+              Tempo improdutivo (peso)
+              <input type="number" id="procrastinationWeight" min="0" max="1" step="0.05" required />
+            </label>
 
-          <label>
-            Trocas de abas (peso)
-            <input type="number" id="tabSwitchWeight" min="0" max="1" step="0.05" required />
-          </label>
+            <label>
+              Trocas de abas (peso)
+              <input type="number" id="tabSwitchWeight" min="0" max="1" step="0.05" required />
+            </label>
 
-          <label>
-            Inatividade (peso)
-            <input type="number" id="inactivityWeight" min="0" max="1" step="0.05" required />
-          </label>
+            <label>
+              Inatividade (peso)
+              <input type="number" id="inactivityWeight" min="0" max="1" step="0.05" required />
+            </label>
 
-          <label>
-          Tempo máximo ocioso antes de considerar inatividade (segundos)
-          <input type="number" id="inactivityThreshold" min="10" max="600" step="10" required />
-          </label>
+            <label>
+              Tempo máximo ocioso antes de considerar inatividade (segundos)
+              <input type="number" id="inactivityThreshold" min="10" max="600" step="10" required />
+            </label>
 
-          <label>
+            <label>
               Chave OpenAI (opcional)
-                <input type="password" id="openAiKey" placeholder="sk-..." />
-            <small class="hint">Guardamos apenas localmente para gerar narrativas no relatório.</small>
-          </label>
+              <input type="password" id="openAiKey" placeholder="sk-..." />
+              <small class="hint">Guardamos apenas localmente para gerar narrativas no relatório.</small>
+            </label>
 
-          <label>
-            Limiar do modo terremoto (0–100)
-            <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
-            <small class="hint">Quando o índice atingir esse valor, Saul ativa o alerta crítico.</small>
-          </label>
+            <label>
+              Limiar do modo terremoto (0–100)
+              <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
+              <small class="hint">Quando o índice atingir esse valor, Saul ativa o alerta crítico.</small>
+            </label>
 
-          <button type="submit" class="primary">Salvar pesos</button>
-        </form>
+            <button type="submit" class="primary">Salvar pesos</button>
+          </form>
+        </div>
+
+        <div class="panel schedule-panel">
+          <h2>Horários de trabalho</h2>
+          <p class="hint">
+            Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
+            períodos, minutos produtivos contam em dobro.
+          </p>
+          <div id="workScheduleList" class="schedule-list"></div>
+          <button type="button" id="addWorkIntervalButton" class="ghost">Adicionar intervalo</button>
+        </div>
       </section>
 
       <section class="panel two-columns">
-        <div>
-          <h2>Domínios produtivos</h2>
-          <p class="hint">Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.</p>
-          <form id="productiveForm" class="domain-form">
-            <input type="text" id="productiveInput" placeholder="ex: docs.google.com" />
-            <button type="submit">Adicionar</button>
-          </form>
-          <ul id="productiveList" class="domain-list"></ul>
+        <div class="domain-panel">
+          <div class="domain-panel-header">
+            <h2>Domínios produtivos</h2>
+            <p class="hint">Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.</p>
+            <form id="productiveForm" class="domain-form">
+              <input type="text" id="productiveInput" placeholder="ex: docs.google.com" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <ul id="productiveList" class="domain-list scrollable"></ul>
         </div>
 
-        <div>
-          <h2>Domínios procrastinatórios</h2>
-          <p class="hint">Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.</p>
-          <form id="procrastinationForm" class="domain-form">
-            <input type="text" id="procrastinationInput" placeholder="ex: youtube.com" />
-            <button type="submit">Adicionar</button>
-          </form>
-          <ul id="procrastinationList" class="domain-list"></ul>
+        <div class="domain-panel">
+          <div class="domain-panel-header">
+            <h2>Domínios procrastinatórios</h2>
+            <p class="hint">Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.</p>
+            <form id="procrastinationForm" class="domain-form">
+              <input type="text" id="procrastinationInput" placeholder="ex: youtube.com" />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+          <ul id="procrastinationList" class="domain-list scrollable"></ul>
         </div>
       </section>
 
-      <section class="panel">
-        <h2>Horários de trabalho</h2>
-        <p class="hint">
-          Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
-          períodos, minutos produtivos contam em dobro.
-        </p>
-        <div id="workScheduleList" class="schedule-list"></div>
-        <button type="button" id="addWorkIntervalButton" class="ghost">Adicionar intervalo</button>
-      </section>
 
     </main>
 
     <div id="statusMessage" class="status-toast">Tudo certo.</div>
 
     <footer>
-      <button id="backToPopupButton" class="ghost">Voltar ao popup</button>
-      <button id="resetButton" class="danger">Restaurar padrões</button>
-      <p>Saul não compartilha seus dados com ninguém. Nem com o juiz.</p>
+      <div class="footer-actions">
+        <button id="backToPopupButton" class="ghost">Voltar ao popup</button>
+        <button id="resetButton" class="danger">Restaurar padrões</button>
+      </div>
+      <p class="footer-note">Saul não compartilha seus dados com ninguém. Nem com o juiz.</p>
     </footer>
   </body>
 </html>

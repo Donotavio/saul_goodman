@@ -81,8 +81,9 @@ function attachListeners(): void {
     const schedule = currentSettings.workSchedule ?? [];
     const nextStart = schedule.length ? schedule[schedule.length - 1].end : '09:00';
     const nextEnd = '10:00';
-    currentSettings.workSchedule = [...schedule, { start: nextStart, end: nextEnd }];
+    currentSettings.workSchedule = sanitizeWorkSchedule([...schedule, { start: nextStart, end: nextEnd }]);
     renderWorkSchedule();
+    void persistSettings('Horários atualizados.');
   });
 }
 
@@ -277,6 +278,10 @@ function renderWorkSchedule(): void {
       updateScheduleInterval(index, { start: startInput.value, end: endInput.value });
     });
 
+    const toLabel = document.createElement('span');
+    toLabel.className = 'to-label';
+    toLabel.textContent = 'até';
+
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
     removeButton.textContent = 'Remover';
@@ -286,7 +291,7 @@ function renderWorkSchedule(): void {
     });
 
     row.appendChild(startInput);
-    row.appendChild(document.createTextNode('até'));
+    row.appendChild(toLabel);
     row.appendChild(endInput);
     row.appendChild(removeButton);
     workScheduleListEl.appendChild(row);
@@ -298,6 +303,9 @@ function updateScheduleInterval(index: number, interval: WorkInterval): void {
     return;
   }
   currentSettings.workSchedule[index] = interval;
+  currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
+  renderWorkSchedule();
+  void persistSettings('Horários atualizados.');
 }
 
 function removeScheduleInterval(index: number): void {
@@ -308,7 +316,9 @@ function removeScheduleInterval(index: number): void {
     return;
   }
   currentSettings.workSchedule.splice(index, 1);
+  currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   renderWorkSchedule();
+  void persistSettings('Horários atualizados.');
 }
 
 function sanitizeWorkSchedule(schedule?: WorkInterval[]): WorkInterval[] {

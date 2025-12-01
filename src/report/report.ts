@@ -1,5 +1,11 @@
-import { DailyMetrics, DomainStats, HourlyBucket, TimelineEntry } from '../shared/types.js';
-import { formatDuration, formatTimeRange } from '../shared/utils/time.js';
+import {
+  DailyMetrics,
+  DomainStats,
+  HourlyBucket,
+  TimelineEntry,
+  WorkInterval
+} from '../shared/types.js';
+import { formatDuration, formatTimeRange, isWithinWorkSchedule } from '../shared/utils/time.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -13,6 +19,10 @@ const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
+const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
+const timelineEndHourInput = document.getElementById('timelineEndHour') as HTMLInputElement;
+const timelineFilterButton = document.getElementById('timelineFilterButton') as HTMLButtonElement;
+const timelineResetButton = document.getElementById('timelineResetButton') as HTMLButtonElement;
 const productiveRankingBody = document
   .getElementById('productiveRanking')
   ?.querySelector('tbody') as HTMLTableSectionElement | null;
@@ -26,6 +36,7 @@ const aiGenerateButton = document.getElementById('aiGenerateButton') as HTMLButt
 const aiRetryButton = document.getElementById('aiRetryButton') as HTMLButtonElement;
 const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement;
 const compositionCanvas = document.getElementById('compositionChart') as HTMLCanvasElement;
+const domainBreakdownCanvas = document.getElementById('domainBreakdownChart') as HTMLCanvasElement;
 const hourlyEmptyEl = document.getElementById('hourlyEmpty');
 const criticalBannerEl = document.getElementById('criticalBanner') as HTMLElement | null;
 const criticalBannerMessageEl = document.getElementById('criticalBannerMessage') as HTMLElement | null;
@@ -62,13 +73,20 @@ const criticalMessages = [
 
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
+let domainBreakdownChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
 let openAiKey = '';
-let latestSettings: { locale?: string; openAiKey?: string; criticalScoreThreshold?: number } | null =
-  null;
+let latestSettings: {
+  locale?: string;
+  openAiKey?: string;
+  criticalScoreThreshold?: number;
+  workSchedule?: WorkInterval[];
+} | null = null;
 let bannerCountdownTimer: number | null = null;
 let bannerCountdownValue = 45;
+let latestTimelineNarrative: string[] = [];
+let timelineFilter = { start: 0, end: 23 };
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
@@ -79,6 +97,34 @@ document.addEventListener('DOMContentLoaded', () => {
   criticalBannerAction?.addEventListener('click', () => {
     const url = chrome.runtime.getURL('src/options/options.html#vilains');
     void chrome.tabs.create({ url });
+  });
+
+  timelineFilterButton?.addEventListener('click', () => {
+    const start = clampHour(Number.parseInt(timelineStartHourInput.value, 10));
+    const end = clampHour(Number.parseInt(timelineEndHourInput.value, 10));
+    if (start <= end) {
+      timelineFilter = { start, end };
+    } else {
+      timelineFilter = { start: end, end: start };
+    }
+    if (latestMetrics) {
+      renderTimeline(latestMetrics.timeline);
+      renderDomainBreakdownChart(latestMetrics.domains);
+    }
+  });
+
+  timelineResetButton?.addEventListener('click', () => {
+    timelineFilter = { start: 0, end: 23 };
+    if (timelineStartHourInput) {
+      timelineStartHourInput.value = '0';
+    }
+    if (timelineEndHourInput) {
+      timelineEndHourInput.value = '23';
+    }
+    if (latestMetrics) {
+      renderTimeline(latestMetrics.timeline);
+      renderDomainBreakdownChart(latestMetrics.domains);
+    }
   });
 });
 
@@ -118,6 +164,9 @@ function renderReport(metrics: DailyMetrics): void {
   renderStoryList(metrics, kpis);
   renderRankings(metrics.domains);
   renderTimeline(metrics.timeline);
+  renderDomainBreakdownChart(metrics.domains);
+  timelineStartHourInput.value = timelineFilter.start.toString();
+  timelineEndHourInput.value = timelineFilter.end.toString();
   aiNarrativeEl.innerHTML =
     'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
@@ -345,28 +394,54 @@ function fillRankingTable(tbody: HTMLTableSectionElement, entries: DomainStats[]
 
 function renderTimeline(entries: TimelineEntry[]): void {
   timelineListEl.innerHTML = '';
-  const meaningful = entries
-    .filter((entry) => entry.durationMs >= 5 * 60 * 1000)
-    .sort((a, b) => a.startTime - b.startTime)
-    .slice(0, 10);
+  latestTimelineNarrative = [];
 
-  if (!meaningful.length) {
+  const filteredEntries = entries.filter((entry) =>
+    isHourInFilter(new Date(entry.startTime).getHours(), timelineFilter.start, timelineFilter.end)
+  );
+
+  const consolidated = consolidateTimelineEntries(filteredEntries);
+  const blocks = buildTimelineBlocks(consolidated);
+
+  if (!blocks.length) {
     const li = document.createElement('li');
     li.textContent = 'O dia foi curto demais para contar uma história.';
     timelineListEl.appendChild(li);
     return;
   }
 
-  meaningful.forEach((entry) => {
+  blocks.forEach((block) => {
     const li = document.createElement('li');
-    const span = document.createElement('span');
-    span.textContent = formatTimeRange(entry.startTime, entry.endTime, locale);
-    li.appendChild(span);
-    li.appendChild(
-      document.createTextNode(
-        `${entry.domain} • ${formatDuration(entry.durationMs)} • ${describeCategory(entry.category)}`
-      )
-    );
+    li.className = 'timeline-hour-block';
+
+    const hourHeader = document.createElement('div');
+    hourHeader.className = 'timeline-hour';
+    hourHeader.textContent = `${block.hour.toString().padStart(2, '0')}h`;
+
+    const summary = document.createElement('span');
+    summary.className = 'timeline-hour-summary';
+    summary.textContent = `${formatDuration(block.totalMs)} • ${block.segments.length} trechos`;
+    hourHeader.appendChild(summary);
+    li.appendChild(hourHeader);
+
+    const list = document.createElement('ul');
+    list.className = 'timeline-segments';
+
+    block.segments.forEach((segment) => {
+      const element = createTimelineSegmentElement(segment);
+      list.appendChild(element);
+
+      if (latestTimelineNarrative.length < 12) {
+        const overtimeNote = isSegmentOvertime(segment) ? ' (overtime)' : '';
+        latestTimelineNarrative.push(
+          `${hourHeader.textContent} ${segment.domain} ${formatDurationFriendly(
+            segment.durationMs
+          )} ${describeCategory(segment.category)}${overtimeNote}`
+        );
+      }
+    });
+
+    li.appendChild(list);
     timelineListEl.appendChild(li);
   });
 }
@@ -406,10 +481,10 @@ async function exportPdf(): Promise<void> {
   doc.setFontSize(12);
   doc.text('Narrativa chave:', 14, 140);
 
-  const narratives = Array.from(timelineListEl.querySelectorAll('li'))
-    .slice(0, 6)
-    .map((li) => li.textContent?.trim())
-    .filter(Boolean) as string[];
+  const narratives =
+    latestTimelineNarrative.length > 0
+      ? latestTimelineNarrative.slice(0, 6)
+      : ['Sem registros na timeline.'];
 
   let cursorY = 148;
   narratives.forEach((line) => {
@@ -659,7 +734,12 @@ interface OpenAiResponse {
 
 interface MetricsResponse {
   metrics: DailyMetrics;
-  settings?: { locale?: string; openAiKey?: string; criticalScoreThreshold?: number };
+  settings?: {
+    locale?: string;
+    openAiKey?: string;
+    criticalScoreThreshold?: number;
+    workSchedule?: WorkInterval[];
+  };
 }
 
 function formatAiNarrative(text: string): string {
@@ -683,6 +763,185 @@ function formatParagraph(content: string): string {
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function consolidateTimelineEntries(entries: TimelineEntry[]): TimelineEntry[] {
+  const sorted = entries.slice().sort((a, b) => a.startTime - b.startTime);
+  const result: TimelineEntry[] = [];
+
+  for (const entry of sorted) {
+    const last = result[result.length - 1];
+    if (
+      last &&
+      last.category === entry.category &&
+      last.domain === entry.domain &&
+      entry.startTime - last.endTime <= 60 * 1000
+    ) {
+      last.endTime = entry.endTime;
+      last.durationMs += entry.durationMs;
+    } else {
+      result.push({ ...entry });
+    }
+  }
+
+  return result;
+}
+
+interface TimelineHourBlock {
+  hour: number;
+  totalMs: number;
+  segments: TimelineEntry[];
+}
+
+function buildTimelineBlocks(entries: TimelineEntry[]): TimelineHourBlock[] {
+  const map = new Map<number, TimelineEntry[]>();
+  entries.forEach((entry) => {
+    const hour = new Date(entry.startTime).getHours();
+    const bucket = map.get(hour) ?? [];
+    bucket.push(entry);
+    map.set(hour, bucket);
+  });
+
+  return Array.from(map.entries())
+    .sort((a, b) => b[0] - a[0])
+    .map(([hour, segments]) => ({
+      hour,
+      totalMs: segments.reduce((acc, segment) => acc + segment.durationMs, 0),
+      segments: segments.sort((a, b) => a.startTime - b.startTime)
+    }));
+}
+
+function createTimelineSegmentElement(entry: TimelineEntry): HTMLLIElement {
+  const item = document.createElement('li');
+  item.className = `timeline-segment ${entry.category}`;
+
+  const header = document.createElement('div');
+  header.className = 'timeline-segment-header';
+
+  const title = document.createElement('strong');
+  title.textContent = entry.domain;
+  header.appendChild(title);
+
+  const categoryTag = document.createElement('span');
+  categoryTag.className = `tag ${entry.category}`;
+  categoryTag.textContent = describeCategory(entry.category);
+  header.appendChild(categoryTag);
+
+  if (isSegmentOvertime(entry)) {
+    const overtimeTag = document.createElement('span');
+    overtimeTag.className = 'tag overtime';
+    overtimeTag.textContent = 'Overtime';
+    header.appendChild(overtimeTag);
+  }
+
+  const meta = document.createElement('div');
+  meta.className = 'timeline-meta';
+
+  const range = document.createElement('span');
+  range.textContent = formatTimeRange(entry.startTime, entry.endTime, locale);
+  meta.appendChild(range);
+
+  const duration = document.createElement('span');
+  duration.textContent = formatDurationFriendly(entry.durationMs);
+  meta.appendChild(duration);
+
+  item.appendChild(header);
+  item.appendChild(meta);
+  return item;
+}
+
+function isSegmentOvertime(entry: TimelineEntry): boolean {
+  if (entry.category !== 'productive') {
+    return false;
+  }
+  const schedule = latestSettings?.workSchedule;
+  if (!schedule || !schedule.length) {
+    return false;
+  }
+  return !isWithinWorkSchedule(new Date(entry.startTime), schedule);
+}
+
+function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void {
+  if (!domainBreakdownCanvas) {
+    return;
+  }
+
+  const topEntries = Object.values(domains)
+    .sort((a, b) => b.milliseconds - a.milliseconds)
+    .slice(0, 6);
+
+  if (!topEntries.length) {
+    if (domainBreakdownChart) {
+      domainBreakdownChart.destroy();
+      domainBreakdownChart = null;
+    }
+    const ctx = domainBreakdownCanvas.getContext('2d');
+    ctx?.clearRect(0, 0, domainBreakdownCanvas.width, domainBreakdownCanvas.height);
+    return;
+  }
+
+  const data = {
+    labels: topEntries.map((entry) => entry.domain),
+    datasets: [
+      {
+        label: 'Minutos',
+        data: topEntries.map((entry) => Math.round(entry.milliseconds / 60000)),
+        backgroundColor: topEntries.map((entry) =>
+          entry.category === 'productive'
+            ? '#0a7e07'
+            : entry.category === 'procrastination'
+              ? '#d00000'
+              : '#6d5945'
+        )
+      }
+    ]
+  };
+
+  if (domainBreakdownChart) {
+    domainBreakdownChart.destroy();
+  }
+
+  domainBreakdownChart = new Chart(domainBreakdownCanvas, {
+    type: 'bar',
+    data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function formatDurationFriendly(ms: number): string {
+  if (ms < 60000) {
+    return '<1m';
+  }
+  return formatDuration(ms);
+}
+
+function isHourInFilter(hour: number, start: number, end: number): boolean {
+  return hour >= start && hour <= end;
+}
+
+function clampHour(value: number): number {
+  if (Number.isNaN(value)) {
+    return 0;
+  }
+  return Math.min(23, Math.max(0, value));
 }
 
 function toggleCriticalBanner(isCritical: boolean): void {

@@ -35,6 +35,14 @@
         </div>
       </div>
       <div class="hero-actions">
+        <div class="logo-frame">
+          <img
+            src="../img/logotipo_saul_goodman.png"
+            alt="Logotipo Saul Goodman"
+            class="logo"
+          />
+          <span class="logo-caption">Filial digital</span>
+        </div>
         <button id="pdfReportButton" class="primary-button">Exportar PDF</button>
         <button id="backButton" class="ghost-button">Voltar ao popup</button>
       </div>
@@ -62,8 +70,8 @@
           <h2>Fluxo horário</h2>
           <p>Produtividade versus tentações ao longo do dia.</p>
         </div>
-               <div class="chart-wrapper">
-          <canvas id="hourlyChart" height="220"></canvas>
+        <div class="chart-wrapper">
+          <canvas id="hourlyChart" height="200"></canvas>
           <p id="hourlyEmpty" class="empty-state hidden">
             Ainda não registramos minutos suficientes para montar o fluxo.
           </p>
@@ -73,7 +81,7 @@
       <section class="panel duo">
         <div class="panel-block">
           <h2>Composição do dia</h2>
-          <canvas id="compositionChart" height="240"></canvas>
+          <canvas id="compositionChart" height="200"></canvas>
         </div>
         <div class="panel-block">
           <h2>Campeões e vilões</h2>
@@ -114,14 +122,38 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel timeline-panel">
         <div class="panel-header">
           <h2>Narrativa minuto a minuto</h2>
           <p>Principais trechos que contam a história do seu expediente.</p>
+          <div class="timeline-filter">
+            <label>
+              De
+              <input type="number" id="timelineStartHour" min="0" max="23" value="0" />
+            </label>
+            <label>
+              até
+              <input type="number" id="timelineEndHour" min="0" max="23" value="23" />
+            </label>
+            <button type="button" id="timelineFilterButton" class="ghost-button small">
+              Filtrar
+            </button>
+            <button type="button" id="timelineResetButton" class="ghost-button small">
+              Resetar
+            </button>
+          </div>
         </div>
         <ol id="timelineList" class="timeline-list">
           <li>Aguardando registros...</li>
         </ol>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Minutos por domínio</h2>
+          <p>Principais campeões e vilões agregados no dia.</p>
+        </div>
+        <canvas id="domainBreakdownChart" height="220"></canvas>
       </section>
 
       <section class="panel">

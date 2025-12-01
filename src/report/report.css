@@ -14,6 +14,10 @@ body.earthquake {
   animation: quake 0.6s linear infinite;
 }
 
+.hidden {
+  display: none !important;
+}
+
 @keyframes quake {
   0% {
     transform: translate(0, 0);
@@ -109,6 +113,33 @@ body.earthquake {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
+}
+
+.logo-frame {
+  border: 3px solid #111;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  box-shadow: 4px 4px 0 #e1c03a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+.logo-caption {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #333;
+  text-transform: uppercase;
 }
 
 .primary-button,
@@ -136,6 +167,22 @@ main {
   gap: 24px;
 }
 
+.chart-wrapper {
+  width: 100%;
+  height: 200px;
+  max-height: 200px;
+}
+
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.panel-block canvas {
+  width: 100%;
+  max-height: 200px;
+}
+
 .panel {
   border: 2px solid #111;
   border-radius: 16px;
@@ -144,8 +191,45 @@ main {
   box-shadow: 4px 4px 0 #f1d884;
 }
 
+.panel.timeline-panel {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
 .panel-header {
   margin-bottom: 12px;
+}
+
+.timeline-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.timeline-filter label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #4c3e32;
+}
+
+.timeline-filter input {
+  width: 60px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+}
+
+.timeline-filter .small {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.timeline-filter .ghost-button.small {
+  border-width: 1px;
 }
 
 .panel-header p {
@@ -163,6 +247,12 @@ main {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.panel-block canvas,
+#domainBreakdownChart {
+  width: 100%;
+  max-height: 220px;
 }
 
 .story-list {
@@ -231,24 +321,120 @@ main {
 }
 
 .timeline-list {
-  list-style: decimal;
-  padding-left: 18px;
+  list-style: none;
+  padding-left: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.timeline-list li {
-  border-left: 3px solid #111;
-  padding-left: 12px;
-  font-size: 0.95rem;
+.timeline-hour-block {
+  border: 1px solid #f0d87c;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fffdf5;
 }
 
-.timeline-list span {
-  display: block;
-  font-size: 0.85rem;
+.timeline-hour {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7a0500;
+}
+
+.timeline-hour-summary {
+  font-size: 0.8rem;
   color: #6d5945;
+}
+
+.timeline-segments {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-segment {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.timeline-segment.productive {
+  border-color: #0a7e07;
+}
+
+.timeline-segment.procrastination {
+  border-color: #d00000;
+}
+
+.timeline-segment.neutral {
+  border-color: #9c8f7a;
+}
+
+.timeline-segment.inactive {
+  border-color: #c1c1c1;
+}
+
+.timeline-segment-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timeline-segment strong {
+  font-size: 0.95rem;
+  color: #1d1d1d;
+}
+
+.timeline-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: #6d5945;
+  margin-top: 4px;
+}
+
+.tag {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag.productive {
+  background: #e8f9e8;
+  color: #0a7e07;
+}
+
+.tag.procrastination {
+  background: #ffe0e0;
+  color: #d00000;
+}
+
+.tag.neutral {
+  background: #f4f4f4;
+  color: #555;
+}
+
+.tag.inactive {
+  background: #ddd;
+  color: #555;
+}
+
+.tag.overtime {
+  background: #ffeec5;
+  color: #7a3b00;
 }
 
 .ai-narrative {

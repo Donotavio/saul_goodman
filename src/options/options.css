@@ -138,10 +138,29 @@ main {
   box-shadow: 4px 4px 0 #e1c03a;
 }
 
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
 .panel.two-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
+}
+
+.panel.two-columns .panel-block,
+.panel.two-columns > div {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.schedule-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
 }
 
 form {
@@ -182,6 +201,26 @@ button {
 
 .primary:hover {
   background: #333;
+}
+
+.domain-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.domain-panel-header {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.domain-list.scrollable {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .domain-form {
@@ -250,36 +289,87 @@ button {
   background: #ffe434;
 }
 
+.schedule-panel .hint {
+  margin-bottom: 12px;
+}
+
 .schedule-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 18px;
+  margin: 12px 0 0;
+  flex: 1;
 }
 
 .schedule-row {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr) max-content;
   align-items: center;
-  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 2px solid #111;
+  background: linear-gradient(135deg, #fffbe8 0%, #fff4cc 100%);
+  box-shadow: 3px 3px 0 #e1c03a;
+}
+
+.schedule-row:last-child {
+  margin-bottom: 0;
 }
 
 .schedule-row input[type='time'] {
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #bbb;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  width: 100%;
+  background: #fffef8;
+}
+
+.schedule-row .to-label {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #5b4a30;
+  letter-spacing: 0.08em;
+  text-align: center;
 }
 
 .schedule-row button {
-  border: 1px solid #111;
+  border: 2px solid #111;
   background: #fff;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 12px;
+  padding: 12px 22px;
   cursor: pointer;
+  font-weight: 700;
+  justify-self: end;
+  min-width: 140px;
 }
 
 .schedule-row button:hover {
   background: #ffe434;
+}
+
+#addWorkIntervalButton {
+  margin-top: 16px;
+  align-self: flex-start;
+  min-width: 220px;
+  font-size: 0.95rem;
+}
+
+.schedule-panel #addWorkIntervalButton {
+  margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+  .schedule-row {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-row button {
+    justify-self: stretch;
+  }
 }
 
 .hint {
@@ -291,12 +381,26 @@ button {
 footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid #ddd;
+  align-items: flex-start;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 2px solid #c6aa48;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 16px;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-note {
+  margin: 0 0 0 auto;
+  font-size: 0.9rem;
+  max-width: 320px;
+  text-align: right;
+  color: #4d3e23;
 }
 
 .ghost {
