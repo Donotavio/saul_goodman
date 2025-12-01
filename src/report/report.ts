@@ -56,7 +56,7 @@ let openAiKey = '';
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
   pdfButton.addEventListener('click', () => void exportPdf());
-  backButton.addEventListener('click', () => window.close());
+  backButton.addEventListener('click', () => closeReportTab());
   aiGenerateButton.addEventListener('click', () => void generateNarrative());
   aiRetryButton.addEventListener('click', () => void generateNarrative());
 });
@@ -78,7 +78,8 @@ async function hydrate(): Promise<void> {
 }
 
 function renderReport(metrics: DailyMetrics): void {
-  reportDateEl.textContent = new Date(metrics.dateKey).toLocaleDateString(locale, {
+  const reportDate = parseDateKey(metrics.dateKey);
+  reportDateEl.textContent = reportDate.toLocaleDateString(locale, {
     weekday: 'long',
     month: 'long',
     day: 'numeric'
@@ -658,4 +659,50 @@ function formatParagraph(content: string): string {
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function parseDateKey(dateKey: string): Date {
+  const [yearStr, monthStr, dayStr] = dateKey.split('-');
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  if (
+    Number.isFinite(year) &&
+    Number.isFinite(month) &&
+    Number.isFinite(day) &&
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= 31
+  ) {
+    return new Date(year, month - 1, day);
+  }
+
+  // fallback to native parsing when the formato foge do esperado
+  return new Date(dateKey);
+}
+
+function closeReportTab(): void {
+  if (chrome?.tabs?.getCurrent) {
+    chrome.tabs.getCurrent((tab) => {
+      if (chrome.runtime.lastError) {
+        window.close();
+        return;
+      }
+
+      if (tab?.id) {
+        chrome.tabs.remove(tab.id, () => {
+          if (chrome.runtime.lastError) {
+            window.close();
+          }
+        });
+      } else {
+        window.close();
+      }
+    });
+    return;
+  }
+
+  window.close();
 }

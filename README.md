@@ -78,7 +78,7 @@ saul_goodman/
 - Reset automático diariamente via alarme de meia-noite; botão "Limpar dados" apaga o dia corrente.
 
 ## Privacidade
-Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai do `chrome.storage.local` e não existe comunicação com servidores externos. O README e os docs explicam claramente o que é medido e como alterar listas/pesos.
+Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai do `chrome.storage.local` e não existe comunicação com servidores externos por padrão. Se você informar uma chave da OpenAI nas opções, apenas o relatório detalhado enviará o resumo diário (índice, métricas agregadas, top domínios e trechos da timeline) para a API da OpenAI com a finalidade de gerar a narrativa em tom Saul Goodman. Sem chave, nenhuma chamada externa acontece. O README e os docs explicam claramente o que é medido e como alterar listas/pesos.
 
 ## Documentação complementar
 - [`docs/architecture.md`](docs/architecture.md): detalha o fluxo do background, content script, storage e cálculo do índice.
