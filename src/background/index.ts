@@ -324,6 +324,8 @@ async function accumulateSlice(): Promise<void> {
       startTime: sliceStart,
       endTime: now
     });
+    metrics.inactiveMs += elapsed;
+    recordHourlyContribution(metrics, 'inactive', sliceStart, elapsed);
     await persistMetrics();
     return;
   }
