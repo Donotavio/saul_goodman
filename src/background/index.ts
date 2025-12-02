@@ -236,7 +236,8 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
 }
 
 async function handleActivityPing(payload: ActivityPingPayload): Promise<void> {
-  trackingState.lastActivity = payload?.timestamp ?? Date.now();
+  const timestamp = payload?.timestamp ?? Date.now();
+  trackingState.lastActivity = Math.max(trackingState.lastActivity, timestamp);
 
   if (trackingState.isIdle) {
     trackingState.isIdle = false;

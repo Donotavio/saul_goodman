@@ -97,7 +97,7 @@ function attachListeners(): void {
     criticalOverlayDismissed = true;
   });
   criticalSoundButton?.addEventListener('click', () => {
-    sirenPlayer.playBursts(4).catch(() => {});
+    sirenPlayer?.playBursts(4).catch(() => {});
   });
   criticalReportButton?.addEventListener('click', () => {
     void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
@@ -451,13 +451,13 @@ function toggleCriticalMode(isCritical: boolean): void {
     }
     startCriticalCountdown();
     if (criticalSoundEnabledSetting) {
-      void sirenPlayer.playBursts(4);
+      void sirenPlayer?.playBursts(4);
     }
   } else {
     document.body.classList.remove('earthquake');
     hideCriticalOverlay();
     stopCriticalCountdown();
-    sirenPlayer.stop();
+    sirenPlayer?.stop();
     criticalOverlayDismissed = false;
   }
   lastCriticalState = isCritical;
