@@ -611,14 +611,9 @@ async function broadcastScoreToast(
 function sendScoreToastToTab(
   tab: chrome.tabs.Tab & { id: number },
   payload: ScoreToastPayload,
-  settings: ExtensionSettings
+  _settings: ExtensionSettings
 ): Promise<void> {
-  const shouldSend =
-    payload.mood === 'negative'
-      ? shouldTriggerCriticalForUrl(tab.url, settings)
-      : isToastSupportedUrl(tab.url);
-
-  if (!shouldSend) {
+  if (!isToastSupportedUrl(tab.url)) {
     return Promise.resolve();
   }
 

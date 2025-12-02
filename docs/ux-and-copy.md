@@ -15,7 +15,7 @@
 - **Gráfico**: barras Produtivo x Procrastinação, sempre no mesmo tamanho — não deve fazer a tela rolar.
 - **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
 - **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
-- **Toasty**: quando o índice muda de faixa/mensagem, mostrar um toast no canto inferior direito do popup (mesma peça usada nas abas) com Saul comemorando (`saul_like.png`) ou desapontado (`saul_incredulo.png`). Mensagens devem aproveitar os textos já usados no badge.
+- **Toasty**: quando o índice muda de faixa/mensagem, mostrar um toast no canto inferior direito do popup (mesma peça usada nas abas) com Saul comemorando (`saul_like.png`) ou desapontado (`saul_incredulo.png`). Mensagens devem aproveitar os textos já usados no badge e o mesmo toast é disparado em qualquer aba ativa compatível.
 - **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
 - **Modo terremoto (limiar configurável, padrão 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Tocar sirene”). A sirene só toca se o usuário consentir e a escolha fica persistida; o overlay aparece em qualquer aba que não esteja marcada como produtiva (procrastinação ou neutro), reforçando na copy que mudar para uma aba produtiva libera o usuário para recuperar o score. Ao fechar o overlay ele só volta quando o score continua crítico.
 - **CTA**:

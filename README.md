@@ -22,7 +22,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário, gráfico de trocas de abas por hora e PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
 - **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; a sirene opcional é configurada nas opções e apenas abas não productivas (procrastinação/indefinidas) recebem o travamento/alerta, permitindo que o usuário continue usando abas classificadas como produtivas para recuperar o foco.
-- **Toasty do Saul**: sempre que a mensagem do índice muda, todas as abas ativas recebem um toast (positivo em qualquer site, negativo apenas em abas não produtivas) com áudio curto opcional, replicando o easter egg “Toasty!” no navegador.
+- **Toasty do Saul**: sempre que a mensagem do índice muda, todas as abas ativas recebem um toast com áudio curto opcional, replicando o easter egg “Toasty!” no navegador (Saul comemora quando o índice está saudável e dá bronca quando passa do ponto).
 
 ## Stack e arquitetura
 

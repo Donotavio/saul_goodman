@@ -90,7 +90,7 @@ Todos os cartões exibem um tooltip descrevendo a métrica.
 
 - **CSV**: gerado diretamente no popup convertendo métricas e KPIs em linhas (`downloadTextFile`). Inclui resumo diário, indicadores extras e top 10 domínios.
 - **PDF**: usa `jspdf` vendorizado (`src/vendor/jspdf.umd.min.js`). O popup monta um relatório com textos, KPIs e a imagem do gráfico (via `Chart.toBase64Image`). O arquivo é salvo localmente com `jsPDF#save`.
-- **Toasty**: `src/shared/toast.js` é injetado como script estático. Quando o background envia `sg:score-toast`, o content script chama `showTabToast` (positivo em qualquer aba, negativo apenas se `shouldTriggerCriticalForUrl` retornar verdadeiro). Isso mantém o usuário informado mesmo fora do popup.
+- **Toasty**: `src/shared/toast.js` é injetado como script estático. Quando o background envia `sg:score-toast`, o content script chama `showTabToast` (positivo comemorando, negativo repreendendo) em qualquer aba compatível (`http/https`). Isso mantém o usuário informado mesmo fora do popup.
 
 ## Build & distribuição
 
