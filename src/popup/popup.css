@@ -80,6 +80,8 @@ p {
   flex-direction: column;
   align-items: center;
   border-radius: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .badge .label {
@@ -96,6 +98,44 @@ p {
 
 .badge .value.alert {
   color: #ff1a1a;
+}
+
+.badge .value.warn {
+  color: #ff9f1c;
+}
+
+.badge .value.good {
+  color: #29c56d;
+}
+
+.badge-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.badge-confetti .confetti-piece {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border-radius: 2px;
+  opacity: 0.9;
+  animation: badge-confetti-fall 1.15s ease-out forwards;
+}
+
+@keyframes badge-confetti-fall {
+  0% {
+    transform: translateY(-15%) rotate(0deg);
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(140%) rotate(280deg);
+    opacity: 0;
+  }
 }
 
 .meta {

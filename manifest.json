@@ -28,6 +28,7 @@
     "alarms",
     "activeTab",
     "idle",
+    "windows",
     "webNavigation",
     "tabGroups",
     "sessions"

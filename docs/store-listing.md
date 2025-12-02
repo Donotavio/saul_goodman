@@ -28,6 +28,7 @@ A Saul Goodman Extension monitora quanto tempo você passa em domínios produtiv
 - `storage`: guardar métricas e configurações no seu navegador.
 - `alarms`: agendar contagem periódica e reset diário.
 - `idle`: usar a API nativa do Chrome para detectar inatividade real.
+- `windows`: identificar quando o navegador perde foco para medir tempo em segundo plano.
 - `webNavigation`: detectar trocas de rota em SPA (YouTube, LinkedIn, Slack web) e contar navegações internas.
 - `tabGroups`: identificar se a aba está em um grupo para medir tempo em grupos.
 - `sessions`: contar itens fechados/reabertos recentemente como KPI no relatório.

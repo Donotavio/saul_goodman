@@ -67,6 +67,8 @@ let criticalSoundEnabledSetting = false;
 let lastCriticalState = false;
 let lastCriticalScoreNotified = -Infinity;
 let currentCriticalThreshold = 90;
+let lastScoreBand: 'good' | 'warn' | 'alert' | 'neutral' = 'neutral';
+let badgeConfettiTimer: number | null = null;
 const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
 
 const criticalMessages: Array<(threshold: number) => string> = [
@@ -165,7 +167,19 @@ function renderScore(score: number): void {
   scoreValueEl.textContent = score.toString();
   const nextMessage = pickScoreMessage(score);
   scoreMessageEl.textContent = nextMessage;
-  scoreValueEl.classList.toggle('alert', score >= 70);
+  const band = getScoreBand(score);
+  scoreValueEl.classList.remove('alert', 'good', 'warn');
+  if (band === 'alert') {
+    scoreValueEl.classList.add('alert');
+  } else if (band === 'good') {
+    scoreValueEl.classList.add('good');
+  } else if (band === 'warn') {
+    scoreValueEl.classList.add('warn');
+  }
+  if (band === 'good' && lastScoreBand !== 'good') {
+    triggerBadgeConfetti();
+  }
+  lastScoreBand = band;
   const threshold = latestData?.settings?.criticalScoreThreshold ?? 90;
   currentCriticalThreshold = threshold;
   if (score >= threshold && score > lastCriticalScoreNotified) {
@@ -173,6 +187,54 @@ function renderScore(score: number): void {
   }
   toggleCriticalMode(score >= threshold);
   lastCriticalScoreNotified = score >= threshold ? score : -Infinity;
+}
+
+function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
+  if (score <= 25) {
+    return 'good';
+  }
+  if (score <= 50) {
+    return 'warn';
+  }
+  if (score >= 70) {
+    return 'alert';
+  }
+  return 'neutral';
+}
+
+function triggerBadgeConfetti(): void {
+  const badge = document.querySelector('.badge');
+  if (!badge) {
+    return;
+  }
+
+  const existing = badge.querySelector('.badge-confetti');
+  existing?.remove();
+
+  const container = document.createElement('div');
+  container.className = 'badge-confetti';
+  const colors = ['#29c56d', '#17a589', '#ffe434', '#ff9f1c', '#ff1a1a'];
+  const pieces = 14;
+
+  for (let i = 0; i < pieces; i += 1) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${(Math.random() * 0.2).toFixed(2)}s`;
+    piece.style.animationDuration = `${(1 + Math.random() * 0.4).toFixed(2)}s`;
+    container.appendChild(piece);
+  }
+
+  badge.appendChild(container);
+
+  if (badgeConfettiTimer) {
+    window.clearTimeout(badgeConfettiTimer);
+  }
+  badgeConfettiTimer = window.setTimeout(() => {
+    container.remove();
+    badgeConfettiTimer = null;
+  }, 1400);
 }
 
 function renderTopDomains(domains: Record<string, DomainStats>): void {

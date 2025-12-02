@@ -106,6 +106,8 @@ let bannerCountdownTimer: number | null = null;
 let bannerCountdownValue = 45;
 let latestTimelineNarrative: string[] = [];
 let timelineFilter = { start: 0, end: 23 };
+let lastHeroBand: 'good' | 'warn' | 'alert' | 'neutral' = 'neutral';
+let heroConfettiTimer: number | null = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
@@ -173,6 +175,11 @@ function renderReport(metrics: DailyMetrics): void {
   });
   heroMessageEl.textContent = pickScoreMessage(metrics.currentIndex);
   heroIndexEl.textContent = metrics.currentIndex.toString().padStart(2, '0');
+  const band = getScoreBand(metrics.currentIndex);
+  if (band === 'good' && lastHeroBand !== 'good') {
+    triggerHeroConfetti();
+  }
+  lastHeroBand = band;
 
   const kpis = calculateKpis(metrics);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
@@ -1036,6 +1043,57 @@ function updateHeroLogo(isCritical: boolean): void {
   heroLogoEl.alt = isCritical
     ? 'Saul Goodman incrédulo com o seu foco'
     : 'Logotipo Saul Goodman';
+}
+
+function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
+  if (score <= 25) {
+    return 'good';
+  }
+  if (score <= 50) {
+    return 'warn';
+  }
+  if (score >= 70) {
+    return 'alert';
+  }
+  return 'neutral';
+}
+
+function triggerHeroConfetti(): void {
+  if (!heroIndexEl) {
+    return;
+  }
+  const card = heroIndexEl.closest('article');
+  if (!card) {
+    return;
+  }
+
+  const existing = card.querySelector('.hero-confetti');
+  existing?.remove();
+
+  const container = document.createElement('div');
+  container.className = 'hero-confetti';
+  const colors = ['#29c56d', '#17a589', '#ffe434', '#ff9f1c', '#ff1a1a'];
+  const pieces = 16;
+
+  for (let i = 0; i < pieces; i += 1) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${(Math.random() * 0.25).toFixed(2)}s`;
+    piece.style.animationDuration = `${(1 + Math.random() * 0.5).toFixed(2)}s`;
+    container.appendChild(piece);
+  }
+
+  card.appendChild(container);
+
+  if (heroConfettiTimer) {
+    window.clearTimeout(heroConfettiTimer);
+  }
+  heroConfettiTimer = window.setTimeout(() => {
+    container.remove();
+    heroConfettiTimer = null;
+  }, 1500);
 }
 
 function startBannerCountdown(): void {

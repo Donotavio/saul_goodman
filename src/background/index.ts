@@ -130,6 +130,10 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
   if (!focused) {
     void (async () => {
       await finalizeCurrentDomainSlice();
+      trackingState.currentDomain = null;
+      trackingState.currentTabId = null;
+      trackingState.currentTabAudible = false;
+      trackingState.currentTabGroupId = null;
       trackingState.browserFocused = false;
       trackingState.lastActivity = now;
       trackingState.lastTimestamp = now;
@@ -207,6 +211,7 @@ async function initialize(): Promise<void> {
 }
 
 async function handleTrackingTick(): Promise<void> {
+  await refreshWindowFocusState();
   await getSettingsCache();
   await ensureDailyCache();
 
@@ -551,6 +556,36 @@ async function scheduleMidnightAlarm(): Promise<void> {
   const next = new Date(now);
   next.setHours(24, 0, 5, 0);
   chrome.alarms.create(MIDNIGHT_ALARM, { when: next.getTime() });
+}
+
+async function refreshWindowFocusState(): Promise<void> {
+  try {
+    const win = await chrome.windows.getLastFocused();
+    const now = Date.now();
+    const wasFocused = trackingState.browserFocused;
+    const isFocused = Boolean(win?.focused);
+
+    if (!isFocused && wasFocused) {
+      await finalizeCurrentDomainSlice();
+      trackingState.currentDomain = null;
+      trackingState.currentTabId = null;
+      trackingState.currentTabAudible = false;
+      trackingState.currentTabGroupId = null;
+      trackingState.browserFocused = false;
+      trackingState.lastActivity = now;
+      trackingState.lastTimestamp = now;
+      return;
+    }
+
+    if (isFocused && !wasFocused) {
+      trackingState.browserFocused = true;
+      trackingState.lastActivity = now;
+      trackingState.lastTimestamp = now;
+      await hydrateActiveTab();
+    }
+  } catch {
+    // ignore focus lookup errors
+  }
 }
 
 async function updateBadgeText(score: number): Promise<void> {

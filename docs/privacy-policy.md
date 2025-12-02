@@ -24,6 +24,7 @@
 - `storage`: salvar métricas e configurações localmente.
 - `alarms`: agendar contagem de tempo e reset diário.
 - `idle`: usar a API nativa de inatividade do Chrome para não contar tempo ocioso como produtivo.
+- `windows`: detectar quando o navegador perde foco para medir tempo em segundo plano.
 - `webNavigation`: detectar trocas de rota em SPA (YouTube, LinkedIn, Slack web) e contar navegações internas.
 - `tabGroups`: identificar quando a aba está agrupada para métricas de tempo em grupos.
 - `sessions`: contar itens fechados/reabertos recentemente (aba ou janela) como KPI no relatório.
