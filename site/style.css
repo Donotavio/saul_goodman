@@ -439,42 +439,6 @@ blockquote p {
   border-color: var(--yellow);
 }
 
-.toast {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  display: flex;
-  gap: 12px;
-  padding: 10px 12px;
-  background: #fff;
-  border: 2px solid var(--black);
-  border-radius: 16px;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
-  align-items: center;
-  opacity: 0;
-  transform: translateY(80px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 100;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.toast img {
-  width: 64px;
-  border-radius: 10px;
-  border: 2px solid var(--black);
-}
-
-.toast strong {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--red);
-}
-
 @media (max-width: 720px) {
   .site-nav {
     flex-wrap: wrap;

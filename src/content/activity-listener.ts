@@ -1,6 +1,5 @@
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
-const SCORE_TOAST_MESSAGE = 'sg:score-toast';
 const EARTHQUAKE_CLASS = 'sg-earthquake-active';
 const OVERLAY_ID = 'sg-earthquake-overlay';
 const STYLE_ID = 'sg-earthquake-style';
@@ -12,13 +11,6 @@ const CRITICAL_QUOTES = [
 ];
 const LOGO_URL = chrome.runtime.getURL('src/img/logotipo_saul_goodman.png');
 
-declare const showTabToast: (mood: 'positive' | 'negative', message: string) => void;
-type ScoreToastPayload = {
-  mood: 'positive' | 'negative';
-  message: string;
-  score: number;
-};
-
 let lastEventTimestamp = Date.now();
 let intervalId: number | null = null;
 let listenersBound = false;
@@ -26,7 +18,6 @@ let overlayElement: HTMLDivElement | null = null;
 let earthquakeActive = false;
 const sirenPlayer =
   typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
-let toastAudioContext: AudioContext | null = null;
 
 const activityHandler = () => {
   lastEventTimestamp = Date.now();
@@ -102,26 +93,8 @@ chrome.runtime.onMessage.addListener((message) => {
     } else {
       deactivateEarthquake();
     }
-  } else if (message?.type === SCORE_TOAST_MESSAGE) {
-    handleScoreToast(message.payload as ScoreToastPayload | undefined);
   }
 });
-
-function handleScoreToast(payload?: ScoreToastPayload): void {
-  if (!payload || typeof showTabToast !== 'function') {
-    return;
-  }
-
-  try {
-    showTabToast(payload.mood, payload.message);
-  } catch (error) {
-    console.warn('Saul toast não pôde ser exibido na página:', error);
-  }
-
-  if (payload.mood === 'positive') {
-    void playToastCelebrationSound();
-  }
-}
 
 function activateEarthquake(shouldPlaySound: boolean): void {
   if (earthquakeActive) {
@@ -151,47 +124,6 @@ function deactivateEarthquake(): void {
   existingOverlay?.remove();
   overlayElement = null;
   sirenPlayer?.stop();
-}
-
-async function playToastCelebrationSound(): Promise<void> {
-  if (typeof AudioContext === 'undefined') {
-    return;
-  }
-
-  if (!toastAudioContext) {
-    try {
-      toastAudioContext = new AudioContext();
-    } catch (error) {
-      console.warn('Contexto de áudio indisponível para o toast:', error);
-      return;
-    }
-  }
-
-  if (toastAudioContext.state === 'suspended') {
-    try {
-      await toastAudioContext.resume();
-    } catch (error) {
-      console.warn('Não foi possível retomar o áudio do toast:', error);
-      return;
-    }
-  }
-
-  try {
-    const oscillator = toastAudioContext.createOscillator();
-    const gain = toastAudioContext.createGain();
-    const now = toastAudioContext.currentTime;
-    oscillator.type = 'triangle';
-    oscillator.frequency.setValueAtTime(550, now);
-    oscillator.frequency.exponentialRampToValueAtTime(880, now + 0.3);
-    gain.gain.setValueAtTime(0.18, now);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
-    oscillator.connect(gain);
-    gain.connect(toastAudioContext.destination);
-    oscillator.start(now);
-    oscillator.stop(now + 0.5);
-  } catch (error) {
-    console.warn('Falha ao tocar áudio do toast:', error);
-  }
 }
 
 function injectStyles(): void {

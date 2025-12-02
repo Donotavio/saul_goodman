@@ -38,7 +38,6 @@
       ],
       "js": [
         "src/shared/critical-siren.js",
-        "src/shared/toast.js",
         "dist/content/activity-listener.js"
       ],
       "run_at": "document_idle"

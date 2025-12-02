@@ -18,7 +18,7 @@
      - `sg:tracking-tick` roda a cada 15s para consolidar tempo produtivo/procrastinação/inativo.
      - `sg:midnight-reset` limpa métricas diariamente e reseta contadores.
    - `chrome.storage.onChanged`: mantém caches locais sincronizados quando options altera configurações.
-   - `calculateProcrastinationIndex` converte métricas em índice (0–100), atualiza badge e emite `sg:score-toast` quando a mensagem do índice muda.
+   - `calculateProcrastinationIndex` converte métricas em índice (0–100) e atualiza o badge.
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
    - Botões: `Atualizar` e `Configurar` (abre options); exportações ficam na seção “Defenda seu foco”.
@@ -86,11 +86,10 @@ Sem gravar dados extras, `popup.ts` calcula indicadores adicionais com base nas 
 - **Vilão do dia**: domínio procrastinatório com maior peso.
 Todos os cartões exibem um tooltip descrevendo a métrica.
 
-## Exportações e toasts
+## Exportações
 
 - **CSV**: gerado diretamente no popup convertendo métricas e KPIs em linhas (`downloadTextFile`). Inclui resumo diário, indicadores extras e top 10 domínios.
 - **PDF**: usa `jspdf` vendorizado (`src/vendor/jspdf.umd.min.js`). O popup monta um relatório com textos, KPIs e a imagem do gráfico (via `Chart.toBase64Image`). O arquivo é salvo localmente com `jsPDF#save`.
-- **Toasty**: `src/shared/toast.js` é injetado como script estático. Quando o background envia `sg:score-toast`, o content script chama `showTabToast` (positivo comemorando, negativo repreendendo) em qualquer aba compatível (`http/https`). Isso mantém o usuário informado mesmo fora do popup.
 
 ## Build & distribuição
 

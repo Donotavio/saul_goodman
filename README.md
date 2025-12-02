@@ -12,7 +12,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 ## Funcionalidades principais
 
 - **Service Worker** monitora domínio ativo, soma tempo produtivo x procrastinação, detecta inatividade e conta troca de abas.
-- **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora e, agora, também exibe os toasts do Saul diretamente dentro das abas ativas.
+- **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
 - **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do “modo terremoto” e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
@@ -22,7 +22,6 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário, gráfico de trocas de abas por hora e PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy em pt-BR com tom sarcástico sem referências visuais protegidas.
 - **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; a sirene opcional é configurada nas opções e apenas abas não productivas (procrastinação/indefinidas) recebem o travamento/alerta, permitindo que o usuário continue usando abas classificadas como produtivas para recuperar o foco.
-- **Toasty do Saul**: sempre que a mensagem do índice muda, todas as abas ativas recebem um toast com áudio curto opcional, replicando o easter egg “Toasty!” no navegador (Saul comemora quando o índice está saudável e dá bronca quando passa do ponto).
 
 ## Stack e arquitetura
 
@@ -50,7 +49,6 @@ saul_goodman/
 │  ├─ options/
 │  │  ├─ options.html / options.css / options.ts
 │  └─ shared/
-│     ├─ toast.js
 │     ├─ types.ts
 │     ├─ storage.ts / score.ts / metrics.ts / tab-switch.ts
 │     └─ utils/{time,domain,inactivity}.ts
