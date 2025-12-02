@@ -16,6 +16,11 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `timeline` | Lista `{startTime, endTime, durationMs, domain, category}` (até 2.000 entradas). | Populada em `recordTimelineSegment` para contar a história do dia. |
 | `currentIndex` | Índice de procrastinação mostrado no badge/popup. | `calculateProcrastinationIndex`. |
 | `overtimeProductiveMs` | Minutos produtivos acumulados fora dos horários cadastrados na options page. | Incrementado em `accumulateSlice` quando `classifyDomain` retorna `productive` e o timestamp está fora do expediente configurado (padrão: 08h–12h e 14h–18h). |
+| `windowUnfocusedMs` | Tempo em que o navegador ficou em segundo plano (outra janela focada). | Incrementado quando `windows.onFocusChanged` indica perda de foco. |
+| `audibleProcrastinationMs` | Tempo com áudio ativo em domínios procrastinatórios. | Incrementado em `accumulateSlice` quando `tab.audible` está ligado e a categoria é procrastinação. |
+| `spaNavigations` | Contagem de trocas de rota em apps SPA. | Incrementado em `webNavigation.onCommitted/onHistoryStateUpdated`. |
+| `groupedMs` | Tempo em abas que estão dentro de grupos. | Incrementado em `accumulateSlice` quando `tab.groupId` é válido. |
+| `restoredItems` | Itens fechados hoje (abas/janelas recentes). | Atualizado em `updateRestoredItems` via `chrome.sessions.getRecentlyClosed`. |
 
 ### Índice de procrastinação
 
@@ -47,6 +52,11 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 | **Prod x Proc** | `productiveMs / procrastinationMs` (∞ quando `procrastinationMs === 0`). | Quantas horas produtivas compensam cada hora desperdiçada. |
 | **Imersão campeã** | `max(domains[category === 'productive'])`. | Domínio produtivo com mais tempo. |
 | **Vilão do dia** | `max(domains[category === 'procrastination'])`. | Domínio procrastinatório que mais consumiu o usuário. |
+| **Mídia em vilões** | `audibleProcrastinationMs` formatado em minutos. | Tempo com áudio tocando em domínios procrastinatórios. |
+| **Browser fora de foco** | `windowUnfocusedMs` formatado em minutos. | Tempo com o navegador em segundo plano. |
+| **Rotas em SPA** | `spaNavigations`. | Trocas de rota internas (YouTube, LinkedIn, Slack web, etc.). |
+| **Tempo em grupos** | `groupedMs` formatado em minutos. | Minutos em abas agrupadas. |
+| **Itens fechados hoje** | `restoredItems`. | Quantidade de abas/janelas recentes fechadas no dia. |
 
 > `totalTracked = productiveMs + procrastinationMs + inactiveMs`. Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
 

@@ -67,32 +67,32 @@
     <main>
       <section class="panel kpi-panel">
         <div class="panel-header">
-          <h2>Indicadores adicionais</h2>
+          <h2>Indicadores adicionais <span class="info-icon" data-tooltip="KPIs extras: mídia em vilões, ociosidade real, rotas SPA e agrupamentos de abas.">i</span></h2>
           <p>Ociosidade real, rotas em SPA e tempo de mídia.</p>
         </div>
         <div class="kpi-row">
           <article>
-            <span class="label">Mídia em vilões</span>
+            <span class="label">Mídia em vilões <span class="info-icon" data-tooltip="Tempo com áudio tocando em domínios marcados como procrastinação.">i</span></span>
             <strong id="audioProcrastinationValue">--</strong>
             <small>Tempo com áudio em sites procrastinatórios</small>
           </article>
           <article>
-            <span class="label">Navegador fora de foco</span>
+            <span class="label">Navegador fora de foco <span class="info-icon" data-tooltip="Minutos em que o browser ficou em segundo plano (outra janela focada).">i</span></span>
             <strong id="unfocusedValue">--</strong>
             <small>Minutos com o browser em segundo plano</small>
           </article>
           <article>
-            <span class="label">Rotas em SPA</span>
+            <span class="label">Rotas em SPA <span class="info-icon" data-tooltip="Trocas de rota internas em apps de página única (YouTube, LinkedIn, Slack web).">i</span></span>
             <strong id="spaNavigationsValue">--</strong>
             <small>Trocas de rota registradas</small>
           </article>
           <article>
-            <span class="label">Tempo em grupos</span>
+            <span class="label">Tempo em grupos <span class="info-icon" data-tooltip="Minutos em abas que pertencem a grupos (quando agrupadas).">i</span></span>
             <strong id="groupedTimeValue">--</strong>
             <small>Minutos em abas agrupadas</small>
           </article>
           <article>
-            <span class="label">Itens fechados hoje</span>
+            <span class="label">Itens fechados hoje <span class="info-icon" data-tooltip="Quantidade de abas ou janelas fechadas hoje (recente).">i</span></span>
             <strong id="restoredItemsValue">--</strong>
             <small>Abas ou janelas recentes</small>
           </article>
@@ -101,7 +101,7 @@
 
       <section class="panel">
         <div class="panel-header">
-          <h2>Fluxo horário</h2>
+          <h2>Fluxo horário <span class="info-icon" data-tooltip="Minutos produtivos, procrastinação e inatividade por hora do dia.">i</span></h2>
           <p>Produtividade versus tentações ao longo do dia.</p>
         </div>
         <div class="chart-wrapper">
@@ -114,7 +114,7 @@
 
       <section class="panel">
         <div class="panel-header">
-          <h2>Trocas de abas por hora</h2>
+          <h2>Trocas de abas por hora <span class="info-icon" data-tooltip="Distribuição das trocas de aba por origem/destino (Prod/Proc/Neutro) ao longo do dia.">i</span></h2>
           <p>Como você pulou entre produtivo, procrastinação e neutro ao longo do dia.</p>
         </div>
         <div class="chart-wrapper">
@@ -127,7 +127,7 @@
 
       <section class="panel duo">
         <div class="panel-block">
-          <h2>Composição do dia</h2>
+          <h2>Composição do dia <span class="info-icon" data-tooltip="Divisão do dia em produtivo, procrastinação, inatividade e neutro.">i</span></h2>
           <canvas id="compositionChart" height="200"></canvas>
         </div>
         <div class="panel-block">
@@ -140,7 +140,7 @@
 
       <section class="panel duo ranking-section">
         <div class="panel-block">
-          <h2>Top produtivos</h2>
+          <h2>Top produtivos <span class="info-icon" data-tooltip="Ranking de domínios produtivos pelo tempo agregado no dia.">i</span></h2>
           <table class="ranking-table" id="productiveRanking">
             <thead>
               <tr>
@@ -154,7 +154,7 @@
           </table>
         </div>
         <div class="panel-block">
-          <h2>Top procrastinação</h2>
+          <h2>Top procrastinação <span class="info-icon" data-tooltip="Ranking de domínios procrastinatórios pelo tempo agregado no dia.">i</span></h2>
           <table class="ranking-table" id="procrastinationRanking">
             <thead>
               <tr>
@@ -171,7 +171,7 @@
 
       <section class="panel timeline-panel">
         <div class="panel-header">
-          <h2>Narrativa minuto a minuto</h2>
+          <h2>Narrativa minuto a minuto <span class="info-icon" data-tooltip="Principais trechos do dia, agrupados por hora com categoria de atividade.">i</span></h2>
           <p>Principais trechos que contam a história do seu expediente.</p>
           <div class="timeline-filter">
             <label>

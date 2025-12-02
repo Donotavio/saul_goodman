@@ -30,6 +30,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Chart.js** vendorizado (UMD local em `src/vendor/chart.umd.js`).
 - **chrome.storage.local** para métricas diárias e configurações.
 - **Sem frameworks**: todo HTML/CSS escrito manualmente.
+- **Permissões extras**: `idle` (ociosidade nativa), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos) e `sessions` (itens fechados recentes) para KPIs adicionais no relatório. Tudo permanece local.
 
 ```text
 saul_goodman/
@@ -94,6 +95,7 @@ saul_goodman/
 
 - `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas (com breakdown Prod⇄Proc⇄Neutro) e minutos produtivos fora do expediente configurado.
 - `score.ts` converte esses números em um índice ponderado (pesos configuráveis nas opções). Cada minuto produtivo fora dos horários cadastrados entra com peso dobrado no cálculo.
+- Indicadores adicionais no relatório: tempo com áudio em domínios procrastinatórios, minutos com navegador em segundo plano, contagem de rotas em SPA, tempo em abas agrupadas e itens fechados no dia.
 - Reset automático diariamente via alarme de meia-noite; para “zerar” manualmente basta usar o DevTools → Application → Storage (não há mais botão dedicado no popup).
 
 ## Privacidade
