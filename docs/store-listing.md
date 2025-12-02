@@ -19,6 +19,7 @@ A Saul Goodman Extension monitora quanto tempo você passa em domínios produtiv
 - Exportação rápida em CSV/PDF e relatório detalhado com timeline por hora.
 - Modo terremoto com overlay e sirene opcional ao ultrapassar o limiar configurável.
 - Listas editáveis de domínios produtivos/vilões e horários de trabalho; minutos produtivos fora do expediente contam em dobro.
+- Indicadores extras: tempo com áudio em vilões, minutos com navegador em segundo plano, rotas em SPA, tempo em abas agrupadas e itens fechados no dia.
 - Funciona 100% local; opcionalmente usa OpenAI para gerar narrativa se você fornecer sua chave.
 
 ### Permissões (justificativa)
@@ -26,6 +27,10 @@ A Saul Goodman Extension monitora quanto tempo você passa em domínios produtiv
 - `tabs` / `activeTab`: ler a URL ativa para classificar o domínio como produtivo/procrastinação/neutral.
 - `storage`: guardar métricas e configurações no seu navegador.
 - `alarms`: agendar contagem periódica e reset diário.
+- `idle`: usar a API nativa do Chrome para detectar inatividade real.
+- `webNavigation`: detectar trocas de rota em SPA (YouTube, LinkedIn, Slack web) e contar navegações internas.
+- `tabGroups`: identificar se a aba está em um grupo para medir tempo em grupos.
+- `sessions`: contar itens fechados/reabertos recentemente como KPI no relatório.
 - `<all_urls>`: permitir a classificação em qualquer site que você abrir.
 
 ### Política de privacidade

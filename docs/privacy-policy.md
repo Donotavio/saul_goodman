@@ -1,6 +1,6 @@
 # Política de Privacidade — Saul Goodman Extension
 
-Última atualização: 2024-xx-xx
+Última atualização: 2025-12-02
 
 ## O que coletamos e onde fica
 
@@ -20,10 +20,14 @@
 
 ## Permissões
 
-- `tabs`/`activeTab`: ler a URL ativa para classificar o domínio.
+- `tabs` / `activeTab`: ler a URL ativa para classificar o domínio.
 - `storage`: salvar métricas e configurações localmente.
 - `alarms`: agendar contagem de tempo e reset diário.
-- `<all_urls>`: permitir classificação de qualquer domínio aberto.
+- `idle`: usar a API nativa de inatividade do Chrome para não contar tempo ocioso como produtivo.
+- `webNavigation`: detectar trocas de rota em SPA (YouTube, LinkedIn, Slack web) e contar navegações internas.
+- `tabGroups`: identificar quando a aba está agrupada para métricas de tempo em grupos.
+- `sessions`: contar itens fechados/reabertos recentemente (aba ou janela) como KPI no relatório.
+- `<all_urls>`: permitir classificação em qualquer site aberto.
 - Todos os scripts são locais (Manifest V3), sem código remoto.
 
 ## Retenção e controle
@@ -38,4 +42,4 @@
 
 ## Contato
 
-- Suporte: adicione seu email/site de suporte aqui.
+- Suporte: informe seu email ou URL oficial de suporte aqui.
