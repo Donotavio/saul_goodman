@@ -124,13 +124,22 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.windows.onFocusChanged.addListener((windowId) => {
+  const now = Date.now();
   const focused = windowId !== chrome.windows.WINDOW_ID_NONE;
-  trackingState.browserFocused = focused;
-  trackingState.lastActivity = Date.now();
-  trackingState.lastTimestamp = Date.now();
+
   if (!focused) {
-    void finalizeCurrentDomainSlice();
+    void (async () => {
+      await finalizeCurrentDomainSlice();
+      trackingState.browserFocused = false;
+      trackingState.lastActivity = now;
+      trackingState.lastTimestamp = now;
+    })();
+    return;
   }
+
+  trackingState.browserFocused = true;
+  trackingState.lastActivity = now;
+  trackingState.lastTimestamp = now;
 });
 
 chrome.idle.onStateChanged.addListener((newState) => {
@@ -141,12 +150,17 @@ chrome.idle.onStateChanged.addListener((newState) => {
     trackingState.lastTimestamp = now;
   } else {
     trackingState.isIdle = false;
+    trackingState.lastActivity = now;
     trackingState.lastTimestamp = now;
   }
 });
 
-chrome.webNavigation.onCommitted.addListener(handleNavigationEvent);
-chrome.webNavigation.onHistoryStateUpdated.addListener(handleNavigationEvent);
+chrome.webNavigation.onCommitted.addListener((details) => {
+  void handleNavigationEvent(details, false);
+});
+chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
+  void handleNavigationEvent(details, true);
+});
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === TRACKING_ALARM) {
@@ -502,9 +516,12 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   return settingsCache;
 }
 
-async function handleNavigationEvent(details: chrome.webNavigation.WebNavigationTransitionCallbackDetails): Promise<void> {
+async function handleNavigationEvent(
+  details: chrome.webNavigation.WebNavigationTransitionCallbackDetails,
+  isSpaNavigation = false
+): Promise<void> {
   const tabId = details.tabId;
-  if (typeof tabId !== 'number') {
+  if (typeof tabId !== 'number' || details.frameId !== 0) {
     return;
   }
   try {
@@ -512,9 +529,11 @@ async function handleNavigationEvent(details: chrome.webNavigation.WebNavigation
     if (!tab.active) {
       return;
     }
-    const metrics = await getMetricsCache();
-    metrics.spaNavigations = (metrics.spaNavigations ?? 0) + 1;
-    await persistMetrics();
+    if (isSpaNavigation) {
+      const metrics = await getMetricsCache();
+      metrics.spaNavigations = (metrics.spaNavigations ?? 0) + 1;
+      await persistMetrics();
+    }
     await updateActiveTabContext(tabId, false, tab);
   } catch {
     // ignore lookup errors
