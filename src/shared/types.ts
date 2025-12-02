@@ -36,6 +36,11 @@ export interface DailyMetrics {
   hourly: HourlyBucket[];
   timeline: TimelineEntry[];
   overtimeProductiveMs?: number;
+  windowUnfocusedMs?: number;
+  audibleProcrastinationMs?: number;
+  spaNavigations?: number;
+  groupedMs?: number;
+  restoredItems?: number;
 }
 
 export interface TabSwitchBreakdown {

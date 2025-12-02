@@ -504,3 +504,33 @@ main {
   gap: 12px;
   flex-wrap: wrap;
 }
+
+.kpi-panel .kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.kpi-panel article {
+  border: 1px solid #e2c975;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fffef6;
+}
+
+.kpi-panel .label {
+  display: block;
+  font-size: 0.9rem;
+  color: #6a4b0f;
+  margin-bottom: 6px;
+}
+
+.kpi-panel strong {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.kpi-panel small {
+  color: #4b3a21;
+}

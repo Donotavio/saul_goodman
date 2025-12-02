@@ -120,7 +120,12 @@ export function createDefaultMetrics(): DailyMetrics {
     lastUpdated: Date.now(),
     hourly: createEmptyHourly(),
     timeline: createEmptyTimeline(),
-    overtimeProductiveMs: 0
+    overtimeProductiveMs: 0,
+    windowUnfocusedMs: 0,
+    audibleProcrastinationMs: 0,
+    spaNavigations: 0,
+    groupedMs: 0,
+    restoredItems: 0
   };
 }
 

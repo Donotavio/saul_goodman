@@ -77,6 +77,11 @@ function createMetrics(overrides: Partial<DailyMetrics> = {}): DailyMetrics {
     })),
     timeline: [],
     overtimeProductiveMs: 0,
+    windowUnfocusedMs: 0,
+    audibleProcrastinationMs: 0,
+    spaNavigations: 0,
+    groupedMs: 0,
+    restoredItems: 0,
     ...overrides
   };
 }

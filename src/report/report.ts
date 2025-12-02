@@ -54,6 +54,13 @@ const criticalBannerCountdownEl = document.getElementById(
   'criticalBannerCountdown'
 ) as HTMLElement | null;
 const criticalBannerAction = document.getElementById('criticalBannerAction') as HTMLButtonElement | null;
+const audioProcrastinationEl = document.getElementById(
+  'audioProcrastinationValue'
+) as HTMLElement | null;
+const unfocusedEl = document.getElementById('unfocusedValue') as HTMLElement | null;
+const spaNavigationsEl = document.getElementById('spaNavigationsValue') as HTMLElement | null;
+const groupedTimeEl = document.getElementById('groupedTimeValue') as HTMLElement | null;
+const restoredItemsEl = document.getElementById('restoredItemsValue') as HTMLElement | null;
 
 const messageTemplates: Array<{ max: number; text: string }> = [
   {
@@ -170,6 +177,21 @@ function renderReport(metrics: DailyMetrics): void {
   const kpis = calculateKpis(metrics);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
   heroSwitchesEl.textContent = `${metrics.tabSwitches}`;
+  if (audioProcrastinationEl) {
+    audioProcrastinationEl.textContent = formatDuration(metrics.audibleProcrastinationMs ?? 0);
+  }
+  if (unfocusedEl) {
+    unfocusedEl.textContent = formatDuration(metrics.windowUnfocusedMs ?? 0);
+  }
+  if (spaNavigationsEl) {
+    spaNavigationsEl.textContent = `${metrics.spaNavigations ?? 0}`;
+  }
+  if (groupedTimeEl) {
+    groupedTimeEl.textContent = formatDuration(metrics.groupedMs ?? 0);
+  }
+  if (restoredItemsEl) {
+    restoredItemsEl.textContent = `${metrics.restoredItems ?? 0}`;
+  }
 
   renderHourlyChart(metrics);
   renderTabSwitchChart(metrics);

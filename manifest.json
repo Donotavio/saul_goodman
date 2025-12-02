@@ -26,7 +26,11 @@
     "storage",
     "tabs",
     "alarms",
-    "activeTab"
+    "activeTab",
+    "idle",
+    "webNavigation",
+    "tabGroups",
+    "sessions"
   ],
   "host_permissions": [
     "<all_urls>"

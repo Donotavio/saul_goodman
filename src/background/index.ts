@@ -39,6 +39,9 @@ interface TrackingState {
   lastTimestamp: number;
   lastActivity: number;
   isIdle: boolean;
+  browserFocused: boolean;
+  currentTabAudible: boolean;
+  currentTabGroupId: number | null;
 }
 
 const trackingState: TrackingState = {
@@ -46,7 +49,10 @@ const trackingState: TrackingState = {
   currentTabId: null,
   lastTimestamp: Date.now(),
   lastActivity: Date.now(),
-  isIdle: false
+  isIdle: false,
+  browserFocused: true,
+  currentTabAudible: false,
+  currentTabGroupId: null
 };
 
 let settingsCache: ExtensionSettings | null = null;
@@ -111,7 +117,36 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url || changeInfo.status === 'complete') {
     void updateActiveTabContext(tabId, false, tab);
   }
+
+  if (typeof changeInfo.audible === 'boolean' && trackingState.currentTabId === tabId) {
+    trackingState.currentTabAudible = changeInfo.audible;
+  }
 });
+
+chrome.windows.onFocusChanged.addListener((windowId) => {
+  const focused = windowId !== chrome.windows.WINDOW_ID_NONE;
+  trackingState.browserFocused = focused;
+  trackingState.lastActivity = Date.now();
+  trackingState.lastTimestamp = Date.now();
+  if (!focused) {
+    void finalizeCurrentDomainSlice();
+  }
+});
+
+chrome.idle.onStateChanged.addListener((newState) => {
+  const now = Date.now();
+  if (newState === 'idle' || newState === 'locked') {
+    void finalizeCurrentDomainSlice();
+    trackingState.isIdle = true;
+    trackingState.lastTimestamp = now;
+  } else {
+    trackingState.isIdle = false;
+    trackingState.lastTimestamp = now;
+  }
+});
+
+chrome.webNavigation.onCommitted.addListener(handleNavigationEvent);
+chrome.webNavigation.onHistoryStateUpdated.addListener(handleNavigationEvent);
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === TRACKING_ALARM) {
@@ -146,8 +181,10 @@ async function initialize(): Promise<void> {
   initializing = true;
 
   await Promise.all([getSettingsCache(), getMetricsCache()]);
+  await updateRestoredItems();
 
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
+  chrome.idle.setDetectionInterval(Math.max(15, Math.round((settingsCache?.inactivityThresholdMs ?? 60000) / 1000)));
   await scheduleTrackingAlarm();
   await scheduleMidnightAlarm();
   await hydrateActiveTab();
@@ -201,6 +238,8 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
   }
 
   const domain = tab.url ? extractDomain(tab.url) : null;
+  const audible = tab.audible === true;
+  const groupId = typeof tab.groupId === 'number' ? tab.groupId : null;
   const previousDomain = trackingState.currentDomain;
   const previousTabId = trackingState.currentTabId;
   const domainChanged = previousDomain !== domain;
@@ -212,6 +251,8 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
     }
     trackingState.currentDomain = null;
     trackingState.currentTabId = null;
+    trackingState.currentTabAudible = false;
+    trackingState.currentTabGroupId = null;
     trackingState.lastTimestamp = Date.now();
     return;
   }
@@ -232,6 +273,8 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
   trackingState.currentDomain = domain;
   trackingState.currentTabId = tabId;
   trackingState.isIdle = false;
+  trackingState.currentTabAudible = audible;
+  trackingState.currentTabGroupId = groupId;
   trackingState.lastTimestamp = Date.now();
 }
 
@@ -257,6 +300,19 @@ async function accumulateSlice(): Promise<void> {
   trackingState.lastTimestamp = now;
 
   const metrics = await getMetricsCache();
+
+  if (!trackingState.browserFocused) {
+    metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + elapsed;
+    recordTimelineSegment(metrics, {
+      category: 'inactive',
+      domain: 'Navegador em segundo plano',
+      durationMs: elapsed,
+      startTime: sliceStart,
+      endTime: now
+    });
+    await persistMetrics();
+    return;
+  }
 
   if (trackingState.isIdle) {
     metrics.inactiveMs += elapsed;
@@ -298,6 +354,13 @@ async function accumulateSlice(): Promise<void> {
     metrics.overtimeProductiveMs = (metrics.overtimeProductiveMs ?? 0) + (isOvertime ? elapsed : 0);
   } else if (category === 'procrastination') {
     metrics.procrastinationMs += elapsed;
+    if (trackingState.currentTabAudible) {
+      metrics.audibleProcrastinationMs = (metrics.audibleProcrastinationMs ?? 0) + elapsed;
+    }
+  }
+
+  if (trackingState.currentTabGroupId !== null && trackingState.currentTabGroupId !== -1) {
+    metrics.groupedMs = (metrics.groupedMs ?? 0) + elapsed;
   }
 
   recordTimelineSegment(metrics, {
@@ -404,6 +467,26 @@ async function ensureDailyCache(): Promise<void> {
   if (!metricsCache.tabSwitchHourly || metricsCache.tabSwitchHourly.length !== 24) {
     metricsCache.tabSwitchHourly = createEmptyTabSwitchHourly();
   }
+
+  if (typeof metricsCache.windowUnfocusedMs !== 'number') {
+    metricsCache.windowUnfocusedMs = 0;
+  }
+
+  if (typeof metricsCache.audibleProcrastinationMs !== 'number') {
+    metricsCache.audibleProcrastinationMs = 0;
+  }
+
+  if (typeof metricsCache.spaNavigations !== 'number') {
+    metricsCache.spaNavigations = 0;
+  }
+
+  if (typeof metricsCache.groupedMs !== 'number') {
+    metricsCache.groupedMs = 0;
+  }
+
+  if (typeof metricsCache.restoredItems !== 'number') {
+    metricsCache.restoredItems = 0;
+  }
 }
 
 async function getMetricsCache(): Promise<DailyMetrics> {
@@ -417,6 +500,25 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   }
 
   return settingsCache;
+}
+
+async function handleNavigationEvent(details: chrome.webNavigation.WebNavigationTransitionCallbackDetails): Promise<void> {
+  const tabId = details.tabId;
+  if (typeof tabId !== 'number') {
+    return;
+  }
+  try {
+    const tab = await chrome.tabs.get(tabId);
+    if (!tab.active) {
+      return;
+    }
+    const metrics = await getMetricsCache();
+    metrics.spaNavigations = (metrics.spaNavigations ?? 0) + 1;
+    await persistMetrics();
+    await updateActiveTabContext(tabId, false, tab);
+  } catch {
+    // ignore lookup errors
+  }
 }
 
 async function scheduleTrackingAlarm(): Promise<void> {
@@ -566,4 +668,25 @@ function sendCriticalMessageToTab(
       resolve();
     });
   });
+}
+
+async function updateRestoredItems(): Promise<void> {
+  try {
+    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 50 });
+    const today = getTodayKey();
+    const countToday = items.filter((item) => {
+      const ts = item.lastModified;
+      if (!ts) {
+        return false;
+      }
+      const d = new Date(ts);
+      const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+      return key === today;
+    }).length;
+    const metrics = await getMetricsCache();
+    metrics.restoredItems = countToday;
+    await persistMetrics();
+  } catch {
+    // ignore sessions errors in hardened environments
+  }
 }
