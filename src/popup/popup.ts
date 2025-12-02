@@ -1,6 +1,13 @@
 import { DailyMetrics, DomainStats, PopupData, RuntimeMessageType } from '../shared/types.js';
 import { formatDuration } from '../shared/utils/time.js';
-import { calculateKpis, CalculatedKpis, formatPercentage, formatRate, formatProductivityRatio } from '../shared/metrics.js';
+import {
+  calculateKpis,
+  CalculatedKpis,
+  formatPercentage,
+  formatRate,
+  formatProductivityRatio
+} from '../shared/metrics.js';
+import { pickScoreMessage } from '../shared/score.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -23,7 +30,6 @@ const procrastinationTimeEl = document.getElementById('procrastinationTime') as 
 const inactiveTimeEl = document.getElementById('inactiveTime') as HTMLElement;
 const domainsListEl = document.getElementById('domainsList') as HTMLOListElement;
 const refreshButton = document.getElementById('refreshButton') as HTMLButtonElement;
-const clearButton = document.getElementById('clearButton') as HTMLButtonElement;
 const optionsButton = document.getElementById('optionsButton') as HTMLButtonElement;
 const chartCanvas = document.getElementById('productivityChart') as HTMLCanvasElement;
 const csvExportButton = document.getElementById('csvExportButton') as HTMLButtonElement;
@@ -70,13 +76,6 @@ let lastScoreMessage = '';
 let toastTimeout: number | null = null;
 let toastAudioContext: AudioContext | null = null;
 
-const messageTemplates: Array<{ max: number; text: string }> = [
-  { max: 25, text: 'Cliente de ouro! Continue assim que eu consigo cobrar cache cheio.' },
-  { max: 50, text: 'Ainda dá pra dizer que é expediente. Não me force a ligar pro seu foco.' },
-  { max: 75, text: 'Vejo sinais de fuga de responsabilidade. Hora de voltar pro jogo.' },
-  { max: 100, text: 'Você está brincando com fogo. E eu cobro por hora para apagar incêndios.' }
-];
-
 const criticalMessages: Array<(threshold: number) => string> = [
   (threshold) =>
     `Cliente, com índice ${threshold} nem eu consigo te defender. Vai custar honorários de risco!`,
@@ -97,12 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function attachListeners(): void {
   refreshButton.addEventListener('click', () => void hydrate());
-  clearButton.addEventListener('click', () => {
-    if (!confirm('Tem certeza? Isso zera apenas o dia atual.')) {
-      return;
-    }
-    void sendRuntimeMessage('clear-data').then(() => hydrate());
-  });
   optionsButton.addEventListener('click', () => {
     void chrome.runtime.openOptionsPage();
   });
@@ -197,15 +190,6 @@ function renderScore(score: number): void {
   }
   toggleCriticalMode(score >= threshold);
   lastCriticalScoreNotified = score >= threshold ? score : -Infinity;
-}
-
-function pickScoreMessage(score: number): string {
-  for (const template of messageTemplates) {
-    if (score <= template.max) {
-      return template.text;
-    }
-  }
-  return messageTemplates[messageTemplates.length - 1].text;
 }
 
 function isScorePositive(score: number): boolean {

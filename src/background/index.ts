@@ -1,4 +1,4 @@
-import { calculateProcrastinationIndex } from '../shared/score.js';
+import { calculateProcrastinationIndex, pickScoreMessage } from '../shared/score.js';
 import {
   StorageKeys,
   clearDailyMetrics,
@@ -19,7 +19,8 @@ import {
   HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
-  RuntimeMessageType
+  RuntimeMessageType,
+  ScoreToastPayload
 } from '../shared/types.js';
 import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
@@ -32,6 +33,7 @@ const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
 const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
+const SCORE_TOAST_MESSAGE = 'sg:score-toast';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -55,6 +57,7 @@ let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
 let lastCriticalScore = -Infinity;
+let lastToastMessage: string | null = null;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -356,11 +359,13 @@ async function persistMetrics(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
+  const previousScore = metricsCache.currentIndex;
   metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
   metricsCache.lastUpdated = Date.now();
 
   await saveDailyMetrics(metricsCache);
   await updateBadgeText(metricsCache.currentIndex);
+  await maybeBroadcastScoreToast(previousScore, metricsCache.currentIndex, settings);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
 
@@ -370,10 +375,12 @@ async function refreshScore(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
+  const previousScore = metricsCache.currentIndex;
   metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
 
   await saveDailyMetrics(metricsCache);
   await updateBadgeText(metricsCache.currentIndex);
+  await maybeBroadcastScoreToast(previousScore, metricsCache.currentIndex, settings);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
 
@@ -442,6 +449,7 @@ async function clearTodayData(): Promise<void> {
   trackingState.isIdle = false;
   trackingState.lastActivity = Date.now();
   trackingState.lastTimestamp = Date.now();
+  lastToastMessage = null;
   await updateBadgeText(metricsCache.currentIndex);
   await hydrateActiveTab();
   await broadcastCriticalState(false, settingsCache ?? (await getSettingsCache()));
@@ -565,4 +573,75 @@ function sendCriticalMessageToTab(
       resolve();
     });
   });
+}
+
+async function maybeBroadcastScoreToast(
+  _previousScore: number,
+  nextScore: number,
+  settings: ExtensionSettings
+): Promise<void> {
+  const message = pickScoreMessage(nextScore);
+  if (!message || message === lastToastMessage) {
+    return;
+  }
+
+  lastToastMessage = message;
+  const mood: ScoreToastPayload['mood'] = nextScore <= 50 ? 'positive' : 'negative';
+  const payload: ScoreToastPayload = {
+    mood,
+    message,
+    score: nextScore
+  };
+
+  await broadcastScoreToast(payload, settings);
+}
+
+async function broadcastScoreToast(
+  payload: ScoreToastPayload,
+  settings: ExtensionSettings
+): Promise<void> {
+  const tabs = await chrome.tabs.query({ active: true });
+  await Promise.all(
+    tabs
+      .filter((tab): tab is chrome.tabs.Tab & { id: number } => typeof tab.id === 'number')
+      .map((tab) => sendScoreToastToTab(tab, payload, settings))
+  );
+}
+
+function sendScoreToastToTab(
+  tab: chrome.tabs.Tab & { id: number },
+  payload: ScoreToastPayload,
+  settings: ExtensionSettings
+): Promise<void> {
+  const shouldSend =
+    payload.mood === 'negative'
+      ? shouldTriggerCriticalForUrl(tab.url, settings)
+      : isToastSupportedUrl(tab.url);
+
+  if (!shouldSend) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    chrome.tabs.sendMessage(
+      tab.id,
+      { type: SCORE_TOAST_MESSAGE, payload },
+      () => {
+        void chrome.runtime.lastError;
+        resolve();
+      }
+    );
+  });
+}
+
+function isToastSupportedUrl(url?: string): boolean {
+  if (!url) {
+    return true;
+  }
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
 }

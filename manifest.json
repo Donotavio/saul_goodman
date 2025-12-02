@@ -33,15 +33,25 @@
   ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/shared/critical-siren.js", "dist/content/activity-listener.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/shared/critical-siren.js",
+        "src/shared/toast.js",
+        "dist/content/activity-listener.js"
+      ],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["src/img/*"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "src/img/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

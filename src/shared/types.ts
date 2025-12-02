@@ -91,6 +91,14 @@ export interface RuntimeMessageResponse {
   settings?: ExtensionSettings;
 }
 
+export type ToastMood = 'positive' | 'negative';
+
+export interface ScoreToastPayload {
+  mood: ToastMood;
+  message: string;
+  score: number;
+}
+
 export type RuntimeMessageType =
   | 'activity-ping'
   | 'metrics-request'
@@ -101,6 +109,7 @@ export interface PopupData {
   metrics: DailyMetrics;
   settings: ExtensionSettings;
 }
+
 
 export interface DomainListChange {
   domain: string;
