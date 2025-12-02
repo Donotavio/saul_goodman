@@ -18,16 +18,18 @@
      - `sg:tracking-tick` roda a cada 15s para consolidar tempo produtivo/procrastinação/inativo.
      - `sg:midnight-reset` limpa métricas diariamente e reseta contadores.
    - `chrome.storage.onChanged`: mantém caches locais sincronizados quando options altera configurações.
-   - `calculateProcrastinationIndex` converte métricas em índice (0–100) e atualiza badge.
+   - `calculateProcrastinationIndex` converte métricas em índice (0–100), atualiza badge e emite `sg:score-toast` quando a mensagem do índice muda.
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
-   - Botões: `Atualizar`, `Configurar` (abre options) e `Limpar dados` (`clear-data`).
+   - Botões: `Atualizar` e `Configurar` (abre options); exportações ficam na seção “Defenda seu foco”.
    - Estado crítico (score >= `settings.criticalScoreThreshold`, padrão 90): adiciona classe de “terremoto”, exibe overlay do Saul, contador regressivo, CTA para relatório/opções e opcionalmente toca uma sirene (preference salva em `ExtensionSettings.criticalSoundEnabled`). O background envia o alerta para abas cujo domínio não seja classificado como produtivo; se o domínio estiver marcado como produtivo, a aba permanece livre para o usuário recuperar o score.
 4. **Options (`options.ts`)**
-   - Carrega settings, permite alterar pesos, threshold e listas de domínio.
+   - Carrega settings, permite alterar pesos, threshold, listas de domínio e configurações do modo terremoto (limiar + alerta sonoro) além dos blocos de horário de trabalho.
    - Atualiza storage e notifica o background via `settings-updated`.
    - Responde ao hash `#vilains` rolando até a lista de domínios procrastinatórios para fluxos vindos do alerta crítico.
    - Gerencia os blocos de horários de trabalho (`workSchedule`). Usuário pode adicionar/remover intervalos e o background usa esses dados para detectar expediente/oferta de horas extras.
+5. **Site institucional (`site/`)**
+   - HTML/CSS/JS independentes apresentam a extensão, seguindo a mesma identidade visual para campanhas e divulgação.
 
 ## Estrutura dos dados
 
@@ -84,11 +86,11 @@ Sem gravar dados extras, `popup.ts` calcula indicadores adicionais com base nas 
 - **Vilão do dia**: domínio procrastinatório com maior peso.
 Todos os cartões exibem um tooltip descrevendo a métrica.
 
-## Exportações
+## Exportações e toasts
 
 - **CSV**: gerado diretamente no popup convertendo métricas e KPIs em linhas (`downloadTextFile`). Inclui resumo diário, indicadores extras e top 10 domínios.
 - **PDF**: usa `jspdf` vendorizado (`src/vendor/jspdf.umd.min.js`). O popup monta um relatório com textos, KPIs e a imagem do gráfico (via `Chart.toBase64Image`). O arquivo é salvo localmente com `jsPDF#save`.
-Esses KPIs são renderizados em cartões e não exigem persistência adicional.
+- **Toasty**: `src/shared/toast.js` é injetado como script estático. Quando o background envia `sg:score-toast`, o content script chama `showTabToast` (positivo em qualquer aba, negativo apenas se `shouldTriggerCriticalForUrl` retornar verdadeiro). Isso mantém o usuário informado mesmo fora do popup.
 
 ## Build & distribuição
 
