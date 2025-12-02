@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Saul Goodman",
   "description": "Extensão sarcástica que monitora domínios e calcula seu índice de procrastinação.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "icons": {
     "16": "src/img/logotipo_saul_goodman.ico",
     "32": "src/img/logotipo_saul_goodman.png",
