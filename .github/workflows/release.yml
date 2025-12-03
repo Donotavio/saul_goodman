@@ -37,6 +37,7 @@ jobs:
           mkdir -p "$PKG_DIR"
           rsync -a manifest.json "$PKG_DIR"/
           rsync -a src "$PKG_DIR"/
+          rsync -a _locales "$PKG_DIR"/
           rsync -a dist "$PKG_DIR"/
           cd release
           zip -r "saul-goodman-$VERSION.zip" "saul-goodman-$VERSION"
