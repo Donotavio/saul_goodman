@@ -136,6 +136,14 @@ function renderForms(): void {
   renderDomainList('procrastinationDomains', procrastinationListEl);
 }
 
+function translateOrFallback(key: string, fallback: string): string {
+  const translated = i18n?.t(key);
+  if (!translated || translated === key) {
+    return fallback;
+  }
+  return translated;
+}
+
 function renderDomainList(key: DomainListKey, container: HTMLUListElement): void {
   if (!currentSettings) {
     return;
@@ -146,7 +154,7 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
 
   if (!domains.length) {
     const li = document.createElement('li');
-    li.textContent = i18n?.t('options_domain_empty') ?? 'No domains yet.';
+    li.textContent = translateOrFallback('options_domain_empty', 'No domains yet.');
     container.appendChild(li);
     return;
   }
@@ -155,7 +163,7 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
     const li = document.createElement('li');
     li.textContent = domain;
     const button = document.createElement('button');
-    button.textContent = i18n?.t('options_domain_remove') ?? 'Remover';
+    button.textContent = translateOrFallback('options_domain_remove', 'Remove');
     button.dataset.domain = domain;
     li.appendChild(button);
     container.appendChild(li);
@@ -302,11 +310,11 @@ function renderWorkSchedule(): void {
 
     const toLabel = document.createElement('span');
     toLabel.className = 'to-label';
-    toLabel.textContent = i18n?.t('options_schedule_to') ?? 'to';
+    toLabel.textContent = translateOrFallback('options_schedule_to', 'to');
 
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
-    removeButton.textContent = i18n?.t('options_domain_remove') ?? 'Remover';
+    removeButton.textContent = translateOrFallback('options_domain_remove', 'Remove');
     removeButton.disabled = schedule.length <= 1;
     removeButton.addEventListener('click', () => {
       removeScheduleInterval(index);
