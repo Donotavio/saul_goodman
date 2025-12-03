@@ -1,6 +1,7 @@
-import { ExtensionSettings, WorkInterval } from '../shared/types.js';
+import { ExtensionSettings, LocalePreference, WorkInterval } from '../shared/types.js';
 import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings } from '../shared/storage.js';
 import { normalizeDomain } from '../shared/utils/domain.js';
+import { createI18n, I18nService, resolveLocale } from '../shared/i18n.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -15,6 +16,7 @@ const procrastinationWeightEl = document.getElementById('procrastinationWeight')
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
 const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLInputElement;
 const inactivityThresholdEl = document.getElementById('inactivityThreshold') as HTMLInputElement;
+const localeSelectEl = document.getElementById('localeSelect') as HTMLSelectElement;
 const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
@@ -27,6 +29,7 @@ const addWorkIntervalButton = document.getElementById('addWorkIntervalButton') a
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
 let procrastinationHighlightDone = false;
+let i18n: I18nService | null = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -49,6 +52,10 @@ function attachListeners(): void {
     void handleDomainSubmit('procrastinationDomains', procrastinationInput);
   });
 
+  localeSelectEl?.addEventListener('change', () => {
+    void handleLocaleChange();
+  });
+
   productiveListEl.addEventListener('click', (event) => {
     const target = event.target as HTMLButtonElement;
     if (target?.dataset.domain) {
@@ -64,12 +71,20 @@ function attachListeners(): void {
   });
 
   resetButton.addEventListener('click', () => {
-    if (!confirm('Isto restaura todos os valores padrão. Continuar?')) {
+    const confirmMessage =
+      i18n?.t('options_confirm_reset') ?? 'This will restore the default values. Continue?';
+    if (!confirm(confirmMessage)) {
       return;
     }
     currentSettings = getDefaultSettings();
-    void persistSettings('Padrões restaurados.');
-    renderForms();
+    if (currentSettings) {
+      currentSettings.locale = resolveLocale(currentSettings.localePreference ?? 'auto');
+    }
+    void (async () => {
+      await persistSettings('options_status_defaults_restored');
+      await refreshTranslations();
+      renderForms();
+    })();
   });
 
   backToPopupButton?.addEventListener('click', () => {
@@ -84,12 +99,13 @@ function attachListeners(): void {
     const nextEnd = '10:00';
     currentSettings.workSchedule = sanitizeWorkSchedule([...schedule, { start: nextStart, end: nextEnd }]);
     renderWorkSchedule();
-    void persistSettings('Horários atualizados.');
+    void persistSettings('options_status_schedule_updated');
   });
 }
 
 async function hydrate(): Promise<void> {
   currentSettings = await getSettings();
+  await refreshTranslations();
   renderForms();
   if (window.location.hash === '#vilains' && !procrastinationHighlightDone) {
     focusProcrastinationSection();
@@ -106,6 +122,9 @@ function renderForms(): void {
   tabSwitchWeightEl.value = currentSettings.weights.tabSwitchWeight.toString();
   inactivityWeightEl.value = currentSettings.weights.inactivityWeight.toString();
   inactivityThresholdEl.value = Math.round(currentSettings.inactivityThresholdMs / 1000).toString();
+  if (localeSelectEl) {
+    localeSelectEl.value = currentSettings.localePreference ?? 'auto';
+  }
   openAiKeyInput.value = currentSettings.openAiKey ?? '';
   criticalThresholdEl.value = (
     currentSettings.criticalScoreThreshold ?? 90
@@ -127,7 +146,7 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
 
   if (!domains.length) {
     const li = document.createElement('li');
-    li.textContent = 'Nenhum domínio cadastrado.';
+    li.textContent = i18n?.t('options_domain_empty') ?? 'No domains yet.';
     container.appendChild(li);
     return;
   }
@@ -136,7 +155,7 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
     const li = document.createElement('li');
     li.textContent = domain;
     const button = document.createElement('button');
-    button.textContent = 'Remover';
+    button.textContent = i18n?.t('options_domain_remove') ?? 'Remover';
     button.dataset.domain = domain;
     li.appendChild(button);
     container.appendChild(li);
@@ -154,7 +173,7 @@ async function handleWeightsSubmit(): Promise<void> {
   const sum = procrastinationWeight + tabSwitchWeight + inactivityWeight;
 
   if (Math.abs(sum - 1) > 0.01) {
-    showStatus('A soma dos pesos precisa ser 1.', true);
+    showStatus(i18n?.t('options_weights_sum_error') ?? 'A soma dos pesos precisa ser 1.', true);
     return;
   }
 
@@ -173,7 +192,7 @@ async function handleWeightsSubmit(): Promise<void> {
   );
   currentSettings.criticalSoundEnabled = criticalSoundEnabledEl.checked;
   currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
-  await persistSettings('Pesos atualizados.');
+  await persistSettings('options_status_weights_saved');
 }
 
 async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): Promise<void> {
@@ -188,13 +207,13 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
 
   const normalized = normalizeDomain(rawValue);
   if (!normalized) {
-    showStatus('Informe um domínio válido.', true);
+    showStatus(i18n?.t('options_domain_invalid') ?? 'Enter a valid domain.', true);
     return;
   }
 
   const domains = currentSettings[key];
   if (domains.includes(normalized)) {
-    showStatus('Esse domínio já está na lista.', true);
+    showStatus(i18n?.t('options_domain_duplicate') ?? 'Domain already listed.', true);
     input.value = '';
     return;
   }
@@ -203,7 +222,7 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
   domains.sort();
   input.value = '';
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
-  await persistSettings('Lista atualizada.');
+  await persistSettings('options_status_list_updated');
 }
 
 async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
@@ -213,16 +232,16 @@ async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
 
   currentSettings[key] = currentSettings[key].filter((item) => item !== domain);
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
-  await persistSettings('Domínio removido.');
+  await persistSettings('options_status_domain_removed');
 }
 
-async function persistSettings(message: string): Promise<void> {
+async function persistSettings(messageKey: string): Promise<void> {
   if (!currentSettings) {
     return;
   }
 
   await saveSettings(currentSettings);
-  showStatus(message);
+  showStatus(i18n?.t(messageKey) ?? messageKey);
   chrome.runtime.sendMessage({ type: 'settings-updated' }).catch(() => {});
 }
 
@@ -283,11 +302,11 @@ function renderWorkSchedule(): void {
 
     const toLabel = document.createElement('span');
     toLabel.className = 'to-label';
-    toLabel.textContent = 'até';
+    toLabel.textContent = i18n?.t('options_schedule_to') ?? 'to';
 
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
-    removeButton.textContent = 'Remover';
+    removeButton.textContent = i18n?.t('options_domain_remove') ?? 'Remover';
     removeButton.disabled = schedule.length <= 1;
     removeButton.addEventListener('click', () => {
       removeScheduleInterval(index);
@@ -308,7 +327,7 @@ function updateScheduleInterval(index: number, interval: WorkInterval): void {
   currentSettings.workSchedule[index] = interval;
   currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   renderWorkSchedule();
-  void persistSettings('Horários atualizados.');
+  void persistSettings('options_status_schedule_updated');
 }
 
 function removeScheduleInterval(index: number): void {
@@ -321,7 +340,7 @@ function removeScheduleInterval(index: number): void {
   currentSettings.workSchedule.splice(index, 1);
   currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   renderWorkSchedule();
-  void persistSettings('Horários atualizados.');
+  void persistSettings('options_status_schedule_updated');
 }
 
 function sanitizeWorkSchedule(schedule?: WorkInterval[]): WorkInterval[] {
@@ -341,6 +360,24 @@ function sanitizeWorkSchedule(schedule?: WorkInterval[]): WorkInterval[] {
 
 function isValidTime(value: string): boolean {
   return /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
+}
+
+async function refreshTranslations(): Promise<void> {
+  const preference = currentSettings?.localePreference ?? 'auto';
+  i18n = await createI18n(preference);
+  i18n.apply();
+}
+
+async function handleLocaleChange(): Promise<void> {
+  if (!currentSettings || !localeSelectEl) {
+    return;
+  }
+  const preference = (localeSelectEl.value as LocalePreference) ?? 'auto';
+  currentSettings.localePreference = preference;
+  currentSettings.locale = resolveLocale(preference);
+  await persistSettings('options_status_language_saved');
+  await refreshTranslations();
+  renderForms();
 }
 
 function returnToPopup(): void {

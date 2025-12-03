@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Saul Goodman - Configurações</title>
+    <title data-i18n="options_head_title">Saul Goodman - Configurações</title>
     <link rel="icon" type="image/x-icon" href="../img/logotipo_saul_goodman.ico" />
     <link rel="stylesheet" href="options.css" />
     <script type="module" src="../../dist/options/options.js" defer></script>
@@ -11,87 +11,126 @@
   <body>
     <header class="hero">
       <div class="hero-text">
-        <span class="tagline">Seu advogado particular contra a procrastinação</span>
-        <h1>Configurações do Escritório</h1>
-        <p class="subtitle">
+        <span class="tagline" data-i18n="options_tagline">Seu advogado particular contra a procrastinação</span>
+        <h1 data-i18n="options_heading">Configurações do Escritório</h1>
+        <p class="subtitle" data-i18n="options_subtitle">
           Personalize o radar para combinar com seu tipo de procrastinação. Tudo fica no seu navegador.
         </p>
-        <p class="promise">
+        <p class="promise" data-i18n="options_promise">
           Saul mantém os dados sob sigilo total enquanto negocia com o seu foco.
         </p>
       </div>
       <div class="logo-frame">
         <img src="../img/logotipo_saul_goodman.png" alt="Logotipo Saul Goodman" class="logo" />
-        <span class="logo-caption">Filial digital</span>
+        <span class="logo-caption" data-i18n="options_digital_branch">Filial digital</span>
       </div>
     </header>
 
     <main>
       <section class="panel-grid">
         <div class="panel">
-          <h2>Limiares e Pesos</h2>
+          <h2 data-i18n="options_thresholds_heading">Limiares e Pesos</h2>
           <form id="weightsForm">
+            <label class="locale-select">
+              <span data-i18n="options_language_label">Idioma da interface</span>
+              <select id="localeSelect">
+                <option value="auto" data-i18n="options_language_auto">Automático (navegador)</option>
+                <option value="pt-BR" data-i18n="options_language_pt">Português (Brasil)</option>
+                <option value="en-US" data-i18n="options_language_en">English (US)</option>
+                <option value="es-419" data-i18n="options_language_es">Español</option>
+              </select>
+              <small class="hint" data-i18n="options_language_hint">
+                Escolha manualmente ou deixe o idioma seguir o Chrome.
+              </small>
+            </label>
             <label>
-              Tempo improdutivo (peso)
+              <span data-i18n="options_weight_procrastination">Tempo improdutivo (peso)</span>
               <input type="number" id="procrastinationWeight" min="0" max="1" step="0.05" required />
             </label>
 
             <label>
-              Trocas de abas (peso)
+              <span data-i18n="options_weight_switches">Trocas de abas (peso)</span>
               <input type="number" id="tabSwitchWeight" min="0" max="1" step="0.05" required />
             </label>
 
             <label>
-              Inatividade (peso)
+              <span data-i18n="options_weight_inactivity">Inatividade (peso)</span>
               <input type="number" id="inactivityWeight" min="0" max="1" step="0.05" required />
             </label>
 
             <label>
-              Tempo máximo ocioso antes de considerar inatividade (segundos)
+              <span data-i18n="options_inactivity_threshold">
+                Tempo máximo ocioso antes de considerar inatividade (segundos)
+              </span>
               <input type="number" id="inactivityThreshold" min="10" max="600" step="10" required />
             </label>
 
             <label>
-              Chave OpenAI (opcional)
-              <input type="password" id="openAiKey" placeholder="sk-..." />
-              <small class="hint">Guardamos apenas localmente para gerar narrativas no relatório.</small>
+              <span data-i18n="options_openai_label">Chave OpenAI (opcional)</span>
+              <input
+                type="password"
+                id="openAiKey"
+                placeholder="sk-..."
+                data-i18n-placeholder="options_openai_placeholder"
+              />
+              <small class="hint" data-i18n="options_openai_hint">
+                Guardamos apenas localmente para gerar narrativas no relatório.
+              </small>
             </label>
 
             <label>
-              Limiar do modo terremoto (0–100)
+              <span data-i18n="options_critical_threshold_label">Limiar do modo terremoto (0–100)</span>
               <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
-              <small class="hint">Quando o índice atingir esse valor, Saul ativa o alerta crítico.</small>
+              <small class="hint" data-i18n="options_critical_threshold_hint">
+                Quando o índice atingir esse valor, Saul ativa o alerta crítico.
+              </small>
             </label>
 
             <label class="toggle">
-              Sirene automática do modo terremoto
+              <span data-i18n="options_critical_sound_label">Sirene automática do modo terremoto</span>
               <input type="checkbox" id="criticalSoundEnabled" />
-              <small class="hint">Quando ativo, a sirene toca sempre que o alerta crítico dispara.</small>
+              <small class="hint" data-i18n="options_critical_sound_hint">
+                Quando ativo, a sirene toca sempre que o alerta crítico dispara.
+              </small>
             </label>
 
-            <button type="submit" class="primary">Salvar pesos</button>
+            <button type="submit" class="primary" data-i18n="options_save_weights">Salvar pesos</button>
           </form>
         </div>
 
         <div class="panel schedule-panel">
-          <h2>Horários de trabalho</h2>
-          <p class="hint">
+          <h2 data-i18n="options_schedule_heading">Horários de trabalho</h2>
+          <p class="hint" data-i18n="options_schedule_hint">
             Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
             períodos, minutos produtivos contam em dobro.
           </p>
           <div id="workScheduleList" class="schedule-list"></div>
-          <button type="button" id="addWorkIntervalButton" class="ghost">Adicionar intervalo</button>
+          <button
+            type="button"
+            id="addWorkIntervalButton"
+            class="ghost"
+            data-i18n="options_schedule_add"
+          >
+            Adicionar intervalo
+          </button>
         </div>
       </section>
 
       <section class="panel two-columns">
         <div class="domain-panel">
           <div class="domain-panel-header">
-            <h2>Domínios produtivos</h2>
-            <p class="hint">Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.</p>
+            <h2 data-i18n="options_productive_heading">Domínios produtivos</h2>
+            <p class="hint" data-i18n="options_productive_hint">
+              Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.
+            </p>
             <form id="productiveForm" class="domain-form">
-              <input type="text" id="productiveInput" placeholder="ex: docs.google.com" />
-              <button type="submit">Adicionar</button>
+              <input
+                type="text"
+                id="productiveInput"
+                placeholder="ex: docs.google.com"
+                data-i18n-placeholder="options_productive_placeholder"
+              />
+              <button type="submit" data-i18n="options_domain_add">Adicionar</button>
             </form>
           </div>
           <ul id="productiveList" class="domain-list scrollable"></ul>
@@ -99,11 +138,18 @@
 
         <div class="domain-panel">
           <div class="domain-panel-header">
-            <h2>Domínios procrastinatórios</h2>
-            <p class="hint">Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.</p>
+            <h2 data-i18n="options_procrastination_heading">Domínios procrastinatórios</h2>
+            <p class="hint" data-i18n="options_procrastination_hint">
+              Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.
+            </p>
             <form id="procrastinationForm" class="domain-form">
-              <input type="text" id="procrastinationInput" placeholder="ex: youtube.com" />
-              <button type="submit">Adicionar</button>
+              <input
+                type="text"
+                id="procrastinationInput"
+                placeholder="ex: youtube.com"
+                data-i18n-placeholder="options_procrastination_placeholder"
+              />
+              <button type="submit" data-i18n="options_domain_add">Adicionar</button>
             </form>
           </div>
           <ul id="procrastinationList" class="domain-list scrollable"></ul>
@@ -113,14 +159,20 @@
 
     </main>
 
-    <div id="statusMessage" class="status-toast">Tudo certo.</div>
+    <div id="statusMessage" class="status-toast" data-i18n="options_status_ready">Tudo certo.</div>
 
     <footer>
       <div class="footer-actions">
-        <button id="backToPopupButton" class="ghost">Voltar ao popup</button>
-        <button id="resetButton" class="danger">Restaurar padrões</button>
+        <button id="backToPopupButton" class="ghost" data-i18n="options_back_to_popup">
+          Voltar ao popup
+        </button>
+        <button id="resetButton" class="danger" data-i18n="options_restore_defaults">
+          Restaurar padrões
+        </button>
       </div>
-      <p class="footer-note">Saul não compartilha seus dados com ninguém. Nem com o juiz.</p>
+      <p class="footer-note" data-i18n="options_footer_note">
+        Saul não compartilha seus dados com ninguém. Nem com o juiz.
+      </p>
     </footer>
   </body>
 </html>

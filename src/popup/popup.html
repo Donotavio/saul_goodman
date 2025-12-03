@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Saul Goodman - Radar de Procrastinação</title>
+    <title data-i18n="popup_head_title">Saul Goodman - Radar de Procrastinação</title>
     <link rel="stylesheet" href="popup.css" />
     <script src="../vendor/chart.umd.js" defer></script>
     <script src="../vendor/jspdf.umd.min.js" defer></script>
@@ -13,23 +13,27 @@
   <body>
     <header class="sg-header">
       <div class="badge">
-        <span class="label">Índice</span>
+        <span class="label" data-i18n="popup_badge_label">Índice</span>
         <span id="scoreValue" class="value">--</span>
       </div>
       <div class="meta">
-        <p id="scoreMessage" class="message">Carregando expediente...</p>
-        <small id="lastSync">Atualizando...</small>
+        <p id="scoreMessage" class="message" data-i18n="popup_score_placeholder">
+          Carregando expediente...
+        </p>
+        <small id="lastSync" data-i18n="popup_last_sync_pending">Atualizando...</small>
       </div>
     </header>
 
     <main>
       <section class="summary">
         <article>
-          <span class="title">
+          <span class="title" data-i18n="popup_summary_productive_label">
             Produtivo
             <span
               class="info-icon"
               aria-label="Explicação"
+              data-i18n-aria-label="popup_tooltip_aria"
+              data-i18n-tooltip="popup_summary_productive_tooltip"
               data-tooltip="Tempo gasto em domínios marcados como produtivos."
               >i</span
             >
@@ -37,11 +41,13 @@
           <strong id="productiveTime">--</strong>
         </article>
         <article>
-          <span class="title">
+          <span class="title" data-i18n="popup_summary_procrastination_label">
             Procrast
             <span
               class="info-icon"
               aria-label="Explicação"
+              data-i18n-aria-label="popup_tooltip_aria"
+              data-i18n-tooltip="popup_summary_procrastination_tooltip"
               data-tooltip="Tempo gasto em domínios procrastinatórios."
               >i</span
             >
@@ -49,11 +55,13 @@
           <strong id="procrastinationTime">--</strong>
         </article>
         <article>
-          <span class="title">
+          <span class="title" data-i18n="popup_summary_inactive_label">
             Inativ
             <span
               class="info-icon"
               aria-label="Explicação"
+              data-i18n-aria-label="popup_tooltip_aria"
+              data-i18n-tooltip="popup_summary_inactive_tooltip"
               data-tooltip="Períodos em que o navegador ficou aberto sem interação."
               >i</span
             >
@@ -64,8 +72,10 @@
 
       <section class="chart-card">
         <div class="chart-header">
-          <h2>Radar diário</h2>
-          <button id="refreshButton" class="ghost-button">Atualizar</button>
+          <h2 data-i18n="popup_chart_title">Radar diário</h2>
+          <button id="refreshButton" class="ghost-button" data-i18n="popup_refresh_button">
+            Atualizar
+          </button>
         </div>
         <div class="chart-wrapper">
           <canvas
@@ -73,144 +83,184 @@
             width="320"
             height="180"
             aria-label="Horas produtivas vs procrastinação"
+            data-i18n-aria-label="popup_chart_aria"
           ></canvas>
         </div>
       </section>
 
       <section class="kpi-board">
         <div class="kpi-header">
-          <h2>Indicadores extras</h2>
-          <p>Sem mistério jurídico: números crus do seu dia.</p>
+          <h2 data-i18n="popup_kpi_section_title">Indicadores extras</h2>
+          <p data-i18n="popup_kpi_section_subtitle">Sem mistério jurídico: números crus do seu dia.</p>
         </div>
         <div class="kpi-grid">
           <article>
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_focus_label">
               Foco ativo
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_focus_tooltip"
                 data-tooltip="Percentual de tempo produtivo sobre tudo que foi rastreado hoje."
                 >i</span
               >
             </span>
             <strong id="focusRateValue">--</strong>
-            <small>Produtivo / jornada</small>
+            <small data-i18n="popup_kpi_focus_hint">Produtivo / jornada</small>
           </article>
           <article>
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_switch_label">
               Trocas por hora
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_switch_tooltip"
                 data-tooltip="Número médio de trocas de abas por hora monitorada."
                 data-align="right"
                 >i</span
               >
             </span>
             <strong id="tabSwitchRateValue">--</strong>
-            <small>Abas por hora rastreada</small>
+            <small data-i18n="popup_kpi_switch_hint">Abas por hora rastreada</small>
           </article>
           <article>
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_idle_label">
               Tempo ocioso
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_idle_tooltip"
                 data-tooltip="Porcentagem do tempo em que o navegador ficou aberto sem interação."
                 >i</span
               >
             </span>
             <strong id="inactivePercentValue">--</strong>
-            <small>Porcentagem do dia</small>
+            <small data-i18n="popup_kpi_idle_hint">Porcentagem do dia</small>
           </article>
           <article>
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_ratio_label">
               Prod x Proc
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_ratio_tooltip"
                 data-tooltip="Horas produtivas que compensam cada hora em sites procrastinatórios."
                 data-align="right"
                 >i</span
               >
             </span>
             <strong id="productivityRatioValue">--</strong>
-            <small>Horas produtivas por vilão</small>
+            <small data-i18n="popup_kpi_ratio_hint">Horas produtivas por vilão</small>
           </article>
           <article class="highlight">
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_focus_domain_label">
               Imersão campeã
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_focus_domain_tooltip"
                 data-tooltip="Domínio produtivo onde você investiu mais tempo contínuo hoje."
                 >i</span
               >
             </span>
             <strong id="topFocusDomain">--</strong>
-            <small id="topFocusTime">Sem dados</small>
+            <small id="topFocusTime" data-i18n="popup_status_no_data">Sem dados</small>
           </article>
           <article class="highlight danger">
-            <span class="kpi-label">
+            <span class="kpi-label" data-i18n="popup_kpi_villain_label">
               Vilão do dia
               <span
                 class="info-icon"
                 aria-label="Explicação"
+                data-i18n-aria-label="popup_tooltip_aria"
+                data-i18n-tooltip="popup_kpi_villain_tooltip"
                 data-tooltip="Domínio procrastinador que mais roubou o seu tempo."
                 data-align="right"
                 >i</span
               >
             </span>
             <strong id="topProcrastinationDomain">--</strong>
-            <small id="topProcrastinationTime">Sem dados</small>
+            <small id="topProcrastinationTime" data-i18n="popup_status_no_data">Sem dados</small>
           </article>
         </div>
       </section>
 
       <section class="top-domains">
         <div class="top-header">
-          <h2>Top 5 domínios</h2>
-          <button id="optionsButton" class="ghost-button">Configurar</button>
+          <h2 data-i18n="popup_top_domains_title">Top 5 domínios</h2>
+          <button id="optionsButton" class="ghost-button" data-i18n="popup_options_button">
+            Configurar
+          </button>
         </div>
         <ol id="domainsList" class="domains-list">
-          <li>Carregando...</li>
+          <li data-i18n="popup_loading">Carregando...</li>
         </ol>
       </section>
 
       <section class="export-card">
         <div>
-          <h2>Defenda seu foco</h2>
-          <p>Transforme seus dados em argumentos com estilo Saul Goodman.</p>
+          <h2 data-i18n="popup_export_title">Defenda seu foco</h2>
+          <p data-i18n="popup_export_description">
+            Transforme seus dados em argumentos com estilo Saul Goodman.
+          </p>
         </div>
         <div class="export-actions">
-          <button id="csvExportButton" class="ghost-button wide">Baixar CSV</button>
-          <button id="pdfExportButton" class="primary-button wide">Gerar PDF</button>
-          <button id="reportButton" class="ghost-button wide">Abrir relatório</button>
+          <button id="csvExportButton" class="ghost-button wide" data-i18n="popup_export_csv">
+            Baixar CSV
+          </button>
+          <button id="pdfExportButton" class="primary-button wide" data-i18n="popup_export_pdf">
+            Gerar PDF
+          </button>
+          <button id="reportButton" class="ghost-button wide" data-i18n="popup_export_report">
+            Abrir relatório
+          </button>
         </div>
       </section>
     </main>
 
     <footer>
-      <p class="privacy">Todos os dados ficam no navegador. Saul honra o sigilo profissional.</p>
+      <p class="privacy" data-i18n="popup_privacy_note">
+        Todos os dados ficam no navegador. Saul honra o sigilo profissional.
+      </p>
     </footer>
 
     <div id="criticalOverlay" class="critical-overlay hidden" role="alert" aria-live="assertive">
       <div class="critical-card">
         <div class="critical-card-header">
-          <strong>Saul em modo terremoto</strong>
-          <button id="criticalCloseButton" class="close-button" aria-label="Fechar alerta">×</button>
+          <strong data-i18n="popup_critical_title">Saul em modo terremoto</strong>
+          <button
+            id="criticalCloseButton"
+            class="close-button"
+            aria-label="Fechar alerta"
+            data-i18n-aria-label="popup_critical_close_aria"
+          >
+            ×
+          </button>
         </div>
-        <p id="criticalMessage" class="critical-message">
+        <p id="criticalMessage" class="critical-message" data-i18n="popup_critical_default_message">
           Cliente, com índice 90 nem eu consigo te defender. Vai custar caro!
         </p>
         <p class="critical-plan">
-          Plano de ação: feche 3 abas vilãs em
-          <span id="criticalCountdown" class="critical-countdown">45</span>s.
+          <span data-i18n="popup_critical_plan_prefix">Plano de ação:</span>
+          <span data-i18n="popup_critical_plan_action">feche 3 abas vilãs em</span>
+          <span id="criticalCountdown" class="critical-countdown">45</span>
+          <span data-i18n="popup_critical_plan_suffix">s.</span>
         </p>
         <div class="critical-actions">
-          <button id="criticalSoundButton" class="primary-button">Ativar alerta sonoro</button>
-          <button id="criticalReportButton" class="ghost-button wide">Abrir relatório</button>
-          <button id="criticalOptionsButton" class="ghost-button wide">Revisar domínios</button>
+          <button id="criticalSoundButton" class="primary-button" data-i18n="popup_critical_sound_now">
+            Ativar alerta sonoro
+          </button>
+          <button id="criticalReportButton" class="ghost-button wide" data-i18n="popup_export_report">
+            Abrir relatório
+          </button>
+          <button id="criticalOptionsButton" class="ghost-button wide" data-i18n="popup_critical_review">
+            Revisar domínios
+          </button>
         </div>
       </div>
     </div>
