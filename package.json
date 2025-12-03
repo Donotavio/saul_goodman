@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json",
-    "test": "npm run build && TEST_FILES=$(find dist/tests -name '*.test.js' -o -name '*.spec.js') && if [ -z \"$TEST_FILES\" ]; then echo 'No compiled tests found'; exit 0; fi && node --test $TEST_FILES"
+    "test": "npm run build && TEST_FILES=$(find dist/tests -name '*.test.js' -o -name '*.spec.js') && if [ -z \"$TEST_FILES\" ]; then echo 'No compiled tests found'; exit 0; fi && node --test $TEST_FILES",
+    "lint:locales": "node scripts/check-locales.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.246",
