@@ -70,12 +70,16 @@ export interface WorkInterval {
   end: string;
 }
 
+export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-419';
+export type LocalePreference = 'auto' | SupportedLocale;
+
 export interface ExtensionSettings {
   productiveDomains: string[];
   procrastinationDomains: string[];
   weights: WeightConfig;
   inactivityThresholdMs: number;
-  locale: 'pt-BR';
+  locale: SupportedLocale;
+  localePreference?: LocalePreference;
   openAiKey?: string;
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];

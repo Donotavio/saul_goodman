@@ -1,4 +1,10 @@
-import { DailyMetrics, DomainStats, PopupData, RuntimeMessageType } from '../shared/types.js';
+import {
+  DailyMetrics,
+  DomainStats,
+  LocalePreference,
+  PopupData,
+  RuntimeMessageType
+} from '../shared/types.js';
 import { formatDuration } from '../shared/utils/time.js';
 import {
   calculateKpis,
@@ -7,7 +13,8 @@ import {
   formatRate,
   formatProductivityRatio
 } from '../shared/metrics.js';
-import { pickScoreMessage } from '../shared/score.js';
+import { pickScoreMessageKey } from '../shared/score.js';
+import { createI18n, I18nService } from '../shared/i18n.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -54,9 +61,6 @@ const criticalCloseButton = document.getElementById('criticalCloseButton') as HT
 const criticalSoundButton = document.getElementById('criticalSoundButton') as HTMLButtonElement | null;
 const criticalReportButton = document.getElementById('criticalReportButton') as HTMLButtonElement | null;
 const criticalOptionsButton = document.getElementById('criticalOptionsButton') as HTMLButtonElement | null;
-if (criticalSoundButton) {
-  criticalSoundButton.textContent = 'Tocar sirene agora';
-}
 
 let productivityChart: ChartInstance = null;
 let latestData: PopupData | null = null;
@@ -70,13 +74,14 @@ let currentCriticalThreshold = 90;
 let lastScoreBand: 'good' | 'warn' | 'alert' | 'neutral' = 'neutral';
 let badgeConfettiTimer: number | null = null;
 const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
+let i18n: I18nService | null = null;
+let activeLocalePreference: LocalePreference = 'auto';
 
-const criticalMessages: Array<(threshold: number) => string> = [
-  (threshold) =>
-    `Cliente, com índice ${threshold} nem eu consigo te defender. Vai custar honorários de risco!`,
-  () => 'Esse tremor? É o juiz batendo o martelo na sua produtividade.',
-  () => 'Pare de procrastinar ou preparo um comercial no horário nobre contando sua história.',
-  () => 'Me ajuda a te defender: fecha essas abas antes que eu cobre em dólar.'
+const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
+  { key: 'popup_critical_message_1', needsThreshold: true },
+  { key: 'popup_critical_message_2' },
+  { key: 'popup_critical_message_3' },
+  { key: 'popup_critical_message_4' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,8 +119,10 @@ async function hydrate(): Promise<void> {
   try {
     const data = await sendRuntimeMessage<PopupData>('metrics-request');
     if (!data || !data.metrics) {
-      throw new Error('Sem dados disponíveis');
+      throw new Error(i18n?.t('popup_error_no_data') ?? 'No data available');
     }
+    const preference = data.settings?.localePreference ?? 'auto';
+    await ensureI18n(preference);
     latestData = data;
     criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
@@ -123,13 +130,25 @@ async function hydrate(): Promise<void> {
     renderKpis(data.metrics);
     renderTopDomains(data.metrics.domains);
     renderChart(data.metrics);
-    lastSyncEl.textContent = `Atualizado às ${new Date(data.metrics.lastUpdated).toLocaleTimeString(
-      data.settings?.locale ?? 'pt-BR'
-    )}`;
+    const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
+      data.settings?.locale ?? 'en-US'
+    );
+    lastSyncEl.textContent =
+      i18n?.t('popup_last_sync', { time: formattedTime }) ?? `Updated at ${formattedTime}`;
   } catch (error) {
     console.error(error);
-    scoreMessageEl.textContent = 'Ops! Não consegui falar com o escritório.';
+    scoreMessageEl.textContent =
+      i18n?.t('popup_error_runtime') ?? 'Oops! Unable to reach the office.';
   }
+}
+
+async function ensureI18n(preference: LocalePreference): Promise<void> {
+  if (i18n && activeLocalePreference === preference) {
+    return;
+  }
+  i18n = await createI18n(preference);
+  activeLocalePreference = preference;
+  i18n.apply();
 }
 
 function renderSummary(metrics: DailyMetrics): void {
@@ -140,6 +159,7 @@ function renderSummary(metrics: DailyMetrics): void {
 
 function renderKpis(metrics: DailyMetrics): void {
   const kpis = calculateKpis(metrics);
+  const noDataLabel = i18n?.t('popup_status_no_data') ?? 'No data';
 
   focusRateEl.textContent = formatPercentage(kpis.focusRate);
   tabSwitchRateEl.textContent = formatRate(kpis.tabSwitchRate);
@@ -151,7 +171,7 @@ function renderKpis(metrics: DailyMetrics): void {
     topFocusTimeEl.textContent = formatDuration(kpis.topFocus.milliseconds);
   } else {
     topFocusDomainEl.textContent = '--';
-    topFocusTimeEl.textContent = 'Sem dados';
+    topFocusTimeEl.textContent = noDataLabel;
   }
 
   if (kpis.topProcrastination) {
@@ -159,14 +179,14 @@ function renderKpis(metrics: DailyMetrics): void {
     topProcrastinationTimeEl.textContent = formatDuration(kpis.topProcrastination.milliseconds);
   } else {
     topProcrastinationDomainEl.textContent = '--';
-    topProcrastinationTimeEl.textContent = 'Sem dados';
+    topProcrastinationTimeEl.textContent = noDataLabel;
   }
 }
 
 function renderScore(score: number): void {
   scoreValueEl.textContent = score.toString();
-  const nextMessage = pickScoreMessage(score);
-  scoreMessageEl.textContent = nextMessage;
+  const messageKey = pickScoreMessageKey(score);
+  scoreMessageEl.textContent = i18n?.t(messageKey) ?? messageKey;
   const band = getScoreBand(score);
   scoreValueEl.classList.remove('alert', 'good', 'warn');
   if (band === 'alert') {
@@ -245,7 +265,7 @@ function renderTopDomains(domains: Record<string, DomainStats>): void {
 
   if (!sorted.length) {
     const li = document.createElement('li');
-    li.textContent = 'Sem dados para hoje.';
+    li.textContent = i18n?.t('popup_status_no_domains') ?? 'No data for today.';
     domainsListEl.appendChild(li);
     return;
   }
@@ -266,11 +286,14 @@ function renderTopDomains(domains: Record<string, DomainStats>): void {
 }
 
 function renderChart(metrics: DailyMetrics): void {
+  const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
+  const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
+  const minutesLabel = i18n?.t('popup_chart_axis_minutes') ?? 'Minutes';
   const data = {
-    labels: ['Produtivo', 'Procrastinação'],
+    labels: [productiveLabel, procrastinationLabel],
     datasets: [
       {
-        label: 'Minutos',
+        label: minutesLabel,
         backgroundColor: ['#0a7e07', '#d00000'],
         borderColor: '#111',
         borderWidth: 1,
@@ -299,7 +322,8 @@ function renderChart(metrics: DailyMetrics): void {
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          title: { display: true, text: minutesLabel }
         }
       }
     }
@@ -325,7 +349,8 @@ async function sendRuntimeMessage<T = RuntimeMessageType>(
       if (response.ok) {
         resolve(response.data as T);
       } else {
-        reject(new Error(response.error ?? 'Erro desconhecido'));
+        const fallback = i18n?.t('popup_error_unknown') ?? 'Unknown error';
+        reject(new Error(response.error ?? fallback));
       }
     });
   });
@@ -337,7 +362,10 @@ function formatMinutesValue(ms: number): string {
 
 function handleCsvExport(): void {
   if (!latestData) {
-    alert('Ainda não há dados carregados. Abra algumas abas e tente novamente.');
+    alert(
+      i18n?.t('popup_alert_no_data') ??
+        'No data yet. Open some tabs and try again.'
+    );
     return;
   }
 
@@ -348,8 +376,16 @@ function handleCsvExport(): void {
 
 function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
   const lines: string[] = [];
-  lines.push('Resumo geral');
-  lines.push('Data,Índice,Produtivo (min),Procrastinação (min),Inatividade (min),Trocas de abas');
+  lines.push(i18n?.t('popup_csv_summary_title') ?? 'General summary');
+  const summaryHeaders = [
+    i18n?.t('popup_csv_column_date') ?? 'Date',
+    i18n?.t('popup_csv_column_index') ?? 'Index',
+    i18n?.t('popup_csv_column_productive') ?? 'Productive (min)',
+    i18n?.t('popup_csv_column_procrastination') ?? 'Procrastination (min)',
+    i18n?.t('popup_csv_column_inactive') ?? 'Inactive (min)',
+    i18n?.t('popup_csv_column_switches') ?? 'Tab switches'
+  ];
+  lines.push(summaryHeaders.join(','));
   lines.push(
     [
       metrics.dateKey,
@@ -362,19 +398,18 @@ function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
   );
 
   lines.push('');
-  lines.push('Indicadores extras');
-  lines.push(
-    [
-      'Foco ativo (%)',
-      'Trocas por hora',
-      'Tempo ocioso (%)',
-      'Prod x Proc',
-      'Imersão campeã',
-      'Tempo',
-      'Vilão do dia',
-      'Tempo'
-    ].join(',')
-  );
+  lines.push(i18n?.t('popup_csv_kpis_title') ?? 'Extra indicators');
+  const kpiHeaders = [
+    i18n?.t('popup_csv_kpi_focus') ?? 'Active focus (%)',
+    i18n?.t('popup_csv_kpi_switches') ?? 'Switches per hour',
+    i18n?.t('popup_csv_kpi_idle') ?? 'Idle time (%)',
+    i18n?.t('popup_csv_kpi_ratio') ?? 'Prod vs Proc',
+    i18n?.t('popup_csv_kpi_champion') ?? 'Top focus domain',
+    i18n?.t('popup_csv_kpi_time') ?? 'Time',
+    i18n?.t('popup_csv_kpi_villain') ?? 'Villain of the day',
+    i18n?.t('popup_csv_kpi_time') ?? 'Time'
+  ];
+  lines.push(kpiHeaders.join(','));
   lines.push(
     [
       formatPercentage(kpis.focusRate),
@@ -389,8 +424,13 @@ function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
   );
 
   lines.push('');
-  lines.push('Top domínios');
-  lines.push('Domínio,Categoria,Minutos');
+  lines.push(i18n?.t('popup_csv_top_domains_title') ?? 'Top domains');
+  const domainHeaders = [
+    i18n?.t('popup_csv_domain') ?? 'Domain',
+    i18n?.t('popup_csv_category') ?? 'Category',
+    i18n?.t('popup_csv_minutes') ?? 'Minutes'
+  ];
+  lines.push(domainHeaders.join(','));
   Object.values(metrics.domains)
     .sort((a, b) => b.milliseconds - a.milliseconds)
     .slice(0, 10)
@@ -417,12 +457,14 @@ function downloadTextFile(content: string, filename: string, mime: string): void
 
 async function handlePdfExport(): Promise<void> {
   if (!latestData) {
-    alert('Ainda não há dados carregados. Abra algumas abas e tente novamente.');
+    alert(
+      i18n?.t('popup_alert_no_data') ?? 'No data yet. Open some tabs and try again.'
+    );
     return;
   }
 
   if (!jspdf?.jsPDF) {
-    alert('Módulo de PDF indisponível.');
+    alert(i18n?.t('popup_alert_pdf_missing') ?? 'PDF module unavailable.');
     return;
   }
 
@@ -431,38 +473,72 @@ async function handlePdfExport(): Promise<void> {
   const doc = new jspdf.jsPDF({ unit: 'mm', format: 'a4' });
 
   doc.setFontSize(18);
-  doc.text('Relatório Saul Goodman', 14, 20);
+  doc.text(i18n?.t('popup_pdf_title') ?? 'Saul Goodman report', 14, 20);
   doc.setFontSize(11);
-  doc.text(`Data: ${metrics.dateKey}`, 14, 30);
-  doc.text(`Índice: ${metrics.currentIndex}`, 14, 36);
+  doc.text(`${i18n?.t('popup_pdf_date') ?? 'Date'}: ${metrics.dateKey}`, 14, 30);
+  doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${metrics.currentIndex}`, 14, 36);
 
   doc.setFont(undefined, 'bold');
-  doc.text('Resumo diário', 14, 48);
+  doc.text(i18n?.t('popup_pdf_summary') ?? 'Daily summary', 14, 48);
   doc.setFont(undefined, 'normal');
-  doc.text(`Produtivo: ${formatDuration(metrics.productiveMs)}`, 14, 54);
-  doc.text(`Procrastinação: ${formatDuration(metrics.procrastinationMs)}`, 14, 60);
-  doc.text(`Inatividade: ${formatDuration(metrics.inactiveMs)}`, 14, 66);
-  doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 72);
-
-  doc.setFont(undefined, 'bold');
-  doc.text('Indicadores extras', 14, 84);
-  doc.setFont(undefined, 'normal');
-  doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 90);
-  doc.text(`Trocas por hora: ${formatRate(kpis.tabSwitchRate)}`, 14, 96);
-  doc.text(`Tempo ocioso: ${formatPercentage(kpis.inactivePercent)}`, 14, 102);
-  doc.text(`Prod x Proc: ${formatProductivityRatio(kpis.productivityRatio)}`, 14, 108);
   doc.text(
-    `Imersão campeã: ${
-      kpis.topFocus ? `${kpis.topFocus.domain} (${formatDuration(kpis.topFocus.milliseconds)})` : 'Sem dados'
+    `${i18n?.t('popup_pdf_productive') ?? 'Productive'}: ${formatDuration(metrics.productiveMs)}`,
+    14,
+    54
+  );
+  doc.text(
+    `${i18n?.t('popup_pdf_procrastination') ?? 'Procrastination'}: ${formatDuration(metrics.procrastinationMs)}`,
+    14,
+    60
+  );
+  doc.text(
+    `${i18n?.t('popup_pdf_inactive') ?? 'Inactive'}: ${formatDuration(metrics.inactiveMs)}`,
+    14,
+    66
+  );
+  doc.text(
+    `${i18n?.t('popup_pdf_switches') ?? 'Tab switches'}: ${metrics.tabSwitches}`,
+    14,
+    72
+  );
+
+  doc.setFont(undefined, 'bold');
+  doc.text(i18n?.t('popup_pdf_kpis') ?? 'Extra indicators', 14, 84);
+  doc.setFont(undefined, 'normal');
+  doc.text(
+    `${i18n?.t('popup_kpi_focus_label') ?? 'Focus'}: ${formatPercentage(kpis.focusRate)}`,
+    14,
+    90
+  );
+  doc.text(
+    `${i18n?.t('popup_kpi_switch_label') ?? 'Switches per hour'}: ${formatRate(kpis.tabSwitchRate)}`,
+    14,
+    96
+  );
+  doc.text(
+    `${i18n?.t('popup_kpi_idle_label') ?? 'Idle time'}: ${formatPercentage(kpis.inactivePercent)}`,
+    14,
+    102
+  );
+  doc.text(
+    `${i18n?.t('popup_kpi_ratio_label') ?? 'Prod vs Proc'}: ${formatProductivityRatio(kpis.productivityRatio)}`,
+    14,
+    108
+  );
+  doc.text(
+    `${i18n?.t('popup_kpi_focus_domain_label') ?? 'Top focus'}: ${
+      kpis.topFocus
+        ? `${kpis.topFocus.domain} (${formatDuration(kpis.topFocus.milliseconds)})`
+        : i18n?.t('popup_status_no_data') ?? 'No data'
     }`,
     14,
     114
   );
   doc.text(
-    `Vilão do dia: ${
+    `${i18n?.t('popup_kpi_villain_label') ?? 'Villain'}: ${
       kpis.topProcrastination
         ? `${kpis.topProcrastination.domain} (${formatDuration(kpis.topProcrastination.milliseconds)})`
-        : 'Sem dados'
+        : i18n?.t('popup_status_no_data') ?? 'No data'
     }`,
     14,
     120
@@ -480,7 +556,7 @@ async function handlePdfExport(): Promise<void> {
   }
 
   doc.setFont(undefined, 'bold');
-  doc.text('Top domínios', 14, yOffset);
+  doc.text(i18n?.t('popup_pdf_top_domains') ?? 'Top domains', 14, yOffset);
   doc.setFont(undefined, 'normal');
   let cursor = yOffset + 8;
   Object.values(metrics.domains)
@@ -529,10 +605,7 @@ function showCriticalOverlay(): void {
   if (!criticalOverlayEl) {
     return;
   }
-  const message =
-    criticalMessages[Math.floor(Math.random() * criticalMessages.length)](
-      currentCriticalThreshold
-    );
+  const message = getRandomCriticalMessage(currentCriticalThreshold);
   if (criticalMessageEl) {
     criticalMessageEl.textContent = message;
   }
@@ -561,7 +634,8 @@ function startCriticalCountdown(): void {
       stopCriticalCountdown();
       if (criticalMessageEl) {
         criticalMessageEl.textContent =
-          'Sem desculpas: quero três abas procrastinatórias fechadas imediatamente!';
+          i18n?.t('popup_critical_countdown_final') ??
+          'No excuses: close three procrastination tabs now!';
       }
     }
   }, 1000);
@@ -572,4 +646,16 @@ function stopCriticalCountdown(): void {
     window.clearInterval(criticalCountdownTimer);
     criticalCountdownTimer = null;
   }
+}
+
+function getRandomCriticalMessage(threshold: number): string {
+  if (!i18n) {
+    return 'Critical focus warning';
+  }
+  const index = Math.floor(Math.random() * POPUP_CRITICAL_MESSAGE_KEYS.length);
+  const template = POPUP_CRITICAL_MESSAGE_KEYS[index];
+  if (template.needsThreshold) {
+    return i18n.t(template.key, { threshold });
+  }
+  return i18n.t(template.key);
 }

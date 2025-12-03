@@ -1,0 +1,56 @@
+name: Release extension
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Package extension
+        id: package
+        run: |
+          VERSION=$(node -pe "require('./package.json').version")
+          PKG_DIR="release/saul-goodman-$VERSION"
+          rm -rf release
+          mkdir -p "$PKG_DIR"
+          rsync -a manifest.json "$PKG_DIR"/
+          rsync -a src "$PKG_DIR"/
+          rsync -a _locales "$PKG_DIR"/
+          rsync -a dist "$PKG_DIR"/
+          cd release
+          zip -r "saul-goodman-$VERSION.zip" "saul-goodman-$VERSION"
+          echo "zip_path=$(pwd)/saul-goodman-$VERSION.zip" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: saul-goodman-${{ steps.package.outputs.version }}
+          path: ${{ steps.package.outputs.zip_path }}
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ steps.package.outputs.zip_path }}

@@ -1,0 +1,731 @@
+{
+  "extName": {
+    "message": "Saul Goodman"
+  },
+  "extDescription": {
+    "message": "Sarcastic focus tracker that measures domains and keeps your procrastination index in check."
+  },
+  "actionTitle": {
+    "message": "Saul Goodman"
+  },
+  "popup_head_title": {
+    "message": "Saul Goodman – Focus Radar"
+  },
+  "popup_badge_label": {
+    "message": "Index"
+  },
+  "popup_score_placeholder": {
+    "message": "Loading shift..."
+  },
+  "popup_last_sync_pending": {
+    "message": "Updating..."
+  },
+  "popup_last_sync": {
+    "message": "Updated at {time}"
+  },
+  "popup_error_no_data": {
+    "message": "No data available"
+  },
+  "popup_error_runtime": {
+    "message": "Oops! Unable to reach the office."
+  },
+  "popup_summary_productive_label": {
+    "message": "Productive"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "Time spent on domains marked as productive."
+  },
+  "popup_summary_procrastination_label": {
+    "message": "Procrast"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "Time spent on procrastination domains."
+  },
+  "popup_summary_inactive_label": {
+    "message": "Idle"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "Periods when the browser stayed open without interaction."
+  },
+  "popup_tooltip_aria": {
+    "message": "Explanation"
+  },
+  "popup_chart_title": {
+    "message": "Daily radar"
+  },
+  "popup_refresh_button": {
+    "message": "Refresh"
+  },
+  "popup_kpi_section_title": {
+    "message": "Extra indicators"
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "Straight to the point: raw numbers from your day."
+  },
+  "popup_kpi_focus_label": {
+    "message": "Active focus"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "Percentage of productive time over everything tracked today."
+  },
+  "popup_kpi_focus_hint": {
+    "message": "Productive / workday"
+  },
+  "popup_kpi_switch_label": {
+    "message": "Switches per hour"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "Average tab switches per monitored hour."
+  },
+  "popup_kpi_switch_hint": {
+    "message": "Tabs per tracked hour"
+  },
+  "popup_kpi_idle_label": {
+    "message": "Idle time"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "Percentage of the day the browser stayed open without interaction."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "Percent of the day"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod vs Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "Productive hours offsetting each procrastination hour."
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "Productive hours per villain"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "Focus champion"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "Productive domain where you invested more continuous time today."
+  },
+  "popup_kpi_villain_label": {
+    "message": "Villain of the day"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "Procrastination domain that stole most of your time."
+  },
+  "popup_status_no_data": {
+    "message": "No data"
+  },
+  "popup_top_domains_title": {
+    "message": "Top 5 domains"
+  },
+  "popup_options_button": {
+    "message": "Configure"
+  },
+  "popup_loading": {
+    "message": "Loading..."
+  },
+  "popup_export_title": {
+    "message": "Defend your focus"
+  },
+  "popup_export_description": {
+    "message": "Turn your numbers into Saul Goodman–style arguments."
+  },
+  "popup_export_csv": {
+    "message": "Download CSV"
+  },
+  "popup_export_pdf": {
+    "message": "Generate PDF"
+  },
+  "popup_export_report": {
+    "message": "Open report"
+  },
+  "popup_privacy_note": {
+    "message": "All data stays in your browser. Saul honors attorney–client privilege."
+  },
+  "popup_critical_title": {
+    "message": "Saul in quake mode"
+  },
+  "popup_critical_close_aria": {
+    "message": "Dismiss alert"
+  },
+  "popup_critical_default_message": {
+    "message": "At this index not even I can defend you. This will cost risk fees!"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "Action plan:"
+  },
+  "popup_critical_plan_action": {
+    "message": "close 3 villain tabs in"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "s."
+  },
+  "popup_critical_sound_now": {
+    "message": "Trigger siren now"
+  },
+  "popup_critical_review": {
+    "message": "Review villains"
+  },
+  "popup_chart_aria": {
+    "message": "Productive vs procrastination hours"
+  },
+  "popup_chart_label_productive": {
+    "message": "Productive"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "Minutes"
+  },
+  "popup_error_unknown": {
+    "message": "Unknown error"
+  },
+  "popup_alert_no_data": {
+    "message": "No data yet. Open some tabs and try again."
+  },
+  "popup_csv_summary_title": {
+    "message": "General summary"
+  },
+  "popup_csv_column_date": {
+    "message": "Date"
+  },
+  "popup_csv_column_index": {
+    "message": "Index"
+  },
+  "popup_csv_column_productive": {
+    "message": "Productive (min)"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "Procrastination (min)"
+  },
+  "popup_csv_column_inactive": {
+    "message": "Inactive (min)"
+  },
+  "popup_csv_column_switches": {
+    "message": "Tab switches"
+  },
+  "popup_csv_kpis_title": {
+    "message": "Extra indicators"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "Active focus (%)"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "Switches per hour"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "Idle time (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod vs Proc"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "Top focus domain"
+  },
+  "popup_csv_kpi_time": {
+    "message": "Time"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "Villain of the day"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "Top domains"
+  },
+  "popup_csv_domain": {
+    "message": "Domain"
+  },
+  "popup_csv_category": {
+    "message": "Category"
+  },
+  "popup_csv_minutes": {
+    "message": "Minutes"
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF module unavailable."
+  },
+  "popup_pdf_title": {
+    "message": "Saul Goodman report"
+  },
+  "popup_pdf_date": {
+    "message": "Date"
+  },
+  "popup_pdf_index": {
+    "message": "Index"
+  },
+  "popup_pdf_summary": {
+    "message": "Daily summary"
+  },
+  "popup_pdf_productive": {
+    "message": "Productive"
+  },
+  "popup_pdf_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_pdf_inactive": {
+    "message": "Inactive"
+  },
+  "popup_pdf_switches": {
+    "message": "Tab switches"
+  },
+  "popup_pdf_kpis": {
+    "message": "Extra indicators"
+  },
+  "popup_pdf_top_domains": {
+    "message": "Top domains"
+  },
+  "popup_critical_message_1": {
+    "message": "Client, with index {threshold} not even I can defend you. Risk fees apply!"
+  },
+  "popup_critical_message_2": {
+    "message": "That tremor? The judge slamming your productivity."
+  },
+  "popup_critical_message_3": {
+    "message": "Stop procrastinating or I'll buy primetime ads telling your story."
+  },
+  "popup_critical_message_4": {
+    "message": "Help me defend you: close those tabs before I start billing in dollars."
+  },
+  "popup_critical_countdown_final": {
+    "message": "No excuses: close three procrastination tabs now!"
+  },
+  "popup_score_message_excellent": {
+    "message": "Golden client! Keep it up and I can charge full retainer."
+  },
+  "popup_score_message_ok": {
+    "message": "Still counts as office hours. Don't make me call your focus."
+  },
+  "popup_score_message_warning": {
+    "message": "I see avoidance here. Time to get back in the game."
+  },
+  "popup_score_message_alert": {
+    "message": "You're playing with fire. I bill by the hour to put fires out."
+  },
+  "popup_status_no_domains": {
+    "message": "No data for today."
+  },
+  "options_head_title": {
+    "message": "Saul Goodman – Settings"
+  },
+  "options_tagline": {
+    "message": "Your personal lawyer against procrastination"
+  },
+  "options_heading": {
+    "message": "Office Settings"
+  },
+  "options_subtitle": {
+    "message": "Customize the radar to match your procrastination style. Everything stays local."
+  },
+  "options_promise": {
+    "message": "Saul keeps your data under seal while negotiating with your focus."
+  },
+  "options_digital_branch": {
+    "message": "Digital branch"
+  },
+  "options_thresholds_heading": {
+    "message": "Thresholds & weights"
+  },
+  "options_language_label": {
+    "message": "Interface language"
+  },
+  "options_language_auto": {
+    "message": "Automatic (browser)"
+  },
+  "options_language_pt": {
+    "message": "Portuguese (Brazil)"
+  },
+  "options_language_en": {
+    "message": "English (US)"
+  },
+  "options_language_es": {
+    "message": "Spanish"
+  },
+  "options_language_hint": {
+    "message": "Pick manually or let the language follow Chrome."
+  },
+  "options_weight_procrastination": {
+    "message": "Unproductive time (weight)"
+  },
+  "options_weight_switches": {
+    "message": "Tab switches (weight)"
+  },
+  "options_weight_inactivity": {
+    "message": "Inactivity (weight)"
+  },
+  "options_inactivity_threshold": {
+    "message": "Maximum idle time before counting as inactive (seconds)"
+  },
+  "options_openai_label": {
+    "message": "OpenAI key (optional)"
+  },
+  "options_openai_placeholder": {
+    "message": "sk-..."
+  },
+  "options_openai_hint": {
+    "message": "Stored locally to generate narratives in the report."
+  },
+  "options_critical_threshold_label": {
+    "message": "Quake mode threshold (0–100)"
+  },
+  "options_critical_threshold_hint": {
+    "message": "When the index hits this value, Saul triggers the critical alert."
+  },
+  "options_critical_sound_label": {
+    "message": "Automatic quake siren"
+  },
+  "options_critical_sound_hint": {
+    "message": "When enabled, the siren plays whenever the critical alert fires."
+  },
+  "options_save_weights": {
+    "message": "Save weights"
+  },
+  "options_schedule_heading": {
+    "message": "Work hours"
+  },
+  "options_schedule_hint": {
+    "message": "Tell Saul when your official shift happens. Outside these blocks, productive minutes count double."
+  },
+  "options_schedule_add": {
+    "message": "Add interval"
+  },
+  "options_productive_heading": {
+    "message": "Productive domains"
+  },
+  "options_productive_hint": {
+    "message": "Saul knows where work happens. Add or remove based on your routine."
+  },
+  "options_productive_placeholder": {
+    "message": "e.g. docs.google.com"
+  },
+  "options_domain_add": {
+    "message": "Add"
+  },
+  "options_procrastination_heading": {
+    "message": "Procrastination domains"
+  },
+  "options_procrastination_hint": {
+    "message": "Here live the temptations. If you love a site, it probably belongs here."
+  },
+  "options_procrastination_placeholder": {
+    "message": "e.g. youtube.com"
+  },
+  "options_status_ready": {
+    "message": "All good."
+  },
+  "options_back_to_popup": {
+    "message": "Back to popup"
+  },
+  "options_restore_defaults": {
+    "message": "Restore defaults"
+  },
+  "options_footer_note": {
+    "message": "Saul doesn't share your data with anyone. Not even the judge."
+  },
+  "options_status_list_updated": {
+    "message": "List updated."
+  },
+  "options_status_domain_removed": {
+    "message": "Domain removed."
+  },
+  "options_status_schedule_updated": {
+    "message": "Schedule updated."
+  },
+  "options_status_weights_saved": {
+    "message": "Weights updated."
+  },
+  "options_status_language_saved": {
+    "message": "Language updated."
+  },
+  "options_status_defaults_restored": {
+    "message": "Defaults restored."
+  },
+  "options_weights_sum_error": {
+    "message": "The sum of weights must be 1."
+  },
+  "options_domain_empty": {
+    "message": "No domains yet."
+  },
+  "options_domain_invalid": {
+    "message": "Enter a valid domain."
+  },
+  "options_domain_duplicate": {
+    "message": "Domain already listed."
+  },
+  "options_schedule_to": {
+    "message": "to"
+  },
+  "options_confirm_reset": {
+    "message": "This will restore the default values. Continue?"
+  },
+  "report_head_title": {
+    "message": "Saul Goodman – Daily report"
+  },
+  "report_tagline": {
+    "message": "Official focus logbook"
+  },
+  "report_heading": {
+    "message": "Detailed report"
+  },
+  "report_subtitle_prefix": {
+    "message": "Daily summary"
+  },
+  "report_hero_placeholder": {
+    "message": "Saul is still collecting evidence about your day."
+  },
+  "report_metric_index_label": {
+    "message": "Index"
+  },
+  "report_metric_switches_label": {
+    "message": "Tab switches"
+  },
+  "report_export_pdf": {
+    "message": "Export PDF"
+  },
+  "report_banner_title": {
+    "message": "Saul on high alert!"
+  },
+  "report_banner_message_1": {
+    "message": "Not even I can persuade the jury with index {threshold}. Cut the distractions!"
+  },
+  "report_banner_message_2": {
+    "message": "Keep this up and I'll rent a billboard warning your boss."
+  },
+  "report_banner_message_3": {
+    "message": "This quake is the echo of your villain tabs. Close them now."
+  },
+  "report_banner_message_4": {
+    "message": "The tab bill is growing: focus now or we charge extra fees."
+  },
+  "report_banner_countdown_final": {
+    "message": "Time to act: close the villain tabs and come back in control."
+  },
+  "report_kpi_heading": {
+    "message": "Additional indicators"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Extra KPIs: villain media, real idle time, SPA routes, grouped tabs."
+  },
+  "report_kpi_subtitle": {
+    "message": "Real idle, SPA routes, and media time."
+  },
+  "report_kpi_audio_label": {
+    "message": "Villain media"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "Time with audio playing on procrastination domains."
+  },
+  "report_kpi_audio_hint": {
+    "message": "Minutes with audio on villain sites"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "Browser unfocused"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "Minutes with another window focused."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "Minutes in the background"
+  },
+  "report_kpi_spa_label": {
+    "message": "SPA routes"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "Internal route changes in single-page apps."
+  },
+  "report_kpi_spa_hint": {
+    "message": "Recorded route changes"
+  },
+  "report_kpi_grouped_label": {
+    "message": "Time in groups"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "Minutes spent in grouped tabs."
+  },
+  "report_kpi_grouped_hint": {
+    "message": "Minutes in grouped tabs"
+  },
+  "report_kpi_restored_label": {
+    "message": "Closed items today"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "Number of tabs or windows closed today."
+  },
+  "report_kpi_restored_hint": {
+    "message": "Recent tabs or windows"
+  },
+  "report_hourly_heading": {
+    "message": "Hourly flow"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "Productive, procrastination, and idle minutes per hour."
+  },
+  "report_hourly_subtitle": {
+    "message": "Productivity versus temptations through the day."
+  },
+  "report_hourly_empty": {
+    "message": "Not enough minutes yet to build this flow."
+  },
+  "report_tab_switch_heading": {
+    "message": "Tab switches per hour"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "Switch distribution across Prod/Proc/Neutral."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "How you jumped between productive, procrastination, and neutral."
+  },
+  "report_tab_switch_empty": {
+    "message": "Not enough switches yet to plot this chart."
+  },
+  "report_composition_heading": {
+    "message": "Day composition"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "Breakdown into productive, procrastination, idle, and neutral."
+  },
+  "report_story_heading": {
+    "message": "Champions and villains"
+  },
+  "report_story_loading": {
+    "message": "Data is still loading..."
+  },
+  "report_ranking_productive_heading": {
+    "message": "Top productive"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "Ranking of productive domains by time."
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "Top procrastination"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "Ranking of procrastination domains by time."
+  },
+  "report_time_column": {
+    "message": "Time"
+  },
+  "report_filter_from": {
+    "message": "From"
+  },
+  "report_filter_to": {
+    "message": "to"
+  },
+  "report_filter_apply": {
+    "message": "Filter"
+  },
+  "report_filter_reset": {
+    "message": "Reset"
+  },
+  "report_timeline_heading": {
+    "message": "Minute-by-minute narrative"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "Key slices grouped by hour and category."
+  },
+  "report_timeline_subtitle": {
+    "message": "Highlights that tell the story of your shift."
+  },
+  "report_timeline_loading": {
+    "message": "Waiting for entries..."
+  },
+  "report_domain_heading": {
+    "message": "Minutes per domain"
+  },
+  "report_domain_subtitle": {
+    "message": "Main champions and villains aggregated for the day."
+  },
+  "report_ai_heading": {
+    "message": "Saul's argument"
+  },
+  "report_ai_subtitle": {
+    "message": "A dramatic defense based on your data."
+  },
+  "report_ai_loading": {
+    "message": "Still preparing the closing argument..."
+  },
+  "report_ai_generate": {
+    "message": "Generate narrative"
+  },
+  "report_ai_retry": {
+    "message": "Try again"
+  },
+  "report_error_no_data": {
+    "message": "No metrics available."
+  },
+  "report_error_runtime": {
+    "message": "Couldn't reach the records office."
+  },
+  "report_error_unknown": {
+    "message": "Unknown error"
+  },
+  "report_hero_message_excellent": {
+    "message": "Impeccable schedule. Saul could use you in a TV ad."
+  },
+  "report_hero_message_ok": {
+    "message": "Acceptable swings. We can still tell the jury you worked."
+  },
+  "report_hero_message_warning": {
+    "message": "Visible relapses today. Time to call reinforcements."
+  },
+  "report_hero_message_alert": {
+    "message": "Verdict is clear: procrastination on trial. We need an urgent plan."
+  },
+  "report_logo_alt_critical": {
+    "message": "Saul Goodman shocked by your focus"
+  },
+  "report_logo_alt_default": {
+    "message": "Saul Goodman logo"
+  },
+  "report_story_focus_title": {
+    "message": "Focus champion"
+  },
+  "report_story_focus_body": {
+    "message": "{domain} held {duration} of focus."
+  },
+  "report_story_villain_title": {
+    "message": "Villain of the day"
+  },
+  "report_story_villain_body": {
+    "message": "{domain} drained {duration}."
+  },
+  "report_story_idle_title": {
+    "message": "Longest silence"
+  },
+  "report_story_idle_body": {
+    "message": "Between {range} the browser stayed idle for {duration}."
+  },
+  "report_story_empty": {
+    "message": "Not enough stories for today."
+  },
+  "report_story_short_day": {
+    "message": "The day was too short to tell a story."
+  },
+  "report_ai_hint": {
+    "message": "Click \"Generate narrative\" so Saul can analyze your day with his sarcasm."
+  },
+  "report_ai_no_metrics": {
+    "message": "No metrics to tell a story today."
+  },
+  "report_ai_missing_key": {
+    "message": "Configure your OpenAI key in the options before generating the narrative."
+  },
+  "report_ai_error_generic": {
+    "message": "Saul could not convince the digital judge. Try again later."
+  },
+  "report_pdf_title": {
+    "message": "Detailed report — Saul Goodman"
+  },
+  "report_category_neutral": {
+    "message": "Neutral"
+  },
+  "report_category_activity": {
+    "message": "Activity"
+  },
+  "report_timeline_summary": {
+    "message": "{duration} • {count} segments"
+  },
+  "report_pdf_top_domains": {
+    "message": "Top domains"
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF library unavailable."
+  }
+}

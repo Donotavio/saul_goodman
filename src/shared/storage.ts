@@ -2,12 +2,15 @@ import {
   DailyMetrics,
   ExtensionSettings,
   HourlyBucket,
+  LocalePreference,
+  SupportedLocale,
   TabSwitchBreakdown,
   TabSwitchHourlyBucket,
   TimelineEntry,
   WorkInterval
 } from './types.js';
 import { getTodayKey } from './utils/time.js';
+import { resolveLocale } from './i18n.js';
 
 export enum StorageKeys {
   METRICS = 'sg:metrics',
@@ -86,6 +89,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   },
   inactivityThresholdMs: 60000,
   locale: 'pt-BR',
+  localePreference: 'auto',
   openAiKey: '',
   criticalScoreThreshold: 90,
   workSchedule: DEFAULT_WORK_SCHEDULE,
@@ -162,10 +166,14 @@ export async function getSettings(): Promise<ExtensionSettings> {
   const stored = (await chrome.storage.local.get(StorageKeys.SETTINGS))[StorageKeys.SETTINGS];
   if (stored) {
     const defaults = getDefaultSettings();
+    const preference = normalizePreference(stored.localePreference, stored.locale);
+    const locale = resolveLocale(preference);
 
     return {
       ...defaults,
       ...stored,
+      locale,
+      localePreference: preference,
       weights: {
         ...defaults.weights,
         ...(stored.weights ?? {})
@@ -178,12 +186,28 @@ export async function getSettings(): Promise<ExtensionSettings> {
   }
 
   const defaults = getDefaultSettings();
-  await chrome.storage.local.set({ [StorageKeys.SETTINGS]: defaults });
-  return defaults;
+  const preference = defaults.localePreference ?? 'auto';
+  const locale = resolveLocale(preference);
+  const normalizedDefaults = { ...defaults, locale, localePreference: preference };
+  await chrome.storage.local.set({ [StorageKeys.SETTINGS]: normalizedDefaults });
+  return normalizedDefaults;
 }
 
 export async function saveSettings(settings: ExtensionSettings): Promise<void> {
   await chrome.storage.local.set({ [StorageKeys.SETTINGS]: settings });
+}
+
+function normalizePreference(
+  storedPreference?: LocalePreference,
+  storedLocale?: SupportedLocale
+): LocalePreference {
+  if (storedPreference) {
+    return storedPreference;
+  }
+  if (storedLocale && (['pt-BR', 'en-US', 'es-419'] as SupportedLocale[]).includes(storedLocale)) {
+    return storedLocale;
+  }
+  return 'auto';
 }
 
 export async function getDailyMetrics(): Promise<DailyMetrics> {

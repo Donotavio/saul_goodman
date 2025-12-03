@@ -24,15 +24,15 @@ export function calculateProcrastinationIndex(
   return Math.min(Math.round(weightedScore * 100), 100);
 }
 
-export function pickScoreMessage(score: number): string {
+export function pickScoreMessageKey(score: number): string {
   if (score <= 25) {
-    return 'Cliente de ouro! Continue assim que eu consigo cobrar cache cheio.';
+    return 'popup_score_message_excellent';
   }
   if (score <= 50) {
-    return 'Ainda dá pra dizer que é expediente. Não me force a ligar pro seu foco.';
+    return 'popup_score_message_ok';
   }
   if (score <= 75) {
-    return 'Vejo sinais de fuga de responsabilidade. Hora de voltar pro jogo.';
+    return 'popup_score_message_warning';
   }
-  return 'Você está brincando com fogo. E eu cobro por hora para apagar incêndios.';
+  return 'popup_score_message_alert';
 }

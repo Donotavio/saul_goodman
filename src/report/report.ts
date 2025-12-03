@@ -2,6 +2,7 @@ import {
   DailyMetrics,
   DomainStats,
   HourlyBucket,
+  LocalePreference,
   TimelineEntry,
   WorkInterval
 } from '../shared/types.js';
@@ -14,6 +15,7 @@ import {
   formatProductivityRatio
 } from '../shared/metrics.js';
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
+import { createI18n, I18nService } from '../shared/i18n.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -62,31 +64,18 @@ const spaNavigationsEl = document.getElementById('spaNavigationsValue') as HTMLE
 const groupedTimeEl = document.getElementById('groupedTimeValue') as HTMLElement | null;
 const restoredItemsEl = document.getElementById('restoredItemsValue') as HTMLElement | null;
 
-const messageTemplates: Array<{ max: number; text: string }> = [
-  {
-    max: 25,
-    text: 'Agenda impecável. Saul poderia usar você como caso de sucesso em propaganda.'
-  },
-  {
-    max: 50,
-    text: 'Oscilações aceitáveis. Ainda dá para dizer aos jurados que você trabalhou.'
-  },
-  {
-    max: 75,
-    text: 'O dia teve recaídas visíveis. Hora de chamar reforços e cortar distrações.'
-  },
-  {
-    max: 100,
-    text: 'O veredito é claro: procrastinação no banco dos réus. Precisamos de um plano urgente.'
-  }
+const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
+  { max: 25, key: 'report_hero_message_excellent' },
+  { max: 50, key: 'report_hero_message_ok' },
+  { max: 75, key: 'report_hero_message_warning' },
+  { max: 100, key: 'report_hero_message_alert' }
 ];
 
-const criticalMessages: Array<(threshold: number) => string> = [
-  (threshold) =>
-    `Nem eu consigo convencer o júri com índice ${threshold}. Hora de cortar as distrações!`,
-  () => 'Se continuar assim, mando um outdoor avisando o seu chefe.',
-  () => 'Este terremoto é o eco das suas abas procrastinatórias. Feche-as já.',
-  () => 'A conta está aumentando: foco agora ou cobramos honorários extras.'
+const REPORT_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
+  { key: 'report_banner_message_1', needsThreshold: true },
+  { key: 'report_banner_message_2' },
+  { key: 'report_banner_message_3' },
+  { key: 'report_banner_message_4' }
 ];
 
 let hourlyChart: ChartInstance = null;
@@ -98,6 +87,7 @@ let locale = 'pt-BR';
 let openAiKey = '';
 let latestSettings: {
   locale?: string;
+  localePreference?: LocalePreference;
   openAiKey?: string;
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
@@ -108,6 +98,8 @@ let latestTimelineNarrative: string[] = [];
 let timelineFilter = { start: 0, end: 23 };
 let lastHeroBand: 'good' | 'warn' | 'alert' | 'neutral' = 'neutral';
 let heroConfettiTimer: number | null = null;
+let i18n: I18nService | null = null;
+let activeLocalePreference: LocalePreference = 'auto';
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
@@ -153,8 +145,10 @@ async function hydrate(): Promise<void> {
   try {
     const response = await sendRuntimeMessage<MetricsResponse>('metrics-request');
     if (!response?.metrics) {
-      throw new Error('Sem métricas disponíveis.');
+      throw new Error(i18n?.t('report_error_no_data') ?? 'No metrics available.');
     }
+    const preference = response.settings?.localePreference ?? 'auto';
+    await ensureI18n(preference);
     latestMetrics = response.metrics;
     latestSettings = response.settings ?? null;
     locale = latestSettings?.locale ?? 'pt-BR';
@@ -162,8 +156,18 @@ async function hydrate(): Promise<void> {
     renderReport(latestMetrics);
   } catch (error) {
     console.error(error);
-    heroMessageEl.textContent = 'Não consegui conversar com o escritório de registros.';
+    heroMessageEl.textContent =
+      i18n?.t('report_error_runtime') ?? 'Unable to contact the records office.';
   }
+}
+
+async function ensureI18n(preference: LocalePreference): Promise<void> {
+  if (i18n && activeLocalePreference === preference) {
+    return;
+  }
+  i18n = await createI18n(preference);
+  activeLocalePreference = preference;
+  i18n.apply();
 }
 
 function renderReport(metrics: DailyMetrics): void {
@@ -173,7 +177,8 @@ function renderReport(metrics: DailyMetrics): void {
     month: 'long',
     day: 'numeric'
   });
-  heroMessageEl.textContent = pickScoreMessage(metrics.currentIndex);
+  const heroMessageKey = pickHeroMessageKey(metrics.currentIndex);
+  heroMessageEl.textContent = i18n?.t(heroMessageKey) ?? heroMessageKey;
   heroIndexEl.textContent = metrics.currentIndex.toString().padStart(2, '0');
   const band = getScoreBand(metrics.currentIndex);
   if (band === 'good' && lastHeroBand !== 'good') {
@@ -210,7 +215,8 @@ function renderReport(metrics: DailyMetrics): void {
   timelineStartHourInput.value = timelineFilter.start.toString();
   timelineEndHourInput.value = timelineFilter.end.toString();
   aiNarrativeEl.innerHTML =
-    'Clique em \"Gerar narrativa\" para Saul analisar seu expediente com seu humor ácido.';
+    i18n?.t('report_ai_hint') ??
+    'Click "Generate narrative" so Saul can analyze your day with his sarcasm.';
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
   updateHeroLogo(metrics.currentIndex >= criticalThreshold);
   toggleCriticalBanner(metrics.currentIndex >= criticalThreshold);
@@ -237,21 +243,24 @@ function renderHourlyChart(metrics: DailyMetrics): void {
   hourlyEmptyEl?.classList.add('hidden');
 
   const labels = metrics.hourly.map((bucket) => `${bucket.hour.toString().padStart(2, '0')}h`);
+  const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
+  const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
+  const inactiveLabel = i18n?.t('popup_summary_inactive_label') ?? 'Inactive';
   const data = {
     labels,
     datasets: [
       {
-        label: 'Produtivo',
+        label: productiveLabel,
         data: metrics.hourly.map((bucket) => Math.round(bucket.productiveMs / 60000)),
         backgroundColor: '#0a7e07'
       },
       {
-        label: 'Procrastinação',
+        label: procrastinationLabel,
         data: metrics.hourly.map((bucket) => Math.round(bucket.procrastinationMs / 60000)),
         backgroundColor: '#d00000'
       },
       {
-        label: 'Inatividade',
+        label: inactiveLabel,
         data: metrics.hourly.map((bucket) => Math.round(bucket.inactiveMs / 60000)),
         backgroundColor: '#c1c1c1'
       }
@@ -277,7 +286,7 @@ function renderHourlyChart(metrics: DailyMetrics): void {
           suggestedMax: Math.max(calculateMaxMinutes(metrics.hourly), 60),
           title: {
             display: true,
-            text: 'Minutos'
+            text: i18n?.t('popup_chart_axis_minutes') ?? 'Minutes'
           }
         }
       }
@@ -355,7 +364,12 @@ function renderCompositionChart(metrics: DailyMetrics): void {
     .filter((entry) => entry.category === 'neutral')
     .reduce((acc, entry) => acc + entry.durationMs, 0);
   const data = {
-    labels: ['Produtivo', 'Procrastinação', 'Inatividade', 'Neutro'],
+    labels: [
+      i18n?.t('popup_chart_label_productive') ?? 'Productive',
+      i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination',
+      i18n?.t('popup_summary_inactive_label') ?? 'Inactive',
+      i18n?.t('report_category_neutral') ?? 'Neutral'
+    ],
     datasets: [
       {
         data: [
@@ -396,31 +410,46 @@ function renderStoryList(metrics: DailyMetrics, kpis: CalculatedKpis): void {
   const items = [
     topFocus
       ? {
-          title: 'Campeão produtivo',
-          body: `${topFocus.domain} segurou ${formatDuration(topFocus.milliseconds)} de foco.`
+          title: i18n?.t('report_story_focus_title') ?? 'Top focus',
+          body:
+            i18n?.t('report_story_focus_body', {
+              domain: topFocus.domain,
+              duration: formatDuration(topFocus.milliseconds)
+            }) ??
+            `${topFocus.domain} held ${formatDuration(topFocus.milliseconds)} of focus.`
         }
       : null,
     topProcrastination
       ? {
-          title: 'Vilão do dia',
-          body: `${topProcrastination.domain} drenou ${formatDuration(
-            topProcrastination.milliseconds
-          )}.`
+          title: i18n?.t('report_story_villain_title') ?? 'Villain of the day',
+          body:
+            i18n?.t('report_story_villain_body', {
+              domain: topProcrastination.domain,
+              duration: formatDuration(topProcrastination.milliseconds)
+            }) ??
+            `${topProcrastination.domain} drained ${formatDuration(
+              topProcrastination.milliseconds
+            )}.`
         }
       : null,
     longestIdle
       ? {
-          title: 'Maior silêncio',
-          body: `Entre ${formatTimeRange(longestIdle.startTime, longestIdle.endTime, locale)} o navegador ficou parado por ${formatDuration(
-            longestIdle.durationMs
-          )}.`
+          title: i18n?.t('report_story_idle_title') ?? 'Longest idle',
+          body:
+            i18n?.t('report_story_idle_body', {
+              range: formatTimeRange(longestIdle.startTime, longestIdle.endTime, locale),
+              duration: formatDuration(longestIdle.durationMs)
+            }) ??
+            `Between ${formatTimeRange(longestIdle.startTime, longestIdle.endTime, locale)} the browser stayed idle for ${formatDuration(
+              longestIdle.durationMs
+            )}.`
         }
       : null
   ].filter(Boolean) as Array<{ title: string; body: string }>;
 
   if (!items.length) {
     const li = document.createElement('li');
-    li.textContent = 'Sem histórias suficientes para hoje.';
+    li.textContent = i18n?.t('report_story_empty') ?? 'Not enough data for stories today.';
     storyListEl.appendChild(li);
     return;
   }
@@ -501,7 +530,8 @@ function renderTimeline(entries: TimelineEntry[]): void {
 
   if (!blocks.length) {
     const li = document.createElement('li');
-    li.textContent = 'O dia foi curto demais para contar uma história.';
+    li.textContent =
+      i18n?.t('report_story_short_day') ?? 'The day was too short to tell a story.';
     timelineListEl.appendChild(li);
     return;
   }
@@ -517,7 +547,11 @@ function renderTimeline(entries: TimelineEntry[]): void {
 
     const summary = document.createElement('span');
     summary.className = 'timeline-hour-summary';
-    summary.textContent = `${formatDuration(block.totalMs)} • ${block.segments.length} trechos`;
+    summary.textContent =
+      i18n?.t('report_timeline_summary', {
+        duration: formatDuration(block.totalMs),
+        count: block.segments.length
+      }) ?? `${formatDuration(block.totalMs)} • ${block.segments.length} segments`;
     hourHeader.appendChild(summary);
     li.appendChild(hourHeader);
 
@@ -549,7 +583,7 @@ async function exportPdf(): Promise<void> {
   }
 
   if (!jspdf?.jsPDF) {
-    alert('Biblioteca de PDF indisponível.');
+    alert(i18n?.t('report_alert_pdf_missing') ?? 'PDF library unavailable.');
     return;
   }
 
@@ -558,10 +592,10 @@ async function exportPdf(): Promise<void> {
   const kpis = calculateKpis(metrics);
 
   doc.setFontSize(18);
-  doc.text('Relatório detalhado — Saul Goodman', 14, 18);
+  doc.text(i18n?.t('report_pdf_title') ?? 'Detailed report — Saul Goodman', 14, 18);
   doc.setFontSize(12);
   doc.text(`Data: ${reportDateEl.textContent}`, 14, 26);
-  doc.text(`Índice: ${metrics.currentIndex}`, 14, 34);
+  doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${metrics.currentIndex}`, 14, 34);
   doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 40);
   doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 46);
 
@@ -619,27 +653,27 @@ function findLongestSegment(
   return filtered.sort((a, b) => b.durationMs - a.durationMs)[0];
 }
 
-function pickScoreMessage(score: number): string {
-  for (const template of messageTemplates) {
+function pickHeroMessageKey(score: number): string {
+  for (const template of HERO_MESSAGE_KEYS) {
     if (score <= template.max) {
-      return template.text;
+      return template.key;
     }
   }
-  return messageTemplates[messageTemplates.length - 1].text;
+  return HERO_MESSAGE_KEYS[HERO_MESSAGE_KEYS.length - 1].key;
 }
 
 function describeCategory(category: TimelineEntry['category']): string {
   switch (category) {
     case 'productive':
-      return 'Produtivo';
+      return i18n?.t('popup_chart_label_productive') ?? 'Productive';
     case 'procrastination':
-      return 'Procrastinação';
+      return i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
     case 'neutral':
-      return 'Neutro';
+      return i18n?.t('report_category_neutral') ?? 'Neutral';
     case 'inactive':
-      return 'Inatividade';
+      return i18n?.t('popup_summary_inactive_label') ?? 'Inactive';
     default:
-      return 'Atividade';
+      return i18n?.t('report_category_activity') ?? 'Activity';
   }
 }
 
@@ -659,7 +693,8 @@ async function sendRuntimeMessage<T>(type: string, payload?: unknown): Promise<T
       if (response.ok) {
         resolve(response.data as T);
       } else {
-        reject(new Error(response.error ?? 'Erro desconhecido'));
+        const fallback = i18n?.t('report_error_unknown') ?? 'Unknown error';
+        reject(new Error(response.error ?? fallback));
       }
     });
   });
@@ -667,31 +702,36 @@ async function sendRuntimeMessage<T>(type: string, payload?: unknown): Promise<T
 
 async function generateNarrative(): Promise<void> {
   if (!latestMetrics) {
-    aiNarrativeEl.textContent = 'Sem métricas para contar uma história hoje.';
+    aiNarrativeEl.textContent =
+      i18n?.t('report_ai_no_metrics') ?? 'No metrics to tell a story today.';
     return;
   }
 
   if (!openAiKey) {
-    aiNarrativeEl.textContent = 'Configure sua chave OpenAI nas opções antes de gerar a narrativa.';
+    aiNarrativeEl.textContent =
+      i18n?.t('report_ai_missing_key') ??
+      'Configure your OpenAI key in the options before generating the narrative.';
     aiRetryButton.classList.remove('hidden');
     return;
   }
 
   aiGenerateButton.disabled = true;
   aiRetryButton.classList.add('hidden');
-  aiNarrativeEl.textContent = 'Saul está analisando as provas...';
+  aiNarrativeEl.textContent =
+    i18n?.t('report_ai_loading') ?? 'Saul is reviewing the evidence...';
 
   try {
     const payload = buildAiPayload(latestMetrics);
-    const narrative = await requestAiNarrative(payload);
+    const narrative = await requestAiNarrative(payload, resolveNarrativeLanguage());
     if (!narrative) {
-      throw new Error('Resposta vazia da IA');
+      throw new Error('Empty AI response');
     }
     aiNarrativeEl.innerHTML = formatAiNarrative(narrative);
   } catch (error) {
-    console.error('Erro na narrativa IA', error);
+    console.error('AI narrative error', error);
     aiNarrativeEl.textContent =
-      'Saul não conseguiu convencer o juiz digital. Tente novamente mais tarde.';
+      i18n?.t('report_ai_error_generic') ??
+      'Saul could not convince the digital judge. Try again later.';
     aiRetryButton.classList.remove('hidden');
   } finally {
     aiGenerateButton.disabled = false;
@@ -721,6 +761,16 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
   };
 }
 
+function resolveNarrativeLanguage(): string {
+  if (locale === 'pt-BR') {
+    return 'Portuguese (Brazil)';
+  }
+  if (locale === 'es-419') {
+    return 'Spanish';
+  }
+  return 'English';
+}
+
 function getTopEntries(
   domains: Record<string, DomainStats>,
   category: DomainStats['category']
@@ -732,10 +782,13 @@ function getTopEntries(
     .map((entry) => ({ domain: entry.domain, duration: formatDuration(entry.milliseconds) }));
 }
 
-async function requestAiNarrative(payload: AiPromptPayload): Promise<string> {
+async function requestAiNarrative(
+  payload: AiPromptPayload,
+  languageLabel: string
+): Promise<string> {
   const apiKey = openAiKey;
   if (!apiKey) {
-    throw new Error('OPENAI_API_KEY não configurada.');
+    throw new Error('OPENAI_API_KEY not configured.');
   }
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -750,12 +803,13 @@ async function requestAiNarrative(payload: AiPromptPayload): Promise<string> {
       messages: [
         {
           role: 'system',
-          content:
-            'Você é Saul Goodman, advogado com humor sarcástico e vendedor nato. Conte a história do dia do usuário usando os dados fornecidos, como se estivesse defendendo o cliente.'
+          content: `You are Saul Goodman, a sarcastic lawyer and relentless salesman. Tell the user's day as if you were defending them, and write the story in ${languageLabel}.`
         },
         {
           role: 'user',
-          content: `Conte uma narrativa curta (2 parágrafos) com os dados:\n${JSON.stringify(payload)}`
+          content: `Write a short narrative (2 paragraphs) using these data points:\n${JSON.stringify(
+            payload
+          )}`
         }
       ]
     })
@@ -789,6 +843,7 @@ interface MetricsResponse {
   metrics: DailyMetrics;
   settings?: {
     locale?: string;
+    localePreference?: LocalePreference;
     openAiKey?: string;
     criticalScoreThreshold?: number;
     workSchedule?: WorkInterval[];
@@ -1021,8 +1076,7 @@ function toggleCriticalBanner(isCritical: boolean): void {
     document.body.classList.add('earthquake');
     criticalBannerEl.classList.remove('hidden');
     const threshold = latestSettings?.criticalScoreThreshold ?? 90;
-    const message =
-      criticalMessages[Math.floor(Math.random() * criticalMessages.length)](threshold);
+    const message = getReportCriticalMessage(threshold);
     if (criticalBannerMessageEl) {
       criticalBannerMessageEl.textContent = message;
     }
@@ -1034,6 +1088,18 @@ function toggleCriticalBanner(isCritical: boolean): void {
   }
 }
 
+function getReportCriticalMessage(threshold: number): string {
+  if (!i18n) {
+    return 'Critical warning';
+  }
+  const index = Math.floor(Math.random() * REPORT_CRITICAL_MESSAGE_KEYS.length);
+  const template = REPORT_CRITICAL_MESSAGE_KEYS[index];
+  if (template.needsThreshold) {
+    return i18n.t(template.key, { threshold });
+  }
+  return i18n.t(template.key);
+}
+
 function updateHeroLogo(isCritical: boolean): void {
   if (!heroLogoEl) {
     return;
@@ -1041,8 +1107,8 @@ function updateHeroLogo(isCritical: boolean): void {
   const imagePath = isCritical ? 'src/img/saul_incredulo.png' : 'src/img/logotipo_saul_goodman.png';
   heroLogoEl.src = chrome.runtime.getURL(imagePath);
   heroLogoEl.alt = isCritical
-    ? 'Saul Goodman incrédulo com o seu foco'
-    : 'Logotipo Saul Goodman';
+    ? i18n?.t('report_logo_alt_critical') ?? 'Saul Goodman unimpressed with your focus'
+    : i18n?.t('report_logo_alt_default') ?? 'Saul Goodman logo';
 }
 
 function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
@@ -1112,7 +1178,8 @@ function startBannerCountdown(): void {
       stopBannerCountdown();
       if (criticalBannerMessageEl) {
         criticalBannerMessageEl.textContent =
-          'Hora de agir: feche as abas vilãs e volte quando estiver no controle.';
+          i18n?.t('report_banner_countdown_final') ??
+          'Time to act: close the villain tabs and return when you are in control.';
       }
     }
   }, 1000);
