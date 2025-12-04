@@ -5,6 +5,7 @@
 - **Manifest V3**: service worker em `dist/background/index.js`, popup/options HTML em `src/popup` e `src/options`, content script em `dist/content/activity-listener.js`.
 - **ES Modules**: TypeScript compila para módulos ES nativos, o que mantém o worker organizado em funções.
 - **Sem backend**: todo armazenamento fica em `chrome.storage.local` e o badge reflete o estado atual.
+- **I18n**: strings em `_locales/{pt_BR,en_US,es_419}`; o popup/options usam `localePreference` (`auto` segue idioma do Chrome) via `createI18n`.
 
 ## Fluxo de dados
 
@@ -17,7 +18,7 @@
    - `chrome.alarms`:
      - `sg:tracking-tick` roda a cada 15s para consolidar tempo produtivo/procrastinação/inativo.
      - `sg:midnight-reset` limpa métricas diariamente e reseta contadores.
-   - `chrome.storage.onChanged`: mantém caches locais sincronizados quando options altera configurações.
+   - `chrome.storage.onChanged`: mantém caches locais sincronizados quando options altera configurações e reaplica o `chrome.idle.setDetectionInterval` com base em `inactivityThresholdMs`.
    - `calculateProcrastinationIndex` converte métricas em índice (0–100) e atualiza o badge.
 3. **Popup (`popup.ts`)**
    - Solicita `metrics-request`, renderiza summary, Chart.js e top 5 domínios.
@@ -39,8 +40,18 @@ interface DailyMetrics {
   productiveMs: number;
   procrastinationMs: number;
   inactiveMs: number;
+  overtimeProductiveMs: number; // minutos produtivos fora do expediente valem em dobro no índice
   tabSwitches: number;
+  tabSwitchBreakdown: TabSwitchBreakdown; // Prod↔Proc↔Neutro
+  tabSwitchHourly: TabSwitchHourlyBucket[]; // 24 buckets das transições por hora
   domains: Record<string, DomainStats>; // domain -> tempo + categoria
+  hourly: HourlyBucket[]; // 24 buckets produtivo/procrastinação/inativo/neutral
+  timeline: TimelineEntry[]; // limitado a 2.000 segmentos por dia
+  windowUnfocusedMs: number;
+  audibleProcrastinationMs: number;
+  spaNavigations: number;
+  groupedMs: number;
+  restoredItems: number;
   currentIndex: number;
   lastUpdated: number;
 }
@@ -54,7 +65,12 @@ interface ExtensionSettings {
     inactivityWeight: number;
   };
   inactivityThresholdMs: number;
-  locale: 'pt-BR';
+  locale: 'pt-BR' | 'en-US' | 'es-419';
+  localePreference: 'auto' | 'pt-BR' | 'en-US' | 'es-419';
+  criticalScoreThreshold?: number; // padrão 90
+  criticalSoundEnabled?: boolean;
+  workSchedule?: WorkInterval[]; // intervalos adicionados em options
+  openAiKey?: string; // opcional para narrativa no relatório
 }
 ```
 
@@ -93,7 +109,7 @@ Todos os cartões exibem um tooltip descrevendo a métrica.
 
 ## Build & distribuição
 
-- `npm run build` → `tsc -p tsconfig.json` gera `dist/**`. Não há bundler; HTML referencia `../../dist/...` diretamente.
+- `npm run build` → `prebuild` limpa `dist/` e `tsc -p tsconfig.json` gera `dist/**`. Não há bundler; HTML referencia `../../dist/...` diretamente.
 - Chart.js fica vendorizado em `src/vendor/chart.umd.js` (carregado pelo popup antes do módulo TS).
 - Para empacotar: após compilar, compacte a pasta raiz (sem `node_modules` se não quiser) e importe em `chrome://extensions`.
 

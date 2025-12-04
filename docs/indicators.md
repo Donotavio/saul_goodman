@@ -8,9 +8,10 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | --- | --- | --- |
 | `productiveMs` | Tempo total em domínios classificados como produtivos. | Soma dos slices coletados quando `classifyDomain` retorna `productive`. |
 | `procrastinationMs` | Tempo total em domínios procrastinatórios. | Soma dos slices com categoria `procrastination`. |
-| `inactiveMs` | Período em que o navegador ficou sem interação além do `inactivityThresholdMs`. | Incrementado quando `trackingState.isIdle === true`. |
+| `inactiveMs` | Período em que o navegador ficou sem interação além do `inactivityThresholdMs` **ou** perdeu foco (janela em segundo plano). | Incrementado quando `trackingState.isIdle === true` ou `browserFocused` é falso (também soma em `windowUnfocusedMs`). |
 | `tabSwitches` | Número de vezes que o usuário trocou de aba enquanto era rastreado. | Incrementado em `incrementTabSwitches`. |
 | `tabSwitchBreakdown` | Estrutura com a contagem de trocas agrupadas por categoria origem/destino (ex.: `productiveToProcrastination`). | Atualizada em `incrementTabSwitches`, usando `classifyDomain` para identificar a categoria de cada domínio. |
+| `tabSwitchHourly` | 24 buckets com as mesmas transições do breakdown, só que por hora do dia. | Atualizado em `recordTabSwitchCounts` com base no timestamp da troca. |
 | `domains` | Mapa domínio → `{milliseconds, category}`. | Atualizado a cada slice ativo. |
 | `hourly` | 24 buckets com tempos por hora (`productiveMs`, `procrastinationMs`, `inactiveMs`, `neutralMs`). | Gerado via `splitDurationByHour` a cada slice. |
 | `timeline` | Lista `{startTime, endTime, durationMs, domain, category}` (até 2.000 entradas). | Populada em `recordTimelineSegment` para contar a história do dia. |
@@ -58,7 +59,7 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 | **Tempo em grupos** | `groupedMs` formatado em minutos. | Minutos em abas agrupadas. |
 | **Itens fechados hoje** | `restoredItems`. | Quantidade de abas/janelas recentes fechadas no dia. |
 
-> `totalTracked = productiveMs + procrastinationMs + inactiveMs`. Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
+> `totalTracked = productiveMs + procrastinationMs + inactiveMs` (tempo inativo inclui janela desfocada). Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
 
 ## Apresentação
 

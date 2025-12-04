@@ -4,7 +4,7 @@
 
 - Inspiração em Saul Goodman como advogado-vendedor carismático.
 - Humor sarcástico, persuasivo, sem referências protegidas (nomes de episódios, imagens da série etc.).
-- Linguagem 100% em **pt-BR**, informal porém clara sobre o que está sendo rastreado.
+- Idiomas suportados: **pt-BR** (padrão), **en-US** e **es-419** via `_locales/`. `localePreference = auto` segue o idioma do Chrome; todos os textos devem ter chave i18n correspondente. Tom permanece informal e claro sobre o que está sendo rastreado.
 
 ## Popup
 
