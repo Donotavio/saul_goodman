@@ -41,7 +41,7 @@ body {
 .site-nav .nav-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .site-nav .nav-links {
@@ -75,6 +75,10 @@ body {
 .language-switcher select:focus {
   outline: 2px solid var(--red);
   outline-offset: 2px;
+}
+
+.sponsor-button iframe {
+  display: block;
 }
 
 .sr-only {
@@ -478,18 +482,17 @@ blockquote p {
 
 .support .support-actions {
   display: grid;
-  gap: 18px;
-  justify-items: start;
+  gap: 16px;
+  justify-items: center;
 }
 
-.support .sponsor-embeds {
-  display: grid;
-  gap: 12px;
+.support iframe,
+.support .repo-badge img {
   max-width: 100%;
 }
 
-.support iframe {
-  max-width: 100%;
+.support .repo-badge img {
+  display: block;
 }
 
 @media (max-width: 720px) {
@@ -500,13 +503,17 @@ blockquote p {
 
   .site-nav .nav-actions {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
   }
 
   .site-nav .nav-links {
     flex-wrap: wrap;
+  }
+
+  .sponsor-button {
+    order: 4;
   }
 
   .hero {
