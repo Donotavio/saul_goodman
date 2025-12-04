@@ -1,85 +1,71 @@
 (function () {
   class CriticalSirenPlayer {
     constructor() {
-      this.context = null;
-      this.timeoutId = null;
-      this.active = false;
+      this.audio = null;
+      this.endedHandler = null;
       this.enabled = true;
     }
 
-    async playBursts(repeats = 3) {
-      if (typeof AudioContext === 'undefined') {
-        return;
+    getSirenUrl() {
+      if (typeof chrome !== 'undefined' && chrome.runtime?.getURL) {
+        return chrome.runtime.getURL('store-assets/audio/Voicy_Better Call Saul intro.aac');
       }
+      return 'store-assets/audio/Voicy_Better Call Saul intro.aac';
+    }
 
-      if (!this.enabled) {
-        return;
+    ensureAudio() {
+      if (this.audio) return;
+      try {
+        this.audio = new Audio(this.getSirenUrl());
+        this.audio.preload = 'auto';
+        this.audio.volume = 0.9;
+      } catch (error) {
+        console.warn('Saul sirene indisponível (Audio bloqueado):', error);
+        this.enabled = false;
       }
+    }
 
-      if (!this.context) {
-        try {
-          this.context = new AudioContext();
-        } catch (error) {
-          console.warn('Saul sirene indisponível (AudioContext bloqueado):', error);
-          this.enabled = false;
-          return;
-        }
-      }
+    playBursts(repeats = 1) {
+      if (!this.enabled) return;
+      this.ensureAudio();
+      if (!this.audio) return;
 
-      if (this.context.state === 'suspended') {
-        try {
-          await this.context.resume();
-        } catch (error) {
-          console.warn('Saul sirene não pôde retomar o contexto de áudio:', error);
-          this.enabled = false;
-          return;
-        }
-      }
-
-      this.active = true;
+      this.stop();
       let count = 0;
 
-      const trigger = () => {
-        if (!this.active || !this.context) {
-          return;
-        }
-        this.playSingleBurst();
-        count += 1;
-        if (count < repeats) {
-          this.timeoutId = setTimeout(trigger, 900);
+      const playOnce = () => {
+        if (!this.audio || !this.enabled) return;
+        this.audio.currentTime = 0;
+        const playPromise = this.audio.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch((error) => {
+            console.warn('Saul sirene não pôde tocar:', error);
+            this.enabled = false;
+          });
         }
       };
 
-      trigger();
+      this.endedHandler = () => {
+        count += 1;
+        if (count < repeats) {
+          playOnce();
+        } else {
+          this.stop();
+        }
+      };
+
+      this.audio.addEventListener('ended', this.endedHandler);
+      playOnce();
     }
 
     stop() {
-      this.active = false;
-      if (this.timeoutId) {
-        clearTimeout(this.timeoutId);
-        this.timeoutId = null;
-      }
-    }
-
-    playSingleBurst() {
-      if (!this.context) {
-        return;
-      }
-      try {
-        const oscillator = this.context.createOscillator();
-        const gain = this.context.createGain();
-        oscillator.type = 'square';
-        oscillator.frequency.value = 480;
-        gain.gain.setValueAtTime(0.22, this.context.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + 0.6);
-        oscillator.connect(gain);
-        gain.connect(this.context.destination);
-        oscillator.start();
-        oscillator.stop(this.context.currentTime + 0.6);
-      } catch (error) {
-        console.warn('Saul sirene não pôde tocar o burst:', error);
-        this.enabled = false;
-        this.stop();
+      if (this.audio) {
+        if (this.endedHandler) {
+          this.audio.removeEventListener('ended', this.endedHandler);
+          this.endedHandler = null;
+        }
+        this.audio.pause();
+        this.audio.currentTime = 0;
       }
     }
   }

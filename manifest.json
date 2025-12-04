@@ -52,7 +52,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "src/img/*"
+        "src/img/*",
+        "store-assets/audio/*"
       ],
       "matches": [
         "<all_urls>"

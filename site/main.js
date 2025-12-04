@@ -66,11 +66,37 @@ const translations = {
     splitPopupTitle: 'Popup de plantão',
     splitPopupBody:
       'O painel mostra o índice, top domínios, indicadores extras e permite exportar CSV/PDF. Quando o foco despenca, o modo terremoto invade para salvar a barra da justiça.',
+    splitPopupCaption: 'Popup com índice, top domínios e exportações.',
+    splitPopupCaption2: 'KPIs, top domínios e exportação rápida.',
+    splitPopupCaption3: 'Listas produtivas/vilãs no painel de opções.',
+    splitPopupCaption4: 'Pesos e horários configuráveis para cálculo do índice.',
     splitReportTitle: 'Relatório dramático',
     splitReportBody:
       'Gráficos por hora, ranking de vilões, narrativa IA e banner crítico com plano de ação. Tudo com visual juramentado.',
+    splitReportCaption: 'Resumo do relatório com gráficos e ranking.',
+    splitReportCaption2: 'Narrativa IA e timeline minuto a minuto.',
+    splitReportCaption3: 'Ranking de vilões, campeões e distribuição.',
     splitStats1: 'Minutos recuperados/dia',
     splitStats2: 'Clientes absolvidos',
+    demoViewFull: 'Ver em alta',
+    reactionsEyebrow: 'Saul reage',
+    reactionsTitle: 'O veredito instantâneo do Saul.',
+    reactionsBody:
+      'Quando o índice sobe, Saul fica incrédulo. Quando você volta ao foco, ele celebra. Pequenos lembretes visuais para manter a barra da justiça no lugar.',
+    reactionDisbeliefLabel: 'Modo incrédulo',
+    reactionDisbeliefText: '“Você chamou isso de foco?”',
+    reactionDisbeliefHint: 'Aciona quando o índice passa do limiar de terremoto.',
+    reactionHypeLabel: 'Modo aprovado',
+    reactionHypeText: '“Assim eu até desconto honorários.”',
+    reactionHypeHint: 'Aparece quando você volta às abas produtivas.',
+    quakeDemoEyebrow: 'Modo terremoto (demo)',
+    quakeDemoTitle: 'Teste o alerta mais dramático do Saul.',
+    quakeDemoBody:
+      'Clique para simular o modo terremoto: tremor de tela, sirene e mensagem dramática. Igual à extensão, mas só por alguns segundos aqui no site.',
+    quakeDemoButton: 'Simular modo terremoto',
+    quakeOverlayTitle: 'Modo terremoto acionado!',
+    quakeOverlayBody: 'Saul está derrubando as abas vilãs. Volte ao foco antes que ele cobre honorários.',
+    quakeOverlayClose: 'Voltar ao foco',
     timelineEyebrow: 'Linha do tempo',
     timelineTitle: 'Do rastreamento ao veredito.',
     timeline1Title: 'Radar inicial',
@@ -102,6 +128,7 @@ const translations = {
     supportBody:
       'O repositório está aberto para você auditar, contribuir e sugerir melhorias. Se curtir o projeto, considere patrocinar para manter os alertas sempre prontos.',
     supportRepo: 'Ver repositório no GitHub',
+    lightboxClose: 'Fechar',
     finalCtaTitle: 'Pronto para defender o seu foco?',
     finalCtaBody:
       'Instale a extensão, liste seus vilões e deixe Saul negociar com a sua procrastinação antes que ela vire caso de tribunal.',
@@ -187,11 +214,37 @@ const translations = {
     splitPopupTitle: 'On-call popup',
     splitPopupBody:
       'The panel shows the index, top domains, extra indicators, and lets you export CSV/PDF. When focus drops, earthquake mode storms in to save the bar of justice.',
+    splitPopupCaption: 'Popup with index, top domains, and exports.',
+    splitPopupCaption2: 'KPIs, top domains, and quick export.',
+    splitPopupCaption3: 'Productive/villain lists in the options panel.',
+    splitPopupCaption4: 'Configurable weights and schedules for the index.',
     splitReportTitle: 'Dramatic report',
     splitReportBody:
       'Charts per hour, villain ranking, AI narrative, and critical banner with action plan. All with sworn visuals.',
+    splitReportCaption: 'Report summary with charts and ranking.',
+    splitReportCaption2: 'AI narrative and minute-by-minute timeline.',
+    splitReportCaption3: 'Villain ranking, champions, and distribution.',
     splitStats1: 'Minutes recovered/day',
     splitStats2: 'Clients acquitted',
+    demoViewFull: 'View full size',
+    reactionsEyebrow: 'Saul reacts',
+    reactionsTitle: 'Saul’s instant verdict.',
+    reactionsBody:
+      'When the index spikes, Saul is incredulous. When you return to focus, he celebrates. Quick visuals to keep the bar of justice in place.',
+    reactionDisbeliefLabel: 'Incredulous mode',
+    reactionDisbeliefText: '“You call that focus?”',
+    reactionDisbeliefHint: 'Triggers when the quake threshold is crossed.',
+    reactionHypeLabel: 'Approved mode',
+    reactionHypeText: '“Now I might discount my fees.”',
+    reactionHypeHint: 'Shows up when you jump back to productive tabs.',
+    quakeDemoEyebrow: 'Earthquake mode (demo)',
+    quakeDemoTitle: 'Test Saul’s most dramatic alert.',
+    quakeDemoBody:
+      'Click to simulate earthquake mode: screen shake, siren, and a dramatic message. Same as the extension, but only for a few seconds here.',
+    quakeDemoButton: 'Simulate earthquake mode',
+    quakeOverlayTitle: 'Earthquake mode triggered!',
+    quakeOverlayBody: 'Saul is shaking villain tabs. Get back to focus before he charges extra.',
+    quakeOverlayClose: 'Back to focus',
     timelineEyebrow: 'Timeline',
     timelineTitle: 'From tracking to verdict.',
     timeline1Title: 'Initial radar',
@@ -223,6 +276,7 @@ const translations = {
     supportBody:
       'The repository is open for you to audit, contribute, and suggest improvements. If you like it, consider sponsoring to keep the alerts sharp.',
     supportRepo: 'View repository on GitHub',
+    lightboxClose: 'Close',
     finalCtaTitle: 'Ready to defend your focus?',
     finalCtaBody:
       'Install the extension, list your villains, and let Saul negotiate with your procrastination before it goes to court.',
@@ -311,11 +365,37 @@ const translations = {
     splitPopupTitle: 'Popup de guardia',
     splitPopupBody:
       'El panel muestra el índice, top dominios, indicadores extra y permite exportar CSV/PDF. Cuando el foco cae, el modo terremoto invade para salvar la barra de la justicia.',
+    splitPopupCaption: 'Popup con índice, top dominios y exportaciones.',
+    splitPopupCaption2: 'KPIs, top dominios y exportación rápida.',
+    splitPopupCaption3: 'Listas productivas/villanas en el panel de opciones.',
+    splitPopupCaption4: 'Pesos y horarios configurables para el índice.',
     splitReportTitle: 'Informe dramático',
     splitReportBody:
       'Gráficos por hora, ranking de villanos, narrativa IA y banner crítico con plan de acción. Todo con visual jurada.',
+    splitReportCaption: 'Resumen del informe con gráficos y ranking.',
+    splitReportCaption2: 'Narrativa IA y timeline minuto a minuto.',
+    splitReportCaption3: 'Ranking de villanos, campeones y distribución.',
     splitStats1: 'Minutos recuperados/día',
     splitStats2: 'Clientes absueltos',
+    demoViewFull: 'Ver en alta',
+    reactionsEyebrow: 'Saul reacciona',
+    reactionsTitle: 'El veredicto instantáneo de Saul.',
+    reactionsBody:
+      'Cuando el índice sube, Saul queda incrédulo. Cuando vuelves al foco, él celebra. Recordatorios visuales para mantener la barra de la justicia en su sitio.',
+    reactionDisbeliefLabel: 'Modo incrédulo',
+    reactionDisbeliefText: '“¿Eso llamas foco?”',
+    reactionDisbeliefHint: 'Se activa al pasar el umbral de terremoto.',
+    reactionHypeLabel: 'Modo aprobado',
+    reactionHypeText: '“Así hasta descuento honorarios.”',
+    reactionHypeHint: 'Aparece cuando regresas a las pestañas productivas.',
+    quakeDemoEyebrow: 'Modo terremoto (demo)',
+    quakeDemoTitle: 'Prueba la alerta más dramática de Saul.',
+    quakeDemoBody:
+      'Haz clic para simular el modo terremoto: temblor de pantalla, sirena y mensaje dramático. Igual que en la extensión, pero solo por unos segundos aquí.',
+    quakeDemoButton: 'Simular modo terremoto',
+    quakeOverlayTitle: '¡Modo terremoto activado!',
+    quakeOverlayBody: 'Saul está sacudiendo las pestañas villanas. Vuelve al foco antes de que cobre honorarios.',
+    quakeOverlayClose: 'Volver al foco',
     timelineEyebrow: 'Línea del tiempo',
     timelineTitle: 'Del rastreo al veredicto.',
     timeline1Title: 'Radar inicial',
@@ -348,6 +428,7 @@ const translations = {
     supportBody:
       'El repositorio está abierto para auditar, contribuir y sugerir mejoras. Si te gusta, considera patrocinar para mantener las alertas afiladas.',
     supportRepo: 'Ver repositorio en GitHub',
+    lightboxClose: 'Cerrar',
     finalCtaTitle: '¿Listo para defender tu foco?',
     finalCtaBody:
       'Instala la extensión, lista tus villanos y deja que Saul negocie con tu procrastinación antes de que llegue al tribunal.',
@@ -371,6 +452,93 @@ const translations = {
 const richTextKeys = new Set(['feature4Item1', 'faq2Answer']);
 const supportedLanguages = ['pt', 'en', 'es'];
 const defaultLanguage = 'pt';
+
+const createLightbox = () => {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'lightbox-backdrop';
+  backdrop.innerHTML = `
+    <div class="lightbox-content">
+      <button class="lightbox-close" type="button" data-i18n="lightboxClose">Fechar</button>
+      <img alt="" />
+      <div class="lightbox-caption"></div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  return backdrop;
+};
+
+let lightbox;
+let introAudio;
+let introAudioPlayed = false;
+const introAudioSrc = 'assets/audio/voicy-better-call-saul.aac';
+const quakeAudioSrc = 'assets/audio/terremoto-siren.aac';
+let quakeAudio;
+let quakeTimeout;
+let quakeOverlay;
+
+const setupLightbox = () => {
+  lightbox = createLightbox();
+  const imgEl = lightbox.querySelector('img');
+  const captionEl = lightbox.querySelector('.lightbox-caption');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+
+  const close = () => lightbox.classList.remove('active');
+
+  closeBtn.addEventListener('click', close);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) {
+      close();
+    }
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
+  });
+
+  document.querySelectorAll('.demo-actions a[data-preview]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey) return; // allow open in new tab
+      event.preventDefault();
+      const src = link.getAttribute('data-preview');
+      const caption = link.closest('.demo-figure')?.querySelector('figcaption')?.textContent || '';
+      if (src) {
+        imgEl.src = src;
+        captionEl.textContent = caption;
+        lightbox.classList.add('active');
+      }
+    });
+  });
+};
+
+const rotateCarousel = (carousel, delta) => {
+  const slides = Array.from(carousel.querySelectorAll('.demo-figure'));
+  if (!slides.length) return;
+  let currentIndex = slides.findIndex((el) => el.classList.contains('active'));
+  if (currentIndex < 0) currentIndex = 0;
+  const nextIndex = (currentIndex + delta + slides.length) % slides.length;
+  slides.forEach((slide, idx) => slide.classList.toggle('active', idx === nextIndex));
+  updateCarouselPreview(carousel);
+};
+
+const setupCarousels = () => {
+  document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+    const slides = Array.from(carousel.querySelectorAll('.demo-figure'));
+    if (!slides.length) return;
+    if (!slides.some((slide) => slide.classList.contains('active'))) {
+      slides[0].classList.add('active');
+    }
+    updateCarouselPreview(carousel);
+  });
+
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.carousel-btn');
+    if (!btn) return;
+    const carousel = btn.closest('[data-carousel]');
+    if (!carousel) return;
+    event.preventDefault();
+    const delta = btn.getAttribute('data-action') === 'next' ? 1 : -1;
+    rotateCarousel(carousel, delta);
+  });
+};
 
 const normalizeLanguage = (value) => {
   if (!value || typeof value !== 'string') return defaultLanguage;
@@ -401,6 +569,10 @@ const applyTranslations = (language) => {
   }
   if (selector) {
     selector.setAttribute('aria-label', dictionary.languageLabel);
+  }
+  const lightboxClose = document.querySelector('.lightbox-close');
+  if (lightboxClose && dictionary.lightboxClose) {
+    lightboxClose.textContent = dictionary.lightboxClose;
   }
 };
 
@@ -450,6 +622,108 @@ const setupCounters = () => {
   counters.forEach((counter) => counterObserver.observe(counter));
 };
 
+const setupIntroAudio = () => {
+  if (!introAudio) {
+    introAudio = new Audio(introAudioSrc);
+    introAudio.preload = 'auto';
+    introAudio.volume = 0.85;
+  }
+
+  const tryPlay = () => {
+    if (introAudioPlayed || !introAudio) return Promise.resolve();
+    const playPromise = introAudio.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      return playPromise
+        .then(() => {
+          introAudioPlayed = true;
+        })
+        .catch(() => Promise.reject());
+    }
+    introAudioPlayed = true;
+    return Promise.resolve();
+  };
+
+  const armOnFirstInteraction = () => {
+    const handler = () => {
+      tryPlay().finally(() => {
+        document.removeEventListener('pointerdown', handler);
+        document.removeEventListener('keydown', handler);
+        document.removeEventListener('touchstart', handler);
+      });
+    };
+    document.addEventListener('pointerdown', handler, { once: true });
+    document.addEventListener('keydown', handler, { once: true });
+    document.addEventListener('touchstart', handler, { once: true });
+  };
+
+  tryPlay().catch(() => {
+    armOnFirstInteraction();
+  });
+};
+
+const ensureQuakeAudio = () => {
+  if (!quakeAudio) {
+    quakeAudio = new Audio(quakeAudioSrc);
+    quakeAudio.preload = 'auto';
+    quakeAudio.volume = 0.9;
+  }
+  return quakeAudio;
+};
+
+const createQuakeOverlay = () => {
+  const overlay = document.createElement('div');
+  overlay.className = 'quake-overlay';
+  overlay.innerHTML = `
+    <div class="quake-card">
+      <p class="quake-title" data-i18n="quakeOverlayTitle">Modo terremoto acionado!</p>
+      <p class="quake-copy" data-i18n="quakeOverlayBody">Saul está derrubando as abas vilãs. Volte ao foco antes que ele cobre honorários.</p>
+      <button type="button" class="quake-close" data-i18n="quakeOverlayClose">Voltar ao foco</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  return overlay;
+};
+
+const stopQuakeDemo = () => {
+  document.body.classList.remove('quake-active');
+  if (quakeOverlay) {
+    quakeOverlay.classList.remove('active');
+  }
+  if (quakeAudio) {
+    quakeAudio.pause();
+    quakeAudio.currentTime = 0;
+  }
+  if (quakeTimeout) {
+    clearTimeout(quakeTimeout);
+    quakeTimeout = null;
+  }
+};
+
+const startQuakeDemo = () => {
+  if (!quakeOverlay) {
+    quakeOverlay = createQuakeOverlay();
+  }
+  quakeOverlay.classList.add('active');
+  document.body.classList.add('quake-active');
+
+  const closeBtn = quakeOverlay.querySelector('.quake-close');
+  const overlayClick = (event) => {
+    if (event.target === quakeOverlay) {
+      stopQuakeDemo();
+    }
+  };
+  quakeOverlay.addEventListener('click', overlayClick, { once: true });
+  closeBtn?.addEventListener('click', stopQuakeDemo, { once: true });
+
+  const audio = ensureQuakeAudio();
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  }
+  if (quakeTimeout) clearTimeout(quakeTimeout);
+  quakeTimeout = setTimeout(stopQuakeDemo, 5000);
+};
+
 const setupParallax = () => {
   window.addEventListener('scroll', () => {
     const hero = document.querySelector('.hero');
@@ -460,8 +734,30 @@ const setupParallax = () => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
+  setupLightbox();
   applyTranslations(detectLanguage());
   bindLanguageSelector();
+  setupCarousels();
   setupCounters();
   setupParallax();
+  setupIntroAudio();
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-quake-trigger]');
+    if (trigger) {
+      event.preventDefault();
+      startQuakeDemo();
+    }
+  });
 });
+const updateCarouselPreview = (carousel) => {
+  const slides = Array.from(carousel.querySelectorAll('.demo-figure'));
+  if (!slides.length) return;
+  const previewLink = carousel.querySelector('.demo-preview');
+  const currentIndex = slides.findIndex((el) => el.classList.contains('active'));
+  const activeSlide = slides[currentIndex >= 0 ? currentIndex : 0];
+  const src = activeSlide?.getAttribute('data-src') || activeSlide?.querySelector('img')?.getAttribute('src');
+  if (src && previewLink) {
+    previewLink.dataset.preview = src;
+    previewLink.href = src;
+  }
+};
