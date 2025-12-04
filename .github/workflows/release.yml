@@ -1,4 +1,6 @@
 name: Release extension
+permissions:
+  contents: write
 
 on:
   push:
