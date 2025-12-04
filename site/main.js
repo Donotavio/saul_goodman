@@ -97,6 +97,11 @@ const translations = {
     testimonial2Cite: '— Engenheiro arrependido',
     testimonial3Quote: '“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”',
     testimonial3Cite: '— Product Manager',
+    supportEyebrow: 'Projeto open-source',
+    supportTitle: 'Acompanhe o código e apoie o Saul.',
+    supportBody:
+      'O repositório está aberto para você auditar, contribuir e sugerir melhorias. Se curtir o projeto, considere patrocinar para manter os alertas sempre prontos.',
+    supportRepo: 'Ver repositório no GitHub',
     finalCtaTitle: 'Pronto para defender o seu foco?',
     finalCtaBody:
       'Instale a extensão, liste seus vilões e deixe Saul negociar com a sua procrastinação antes que ela vire caso de tribunal.',
@@ -213,6 +218,11 @@ const translations = {
     testimonial2Cite: '— Regretful engineer',
     testimonial3Quote: '“Earthquake mode saved my sprint. Fees gladly paid.”',
     testimonial3Cite: '— Product Manager',
+    supportEyebrow: 'Open-source project',
+    supportTitle: 'Track the code and support Saul.',
+    supportBody:
+      'The repository is open for you to audit, contribute, and suggest improvements. If you like it, consider sponsoring to keep the alerts sharp.',
+    supportRepo: 'View repository on GitHub',
     finalCtaTitle: 'Ready to defend your focus?',
     finalCtaBody:
       'Install the extension, list your villains, and let Saul negotiate with your procrastination before it goes to court.',
@@ -333,6 +343,11 @@ const translations = {
     testimonial2Cite: '— Ingeniero arrepentido',
     testimonial3Quote: '“El modo terremoto salvó mi sprint. Honorarios pagados con gusto.”',
     testimonial3Cite: '— Product Manager',
+    supportEyebrow: 'Proyecto open-source',
+    supportTitle: 'Sigue el código y apoya a Saul.',
+    supportBody:
+      'El repositorio está abierto para auditar, contribuir y sugerir mejoras. Si te gusta, considera patrocinar para mantener las alertas afiladas.',
+    supportRepo: 'Ver repositorio en GitHub',
     finalCtaTitle: '¿Listo para defender tu foco?',
     finalCtaBody:
       'Instala la extensión, lista tus villanos y deja que Saul negocie con tu procrastinación antes de que llegue al tribunal.',

@@ -250,6 +250,11 @@ body {
   max-width: 560px;
 }
 
+.section-lead {
+  max-width: 720px;
+  margin: 12px auto 0;
+}
+
 .process-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -469,6 +474,22 @@ blockquote p {
 
 .footer-links a:hover {
   border-color: var(--yellow);
+}
+
+.support .support-actions {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+
+.support .sponsor-embeds {
+  display: grid;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.support iframe {
+  max-width: 100%;
 }
 
 @media (max-width: 720px) {
