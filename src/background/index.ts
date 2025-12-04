@@ -215,17 +215,7 @@ async function handleTrackingTick(): Promise<void> {
   await getSettingsCache();
   await ensureDailyCache();
 
-  const threshold = settingsCache?.inactivityThresholdMs ?? 60000;
-  const now = Date.now();
-  const idleTimeoutReached = now - trackingState.lastActivity >= threshold;
-
-  if (!trackingState.isIdle && idleTimeoutReached) {
-    await finalizeCurrentDomainSlice();
-    trackingState.isIdle = true;
-    trackingState.lastTimestamp = now;
-  } else {
-    await accumulateSlice();
-  }
+  await accumulateSlice();
 }
 
 async function handleMidnightReset(): Promise<void> {

@@ -14,6 +14,10 @@ export function formatMilliseconds(ms: number): { hours: number; minutes: number
 }
 
 export function formatDuration(ms: number): string {
+  if (ms < 60000) {
+    const seconds = Math.max(0, Math.round(ms / 1000));
+    return `${seconds}s`;
+  }
   const { hours, minutes } = formatMilliseconds(ms);
   if (hours <= 0) {
     return `${minutes}m`;

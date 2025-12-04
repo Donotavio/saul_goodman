@@ -289,6 +289,9 @@ function renderChart(metrics: DailyMetrics): void {
   const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
   const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
   const minutesLabel = i18n?.t('popup_chart_axis_minutes') ?? 'Minutes';
+  const productiveMinutes = metrics.productiveMs / 60000;
+  const procrastinationMinutes = metrics.procrastinationMs / 60000;
+  const maxValue = Math.max(productiveMinutes, procrastinationMinutes, 1);
   const data = {
     labels: [productiveLabel, procrastinationLabel],
     datasets: [
@@ -297,10 +300,7 @@ function renderChart(metrics: DailyMetrics): void {
         backgroundColor: ['#0a7e07', '#d00000'],
         borderColor: '#111',
         borderWidth: 1,
-        data: [
-          Math.round(metrics.productiveMs / 60000),
-          Math.round(metrics.procrastinationMs / 60000)
-        ]
+        data: [productiveMinutes, procrastinationMinutes]
       }
     ]
   };
@@ -323,6 +323,7 @@ function renderChart(metrics: DailyMetrics): void {
       scales: {
         y: {
           beginAtZero: true,
+          suggestedMax: Math.max(1, Math.ceil(maxValue * 1.2 * 10) / 10),
           title: { display: true, text: minutesLabel }
         }
       }
