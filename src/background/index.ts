@@ -74,7 +74,8 @@ const messageHandlers: Record<
   'clear-data': async () => clearTodayData(),
   'settings-updated': async () => {
     settingsCache = null;
-    await getSettingsCache();
+    const settings = await getSettingsCache();
+    applyIdleDetectionInterval(settings);
     await refreshScore();
   }
 };
@@ -183,6 +184,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 
   if (changes[StorageKeys.SETTINGS]) {
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
+    applyIdleDetectionInterval(settingsCache);
     void refreshScore();
   }
 
@@ -202,7 +204,9 @@ async function initialize(): Promise<void> {
   await updateRestoredItems();
 
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
-  chrome.idle.setDetectionInterval(Math.max(15, Math.round((settingsCache?.inactivityThresholdMs ?? 60000) / 1000)));
+  if (settingsCache) {
+    applyIdleDetectionInterval(settingsCache);
+  }
   await scheduleTrackingAlarm();
   await scheduleMidnightAlarm();
   await hydrateActiveTab();
@@ -641,6 +645,11 @@ function recordTimelineSegment(
   if (metrics.timeline.length > MAX_TIMELINE_SEGMENTS) {
     metrics.timeline.splice(0, metrics.timeline.length - MAX_TIMELINE_SEGMENTS);
   }
+}
+
+function applyIdleDetectionInterval(settings: ExtensionSettings): void {
+  const intervalSeconds = Math.max(15, Math.round((settings.inactivityThresholdMs ?? 60000) / 1000));
+  chrome.idle.setDetectionInterval(intervalSeconds);
 }
 
 void initialize();
