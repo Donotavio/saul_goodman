@@ -38,6 +38,12 @@ body {
   text-decoration: none;
 }
 
+.site-nav .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .site-nav .nav-links {
   display: flex;
   gap: 16px;
@@ -54,6 +60,32 @@ body {
   border: 2px solid var(--black);
   border-radius: 999px;
   padding: 6px 14px;
+}
+
+.language-switcher select {
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background: #fff;
+  font-weight: 600;
+  color: var(--brown);
+  min-width: 86px;
+}
+
+.language-switcher select:focus {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 .hero {
@@ -443,6 +475,17 @@ blockquote p {
   .site-nav {
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .site-nav .nav-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .site-nav .nav-links {
+    flex-wrap: wrap;
   }
 
   .hero {
