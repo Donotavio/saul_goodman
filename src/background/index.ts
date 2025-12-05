@@ -68,6 +68,7 @@ const messageHandlers: Record<
 > = {
   'activity-ping': async (payload?: unknown) => handleActivityPing(payload as ActivityPingPayload),
   'metrics-request': async () => {
+    await updateRestoredItems();
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
     return { metrics, settings };
   },
@@ -108,6 +109,10 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 chrome.tabs.onActivated.addListener(({ tabId }) => {
   void updateActiveTabContext(tabId, true);
   void syncCriticalStateToTab(tabId);
+});
+
+chrome.tabs.onRemoved.addListener(() => {
+  void updateRestoredItems();
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -191,6 +196,10 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes[StorageKeys.METRICS]) {
     metricsCache = changes[StorageKeys.METRICS].newValue as DailyMetrics;
   }
+});
+
+chrome.sessions.onChanged.addListener(() => {
+  void updateRestoredItems();
 });
 
 async function initialize(): Promise<void> {
@@ -729,15 +738,25 @@ async function updateRestoredItems(): Promise<void> {
   try {
     const items = await chrome.sessions.getRecentlyClosed({ maxResults: 50 });
     const today = getTodayKey();
-    const countToday = items.filter((item) => {
+    const countToday = items.reduce((acc, item) => {
       const ts = item.lastModified;
       if (!ts) {
-        return false;
+        return acc;
       }
       const d = new Date(ts);
       const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-      return key === today;
-    }).length;
+      if (key !== today) {
+        return acc;
+      }
+      if (item.tab) {
+        return acc + 1;
+      }
+      if (item.window) {
+        const tabs = item.window.tabs?.length ?? 1;
+        return acc + tabs;
+      }
+      return acc;
+    }, 0);
     const metrics = await getMetricsCache();
     metrics.restoredItems = countToday;
     await persistMetrics();
