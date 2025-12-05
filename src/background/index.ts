@@ -202,6 +202,10 @@ chrome.sessions.onChanged.addListener(() => {
   void updateRestoredItems();
 });
 
+chrome.tabs.onRemoved.addListener(() => {
+  void bumpRestoredItems(1);
+});
+
 async function initialize(): Promise<void> {
   if (initializing) {
     return;
@@ -736,8 +740,14 @@ function sendCriticalMessageToTab(
 
 async function updateRestoredItems(): Promise<void> {
   try {
+    const metrics = await getMetricsCache();
     const items = await chrome.sessions.getRecentlyClosed({ maxResults: 50 });
     const today = getTodayKey();
+
+    if (!items.length && (metrics.restoredItems ?? 0) > 0) {
+      return;
+    }
+
     const countToday = items.reduce((acc, item) => {
       const ts = item.lastModified;
       if (!ts) {
@@ -757,10 +767,23 @@ async function updateRestoredItems(): Promise<void> {
       }
       return acc;
     }, 0);
-    const metrics = await getMetricsCache();
+
+    if (countToday === metrics.restoredItems) {
+      return;
+    }
+
     metrics.restoredItems = countToday;
     await persistMetrics();
-  } catch {
-    // ignore sessions errors in hardened environments
+  } catch (error) {
+    console.warn('Falha ao atualizar abas fechadas', error);
   }
+}
+
+async function bumpRestoredItems(delta: number): Promise<void> {
+  if (delta <= 0) {
+    return;
+  }
+  const metrics = await getMetricsCache();
+  metrics.restoredItems = (metrics.restoredItems ?? 0) + delta;
+  await persistMetrics();
 }
