@@ -21,9 +21,14 @@ class ActivityTracker {
     this.sessionId = null;
     this.heartbeatTimer = null;
     this.config = readConfig();
+    this.promptedMissingKey = false;
 
     if (!this.config.enabled) {
       return;
+    }
+
+    if (!this.config.pairingKey) {
+      void this.promptMissingKey();
     }
 
     this.disposables.push(
@@ -51,6 +56,11 @@ class ActivityTracker {
 
   reloadConfig() {
     this.config = readConfig();
+    if (!this.config.pairingKey) {
+      void this.promptMissingKey();
+    } else {
+      this.promptedMissingKey = false;
+    }
   }
 
   handleWindowStateChange(state) {
@@ -116,6 +126,20 @@ class ActivityTracker {
       });
     } catch (error) {
       console.warn('[saul-goodman-vscode] heartbeat failed', error);
+    }
+  }
+
+  async promptMissingKey() {
+    if (this.promptedMissingKey) {
+      return;
+    }
+    this.promptedMissingKey = true;
+    const choice = await vscode.window.showWarningMessage(
+      'Saul Goodman: defina a pairing key para enviar tempo ao SaulDaemon.',
+      'Abrir configurações'
+    );
+    if (choice === 'Abrir configurações') {
+      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.pairingKey');
     }
   }
 }

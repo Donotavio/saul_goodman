@@ -806,7 +806,7 @@ function sendCriticalMessageToTab(
 async function updateRestoredItems(): Promise<void> {
   try {
     const metrics = await getMetricsCache();
-    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 50 });
+    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 25 });
     const today = getTodayKey();
 
     if (!items.length && (metrics.restoredItems ?? 0) > 0) {
