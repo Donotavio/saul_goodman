@@ -1,6 +1,6 @@
 # SaulDaemon (local backend)
 
-Backend HTTP leve para servir de ponte entre o VS Code e a extensão Chrome. Nada sai da máquina: leitura e escrita acontecem apenas em `saul-daemon/data/vscode-usage.json`.
+Backend HTTP leve para servir de ponte entre o VS Code e a extensão Chrome. Nada sai da máquina: leitura e escrita acontecem apenas em `saul-daemon/data/vscode-usage.json`. A versão acompanha a extensão Chrome (1.1.2 neste pacote).
 
 ## Endpoints
 

@@ -1,6 +1,6 @@
 # Saul Goodman VS Code Bridge
 
-Extensão VS Code que envia tempo ativo para o SaulDaemon local, permitindo que a extensão Chrome some VS Code como tempo produtivo.
+Extensão VS Code que envia tempo ativo para o SaulDaemon local, permitindo que a extensão Chrome some VS Code como tempo produtivo. A versão segue a mesma da extensão Chrome; atualize ambas em conjunto.
 
 ## Como usar
 
@@ -33,3 +33,4 @@ A cada heartbeat (quando o VS Code está focado e houve atividade recente):
 
 - A extensão é JavaScript puro (`src/extension.js`), então não exige build. Se quiser tipagem, rode `npm install` para trazer `@types/vscode`.
 - Node 18+ é recomendado (usa `fetch` quando disponível; fallback para `http/https` nativo).
+- Se a pairing key estiver vazia, a extensão abre um input no VS Code pedindo a chave (a mesma da extensão Chrome/SaulDaemon) e salva em `saulGoodman.pairingKey`.

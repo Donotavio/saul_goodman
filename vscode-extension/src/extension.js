@@ -134,12 +134,31 @@ class ActivityTracker {
       return;
     }
     this.promptedMissingKey = true;
-    const choice = await vscode.window.showWarningMessage(
-      'Saul Goodman: defina a pairing key para enviar tempo ao SaulDaemon.',
-      'Abrir configurações'
-    );
-    if (choice === 'Abrir configurações') {
-      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.pairingKey');
+    try {
+      const value = await vscode.window.showInputBox({
+        title: 'Saul Goodman: configure a pairing key',
+        prompt: 'Digite a mesma chave configurada na extensão Chrome',
+        placeHolder: 'ex: teste-123',
+        ignoreFocusOut: true
+      });
+      this.promptedMissingKey = false;
+      const key = value?.trim();
+      if (!key) {
+        await vscode.window.showWarningMessage(
+          'Saul Goodman: sem pairing key não enviaremos tempo. Abra configurações para definir agora.',
+          'Abrir configurações'
+        ).then((choice) => {
+          if (choice === 'Abrir configurações') {
+            void vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.pairingKey');
+          }
+        });
+        return;
+      }
+      const config = vscode.workspace.getConfiguration('saulGoodman');
+      await config.update('pairingKey', key, vscode.ConfigurationTarget.Global);
+      this.config.pairingKey = key;
+    } catch {
+      this.promptedMissingKey = false;
     }
   }
 }
