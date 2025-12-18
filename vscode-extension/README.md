@@ -4,7 +4,7 @@ Extensão VS Code que envia tempo ativo para o SaulDaemon local, permitindo que 
 
 ## Como usar
 
-1. Suba o SaulDaemon local (`saul-daemon/index.cjs`) com um `PAIRING_KEY`.
+1. Suba o SaulDaemon local (`saul-daemon/index.cjs`) com um `PAIRING_KEY`. Você pode abrir o comando **“Saul Goodman: preparar comando do SaulDaemon”** na paleta (Ctrl/Cmd+Shift+P) para preencher o terminal com `PAIRING_KEY=... PORT=... node index.cjs` sem digitar nada; ao instalar a extensão o comando já fica disponível e o terminal abre em `saul-daemon/` se o repo raiz estiver aberto.
 2. No VS Code, abra esta pasta `vscode-extension`.
 3. Ajuste as configurações em `Configurações > Saul Goodman`:
    - `saulGoodman.enabled`: habilita/desabilita a coleta (padrão: ligado).

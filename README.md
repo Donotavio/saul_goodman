@@ -22,6 +22,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Exportação**: o usuário pode baixar um CSV completo, gerar o PDF do popup ou abrir o **Relatório detalhado** (nova página com storytelling horário, gráfico de trocas de abas por hora e PDF próprio).
 - **Personalidade Saul Goodman**: mensagens e microcopy localizáveis (pt-BR por padrão, en-US/es-419 via `_locales/`) com tom sarcástico sem referências visuais protegidas.
 - **Modo terremoto**: ao atingir o limiar configurável (padrão 90) o popup treme como um pager desesperado, exibe um overlay do Saul com contador regressivo e CTA para relatório/opções; a sirene opcional é configurada nas opções e apenas abas não productivas (procrastinação/indefinidas) recebem o travamento/alerta, permitindo que o usuário continue usando abas classificadas como produtivas para recuperar o foco.
+- **Integração opcional com VS Code**: um daemon local (`saul-daemon`) recebe batimentos da extensão VS Code e entrega resumo diário (tempo ativo, sessões, switches/hora, timeline). O background do Chrome consome esses dados como tempo produtivo adicional — nada sai do `localhost`.
 
 ## Stack e arquitetura
 
@@ -85,6 +86,24 @@ saul_goodman/
    - Clique em **Carregar sem compactação** e selecione a pasta `saul_goodman`
 4. Fixe o ícone na barra e abra o popup para validar o gráfico e o badge.
 
+### Integração VS Code + SaulDaemon (opcional)
+
+- Gere a **chave de pareamento** na página de opções (botão “Gerar chave”); ela fica em `ExtensionSettings.vscodePairingKey`.
+- Suba o **daemon local** (Node puro, CJS):
+
+  ```bash
+  PAIRING_KEY=<sua-chave> PORT=3123 node saul-daemon/index.cjs
+  ```
+
+  Ele grava `saul-daemon/data/vscode-usage.json` e expõe `http://127.0.0.1:PORT/v1/tracking/vscode/summary`.
+
+- Instale a **extensão VS Code** (`vscode-extension/`):
+  - Gere um `.vsix` com `npm install && npm run build && vsce package` (ou instale pela Marketplace quando publicada).
+  - Use o comando **Saul Goodman: preparar comando do SaulDaemon** para preencher o terminal com o start (port/chave) em modo não bloqueante.
+  - Configure a mesma chave/porta da options page; o daemon e o Chrome nunca enviam dados para fora.
+
+Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo produtivo, inclui `vscodeSessions`, trocas por hora de VS Code no gráfico de abas e mistura a timeline do editor na narrativa do relatório.
+
 ## Fluxo de desenvolvimento
 
 - **Editar TypeScript:** os arquivos em `src/**.ts` compilam para `dist/`. Sempre rode `npm run build` ou `npm test` (que já compila) após ajustar lógica.
@@ -109,6 +128,7 @@ Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai d
 - [`docs/indicators.md`](docs/indicators.md): descrição formal do índice de procrastinação, métricas base, buckets horários e KPIs usados no popup, relatório, CSV e PDFs.
 - Exportações estão disponíveis no popup em “Defenda seu foco” (CSV/PDF rápido) e na página `src/report/report.html`, acessível pelo botão “Abrir relatório”. Lá existe outro PDF completo com storytelling do dia.
 - **Assets**: logotipo oficial em PNG/ICO dentro de `src/img/`, já referenciado pelo manifest/action.
+- **VS Code & Daemon**: `saul-daemon/` mantém o backend local e `vscode-extension/` envia os batimentos. As três versões (Chrome, daemon e VS Code) são sincronizadas pelo workflow `.github/workflows/version-bump.yml`.
 
 ```mermaid
 flowchart TD

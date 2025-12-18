@@ -22,12 +22,17 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `spaNavigations` | Contagem de trocas de rota em apps SPA. | Incrementado em `webNavigation.onCommitted/onHistoryStateUpdated`. |
 | `groupedMs` | Tempo em abas que estão dentro de grupos. | Incrementado em `accumulateSlice` quando `tab.groupId` é válido. |
 | `restoredItems` | Itens fechados hoje (abas/janelas recentes). | Atualizado em `updateRestoredItems` via `chrome.sessions.getRecentlyClosed`. |
+| `vscodeActiveMs` | Tempo ativo no VS Code (via daemon local). Conta como produtivo. | Lido de `saul-daemon` em `syncVscodeMetrics` e somado direto ao bucket produtivo. |
+| `vscodeSessions` | Quantidade de sessões de foco no VS Code. | Lido de `saul-daemon` em `syncVscodeMetrics`. |
+| `vscodeSwitches` | Trocas registradas no VS Code. | Lido de `saul-daemon` em `syncVscodeMetrics`. |
+| `vscodeSwitchHourly` | 24 buckets de trocas no VS Code. | Lido de `saul-daemon` e usado em conjunto com `tabSwitchHourly` no relatório. |
+| `vscodeTimeline` | Lista `{startTime, endTime, durationMs, domain, category}` originada do VS Code. | O daemon envia slices; o report insere como domínio sintético `VS Code (IDE)` com categoria `productive`. |
 
 ### Índice de procrastinação
 
 O score final (`currentIndex`) combina três componentes normalizados entre 0 e 1:
 
-1. **Procrastinação**: `metrics.procrastinationMs / (productiveMs + overtimeBonus + procrastinationMs)` (0 quando não há tempo improdutivo). `overtimeBonus = metrics.overtimeProductiveMs` garante que minutos produtivos fora do expediente entrem com peso dobrado e influenciem positivamente o índice.
+1. **Procrastinação**: `metrics.procrastinationMs / (productiveMs + vscodeMs + overtimeBonus + procrastinationMs)` (0 quando não há tempo improdutivo). `overtimeBonus = metrics.overtimeProductiveMs` garante que minutos produtivos fora do expediente entrem com peso dobrado e influenciem positivamente o índice; `vscodeMs = metrics.vscodeActiveMs ?? 0`.
 2. **Trocas de abas**: `min(tabSwitches / 50, 1)` — considera até 50 trocas/dia como limite.
 3. **Inatividade**: `min(inactiveMs / (3h em ms), 1)` — penaliza até 3 horas de ociosidade.
 
@@ -47,7 +52,7 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 
 | KPI | Fórmula / Fonte | Interpretação |
 | --- | --- | --- |
-| **Foco ativo** | `(productiveMs / totalTracked) * 100`. | Percentual de tempo útil sobre a jornada monitorada. |
+| **Foco ativo** | `((productiveMs + vscodeActiveMs) / totalTracked) * 100`. | Percentual de tempo útil sobre a jornada monitorada. |
 | **Trocas por hora** | `tabSwitches / (totalTracked / 3.6e6)`. | Quantas abas são trocadas em média por hora rastreada. |
 | **Tempo ocioso** | `(inactiveMs / totalTracked) * 100`. | Fração do tempo com navegador aberto sem interação. |
 | **Prod x Proc** | `productiveMs / procrastinationMs` (∞ quando `procrastinationMs === 0`). | Quantas horas produtivas compensam cada hora desperdiçada. |
@@ -58,8 +63,10 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 | **Rotas em SPA** | `spaNavigations`. | Trocas de rota internas (YouTube, LinkedIn, Slack web, etc.). |
 | **Tempo em grupos** | `groupedMs` formatado em minutos. | Minutos em abas agrupadas. |
 | **Itens fechados hoje** | `restoredItems`. | Quantidade de abas/janelas recentes fechadas no dia. |
+| **VS Code sessões** | `vscodeSessions`. | Quantidade de blocos de foco no editor. |
+| **VS Code ativo** | `vscodeActiveMs` em minutos. | Tempo produtivo capturado pelo daemon/VS Code. |
 
-> `totalTracked = productiveMs + procrastinationMs + inactiveMs` (tempo inativo inclui janela desfocada). Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
+> `totalTracked = productiveMs + vscodeActiveMs + procrastinationMs + inactiveMs` (tempo inativo inclui janela desfocada). Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
 
 ## Apresentação
 
