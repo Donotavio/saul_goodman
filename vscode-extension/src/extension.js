@@ -2,10 +2,16 @@ const vscode = require('vscode');
 const http = require('http');
 const https = require('https');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const child_process = require('child_process');
 
 function activate(context) {
   const tracker = new ActivityTracker();
   context.subscriptions.push(tracker);
+  context.subscriptions.push(
+    vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand())
+  );
 }
 
 function deactivate() {
@@ -172,6 +178,70 @@ function readConfig() {
     heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
     idleThresholdMs: config.get('idleThresholdMs', 60000)
   };
+}
+
+async function prepareDaemonCommand() {
+  const config = readConfig();
+  const keyInput = await vscode.window.showInputBox({
+    title: 'Saul Goodman: pairing key do SaulDaemon',
+    prompt: 'Use a mesma chave da extensão Chrome',
+    value: config.pairingKey?.trim() || '',
+    ignoreFocusOut: true
+  });
+  if (keyInput === undefined) {
+    return;
+  }
+  const key = keyInput.trim() || 'sua-chave';
+
+  const portInput = await vscode.window.showInputBox({
+    title: 'Saul Goodman: porta do SaulDaemon',
+    prompt: 'Porta HTTP local do daemon',
+    value: inferPortFromApiBase(config.apiBase) || '3123',
+    ignoreFocusOut: true
+  });
+  if (portInput === undefined) {
+    return;
+  }
+  const port = portInput.trim() || '3123';
+
+  const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const daemonDir = workspace ? path.join(workspace, 'saul-daemon') : null;
+  const daemonIndex = daemonDir ? path.join(daemonDir, 'index.cjs') : null;
+  const daemonExists = Boolean(daemonIndex && fs.existsSync(daemonIndex));
+
+  if (!daemonExists) {
+    vscode.window.showErrorMessage(
+      'Pasta saul-daemon/index.cjs não encontrada. Abra o repositório raiz antes de iniciar o daemon.'
+    );
+    return;
+  }
+
+  try {
+    const child = child_process.spawn('node', ['index.cjs'], {
+      cwd: daemonDir ?? workspace,
+      env: { ...process.env, PAIRING_KEY: key, PORT: port },
+      detached: true,
+      stdio: 'ignore'
+    });
+    child.unref();
+    vscode.window.showInformationMessage(
+      `SaulDaemon iniciado em background (porta ${port}, key ${key}).`
+    );
+  } catch (error) {
+    vscode.window.showErrorMessage(`Falha ao iniciar SaulDaemon: ${error.message}`);
+  }
+}
+
+function inferPortFromApiBase(apiBase) {
+  try {
+    const url = new URL(apiBase);
+    if (url.port) {
+      return url.port;
+    }
+    return url.protocol === 'https:' ? '443' : '3123';
+  } catch {
+    return '3123';
+  }
 }
 
 function createSessionId() {

@@ -10,9 +10,17 @@
   },
   "main": "./src/extension.js",
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:saulGoodman.startDaemon"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "saulGoodman.startDaemon",
+        "title": "Saul Goodman: preparar comando do SaulDaemon",
+        "category": "Saul Goodman"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "Saul Goodman",

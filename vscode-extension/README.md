@@ -34,3 +34,4 @@ A cada heartbeat (quando o VS Code está focado e houve atividade recente):
 - A extensão é JavaScript puro (`src/extension.js`), então não exige build. Se quiser tipagem, rode `npm install` para trazer `@types/vscode`.
 - Node 18+ é recomendado (usa `fetch` quando disponível; fallback para `http/https` nativo).
 - Se a pairing key estiver vazia, a extensão abre um input no VS Code pedindo a chave (a mesma da extensão Chrome/SaulDaemon) e salva em `saulGoodman.pairingKey`.
+- Comando útil: “Saul Goodman: preparar comando do SaulDaemon” preenche um terminal com `PAIRING_KEY=... PORT=... node index.cjs` (sem executar) para você iniciar o backend local rapidamente. Se o repo raiz estiver aberto, o terminal já abre em `saul-daemon/`; caso contrário, ele envia `cd saul-daemon && ...`.
