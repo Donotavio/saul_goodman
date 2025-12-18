@@ -273,7 +273,18 @@ function createSessionId() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
   }
-  return `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  try {
+    const bytes = crypto.randomBytes?.(16);
+    if (bytes) {
+      return `session-${Date.now()}-${bytes.toString('hex')}`;
+    }
+  } catch {
+    // ignore and fall back below
+  }
+  const fallback = typeof process !== 'undefined' && process.hrtime?.bigint
+    ? process.hrtime.bigint().toString(16)
+    : Date.now().toString(16);
+  return `session-${Date.now()}-${fallback}`;
 }
 
 async function testDaemonHealth() {
