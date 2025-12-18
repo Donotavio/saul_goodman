@@ -23,6 +23,8 @@ const vscodeIntegrationEnabledEl = document.getElementById(
 ) as HTMLInputElement;
 const vscodeLocalApiUrlEl = document.getElementById('vscodeLocalApiUrl') as HTMLInputElement;
 const vscodePairingKeyEl = document.getElementById('vscodePairingKey') as HTMLInputElement;
+const generateVscodeKeyButton = document.getElementById('generateVscodeKey') as HTMLButtonElement;
+const copyVscodeKeyButton = document.getElementById('copyVscodeKey') as HTMLButtonElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
@@ -105,6 +107,21 @@ function attachListeners(): void {
     currentSettings.workSchedule = sanitizeWorkSchedule([...schedule, { start: nextStart, end: nextEnd }]);
     renderWorkSchedule();
     void persistSettings('options_status_schedule_updated');
+  });
+  generateVscodeKeyButton?.addEventListener('click', () => {
+    const newKey = generatePairingKey();
+    if (vscodePairingKeyEl) {
+      vscodePairingKeyEl.value = newKey;
+    }
+    if (currentSettings) {
+      currentSettings.vscodePairingKey = newKey;
+      void persistSettings('options_vscode_key_generated');
+    } else {
+      showStatus(newKey);
+    }
+  });
+  copyVscodeKeyButton?.addEventListener('click', () => {
+    void copyPairingKey();
   });
 }
 
@@ -425,6 +442,36 @@ function returnToPopup(): void {
     }
     closeCurrentTab();
   });
+}
+
+function generatePairingKey(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `sg-${Math.random().toString(36).slice(2, 10)}-${Date.now().toString(36)}`;
+}
+
+async function copyPairingKey(): Promise<void> {
+  const value = vscodePairingKeyEl?.value?.trim() ?? '';
+  if (!value) {
+    showStatus(i18n?.t('options_vscode_key_copy_error') ?? 'Nenhuma chave para copiar.', true);
+    return;
+  }
+  try {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = value;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+    showStatus(i18n?.t('options_vscode_key_copied') ?? 'Chave copiada.');
+  } catch {
+    showStatus(i18n?.t('options_vscode_key_copy_error') ?? 'Falha ao copiar a chave.', true);
+  }
 }
 
 function closeCurrentTab(): void {

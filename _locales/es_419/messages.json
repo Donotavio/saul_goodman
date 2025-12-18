@@ -386,6 +386,21 @@
   "options_vscode_key_hint": {
     "message": "Debe coincidir con la clave configurada en SaulDaemon/VS Code."
   },
+  "options_vscode_key_generate": {
+    "message": "Generar nueva clave"
+  },
+  "options_vscode_key_generated": {
+    "message": "Nueva clave creada."
+  },
+  "options_vscode_key_copy": {
+    "message": "Copiar clave"
+  },
+  "options_vscode_key_copied": {
+    "message": "Clave copiada."
+  },
+  "options_vscode_key_copy_error": {
+    "message": "No hay clave para copiar."
+  },
   "label_vscode": {
     "message": "VS Code (IDE)"
   },

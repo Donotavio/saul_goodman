@@ -386,6 +386,21 @@
   "options_vscode_key_hint": {
     "message": "Use a mesma chave configurada no SaulDaemon/VS Code."
   },
+  "options_vscode_key_generate": {
+    "message": "Gerar nova chave"
+  },
+  "options_vscode_key_generated": {
+    "message": "Nova chave criada."
+  },
+  "options_vscode_key_copy": {
+    "message": "Copiar chave"
+  },
+  "options_vscode_key_copied": {
+    "message": "Chave copiada."
+  },
+  "options_vscode_key_copy_error": {
+    "message": "Nenhuma chave para copiar."
+  },
   "label_vscode": {
     "message": "VS Code (IDE)"
   },

@@ -6,12 +6,18 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 
+let statusBarItem = null;
+
 function activate(context) {
   const tracker = new ActivityTracker();
   context.subscriptions.push(tracker);
   context.subscriptions.push(
     vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand())
   );
+  context.subscriptions.push(
+    vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth())
+  );
+  initStatusBar(context);
 }
 
 function deactivate() {
@@ -217,18 +223,37 @@ async function prepareDaemonCommand() {
   }
 
   try {
+    const logFile = path.join(daemonDir ?? workspace, 'daemon.log');
+    let stdoutFd = null;
+    let stderrFd = null;
+    try {
+      stdoutFd = fs.openSync(logFile, 'a');
+      stderrFd = fs.openSync(logFile, 'a');
+    } catch {
+      stdoutFd = null;
+      stderrFd = null;
+    }
+
     const child = child_process.spawn('node', ['index.cjs'], {
       cwd: daemonDir ?? workspace,
       env: { ...process.env, PAIRING_KEY: key, PORT: port },
       detached: true,
-      stdio: 'ignore'
+      stdio: ['ignore', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
     });
     child.unref();
+    if (stdoutFd) {
+      fs.closeSync(stdoutFd);
+    }
+    if (stderrFd) {
+      fs.closeSync(stderrFd);
+    }
     vscode.window.showInformationMessage(
-      `SaulDaemon iniciado em background (porta ${port}, key ${key}).`
+      `SaulDaemon iniciado em background (porta ${port}, key ${key}). Logs: ${logFile}`
     );
+    void updateStatusBar('ok', port);
   } catch (error) {
     vscode.window.showErrorMessage(`Falha ao iniciar SaulDaemon: ${error.message}`);
+    void updateStatusBar('error');
   }
 }
 
@@ -249,6 +274,59 @@ function createSessionId() {
     return crypto.randomUUID();
   }
   return `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+async function testDaemonHealth() {
+  const config = readConfig();
+  const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
+  const url = new URL('/health', apiBase);
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const res = await fetch(url.toString(), { signal: controller.signal });
+    clearTimeout(timer);
+    if (res.ok) {
+      vscode.window.showInformationMessage(`SaulDaemon responde em ${url.origin}`);
+      void updateStatusBar('ok', url.port || '3123');
+      return;
+    }
+    vscode.window.showWarningMessage(
+      `SaulDaemon respondeu com status ${res.status} em ${url.origin}`
+    );
+    void updateStatusBar('error');
+  } catch (error) {
+    vscode.window.showWarningMessage(`SaulDaemon não respondeu em ${url.origin}: ${error.message}`);
+    void updateStatusBar('error');
+  }
+}
+
+function initStatusBar(context) {
+  statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+  statusBarItem.command = 'saulGoodman.testDaemon';
+  statusBarItem.text = 'SaulDaemon: ...';
+  statusBarItem.tooltip = 'Testar conexão com o SaulDaemon';
+  statusBarItem.show();
+  context.subscriptions.push(statusBarItem);
+  void updateStatusBar('unknown');
+}
+
+async function updateStatusBar(state, port) {
+  if (!statusBarItem) {
+    return;
+  }
+  if (state === 'ok') {
+    statusBarItem.text = `$(debug-start) SaulDaemon ON${port ? ` :${port}` : ''}`;
+    statusBarItem.color = undefined;
+  } else if (state === 'error') {
+    statusBarItem.text = '$(error) SaulDaemon OFF';
+    statusBarItem.color = new vscode.ThemeColor('errorForeground');
+  } else if (state === 'disabled') {
+    statusBarItem.text = '$(circle-slash) SaulDaemon disabled';
+    statusBarItem.color = undefined;
+  } else {
+    statusBarItem.text = '$(loading~spin) SaulDaemon ...';
+    statusBarItem.color = undefined;
+  }
 }
 
 async function postHeartbeat(apiBase, payload) {
