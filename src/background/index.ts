@@ -83,7 +83,7 @@ const messageHandlers: Record<
   'activity-ping': async (payload?: unknown) => handleActivityPing(payload as ActivityPingPayload),
   'metrics-request': async () => {
     await updateRestoredItems();
-    await syncVscodeMetrics();
+    await syncVscodeMetrics(true);
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
     return { metrics, settings };
   },
@@ -238,6 +238,7 @@ async function initialize(): Promise<void> {
   await scheduleTrackingAlarm();
   await scheduleMidnightAlarm();
   await hydrateActiveTab();
+  await syncVscodeMetrics(true);
 
   initializing = false;
 }
@@ -248,6 +249,7 @@ async function handleTrackingTick(): Promise<void> {
   await ensureDailyCache();
 
   await accumulateSlice();
+  await syncVscodeMetrics();
 }
 
 async function handleMidnightReset(): Promise<void> {
@@ -584,6 +586,8 @@ async function syncVscodeMetrics(force = false): Promise<void> {
   ) {
     return;
   }
+
+  lastVscodeSyncAt = now;
 
   let url: URL;
   try {
