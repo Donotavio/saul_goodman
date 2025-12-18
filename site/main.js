@@ -66,6 +66,7 @@ const translations = {
     integrationCard3Title: 'Extensão VS Code',
     integrationCard3Body:
       'Comando “Saul Goodman: preparar comando do SaulDaemon” vem pronto após instalar e envia batimentos do editor para o Chrome.',
+    integrationVsixCta: 'Instalar extensão VS Code',
     integrationCta: 'Ver guia da integração',
     manifestoEyebrow: 'Manifesto',
     manifestoTitle: 'Marketing agressivo com uma pitada de ética.',
@@ -226,6 +227,7 @@ const translations = {
     integrationCard3Title: 'VS Code extension',
     integrationCard3Body:
       'Command “Saul Goodman: preparar comando do SaulDaemon” ships ready after install and sends editor heartbeats to Chrome.',
+    integrationVsixCta: 'Install VS Code extension',
     integrationCta: 'See integration guide',
     manifestoEyebrow: 'Manifesto',
     manifestoTitle: 'Aggressive marketing with a pinch of ethics.',
@@ -388,6 +390,7 @@ const translations = {
     integrationCard3Title: 'Extensión VS Code',
     integrationCard3Body:
       'El comando “Saul Goodman: preparar comando do SaulDaemon” llega listo tras instalar y envía latidos del editor al Chrome.',
+    integrationVsixCta: 'Instalar extensión VS Code',
     integrationCta: 'Ver guía de integración',
     manifestoEyebrow: 'Manifiesto',
     manifestoTitle: 'Marketing agresivo con una pizca de ética.',
