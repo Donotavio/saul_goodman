@@ -8,7 +8,8 @@ export function calculateProcrastinationIndex(
   settings: ExtensionSettings
 ): number {
   const overtimeBonus = metrics.overtimeProductiveMs ?? 0;
-  const effectiveProductive = metrics.productiveMs + overtimeBonus;
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const effectiveProductive = metrics.productiveMs + vscodeMs + overtimeBonus;
   const totalTracked = effectiveProductive + metrics.procrastinationMs;
   const procrastinationRatio = totalTracked === 0 ? 0 : metrics.procrastinationMs / totalTracked;
   const tabSwitchRatio = Math.min(metrics.tabSwitches / MAX_TAB_SWITCHES, 1);

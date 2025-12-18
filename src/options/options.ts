@@ -18,6 +18,11 @@ const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLIn
 const inactivityThresholdEl = document.getElementById('inactivityThreshold') as HTMLInputElement;
 const localeSelectEl = document.getElementById('localeSelect') as HTMLSelectElement;
 const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
+const vscodeIntegrationEnabledEl = document.getElementById(
+  'vscodeIntegrationEnabled'
+) as HTMLInputElement;
+const vscodeLocalApiUrlEl = document.getElementById('vscodeLocalApiUrl') as HTMLInputElement;
+const vscodePairingKeyEl = document.getElementById('vscodePairingKey') as HTMLInputElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
@@ -126,6 +131,18 @@ function renderForms(): void {
     localeSelectEl.value = currentSettings.localePreference ?? 'auto';
   }
   openAiKeyInput.value = currentSettings.openAiKey ?? '';
+  if (vscodeIntegrationEnabledEl) {
+    vscodeIntegrationEnabledEl.checked = Boolean(currentSettings.vscodeIntegrationEnabled);
+  }
+  if (vscodeLocalApiUrlEl) {
+    vscodeLocalApiUrlEl.value =
+      currentSettings.vscodeLocalApiUrl && currentSettings.vscodeLocalApiUrl.trim().length > 0
+        ? currentSettings.vscodeLocalApiUrl
+        : 'http://127.0.0.1:3123';
+  }
+  if (vscodePairingKeyEl) {
+    vscodePairingKeyEl.value = currentSettings.vscodePairingKey ?? '';
+  }
   criticalThresholdEl.value = (
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
@@ -194,6 +211,17 @@ async function handleWeightsSubmit(): Promise<void> {
   const thresholdSeconds = Math.max(10, parseInt(inactivityThresholdEl.value, 10));
   currentSettings.inactivityThresholdMs = thresholdSeconds * 1000;
   currentSettings.openAiKey = openAiKeyInput.value.trim();
+  if (vscodeIntegrationEnabledEl) {
+    currentSettings.vscodeIntegrationEnabled = vscodeIntegrationEnabledEl.checked;
+  }
+  if (vscodeLocalApiUrlEl) {
+    const url = vscodeLocalApiUrlEl.value.trim();
+    currentSettings.vscodeLocalApiUrl = url.length > 0 ? url : 'http://127.0.0.1:3123';
+  }
+  if (vscodePairingKeyEl) {
+    const key = vscodePairingKeyEl.value.trim();
+    currentSettings.vscodePairingKey = key.length > 0 ? key : '';
+  }
   currentSettings.criticalScoreThreshold = Math.min(
     100,
     Math.max(0, parseInt(criticalThresholdEl.value, 10))

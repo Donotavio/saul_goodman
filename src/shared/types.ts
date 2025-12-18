@@ -41,6 +41,16 @@ export interface DailyMetrics {
   spaNavigations?: number;
   groupedMs?: number;
   restoredItems?: number;
+
+  /**
+   * Tempo total ativo no VS Code (em milissegundos) no dia corrente.
+   */
+  vscodeActiveMs?: number;
+
+  /**
+   * Quantidade de sessões de foco no VS Code no dia corrente.
+   */
+  vscodeSessions?: number;
 }
 
 export interface TabSwitchBreakdown {
@@ -84,6 +94,22 @@ export interface ExtensionSettings {
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
   criticalSoundEnabled?: boolean;
+
+  /**
+   * Ativa/desativa a integração com VS Code via backend local.
+   */
+  vscodeIntegrationEnabled?: boolean;
+
+  /**
+   * URL base da API HTTP local do SaulDaemon.
+   * Exemplo: http://127.0.0.1:3123
+   */
+  vscodeLocalApiUrl?: string;
+
+  /**
+   * Chave de pareamento entre Chrome e VS Code, usada pelo backend para vincular eventos.
+   */
+  vscodePairingKey?: string;
 }
 
 export interface ActivityPingPayload {
@@ -126,4 +152,7 @@ export interface OptionsFormState {
   openAiKey?: string;
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
+  vscodeIntegrationEnabled?: boolean;
+  vscodeLocalApiUrl?: string;
+  vscodePairingKey?: string;
 }

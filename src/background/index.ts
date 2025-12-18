@@ -32,6 +32,7 @@ const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
 const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
+const VSCODE_SYNC_MIN_INTERVAL_MS = 5 * 60 * 1000; // 5 minutos
 
 interface TrackingState {
   currentDomain: string | null;
@@ -42,6 +43,11 @@ interface TrackingState {
   browserFocused: boolean;
   currentTabAudible: boolean;
   currentTabGroupId: number | null;
+}
+
+interface VscodeSummaryResponse {
+  totalActiveMs: number;
+  sessions: number;
 }
 
 const trackingState: TrackingState = {
@@ -57,6 +63,7 @@ const trackingState: TrackingState = {
 
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
+let lastVscodeSyncAt = 0;
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
@@ -69,6 +76,7 @@ const messageHandlers: Record<
   'activity-ping': async (payload?: unknown) => handleActivityPing(payload as ActivityPingPayload),
   'metrics-request': async () => {
     await updateRestoredItems();
+    await syncVscodeMetrics();
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
     return { metrics, settings };
   },
@@ -515,6 +523,14 @@ async function ensureDailyCache(): Promise<void> {
   if (typeof metricsCache.restoredItems !== 'number') {
     metricsCache.restoredItems = 0;
   }
+
+  if (typeof metricsCache.vscodeActiveMs !== 'number') {
+    metricsCache.vscodeActiveMs = 0;
+  }
+
+  if (typeof metricsCache.vscodeSessions !== 'number') {
+    metricsCache.vscodeSessions = 0;
+  }
 }
 
 async function getMetricsCache(): Promise<DailyMetrics> {
@@ -528,6 +544,55 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   }
 
   return settingsCache;
+}
+
+/**
+ * Consulta o SaulDaemon local para trazer o resumo diário de uso do VS Code.
+ * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
+ * Resposta: { totalActiveMs: number; sessions: number }
+ */
+async function syncVscodeMetrics(force = false): Promise<void> {
+  const now = Date.now();
+  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
+    return;
+  }
+
+  const settings = await getSettingsCache();
+
+  if (
+    !settings.vscodeIntegrationEnabled ||
+    !settings.vscodeLocalApiUrl ||
+    !settings.vscodePairingKey
+  ) {
+    return;
+  }
+
+  let url: URL;
+  try {
+    url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
+  } catch {
+    return;
+  }
+  url.searchParams.set('date', getTodayKey());
+  url.searchParams.set('key', settings.vscodePairingKey);
+
+  try {
+    const response = await fetch(url.toString());
+    if (!response.ok) {
+      return;
+    }
+
+    const summary = (await response.json()) as VscodeSummaryResponse;
+    const metrics = await getMetricsCache();
+    metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+    metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+
+    await persistMetrics();
+
+    lastVscodeSyncAt = now;
+  } catch (error) {
+    console.warn('Falha ao sincronizar métricas do VS Code', error);
+  }
 }
 
 async function handleNavigationEvent(

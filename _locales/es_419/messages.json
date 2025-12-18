@@ -362,6 +362,30 @@
   "options_openai_hint": {
     "message": "Se guarda localmente para generar narrativas en el informe."
   },
+  "options_vscode_heading": {
+    "message": "Integración con VS Code"
+  },
+  "options_vscode_toggle_label": {
+    "message": "Sumar sesiones de VS Code como foco"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Consulta el SaulDaemon local (localhost) antes de recalcular el índice."
+  },
+  "options_vscode_url_label": {
+    "message": "URL del backend local"
+  },
+  "options_vscode_url_hint": {
+    "message": "Solo habla con localhost; nada sale de tu máquina."
+  },
+  "options_vscode_key_label": {
+    "message": "Clave de emparejamiento"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Pega la clave del SaulDaemon"
+  },
+  "options_vscode_key_hint": {
+    "message": "Debe coincidir con la clave configurada en SaulDaemon/VS Code."
+  },
   "options_critical_threshold_label": {
     "message": "Umbral del modo sismo (0–100)"
   },

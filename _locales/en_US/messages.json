@@ -362,6 +362,30 @@
   "options_openai_hint": {
     "message": "Stored locally to generate narratives in the report."
   },
+  "options_vscode_heading": {
+    "message": "VS Code integration"
+  },
+  "options_vscode_toggle_label": {
+    "message": "Include VS Code focus time"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Calls the local SaulDaemon (localhost) before refreshing your score."
+  },
+  "options_vscode_url_label": {
+    "message": "Local backend URL"
+  },
+  "options_vscode_url_hint": {
+    "message": "Only talks to localhost; nothing leaves your machine."
+  },
+  "options_vscode_key_label": {
+    "message": "Pairing key"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Paste the SaulDaemon key"
+  },
+  "options_vscode_key_hint": {
+    "message": "Must match the key configured in SaulDaemon/VS Code."
+  },
   "options_critical_threshold_label": {
     "message": "Quake mode threshold (0–100)"
   },

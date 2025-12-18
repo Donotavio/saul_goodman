@@ -78,6 +78,35 @@
               </small>
             </label>
 
+            <h3 data-i18n="options_vscode_heading">Integração com VS Code</h3>
+            <label class="toggle">
+              <span data-i18n="options_vscode_toggle_label">Somar sessões do VS Code como foco</span>
+              <input type="checkbox" id="vscodeIntegrationEnabled" />
+              <small class="hint" data-i18n="options_vscode_toggle_hint">
+                Saul consulta o backend local SaulDaemon (localhost) antes de calcular os índices.
+              </small>
+            </label>
+
+            <label>
+              <span data-i18n="options_vscode_url_label">URL do backend local</span>
+              <input type="text" id="vscodeLocalApiUrl" placeholder="http://127.0.0.1:3123" />
+              <small class="hint" data-i18n="options_vscode_url_hint">
+                A extensão só faz chamadas para localhost; nada sai da sua máquina.
+              </small>
+            </label>
+
+            <label>
+              <span data-i18n="options_vscode_key_label">Chave de pareamento</span>
+              <input
+                type="text"
+                id="vscodePairingKey"
+                data-i18n-placeholder="options_vscode_key_placeholder"
+              />
+              <small class="hint" data-i18n="options_vscode_key_hint">
+                Deve coincidir com a chave configurada no SaulDaemon/VS Code.
+              </small>
+            </label>
+
             <label>
               <span data-i18n="options_critical_threshold_label">Limiar do modo terremoto (0–100)</span>
               <input type="number" id="criticalThreshold" min="0" max="100" step="5" required />
