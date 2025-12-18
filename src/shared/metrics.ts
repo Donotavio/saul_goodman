@@ -10,19 +10,33 @@ export interface CalculatedKpis {
 }
 
 export function calculateKpis(metrics: DailyMetrics): CalculatedKpis {
-  const totalTracked = metrics.productiveMs + metrics.procrastinationMs + metrics.inactiveMs;
-  const focusRate = totalTracked > 0 ? (metrics.productiveMs / totalTracked) * 100 : null;
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const productiveMs = metrics.productiveMs + vscodeMs;
+  const totalTracked = productiveMs + metrics.procrastinationMs + metrics.inactiveMs;
+  const focusRate = totalTracked > 0 ? (productiveMs / totalTracked) * 100 : null;
   const inactivePercent = totalTracked > 0 ? (metrics.inactiveMs / totalTracked) * 100 : null;
   const trackedHours = totalTracked / 3600000;
   const tabSwitchRate = trackedHours > 0 ? metrics.tabSwitches / trackedHours : null;
   const productivityRatio =
-    metrics.productiveMs > 0
+    productiveMs > 0
       ? metrics.procrastinationMs === 0
         ? Infinity
-        : metrics.productiveMs / metrics.procrastinationMs
+        : productiveMs / metrics.procrastinationMs
       : null;
 
-  const topFocus = getTopDomainByCategory(metrics.domains, 'productive');
+  const domainsWithVscode: Record<string, DomainStats> =
+    vscodeMs > 0
+      ? {
+          ...metrics.domains,
+          '__vscode:ide': {
+            domain: 'VS Code (IDE)',
+            category: 'productive',
+            milliseconds: vscodeMs
+          }
+        }
+      : metrics.domains;
+
+  const topFocus = getTopDomainByCategory(domainsWithVscode, 'productive');
   const topProcrastination = getTopDomainByCategory(metrics.domains, 'procrastination');
 
   return {

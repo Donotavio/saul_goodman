@@ -386,6 +386,18 @@
   "options_vscode_key_hint": {
     "message": "Debe coincidir con la clave configurada en SaulDaemon/VS Code."
   },
+  "label_vscode": {
+    "message": "VS Code (IDE)"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS Code"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (min)"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS Code"
+  },
   "options_critical_threshold_label": {
     "message": "Umbral del modo sismo (0–100)"
   },

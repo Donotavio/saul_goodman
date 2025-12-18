@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (latestMetrics) {
       renderTimeline(latestMetrics.timeline);
-      renderDomainBreakdownChart(latestMetrics.domains);
+      renderDomainBreakdownChart(getDomainsWithVscode(latestMetrics));
     }
   });
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (latestMetrics) {
       renderTimeline(latestMetrics.timeline);
-      renderDomainBreakdownChart(latestMetrics.domains);
+      renderDomainBreakdownChart(getDomainsWithVscode(latestMetrics));
     }
   });
 });
@@ -209,9 +209,10 @@ function renderReport(metrics: DailyMetrics): void {
   renderTabSwitchChart(metrics);
   renderCompositionChart(metrics);
   renderStoryList(metrics, kpis);
-  renderRankings(metrics.domains);
+  const domainsWithVscode = getDomainsWithVscode(metrics);
+  renderRankings(domainsWithVscode);
   renderTimeline(metrics.timeline);
-  renderDomainBreakdownChart(metrics.domains);
+  renderDomainBreakdownChart(domainsWithVscode);
   timelineStartHourInput.value = timelineFilter.start.toString();
   timelineEndHourInput.value = timelineFilter.end.toString();
   aiNarrativeEl.innerHTML =
@@ -360,12 +361,15 @@ function calculateMaxMinutes(buckets: HourlyBucket[]): number {
 }
 
 function renderCompositionChart(metrics: DailyMetrics): void {
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const webProductiveMs = metrics.productiveMs;
   const neutralTotal = metrics.timeline
     .filter((entry) => entry.category === 'neutral')
     .reduce((acc, entry) => acc + entry.durationMs, 0);
   const data = {
     labels: [
       i18n?.t('popup_chart_label_productive') ?? 'Productive',
+      i18n?.t('popup_chart_label_vscode') ?? 'VS Code',
       i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination',
       i18n?.t('popup_summary_inactive_label') ?? 'Inactive',
       i18n?.t('report_category_neutral') ?? 'Neutral'
@@ -373,12 +377,13 @@ function renderCompositionChart(metrics: DailyMetrics): void {
     datasets: [
       {
         data: [
-          Math.round(metrics.productiveMs / 60000),
+          Math.round(webProductiveMs / 60000),
+          Math.round(vscodeMs / 60000),
           Math.round(metrics.procrastinationMs / 60000),
           Math.round(metrics.inactiveMs / 60000),
           Math.round(neutralTotal / 60000)
         ],
-        backgroundColor: ['#0a7e07', '#d00000', '#c1c1c1', '#f4c95d'],
+        backgroundColor: ['#0a7e07', '#005bd1', '#d00000', '#c1c1c1', '#f4c95d'],
         borderWidth: 1,
         borderColor: '#111'
       }
@@ -401,7 +406,9 @@ function renderCompositionChart(metrics: DailyMetrics): void {
 }
 
 function renderStoryList(metrics: DailyMetrics, kpis: CalculatedKpis): void {
-  const topFocus = kpis.topFocus;
+  const topFocus = kpis.topFocus
+    ? { ...kpis.topFocus, domain: formatDomainLabel(kpis.topFocus.domain) }
+    : null;
   const topProcrastination = kpis.topProcrastination;
   const longestIdle = findLongestSegment(metrics.timeline, 'inactive');
 
@@ -501,7 +508,7 @@ function fillRankingTable(tbody: HTMLTableSectionElement, entries: DomainStats[]
     bar.style.width = `${(entry.milliseconds / maxMs) * 100}%`;
 
     const domainSpan = document.createElement('span');
-    domainSpan.textContent = entry.domain;
+    domainSpan.textContent = formatDomainLabel(entry.domain);
     const durationSpan = document.createElement('span');
     durationSpan.textContent = formatDuration(entry.milliseconds);
 
@@ -1032,6 +1039,30 @@ function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void 
       }
     }
   });
+}
+
+function getDomainsWithVscode(metrics: DailyMetrics): Record<string, DomainStats> {
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  if (vscodeMs <= 0) {
+    return metrics.domains;
+  }
+  const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+  return {
+    ...metrics.domains,
+    '__vscode:ide': {
+      domain: label,
+      category: 'productive',
+      milliseconds: vscodeMs
+    }
+  };
+}
+
+function formatDomainLabel(domain: string): string {
+  const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+  if (domain === 'VS Code (IDE)' || domain === '__vscode:ide') {
+    return label;
+  }
+  return domain;
 }
 
 function formatDurationFriendly(ms: number): string {
