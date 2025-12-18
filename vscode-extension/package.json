@@ -5,6 +5,11 @@
   "version": "1.1.2",
   "publisher": "donotavio",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Donotavio/saul_goodman.git"
+  },
+  "icon": "images/logotipo_saul_goodman.png",
   "engines": {
     "vscode": "^1.80.0"
   },

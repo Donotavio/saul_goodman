@@ -1,6 +1,6 @@
 # Saul Goodman VS Code Bridge
 
-Extensão VS Code que envia tempo ativo para o SaulDaemon local, permitindo que a extensão Chrome some VS Code como tempo produtivo. A versão segue a mesma da extensão Chrome; atualize ambas em conjunto.
+Extensão VS Code que envia tempo ativo para o SaulDaemon local, permitindo que a extensão Chrome some VS Code como tempo produtivo. A versão segue a mesma da extensão Chrome; atualize ambas em conjunto. Usa o mesmo logotipo do projeto para fácil identificação no marketplace.
 
 ## Como usar
 
