@@ -300,9 +300,10 @@ function renderTabSwitchChart(metrics: DailyMetrics): void {
     return;
   }
   const buckets = metrics.tabSwitchHourly ?? [];
-  const hasData = buckets.some((bucket) =>
-    TAB_SWITCH_SERIES.some((series) => bucket[series.key] > 0)
-  );
+  const vscodeHourly = metrics.vscodeSwitchHourly ?? [];
+  const hasData =
+    buckets.some((bucket) => TAB_SWITCH_SERIES.some((series) => bucket[series.key] > 0)) ||
+    vscodeHourly.some((value) => value > 0);
 
   if (!hasData) {
     tabSwitchCanvas.style.display = 'none';
@@ -320,6 +321,14 @@ function renderTabSwitchChart(metrics: DailyMetrics): void {
     backgroundColor: series.color,
     stack: 'tabSwitches'
   }));
+  if (vscodeHourly.length === 24) {
+    datasets.push({
+      label: i18n?.t('label_vscode') ?? 'VS Code (IDE)',
+      data: vscodeHourly,
+      backgroundColor: '#005bd1',
+      stack: 'tabSwitches'
+    });
+  }
 
   if (tabSwitchChart) {
     tabSwitchChart.destroy();

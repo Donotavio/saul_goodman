@@ -135,7 +135,9 @@ export function createDefaultMetrics(): DailyMetrics {
     restoredItems: 0,
     vscodeActiveMs: 0,
     vscodeSessions: 0,
-    vscodeTimeline: []
+    vscodeTimeline: [],
+    vscodeSwitches: 0,
+    vscodeSwitchHourly: createEmptyNumberHourly()
   };
 }
 
@@ -158,6 +160,10 @@ export function createEmptyTabSwitchHourly(): TabSwitchHourlyBucket[] {
     hour,
     ...createDefaultTabSwitchBreakdown()
   }));
+}
+
+function createEmptyNumberHourly(): number[] {
+  return Array.from({ length: 24 }, () => 0);
 }
 
 export function getDefaultSettings(): ExtensionSettings {

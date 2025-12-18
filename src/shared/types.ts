@@ -56,6 +56,16 @@ export interface DailyMetrics {
    * Linha do tempo de sessões no VS Code para compor a narrativa.
    */
   vscodeTimeline?: TimelineEntry[];
+
+  /**
+   * Trocas de contexto do VS Code (por sessão) no dia.
+   */
+  vscodeSwitches?: number;
+
+  /**
+   * Trocas de contexto do VS Code por hora.
+   */
+  vscodeSwitchHourly?: number[];
 }
 
 export interface TabSwitchBreakdown {

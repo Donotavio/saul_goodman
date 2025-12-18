@@ -48,6 +48,8 @@ interface TrackingState {
 interface VscodeSummaryResponse {
   totalActiveMs: number;
   sessions: number;
+  switches?: number;
+  switchHourly?: number[];
   timeline?: Array<{
     startTime: number;
     endTime: number;
@@ -540,6 +542,13 @@ async function ensureDailyCache(): Promise<void> {
   if (!Array.isArray(metricsCache.vscodeTimeline)) {
     metricsCache.vscodeTimeline = [];
   }
+
+  if (typeof metricsCache.vscodeSwitches !== 'number') {
+    metricsCache.vscodeSwitches = 0;
+  }
+  if (!Array.isArray(metricsCache.vscodeSwitchHourly) || metricsCache.vscodeSwitchHourly.length !== 24) {
+    metricsCache.vscodeSwitchHourly = Array.from({ length: 24 }, () => 0);
+  }
 }
 
 async function getMetricsCache(): Promise<DailyMetrics> {
@@ -595,6 +604,11 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     const metrics = await getMetricsCache();
     metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
     metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+    metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
+    metrics.vscodeSwitchHourly =
+      Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
+        ? summary.switchHourly
+        : Array.from({ length: 24 }, () => 0);
     metrics.vscodeTimeline =
       Array.isArray(summary.timeline) && summary.timeline.length
         ? summary.timeline.map((entry) => ({

@@ -79,7 +79,14 @@ function ensureEntry(key, dateKey) {
     state.byKey[key] = Object.create(null);
   }
   if (!state.byKey[key][dateKey]) {
-    state.byKey[key][dateKey] = { totalActiveMs: 0, sessions: 0, sessionIds: [], timeline: [] };
+    state.byKey[key][dateKey] = {
+      totalActiveMs: 0,
+      sessions: 0,
+      switches: 0,
+      sessionIds: [],
+      timeline: [],
+      switchHourly: Array.from({ length: 24 }, () => 0)
+    };
   }
   return state.byKey[key][dateKey];
 }
@@ -171,9 +178,15 @@ async function handleHeartbeat(req, res, url) {
     const entry = ensureEntry(key, dateKey);
 
     entry.totalActiveMs += durationMs;
-    if (!entry.sessionIds.includes(sessionId)) {
+    const isNewSession = !entry.sessionIds.includes(sessionId);
+    if (isNewSession) {
       entry.sessionIds.push(sessionId);
       entry.sessions += 1;
+      entry.switches += 1;
+      const hour = new Date(timestamp ?? Date.now()).getHours();
+      if (Array.isArray(entry.switchHourly) && entry.switchHourly[hour] !== undefined) {
+        entry.switchHourly[hour] += 1;
+      }
     }
     const end = timestamp ?? Date.now();
     const start = end - durationMs;
@@ -203,10 +216,14 @@ function handleSummary(res, url) {
     return;
   }
 
-  const entry = state.byKey[key]?.[dateKey] ?? { totalActiveMs: 0, sessions: 0, timeline: [] };
+  const entry =
+    state.byKey[key]?.[dateKey] ??
+    { totalActiveMs: 0, sessions: 0, switches: 0, timeline: [], switchHourly: Array.from({ length: 24 }, () => 0) };
   sendJson(res, 200, {
     totalActiveMs: entry.totalActiveMs ?? 0,
     sessions: entry.sessions ?? 0,
+    switches: entry.switches ?? entry.sessions ?? 0,
+    switchHourly: Array.isArray(entry.switchHourly) ? entry.switchHourly : Array.from({ length: 24 }, () => 0),
     timeline: Array.isArray(entry.timeline) ? entry.timeline : []
   });
 }
