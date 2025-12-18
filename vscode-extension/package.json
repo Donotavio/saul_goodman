@@ -1,0 +1,54 @@
+{
+  "name": "saul-goodman-vscode",
+  "displayName": "Saul Goodman VS Code Bridge",
+  "description": "Envia tempo ativo do VS Code para o SaulDaemon local usado pela extensão Chrome.",
+  "version": "0.0.1",
+  "publisher": "donotavio",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Saul Goodman",
+      "properties": {
+        "saulGoodman.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita o envio de tempo ativo para o SaulDaemon local."
+        },
+        "saulGoodman.apiBase": {
+          "type": "string",
+          "default": "http://127.0.0.1:3123",
+          "description": "URL base do SaulDaemon local."
+        },
+        "saulGoodman.pairingKey": {
+          "type": "string",
+          "default": "",
+          "description": "Chave de pareamento compartilhada com a extensão Chrome."
+        },
+        "saulGoodman.heartbeatIntervalMs": {
+          "type": "number",
+          "default": 15000,
+          "description": "Intervalo em milissegundos entre heartbeats enviados ao SaulDaemon."
+        },
+        "saulGoodman.idleThresholdMs": {
+          "type": "number",
+          "default": 60000,
+          "description": "Tempo máximo sem atividade antes de considerar a sessão inativa."
+        }
+      }
+    }
+  },
+  "categories": [
+    "Other"
+  ],
+  "devDependencies": {
+    "@types/vscode": "^1.80.0"
+  }
+}
