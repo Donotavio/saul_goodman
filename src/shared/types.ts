@@ -51,6 +51,11 @@ export interface DailyMetrics {
    * Quantidade de sessões de foco no VS Code no dia corrente.
    */
   vscodeSessions?: number;
+
+  /**
+   * Linha do tempo de sessões no VS Code para compor a narrativa.
+   */
+  vscodeTimeline?: TimelineEntry[];
 }
 
 export interface TabSwitchBreakdown {

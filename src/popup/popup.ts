@@ -291,21 +291,19 @@ function renderTopDomains(metrics: DailyMetrics): void {
 function renderChart(metrics: DailyMetrics): void {
   const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
   const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
-  const vscodeLabel = i18n?.t('popup_chart_label_vscode') ?? 'VS Code';
   const minutesLabel = i18n?.t('popup_chart_axis_minutes') ?? 'Minutes';
-  const productiveMinutes = metrics.productiveMs / 60000;
-  const vscodeMinutes = (metrics.vscodeActiveMs ?? 0) / 60000;
+  const productiveMinutes = (metrics.productiveMs + (metrics.vscodeActiveMs ?? 0)) / 60000;
   const procrastinationMinutes = metrics.procrastinationMs / 60000;
-  const maxValue = Math.max(productiveMinutes, procrastinationMinutes, vscodeMinutes, 1);
+  const maxValue = Math.max(productiveMinutes, procrastinationMinutes, 1);
   const data = {
-    labels: [productiveLabel, procrastinationLabel, vscodeLabel],
+    labels: [productiveLabel, procrastinationLabel],
     datasets: [
       {
         label: minutesLabel,
-        backgroundColor: ['#0a7e07', '#d00000', '#005bd1'],
+        backgroundColor: ['#0a7e07', '#d00000'],
         borderColor: '#111',
         borderWidth: 1,
-        data: [productiveMinutes, procrastinationMinutes, vscodeMinutes]
+        data: [productiveMinutes, procrastinationMinutes]
       }
     ]
   };

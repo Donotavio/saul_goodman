@@ -79,7 +79,7 @@ function ensureEntry(key, dateKey) {
     state.byKey[key] = Object.create(null);
   }
   if (!state.byKey[key][dateKey]) {
-    state.byKey[key][dateKey] = { totalActiveMs: 0, sessions: 0, sessionIds: [] };
+    state.byKey[key][dateKey] = { totalActiveMs: 0, sessions: 0, sessionIds: [], timeline: [] };
   }
   return state.byKey[key][dateKey];
 }
@@ -148,15 +148,15 @@ function handleOptions(res) {
 async function handleHeartbeat(req, res, url) {
   try {
     const body = await readJsonBody(req);
-    const key = body.key ?? url.searchParams.get('key');
-    if (!validateKey(key)) {
-      sendError(res, 401, 'Invalid key');
-      return;
-    }
+  const key = body.key ?? url.searchParams.get('key');
+  if (!validateKey(key)) {
+    sendError(res, 401, 'Invalid key');
+    return;
+  }
 
-    const durationMs = Number(body.durationMs ?? 0);
-    const sessionId = typeof body.sessionId === 'string' ? body.sessionId.trim() : '';
-    const timestamp = body.timestamp;
+  const durationMs = Number(body.durationMs ?? 0);
+  const sessionId = typeof body.sessionId === 'string' ? body.sessionId.trim() : '';
+  const timestamp = body.timestamp;
 
     if (!sessionId) {
       sendError(res, 400, 'sessionId is required');
@@ -165,7 +165,7 @@ async function handleHeartbeat(req, res, url) {
     if (!Number.isFinite(durationMs) || durationMs <= 0) {
       sendError(res, 400, 'durationMs must be > 0');
       return;
-    }
+  }
 
     const dateKey = getDateFromTimestamp(timestamp);
     const entry = ensureEntry(key, dateKey);
@@ -174,6 +174,16 @@ async function handleHeartbeat(req, res, url) {
     if (!entry.sessionIds.includes(sessionId)) {
       entry.sessionIds.push(sessionId);
       entry.sessions += 1;
+    }
+    const end = timestamp ?? Date.now();
+    const start = end - durationMs;
+    entry.timeline.push({
+      startTime: start,
+      endTime: end,
+      durationMs
+    });
+    if (entry.timeline.length > 2000) {
+      entry.timeline.splice(0, entry.timeline.length - 2000);
     }
 
     pruneOldEntries();
@@ -193,10 +203,11 @@ function handleSummary(res, url) {
     return;
   }
 
-  const entry = state.byKey[key]?.[dateKey] ?? { totalActiveMs: 0, sessions: 0 };
+  const entry = state.byKey[key]?.[dateKey] ?? { totalActiveMs: 0, sessions: 0, timeline: [] };
   sendJson(res, 200, {
     totalActiveMs: entry.totalActiveMs ?? 0,
-    sessions: entry.sessions ?? 0
+    sessions: entry.sessions ?? 0,
+    timeline: Array.isArray(entry.timeline) ? entry.timeline : []
   });
 }
 

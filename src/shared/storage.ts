@@ -134,7 +134,8 @@ export function createDefaultMetrics(): DailyMetrics {
     groupedMs: 0,
     restoredItems: 0,
     vscodeActiveMs: 0,
-    vscodeSessions: 0
+    vscodeSessions: 0,
+    vscodeTimeline: []
   };
 }
 

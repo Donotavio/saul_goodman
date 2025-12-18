@@ -211,7 +211,7 @@ function renderReport(metrics: DailyMetrics): void {
   renderStoryList(metrics, kpis);
   const domainsWithVscode = getDomainsWithVscode(metrics);
   renderRankings(domainsWithVscode);
-  renderTimeline(metrics.timeline);
+  renderTimeline(mergeTimelines(metrics, domainsWithVscode));
   renderDomainBreakdownChart(domainsWithVscode);
   timelineStartHourInput.value = timelineFilter.start.toString();
   timelineEndHourInput.value = timelineFilter.end.toString();
@@ -361,15 +361,13 @@ function calculateMaxMinutes(buckets: HourlyBucket[]): number {
 }
 
 function renderCompositionChart(metrics: DailyMetrics): void {
-  const vscodeMs = metrics.vscodeActiveMs ?? 0;
-  const webProductiveMs = metrics.productiveMs;
   const neutralTotal = metrics.timeline
     .filter((entry) => entry.category === 'neutral')
     .reduce((acc, entry) => acc + entry.durationMs, 0);
+  const totalProductive = metrics.productiveMs + (metrics.vscodeActiveMs ?? 0);
   const data = {
     labels: [
       i18n?.t('popup_chart_label_productive') ?? 'Productive',
-      i18n?.t('popup_chart_label_vscode') ?? 'VS Code',
       i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination',
       i18n?.t('popup_summary_inactive_label') ?? 'Inactive',
       i18n?.t('report_category_neutral') ?? 'Neutral'
@@ -377,13 +375,12 @@ function renderCompositionChart(metrics: DailyMetrics): void {
     datasets: [
       {
         data: [
-          Math.round(webProductiveMs / 60000),
-          Math.round(vscodeMs / 60000),
+          Math.round(totalProductive / 60000),
           Math.round(metrics.procrastinationMs / 60000),
           Math.round(metrics.inactiveMs / 60000),
           Math.round(neutralTotal / 60000)
         ],
-        backgroundColor: ['#0a7e07', '#005bd1', '#d00000', '#c1c1c1', '#f4c95d'],
+        backgroundColor: ['#0a7e07', '#d00000', '#c1c1c1', '#f4c95d'],
         borderWidth: 1,
         borderColor: '#111'
       }
@@ -582,6 +579,17 @@ function renderTimeline(entries: TimelineEntry[]): void {
     li.appendChild(list);
     timelineListEl.appendChild(li);
   });
+}
+
+function mergeTimelines(metrics: DailyMetrics, domains: Record<string, DomainStats>): TimelineEntry[] {
+  const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+  const vscodeEntries =
+    metrics.vscodeTimeline?.map((entry) => ({
+      ...entry,
+      domain: label,
+      category: 'productive' as const
+    })) ?? [];
+  return [...metrics.timeline, ...vscodeEntries].sort((a, b) => a.startTime - b.startTime);
 }
 
 async function exportPdf(): Promise<void> {

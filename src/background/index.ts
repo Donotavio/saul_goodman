@@ -48,6 +48,11 @@ interface TrackingState {
 interface VscodeSummaryResponse {
   totalActiveMs: number;
   sessions: number;
+  timeline?: Array<{
+    startTime: number;
+    endTime: number;
+    durationMs: number;
+  }>;
 }
 
 const trackingState: TrackingState = {
@@ -531,6 +536,10 @@ async function ensureDailyCache(): Promise<void> {
   if (typeof metricsCache.vscodeSessions !== 'number') {
     metricsCache.vscodeSessions = 0;
   }
+
+  if (!Array.isArray(metricsCache.vscodeTimeline)) {
+    metricsCache.vscodeTimeline = [];
+  }
 }
 
 async function getMetricsCache(): Promise<DailyMetrics> {
@@ -586,6 +595,16 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     const metrics = await getMetricsCache();
     metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
     metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+    metrics.vscodeTimeline =
+      Array.isArray(summary.timeline) && summary.timeline.length
+        ? summary.timeline.map((entry) => ({
+            startTime: entry.startTime,
+            endTime: entry.endTime,
+            durationMs: entry.durationMs,
+            domain: 'VS Code (IDE)',
+            category: 'productive' as const
+          }))
+        : [];
 
     await persistMetrics();
 
