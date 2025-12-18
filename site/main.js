@@ -495,13 +495,27 @@ const defaultLanguage = 'pt';
 const createLightbox = () => {
   const backdrop = document.createElement('div');
   backdrop.className = 'lightbox-backdrop';
-  backdrop.innerHTML = `
-    <div class="lightbox-content">
-      <button class="lightbox-close" type="button" data-i18n="lightboxClose">Fechar</button>
-      <img alt="" />
-      <div class="lightbox-caption"></div>
-    </div>
-  `;
+
+  const content = document.createElement('div');
+  content.className = 'lightbox-content';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.dataset.i18n = 'lightboxClose';
+  closeBtn.textContent = 'Fechar';
+
+  const img = document.createElement('img');
+  img.alt = '';
+
+  const caption = document.createElement('div');
+  caption.className = 'lightbox-caption';
+
+  content.appendChild(closeBtn);
+  content.appendChild(img);
+  content.appendChild(caption);
+  backdrop.appendChild(content);
+
   document.body.appendChild(backdrop);
   return backdrop;
 };
