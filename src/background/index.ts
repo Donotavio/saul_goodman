@@ -19,7 +19,8 @@ import {
   HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
-  RuntimeMessageType
+  RuntimeMessageType,
+  TimelineEntry
 } from '../shared/types.js';
 import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
@@ -342,20 +343,31 @@ async function accumulateSlice(): Promise<void> {
 
   trackingState.lastTimestamp = now;
 
+  const settings = await getSettingsCache();
+  if (!trackingState.browserFocused) {
+    await syncVscodeMetrics(true);
+  }
   const metrics = await getMetricsCache();
 
   if (!trackingState.browserFocused) {
-    metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + elapsed;
-    recordTimelineSegment(metrics, {
-      category: 'inactive',
-      domain: 'Navegador em segundo plano',
-      durationMs: elapsed,
-      startTime: sliceStart,
-      endTime: now
-    });
-    metrics.inactiveMs += elapsed;
-    recordHourlyContribution(metrics, 'inactive', sliceStart, elapsed);
-    await persistMetrics();
+    const overlapMs = calculateVscodeOverlap(metrics.vscodeTimeline ?? [], sliceStart, now);
+    const inactivePortion = Math.max(0, elapsed - overlapMs);
+
+    if (inactivePortion > 0) {
+      metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + inactivePortion;
+      recordTimelineSegment(metrics, {
+        category: 'inactive',
+        domain: 'Navegador em segundo plano',
+        durationMs: inactivePortion,
+        startTime: sliceStart,
+        endTime: now
+      });
+      metrics.inactiveMs += inactivePortion;
+      recordHourlyContribution(metrics, 'inactive', sliceStart, inactivePortion);
+      await persistMetrics();
+    } else {
+      trackingState.lastTimestamp = now;
+    }
     return;
   }
 
@@ -377,7 +389,6 @@ async function accumulateSlice(): Promise<void> {
     return;
   }
 
-  const settings = await getSettingsCache();
   const category = classifyDomain(trackingState.currentDomain, settings);
 
   const stats = metrics.domains[trackingState.currentDomain] ?? {
@@ -418,6 +429,28 @@ async function accumulateSlice(): Promise<void> {
   recordHourlyContribution(metrics, category, sliceStart, elapsed);
 
   await persistMetrics();
+}
+
+function calculateVscodeOverlap(timeline: TimelineEntry[], start: number, end: number): number {
+  if (!timeline.length) {
+    return 0;
+  }
+
+  let overlap = 0;
+  for (const entry of timeline) {
+    const entryStart = entry.startTime ?? 0;
+    const entryEnd = entry.endTime ?? 0;
+    if (entryEnd <= start || entryStart >= end) {
+      continue;
+    }
+    const clampedStart = Math.max(entryStart, start);
+    const clampedEnd = Math.min(entryEnd, end);
+    if (clampedEnd > clampedStart) {
+      overlap += clampedEnd - clampedStart;
+    }
+  }
+
+  return overlap;
 }
 
 async function finalizeCurrentDomainSlice(): Promise<void> {
