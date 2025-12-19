@@ -78,7 +78,8 @@ function ensureEntry(key, dateKey) {
   if (!state.byKey[key]) {
     state.byKey[key] = Object.create(null);
   }
-  if (!state.byKey[key][dateKey]) {
+  const existing = state.byKey[key][dateKey];
+  if (!existing) {
     state.byKey[key][dateKey] = {
       totalActiveMs: 0,
       sessions: 0,
@@ -87,8 +88,29 @@ function ensureEntry(key, dateKey) {
       timeline: [],
       switchHourly: Array.from({ length: 24 }, () => 0)
     };
+    return state.byKey[key][dateKey];
   }
-  return state.byKey[key][dateKey];
+
+  const entry = existing;
+  if (typeof entry.totalActiveMs !== 'number') {
+    entry.totalActiveMs = 0;
+  }
+  if (!Array.isArray(entry.sessionIds)) {
+    entry.sessionIds = [];
+  }
+  if (typeof entry.sessions !== 'number') {
+    entry.sessions = entry.sessionIds.length ?? 0;
+  }
+  if (!Number.isFinite(entry.switches)) {
+    entry.switches = entry.sessions ?? 0;
+  }
+  if (!Array.isArray(entry.switchHourly) || entry.switchHourly.length !== 24) {
+    entry.switchHourly = Array.from({ length: 24 }, () => 0);
+  }
+  if (!Array.isArray(entry.timeline)) {
+    entry.timeline = [];
+  }
+  return entry;
 }
 
 function pruneOldEntries() {
@@ -181,11 +203,11 @@ async function handleHeartbeat(req, res, url) {
     const isNewSession = !entry.sessionIds.includes(sessionId);
     if (isNewSession) {
       entry.sessionIds.push(sessionId);
-      entry.sessions += 1;
-      entry.switches += 1;
+      entry.sessions = (entry.sessions ?? 0) + 1;
+      entry.switches = Number.isFinite(entry.switches) ? entry.switches + 1 : 1;
       const hour = new Date(timestamp ?? Date.now()).getHours();
       if (Array.isArray(entry.switchHourly) && entry.switchHourly[hour] !== undefined) {
-        entry.switchHourly[hour] += 1;
+        entry.switchHourly[hour] = (entry.switchHourly[hour] ?? 0) + 1;
       }
     }
     const end = timestamp ?? Date.now();
@@ -216,14 +238,27 @@ function handleSummary(res, url) {
     return;
   }
 
-  const entry =
-    state.byKey[key]?.[dateKey] ??
-    { totalActiveMs: 0, sessions: 0, switches: 0, timeline: [], switchHourly: Array.from({ length: 24 }, () => 0) };
+  const hasEntry = Boolean(state.byKey[key]?.[dateKey]);
+  const entry = hasEntry
+    ? ensureEntry(key, dateKey)
+    : {
+        totalActiveMs: 0,
+        sessions: 0,
+        switches: 0,
+        sessionIds: [],
+        timeline: [],
+        switchHourly: Array.from({ length: 24 }, () => 0)
+      };
+  const switches = Number.isFinite(entry.switches) ? entry.switches : entry.sessions ?? 0;
+  const switchHourly =
+    Array.isArray(entry.switchHourly) && entry.switchHourly.length === 24
+      ? entry.switchHourly
+      : Array.from({ length: 24 }, () => 0);
   sendJson(res, 200, {
     totalActiveMs: entry.totalActiveMs ?? 0,
     sessions: entry.sessions ?? 0,
-    switches: entry.switches ?? entry.sessions ?? 0,
-    switchHourly: Array.isArray(entry.switchHourly) ? entry.switchHourly : Array.from({ length: 24 }, () => 0),
+    switches,
+    switchHourly,
     timeline: Array.isArray(entry.timeline) ? entry.timeline : []
   });
 }
