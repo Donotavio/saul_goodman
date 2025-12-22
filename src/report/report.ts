@@ -44,6 +44,10 @@ const backButton = document.getElementById('backButton') as HTMLButtonElement;
 const aiNarrativeEl = document.getElementById('aiNarrative') as HTMLElement;
 const aiGenerateButton = document.getElementById('aiGenerateButton') as HTMLButtonElement;
 const aiRetryButton = document.getElementById('aiRetryButton') as HTMLButtonElement;
+const shareMenuButton = document.getElementById('shareMenuButton') as HTMLButtonElement | null;
+const shareMenuEl = document.getElementById('shareMenu') as HTMLDivElement | null;
+const toastEl = document.getElementById('toast') as HTMLElement | null;
+const toastMessageEl = document.getElementById('toastMessage') as HTMLElement | null;
 const hourlyCanvas = document.getElementById('hourlyChart') as HTMLCanvasElement;
 const compositionCanvas = document.getElementById('compositionChart') as HTMLCanvasElement;
 const domainBreakdownCanvas = document.getElementById('domainBreakdownChart') as HTMLCanvasElement;
@@ -100,6 +104,9 @@ let lastHeroBand: 'good' | 'warn' | 'alert' | 'neutral' = 'neutral';
 let heroConfettiTimer: number | null = null;
 let i18n: I18nService | null = null;
 let activeLocalePreference: LocalePreference = 'auto';
+let hasAiNarrative = false;
+let toastTimer: number | null = null;
+const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
 document.addEventListener('DOMContentLoaded', () => {
   void hydrate();
@@ -107,6 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
   backButton.addEventListener('click', () => closeReportTab());
   aiGenerateButton.addEventListener('click', () => void generateNarrative());
   aiRetryButton.addEventListener('click', () => void generateNarrative());
+  shareMenuButton?.addEventListener('click', toggleShareMenu);
+  shareMenuEl?.addEventListener('click', onShareMenuClick);
+  document.addEventListener('click', (event) => {
+    if (!shareMenuEl || !shareMenuButton) {
+      return;
+    }
+    if (
+      shareMenuEl.classList.contains('hidden') ||
+      shareMenuEl.contains(event.target as Node) ||
+      shareMenuButton.contains(event.target as Node)
+    ) {
+      return;
+    }
+    shareMenuEl.classList.add('hidden');
+  });
   criticalBannerAction?.addEventListener('click', () => {
     const url = chrome.runtime.getURL('src/options/options.html#vilains');
     void chrome.tabs.create({ url });
@@ -218,6 +240,7 @@ function renderReport(metrics: DailyMetrics): void {
   aiNarrativeEl.innerHTML =
     i18n?.t('report_ai_hint') ??
     'Click "Generate narrative" so Saul can analyze your day with his sarcasm.';
+  hasAiNarrative = false;
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
   updateHeroLogo(metrics.currentIndex >= criticalThreshold);
   toggleCriticalBanner(metrics.currentIndex >= criticalThreshold);
@@ -666,6 +689,354 @@ async function exportPdf(): Promise<void> {
   doc.save(`relatorio-saul-goodman-${metrics.dateKey}.pdf`);
 }
 
+async function shareReportSummary(): Promise<void> {
+  if (!latestMetrics) {
+    showToast(i18n?.t('report_share_error_no_metrics') ?? 'Sem dados para compartilhar.', 'error');
+    return;
+  }
+
+  const text = buildShareSummaryText(latestMetrics);
+  await shareContent({
+    title: i18n?.t('report_share_title') ?? 'Saul Goodman — Highlights',
+    text,
+    successMessage:
+      i18n?.t('report_share_success') ??
+      'Menu de compartilhamento aberto! Se não aparecer, copiamos para a área de transferência.',
+    errorMessage: i18n?.t('report_share_error') ?? 'Não foi possível compartilhar agora.'
+  });
+}
+
+async function shareNarrative(): Promise<void> {
+  if (!latestMetrics) {
+    showToast(i18n?.t('report_share_error_no_metrics') ?? 'Sem dados para compartilhar.', 'error');
+    return;
+  }
+
+  if (!hasAiNarrative) {
+    showToast(
+      i18n?.t('report_share_error_no_narrative') ?? 'Gere o argumento do Saul antes de compartilhar.',
+      'error'
+    );
+    return;
+  }
+
+  const text = buildNarrativeShareText(latestMetrics);
+  await shareContent({
+    title: i18n?.t('report_share_argument_title') ?? 'Argumento do Saul',
+    text,
+    successMessage:
+      i18n?.t('report_share_success') ??
+      'Menu de compartilhamento aberto! Se não aparecer, copiamos para a área de transferência.',
+    errorMessage: i18n?.t('report_share_error') ?? 'Não foi possível compartilhar agora.'
+  });
+}
+
+function buildShareSummaryText(metrics: DailyMetrics): string {
+  const kpis = calculateKpis(metrics);
+  const date = reportDateEl.textContent ?? metrics.dateKey;
+  const focusLabel = i18n?.t('popup_kpi_focus_label') ?? 'Foco';
+  const indexLabel = i18n?.t('report_share_index_label') ?? 'Índice';
+  const switchesLabel = i18n?.t('report_metric_switches_label') ?? 'Trocas';
+  const headline = i18n?.t('report_share_headline') ?? 'Objeção! Resumo do caso';
+  const heroLine =
+    heroMessageEl.textContent?.trim() ??
+    (i18n?.t('report_share_opening') ?? 'O cliente trabalhou e eu tenho provas.');
+  const topProductive = getTopEntries(metrics.domains, 'productive')[0];
+  const topProcrastination = getTopEntries(metrics.domains, 'procrastination')[0];
+  const timelineHighlights = latestTimelineNarrative.slice(0, 2).join(' • ');
+  const cta = i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.';
+
+  const lines = [
+    `${headline} — ${date}`,
+    `${indexLabel} ${metrics.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)} · ${switchesLabel} ${metrics.tabSwitches}`,
+    `${i18n?.t('report_share_opening') ?? 'O cliente trabalhou e eu tenho provas.'} ${heroLine}`,
+    topProductive
+      ? `${i18n?.t('report_story_focus_title') ?? 'Top focus'} ➜ ${formatDomainLabel(topProductive.domain)} (${topProductive.duration})`
+      : null,
+    topProcrastination
+      ? `${i18n?.t('report_story_villain_title') ?? 'Vilão'} ➜ ${formatDomainLabel(topProcrastination.domain)} (${topProcrastination.duration})`
+      : null,
+    timelineHighlights
+      ? `${i18n?.t('report_timeline_heading') ?? 'Narrativa minuto a minuto'} ➜ ${timelineHighlights}`
+      : null,
+    cta
+  ];
+
+  return lines.filter(Boolean).join('\n');
+}
+
+function buildNarrativeShareText(metrics: DailyMetrics): string {
+  const kpis = calculateKpis(metrics);
+  const date = reportDateEl.textContent ?? metrics.dateKey;
+  const focusLabel = i18n?.t('popup_kpi_focus_label') ?? 'Foco';
+  const indexLabel = i18n?.t('report_share_index_label') ?? 'Índice';
+  const narrative = aiNarrativeEl.textContent?.trim() ?? '';
+  const cta = i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.';
+
+  const lines = [
+    i18n?.t('report_share_argument_title') ?? 'Argumento do Saul',
+    `${date} · ${indexLabel} ${metrics.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)}`,
+    narrative,
+    cta
+  ];
+
+  return lines.filter(Boolean).join('\n');
+}
+
+function buildSocialPostText(metrics: DailyMetrics): string {
+  const kpis = calculateKpis(metrics);
+  const date = reportDateEl.textContent ?? metrics.dateKey;
+  const topProductive = getTopEntries(metrics.domains, 'productive')[0];
+  const topProcrastination = getTopEntries(metrics.domains, 'procrastination')[0];
+  const timelineHighlights = latestTimelineNarrative.slice(0, 1).join(' • ');
+  const hashtags = i18n?.t('report_share_hashtags') ?? '#SaulGoodman #AntiProcrastinacao';
+
+  const lines = [
+    `${i18n?.t('report_share_social_tagline') ?? 'Objeção! Meu cliente trabalhou.'} ${date}`,
+    `Índice ${metrics.currentIndex} · Foco ${formatPercentage(kpis.focusRate)} · ${metrics.tabSwitches} trocas`,
+    topProductive
+      ? `Campeão: ${formatDomainLabel(topProductive.domain)} (${topProductive.duration})`
+      : null,
+    topProcrastination
+      ? `Vilão vigiado: ${formatDomainLabel(topProcrastination.domain)} (${topProcrastination.duration})`
+      : null,
+    timelineHighlights ? `Linha do tempo: ${timelineHighlights}` : null,
+    `${i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.'} ${EXTENSION_SITE_URL}`,
+    hashtags
+  ];
+
+  return lines.filter(Boolean).join('\n');
+}
+
+function buildNarrativeSocialText(metrics: DailyMetrics): string {
+  const base = buildNarrativeShareText(metrics);
+  const hashtags = i18n?.t('report_share_hashtags') ?? '#SaulGoodman #AntiProcrastinacao';
+  return `${base}\n${EXTENSION_SITE_URL}\n${hashtags}`;
+}
+
+function toggleShareMenu(): void {
+  if (!shareMenuEl) {
+    return;
+  }
+  shareMenuEl.classList.toggle('hidden');
+}
+
+async function onShareMenuClick(event: Event): Promise<void> {
+  const target = event.target as HTMLElement;
+  if (target.tagName !== 'BUTTON') {
+    return;
+  }
+  const channel = target.dataset.channel;
+  const kind = target.dataset.kind as 'summary' | 'argument';
+  if (!channel || !kind) {
+    return;
+  }
+
+  if (kind === 'argument' && !hasAiNarrative) {
+    showToast(
+      i18n?.t('report_share_error_no_narrative') ?? 'Gere o argumento do Saul antes de compartilhar.',
+      'error'
+    );
+    return;
+  }
+
+  if (!latestMetrics) {
+    showToast(i18n?.t('report_share_error_no_metrics') ?? 'Sem dados para compartilhar.', 'error');
+    return;
+  }
+
+  const text =
+    kind === 'summary'
+      ? buildSocialPostText(latestMetrics)
+      : buildNarrativeSocialText(latestMetrics);
+  const sanitized = normalizeShareText(text);
+
+  switch (channel) {
+    case 'x':
+      openXIntent(sanitized);
+      break;
+    case 'linkedin':
+      await copyToClipboardWithToast(
+        text,
+        i18n?.t('report_share_copy_linkedin') ??
+          'Texto copiado. Cole no campo do LinkedIn antes de publicar.',
+        i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.'
+      );
+      openLinkedInShare(sanitized);
+      showToast(
+        i18n?.t('report_share_hint_linkedin') ??
+          'LinkedIn não preenche o texto automaticamente: cole o conteúdo copiado no post.',
+        'success'
+      );
+      break;
+    case 'instagram':
+      await copyToClipboardWithToast(
+        text,
+        i18n?.t('report_share_copy_instagram') ??
+          'Texto copiado. Abra o Instagram e cole no campo antes de postar.',
+        i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.'
+      );
+      window.open('https://www.instagram.com/', '_blank');
+      showToast(
+        i18n?.t('report_share_hint_instagram') ??
+          'Instagram Web não aceita texto pré-preenchido: cole o que copiamos na caixa de postagem.',
+        'success'
+      );
+      break;
+    case 'copy':
+      await copyToClipboardWithToast(
+        text,
+        i18n?.t('report_share_copy_success') ??
+          'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.',
+        i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.'
+      );
+      break;
+    case 'native':
+      await shareContent({
+        title: i18n?.t('report_share_title') ?? 'Saul Goodman — Highlights',
+        text: sanitized,
+        successMessage:
+          i18n?.t('report_share_success') ??
+          'Menu de compartilhamento aberto! Se não aparecer, copiamos para a área de transferência.',
+        errorMessage: i18n?.t('report_share_error') ?? 'Não foi possível compartilhar agora.'
+      });
+      break;
+    default:
+      break;
+  }
+
+  shareMenuEl?.classList.add('hidden');
+}
+
+function openXIntent(text: string): void {
+  const encoded = safeEncodeURIComponent(text);
+  const url = `https://x.com/intent/tweet?text=${encoded}`;
+  window.open(url, '_blank');
+}
+
+function openLinkedInShare(summary: string): void {
+  const url = safeEncodeURIComponent(EXTENSION_SITE_URL);
+  const title = safeEncodeURIComponent(i18n?.t('report_share_title') ?? 'Saul Goodman — Highlights');
+  const encodedSummary = safeEncodeURIComponent(summary.slice(0, 950));
+  const shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${encodedSummary}`;
+  window.open(shareUrl, '_blank');
+}
+
+function normalizeShareText(value: string): string {
+  const cleaned = value
+    .replace(/%/g, '')
+    .replace(/[\u0000-\u001F\u007F]/g, ' ')
+    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '')
+    .replace(/(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, '');
+  return cleaned.trim();
+}
+
+function safeEncodeURIComponent(value: string): string {
+  try {
+    return encodeURIComponent(value);
+  } catch (error) {
+    const normalized = value
+      .replace(/%([^0-9A-Fa-f]|$)/g, '%25$1')
+      .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '')
+      .replace(/(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, '');
+    return encodeURIComponent(normalized);
+  }
+}
+
+async function shareContent(options: {
+  title: string;
+  text: string;
+  successMessage: string;
+  errorMessage: string;
+}): Promise<void> {
+  const { title, text, successMessage, errorMessage } = options;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({ title, text });
+      showToast(successMessage, 'success');
+      return;
+    }
+
+    await copyToClipboardWithToast(text, successMessage, errorMessage);
+  } catch (error) {
+    if ((error as Error)?.name === 'AbortError') {
+      return;
+    }
+    console.error('Share error', error);
+    showToast(errorMessage, 'error');
+  }
+}
+
+async function copySharePost(): Promise<void> {
+  if (!latestMetrics) {
+    showToast(i18n?.t('report_share_error_no_metrics') ?? 'Sem dados para compartilhar.', 'error');
+    return;
+  }
+  const text = buildSocialPostText(latestMetrics);
+  const success =
+    i18n?.t('report_share_copy_success') ??
+    'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.';
+  const error =
+    i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.';
+  await copyToClipboardWithToast(text, success, error);
+}
+
+async function copyNarrativePost(): Promise<void> {
+  if (!latestMetrics) {
+    showToast(i18n?.t('report_share_error_no_metrics') ?? 'Sem dados para compartilhar.', 'error');
+    return;
+  }
+  if (!hasAiNarrative) {
+    showToast(
+      i18n?.t('report_share_error_no_narrative') ?? 'Gere o argumento do Saul antes de compartilhar.',
+      'error'
+    );
+    return;
+  }
+  const text = buildNarrativeSocialText(latestMetrics);
+  const success =
+    i18n?.t('report_share_copy_success') ??
+    'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.';
+  const error =
+    i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.';
+  await copyToClipboardWithToast(text, success, error);
+}
+
+async function copyToClipboardWithToast(
+  text: string,
+  successMessage: string,
+  errorMessage: string
+): Promise<void> {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      showToast(successMessage, 'success');
+      return;
+    }
+    showToast(errorMessage, 'error');
+  } catch (error) {
+    console.error('Clipboard error', error);
+    showToast(errorMessage, 'error');
+  }
+}
+
+function showToast(message: string, type: 'success' | 'error' = 'success'): void {
+  if (!toastEl || !toastMessageEl) {
+    return;
+  }
+  toastMessageEl.textContent = message;
+  toastEl.classList.remove('hidden', 'success', 'error');
+  toastEl.classList.add(type);
+  if (toastTimer) {
+    window.clearTimeout(toastTimer);
+  }
+  toastTimer = window.setTimeout(() => {
+    toastEl.classList.add('hidden');
+    toastTimer = null;
+  }, 3500);
+}
+
 function findLongestSegment(
   timeline: TimelineEntry[],
   category: TimelineEntry['category']
@@ -736,6 +1107,7 @@ async function generateNarrative(): Promise<void> {
       i18n?.t('report_ai_missing_key') ??
       'Configure your OpenAI key in the options before generating the narrative.';
     aiRetryButton.classList.remove('hidden');
+    hasAiNarrative = false;
     return;
   }
 
@@ -751,12 +1123,14 @@ async function generateNarrative(): Promise<void> {
       throw new Error('Empty AI response');
     }
     aiNarrativeEl.innerHTML = formatAiNarrative(narrative);
+    hasAiNarrative = true;
   } catch (error) {
     console.error('AI narrative error', error);
     aiNarrativeEl.textContent =
       i18n?.t('report_ai_error_generic') ??
       'Saul could not convince the digital judge. Try again later.';
     aiRetryButton.classList.remove('hidden');
+    hasAiNarrative = false;
   } finally {
     aiGenerateButton.disabled = false;
   }

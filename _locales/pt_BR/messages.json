@@ -761,6 +761,90 @@
   "report_ai_error_generic": {
     "message": "Saul não conseguiu convencer o juiz digital. Tente novamente mais tarde."
   },
+  "report_share_report_label": {
+    "message": "Compartilhar highlights"
+  },
+  "report_share_menu_label": {
+    "message": "Compartilhar"
+  },
+  "report_share_argument_label": {
+    "message": "Compartilhar argumento"
+  },
+  "report_share_post_label": {
+    "message": "Copiar post (redes)"
+  },
+  "report_share_post_argument_label": {
+    "message": "Copiar post do argumento"
+  },
+  "report_share_menu_copy": {
+    "message": "Copiar texto"
+  },
+  "report_share_menu_highlights": {
+    "message": "Destaques"
+  },
+  "report_share_menu_argument": {
+    "message": "Argumento do Saul"
+  },
+  "report_share_menu_native": {
+    "message": "Compartilhamento nativo"
+  },
+  "report_share_menu_native_action": {
+    "message": "Share sheet do sistema"
+  },
+  "report_share_error_no_metrics": {
+    "message": "Sem dados para compartilhar."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman — Highlights"
+  },
+  "report_share_success": {
+    "message": "Menu de compartilhamento aberto! Se não aparecer, copiamos para a área de transferência."
+  },
+  "report_share_error": {
+    "message": "Não foi possível compartilhar agora."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Gere o argumento do Saul antes de compartilhar."
+  },
+  "report_share_argument_title": {
+    "message": "Argumento do Saul"
+  },
+  "report_share_index_label": {
+    "message": "Índice"
+  },
+  "report_share_headline": {
+    "message": "Objeção! Resumo do caso"
+  },
+  "report_share_opening": {
+    "message": "O cliente trabalhou e eu tenho provas."
+  },
+  "report_share_cta": {
+    "message": "Gerado pelo Saul Goodman."
+  },
+  "report_share_copy_success": {
+    "message": "Post copiado. Cole no LinkedIn, Twitter ou onde quiser."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Texto copiado. Cole no campo do LinkedIn antes de publicar."
+  },
+  "report_share_copy_instagram": {
+    "message": "Texto copiado. Abra o Instagram e cole no campo antes de postar."
+  },
+  "report_share_copy_error": {
+    "message": "Não foi possível copiar o post agora."
+  },
+  "report_share_hint_linkedin": {
+    "message": "LinkedIn não preenche o texto automaticamente: cole o conteúdo copiado no post."
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web não aceita texto pré-preenchido: cole o que copiamos na caixa de postagem."
+  },
+  "report_share_social_tagline": {
+    "message": "Objeção! Meu cliente trabalhou."
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #AntiProcrastinacao"
+  },
   "report_pdf_title": {
     "message": "Relatório detalhado — Saul Goodman"
   },
