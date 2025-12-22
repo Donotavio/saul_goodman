@@ -10,8 +10,16 @@ body {
   color: #111;
 }
 
+header.hero,
+main,
+footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .hero {
-  margin-bottom: 32px;
+  margin-bottom: clamp(48px, 6vw, 72px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,6 +136,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-top: clamp(32px, 5vw, 72px);
 }
 
 .panel {
@@ -166,15 +175,29 @@ main {
 form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
-label {
+.field-group {
+  border: 1px dashed #d7b247;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0;
+}
+
+.field-group legend {
+  font-weight: 800;
+  color: #2d221a;
+  padding: 0 8px;
+}
+
+.field {
   display: flex;
   flex-direction: column;
   font-weight: 600;
   color: #333;
   gap: 6px;
+  padding: 6px 0;
 }
 
 input[type='number'],
@@ -183,6 +206,15 @@ input[type='text'] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #bbb;
+  background: #fff;
+}
+
+select {
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  background: #fff;
 }
 
 label.toggle {
@@ -451,6 +483,12 @@ footer {
   max-width: 320px;
   text-align: right;
   color: #4d3e23;
+}
+
+.field__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .ghost {
