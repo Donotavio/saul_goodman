@@ -12,6 +12,7 @@ const RSS_URL = `${BLOG_BASE_URL}/rss.xml`;
 const BLOG_TITLE = 'Blog do Saul Goodman';
 const BLOG_DESCRIPTION =
   'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.';
+const GA_MEASUREMENT_ID = 'G-JM4SE32S0M';
 const CATEGORY_TONE = {
   'procrastinacao': 'incredulo',
   'foco-atencao': 'like',
@@ -153,6 +154,15 @@ function buildPostPageHtml({
     <meta name="twitter:title" content="${escapedTitleAttribute}" />
     <meta name="twitter:description" content="${escapedDescription}" />
     <meta name="twitter:image" content="${escapedImage}" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', '${GA_MEASUREMENT_ID}');
+    </script>
     <link rel="icon" type="image/png" href="../../../../assets/logotipo_saul_goodman.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
