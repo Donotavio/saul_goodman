@@ -1,6 +1,72 @@
 {
   "posts": [
     {
+      "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
+      "url": "./post/?post=2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "date": "2025-12-23",
+      "category": "procrastinacao",
+      "tags": [
+        "debugging",
+        "procrastinação",
+        "desenvolvimento",
+        "tecnologia",
+        "humor"
+      ],
+      "excerpt": "Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.",
+      "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
+      "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
+      "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
+      "source_url": "https://dev.to/mda2av/from-serial-ports-to-websockets-debugging-across-two-worlds-2l7o",
+      "source_published_at": "Tue, 23 Dec 2025 14:07:19 +0000",
+      "excerpt_en": "Oscilloscopes, endless tabs, and procrastination share the same courtroom in a developer's routine.",
+      "excerpt_es": "Osciloscopios, pestañas infinitas y procrastinación comparten la misma sala de juicio en la vida de un dev."
+    },
+    {
+      "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
+      "url": "./post/?post=2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "supabase",
+        "kiro",
+        "performance",
+        "programação",
+        "sarcasmo"
+      ],
+      "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
+      "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
+      "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
+      "source_title": "The new Supabase power for Kiro",
+      "source_url": "https://dev.to/supabase/the-new-supabase-power-for-kiro-51df",
+      "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
+      "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
+      "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
+    },
+    {
+      "title": "Mutantes no Código: A Revolução que Você Não Pediu",
+      "url": "./post/?post=2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
+      "markdown": "2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "mutation-testing",
+        "Stryker",
+        "qualidade",
+        "dev",
+        "sarcasmo"
+      ],
+      "excerpt": "Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...",
+      "title_en": "Mutants in Code: The Revolution You Didn't Ask For",
+      "title_es": "Mutantes en el Código: La Revolución que No Pediste",
+      "source_title": "Mutation Testing com Stryker",
+      "source_url": "https://dev.to/lucaspereiradesouzat/mutation-testing-com-stryker-1360",
+      "source_published_at": "Tue, 23 Dec 2025 16:15:41 +0000",
+      "excerpt_en": "Discover how Stryker turns your code into a battlefield. And you thought debugging was complicated...",
+      "excerpt_es": "Descubre cómo Stryker transforma tu código en un campo de batalla. Y tú pensando que depurar era complicado..."
+    },
+    {
       "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
       "url": "./post/?post=2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
       "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
@@ -19,50 +85,6 @@
       "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
     },
     {
-      "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
-      "url": "./post/?post=2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
-      "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
-      "date": "2025-12-23",
-      "category": "procrastinacao",
-      "tags": [
-        "debugging",
-        "procrastinação",
-        "desenvolvimento",
-        "tecnologia",
-        "humor"
-      ],
-      "excerpt": "A vida é uma grande sessão de debugging, onde a procrastinação é o software que nunca para de falhar.",
-      "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
-      "source_url": "https://dev.to/mda2av/from-serial-ports-to-websockets-debugging-across-two-worlds-2l7o",
-      "source_published_at": "Tue, 23 Dec 2025 14:07:19 +0000",
-      "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
-      "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
-      "excerpt_en": "Life is one big debugging session, where procrastination is the software that never stops failing.",
-      "excerpt_es": "La vida es una gran sesión de depuración, donde la procrastinación es el software que nunca deja de fallar."
-    },
-    {
-      "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
-      "url": "./post/?post=2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
-      "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "supabase",
-        "kiro",
-        "performance",
-        "programação",
-        "sarcasmo"
-      ],
-      "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
-      "source_title": "The new Supabase power for Kiro",
-      "source_url": "https://dev.to/supabase/the-new-supabase-power-for-kiro-51df",
-      "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
-      "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
-      "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
-      "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
-      "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
-    },
-    {
       "title": "Terraform: O Módulo que Faz Tudo, Menos Café",
       "url": "./post/?post=2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
       "markdown": "2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
@@ -76,40 +98,16 @@
         "produtividade"
       ],
       "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
+      "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
+      "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
       "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
       "source_url": "https://dev.to/jeeva_5c84a254e90842940dd/terraform-day-15-modules-writing-reusable-scalable-infrastructure-code-jgc",
       "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
-      "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
-      "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
       "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
       "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
     },
     {
-      "title": "Mutantes no Código: A Revolução que Você Não Pediu",
-      "url": "./post/?post=2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
-      "markdown": "2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "mutation-testing",
-        "Stryker",
-        "qualidade",
-        "dev",
-        "sarcasmo"
-      ],
-      "excerpt": "Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...",
-      "source_title": "Mutation Testing com Stryker",
-      "source_url": "https://dev.to/lucaspereiradesouzat/mutation-testing-com-stryker-1360",
-      "source_published_at": "Tue, 23 Dec 2025 16:15:41 +0000",
-      "title_en": "Mutants in Code: The Revolution You Didn't Ask For",
-      "title_es": "Mutantes en el Código: La Revolución que No Pediste",
-      "excerpt_en": "Discover how Stryker turns your code into a battlefield. And you thought debugging was complicated...",
-      "excerpt_es": "Descubre cómo Stryker transforma tu código en un campo de batalla. Y tú pensando que depurar era complicado..."
-    },
-    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
-      "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
-      "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
       "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
       "date": "2025-01-05",
@@ -121,11 +119,13 @@
         "vscode"
       ],
       "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
-      "excerpt_en": "When the squad calls ten standups and VS Code never reaches the foreground, the focus judge bangs the gavel and bans multitasking.",
-      "excerpt_es": "Cuando el equipo convoca diez standups y VS Code nunca llega al frente, el juez del foco golpea el mazo y prohíbe el multitasking.",
+      "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
+      "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
       "source_title": "Pesquisa sobre context switching em times remotos",
       "source_url": "https://example.com/estudo-context-switching",
-      "source_published_at": "2024-12-12T00:00:00Z"
+      "source_published_at": "2024-12-12T00:00:00Z",
+      "excerpt_en": "When the squad agenda hits ten standups and VS Code never returns to the foreground, the focus judge bangs the gavel and bans multitasking.",
+      "excerpt_es": "Cuando el equipo agenda diez standups y VS Code nunca vuelve al frente, el juez del foco golpea el mazo y prohíbe el multitasking."
     }
   ]
 }

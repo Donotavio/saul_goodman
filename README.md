@@ -113,6 +113,7 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 ## Blog e content engine
 
 - Blog público em `site/blog/` (home, categorias e `post/?post=...`), posts Markdown em `site/blog/posts/YYYY/*.md` com frontmatter (title, date, category, tags, excerpt, source_*); índice JSON para consumo em `site/blog/index.json`.
+- Após adicionar/editar posts manualmente, rode `npm run blog:index` (aceita `-- --dry-run`) para regenerar `site/blog/index.json` e manter o feed consumido pelo site/extensões sincronizado.
 - Interface do blog segue o seletor PT/EN/ES do site: detecta o idioma do navegador/localStorage e atualiza hero, navegação e chips; usuários podem trocar pelo `<select>` presente em todas as páginas.
 - Cada artigo inclui traduções EN/ES geradas automaticamente: frontmatter expõe `title_<lang>`/`excerpt_<lang>` e o corpo contém blocos `<!--lang:xx-->` que o frontend escolhe conforme o idioma atual.
 - Execução manual: `npm run content:engine` (ou `npm run content:engine:dry-run` para não gravar) com `LLM_API_KEY` definido e opcionais `LLM_BASE_URL`/`LLM_MODEL`/`LLM_PROVIDER`. O script gera slug `YYYY-MM-DD-<slug>`, atualiza o índice e registra a fonte em `tools/content_engine/state/posted.json` para evitar duplicidade.
