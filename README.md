@@ -110,6 +110,14 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 - **Popup/Options HTML & CSS:** vivem em `src/popup` e `src/options`. Não precisam de build além do TypeScript.
 - **Vendor:** se atualizar o Chart.js local, substitua `src/vendor/chart.umd.js` (e mantenha o manifesto sem CSP extra).
 
+## Blog e content engine
+
+- Blog público em `site/blog/` (home, categorias e `post.html?post=...`), posts Markdown em `site/blog/posts/YYYY/*.md` com frontmatter (title, date, category, tags, excerpt, source_*); índice JSON para consumo em `site/blog/index.json`.
+- Execução manual: `npm run content:engine` (ou `npm run content:engine:dry-run` para não gravar) com `LLM_API_KEY` definido e opcionais `LLM_BASE_URL`/`LLM_MODEL`/`LLM_PROVIDER`. O script gera slug `YYYY-MM-DD-<slug>`, atualiza o índice e registra a fonte em `tools/content_engine/state/posted.json` para evitar duplicidade.
+- Feeds/keywords configuráveis em `tools/content_engine/sources.json` (janela padrão 14 dias). Sem item relevante ou score baixo, nada é publicado.
+- Automação: `.github/workflows/blog-content-engine.yml` roda às segundas 08:00 BRT e via `workflow_dispatch`, instala deps, roda o content engine e commita mudanças com `chore(blog): publish weekly article` usando `GITHUB_TOKEN` (contents: write).
+- Layout do blog: ajuste `site/blog/*.html` e `site/blog/blog.css`; mantenha ao menos um post seed para validar o rendering local.
+
 ## Métricas & índice
 
 - `DailyMetrics` agrupa tempos produtivos, procrastinação, inatividade, domínio detalhado, trocas de abas (com breakdown Prod⇄Proc⇄Neutro) e minutos produtivos fora do expediente configurado.

@@ -1,0 +1,56 @@
+name: Blog Content Engine
+
+on:
+  schedule:
+    - cron: '0 11 * * 1' # 08:00 BRT on Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run content engine
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
+        run: npm run content:engine
+
+      - name: Check for generated content
+        id: changes
+        run: |
+          if [[ -n "$(git status --porcelain site/blog tools/content_engine/state)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/blog tools/content_engine/state
+          git commit -m "chore(blog): publish weekly article"
+          git push
+
+      - name: No changes to publish
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "Nenhuma publicação gerada nesta execução."

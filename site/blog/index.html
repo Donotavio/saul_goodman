@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog do Saul Goodman</title>
+    <link rel="icon" type="image/png" href="../assets/logotipo_saul_goodman.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        const p = location.pathname;
+        if (!p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          location.replace(p + '/' + location.search + location.hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./blog.css" />
+  </head>
+  <body data-blog-view="index">
+    <nav class="site-nav">
+      <a class="brand" href="../index.html#home">Saul Goodman</a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="../index.html#processo">Processo</a>
+          <a href="../index.html#demos">Demonstração</a>
+          <a href="../index.html#testemunhos">Clientes</a>
+          <a href="./index.html">Blog</a>
+        </div>
+        <a class="nav-cta" href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/" target="_blank" rel="noreferrer">
+          Instalar
+        </a>
+      </div>
+    </nav>
+
+    <main class="blog-page">
+      <header class="blog-hero">
+        <p class="eyebrow">Blog do Saul Goodman</p>
+        <h1>Opiniões jurídicas sobre procrastinação digital</h1>
+        <p class="lead">
+          Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul,
+          direto ao ponto, sem coach barato.
+        </p>
+        <div class="blog-categories">
+          <a class="chip" href="./procrastinacao/">Procrastinação</a>
+          <a class="chip" href="./foco-atencao/">Foco &amp; Atenção</a>
+          <a class="chip" href="./dev-performance/">Performance Dev</a>
+          <a class="chip" href="./trabalho-remoto/">Trabalho Remoto</a>
+        </div>
+      </header>
+
+      <section class="blog-list" id="blog-list" aria-live="polite"></section>
+    </main>
+
+    <script type="module" src="./blog.js"></script>
+  </body>
+</html>

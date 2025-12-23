@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Performance Dev - Blog do Saul Goodman</title>
+    <link rel="icon" type="image/png" href="../../assets/logotipo_saul_goodman.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        const p = location.pathname;
+        if (!p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          location.replace(p + '/' + location.search + location.hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../blog.css" />
+  </head>
+  <body data-blog-view="index" data-blog-category="dev-performance">
+    <nav class="site-nav">
+      <a class="brand" href="../../index.html#home">Saul Goodman</a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="../index.html">Blog</a>
+          <a href="../procrastinacao/">Procrastinação</a>
+          <a href="../foco-atencao/">Foco &amp; Atenção</a>
+        </div>
+        <a class="nav-cta" href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/" target="_blank" rel="noreferrer">
+          Instalar
+        </a>
+      </div>
+    </nav>
+
+    <main class="blog-page">
+      <header class="blog-hero">
+        <p class="eyebrow">Categoria</p>
+        <h1>Performance dev com réu confesso</h1>
+        <p class="lead">Produtividade realista para quem vive entre VS Code, PRs e reuniões remotas.</p>
+        <div class="blog-categories">
+          <a class="chip" href="../index.html">Todos</a>
+          <a class="chip" href="../procrastinacao/">Procrastinação</a>
+          <a class="chip" href="../foco-atencao/">Foco &amp; Atenção</a>
+          <a class="chip" href="../trabalho-remoto/">Trabalho Remoto</a>
+        </div>
+      </header>
+      <section class="blog-list" id="blog-list" aria-live="polite"></section>
+    </main>
+
+    <script type="module" src="../blog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "window_days": 14,
+  "feeds": [
+    { "name": "HN Melhor", "url": "https://hnrss.org/frontpage" },
+    { "name": "Dev.to", "url": "https://dev.to/feed" },
+    { "name": "HBR - Productivity", "url": "https://feeds.harvardbusiness.org/harvardbusiness/productivity" }
+  ],
+  "keywords": [
+    "procrastinação",
+    "foco",
+    "atenção",
+    "produtividade",
+    "multitarefa",
+    "multitasking",
+    "dopamina",
+    "trabalho remoto",
+    "dev",
+    "engenharia",
+    "concentração"
+  ]
+}

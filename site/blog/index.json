@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "title": "Sprint sem prova: o júri do foco condena o multitasking",
+      "url": "./post.html?post=2025/2025-01-05-sprint-sem-prova.md",
+      "markdown": "2025/2025-01-05-sprint-sem-prova.md",
+      "date": "2025-01-05",
+      "category": "dev-performance",
+      "tags": ["dev", "foco", "sprint", "vscode"],
+      "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
+      "source_title": "Pesquisa sobre context switching em times remotos",
+      "source_url": "https://example.com/estudo-context-switching",
+      "source_published_at": "2024-12-12T00:00:00Z"
+    }
+  ]
+}

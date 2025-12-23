@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Artigo - Blog do Saul Goodman</title>
+    <link rel="icon" type="image/png" href="../assets/logotipo_saul_goodman.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        const p = location.pathname;
+        if (!p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          location.replace(p + '/' + location.search + location.hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./blog.css" />
+  </head>
+  <body data-blog-view="post">
+    <nav class="site-nav">
+      <a class="brand" href="../index.html#home">Saul Goodman</a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="./index.html">Blog</a>
+          <a href="./procrastinacao/">Procrastinação</a>
+          <a href="./foco-atencao/">Foco &amp; Atenção</a>
+        </div>
+        <a class="nav-cta" href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/" target="_blank" rel="noreferrer">
+          Instalar
+        </a>
+      </div>
+    </nav>
+
+    <main class="post-page">
+      <p class="breadcrumb"><a href="./index.html">Blog</a> › <span class="current">Artigo</span></p>
+      <header class="post-header">
+        <h1>Carregando artigo...</h1>
+        <div class="blog-meta">...</div>
+      </header>
+      <article class="post-body">Carregando...</article>
+      <div class="metadata-footer"></div>
+    </main>
+
+    <script type="module" src="./blog.js"></script>
+  </body>
+</html>
