@@ -292,22 +292,27 @@ class ActivityTracker {
     this.promptedMissingKey = true;
     try {
       const value = await vscode.window.showInputBox({
-        title: 'Saul Goodman: configure a pairing key',
-        prompt: 'Digite a mesma chave configurada na extensão Chrome',
+        title: localize('prompt.missingKey.title'),
+        prompt: localize('prompt.missingKey.prompt'),
         placeHolder: 'ex: teste-123',
         ignoreFocusOut: true
       });
       this.promptedMissingKey = false;
       const key = value?.trim();
       if (!key) {
-        await vscode.window.showWarningMessage(
-          'Saul Goodman: sem pairing key não enviaremos tempo. Abra configurações para definir agora.',
-          'Abrir configurações'
-        ).then((choice) => {
-          if (choice === 'Abrir configurações') {
-            void vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.pairingKey');
-          }
-        });
+        await vscode.window
+          .showWarningMessage(
+            localize('prompt.missingKey.warning'),
+            localize('prompt.missingKey.openSettings')
+          )
+          .then((choice) => {
+            if (choice === localize('prompt.missingKey.openSettings')) {
+              void vscode.commands.executeCommand(
+                'workbench.action.openSettings',
+                'saulGoodman.pairingKey'
+              );
+            }
+          });
         return;
       }
       const config = vscode.workspace.getConfiguration('saulGoodman');
@@ -443,16 +448,18 @@ async function testDaemonHealth() {
     const res = await fetch(url.toString(), { signal: controller.signal });
     clearTimeout(timer);
     if (res.ok) {
-      vscode.window.showInformationMessage(`SaulDaemon responde em ${url.origin}`);
+      vscode.window.showInformationMessage(localize('test.healthSuccess', { origin: url.origin }));
       void updateStatusBar('ok', url.port || '3123');
       return;
     }
     vscode.window.showWarningMessage(
-      `SaulDaemon respondeu com status ${res.status} em ${url.origin}`
+      localize('test.healthStatus', { status: res.status, origin: url.origin })
     );
     void updateStatusBar('error');
   } catch (error) {
-    vscode.window.showWarningMessage(`SaulDaemon não respondeu em ${url.origin}: ${error.message}`);
+    vscode.window.showWarningMessage(
+      localize('test.healthFailure', { origin: url.origin, error: error.message })
+    );
     void updateStatusBar('error');
   }
 }
@@ -460,8 +467,8 @@ async function testDaemonHealth() {
 function initStatusBar(context) {
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   statusBarItem.command = 'saulGoodman.testDaemon';
-  statusBarItem.text = 'SaulDaemon: ...';
-  statusBarItem.tooltip = 'Testar conexão com o SaulDaemon';
+  statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
+  statusBarItem.tooltip = localize('status.loading.tooltip');
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
   void updateStatusBar('unknown');
@@ -472,27 +479,34 @@ async function updateStatusBar(state, port, stats) {
   if (!statusBarItem) {
     return;
   }
+  const portSuffix = port ? localize('status.portSuffix', { port }) : '';
   if (state === 'ok') {
     if (stats && typeof stats.index === 'number') {
-      statusBarItem.text = `$(law) Saul Index: ${Math.round(stats.index)}`;
-      statusBarItem.tooltip = `Índice ${stats.index} — atualizado em ${formatTimestamp(stats.updatedAt)}${port ? ` (porta ${port})` : ''}`;
+      const roundedIndex = Math.round(stats.index);
+      const tooltipPort = portSuffix;
+      statusBarItem.text = `$(law) ${localize('status.index.text', { index: roundedIndex })}`;
+      statusBarItem.tooltip = localize('status.index.tooltip', {
+        index: stats.index.toFixed(1),
+        time: formatTimestamp(stats.updatedAt),
+        port: tooltipPort
+      });
     } else {
-      statusBarItem.text = `$(debug-start) SaulDaemon ON${port ? ` :${port}` : ''}`;
-      statusBarItem.tooltip = 'SaulDaemon conectado';
+      statusBarItem.text = `$(debug-start) ${localize('status.on.text', { port: portSuffix })}`;
+      statusBarItem.tooltip = localize('status.on.tooltip');
     }
     statusBarItem.color = undefined;
   } else if (state === 'error') {
-    statusBarItem.text = '$(error) SaulDaemon OFF';
+    statusBarItem.text = `$(error) ${localize('status.off.text')}`;
     statusBarItem.color = new vscode.ThemeColor('errorForeground');
-    statusBarItem.tooltip = 'SaulDaemon indisponível';
+    statusBarItem.tooltip = localize('status.off.tooltip');
   } else if (state === 'disabled') {
-    statusBarItem.text = '$(circle-slash) SaulDaemon disabled';
+    statusBarItem.text = `$(circle-slash) ${localize('status.disabled.text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = 'Integração VS Code desativada';
+    statusBarItem.tooltip = localize('status.disabled.tooltip');
   } else {
-    statusBarItem.text = '$(loading~spin) SaulDaemon ...';
+    statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = 'Verificando SaulDaemon';
+    statusBarItem.tooltip = localize('status.loading.tooltip');
   }
 }
 
@@ -536,6 +550,67 @@ function startStatusPolling() {
   }
   void run();
   statusPollTimer = setInterval(run, 60000);
+}
+
+function fetchWithTimeout(url, timeout = 4000, options = {}) {
+  if (typeof fetch === 'function') {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    const opts = { ...options, signal: controller.signal };
+    return fetch(url, opts)
+      .finally(() => clearTimeout(timer));
+  }
+
+  return new Promise((resolve, reject) => {
+    try {
+      const parsed = new URL(url);
+      const isHttps = parsed.protocol === 'https:';
+      const client = isHttps ? https : http;
+      const req = client.request(
+        {
+          method: options.method || 'GET',
+          hostname: parsed.hostname,
+          port: parsed.port || (isHttps ? 443 : 80),
+          path: parsed.pathname + parsed.search,
+          headers: options.headers || {},
+          timeout
+        },
+        (res) => {
+          const chunks = [];
+          res.on('data', (chunk) => chunks.push(chunk));
+          res.on('end', () => {
+            const body = Buffer.concat(chunks).toString('utf8');
+            const result = {
+              ok: res.statusCode >= 200 && res.statusCode < 300,
+              status: res.statusCode ?? 0,
+              json: async () => {
+                if (!body) {
+                  return {};
+                }
+                try {
+                  return JSON.parse(body);
+                } catch (error) {
+                  throw error;
+                }
+              },
+              text: async () => body
+            };
+            resolve(result);
+          });
+        }
+      );
+      req.on('error', reject);
+      req.on('timeout', () => {
+        req.destroy(new Error('Request timed out'));
+      });
+      if (options.body) {
+        req.write(options.body);
+      }
+      req.end();
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
 async function postHeartbeat(apiBase, payload) {
