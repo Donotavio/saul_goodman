@@ -30,6 +30,7 @@
 - Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
 - "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
 - Campo "Chave OpenAI" opcional: explique que o valor fica salvo localmente e habilita o storytelling na página de relatório.
+- Toggle **“Bloquear acesso aos domínios desta lista”** na seção de procrastinação: quando ligado, a extensão aplica regras locais (declarativeNetRequest) que redirecionam o usuário para a página de bloqueio do Saul ao acessar qualquer domínio vilão. Copy deve reforçar que é um bloqueio local e reversível nas opções.
 - Hash `#vilains`: quando aberto a partir do modo crítico/relatório, rolar suavemente até o bloco de domínios procrastinatórios e destacá-lo (animação pulsante) por alguns segundos para guiar a ação. O formulário inclui campo para ajustar o limiar do modo terremoto (0–100).
 - Seção “Horários de trabalho”: permitir adicionar/remover intervalos (`input type="time"`) que representam o expediente oficial. Copy reforça que minutos produtivos fora desses blocos contam em dobro. Manter ao menos um intervalo cadastrado.
 
