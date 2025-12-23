@@ -53,6 +53,12 @@ const FALLBACK_CATEGORY_RULES = [
   { category: 'trabalho-remoto', regex: /(remote work|home office|async|distributed|trabalho remoto)/i },
   { category: 'dev-performance', regex: /(dev|developer|code|engineering|sprint|deploy|pull request|commit)/i },
 ];
+const FEED_CATEGORY_HINTS = [
+  { pattern: /remotive/i, category: 'trabalho-remoto' },
+  { pattern: /remote jobs/i, category: 'trabalho-remoto' },
+  { pattern: /productivity|lifehack|asian efficiency|freedom/i, category: 'foco-atencao' },
+  { pattern: /dev\.to|hacker news|time doctor|ali abdaal|springworks|virtual work/i, category: 'dev-performance' },
+];
 const TONE_OPTIONS = ['incredulo', 'like', 'nao-corte'];
 const TONE_TAG_HINTS = {
   'incredulo': ['sarcasmo', 'humor', 'vilao', 'vilão', 'procrastinacao', 'procrastinação'],
@@ -133,10 +139,16 @@ function scoreItem(item, keywords) {
   return { total, categoryScores };
 }
 
-function inferCategory(item, categoryScores) {
+function inferCategory(item, categoryScores, feedName) {
   const entries = Object.entries(categoryScores || {}).sort((a, b) => b[1] - a[1]);
   if (entries.length && entries[0][1] > 0) {
     return entries[0][0];
+  }
+  const normalizedFeed = (feedName || '').toLowerCase();
+  for (const hint of FEED_CATEGORY_HINTS) {
+    if (hint.pattern.test(normalizedFeed)) {
+      return hint.category;
+    }
   }
   const text = `${item.title || ''} ${item.summary || ''}`.toLowerCase();
   for (const rule of FALLBACK_CATEGORY_RULES) {
@@ -272,7 +284,7 @@ async function fetchCandidates(config, posted) {
         if (alreadyPosted(item.link, posted)) continue;
 
         const { total: score, categoryScores } = scoreItem(item, config.keywords);
-        const categoryHint = inferCategory(item, categoryScores);
+        const categoryHint = inferCategory(item, categoryScores, feed.name);
         candidates.push({
           feed: feed.name,
           link: item.link,
