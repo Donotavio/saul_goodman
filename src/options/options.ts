@@ -191,9 +191,11 @@ async function testVscodeConnection(): Promise<void> {
   const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || 'http://127.0.0.1:3123').trim();
   const pairingKey = vscodePairingKeyEl?.value.trim() ?? '';
 
+  let summaryUrl: URL;
   let healthUrl: URL;
   try {
-    healthUrl = new URL('/v1/tracking/vscode/summary', baseUrl);
+    summaryUrl = new URL('/v1/tracking/vscode/summary', baseUrl);
+    healthUrl = new URL('/health', baseUrl);
   } catch {
     setVscodeTestStatus(
       'options_vscode_test_invalid_url',
@@ -208,8 +210,15 @@ async function testVscodeConnection(): Promise<void> {
   testVscodeConnectionButton.disabled = true;
   testVscodeConnectionButton.setAttribute('aria-busy', 'true');
 
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 4000);
+  const fetchWithTimeout = async (url: URL) => {
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), 4000);
+    try {
+      return await fetch(url.toString(), { signal: ctrl.signal });
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
 
   try {
     if (!pairingKey) {
@@ -221,26 +230,61 @@ async function testVscodeConnection(): Promise<void> {
       return;
     }
 
-    healthUrl.searchParams.set('date', getTodayKey());
-    healthUrl.searchParams.set('key', pairingKey);
+    // 1. Health probe
+    try {
+      const healthResponse = await fetchWithTimeout(healthUrl);
+      if (!healthResponse.ok) {
+        const reason = `status ${healthResponse.status}`;
+        setVscodeTestStatus(
+          'options_vscode_test_health_error',
+          `Falha ao acessar ${healthUrl.origin}/health (${reason}).`,
+          'error',
+          { reason, origin: healthUrl.origin }
+        );
+        return;
+      }
+    } catch (error) {
+      if ((error as DOMException)?.name === 'AbortError') {
+        setVscodeTestStatus(
+          'options_vscode_test_timeout',
+          'SaulDaemon não respondeu a tempo.',
+          'error'
+        );
+      } else {
+        const reason = (error as Error)?.message ?? 'erro desconhecido';
+        setVscodeTestStatus(
+          'options_vscode_test_health_error',
+          `Falha ao acessar ${healthUrl.origin}/health (${reason}).`,
+          'error',
+          { reason, origin: healthUrl.origin }
+        );
+      }
+      return;
+    }
 
-    const response = await fetch(healthUrl.toString(), { signal: controller.signal });
-    if (response.ok) {
-      const summary = (await response.json()) as {
-        totalActiveMs?: number;
-        sessions?: number;
-        switches?: number;
-      };
-      setVscodeTestStatus(
-        'options_vscode_test_success',
-        `SaulDaemon respondeu em ${healthUrl.origin}.`,
-        'success',
-        {
-          origin: healthUrl.origin,
-          sessions: summary?.sessions ?? 0,
-          minutes: Math.round((summary?.totalActiveMs ?? 0) / 60000)
-        }
-      );
+    // 2. Summary with key
+    summaryUrl.searchParams.set('date', getTodayKey());
+    summaryUrl.searchParams.set('key', pairingKey);
+
+    let response: Response;
+    try {
+      response = await fetchWithTimeout(summaryUrl);
+    } catch (error) {
+      if ((error as DOMException)?.name === 'AbortError') {
+        setVscodeTestStatus(
+          'options_vscode_test_timeout',
+          'SaulDaemon não respondeu a tempo.',
+          'error'
+        );
+      } else {
+        const reason = (error as Error)?.message ?? 'erro desconhecido';
+        setVscodeTestStatus(
+          'options_vscode_test_error',
+          `Falha ao conectar ao SaulDaemon (${reason}).`,
+          'error',
+          { reason }
+        );
+      }
       return;
     }
 
@@ -253,31 +297,34 @@ async function testVscodeConnection(): Promise<void> {
       return;
     }
 
-    const reason = `status ${response.status}`;
-    setVscodeTestStatus(
-      'options_vscode_test_error',
-      `Falha ao conectar ao SaulDaemon (${reason}).`,
-      'error',
-      { reason }
-    );
-  } catch (error) {
-    if ((error as DOMException)?.name === 'AbortError') {
-      setVscodeTestStatus(
-        'options_vscode_test_timeout',
-        'SaulDaemon não respondeu a tempo.',
-        'error'
-      );
-    } else {
-      const reason = (error as Error)?.message ?? 'erro desconhecido';
+    if (!response.ok) {
+      const reason = `status ${response.status}`;
       setVscodeTestStatus(
         'options_vscode_test_error',
         `Falha ao conectar ao SaulDaemon (${reason}).`,
         'error',
         { reason }
       );
+      return;
     }
+
+    const summary = (await response.json()) as {
+      totalActiveMs?: number;
+      sessions?: number;
+      switches?: number;
+    };
+
+    setVscodeTestStatus(
+      'options_vscode_test_success',
+      `SaulDaemon respondeu em ${summaryUrl.origin}.`,
+      'success',
+      {
+        origin: summaryUrl.origin,
+        sessions: summary?.sessions ?? 0,
+        minutes: Math.round((summary?.totalActiveMs ?? 0) / 60000)
+      }
+    );
   } finally {
-    window.clearTimeout(timeout);
     testVscodeConnectionButton.disabled = false;
     testVscodeConnectionButton.removeAttribute('aria-busy');
     if (vscodeTestStatusEl && !vscodeTestStatusEl.classList.contains('visible')) {

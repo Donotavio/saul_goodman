@@ -40,6 +40,8 @@ const CHANGELOG_URL = 'https://github.com/Donotavio/saul_goodman/blob/main/CHANG
 const BLOCK_RULE_ID_BASE = 50_000;
 const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
 const BLOCK_PAGE_PATH = '/src/block/block.html';
+const VS_CODE_DOMAIN_ID = '__vscode:ide';
+const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -50,6 +52,7 @@ interface TrackingState {
   browserFocused: boolean;
   currentTabAudible: boolean;
   currentTabGroupId: number | null;
+  awaitingVscodeReturn: boolean;
   pendingSwitchFromDomain: string | null;
 }
 
@@ -74,6 +77,7 @@ const trackingState: TrackingState = {
   browserFocused: true,
   currentTabAudible: false,
   currentTabGroupId: null,
+  awaitingVscodeReturn: false,
   pendingSwitchFromDomain: null
 };
 
@@ -166,6 +170,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
   if (!focused) {
     void (async () => {
       trackingState.pendingSwitchFromDomain = trackingState.currentDomain;
+      trackingState.awaitingVscodeReturn = true;
       await finalizeCurrentDomainSlice();
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
@@ -179,6 +184,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
   }
 
   trackingState.browserFocused = true;
+  trackingState.awaitingVscodeReturn = false;
   trackingState.pendingSwitchFromDomain = null;
   trackingState.lastActivity = now;
   trackingState.lastTimestamp = now;
@@ -327,6 +333,11 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
 
   trackingState.lastActivity = Date.now();
 
+  if (trackingState.awaitingVscodeReturn && domain) {
+    await recordVscodeToChromeSwitch(domain, Date.now());
+    trackingState.awaitingVscodeReturn = false;
+  }
+
   if (previousDomain && (domainChanged || tabChanged)) {
     await finalizeCurrentDomainSlice();
     if (countSwitch) {
@@ -376,6 +387,7 @@ async function accumulateSlice(): Promise<void> {
     if (overlapMs > 0 && trackingState.pendingSwitchFromDomain) {
       await recordChromeToVscodeSwitch(trackingState.pendingSwitchFromDomain, sliceStart);
       trackingState.pendingSwitchFromDomain = null;
+      trackingState.awaitingVscodeReturn = true;
     }
 
     if (inactivePortion > 0) {
@@ -505,8 +517,8 @@ async function incrementTabSwitches(
     metrics.tabSwitchHourly = createEmptyTabSwitchHourly();
   }
 
-  const fromCategory = classifyDomain(fromDomain, settings);
-  const toCategory = overrideToCategory ?? classifyDomain(toDomain, settings);
+  const fromCategory = classifyWithVsCode(fromDomain, settings);
+  const toCategory = overrideToCategory ?? classifyWithVsCode(toDomain, settings);
   recordTabSwitchCounts(
     metrics.tabSwitchBreakdown,
     metrics.tabSwitchHourly ?? [],
@@ -519,7 +531,18 @@ async function incrementTabSwitches(
 }
 
 async function recordChromeToVscodeSwitch(previousDomain: string, timestamp: number): Promise<void> {
-  await incrementTabSwitches(previousDomain, '__vscode:ide', timestamp, 'productive');
+  await incrementTabSwitches(previousDomain, VS_CODE_DOMAIN_ID, timestamp, 'productive');
+}
+
+async function recordVscodeToChromeSwitch(targetDomain: string, timestamp: number): Promise<void> {
+  await incrementTabSwitches(VS_CODE_DOMAIN_ID, targetDomain, timestamp);
+}
+
+function classifyWithVsCode(domain: string, settings: ExtensionSettings): DomainCategory {
+  if (domain === VS_CODE_DOMAIN_ID || domain === VS_CODE_DOMAIN_LABEL) {
+    return 'productive';
+  }
+  return classifyDomain(domain, settings);
 }
 
 async function persistMetrics(): Promise<void> {
@@ -905,6 +928,7 @@ async function refreshWindowFocusState(): Promise<void> {
 
     if (isFocused && !wasFocused) {
       trackingState.browserFocused = true;
+      trackingState.awaitingVscodeReturn = false;
       trackingState.lastActivity = now;
       trackingState.lastTimestamp = now;
       await hydrateActiveTab();

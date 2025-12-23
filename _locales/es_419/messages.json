@@ -467,6 +467,9 @@
   "options_vscode_test_invalid_url": {
     "message": "URL inválida. Usa algo como http://127.0.0.1:3123."
   },
+  "options_vscode_test_health_error": {
+    "message": "Fallo al acceder a {origin}/health ({reason})."
+  },
   "options_vscode_test_unauthorized": {
     "message": "Clave distinta. Usa la misma key en Chrome y en VS Code."
   },
@@ -840,7 +843,7 @@
     "message": "Silencio más largo"
   },
   "report_story_idle_body": {
-    "message": "Entre {range} el navegador quedó inactivo durante {duration}."
+    "message": "Entre {range} el navegador quedó inactivo durante {duration}. Total inactivo del día: {total}."
   },
   "report_story_empty": {
     "message": "No hay suficientes historias para hoy."

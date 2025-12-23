@@ -6,7 +6,12 @@ import {
   TimelineEntry,
   WorkInterval
 } from '../shared/types.js';
-import { formatDuration, formatTimeRange, isWithinWorkSchedule } from '../shared/utils/time.js';
+import {
+  formatDuration,
+  formatTimeRange,
+  isWithinWorkSchedule,
+  splitDurationByHour
+} from '../shared/utils/time.js';
 import {
   calculateKpis,
   CalculatedKpis,
@@ -143,9 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
       timelineFilter = { start: end, end: start };
     }
     if (latestMetrics) {
-      const domainsWithVscode = getDomainsWithVscode(latestMetrics);
-      renderTimeline(mergeTimelines(latestMetrics, domainsWithVscode));
-      renderDomainBreakdownChart(domainsWithVscode);
+      const enriched = enrichMetricsWithVscode(latestMetrics);
+      renderTimeline(enriched.timeline);
+      renderDomainBreakdownChart(enriched.domains);
     }
   });
 
@@ -158,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
       timelineEndHourInput.value = '23';
     }
     if (latestMetrics) {
-      const domainsWithVscode = getDomainsWithVscode(latestMetrics);
-      renderTimeline(mergeTimelines(latestMetrics, domainsWithVscode));
-      renderDomainBreakdownChart(domainsWithVscode);
+      const enriched = enrichMetricsWithVscode(latestMetrics);
+      renderTimeline(enriched.timeline);
+      renderDomainBreakdownChart(enriched.domains);
     }
   });
 });
@@ -195,49 +200,48 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
 }
 
 function renderReport(metrics: DailyMetrics): void {
-  const reportDate = parseDateKey(metrics.dateKey);
+  const enriched = enrichMetricsWithVscode(metrics);
+  const reportDate = parseDateKey(enriched.dateKey);
   reportDateEl.textContent = reportDate.toLocaleDateString(locale, {
     weekday: 'long',
     month: 'long',
     day: 'numeric'
   });
-  const heroMessageKey = pickHeroMessageKey(metrics.currentIndex);
+  const heroMessageKey = pickHeroMessageKey(enriched.currentIndex);
   heroMessageEl.textContent = i18n?.t(heroMessageKey) ?? heroMessageKey;
-  heroIndexEl.textContent = metrics.currentIndex.toString().padStart(2, '0');
-  const band = getScoreBand(metrics.currentIndex);
+  heroIndexEl.textContent = enriched.currentIndex.toString().padStart(2, '0');
+  const band = getScoreBand(enriched.currentIndex);
   if (band === 'good' && lastHeroBand !== 'good') {
     triggerHeroConfetti();
   }
   lastHeroBand = band;
 
-  const kpis = calculateKpis(metrics);
+  const kpis = calculateKpis(enriched);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
-  heroSwitchesEl.textContent = `${metrics.tabSwitches}`;
+  heroSwitchesEl.textContent = `${enriched.tabSwitches}`;
   if (audioProcrastinationEl) {
-    audioProcrastinationEl.textContent = formatDuration(metrics.audibleProcrastinationMs ?? 0);
+    audioProcrastinationEl.textContent = formatDuration(enriched.audibleProcrastinationMs ?? 0);
   }
   if (unfocusedEl) {
-    unfocusedEl.textContent = formatDuration(metrics.windowUnfocusedMs ?? 0);
+    unfocusedEl.textContent = formatDuration(enriched.windowUnfocusedMs ?? 0);
   }
   if (spaNavigationsEl) {
-    spaNavigationsEl.textContent = `${metrics.spaNavigations ?? 0}`;
+    spaNavigationsEl.textContent = `${enriched.spaNavigations ?? 0}`;
   }
   if (groupedTimeEl) {
-    groupedTimeEl.textContent = formatDuration(metrics.groupedMs ?? 0);
+    groupedTimeEl.textContent = formatDuration(enriched.groupedMs ?? 0);
   }
   if (restoredItemsEl) {
-    restoredItemsEl.textContent = `${metrics.restoredItems ?? 0}`;
+    restoredItemsEl.textContent = `${enriched.restoredItems ?? 0}`;
   }
 
-  renderHourlyChart(metrics);
-  renderTabSwitchChart(metrics);
-  renderCompositionChart(metrics);
-  renderStoryList(metrics, kpis);
-  const domainsWithVscode = getDomainsWithVscode(metrics);
-  renderRankings(domainsWithVscode);
-  const mergedTimeline = mergeTimelines(metrics, domainsWithVscode);
-  renderTimeline(mergedTimeline);
-  renderDomainBreakdownChart(domainsWithVscode);
+  renderHourlyChart(enriched);
+  renderTabSwitchChart(enriched);
+  renderCompositionChart(enriched);
+  renderStoryList(enriched, kpis);
+  renderRankings(enriched.domains);
+  renderTimeline(enriched.timeline);
+  renderDomainBreakdownChart(enriched.domains);
   timelineStartHourInput.value = timelineFilter.start.toString();
   timelineEndHourInput.value = timelineFilter.end.toString();
   aiNarrativeEl.innerHTML =
@@ -245,8 +249,8 @@ function renderReport(metrics: DailyMetrics): void {
     'Click "Generate narrative" so Saul can analyze your day with his sarcasm.';
   hasAiNarrative = false;
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
-  updateHeroLogo(metrics.currentIndex >= criticalThreshold);
-  toggleCriticalBanner(metrics.currentIndex >= criticalThreshold);
+  updateHeroLogo(enriched.currentIndex >= criticalThreshold);
+  toggleCriticalBanner(enriched.currentIndex >= criticalThreshold);
 }
 
 function renderHourlyChart(metrics: DailyMetrics): void {
@@ -332,8 +336,9 @@ function renderTabSwitchChart(metrics: DailyMetrics): void {
   if (!tabSwitchCanvas) {
     return;
   }
-  const buckets = metrics.tabSwitchHourly ?? [];
-  const vscodeHourly = metrics.vscodeSwitchHourly ?? [];
+  const enriched = enrichMetricsWithVscode(metrics);
+  const buckets = enriched.tabSwitchHourly ?? [];
+  const vscodeHourly = enriched.vscodeSwitchHourly ?? [];
   const hasData =
     buckets.some((bucket) => TAB_SWITCH_SERIES.some((series) => bucket[series.key] > 0)) ||
     vscodeHourly.some((value) => value > 0);
@@ -406,7 +411,7 @@ function renderCompositionChart(metrics: DailyMetrics): void {
   const neutralTotal = metrics.timeline
     .filter((entry) => entry.category === 'neutral')
     .reduce((acc, entry) => acc + entry.durationMs, 0);
-  const totalProductive = metrics.productiveMs + (metrics.vscodeActiveMs ?? 0);
+  const totalProductive = metrics.productiveMs;
   const data = {
     labels: [
       i18n?.t('popup_chart_label_productive') ?? 'Productive',
@@ -746,8 +751,9 @@ async function shareNarrative(): Promise<void> {
 }
 
 function buildShareSummaryText(metrics: DailyMetrics): string {
-  const kpis = calculateKpis(metrics);
-  const date = reportDateEl.textContent ?? metrics.dateKey;
+  const enriched = enrichMetricsWithVscode(metrics);
+  const kpis = calculateKpis(enriched);
+  const date = reportDateEl.textContent ?? enriched.dateKey;
   const focusLabel = i18n?.t('popup_kpi_focus_label') ?? 'Foco';
   const indexLabel = i18n?.t('report_share_index_label') ?? 'Índice';
   const switchesLabel = i18n?.t('report_metric_switches_label') ?? 'Trocas';
@@ -755,14 +761,14 @@ function buildShareSummaryText(metrics: DailyMetrics): string {
   const heroLine =
     heroMessageEl.textContent?.trim() ??
     (i18n?.t('report_share_opening') ?? 'O cliente trabalhou e eu tenho provas.');
-  const topProductive = getTopEntries(metrics.domains, 'productive')[0];
-  const topProcrastination = getTopEntries(metrics.domains, 'procrastination')[0];
+  const topProductive = getTopEntries(enriched.domains, 'productive')[0];
+  const topProcrastination = getTopEntries(enriched.domains, 'procrastination')[0];
   const timelineHighlights = latestTimelineNarrative.slice(0, 2).join(' • ');
   const cta = i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.';
 
   const lines = [
     `${headline} — ${date}`,
-    `${indexLabel} ${metrics.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)} · ${switchesLabel} ${metrics.tabSwitches}`,
+    `${indexLabel} ${enriched.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)} · ${switchesLabel} ${enriched.tabSwitches}`,
     `${i18n?.t('report_share_opening') ?? 'O cliente trabalhou e eu tenho provas.'} ${heroLine}`,
     topProductive
       ? `${i18n?.t('report_story_focus_title') ?? 'Top focus'} ➜ ${formatDomainLabel(topProductive.domain)} (${topProductive.duration})`
@@ -780,8 +786,9 @@ function buildShareSummaryText(metrics: DailyMetrics): string {
 }
 
 function buildNarrativeShareText(metrics: DailyMetrics): string {
-  const kpis = calculateKpis(metrics);
-  const date = reportDateEl.textContent ?? metrics.dateKey;
+  const enriched = enrichMetricsWithVscode(metrics);
+  const kpis = calculateKpis(enriched);
+  const date = reportDateEl.textContent ?? enriched.dateKey;
   const focusLabel = i18n?.t('popup_kpi_focus_label') ?? 'Foco';
   const indexLabel = i18n?.t('report_share_index_label') ?? 'Índice';
   const narrative = aiNarrativeEl.textContent?.trim() ?? '';
@@ -789,7 +796,7 @@ function buildNarrativeShareText(metrics: DailyMetrics): string {
 
   const lines = [
     i18n?.t('report_share_argument_title') ?? 'Argumento do Saul',
-    `${date} · ${indexLabel} ${metrics.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)}`,
+    `${date} · ${indexLabel} ${enriched.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)}`,
     narrative,
     cta
   ];
@@ -798,16 +805,17 @@ function buildNarrativeShareText(metrics: DailyMetrics): string {
 }
 
 function buildSocialPostText(metrics: DailyMetrics): string {
-  const kpis = calculateKpis(metrics);
-  const date = reportDateEl.textContent ?? metrics.dateKey;
-  const topProductive = getTopEntries(metrics.domains, 'productive')[0];
-  const topProcrastination = getTopEntries(metrics.domains, 'procrastination')[0];
+  const enriched = enrichMetricsWithVscode(metrics);
+  const kpis = calculateKpis(enriched);
+  const date = reportDateEl.textContent ?? enriched.dateKey;
+  const topProductive = getTopEntries(enriched.domains, 'productive')[0];
+  const topProcrastination = getTopEntries(enriched.domains, 'procrastination')[0];
   const timelineHighlights = latestTimelineNarrative.slice(0, 1).join(' • ');
   const hashtags = i18n?.t('report_share_hashtags') ?? '#SaulGoodman #AntiProcrastinacao';
 
   const lines = [
     `${i18n?.t('report_share_social_tagline') ?? 'Objeção! Meu cliente trabalhou.'} ${date}`,
-    `Índice ${metrics.currentIndex} · Foco ${formatPercentage(kpis.focusRate)} · ${metrics.tabSwitches} trocas`,
+    `Índice ${enriched.currentIndex} · Foco ${formatPercentage(kpis.focusRate)} · ${enriched.tabSwitches} trocas`,
     topProductive
       ? `Campeão: ${formatDomainLabel(topProductive.domain)} (${topProductive.duration})`
       : null,
@@ -823,7 +831,8 @@ function buildSocialPostText(metrics: DailyMetrics): string {
 }
 
 function buildNarrativeSocialText(metrics: DailyMetrics): string {
-  const base = buildNarrativeShareText(metrics);
+  const enriched = enrichMetricsWithVscode(metrics);
+  const base = buildNarrativeShareText(enriched);
   const hashtags = i18n?.t('report_share_hashtags') ?? '#SaulGoodman #AntiProcrastinacao';
   return `${base}\n${EXTENSION_SITE_URL}\n${hashtags}`;
 }
@@ -1151,8 +1160,9 @@ async function generateNarrative(): Promise<void> {
 }
 
 function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
-  const kpis = calculateKpis(metrics);
-  const timelineSnippets = metrics.timeline
+  const enriched = enrichMetricsWithVscode(metrics);
+  const kpis = calculateKpis(enriched);
+  const timelineSnippets = enriched.timeline
     .sort((a, b) => a.startTime - b.startTime)
     .slice(0, 10)
     .map((entry) => ({
@@ -1446,19 +1456,55 @@ function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void 
   });
 }
 
-function getDomainsWithVscode(metrics: DailyMetrics): Record<string, DomainStats> {
+interface EnrichedMetrics extends DailyMetrics {
+  domains: Record<string, DomainStats>;
+  timeline: TimelineEntry[];
+  productiveMs: number;
+}
+
+function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
   const vscodeMs = metrics.vscodeActiveMs ?? 0;
-  if (vscodeMs <= 0) {
-    return metrics.domains;
-  }
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
-  return {
-    ...metrics.domains,
-    '__vscode:ide': {
+
+  const domains = { ...metrics.domains };
+  if (vscodeMs > 0) {
+    domains['__vscode:ide'] = {
       domain: label,
       category: 'productive',
-      milliseconds: vscodeMs
+      milliseconds: (domains['__vscode:ide']?.milliseconds ?? 0) + vscodeMs
+    };
+  }
+
+  const timeline = mergeTimelines(metrics, domains);
+
+  const hourly = metrics.hourly.map((bucket) => ({ ...bucket }));
+  if (metrics.vscodeTimeline?.length) {
+    for (const entry of metrics.vscodeTimeline) {
+      const duration = typeof entry.durationMs === 'number'
+        ? entry.durationMs
+        : Math.max(0, (entry.endTime ?? 0) - (entry.startTime ?? 0));
+      if (!Number.isFinite(duration) || duration <= 0) {
+        continue;
+      }
+      const startTime =
+        typeof entry.startTime === 'number'
+          ? entry.startTime
+          : Math.max(0, (entry.endTime ?? Date.now()) - duration);
+      for (const segment of splitDurationByHour(startTime, duration)) {
+        const bucket = hourly[segment.hour];
+        if (bucket) {
+          bucket.productiveMs += segment.milliseconds;
+        }
+      }
     }
+  }
+
+  return {
+    ...metrics,
+    domains,
+    timeline,
+    hourly,
+    productiveMs: metrics.productiveMs + vscodeMs
   };
 }
 

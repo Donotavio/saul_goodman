@@ -453,7 +453,7 @@
     "message": "Testing connection..."
   },
   "options_vscode_test_success": {
-    "message": "SaulDaemon responded at {origin}."
+    "message": "SaulDaemon responded at {origin}. Sessions today: {sessions}. Active minutes: {minutes}."
   },
   "options_vscode_test_error": {
     "message": "Failed to reach SaulDaemon ({reason})."
@@ -466,6 +466,9 @@
   },
   "options_vscode_test_invalid_url": {
     "message": "Invalid URL. Try something like http://127.0.0.1:3123."
+  },
+  "options_vscode_test_health_error": {
+    "message": "Failed to reach {origin}/health ({reason})."
   },
   "options_vscode_test_unauthorized": {
     "message": "Pairing key mismatch. Use the same key in Chrome and VS Code."
@@ -840,7 +843,7 @@
     "message": "Longest silence"
   },
   "report_story_idle_body": {
-    "message": "Between {range} the browser stayed idle for {duration}."
+    "message": "Between {range} the browser stayed idle for {duration}. Total idle today: {total}."
   },
   "report_story_empty": {
     "message": "Not enough stories for today."

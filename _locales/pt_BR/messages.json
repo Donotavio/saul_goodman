@@ -453,7 +453,7 @@
     "message": "Testando conexão..."
   },
   "options_vscode_test_success": {
-    "message": "SaulDaemon respondeu em {origin}."
+    "message": "SaulDaemon respondeu em {origin}. Sessões hoje: {sessions}. Minutos ativos: {minutes}."
   },
   "options_vscode_test_error": {
     "message": "Falha ao conectar ao SaulDaemon ({reason})."
@@ -466,6 +466,9 @@
   },
   "options_vscode_test_invalid_url": {
     "message": "URL inválida. Use algo como http://127.0.0.1:3123."
+  },
+  "options_vscode_test_health_error": {
+    "message": "Falha ao acessar {origin}/health ({reason})."
   },
   "options_vscode_test_unauthorized": {
     "message": "Chave diferente. Use a mesma key no Chrome e no VS Code."
@@ -840,7 +843,7 @@
     "message": "Maior silêncio"
   },
   "report_story_idle_body": {
-    "message": "Entre {range} o navegador ficou parado por {duration}."
+    "message": "Entre {range} o navegador ficou parado por {duration}. Total ocioso no dia: {total}."
   },
   "report_story_empty": {
     "message": "Não há histórias suficientes para hoje."
