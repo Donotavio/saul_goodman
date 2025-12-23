@@ -31,6 +31,9 @@ jobs:
           LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
         run: npm run content:engine
 
+      - name: Rebuild blog index
+        run: npm run blog:index
+
       - name: Check for generated content
         id: changes
         run: |
