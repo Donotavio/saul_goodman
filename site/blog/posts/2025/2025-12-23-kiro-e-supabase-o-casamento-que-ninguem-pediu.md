@@ -1,5 +1,6 @@
 ---
 title: "Kiro e Supabase: O Casamento Que Ninguém Pediu"
+tone: "nao-corte"
 title_en: "Kiro and Supabase: The Marriage Nobody Asked For"
 title_es: "Kiro y Supabase: El Matrimonio Que Nadie Pidió"
 date: 2025-12-23

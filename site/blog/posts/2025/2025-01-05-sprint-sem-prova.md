@@ -1,5 +1,6 @@
 ---
 title: "Sprint sem prova: o júri do foco condena o multitasking"
+tone: "nao-corte"
 title_en: "Sprint Without Evidence: The Focus Jury Convicts Multitasking"
 title_es: "Sprint sin pruebas: el jurado del foco condena el multitasking"
 date: 2025-01-05

@@ -14,6 +14,7 @@
         "humor"
       ],
       "excerpt": "Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.",
+      "tone": "incredulo",
       "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
       "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
       "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
@@ -36,6 +37,7 @@
         "sarcasmo"
       ],
       "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
+      "tone": "nao-corte",
       "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
       "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
       "source_title": "The new Supabase power for Kiro",
@@ -58,6 +60,7 @@
         "sarcasmo"
       ],
       "excerpt": "Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...",
+      "tone": "nao-corte",
       "title_en": "Mutants in Code: The Revolution You Didn't Ask For",
       "title_es": "Mutantes en el Código: La Revolución que No Pediste",
       "source_title": "Mutation Testing com Stryker",
@@ -65,6 +68,28 @@
       "source_published_at": "Tue, 23 Dec 2025 16:15:41 +0000",
       "excerpt_en": "Discover how Stryker turns your code into a battlefield. And you thought debugging was complicated...",
       "excerpt_es": "Descubre cómo Stryker transforma tu código en un campo de batalla. Y tú pensando que depurar era complicado..."
+    },
+    {
+      "title": "O Fim da Procrastinação? Conheça o Yapi, o Salvador da Pátria Dev!",
+      "url": "./post/?post=2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
+      "markdown": "2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "yapi",
+        "produtividade",
+        "dev",
+        "procrastinação",
+        "sarcasmo"
+      ],
+      "excerpt": "Yapi promete revolucionar sua produtividade, mas será que isso é mesmo possível no mundo da procrastinação incessante?",
+      "title_en": "The End of Procrastination? Meet Yapi, the Dev Savior!",
+      "title_es": "¿El Fin de la Procrastinación? Conoce Yapi, el Salvador de la Patria Dev!",
+      "source_title": "<![CDATA[Show HN: Yapi – FOSS terminal API client for power users]]>",
+      "source_url": "https://yapi.run/blog/what-is-yapi",
+      "source_published_at": "Mon, 22 Dec 2025 08:49:47 +0000",
+      "excerpt_en": "Yapi promises to revolutionize your productivity, but is that really possible in a world of endless procrastination?",
+      "excerpt_es": "Yapi promete revolucionar tu productividad, pero ¿es eso realmente posible en un mundo de procrastinación incesante?"
     },
     {
       "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
@@ -80,6 +105,7 @@
         "Terraform"
       ],
       "excerpt": "Aprenda a procrastinar como um verdadeiro artista enquanto acha que está \"solucionando\" tudo com Terraform.",
+      "tone": "incredulo",
       "source_title": "Cómo solucionarlo con Terraform?",
       "source_url": "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb",
       "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
@@ -98,6 +124,7 @@
         "produtividade"
       ],
       "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
+      "tone": "like",
       "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
       "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
       "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
@@ -105,28 +132,6 @@
       "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
       "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
       "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
-    },
-    {
-      "title": "O Fim da Procrastinação? Conheça o Yapi, o Salvador da Pátria Dev!",
-      "url": "./post/?post=2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
-      "markdown": "2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "yapi",
-        "produtividade",
-        "dev",
-        "procrastinação",
-        "sarcasmo"
-      ],
-      "excerpt": "Yapi promete revolucionar sua produtividade, mas será que isso é mesmo possível no mundo da procrastinação incessante?",
-      "source_title": "<![CDATA[Show HN: Yapi – FOSS terminal API client for power users]]>",
-      "source_url": "https://yapi.run/blog/what-is-yapi",
-      "source_published_at": "Mon, 22 Dec 2025 08:49:47 +0000",
-      "title_en": "The End of Procrastination? Meet Yapi, the Dev Savior!",
-      "title_es": "¿El Fin de la Procrastinación? Conoce Yapi, el Salvador de la Patria Dev!",
-      "excerpt_en": "Yapi promises to revolutionize your productivity, but is that really possible in a world of endless procrastination?",
-      "excerpt_es": "Yapi promete revolucionar tu productividad, pero ¿es eso realmente posible en un mundo de procrastinación incesante?"
     },
     {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
@@ -141,6 +146,7 @@
         "vscode"
       ],
       "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
+      "tone": "nao-corte",
       "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
       "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
       "source_title": "Pesquisa sobre context switching em times remotos",

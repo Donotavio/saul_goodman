@@ -204,14 +204,74 @@ const DATE_LOCALE = {
   es: 'es-ES',
 };
 
-const CATEGORY_IMAGES = {
-  'procrastinacao': '/assets/saul_incredulo.png',
-  'foco-atencao': '/assets/saul_like.png',
-  'dev-performance': '/assets/saul_nao_corte.png',
-  'trabalho-remoto': '/assets/logotipo_saul_goodman.png',
+const BLOG_LOGO = '/assets/logotipo_saul_goodman.png';
+const TONE_ARTWORK = {
+  'incredulo': {
+    src: '/assets/saul_incredulo.png',
+    alt: 'Saul Goodman incrédulo',
+  },
+  'like': {
+    src: '/assets/saul_like.png',
+    alt: 'Saul Goodman aprovando',
+  },
+  'nao-corte': {
+    src: '/assets/saul_nao_corte.png',
+    alt: 'Saul Goodman julgando',
+  },
 };
 
-const BLOG_LOGO = '/assets/logotipo_saul_goodman.png';
+function normalizeTone(value) {
+  if (!value || typeof value !== 'string') return '';
+  return value.toLowerCase().trim();
+}
+
+function inferTone(meta = {}) {
+  const explicit = normalizeTone(meta.tone || meta.mood);
+  if (explicit && TONE_ARTWORK[explicit]) {
+    return explicit;
+  }
+  const tags = Array.isArray(meta.tags) ? meta.tags.map((tag) => normalizeTone(tag)) : [];
+  if (tags.length) {
+    const foldedTags = tags.map((tag) =>
+      tag.normalize ? tag.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : tag
+    );
+    for (const tone of Object.keys(TONE_TAG_HINTS)) {
+      const hints = TONE_TAG_HINTS[tone];
+      if (hints.some((hint) => foldedTags.includes(hint))) {
+        return tone;
+      }
+    }
+  }
+  const haystack = `${meta.title || ''} ${meta.excerpt || ''}`.toLowerCase();
+  for (const tone of Object.keys(TONE_TEXT_HINTS)) {
+    const hints = TONE_TEXT_HINTS[tone];
+    if (hints.some((hint) => haystack.includes(hint))) {
+      return tone;
+    }
+  }
+  if (meta.category === 'trabalho-remoto') return 'nao-corte';
+  if (meta.category === 'foco-atencao') return 'like';
+  if (meta.category === 'dev-performance') return 'like';
+  return 'incredulo';
+}
+
+function getToneArtwork(meta = {}) {
+  const tone = inferTone(meta);
+  const artwork = TONE_ARTWORK[tone] || { src: BLOG_LOGO, alt: 'Saul Goodman' };
+  return { ...artwork, tone };
+}
+
+const TONE_TAG_HINTS = {
+  'nao-corte': ['trabalho-remoto', 'remote', 'remoto', 'burnout', 'alerta', 'culpa', 'pressao', 'pressão'],
+  'like': ['produtividade', 'foco', 'performance', 'qualidade', 'devops', 'inspiração', 'dica', 'sucesso'],
+  'incredulo': ['sarcasmo', 'humor', 'vilao', 'vilão', 'procrastinacao', 'procrastinação', 'caos'],
+};
+
+const TONE_TEXT_HINTS = {
+  'nao-corte': ['trabalho remoto', 'home office', 'remoto', 'culpa', 'julgamento', 'pressão'],
+  'like': ['foco', 'produtivo', 'ganhar', 'melhorar', 'dica', 'workflow'],
+  'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
+};
 
 const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
 const defaultLanguage = 'pt';
@@ -248,12 +308,6 @@ function stripMetadataSection(markdown = '') {
     }
   });
   return result.trim();
-}
-
-function getCategoryArtwork(category) {
-  const src = CATEGORY_IMAGES[category] || BLOG_LOGO;
-  const alt = `${getCategoryLabel(category)} — Saul Goodman`;
-  return { src, alt };
 }
 
 function extractLocalizedBodies(body) {
@@ -555,7 +609,7 @@ function renderCards(posts, container) {
       const card = document.createElement('article');
       card.className = 'blog-card';
 
-      const artwork = getCategoryArtwork(post.category);
+      const artwork = getToneArtwork(post);
       const thumb = document.createElement('div');
       thumb.className = 'blog-card-thumb';
       const thumbImg = document.createElement('img');
@@ -731,8 +785,8 @@ function sanitizePostPath(value) {
   return normalized;
 }
 
-function updatePostMedia(category) {
-  const artwork = getCategoryArtwork(category);
+function updatePostMedia(meta) {
+  const artwork = getToneArtwork(meta);
   const heroImage = document.querySelector('.post-category-image');
   if (heroImage) {
     heroImage.src = artwork.src;
@@ -743,7 +797,7 @@ function updatePostMedia(category) {
     heroLogo.src = BLOG_LOGO;
     heroLogo.alt = 'Saul Goodman logo';
   }
-  updateMediaCopy(category);
+  updateMediaCopy(meta.category);
 }
 
 async function renderPost() {
@@ -787,7 +841,7 @@ async function renderPost() {
       breadcrumbCurrent.removeAttribute('data-i18n');
     }
     if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
-    updatePostMedia(data.category);
+    updatePostMedia(data);
 
     const localizedBodies = extractLocalizedBodies(body);
     const selectedBody = localizedBodies[currentLanguage] || localizedBodies.pt || body;

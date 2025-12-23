@@ -1,5 +1,6 @@
 ---
 title: "Mutantes no Código: A Revolução que Você Não Pediu"
+tone: "nao-corte"
 title_en: "Mutants in Code: The Revolution You Didn't Ask For"
 title_es: "Mutantes en el Código: La Revolución que No Pediste"
 date: 2025-12-23

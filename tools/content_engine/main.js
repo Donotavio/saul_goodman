@@ -52,6 +52,17 @@ const FALLBACK_CATEGORY_RULES = [
   { category: 'trabalho-remoto', regex: /(remote work|home office|async|distributed|trabalho remoto)/i },
   { category: 'dev-performance', regex: /(dev|developer|code|engineering|sprint|deploy|pull request|commit)/i },
 ];
+const TONE_OPTIONS = ['incredulo', 'like', 'nao-corte'];
+const TONE_TAG_HINTS = {
+  'incredulo': ['sarcasmo', 'humor', 'vilao', 'vilão', 'procrastinacao', 'procrastinação'],
+  'like': ['produtividade', 'foco', 'performance', 'qualidade', 'devops', 'inspiração', 'dica'],
+  'nao-corte': ['trabalho-remoto', 'remote', 'remoto', 'alerta', 'culpa', 'pressao', 'pressão'],
+};
+const TONE_TEXT_HINTS = {
+  'nao-corte': ['trabalho remoto', 'home office', 'remoto', 'culpa', 'julgamento', 'pressão'],
+  'like': ['produtivo', 'foco', 'ganho', 'melhorar', 'dica', 'workflow'],
+  'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
+};
 const MIN_SCORE = 1;
 const DEFAULT_WINDOW_DAYS = 14;
 const RETRIES = 2;
@@ -133,6 +144,37 @@ function inferCategory(item, categoryScores) {
     }
   }
   return 'dev-performance';
+}
+
+function normalizeTone(value) {
+  if (!value || typeof value !== 'string') return '';
+  const normalized = value.toLowerCase().trim();
+  return TONE_OPTIONS.includes(normalized) ? normalized : '';
+}
+
+function detectTone(metadata, candidateCategory = '') {
+  const explicit = normalizeTone(metadata.tone || metadata.mood);
+  if (explicit) return explicit;
+  const tags = Array.isArray(metadata.tags)
+    ? metadata.tags.map((tag) => tag.toLowerCase())
+    : [];
+  for (const tone of TONE_OPTIONS) {
+    const hints = TONE_TAG_HINTS[tone] || [];
+    if (tags.some((tag) => hints.includes(tag))) {
+      return tone;
+    }
+  }
+  const haystack = `${metadata.title || ''} ${metadata.excerpt || ''}`.toLowerCase();
+  for (const tone of TONE_OPTIONS) {
+    const hints = TONE_TEXT_HINTS[tone] || [];
+    if (hints.some((hint) => haystack.includes(hint))) {
+      return tone;
+    }
+  }
+  if (candidateCategory === 'trabalho-remoto') return 'nao-corte';
+  if (candidateCategory === 'foco-atencao') return 'like';
+  if (candidateCategory === 'dev-performance') return 'like';
+  return 'incredulo';
 }
 
 function decodeHtml(value) {
@@ -260,6 +302,7 @@ Estrutura obrigatória em Markdown com frontmatter YAML:
 title: <título provocativo>
 date: ${new Date().toISOString().slice(0, 10)}
 category: ${category}
+tone: escolha entre incredulo | like | nao-corte para refletir o tom visual
 tags: [3-5 tags curtas]
 source_title: "${candidate.title}"
 source_url: "${candidate.link}"
@@ -391,6 +434,7 @@ function buildFrontmatter(metadata) {
     'title_es',
     'date',
     'category',
+    'tone',
     'tags',
     'source_title',
     'source_url',
@@ -550,6 +594,7 @@ async function updateIndex(metadata, markdownPath, body = '') {
   if (metadata.title_es) entry.title_es = metadata.title_es;
   if (metadata.excerpt_en) entry.excerpt_en = metadata.excerpt_en;
   if (metadata.excerpt_es) entry.excerpt_es = metadata.excerpt_es;
+  if (metadata.tone) entry.tone = metadata.tone;
 
   index.posts = index.posts.filter((p) => p.markdown !== markdownPath);
   index.posts.push(entry);
@@ -612,6 +657,7 @@ async function run() {
   if (best.categoryHint && metadata.category !== best.categoryHint) {
     metadata.category = best.categoryHint;
   }
+  metadata.tone = detectTone(metadata, metadata.category || best.categoryHint);
   const translations = await generateTranslations(metadata, body);
   translations.forEach((entry) => {
     if (entry.title) metadata[`title_${entry.lang}`] = entry.title;
