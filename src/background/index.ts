@@ -50,6 +50,7 @@ interface TrackingState {
   browserFocused: boolean;
   currentTabAudible: boolean;
   currentTabGroupId: number | null;
+  pendingSwitchFromDomain: string | null;
 }
 
 interface VscodeSummaryResponse {
@@ -72,7 +73,8 @@ const trackingState: TrackingState = {
   isIdle: false,
   browserFocused: true,
   currentTabAudible: false,
-  currentTabGroupId: null
+  currentTabGroupId: null,
+  pendingSwitchFromDomain: null
 };
 
 let settingsCache: ExtensionSettings | null = null;
@@ -163,6 +165,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
 
   if (!focused) {
     void (async () => {
+      trackingState.pendingSwitchFromDomain = trackingState.currentDomain;
       await finalizeCurrentDomainSlice();
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
@@ -176,6 +179,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
   }
 
   trackingState.browserFocused = true;
+  trackingState.pendingSwitchFromDomain = null;
   trackingState.lastActivity = now;
   trackingState.lastTimestamp = now;
 });
@@ -369,6 +373,11 @@ async function accumulateSlice(): Promise<void> {
     const overlapMs = calculateVscodeOverlap(metrics.vscodeTimeline ?? [], sliceStart, now);
     const inactivePortion = Math.max(0, elapsed - overlapMs);
 
+    if (overlapMs > 0 && trackingState.pendingSwitchFromDomain) {
+      await recordChromeToVscodeSwitch(trackingState.pendingSwitchFromDomain, sliceStart);
+      trackingState.pendingSwitchFromDomain = null;
+    }
+
     if (inactivePortion > 0) {
       metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + inactivePortion;
       recordTimelineSegment(metrics, {
@@ -482,7 +491,8 @@ async function finalizeCurrentDomainSlice(): Promise<void> {
 async function incrementTabSwitches(
   fromDomain: string,
   toDomain: string,
-  timestamp: number
+  timestamp: number,
+  overrideToCategory?: DomainCategory
 ): Promise<void> {
   const metrics = await getMetricsCache();
   const settings = await getSettingsCache();
@@ -496,7 +506,7 @@ async function incrementTabSwitches(
   }
 
   const fromCategory = classifyDomain(fromDomain, settings);
-  const toCategory = classifyDomain(toDomain, settings);
+  const toCategory = overrideToCategory ?? classifyDomain(toDomain, settings);
   recordTabSwitchCounts(
     metrics.tabSwitchBreakdown,
     metrics.tabSwitchHourly ?? [],
@@ -506,6 +516,10 @@ async function incrementTabSwitches(
   );
 
   await persistMetrics();
+}
+
+async function recordChromeToVscodeSwitch(previousDomain: string, timestamp: number): Promise<void> {
+  await incrementTabSwitches(previousDomain, '__vscode:ide', timestamp, 'productive');
 }
 
 async function persistMetrics(): Promise<void> {
