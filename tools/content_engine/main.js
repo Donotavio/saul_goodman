@@ -383,10 +383,9 @@ function parseJsonBlock(text) {
   try {
     return JSON.parse(cleaned);
   } catch (error) {
-    const start = cleaned.indexOf('{');
-    const end = cleaned.lastIndexOf('}');
-    if (start === -1 || end === -1 || end <= start) throw new Error('Resposta JSON inválida');
-    return JSON.parse(cleaned.slice(start, end + 1));
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('Resposta JSON inválida');
+    return JSON.parse(match[0]);
   }
 }
 
@@ -401,15 +400,18 @@ ${body}`;
   const response = await callLLM(prompt, {
     systemPrompt:
       'Você é um tradutor profissional que converte textos em diferentes idiomas mantendo sarcasmo e clareza. Responda apenas no idioma solicitado.',
-    maxTokens: 1800,
+    maxTokens: 3200,
   });
   const json = parseJsonBlock(response);
-  if (!json.body || !json.title) throw new Error('Tradução sem body ou title');
+  const title = (json.title || json.headline || json.name || json.titulo || '').trim();
+  const excerpt = (json.excerpt || json.summary || json.description || '').trim();
+  const articleBody = (json.body || json.content || json.article || json.text || json.story || '').trim();
+  if (!title || !articleBody) throw new Error('Tradução sem body ou title');
   return {
     lang: target.code,
-    title: json.title.trim(),
-    excerpt: (json.excerpt || '').trim(),
-    body: json.body.trim(),
+    title,
+    excerpt,
+    body: articleBody,
   };
 }
 
