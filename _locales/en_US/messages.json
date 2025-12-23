@@ -467,6 +467,9 @@
   "options_vscode_test_invalid_url": {
     "message": "Invalid URL. Try something like http://127.0.0.1:3123."
   },
+  "options_vscode_test_unauthorized": {
+    "message": "Pairing key mismatch. Use the same key in Chrome and VS Code."
+  },
   "label_vscode": {
     "message": "VS Code (IDE)"
   },

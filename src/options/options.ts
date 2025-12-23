@@ -166,6 +166,14 @@ function setVscodeTestStatus(
   }
 }
 
+function getTodayKey(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 async function testVscodeConnection(): Promise<void> {
   if (!testVscodeConnectionButton) {
     return;
@@ -181,10 +189,11 @@ async function testVscodeConnection(): Promise<void> {
   }
 
   const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || 'http://127.0.0.1:3123').trim();
+  const pairingKey = vscodePairingKeyEl?.value.trim() ?? '';
 
   let healthUrl: URL;
   try {
-    healthUrl = new URL('/health', baseUrl);
+    healthUrl = new URL('/v1/tracking/vscode/summary', baseUrl);
   } catch {
     setVscodeTestStatus(
       'options_vscode_test_invalid_url',
@@ -203,13 +212,43 @@ async function testVscodeConnection(): Promise<void> {
   const timeout = window.setTimeout(() => controller.abort(), 4000);
 
   try {
+    if (!pairingKey) {
+      setVscodeTestStatus(
+        'options_vscode_test_missing_key',
+        'Preencha a chave de pareamento antes de testar.',
+        'error'
+      );
+      return;
+    }
+
+    healthUrl.searchParams.set('date', getTodayKey());
+    healthUrl.searchParams.set('key', pairingKey);
+
     const response = await fetch(healthUrl.toString(), { signal: controller.signal });
     if (response.ok) {
+      const summary = (await response.json()) as {
+        totalActiveMs?: number;
+        sessions?: number;
+        switches?: number;
+      };
       setVscodeTestStatus(
         'options_vscode_test_success',
         `SaulDaemon respondeu em ${healthUrl.origin}.`,
         'success',
-        { origin: healthUrl.origin }
+        {
+          origin: healthUrl.origin,
+          sessions: summary?.sessions ?? 0,
+          minutes: Math.round((summary?.totalActiveMs ?? 0) / 60000)
+        }
+      );
+      return;
+    }
+
+    if (response.status === 401) {
+      setVscodeTestStatus(
+        'options_vscode_test_unauthorized',
+        'Chave incorreta. Ajuste para a mesma chave usada no VS Code.',
+        'error'
       );
       return;
     }
@@ -241,6 +280,9 @@ async function testVscodeConnection(): Promise<void> {
     window.clearTimeout(timeout);
     testVscodeConnectionButton.disabled = false;
     testVscodeConnectionButton.removeAttribute('aria-busy');
+    if (vscodeTestStatusEl && !vscodeTestStatusEl.classList.contains('visible')) {
+      vscodeTestStatusEl.classList.add('visible');
+    }
   }
 }
 
