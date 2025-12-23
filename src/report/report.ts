@@ -270,23 +270,30 @@ function renderHourlyChart(metrics: DailyMetrics): void {
   const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
   const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
   const inactiveLabel = i18n?.t('popup_summary_inactive_label') ?? 'Inactive';
+  const neutralLabel = i18n?.t('report_category_neutral') ?? 'Neutral';
+  const toMinutes = (value: number) => value / 60000;
   const data = {
     labels,
     datasets: [
       {
         label: productiveLabel,
-        data: metrics.hourly.map((bucket) => Math.round(bucket.productiveMs / 60000)),
+        data: metrics.hourly.map((bucket) => toMinutes(bucket.productiveMs)),
         backgroundColor: '#0a7e07'
       },
       {
         label: procrastinationLabel,
-        data: metrics.hourly.map((bucket) => Math.round(bucket.procrastinationMs / 60000)),
+        data: metrics.hourly.map((bucket) => toMinutes(bucket.procrastinationMs)),
         backgroundColor: '#d00000'
       },
       {
         label: inactiveLabel,
-        data: metrics.hourly.map((bucket) => Math.round(bucket.inactiveMs / 60000)),
+        data: metrics.hourly.map((bucket) => toMinutes(bucket.inactiveMs)),
         backgroundColor: '#c1c1c1'
+      },
+      {
+        label: neutralLabel,
+        data: metrics.hourly.map((bucket) => toMinutes(bucket.neutralMs)),
+        backgroundColor: '#f4c95d'
       }
     ]
   };
@@ -440,6 +447,9 @@ function renderStoryList(metrics: DailyMetrics, kpis: CalculatedKpis): void {
     : null;
   const topProcrastination = kpis.topProcrastination;
   const longestIdle = findLongestSegment(metrics.timeline, 'inactive');
+  const totalIdleMs = metrics.timeline
+    .filter((entry) => entry.category === 'inactive')
+    .reduce((sum, entry) => sum + entry.durationMs, 0);
 
   storyListEl.innerHTML = '';
 
@@ -474,11 +484,12 @@ function renderStoryList(metrics: DailyMetrics, kpis: CalculatedKpis): void {
           body:
             i18n?.t('report_story_idle_body', {
               range: formatTimeRange(longestIdle.startTime, longestIdle.endTime, locale),
-              duration: formatDuration(longestIdle.durationMs)
+              duration: formatDuration(longestIdle.durationMs),
+              total: formatDuration(totalIdleMs)
             }) ??
             `Between ${formatTimeRange(longestIdle.startTime, longestIdle.endTime, locale)} the browser stayed idle for ${formatDuration(
               longestIdle.durationMs
-            )}.`
+            )}. Total idle in the day: ${formatDuration(totalIdleMs)}.`
         }
       : null
   ].filter(Boolean) as Array<{ title: string; body: string }>;
