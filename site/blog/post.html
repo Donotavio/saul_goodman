@@ -75,8 +75,19 @@
         <h1 data-i18n="postLoadingTitle">Carregando artigo...</h1>
         <div class="blog-meta">...</div>
       </header>
-      <article class="post-body" data-i18n="postLoadingBody">Carregando...</article>
-      <div class="metadata-footer"></div>
+      <section class="post-layout">
+        <article class="post-body" data-i18n="postLoadingBody">Carregando...</article>
+        <aside class="post-sidebar">
+          <div class="post-share">
+            <p class="share-title" data-i18n="shareTitle">Compartilhar</p>
+            <button class="share-btn" data-share="twitter" type="button" data-i18n="shareTwitter">Twitter</button>
+            <button class="share-btn" data-share="linkedin" type="button" data-i18n="shareLinkedin">LinkedIn</button>
+            <button class="share-btn" data-share="copy" type="button" data-i18n="shareCopy">Copiar link</button>
+            <span class="share-feedback" hidden data-i18n="shareCopied">Link copiado!</span>
+          </div>
+          <div class="metadata-panel"></div>
+        </aside>
+      </section>
     </main>
 
     <script type="module" src="./blog.js"></script>

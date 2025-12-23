@@ -63,6 +63,28 @@
       "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
     },
     {
+      "title": "Terraform: O Módulo que Faz Tudo, Menos Café",
+      "url": "./post/?post=2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
+      "markdown": "2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "terraform",
+        "módulos",
+        "infraestrutura",
+        "devops",
+        "produtividade"
+      ],
+      "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
+      "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
+      "source_url": "https://dev.to/jeeva_5c84a254e90842940dd/terraform-day-15-modules-writing-reusable-scalable-infrastructure-code-jgc",
+      "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
+      "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
+      "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
+      "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
+      "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
       "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
       "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
