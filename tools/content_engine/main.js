@@ -13,6 +13,45 @@ const SOURCES_PATH = path.join(__dirname, 'sources.json');
 const STATE_PATH = path.join(__dirname, 'state', 'posted.json');
 
 const CATEGORY_OPTIONS = ['procrastinacao', 'foco-atencao', 'dev-performance', 'trabalho-remoto'];
+const CATEGORY_KEYWORD_HINTS = {
+  'procrastinacao': 'procrastinacao',
+  'procrastinação': 'procrastinacao',
+  'procrastinar': 'procrastinacao',
+  'multitarefa': 'procrastinacao',
+  'multitasking': 'procrastinacao',
+  'distração': 'procrastinacao',
+  'distraction': 'procrastinacao',
+  'dopamina': 'procrastinacao',
+  'foco': 'foco-atencao',
+  'focada': 'foco-atencao',
+  'atenção': 'foco-atencao',
+  'atencao': 'foco-atencao',
+  'concentracao': 'foco-atencao',
+  'concentração': 'foco-atencao',
+  'mindfulness': 'foco-atencao',
+  'produtividade': 'dev-performance',
+  'produtivo': 'dev-performance',
+  'desenvolvimento': 'dev-performance',
+  'dev': 'dev-performance',
+  'engenharia': 'dev-performance',
+  'engenharia de software': 'dev-performance',
+  'tecnologia': 'dev-performance',
+  'ux': 'dev-performance',
+  'programação': 'dev-performance',
+  'programacao': 'dev-performance',
+  'sprint': 'dev-performance',
+  'trabalho remoto': 'trabalho-remoto',
+  'remote work': 'trabalho-remoto',
+  'home office': 'trabalho-remoto',
+  'async': 'trabalho-remoto',
+  'distributed': 'trabalho-remoto',
+};
+const FALLBACK_CATEGORY_RULES = [
+  { category: 'procrastinacao', regex: /(procrastin|multitask|distraction|dopamine)/i },
+  { category: 'foco-atencao', regex: /(focus|aten[cç][aã]o|concentr|mindfulness)/i },
+  { category: 'trabalho-remoto', regex: /(remote work|home office|async|distributed|trabalho remoto)/i },
+  { category: 'dev-performance', regex: /(dev|developer|code|engineering|sprint|deploy|pull request|commit)/i },
+];
 const MIN_SCORE = 1;
 const DEFAULT_WINDOW_DAYS = 14;
 const RETRIES = 2;
@@ -57,12 +96,43 @@ function withinWindow(dateStr, days) {
   return date.getTime() >= cutoff;
 }
 
+function createCategoryScoreboard() {
+  const board = {};
+  CATEGORY_OPTIONS.forEach((category) => {
+    board[category] = 0;
+  });
+  return board;
+}
+
 function scoreItem(item, keywords) {
   const haystack = `${item.title || ''} ${item.summary || ''}`.toLowerCase();
-  return keywords.reduce((score, keyword) => {
+  const categoryScores = createCategoryScoreboard();
+  const total = keywords.reduce((score, keyword) => {
     const normalized = keyword.toLowerCase();
-    return haystack.includes(normalized) ? score + 1 : score;
+    if (haystack.includes(normalized)) {
+      const hint = CATEGORY_KEYWORD_HINTS[normalized];
+      if (hint && categoryScores[hint] !== undefined) {
+        categoryScores[hint] += 1;
+      }
+      return score + 1;
+    }
+    return score;
   }, 0);
+  return { total, categoryScores };
+}
+
+function inferCategory(item, categoryScores) {
+  const entries = Object.entries(categoryScores || {}).sort((a, b) => b[1] - a[1]);
+  if (entries.length && entries[0][1] > 0) {
+    return entries[0][0];
+  }
+  const text = `${item.title || ''} ${item.summary || ''}`.toLowerCase();
+  for (const rule of FALLBACK_CATEGORY_RULES) {
+    if (rule.regex.test(text)) {
+      return rule.category;
+    }
+  }
+  return 'dev-performance';
 }
 
 function decodeHtml(value) {
@@ -158,7 +228,8 @@ async function fetchCandidates(config, posted) {
         if (!published || !withinWindow(published, windowDays)) continue;
         if (alreadyPosted(item.link, posted)) continue;
 
-        const score = scoreItem(item, config.keywords);
+        const { total: score, categoryScores } = scoreItem(item, config.keywords);
+        const categoryHint = inferCategory(item, categoryScores);
         candidates.push({
           feed: feed.name,
           link: item.link,
@@ -166,6 +237,7 @@ async function fetchCandidates(config, posted) {
           summary: item.summary || '',
           published,
           score,
+          categoryHint,
         });
       }
     } catch (error) {
@@ -177,15 +249,17 @@ async function fetchCandidates(config, posted) {
 }
 
 function buildPrompt(candidate) {
+  const category = candidate.categoryHint || 'dev-performance';
   return `Você é o Saul Goodman escrevendo sobre foco, procrastinação e performance dev.
 Fonte selecionada: ${candidate.title} (${candidate.link}) publicada em ${candidate.published}.
 Resumo do item: ${candidate.summary?.slice(0, 400) || 'sem resumo'}.
 Resuma e reescreva em PT-BR com sarcasmo elegante, sem coach e sem propaganda.
+Categoria obrigatória no frontmatter: ${category}.
 Estrutura obrigatória em Markdown com frontmatter YAML:
 ---
 title: <título provocativo>
 date: ${new Date().toISOString().slice(0, 10)}
-category: escolha entre procrastinacao | foco-atencao | dev-performance | trabalho-remoto
+category: ${category}
 tags: [3-5 tags curtas]
 source_title: "${candidate.title}"
 source_url: "${candidate.link}"
@@ -530,11 +604,14 @@ async function run() {
     return;
   }
 
-  console.log(`Selecionado: ${best.title} (score ${best.score})`);
+  console.log(`Selecionado: ${best.title} (score ${best.score}) [categoria: ${best.categoryHint}]`);
 
   const prompt = buildPrompt(best);
   const generated = await callLLM(prompt);
   const { metadata, body } = validateGenerated(generated);
+  if (best.categoryHint && metadata.category !== best.categoryHint) {
+    metadata.category = best.categoryHint;
+  }
   const translations = await generateTranslations(metadata, body);
   translations.forEach((entry) => {
     if (entry.title) metadata[`title_${entry.lang}`] = entry.title;
