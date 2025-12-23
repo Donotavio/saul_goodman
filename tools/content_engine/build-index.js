@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildPostUrl, writePostPage, writeRssFeed } from './post-page.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -97,6 +98,22 @@ function ensureExcerpt(metadata, body) {
   return clean.split(' ').slice(0, 40).join(' ');
 }
 
+function getSortTime(value) {
+  if (!value) return 0;
+  const trimmed = String(value).trim();
+  if (!trimmed) return 0;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const date = new Date(`${trimmed}T00:00:00Z`);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  }
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
+function getPostSortTime(post) {
+  return getSortTime(post.source_published_at || post.date);
+}
+
 async function buildIndex() {
   const markdownFiles = await readDirRecursive(POSTS_DIR);
   if (!markdownFiles.length) {
@@ -113,27 +130,32 @@ async function buildIndex() {
     }
 
     const relativePath = normalizeRelative(file);
+    const excerpt = ensureExcerpt(data, body);
+    const metadata = { ...data, excerpt };
     const entry = {
-      title: data.title,
-      url: `./post/?post=${relativePath}`,
+      title: metadata.title,
+      url: buildPostUrl(relativePath),
       markdown: relativePath,
-      date: data.date,
-      category: data.category,
-      tags: coerceTags(data.tags),
-      excerpt: ensureExcerpt(data, body),
+      date: metadata.date,
+      category: metadata.category,
+      tags: coerceTags(metadata.tags),
+      excerpt,
     };
 
     Object.keys(data).forEach((key) => {
       if (['title', 'date', 'category', 'tags', 'excerpt'].includes(key)) return;
-      if (data[key] === undefined || data[key] === null || data[key] === '') return;
-      entry[key] = data[key];
+      if (metadata[key] === undefined || metadata[key] === null || metadata[key] === '') return;
+      entry[key] = metadata[key];
     });
 
     posts.push(entry);
+    await writePostPage({ relativePath, metadata, excerpt, dryRun: DRY_RUN });
   }
 
-  posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  posts.sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
   const payload = { posts };
+
+  await writeRssFeed(posts, DRY_RUN);
 
   if (DRY_RUN) {
     console.log('[blog:index] (dry-run) Índice não salvo. Prévia:');

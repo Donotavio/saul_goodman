@@ -5,6 +5,9 @@ const translations = {
     navClients: 'Clientes',
     navBlog: 'Blog',
     navCta: 'Instalar',
+    seoTitle: 'Saul Goodman - Extensão Anti-Procrastinação',
+    seoDescription:
+      'Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos.',
     languageLabel: 'Selecionar idioma',
     heroTag: '100% SIGILO PROFISSIONAL',
     heroTitle: 'Seu advogado particular contra a procrastinação.',
@@ -77,6 +80,16 @@ const translations = {
     manifesto2Body: 'Alertas visuais e sonoros deixam claro quando Saul está prestes a cobrar honorários extras.',
     manifesto3Title: 'Humor como arma',
     manifesto3Body: 'Mensagens sarcásticas e banners dramáticos lembram que procrastinar também custa caro.',
+    blogPreviewEyebrow: 'Blog do Saul',
+    blogPreviewTitle: 'Últimos casos do tribunal digital.',
+    blogPreviewLead:
+      'Leia os 3 artigos mais recentes e descubra como o Saul defende o seu foco com sarcasmo jurídico.',
+    blogPreviewLoading: 'Carregando artigos...',
+    blogPreviewEmpty: 'Nenhum artigo disponível no momento.',
+    blogPreviewError: 'Não foi possível carregar os artigos.',
+    blogPreviewCta: 'Ver todos os artigos',
+    blogPreviewRead: 'Ler artigo',
+    blogPreviewImageAlt: 'Ilustração Saul Goodman',
     splitPopupTitle: 'Popup de plantão',
     splitPopupBody:
       'O painel mostra o índice, top domínios, indicadores extras e permite exportar CSV/PDF. Quando o foco despenca, o modo terremoto invade para salvar a barra da justiça.',
@@ -171,6 +184,9 @@ const translations = {
     navClients: 'Clients',
     navBlog: 'Blog',
     navCta: 'Install',
+    seoTitle: 'Saul Goodman - Anti-Procrastination Extension',
+    seoDescription:
+      'Saul Goodman polices your tabs, fights procrastination, and delivers dramatic reports in your browser. Everything stays local, no external servers.',
     languageLabel: 'Select language',
     heroTag: '100% ATTORNEY-CLIENT PRIVILEGE',
     heroTitle: 'Your personal lawyer against procrastination.',
@@ -243,6 +259,15 @@ const translations = {
     manifesto2Body: 'Visual and sound alerts make it clear when Saul is about to charge extra fees.',
     manifesto3Title: 'Humor as weapon',
     manifesto3Body: 'Sarcastic messages and dramatic banners remind you procrastination is also expensive.',
+    blogPreviewEyebrow: 'Saul Blog',
+    blogPreviewTitle: 'Latest cases from the digital courtroom.',
+    blogPreviewLead: 'Read the 3 newest articles and see how Saul defends your focus with legal sarcasm.',
+    blogPreviewLoading: 'Loading articles...',
+    blogPreviewEmpty: 'No articles available right now.',
+    blogPreviewError: 'Unable to load articles.',
+    blogPreviewCta: 'See all articles',
+    blogPreviewRead: 'Read article',
+    blogPreviewImageAlt: 'Saul Goodman illustration',
     splitPopupTitle: 'On-call popup',
     splitPopupBody:
       'The panel shows the index, top domains, extra indicators, and lets you export CSV/PDF. When focus drops, earthquake mode storms in to save the bar of justice.',
@@ -337,6 +362,9 @@ const translations = {
     navClients: 'Clientes',
     navBlog: 'Blog',
     navCta: 'Instalar',
+    seoTitle: 'Saul Goodman - Extensión Anti-Procrastinación',
+    seoDescription:
+      'Saul Goodman vigila tus pestañas, combate la procrastinación y genera informes dramáticos en tu navegador. Todo queda local, sin servidores externos.',
     languageLabel: 'Seleccionar idioma',
     heroTag: '100% SECRETO PROFESIONAL',
     heroTitle: 'Tu abogado particular contra la procrastinación.',
@@ -412,6 +440,16 @@ const translations = {
     manifesto2Body: 'Alertas visuales y sonoras dejan claro cuando Saul está a punto de cobrar honorarios extra.',
     manifesto3Title: 'Humor como arma',
     manifesto3Body: 'Mensajes sarcásticos y banners dramáticos recuerdan que procrastinar también cuesta caro.',
+    blogPreviewEyebrow: 'Blog de Saul',
+    blogPreviewTitle: 'Últimos casos del tribunal digital.',
+    blogPreviewLead:
+      'Lee los 3 artículos más recientes y descubre cómo Saul defiende tu foco con sarcasmo legal.',
+    blogPreviewLoading: 'Cargando artículos...',
+    blogPreviewEmpty: 'No hay artículos disponibles por ahora.',
+    blogPreviewError: 'No fue posible cargar los artículos.',
+    blogPreviewCta: 'Ver todos los artículos',
+    blogPreviewRead: 'Leer artículo',
+    blogPreviewImageAlt: 'Ilustración de Saul Goodman',
     splitPopupTitle: 'Popup de guardia',
     splitPopupBody:
       'El panel muestra el índice, top dominios, indicadores extra y permite exportar CSV/PDF. Cuando el foco cae, el modo terremoto invade para salvar la barra de la justicia.',
@@ -506,6 +544,202 @@ const translations = {
 const richTextKeys = new Set(['feature4Item1', 'faq2Answer']);
 const supportedLanguages = ['pt', 'en', 'es'];
 const defaultLanguage = 'pt';
+let currentLanguage = defaultLanguage;
+const BLOG_PREVIEW_LIMIT = 3;
+const BLOG_CATEGORY_LABELS = {
+  pt: {
+    'procrastinacao': 'Procrastinação',
+    'foco-atencao': 'Foco & Atenção',
+    'dev-performance': 'Performance Dev',
+    'trabalho-remoto': 'Trabalho Remoto',
+  },
+  en: {
+    'procrastinacao': 'Procrastination',
+    'foco-atencao': 'Focus & Attention',
+    'dev-performance': 'Dev Performance',
+    'trabalho-remoto': 'Remote Work',
+  },
+  es: {
+    'procrastinacao': 'Procrastinación',
+    'foco-atencao': 'Enfoque y Atención',
+    'dev-performance': 'Rendimiento Dev',
+    'trabalho-remoto': 'Trabajo Remoto',
+  },
+};
+const BLOG_CATEGORY_TONES = {
+  'procrastinacao': 'incredulo',
+  'foco-atencao': 'like',
+  'dev-performance': 'like',
+  'trabalho-remoto': 'nao-corte',
+};
+const BLOG_TONE_ARTWORK = {
+  'incredulo': 'assets/saul_incredulo.png',
+  'like': 'assets/saul_like.png',
+  'nao-corte': 'assets/saul_nao_corte.png',
+  'default': 'assets/logotipo_saul_goodman.png',
+};
+const DATE_LOCALE = {
+  pt: 'pt-BR',
+  en: 'en-US',
+  es: 'es-ES',
+};
+let blogPreviewPosts = null;
+let blogPreviewPromise = null;
+
+const getDictionary = () => translations[currentLanguage] || translations[defaultLanguage];
+const t = (key) => {
+  const dictionary = getDictionary();
+  return dictionary[key] || key;
+};
+
+const parseDateValue = (value) => {
+  if (!value || typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const dateOnlyMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (dateOnlyMatch) {
+    const year = Number(dateOnlyMatch[1]);
+    const month = Number(dateOnlyMatch[2]) - 1;
+    const day = Number(dateOnlyMatch[3]);
+    const date = new Date(year, month, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+const formatBlogDate = (value) => {
+  const date = parseDateValue(value);
+  if (!date) return value;
+  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+};
+
+const getPostSortTime = (post) => {
+  const raw = post?.source_published_at || post?.date;
+  const parsed = parseDateValue(raw);
+  return parsed ? parsed.getTime() : 0;
+};
+
+const getLocalizedValue = (data, key) => {
+  if (!data) return '';
+  if (currentLanguage !== 'pt') {
+    const localizedKey = `${key}_${currentLanguage}`;
+    if (data[localizedKey]) return data[localizedKey];
+  }
+  return data[key] || '';
+};
+
+const getBlogCategoryLabel = (category) => {
+  if (!category) return '';
+  const labels = BLOG_CATEGORY_LABELS[currentLanguage] || BLOG_CATEGORY_LABELS[defaultLanguage];
+  return labels[category] || category;
+};
+
+const getBlogArtwork = (post) => {
+  const tone = post?.tone || BLOG_CATEGORY_TONES[post?.category] || 'default';
+  return BLOG_TONE_ARTWORK[tone] || BLOG_TONE_ARTWORK.default;
+};
+
+const buildBlogPostLink = (post) => {
+  const path = (post?.markdown || post?.path || '').replace(/^\//, '');
+  const blogBase = new URL('blog/', document.baseURI);
+  if (path) {
+    const normalized = path.replace(/\.md$/, '');
+    return new URL(`posts/${normalized}/`, blogBase).toString();
+  }
+  if (post?.url) {
+    return new URL(post.url, blogBase).toString();
+  }
+  return new URL('index.html', blogBase).toString();
+};
+
+const loadBlogPreviewPosts = async () => {
+  if (blogPreviewPosts) return blogPreviewPosts;
+  if (blogPreviewPromise) return blogPreviewPromise;
+  const url = new URL('blog/index.json', document.baseURI).toString();
+  blogPreviewPromise = fetch(url, { headers: { Accept: 'application/json' } })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Falha ao carregar blog (${response.status})`);
+      return response.json();
+    })
+    .then((data) => {
+      blogPreviewPosts = Array.isArray(data?.posts) ? data.posts : [];
+      return blogPreviewPosts;
+    })
+    .catch((error) => {
+      console.error('Falha ao carregar blog', error);
+      throw error;
+    })
+    .finally(() => {
+      blogPreviewPromise = null;
+    });
+  return blogPreviewPromise;
+};
+
+const renderBlogPreview = async () => {
+  const container = document.getElementById('blog-preview-list');
+  if (!container) return;
+  container.innerHTML = '';
+  const loadingState = document.createElement('div');
+  loadingState.className = 'blog-preview-state';
+  loadingState.textContent = t('blogPreviewLoading');
+  container.appendChild(loadingState);
+
+  try {
+    const posts = await loadBlogPreviewPosts();
+    const ordered = [...posts].sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
+    const trimmed = ordered.slice(0, BLOG_PREVIEW_LIMIT);
+    container.innerHTML = '';
+    if (!trimmed.length) {
+      const emptyState = document.createElement('div');
+      emptyState.className = 'blog-preview-state';
+      emptyState.textContent = t('blogPreviewEmpty');
+      container.appendChild(emptyState);
+      return;
+    }
+
+    trimmed.forEach((post) => {
+      const card = document.createElement('article');
+      card.className = 'blog-preview-card';
+
+      const image = document.createElement('img');
+      image.src = getBlogArtwork(post);
+      image.alt = t('blogPreviewImageAlt');
+      card.appendChild(image);
+
+      const meta = document.createElement('div');
+      meta.className = 'blog-preview-meta';
+      meta.textContent = `${formatBlogDate(post.date)} · ${getBlogCategoryLabel(post.category)}`;
+      card.appendChild(meta);
+
+      const title = document.createElement('h3');
+      title.textContent = getLocalizedValue(post, 'title') || post.title || '';
+      card.appendChild(title);
+
+      const excerpt = getLocalizedValue(post, 'excerpt') || post.excerpt || '';
+      if (excerpt) {
+        const excerptEl = document.createElement('p');
+        excerptEl.textContent = excerpt;
+        card.appendChild(excerptEl);
+      }
+
+      const link = document.createElement('a');
+      link.className = 'blog-preview-link';
+      link.href = buildBlogPostLink(post);
+      link.textContent = t('blogPreviewRead');
+      card.appendChild(link);
+
+      container.appendChild(card);
+    });
+  } catch (error) {
+    container.innerHTML = '';
+    const errorState = document.createElement('div');
+    errorState.className = 'blog-preview-state';
+    errorState.textContent = t('blogPreviewError');
+    container.appendChild(errorState);
+  }
+};
 
 const createLightbox = () => {
   const backdrop = document.createElement('div');
@@ -617,9 +851,32 @@ const normalizeLanguage = (value) => {
   return defaultLanguage;
 };
 
+const setMetaContent = (selector, value) => {
+  if (!value) return;
+  const element = document.querySelector(selector);
+  if (!element) return;
+  element.setAttribute('content', value);
+};
+
+const updateSiteSeo = (dictionary) => {
+  if (!dictionary) return;
+  if (dictionary.seoTitle) {
+    document.title = dictionary.seoTitle;
+    setMetaContent('meta[property="og:title"]', dictionary.seoTitle);
+    setMetaContent('meta[name="twitter:title"]', dictionary.seoTitle);
+  }
+  if (dictionary.seoDescription) {
+    setMetaContent('meta[name="description"]', dictionary.seoDescription);
+    setMetaContent('meta[property="og:description"]', dictionary.seoDescription);
+    setMetaContent('meta[name="twitter:description"]', dictionary.seoDescription);
+  }
+};
+
 const applyTranslations = (language) => {
   const lang = supportedLanguages.includes(language) ? language : defaultLanguage;
+  currentLanguage = lang;
   const dictionary = translations[lang] || translations[defaultLanguage];
+  updateSiteSeo(dictionary);
   document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
@@ -666,6 +923,7 @@ const bindLanguageSelector = () => {
     const value = normalizeLanguage(event.target.value);
     localStorage.setItem('saul-language', value);
     applyTranslations(value);
+    renderBlogPreview();
   });
 };
 
@@ -811,6 +1069,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupLightbox();
   applyTranslations(detectLanguage());
   bindLanguageSelector();
+  renderBlogPreview();
   setupCarousels();
   setupCounters();
   setupParallax();

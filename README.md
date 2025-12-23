@@ -112,12 +112,13 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 
 ## Blog e content engine
 
-- Blog público em `site/blog/` (home, categorias e `post/?post=...`), posts Markdown em `site/blog/posts/YYYY/*.md` com frontmatter (title, date, category, tags, excerpt, source_*); índice JSON para consumo em `site/blog/index.json`.
-- Após adicionar/editar posts manualmente, rode `npm run blog:index` (aceita `-- --dry-run`) para regenerar `site/blog/index.json` e manter o feed consumido pelo site/extensões sincronizado.
-- O popup da extensão consome esse índice, detecta a categoria com base nas métricas do dia e sugere um artigo (com botão direto para o blog) sem depender de atualizações da Chrome Web Store.
+- Blog público em `site/blog/` (home, categorias e posts estáticos em `posts/YYYY/<slug>/`), posts Markdown em `site/blog/posts/YYYY/*.md` com frontmatter (title, date, category, tags, excerpt, source_*); índice JSON para consumo em `site/blog/index.json`.
+- Após adicionar/editar posts manualmente, rode `npm run blog:index` (aceita `-- --dry-run`) para regenerar `site/blog/index.json`, os posts estáticos e o RSS.
+- O popup da extensão consome esse índice (URLs limpas de posts), detecta a categoria com base nas métricas do dia e sugere um artigo (com botão direto para o blog) sem depender de atualizações da Chrome Web Store.
 - Para controlar a arte exibida no blog/popup, adicione `tone` no frontmatter (`incredulo`, `like` ou `nao-corte`). Quando ausente, o frontend usa heurísticas (tags/texto) para escolher a imagem que melhor representa o tom.
 - Interface do blog segue o seletor PT/EN/ES do site: detecta o idioma do navegador/localStorage e atualiza hero, navegação e chips; usuários podem trocar pelo `<select>` presente em todas as páginas.
 - Cada artigo inclui traduções EN/ES geradas automaticamente: frontmatter expõe `title_<lang>`/`excerpt_<lang>` e o corpo contém blocos `<!--lang:xx-->` que o frontend escolhe conforme o idioma atual.
+- RSS público em `site/blog/rss.xml` e URLs no `site/sitemap.xml` para indexação.
 - Execução manual: `npm run content:engine` (ou `npm run content:engine:dry-run` para não gravar) com `LLM_API_KEY` definido e opcionais `LLM_BASE_URL`/`LLM_MODEL`/`LLM_PROVIDER`. O script gera slug `YYYY-MM-DD-<slug>`, atualiza o índice e registra a fonte em `tools/content_engine/state/posted.json` para evitar duplicidade.
 - Feeds/keywords configuráveis em `tools/content_engine/sources.json` (janela padrão 14 dias). Sem item relevante ou score baixo, nada é publicado.
 - Automação: `.github/workflows/blog-content-engine.yml` roda às segundas 08:00 BRT e via `workflow_dispatch`, instala deps, roda o content engine e commita mudanças com `chore(blog): publish weekly article` usando `GITHUB_TOKEN` (contents: write).

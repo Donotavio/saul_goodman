@@ -177,6 +177,13 @@ const CATEGORY_TITLE_KEYS = {
   'trabalho-remoto': 'categoryRemotoTitle',
 };
 
+const CATEGORY_LEAD_KEYS = {
+  'procrastinacao': 'categoryProcrastinacaoLead',
+  'foco-atencao': 'categoryFocoLead',
+  'dev-performance': 'categoryDevLead',
+  'trabalho-remoto': 'categoryRemotoLead',
+};
+
 const CATEGORY_TAGLINES = {
   pt: {
     'procrastinacao': 'Osciloscópios emocionais e sarcasmo terapêutico.',
@@ -431,6 +438,7 @@ function applyTranslations(lang) {
     } else {
       document.title = t('blogHeroEyebrow');
     }
+    updateListingSeo();
   }
 }
 
@@ -605,12 +613,128 @@ function formatDateTime(dateStr) {
   });
 }
 
-function buildPostLink(post) {
-  const path = (post.markdown || post.path || '').replace(/^\//, '') || post.url;
-  if (!path) return '#';
-  const url = new URL('post/', blogBase);
-  url.searchParams.set('post', path);
+function getPostSortTime(post) {
+  const raw = post?.source_published_at || post?.date;
+  const parsed = parseDateValue(raw);
+  return parsed ? parsed.getTime() : 0;
+}
+
+function normalizeCanonicalUrl(value) {
+  if (!value) return '';
+  const url = new URL(value, window.location.href);
+  url.hash = '';
+  if (url.pathname.endsWith('/index.html')) {
+    url.pathname = url.pathname.replace(/index\.html$/, '');
+  }
   return url.toString();
+}
+
+function buildStaticPostPath(postPath) {
+  if (!postPath) return '';
+  const normalized = postPath.replace(/^\//, '').replace(/\.md$/, '');
+  return `posts/${normalized}/`;
+}
+
+function buildCanonicalPostUrl(postPath) {
+  const staticPath = buildStaticPostPath(postPath);
+  if (staticPath) return new URL(staticPath, blogBase).toString();
+  return normalizeCanonicalUrl(window.location.href);
+}
+
+function setMetaContent(selector, value) {
+  if (!value && value !== '') return;
+  const element = document.querySelector(selector);
+  if (!element) return;
+  element.setAttribute('content', value);
+}
+
+function setCanonicalUrl(value) {
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical || !value) return;
+  canonical.setAttribute('href', value);
+}
+
+function updateSeoTags({ title, description, image, type, url, publishedTime } = {}) {
+  if (title) {
+    setMetaContent('meta[property="og:title"]', title);
+    setMetaContent('meta[name="twitter:title"]', title);
+  }
+  if (description) {
+    setMetaContent('meta[name="description"]', description);
+    setMetaContent('meta[property="og:description"]', description);
+    setMetaContent('meta[name="twitter:description"]', description);
+  }
+  if (image) {
+    setMetaContent('meta[property="og:image"]', image);
+    setMetaContent('meta[name="twitter:image"]', image);
+  }
+  if (type) {
+    setMetaContent('meta[property="og:type"]', type);
+  }
+  if (url) {
+    setMetaContent('meta[property="og:url"]', url);
+    setCanonicalUrl(url);
+  }
+  if (typeof publishedTime !== 'undefined') {
+    setMetaContent('meta[property="article:published_time"]', publishedTime || '');
+  }
+}
+
+function updatePostJsonLd({ title, description, image, url, publishedTime } = {}) {
+  const script = document.getElementById('post-jsonld');
+  if (!script) return;
+  const payload = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title || document.title,
+    description: description || undefined,
+    image: image ? [image] : undefined,
+    datePublished: publishedTime || undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Saul Goodman',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Saul Goodman',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url || normalizeCanonicalUrl(window.location.href),
+    },
+  };
+  script.textContent = JSON.stringify(payload);
+}
+
+function updateListingSeo() {
+  const view = document.body.dataset.blogView;
+  if (view === 'post') return;
+  const category = document.body.dataset.blogCategory;
+  const title = document.title;
+  const description = category && CATEGORY_LEAD_KEYS[category]
+    ? t(CATEGORY_LEAD_KEYS[category])
+    : t('blogHeroLead');
+  const image = category ? getToneArtwork({ category }).src : BLOG_LOGO;
+  const url = normalizeCanonicalUrl(window.location.href);
+  updateSeoTags({
+    title,
+    description,
+    image,
+    type: 'website',
+    url,
+    publishedTime: undefined,
+  });
+}
+
+function buildPostLink(post) {
+  const path = (post.markdown || post.path || '').replace(/^\//, '');
+  if (path) {
+    return new URL(buildStaticPostPath(path), blogBase).toString();
+  }
+  if (post.url) {
+    return new URL(post.url, blogBase).toString();
+  }
+  return '#';
 }
 
 function renderCards(posts, container) {
@@ -621,13 +745,7 @@ function renderCards(posts, container) {
   }
 
   posts
-    .sort((a, b) => {
-      const left = parseDateValue(b.date);
-      const right = parseDateValue(a.date);
-      const leftTime = left ? left.getTime() : 0;
-      const rightTime = right ? right.getTime() : 0;
-      return leftTime - rightTime;
-    })
+    .sort((a, b) => getPostSortTime(b) - getPostSortTime(a))
     .forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-card';
@@ -738,7 +856,7 @@ function renderMetadata(meta, container) {
   target.appendChild(dl);
 }
 
-function setupShareButtons(meta, localizedTitle) {
+function setupShareButtons(meta, localizedTitle, shareUrl) {
   const container = document.querySelector('.post-share');
   if (!container) return;
   const feedback = container.querySelector('.share-feedback');
@@ -746,7 +864,7 @@ function setupShareButtons(meta, localizedTitle) {
     feedback.hidden = true;
     feedback.textContent = t('shareCopied');
   }
-  const url = window.location.href;
+  const url = shareUrl || window.location.href;
   const shareLinks = {
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(localizedTitle)}&url=${encodeURIComponent(url)}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
@@ -825,7 +943,8 @@ function updatePostMedia(meta) {
 
 async function renderPost() {
   const params = new URLSearchParams(window.location.search);
-  const postParam = sanitizePostPath(params.get('post'));
+  const postParam =
+    sanitizePostPath(params.get('post')) || sanitizePostPath(document.body.dataset.blogPost);
   const postContainer = document.querySelector('.post-body');
   const metadataPanel = document.querySelector('.metadata-panel');
   const footer = document.querySelector('.metadata-footer');
@@ -864,6 +983,27 @@ async function renderPost() {
       breadcrumbCurrent.removeAttribute('data-i18n');
     }
     if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
+    const localizedExcerpt = getLocalizedValue(data, 'excerpt') || data.excerpt;
+    const artwork = getToneArtwork(data);
+    const publishedValue = data.source_published_at || data.date;
+    const publishedDate = parseDateValue(publishedValue);
+    const publishedTime = publishedDate ? publishedDate.toISOString() : '';
+    const canonicalUrl = buildCanonicalPostUrl(postParam);
+    updateSeoTags({
+      title: document.title,
+      description: localizedExcerpt,
+      image: artwork.src,
+      type: 'article',
+      url: canonicalUrl,
+      publishedTime,
+    });
+    updatePostJsonLd({
+      title: localizedTitle,
+      description: localizedExcerpt,
+      image: artwork.src,
+      url: canonicalUrl,
+      publishedTime,
+    });
     updatePostMedia(data);
 
     const localizedBodies = extractLocalizedBodies(body);
@@ -873,7 +1013,7 @@ async function renderPost() {
     postContainer.removeAttribute('data-i18n');
 
     if (metadataPanel || footer) renderMetadata(data, metadataPanel || footer);
-    setupShareButtons(data, localizedTitle);
+    setupShareButtons(data, localizedTitle, canonicalUrl);
   } catch (error) {
     console.error('Failed to load blog post', error);
     postContainer.innerHTML = `<div class="empty-state">${t('postLoadError')}: ${error.message}</div>`;
