@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildPostUrl, writePostPage, writeRssFeed } from './post-page.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -578,14 +579,15 @@ async function savePost(markdown, metadata) {
 
 async function updateIndex(metadata, markdownPath, body = '') {
   const index = await ensureIndexFile();
+  const excerpt = ensureExcerpt(metadata, body);
   const entry = {
     title: metadata.title,
-    url: `./post/?post=${markdownPath}`,
+    url: buildPostUrl(markdownPath),
     markdown: markdownPath,
     date: metadata.date,
     category: metadata.category,
     tags: metadata.tags,
-    excerpt: ensureExcerpt(metadata, body),
+    excerpt,
     source_title: metadata.source_title,
     source_url: metadata.source_url,
     source_published_at: metadata.source_published_at,
@@ -604,6 +606,9 @@ async function updateIndex(metadata, markdownPath, body = '') {
     console.log('[dry-run] Índice atualizado na memória');
     return entry;
   }
+
+  await writePostPage({ relativePath: markdownPath, metadata, excerpt, dryRun: DRY_RUN });
+  await writeRssFeed(index.posts, DRY_RUN);
 
   await writeJson(INDEX_PATH, index);
   console.log('index.json atualizado');

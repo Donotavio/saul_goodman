@@ -4,13 +4,14 @@
 
 - Entradas do blog em Markdown com frontmatter YAML em `site/blog/posts/YYYY/AAAA-MM-DD-slug.md`.
 - Índice para consumo do site/extensões em `site/blog/index.json` (title, url, markdown, date, category, tags, excerpt, source_*).
-- Gere/atualize esse índice com `npm run blog:index` sempre que criar ou editar posts manualmente (use `-- --dry-run` para pré-visualizar sem escrever).
+- Gere/atualize esse índice com `npm run blog:index` sempre que criar ou editar posts manualmente (use `-- --dry-run` para pré-visualizar sem escrever); o comando também regenera os HTMLs estáticos e o RSS.
 - A extensão Chrome lê esse índice direto do site para sugerir artigos no popup conforme a categoria dominante do dia.
 - Use o campo opcional `tone` (`incredulo` | `like` | `nao-corte`) para definir qual arte do Saul aparecerá no blog/popup; quando omitido, heurísticas baseadas em tags/excerpts escolhem automaticamente.
-- Páginas públicas: `/site/blog/index.html`, categorias `/site/blog/<categoria>/index.html` e `post/?post=<path>` para renderizar cada Markdown no navegador.
+- Páginas públicas: `/site/blog/index.html`, categorias `/site/blog/<categoria>/index.html` e posts estáticos em `/site/blog/posts/<ano>/<slug>/index.html` (a rota `post/?post=<path>` segue como fallback).
 - Estado de duplicidade salvo em `tools/content_engine/state/posted.json` (chaves das fontes já publicadas).
 - UI do blog replica o seletor PT/EN/ES do site: detecta idioma via `localStorage`/navegador, atualiza hero/nav/chips e permite troca manual em qualquer página.
 - Cada post traz traduções EN/ES incorporadas no próprio Markdown: frontmatter define `title_<lang>`/`excerpt_<lang>` e o corpo usa blocos `<!--lang:xx-->` para que o frontend carregue a versão correta.
+- RSS do blog em `site/blog/rss.xml` para distribuição e indexação.
 
 ## Content Engine
 

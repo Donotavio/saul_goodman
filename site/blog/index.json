@@ -2,7 +2,7 @@
   "posts": [
     {
       "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
-      "url": "./post/?post=2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "url": "./posts/2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios/",
       "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
       "date": "2025-12-23",
       "category": "procrastinacao",
@@ -25,7 +25,7 @@
     },
     {
       "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
-      "url": "./post/?post=2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "url": "./posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/",
       "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
       "date": "2025-12-23",
       "category": "dev-performance",
@@ -48,7 +48,7 @@
     },
     {
       "title": "Mutantes no Código: A Revolução que Você Não Pediu",
-      "url": "./post/?post=2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
+      "url": "./posts/2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu/",
       "markdown": "2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
       "date": "2025-12-23",
       "category": "dev-performance",
@@ -71,7 +71,7 @@
     },
     {
       "title": "O Fim da Procrastinação? Conheça o Yapi, o Salvador da Pátria Dev!",
-      "url": "./post/?post=2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
+      "url": "./posts/2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev/",
       "markdown": "2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
       "date": "2025-12-23",
       "category": "dev-performance",
@@ -93,7 +93,7 @@
     },
     {
       "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
-      "url": "./post/?post=2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
+      "url": "./posts/2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo/",
       "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
       "date": "2025-12-23",
       "category": "procrastinacao",
@@ -112,7 +112,7 @@
     },
     {
       "title": "Terraform: O Módulo que Faz Tudo, Menos Café",
-      "url": "./post/?post=2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
+      "url": "./posts/2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe/",
       "markdown": "2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
       "date": "2025-12-23",
       "category": "dev-performance",
@@ -135,7 +135,7 @@
     },
     {
       "title": "Login Hint: O Mistério Que Ninguém Pediu",
-      "url": "./post/?post=2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
+      "url": "./posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/",
       "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
       "date": "2025-12-23",
       "category": "dev-performance",
@@ -158,7 +158,7 @@
     },
     {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
-      "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
+      "url": "./posts/2025/2025-01-05-sprint-sem-prova/",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
       "date": "2025-01-05",
       "category": "dev-performance",

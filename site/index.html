@@ -4,6 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Saul Goodman - Extensão Anti-Procrastinação</title>
+    <meta
+      name="description"
+      content="Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://donotavio.github.io/saul_goodman/" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Blog do Saul Goodman"
+      href="https://donotavio.github.io/saul_goodman/blog/rss.xml"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Saul Goodman - Extensão Anti-Procrastinação" />
+    <meta
+      property="og:description"
+      content="Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos."
+    />
+    <meta property="og:url" content="https://donotavio.github.io/saul_goodman/" />
+    <meta property="og:image" content="https://donotavio.github.io/saul_goodman/assets/logotipo_saul_goodman.png" />
+    <meta property="og:site_name" content="Saul Goodman" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Saul Goodman - Extensão Anti-Procrastinação" />
+    <meta
+      name="twitter:description"
+      content="Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos."
+    />
+    <meta name="twitter:image" content="https://donotavio.github.io/saul_goodman/assets/logotipo_saul_goodman.png" />
     <link rel="icon" type="image/png" href="assets/logotipo_saul_goodman.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +40,36 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Saul Goodman Extension",
+            "url": "https://donotavio.github.io/saul_goodman/",
+            "description": "Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Saul Goodman"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Saul Goodman Extension",
+            "applicationCategory": "BrowserApplication",
+            "operatingSystem": "Chrome",
+            "description": "Extensão anti-procrastinação que monitora abas, aplica alertas dramáticos e gera relatórios com storytelling.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "BRL"
+            },
+            "url": "https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <nav class="site-nav">
@@ -251,6 +309,22 @@
           <h3 data-i18n="manifesto3Title">Humor como arma</h3>
           <p data-i18n="manifesto3Body">Mensagens sarcásticas e banners dramáticos lembram que procrastinar também custa caro.</p>
         </article>
+      </div>
+    </section>
+
+    <section class="section blog-preview" id="blog-preview">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="blogPreviewEyebrow">Blog do Saul</p>
+        <h2 data-i18n="blogPreviewTitle">Últimos casos do tribunal digital.</h2>
+        <p class="section-lead" data-i18n="blogPreviewLead">
+          Leia os 3 artigos mais recentes e descubra como o Saul defende o seu foco com sarcasmo jurídico.
+        </p>
+      </div>
+      <div class="blog-preview-grid" id="blog-preview-list" aria-live="polite">
+        <div class="blog-preview-state" data-i18n="blogPreviewLoading">Carregando artigos...</div>
+      </div>
+      <div class="hero-cta blog-preview-actions">
+        <a class="ghost" href="blog/index.html" data-i18n="blogPreviewCta">Ver todos os artigos</a>
       </div>
     </section>
 

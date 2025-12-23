@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://donotavio.github.io/saul_goodman/sitemap.xml

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog do Saul Goodman</title>
+    <link>https://donotavio.github.io/saul_goodman/blog/</link>
+    <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
+    <language>pt-BR</language>
+    <lastBuildDate>Tue, 23 Dec 2025 17:37:22 GMT</lastBuildDate>
+    <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>Login Hint: O Mistério Que Ninguém Pediu</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/</guid>
+      <pubDate>Tue, 23 Dec 2025 17:37:22 GMT</pubDate>
+      <description><![CDATA[Você sabia que o `login_hint` não funcionava nas Azure Static Web Apps? Agora já sabe. E o que fazer com isso?]]></description>
+    </item>
+
+    <item>
+      <title>Mutantes no Código: A Revolução que Você Não Pediu</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu/</guid>
+      <pubDate>Tue, 23 Dec 2025 16:15:41 GMT</pubDate>
+      <description><![CDATA[Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...]]></description>
+    </item>
+
+    <item>
+      <title>Terraform: O Módulo que Faz Tudo, Menos Café</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe/</guid>
+      <pubDate>Tue, 23 Dec 2025 15:35:37 GMT</pubDate>
+      <description><![CDATA[Módulos do Terraform: a solução para você não fazer nada de novo.]]></description>
+    </item>
+
+    <item>
+      <title>Kiro e Supabase: O Casamento Que Ninguém Pediu</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/</guid>
+      <pubDate>Tue, 23 Dec 2025 14:18:00 GMT</pubDate>
+      <description><![CDATA[Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?]]></description>
+    </item>
+
+    <item>
+      <title>Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios/</guid>
+      <pubDate>Tue, 23 Dec 2025 14:07:19 GMT</pubDate>
+      <description><![CDATA[Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.]]></description>
+    </item>
+
+    <item>
+      <title>Procrastinação: A Arte de Fazer Nada com Estilo</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo/</guid>
+      <pubDate>Tue, 23 Dec 2025 13:13:18 GMT</pubDate>
+      <description><![CDATA[Aprenda a procrastinar como um verdadeiro artista enquanto acha que está "solucionando" tudo com Terraform.]]></description>
+    </item>
+
+    <item>
+      <title>O Fim da Procrastinação? Conheça o Yapi, o Salvador da Pátria Dev!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev/</guid>
+      <pubDate>Mon, 22 Dec 2025 08:49:47 GMT</pubDate>
+      <description><![CDATA[Yapi promete revolucionar sua produtividade, mas será que isso é mesmo possível no mundo da procrastinação incessante?]]></description>
+    </item>
+
+    <item>
+      <title>Sprint sem prova: o júri do foco condena o multitasking</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-01-05-sprint-sem-prova/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-01-05-sprint-sem-prova/</guid>
+      <pubDate>Thu, 12 Dec 2024 00:00:00 GMT</pubDate>
+      <description><![CDATA[Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.]]></description>
+    </item>
+  </channel>
+</rss>
