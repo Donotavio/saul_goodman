@@ -101,6 +101,7 @@ const translations = {
     reactionDisbeliefHint: 'Aciona quando o índice passa do limiar de terremoto.',
     reactionBlockLabel: 'Modo bloqueio',
     reactionBlockText: '“Nem tente: vilões barrados no ato.”',
+    reactionBlockAlt: 'Saul bloqueando o acesso',
     reactionBlockHint: 'Redireciona para a página de bloqueio com o Saul de cara fechada.',
     reactionHypeLabel: 'Modo aprovado',
     reactionHypeText: '“Assim eu até desconto honorários.”',
@@ -265,6 +266,7 @@ const translations = {
     reactionDisbeliefHint: 'Triggers when the quake threshold is crossed.',
     reactionBlockLabel: 'Block mode',
     reactionBlockText: '“Don’t even try it: villains get blocked instantly.”',
+    reactionBlockAlt: 'Saul blocking the access',
     reactionBlockHint: 'Redirects to the block page with Saul shutting the door.',
     reactionHypeLabel: 'Approved mode',
     reactionHypeText: '“Now I might discount my fees.”',
@@ -432,6 +434,7 @@ const translations = {
     reactionDisbeliefHint: 'Se activa al pasar el umbral de terremoto.',
     reactionBlockLabel: 'Modo bloqueo',
     reactionBlockText: '“Ni lo intentes: los villanos se bloquean al instante.”',
+    reactionBlockAlt: 'Saul bloqueando el acceso',
     reactionBlockHint: 'Redirige a la página de bloqueo con Saul cerrando la puerta.',
     reactionHypeLabel: 'Modo aprobado',
     reactionHypeText: '“Así hasta descuento honorarios.”',
@@ -624,6 +627,12 @@ const applyTranslations = (language) => {
     } else {
       element.textContent = text;
     }
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-alt');
+    const text = dictionary[key];
+    if (!text) return;
+    element.setAttribute('alt', text);
   });
   const selector = document.getElementById('language-select');
   if (selector && selector.value !== lang) {

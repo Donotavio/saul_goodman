@@ -485,6 +485,27 @@
   "options_status_domain_removed": {
     "message": "Dominio eliminado."
   },
+  "block_page_title": {
+    "message": "Saul bloqueó este dominio"
+  },
+  "block_page_heading": {
+    "message": "Saul bloqueó este dominio"
+  },
+  "block_page_body": {
+    "message": "Marcaste este sitio como procrastinación. Cierra la pestaña o ajusta la lista si cambias de idea."
+  },
+  "block_page_back": {
+    "message": "Volver"
+  },
+  "block_page_options": {
+    "message": "Abrir configuración"
+  },
+  "block_page_local_note": {
+    "message": "Bloqueo local: nada sale de tu navegador."
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman decepcionado"
+  },
   "options_status_schedule_updated": {
     "message": "Horario actualizado."
   },

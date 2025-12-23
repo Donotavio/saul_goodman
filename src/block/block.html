@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Saul bloqueou este domínio</title>
+    <title data-i18n="block_page_title">Saul bloqueou este domínio</title>
     <style>
       :root {
         color-scheme: light;
@@ -91,15 +91,15 @@
   </head>
   <body>
     <main class="card">
-      <img src="../../site/assets/saul_nao_corte.png" alt="Saul Goodman desapontado" />
+      <img id="blockImage" src="../../site/assets/saul_nao_corte.png" alt="Saul Goodman desapontado" />
       <div>
-        <h1>Saul bloqueou este domínio</h1>
-        <p>Você marcou este site como procrastinação. Feche a aba ou ajuste a lista se mudar de ideia.</p>
+        <h1 id="blockHeading">Saul bloqueou este domínio</h1>
+        <p id="blockBody">Você marcou este site como procrastinação. Feche a aba ou ajuste a lista se mudar de ideia.</p>
         <div class="actions">
           <button id="backButton">Voltar</button>
           <button id="optionsButton" class="secondary">Abrir configurações</button>
         </div>
-        <small>Bloqueio local — nada sai do seu navegador.</small>
+        <small id="blockLocalNote">Bloqueio local — nada sai do seu navegador.</small>
       </div>
     </main>
     <script type="module" src="block.js"></script>
