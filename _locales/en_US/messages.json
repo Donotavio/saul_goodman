@@ -791,6 +791,90 @@
   "report_ai_error_generic": {
     "message": "Saul could not convince the digital judge. Try again later."
   },
+  "report_share_report_label": {
+    "message": "Share highlights"
+  },
+  "report_share_menu_label": {
+    "message": "Share"
+  },
+  "report_share_argument_label": {
+    "message": "Share Saul's argument"
+  },
+  "report_share_post_label": {
+    "message": "Copy post (social)"
+  },
+  "report_share_post_argument_label": {
+    "message": "Copy argument post"
+  },
+  "report_share_menu_copy": {
+    "message": "Copy text"
+  },
+  "report_share_menu_highlights": {
+    "message": "Highlights"
+  },
+  "report_share_menu_argument": {
+    "message": "Saul's argument"
+  },
+  "report_share_menu_native": {
+    "message": "Native share"
+  },
+  "report_share_menu_native_action": {
+    "message": "System share sheet"
+  },
+  "report_share_error_no_metrics": {
+    "message": "No data to share."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman — Highlights"
+  },
+  "report_share_success": {
+    "message": "Share sheet opened! If it doesn't appear, we copied it to your clipboard."
+  },
+  "report_share_error": {
+    "message": "Couldn't share right now."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Generate Saul's argument before sharing."
+  },
+  "report_share_argument_title": {
+    "message": "Saul's Argument"
+  },
+  "report_share_index_label": {
+    "message": "Index"
+  },
+  "report_share_headline": {
+    "message": "Objection! Case highlights"
+  },
+  "report_share_opening": {
+    "message": "My client worked hard and I have evidence."
+  },
+  "report_share_cta": {
+    "message": "Brought to you by Saul Goodman."
+  },
+  "report_share_copy_success": {
+    "message": "Post copied. Paste on LinkedIn, Twitter, anywhere."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Text copied. Paste it into LinkedIn before posting."
+  },
+  "report_share_copy_instagram": {
+    "message": "Text copied. Open Instagram and paste before posting."
+  },
+  "report_share_copy_error": {
+    "message": "Couldn't copy the post now."
+  },
+  "report_share_hint_linkedin": {
+    "message": "LinkedIn won't prefill text: paste the copied content into the post."
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web can't prefill text: paste what we copied into the posting box."
+  },
+  "report_share_social_tagline": {
+    "message": "Objection! My client put in the work."
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #AntiProcrastination"
+  },
   "report_pdf_title": {
     "message": "Detailed report — Saul Goodman"
   },

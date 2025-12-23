@@ -365,5 +365,35 @@
         </div>
       </section>
     </main>
+
+    <div class="floating-share">
+      <button id="shareMenuButton" class="secondary-button" data-i18n="report_share_menu_label">
+        Compartilhar
+      </button>
+      <div id="shareMenu" class="share-menu hidden" role="menu">
+        <p class="menu-heading" data-i18n="report_share_menu_highlights">Highlights</p>
+        <button data-channel="x" data-kind="summary" type="button">X / Twitter</button>
+        <button data-channel="linkedin" data-kind="summary" type="button">LinkedIn</button>
+        <button data-channel="instagram" data-kind="summary" type="button">Instagram</button>
+        <button data-channel="copy" data-kind="summary" type="button" data-i18n="report_share_menu_copy">
+          Copiar texto
+        </button>
+        <p class="menu-heading" data-i18n="report_share_menu_argument">Argumento do Saul</p>
+        <button data-channel="x" data-kind="argument" type="button">X / Twitter</button>
+        <button data-channel="linkedin" data-kind="argument" type="button">LinkedIn</button>
+        <button data-channel="instagram" data-kind="argument" type="button">Instagram</button>
+        <button data-channel="copy" data-kind="argument" type="button" data-i18n="report_share_menu_copy">
+          Copiar texto
+        </button>
+        <p class="menu-heading" data-i18n="report_share_menu_native">Nativo</p>
+        <button data-channel="native" data-kind="summary" type="button" data-i18n="report_share_menu_native_action">
+          Share sheet do sistema
+        </button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite">
+      <span id="toastMessage"></span>
+    </div>
   </body>
 </html>

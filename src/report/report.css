@@ -174,6 +174,54 @@ body.earthquake {
   text-transform: uppercase;
 }
 
+.floating-share {
+  position: sticky;
+  align-self: flex-end;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 15;
+}
+
+.share-menu {
+  position: absolute;
+  bottom: 56px;
+  right: 0;
+  padding: 10px 10px 8px;
+  background: #fffdf5;
+  border: 2px solid #111;
+  border-radius: 12px;
+  box-shadow: 8px 8px 0 #f1d884;
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  z-index: 12;
+}
+
+.share-menu .menu-heading {
+  margin: 4px 0 2px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6a553f;
+}
+
+.share-menu button {
+  text-align: left;
+  border: 1px solid #111;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.share-menu button:hover {
+  background: #ffeec5;
+}
+
 .primary-button,
 .ghost-button {
   border-radius: 12px;
@@ -181,6 +229,14 @@ body.earthquake {
   padding: 10px 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.primary-button.small,
+.secondary-button.small,
+.ghost-button.small {
+  padding: 6px 10px;
+  font-size: 0.8rem;
 }
 
 .primary-button {
@@ -188,9 +244,34 @@ body.earthquake {
   color: #ffe434;
 }
 
+.secondary-button {
+  border-radius: 12px;
+  border: 2px solid #111;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffe13f 0%, #ffb347 60%, #ffdd80 100%);
+  color: #1b120a;
+  box-shadow: 3px 3px 0 #f3c14a;
+}
+
 .ghost-button {
   background: transparent;
   color: #111;
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 #1b120a22;
+}
+
+.primary-button:active,
+.ghost-button:active,
+.secondary-button:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 0 #1b120a33;
 }
 
 main {
@@ -499,6 +580,7 @@ main {
   margin-top: 12px;
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .ai-actions .hidden {
@@ -622,4 +704,42 @@ main {
 
 .kpi-panel small {
   color: #4b3a21;
+}
+
+.toast {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  background: #fffdf5;
+  box-shadow: 4px 4px 0 #f1d884;
+  min-width: 220px;
+  max-width: 320px;
+  font-weight: 700;
+  color: #1b120a;
+  z-index: 20;
+  animation: pop-in 0.2s ease;
+}
+
+.toast.success {
+  border-color: #0a7e07;
+  box-shadow: 4px 4px 0 #7fe28b;
+}
+
+.toast.error {
+  border-color: #d00000;
+  box-shadow: 4px 4px 0 #ff9f9f;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
