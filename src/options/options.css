@@ -132,6 +132,29 @@ h1 {
   color: #fff;
 }
 
+.inline-status {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #555;
+  display: none;
+}
+
+.inline-status.visible {
+  display: block;
+}
+
+.inline-status.pending {
+  color: #91560a;
+}
+
+.inline-status.success {
+  color: #0f7a39;
+}
+
+.inline-status.error {
+  color: #b21d12;
+}
+
 main {
   display: flex;
   flex-direction: column;

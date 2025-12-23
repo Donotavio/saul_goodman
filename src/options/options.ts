@@ -26,6 +26,10 @@ const vscodeLocalApiUrlEl = document.getElementById('vscodeLocalApiUrl') as HTML
 const vscodePairingKeyEl = document.getElementById('vscodePairingKey') as HTMLInputElement;
 const generateVscodeKeyButton = document.getElementById('generateVscodeKey') as HTMLButtonElement;
 const copyVscodeKeyButton = document.getElementById('copyVscodeKey') as HTMLButtonElement;
+const testVscodeConnectionButton = document.getElementById(
+  'testVscodeConnection'
+) as HTMLButtonElement;
+const vscodeTestStatusEl = document.getElementById('vscodeTestStatus') as HTMLParagraphElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
@@ -132,6 +136,112 @@ function attachListeners(): void {
   copyVscodeKeyButton?.addEventListener('click', () => {
     void copyPairingKey();
   });
+  testVscodeConnectionButton?.addEventListener('click', () => {
+    void testVscodeConnection();
+  });
+}
+
+function setVscodeTestStatus(
+  messageKey: string,
+  fallback: string,
+  variant: 'idle' | 'pending' | 'success' | 'error',
+  substitutions?: Array<string | number> | Record<string, string | number>
+): void {
+  if (!vscodeTestStatusEl) {
+    return;
+  }
+
+  const message = i18n?.t(messageKey, substitutions) ?? fallback;
+  vscodeTestStatusEl.textContent = message;
+  vscodeTestStatusEl.classList.remove('pending', 'success', 'error');
+
+  if (variant !== 'idle') {
+    vscodeTestStatusEl.classList.add('visible');
+  } else {
+    vscodeTestStatusEl.classList.remove('visible');
+  }
+
+  if (variant !== 'idle') {
+    vscodeTestStatusEl.classList.add(variant);
+  }
+}
+
+async function testVscodeConnection(): Promise<void> {
+  if (!testVscodeConnectionButton) {
+    return;
+  }
+
+  if (!vscodeIntegrationEnabledEl?.checked) {
+    setVscodeTestStatus(
+      'options_vscode_test_disabled',
+      'Ative a integração com VS Code antes de testar.',
+      'error'
+    );
+    return;
+  }
+
+  const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || 'http://127.0.0.1:3123').trim();
+
+  let healthUrl: URL;
+  try {
+    healthUrl = new URL('/health', baseUrl);
+  } catch {
+    setVscodeTestStatus(
+      'options_vscode_test_invalid_url',
+      'URL inválida. Use algo como http://127.0.0.1:3123.',
+      'error'
+    );
+    return;
+  }
+
+  setVscodeTestStatus('options_vscode_test_running', 'Testando conexão...', 'pending');
+
+  testVscodeConnectionButton.disabled = true;
+  testVscodeConnectionButton.setAttribute('aria-busy', 'true');
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 4000);
+
+  try {
+    const response = await fetch(healthUrl.toString(), { signal: controller.signal });
+    if (response.ok) {
+      setVscodeTestStatus(
+        'options_vscode_test_success',
+        `SaulDaemon respondeu em ${healthUrl.origin}.`,
+        'success',
+        { origin: healthUrl.origin }
+      );
+      return;
+    }
+
+    const reason = `status ${response.status}`;
+    setVscodeTestStatus(
+      'options_vscode_test_error',
+      `Falha ao conectar ao SaulDaemon (${reason}).`,
+      'error',
+      { reason }
+    );
+  } catch (error) {
+    if ((error as DOMException)?.name === 'AbortError') {
+      setVscodeTestStatus(
+        'options_vscode_test_timeout',
+        'SaulDaemon não respondeu a tempo.',
+        'error'
+      );
+    } else {
+      const reason = (error as Error)?.message ?? 'erro desconhecido';
+      setVscodeTestStatus(
+        'options_vscode_test_error',
+        `Falha ao conectar ao SaulDaemon (${reason}).`,
+        'error',
+        { reason }
+      );
+    }
+  } finally {
+    window.clearTimeout(timeout);
+    testVscodeConnectionButton.disabled = false;
+    testVscodeConnectionButton.removeAttribute('aria-busy');
+  }
 }
 
 async function hydrate(): Promise<void> {

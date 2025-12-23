@@ -446,6 +446,27 @@
   "options_vscode_key_copy_error": {
     "message": "Nenhuma chave para copiar."
   },
+  "options_vscode_test_button": {
+    "message": "Testar conexão"
+  },
+  "options_vscode_test_running": {
+    "message": "Testando conexão..."
+  },
+  "options_vscode_test_success": {
+    "message": "SaulDaemon respondeu em {origin}."
+  },
+  "options_vscode_test_error": {
+    "message": "Falha ao conectar ao SaulDaemon ({reason})."
+  },
+  "options_vscode_test_timeout": {
+    "message": "SaulDaemon não respondeu a tempo."
+  },
+  "options_vscode_test_disabled": {
+    "message": "Ative a integração com VS Code antes de testar."
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "URL inválida. Use algo como http://127.0.0.1:3123."
+  },
   "label_vscode": {
     "message": "VS Code (IDE)"
   },
