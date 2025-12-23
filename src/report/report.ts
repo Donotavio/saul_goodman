@@ -143,8 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
       timelineFilter = { start: end, end: start };
     }
     if (latestMetrics) {
-      renderTimeline(latestMetrics.timeline);
-      renderDomainBreakdownChart(getDomainsWithVscode(latestMetrics));
+      const domainsWithVscode = getDomainsWithVscode(latestMetrics);
+      renderTimeline(mergeTimelines(latestMetrics, domainsWithVscode));
+      renderDomainBreakdownChart(domainsWithVscode);
     }
   });
 
@@ -157,8 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
       timelineEndHourInput.value = '23';
     }
     if (latestMetrics) {
-      renderTimeline(latestMetrics.timeline);
-      renderDomainBreakdownChart(getDomainsWithVscode(latestMetrics));
+      const domainsWithVscode = getDomainsWithVscode(latestMetrics);
+      renderTimeline(mergeTimelines(latestMetrics, domainsWithVscode));
+      renderDomainBreakdownChart(domainsWithVscode);
     }
   });
 });
