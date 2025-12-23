@@ -154,13 +154,13 @@ const DATE_LOCALE = {
 };
 
 const CATEGORY_IMAGES = {
-  'procrastinacao': '../assets/saul_incredulo.png',
-  'foco-atencao': '../assets/saul_like.png',
-  'dev-performance': '../assets/saul_nao_corte.png',
-  'trabalho-remoto': '../assets/logotipo_saul_goodman.png',
+  'procrastinacao': '/assets/saul_incredulo.png',
+  'foco-atencao': '/assets/saul_like.png',
+  'dev-performance': '/assets/saul_nao_corte.png',
+  'trabalho-remoto': '/assets/logotipo_saul_goodman.png',
 };
 
-const BLOG_LOGO = new URL('../assets/logotipo_saul_goodman.png', blogBase).toString();
+const BLOG_LOGO = '/assets/logotipo_saul_goodman.png';
 
 const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
 const defaultLanguage = 'pt';
@@ -200,8 +200,7 @@ function stripMetadataSection(markdown = '') {
 }
 
 function getCategoryArtwork(category) {
-  const relPath = CATEGORY_IMAGES[category] || '../assets/logotipo_saul_goodman.png';
-  const src = new URL(relPath, blogBase).toString();
+  const src = CATEGORY_IMAGES[category] || BLOG_LOGO;
   const alt = `${getCategoryLabel(category)} — Saul Goodman`;
   return { src, alt };
 }
