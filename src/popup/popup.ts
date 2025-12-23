@@ -3,7 +3,8 @@ import {
   DomainStats,
   LocalePreference,
   PopupData,
-  RuntimeMessageType
+  RuntimeMessageType,
+  SupportedLocale
 } from '../shared/types.js';
 import { formatDuration } from '../shared/utils/time.js';
 import {
@@ -62,6 +63,69 @@ const criticalCloseButton = document.getElementById('criticalCloseButton') as HT
 const criticalSoundButton = document.getElementById('criticalSoundButton') as HTMLButtonElement | null;
 const criticalReportButton = document.getElementById('criticalReportButton') as HTMLButtonElement | null;
 const criticalOptionsButton = document.getElementById('criticalOptionsButton') as HTMLButtonElement | null;
+const blogSectionEl = document.getElementById('blogCard') as HTMLElement | null;
+const blogCategoryEl = document.getElementById('blogCategoryLabel') as HTMLElement | null;
+const blogReasonEl = document.getElementById('blogReason') as HTMLElement | null;
+const blogTitleEl = document.getElementById('blogTitle') as HTMLElement | null;
+const blogExcerptEl = document.getElementById('blogExcerpt') as HTMLElement | null;
+const blogTagsEl = document.getElementById('blogTags') as HTMLUListElement | null;
+const blogStatusEl = document.getElementById('blogRecommendationStatus') as HTMLElement | null;
+const blogContentEl = document.getElementById('blogRecommendationContent') as HTMLElement | null;
+const blogReadButton = document.getElementById('blogReadButton') as HTMLButtonElement | null;
+const blogOpenButton = document.getElementById('blogOpenBlogButton') as HTMLButtonElement | null;
+const manifestInfo = chrome.runtime.getManifest?.() ?? { homepage_url: undefined };
+const DEFAULT_SITE_BASE = 'https://donotavio.github.io/saul_goodman';
+const HOMEPAGE_BASE = (manifestInfo.homepage_url ?? DEFAULT_SITE_BASE).replace(/\/+$/, '');
+const BLOG_ROOT_URL = `${HOMEPAGE_BASE}/blog`;
+const BLOG_HOME_URL = `${BLOG_ROOT_URL}/`;
+const BLOG_INDEX_REMOTE_URL = `${BLOG_ROOT_URL}/index.json`;
+const BLOG_INDEX_FALLBACK_URL = chrome.runtime.getURL('site/blog/index.json');
+type BlogCategory = 'procrastinacao' | 'foco-atencao' | 'dev-performance' | 'trabalho-remoto';
+
+interface BlogPost {
+  title: string;
+  url: string;
+  markdown: string;
+  date: string;
+  category: BlogCategory;
+  tags?: string[];
+  excerpt?: string;
+  [key: string]: string | string[] | BlogCategory | undefined;
+}
+
+const BLOG_CATEGORY_LABELS: Record<'pt' | 'en' | 'es', Record<BlogCategory, string>> = {
+  pt: {
+    'procrastinacao': 'Procrastinação',
+    'foco-atencao': 'Foco & Atenção',
+    'dev-performance': 'Performance Dev',
+    'trabalho-remoto': 'Trabalho Remoto'
+  },
+  en: {
+    'procrastinacao': 'Procrastination',
+    'foco-atencao': 'Focus & Attention',
+    'dev-performance': 'Dev Performance',
+    'trabalho-remoto': 'Remote Work'
+  },
+  es: {
+    'procrastinacao': 'Procrastinación',
+    'foco-atencao': 'Enfoque y Atención',
+    'dev-performance': 'Rendimiento Dev',
+    'trabalho-remoto': 'Trabajo Remoto'
+  }
+};
+
+const BLOG_REASON_KEYS: Record<BlogCategory, string> = {
+  'procrastinacao': 'popup_blog_reason_procrastinacao',
+  'foco-atencao': 'popup_blog_reason_foco',
+  'dev-performance': 'popup_blog_reason_dev',
+  'trabalho-remoto': 'popup_blog_reason_remoto'
+};
+
+const BLOG_LOCALE_SUFFIX: Record<SupportedLocale, 'pt' | 'en' | 'es'> = {
+  'pt-BR': 'pt',
+  'en-US': 'en',
+  'es-419': 'es'
+};
 
 let productivityChart: ChartInstance = null;
 let latestData: PopupData | null = null;
@@ -77,6 +141,10 @@ let badgeConfettiTimer: number | null = null;
 const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
 let i18n: I18nService | null = null;
 let activeLocalePreference: LocalePreference = 'auto';
+let latestKpis: CalculatedKpis | null = null;
+let cachedBlogPosts: BlogPost[] | null = null;
+let blogFetchPromise: Promise<BlogPost[] | null> | null = null;
+let blogSelectedPostUrl: string | null = null;
 
 const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'popup_critical_message_1', needsThreshold: true },
@@ -115,6 +183,15 @@ function attachListeners(): void {
     const url = chrome.runtime.getURL('src/options/options.html#vilains');
     void chrome.tabs.create({ url });
   });
+  blogOpenButton?.addEventListener('click', () => {
+    void chrome.tabs.create({ url: BLOG_HOME_URL });
+  });
+  blogReadButton?.addEventListener('click', () => {
+    if (!blogSelectedPostUrl) {
+      return;
+    }
+    void chrome.tabs.create({ url: blogSelectedPostUrl });
+  });
 }
 
 async function hydrate(): Promise<void> {
@@ -132,6 +209,7 @@ async function hydrate(): Promise<void> {
     renderKpis(data.metrics);
     renderTopDomains(data.metrics);
     renderChart(data.metrics);
+    void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
     );
@@ -163,6 +241,7 @@ function renderSummary(metrics: DailyMetrics): void {
 
 function renderKpis(metrics: DailyMetrics): void {
   const kpis = calculateKpis(metrics);
+  latestKpis = kpis;
   const noDataLabel = i18n?.t('popup_status_no_data') ?? 'No data';
 
   focusRateEl.textContent = formatPercentage(kpis.focusRate);
@@ -718,4 +797,185 @@ async function triggerReleaseNotes(): Promise<void> {
       releaseNotesButton.removeAttribute('aria-busy');
     }
   }
+}
+
+async function loadBlogSuggestion(metrics: DailyMetrics): Promise<void> {
+  if (!blogSectionEl) {
+    return;
+  }
+  showBlogStatus('popup_blog_loading');
+  try {
+    const posts = await fetchBlogPosts();
+    if (!posts || posts.length === 0) {
+      showBlogStatus('popup_blog_empty');
+      return;
+    }
+    const category = inferBlogCategory(metrics);
+    const selected = pickPostForCategory(posts, category);
+    if (!selected) {
+      showBlogStatus('popup_blog_empty');
+      return;
+    }
+    renderBlogRecommendation(selected, category);
+  } catch (error) {
+    console.error('Failed to load blog recommendation', error);
+    showBlogStatus('popup_blog_error');
+  }
+}
+
+async function fetchBlogPosts(): Promise<BlogPost[] | null> {
+  if (cachedBlogPosts) {
+    return cachedBlogPosts;
+  }
+  if (blogFetchPromise) {
+    return blogFetchPromise;
+  }
+  blogFetchPromise = (async () => {
+    const sources = [BLOG_INDEX_REMOTE_URL, BLOG_INDEX_FALLBACK_URL];
+    for (const source of sources) {
+      try {
+        const response = await fetch(source, { cache: 'no-store' });
+        if (!response.ok) {
+          continue;
+        }
+        const payload = (await response.json()) as { posts?: BlogPost[] };
+        if (Array.isArray(payload.posts) && payload.posts.length > 0) {
+          cachedBlogPosts = payload.posts;
+          return cachedBlogPosts;
+        }
+      } catch (error) {
+        console.warn('Blog index source failed', source, error);
+      }
+    }
+    return null;
+  })();
+  const result = await blogFetchPromise;
+  blogFetchPromise = null;
+  return result;
+}
+
+function pickPostForCategory(posts: BlogPost[], category: BlogCategory): BlogPost | null {
+  const sorted = [...posts].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const priorityOrder: BlogCategory[] = [
+    category,
+    'procrastinacao',
+    'foco-atencao',
+    'dev-performance',
+    'trabalho-remoto'
+  ];
+  for (const cat of priorityOrder) {
+    const match = sorted.find((post) => post.category === cat);
+    if (match) {
+      return match;
+    }
+  }
+  return sorted[0] ?? null;
+}
+
+function inferBlogCategory(metrics: DailyMetrics): BlogCategory {
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const productiveMinutes = (metrics.productiveMs + vscodeMs) / 60000;
+  const procrastinationMinutes = metrics.procrastinationMs / 60000;
+  const inactiveMinutes = metrics.inactiveMs / 60000;
+  const focusRate = latestKpis?.focusRate ?? 0;
+  const productivityRatio = latestKpis?.productivityRatio ?? 0;
+
+  if (procrastinationMinutes >= productiveMinutes || productivityRatio < 1) {
+    return 'procrastinacao';
+  }
+  if (inactiveMinutes >= 45 || focusRate < 0.55) {
+    return 'foco-atencao';
+  }
+  if (vscodeMs >= 45 * 60000 || productivityRatio >= 1.4) {
+    return 'dev-performance';
+  }
+  return 'trabalho-remoto';
+}
+
+function showBlogStatus(key: string): void {
+  if (!blogStatusEl) {
+    return;
+  }
+  blogStatusEl.textContent = i18n?.t(key) ?? key;
+  blogStatusEl.hidden = false;
+  blogContentEl?.setAttribute('hidden', 'true');
+  if (blogReadButton) {
+    blogReadButton.disabled = true;
+  }
+  blogSelectedPostUrl = null;
+}
+
+function renderBlogRecommendation(post: BlogPost, category: BlogCategory): void {
+  if (!blogContentEl) {
+    return;
+  }
+  const localeSuffix = getBlogLocaleSuffix();
+  const categoryLabel = getBlogCategoryLabel(category, localeSuffix);
+  if (blogCategoryEl) {
+    blogCategoryEl.textContent =
+      i18n?.t('popup_blog_category_prefix', { category: categoryLabel }) ??
+      `Categoria: ${categoryLabel}`;
+  }
+  if (blogReasonEl) {
+    const reasonKey = BLOG_REASON_KEYS[category];
+    blogReasonEl.textContent = i18n?.t(reasonKey) ?? '';
+  }
+  if (blogTitleEl) {
+    blogTitleEl.textContent = resolveLocalizedField(post, 'title', localeSuffix) ?? post.title;
+  }
+  if (blogExcerptEl) {
+    blogExcerptEl.textContent =
+      resolveLocalizedField(post, 'excerpt', localeSuffix) ?? post.excerpt ?? '';
+  }
+  if (blogTagsEl) {
+    blogTagsEl.innerHTML = '';
+    if (Array.isArray(post.tags) && post.tags.length > 0) {
+      post.tags.forEach((tag) => {
+        const li = document.createElement('li');
+        li.textContent = tag;
+        blogTagsEl.appendChild(li);
+      });
+    }
+  }
+
+  blogSelectedPostUrl = buildBlogPostUrl(post);
+  blogContentEl.removeAttribute('hidden');
+  if (blogStatusEl) {
+    blogStatusEl.hidden = true;
+  }
+  if (blogReadButton) {
+    blogReadButton.disabled = !blogSelectedPostUrl;
+  }
+}
+
+function resolveLocalizedField(
+  post: BlogPost,
+  key: string,
+  localeSuffix: 'pt' | 'en' | 'es'
+): string | undefined {
+  if (localeSuffix === 'pt') {
+    return (post[key] as string | undefined) ?? undefined;
+  }
+  const localizedKey = `${key}_${localeSuffix}`;
+  return (post[localizedKey] as string | undefined) ?? (post[key] as string | undefined);
+}
+
+function getBlogLocaleSuffix(): 'pt' | 'en' | 'es' {
+  const locale = i18n?.locale ?? 'en-US';
+  return BLOG_LOCALE_SUFFIX[locale] ?? 'en';
+}
+
+function getBlogCategoryLabel(category: BlogCategory, localeSuffix: 'pt' | 'en' | 'es'): string {
+  const labels = BLOG_CATEGORY_LABELS[localeSuffix] ?? BLOG_CATEGORY_LABELS.en;
+  return labels[category] ?? category;
+}
+
+function buildBlogPostUrl(post: BlogPost): string {
+  if (post.url.startsWith('http://') || post.url.startsWith('https://')) {
+    return post.url;
+  }
+  const clean = post.url.replace(/^\.\//, '');
+  return new URL(clean, BLOG_HOME_URL).toString();
 }
