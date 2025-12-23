@@ -46,7 +46,9 @@ const MESSAGES = {
     'prompt.missingKey.openSettings': 'Open settings',
     'test.healthSuccess': 'SaulDaemon responded at {origin}',
     'test.healthStatus': 'SaulDaemon responded with status {status} at {origin}',
-    'test.healthFailure': 'SaulDaemon did not respond at {origin}: {error}'
+    'test.healthFailure': 'SaulDaemon did not respond at {origin}: {error}',
+    'log.heartbeatFailed': 'Heartbeat request failed',
+    'log.publishIndexFailed': 'Failed to publish index to SaulDaemon'
   },
   'pt-BR': {
     'status.index.text': 'Índice do Saul: {index}',
@@ -73,7 +75,9 @@ const MESSAGES = {
     'prompt.missingKey.openSettings': 'Abrir configurações',
     'test.healthSuccess': 'SaulDaemon respondeu em {origin}',
     'test.healthStatus': 'SaulDaemon respondeu com status {status} em {origin}',
-    'test.healthFailure': 'SaulDaemon não respondeu em {origin}: {error}'
+    'test.healthFailure': 'SaulDaemon não respondeu em {origin}: {error}',
+    'log.heartbeatFailed': 'Falha ao enviar heartbeat',
+    'log.publishIndexFailed': 'Falha ao publicar índice para o SaulDaemon'
   },
   'es-419': {
     'status.index.text': 'Índice de Saul: {index}',
@@ -100,7 +104,9 @@ const MESSAGES = {
     'prompt.missingKey.openSettings': 'Abrir configuraciones',
     'test.healthSuccess': 'SaulDaemon respondió en {origin}',
     'test.healthStatus': 'SaulDaemon respondió con estado {status} en {origin}',
-    'test.healthFailure': 'SaulDaemon no respondió en {origin}: {error}'
+    'test.healthFailure': 'SaulDaemon no respondió en {origin}: {error}',
+    'log.heartbeatFailed': 'Error al enviar el heartbeat',
+    'log.publishIndexFailed': 'Error al publicar el índice en SaulDaemon'
   }
 };
 
@@ -281,7 +287,7 @@ class ActivityTracker {
         timestamp: now
       });
     } catch (error) {
-      console.warn('[saul-goodman-vscode] heartbeat failed', error);
+      console.warn('[saul-goodman-vscode] ', localize('log.heartbeatFailed'), error);
     }
   }
 
