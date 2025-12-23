@@ -362,6 +362,57 @@
   "options_openai_hint": {
     "message": "Se guarda localmente para generar narrativas en el informe."
   },
+  "options_vscode_heading": {
+    "message": "Integración con VS Code"
+  },
+  "options_vscode_toggle_label": {
+    "message": "Sumar sesiones de VS Code como foco"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Consulta el SaulDaemon local (localhost) antes de recalcular el índice."
+  },
+  "options_vscode_url_label": {
+    "message": "URL del backend local"
+  },
+  "options_vscode_url_hint": {
+    "message": "Solo habla con localhost; nada sale de tu máquina."
+  },
+  "options_vscode_key_label": {
+    "message": "Clave de emparejamiento"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Pega la clave del SaulDaemon"
+  },
+  "options_vscode_key_hint": {
+    "message": "Debe coincidir con la clave configurada en SaulDaemon/VS Code."
+  },
+  "options_vscode_key_generate": {
+    "message": "Generar nueva clave"
+  },
+  "options_vscode_key_generated": {
+    "message": "Nueva clave creada."
+  },
+  "options_vscode_key_copy": {
+    "message": "Copiar clave"
+  },
+  "options_vscode_key_copied": {
+    "message": "Clave copiada."
+  },
+  "options_vscode_key_copy_error": {
+    "message": "No hay clave para copiar."
+  },
+  "label_vscode": {
+    "message": "VS Code (IDE)"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS Code"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (min)"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS Code"
+  },
   "options_critical_threshold_label": {
     "message": "Umbral del modo sismo (0–100)"
   },
@@ -404,6 +455,12 @@
   "options_procrastination_hint": {
     "message": "Aquí viven las tentaciones. Si amas un sitio, probablemente va aquí."
   },
+  "options_procrastination_block_toggle_label": {
+    "message": "Bloquear acceso a esta lista"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Al activarlo, Saul bloquea la navegación a estos sitios usando reglas locales de Chrome."
+  },
   "options_procrastination_placeholder": {
     "message": "ej.: youtube.com"
   },
@@ -422,8 +479,32 @@
   "options_status_list_updated": {
     "message": "Lista actualizada."
   },
+  "options_status_blocklist_saved": {
+    "message": "Preferencia de bloqueo actualizada."
+  },
   "options_status_domain_removed": {
     "message": "Dominio eliminado."
+  },
+  "block_page_title": {
+    "message": "Saul bloqueó este dominio"
+  },
+  "block_page_heading": {
+    "message": "Saul bloqueó este dominio"
+  },
+  "block_page_body": {
+    "message": "Marcaste este sitio como procrastinación. Cierra la pestaña o ajusta la lista si cambias de idea."
+  },
+  "block_page_back": {
+    "message": "Volver"
+  },
+  "block_page_options": {
+    "message": "Abrir configuración"
+  },
+  "block_page_local_note": {
+    "message": "Bloqueo local: nada sale de tu navegador."
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman decepcionado"
   },
   "options_status_schedule_updated": {
     "message": "Horario actualizado."
@@ -709,6 +790,90 @@
   },
   "report_ai_error_generic": {
     "message": "Saul no pudo convencer al juez digital. Inténtalo más tarde."
+  },
+  "report_share_report_label": {
+    "message": "Compartir destacados"
+  },
+  "report_share_menu_label": {
+    "message": "Compartir"
+  },
+  "report_share_argument_label": {
+    "message": "Compartir argumento"
+  },
+  "report_share_post_label": {
+    "message": "Copiar post (redes)"
+  },
+  "report_share_post_argument_label": {
+    "message": "Copiar post del argumento"
+  },
+  "report_share_menu_copy": {
+    "message": "Copiar texto"
+  },
+  "report_share_menu_highlights": {
+    "message": "Destacados"
+  },
+  "report_share_menu_argument": {
+    "message": "Argumento de Saul"
+  },
+  "report_share_menu_native": {
+    "message": "Compartir nativo"
+  },
+  "report_share_menu_native_action": {
+    "message": "Hoja de compartir del sistema"
+  },
+  "report_share_error_no_metrics": {
+    "message": "Sin datos para compartir."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman — Destacados"
+  },
+  "report_share_success": {
+    "message": "Hoja de compartir abierta. Si no aparece, lo copiamos al portapapeles."
+  },
+  "report_share_error": {
+    "message": "No se pudo compartir ahora."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Genera el argumento de Saul antes de compartir."
+  },
+  "report_share_argument_title": {
+    "message": "Argumento de Saul"
+  },
+  "report_share_index_label": {
+    "message": "Índice"
+  },
+  "report_share_headline": {
+    "message": "¡Objeción! Resumen del caso"
+  },
+  "report_share_opening": {
+    "message": "Mi cliente trabajó y tengo pruebas."
+  },
+  "report_share_cta": {
+    "message": "Generado por Saul Goodman."
+  },
+  "report_share_copy_success": {
+    "message": "Post copiado. Pégalo en LinkedIn, Twitter o donde quieras."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Texto copiado. Pégalo en el campo de LinkedIn antes de publicar."
+  },
+  "report_share_copy_instagram": {
+    "message": "Texto copiado. Abre Instagram y pégalo antes de publicar."
+  },
+  "report_share_copy_error": {
+    "message": "No se pudo copiar el post ahora."
+  },
+  "report_share_hint_linkedin": {
+    "message": "LinkedIn no rellena el texto automáticamente: pega el contenido copiado en el post."
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web no permite autocompletar texto: pega lo que copiamos en el cuadro de publicación."
+  },
+  "report_share_social_tagline": {
+    "message": "¡Objeción! Mi cliente trabajó."
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #AntiProcrastinacion"
   },
   "report_pdf_title": {
     "message": "Informe detallado — Saul Goodman"

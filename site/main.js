@@ -55,6 +55,19 @@ const translations = {
     feature4Item1: 'Dados em <code>chrome.storage.local</code> — nada é enviado à nuvem.',
     feature4Item2: 'Listas produtivas/vilãs salvas só no seu navegador.',
     feature4Item3: 'Chave OpenAI opcional e guardada localmente.',
+    integrationEyebrow: 'Para devs',
+    integrationTitle: 'VS Code + daemon local, tudo como foco produtivo.',
+    integrationLead: 'Ative a integração opcional: Saul soma sessões do editor como tempo produtivo sem sair do localhost.',
+    integrationCard1Title: 'Ligue nas opções',
+    integrationCard1Body: 'Gere a chave de pareamento, ative a integração e configure a URL local. Nada sai do seu navegador.',
+    integrationCard2Title: 'Daemon local',
+    integrationCard2Body:
+      'Use o comando da extensão VS Code para iniciar: ele já preenche PAIRING_KEY/PORT e abre no diretório do daemon.',
+    integrationCard3Title: 'Extensão VS Code',
+    integrationCard3Body:
+      'Comando “Saul Goodman: preparar comando do SaulDaemon” vem pronto após instalar e envia batimentos do editor para o Chrome.',
+    integrationVsixCta: 'Instalar extensão VS Code',
+    integrationCta: 'Ver guia da integração',
     manifestoEyebrow: 'Manifesto',
     manifestoTitle: 'Marketing agressivo com uma pitada de ética.',
     manifesto1Title: '100% local',
@@ -86,6 +99,10 @@ const translations = {
     reactionDisbeliefLabel: 'Modo incrédulo',
     reactionDisbeliefText: '“Você chamou isso de foco?”',
     reactionDisbeliefHint: 'Aciona quando o índice passa do limiar de terremoto.',
+    reactionBlockLabel: 'Modo bloqueio',
+    reactionBlockText: '“Nem tente: vilões barrados no ato.”',
+    reactionBlockAlt: 'Saul bloqueando o acesso',
+    reactionBlockHint: 'Redireciona para a página de bloqueio com o Saul de cara fechada.',
     reactionHypeLabel: 'Modo aprovado',
     reactionHypeText: '“Assim eu até desconto honorários.”',
     reactionHypeHint: 'Aparece quando você volta às abas produtivas.',
@@ -203,6 +220,19 @@ const translations = {
     feature4Item1: 'Data in <code>chrome.storage.local</code> — nothing goes to the cloud.',
     feature4Item2: 'Productive/villain lists saved only in your browser.',
     feature4Item3: 'Optional OpenAI key stored locally.',
+    integrationEyebrow: 'For devs',
+    integrationTitle: 'VS Code + local daemon, all counted as productive.',
+    integrationLead: 'Turn on the optional integration: Saul adds editor time as productive without leaving localhost.',
+    integrationCard1Title: 'Enable in options',
+    integrationCard1Body: 'Generate the pairing key, toggle the integration, and set the local URL. Nothing leaves your browser.',
+    integrationCard2Title: 'Local daemon',
+    integrationCard2Body:
+      'Use the VS Code extension command to start it: it pre-fills PAIRING_KEY/PORT and opens in the daemon folder.',
+    integrationCard3Title: 'VS Code extension',
+    integrationCard3Body:
+      'Command “Saul Goodman: preparar comando do SaulDaemon” ships ready after install and sends editor heartbeats to Chrome.',
+    integrationVsixCta: 'Install VS Code extension',
+    integrationCta: 'See integration guide',
     manifestoEyebrow: 'Manifesto',
     manifestoTitle: 'Aggressive marketing with a pinch of ethics.',
     manifesto1Title: '100% local',
@@ -234,6 +264,10 @@ const translations = {
     reactionDisbeliefLabel: 'Incredulous mode',
     reactionDisbeliefText: '“You call that focus?”',
     reactionDisbeliefHint: 'Triggers when the quake threshold is crossed.',
+    reactionBlockLabel: 'Block mode',
+    reactionBlockText: '“Don’t even try it: villains get blocked instantly.”',
+    reactionBlockAlt: 'Saul blocking the access',
+    reactionBlockHint: 'Redirects to the block page with Saul shutting the door.',
     reactionHypeLabel: 'Approved mode',
     reactionHypeText: '“Now I might discount my fees.”',
     reactionHypeHint: 'Shows up when you jump back to productive tabs.',
@@ -353,6 +387,19 @@ const translations = {
     feature4Item1: 'Datos en <code>chrome.storage.local</code>; nada va a la nube.',
     feature4Item2: 'Listas productivas/villanas guardadas solo en tu navegador.',
     feature4Item3: 'Clave OpenAI opcional y guardada localmente.',
+    integrationEyebrow: 'Para devs',
+    integrationTitle: 'VS Code + daemon local, todo como tiempo productivo.',
+    integrationLead: 'Activa la integración opcional: Saul suma sesiones del editor como productivas sin salir de localhost.',
+    integrationCard1Title: 'Activa en opciones',
+    integrationCard1Body: 'Genera la clave de pareamiento, habilita la integración y define la URL local. Nada sale de tu navegador.',
+    integrationCard2Title: 'Daemon local',
+    integrationCard2Body:
+      'Usa el comando de la extensión VS Code para iniciarlo: ya rellena PAIRING_KEY/PORT y abre en la carpeta del daemon.',
+    integrationCard3Title: 'Extensión VS Code',
+    integrationCard3Body:
+      'El comando “Saul Goodman: preparar comando do SaulDaemon” llega listo tras instalar y envía latidos del editor al Chrome.',
+    integrationVsixCta: 'Instalar extensión VS Code',
+    integrationCta: 'Ver guía de integración',
     manifestoEyebrow: 'Manifiesto',
     manifestoTitle: 'Marketing agresivo con una pizca de ética.',
     manifesto1Title: '100% local',
@@ -385,6 +432,10 @@ const translations = {
     reactionDisbeliefLabel: 'Modo incrédulo',
     reactionDisbeliefText: '“¿Eso llamas foco?”',
     reactionDisbeliefHint: 'Se activa al pasar el umbral de terremoto.',
+    reactionBlockLabel: 'Modo bloqueo',
+    reactionBlockText: '“Ni lo intentes: los villanos se bloquean al instante.”',
+    reactionBlockAlt: 'Saul bloqueando el acceso',
+    reactionBlockHint: 'Redirige a la página de bloqueo con Saul cerrando la puerta.',
     reactionHypeLabel: 'Modo aprobado',
     reactionHypeText: '“Así hasta descuento honorarios.”',
     reactionHypeHint: 'Aparece cuando regresas a las pestañas productivas.',
@@ -456,13 +507,27 @@ const defaultLanguage = 'pt';
 const createLightbox = () => {
   const backdrop = document.createElement('div');
   backdrop.className = 'lightbox-backdrop';
-  backdrop.innerHTML = `
-    <div class="lightbox-content">
-      <button class="lightbox-close" type="button" data-i18n="lightboxClose">Fechar</button>
-      <img alt="" />
-      <div class="lightbox-caption"></div>
-    </div>
-  `;
+
+  const content = document.createElement('div');
+  content.className = 'lightbox-content';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.dataset.i18n = 'lightboxClose';
+  closeBtn.textContent = 'Fechar';
+
+  const img = document.createElement('img');
+  img.alt = '';
+
+  const caption = document.createElement('div');
+  caption.className = 'lightbox-caption';
+
+  content.appendChild(closeBtn);
+  content.appendChild(img);
+  content.appendChild(caption);
+  backdrop.appendChild(content);
+
   document.body.appendChild(backdrop);
   return backdrop;
 };
@@ -562,6 +627,12 @@ const applyTranslations = (language) => {
     } else {
       element.textContent = text;
     }
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-alt');
+    const text = dictionary[key];
+    if (!text) return;
+    element.setAttribute('alt', text);
   });
   const selector = document.getElementById('language-select');
   if (selector && selector.value !== lang) {

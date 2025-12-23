@@ -41,6 +41,31 @@ export interface DailyMetrics {
   spaNavigations?: number;
   groupedMs?: number;
   restoredItems?: number;
+
+  /**
+   * Tempo total ativo no VS Code (em milissegundos) no dia corrente.
+   */
+  vscodeActiveMs?: number;
+
+  /**
+   * Quantidade de sessões de foco no VS Code no dia corrente.
+   */
+  vscodeSessions?: number;
+
+  /**
+   * Linha do tempo de sessões no VS Code para compor a narrativa.
+   */
+  vscodeTimeline?: TimelineEntry[];
+
+  /**
+   * Trocas de contexto do VS Code (por sessão) no dia.
+   */
+  vscodeSwitches?: number;
+
+  /**
+   * Trocas de contexto do VS Code por hora.
+   */
+  vscodeSwitchHourly?: number[];
 }
 
 export interface TabSwitchBreakdown {
@@ -76,6 +101,7 @@ export type LocalePreference = 'auto' | SupportedLocale;
 export interface ExtensionSettings {
   productiveDomains: string[];
   procrastinationDomains: string[];
+  blockProcrastination?: boolean;
   weights: WeightConfig;
   inactivityThresholdMs: number;
   locale: SupportedLocale;
@@ -84,6 +110,22 @@ export interface ExtensionSettings {
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
   criticalSoundEnabled?: boolean;
+
+  /**
+   * Ativa/desativa a integração com VS Code via backend local.
+   */
+  vscodeIntegrationEnabled?: boolean;
+
+  /**
+   * URL base da API HTTP local do SaulDaemon.
+   * Exemplo: http://127.0.0.1:3123
+   */
+  vscodeLocalApiUrl?: string;
+
+  /**
+   * Chave de pareamento entre Chrome e VS Code, usada pelo backend para vincular eventos.
+   */
+  vscodePairingKey?: string;
 }
 
 export interface ActivityPingPayload {
@@ -121,9 +163,13 @@ export interface DomainListChange {
 export interface OptionsFormState {
   productiveDomains: string[];
   procrastinationDomains: string[];
+  blockProcrastination?: boolean;
   weights: WeightConfig;
   inactivityThresholdMs: number;
   openAiKey?: string;
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
+  vscodeIntegrationEnabled?: boolean;
+  vscodeLocalApiUrl?: string;
+  vscodePairingKey?: string;
 }

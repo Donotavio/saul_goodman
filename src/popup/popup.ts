@@ -128,7 +128,7 @@ async function hydrate(): Promise<void> {
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
     renderKpis(data.metrics);
-    renderTopDomains(data.metrics.domains);
+    renderTopDomains(data.metrics);
     renderChart(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -152,7 +152,9 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
 }
 
 function renderSummary(metrics: DailyMetrics): void {
-  productiveTimeEl.textContent = formatDuration(metrics.productiveMs);
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const totalProductive = metrics.productiveMs + vscodeMs;
+  productiveTimeEl.textContent = formatDuration(totalProductive);
   procrastinationTimeEl.textContent = formatDuration(metrics.procrastinationMs);
   inactiveTimeEl.textContent = formatDuration(metrics.inactiveMs);
 }
@@ -167,7 +169,7 @@ function renderKpis(metrics: DailyMetrics): void {
   productivityRatioEl.textContent = formatProductivityRatio(kpis.productivityRatio);
 
   if (kpis.topFocus) {
-    topFocusDomainEl.textContent = kpis.topFocus.domain;
+    topFocusDomainEl.textContent = formatDomainLabel(kpis.topFocus.domain);
     topFocusTimeEl.textContent = formatDuration(kpis.topFocus.milliseconds);
   } else {
     topFocusDomainEl.textContent = '--';
@@ -257,8 +259,9 @@ function triggerBadgeConfetti(): void {
   }, 1400);
 }
 
-function renderTopDomains(domains: Record<string, DomainStats>): void {
+function renderTopDomains(metrics: DailyMetrics): void {
   domainsListEl.innerHTML = '';
+  const domains = getDomainsWithVscode(metrics);
   const sorted = Object.values(domains)
     .sort((a, b) => b.milliseconds - a.milliseconds)
     .slice(0, 5);
@@ -289,7 +292,7 @@ function renderChart(metrics: DailyMetrics): void {
   const productiveLabel = i18n?.t('popup_chart_label_productive') ?? 'Productive';
   const procrastinationLabel = i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination';
   const minutesLabel = i18n?.t('popup_chart_axis_minutes') ?? 'Minutes';
-  const productiveMinutes = metrics.productiveMs / 60000;
+  const productiveMinutes = (metrics.productiveMs + (metrics.vscodeActiveMs ?? 0)) / 60000;
   const procrastinationMinutes = metrics.procrastinationMs / 60000;
   const maxValue = Math.max(productiveMinutes, procrastinationMinutes, 1);
   const data = {
@@ -329,6 +332,30 @@ function renderChart(metrics: DailyMetrics): void {
       }
     }
   });
+}
+
+function getDomainsWithVscode(metrics: DailyMetrics): Record<string, DomainStats> {
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  if (vscodeMs <= 0) {
+    return metrics.domains;
+  }
+  const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+  return {
+    ...metrics.domains,
+    '__vscode:ide': {
+      domain: label,
+      category: 'productive',
+      milliseconds: vscodeMs
+    }
+  };
+}
+
+function formatDomainLabel(domain: string): string {
+  const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+  if (domain === 'VS Code (IDE)' || domain === '__vscode:ide') {
+    return label;
+  }
+  return domain;
 }
 
 async function sendRuntimeMessage<T = RuntimeMessageType>(
@@ -377,11 +404,14 @@ function handleCsvExport(): void {
 
 function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
   const lines: string[] = [];
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const totalProductive = metrics.productiveMs + vscodeMs;
   lines.push(i18n?.t('popup_csv_summary_title') ?? 'General summary');
   const summaryHeaders = [
     i18n?.t('popup_csv_column_date') ?? 'Date',
     i18n?.t('popup_csv_column_index') ?? 'Index',
     i18n?.t('popup_csv_column_productive') ?? 'Productive (min)',
+    i18n?.t('popup_csv_column_vscode') ?? 'VS Code (min)',
     i18n?.t('popup_csv_column_procrastination') ?? 'Procrastination (min)',
     i18n?.t('popup_csv_column_inactive') ?? 'Inactive (min)',
     i18n?.t('popup_csv_column_switches') ?? 'Tab switches'
@@ -391,7 +421,8 @@ function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
     [
       metrics.dateKey,
       metrics.currentIndex,
-      formatMinutesValue(metrics.productiveMs),
+      formatMinutesValue(totalProductive),
+      formatMinutesValue(vscodeMs),
       formatMinutesValue(metrics.procrastinationMs),
       formatMinutesValue(metrics.inactiveMs),
       metrics.tabSwitches
@@ -432,7 +463,7 @@ function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
     i18n?.t('popup_csv_minutes') ?? 'Minutes'
   ];
   lines.push(domainHeaders.join(','));
-  Object.values(metrics.domains)
+  Object.values(getDomainsWithVscode(metrics))
     .sort((a, b) => b.milliseconds - a.milliseconds)
     .slice(0, 10)
     .forEach((domain) => {
@@ -482,25 +513,30 @@ async function handlePdfExport(): Promise<void> {
   doc.setFont(undefined, 'bold');
   doc.text(i18n?.t('popup_pdf_summary') ?? 'Daily summary', 14, 48);
   doc.setFont(undefined, 'normal');
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const totalProductive = metrics.productiveMs + vscodeMs;
   doc.text(
-    `${i18n?.t('popup_pdf_productive') ?? 'Productive'}: ${formatDuration(metrics.productiveMs)}`,
+    `${i18n?.t('popup_pdf_productive') ?? 'Productive'}: ${formatDuration(totalProductive)}`,
     14,
     54
   );
+  if (vscodeMs > 0) {
+    doc.text(`${i18n?.t('popup_pdf_vscode') ?? 'VS Code'}: ${formatDuration(vscodeMs)}`, 14, 60);
+  }
   doc.text(
     `${i18n?.t('popup_pdf_procrastination') ?? 'Procrastination'}: ${formatDuration(metrics.procrastinationMs)}`,
-    14,
-    60
-  );
-  doc.text(
-    `${i18n?.t('popup_pdf_inactive') ?? 'Inactive'}: ${formatDuration(metrics.inactiveMs)}`,
     14,
     66
   );
   doc.text(
-    `${i18n?.t('popup_pdf_switches') ?? 'Tab switches'}: ${metrics.tabSwitches}`,
+    `${i18n?.t('popup_pdf_inactive') ?? 'Inactive'}: ${formatDuration(metrics.inactiveMs)}`,
     14,
     72
+  );
+  doc.text(
+    `${i18n?.t('popup_pdf_switches') ?? 'Tab switches'}: ${metrics.tabSwitches}`,
+    14,
+    78
   );
 
   doc.setFont(undefined, 'bold');

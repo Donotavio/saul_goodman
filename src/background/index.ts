@@ -19,9 +19,10 @@ import {
   HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
-  RuntimeMessageType
+  RuntimeMessageType,
+  TimelineEntry
 } from '../shared/types.js';
-import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
+import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -32,6 +33,10 @@ const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
 const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
+const VSCODE_SYNC_MIN_INTERVAL_MS = 5 * 60 * 1000; // 5 minutos
+const BLOCK_RULE_ID_BASE = 50_000;
+const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
+const BLOCK_PAGE_PATH = '/src/block/block.html';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -42,6 +47,18 @@ interface TrackingState {
   browserFocused: boolean;
   currentTabAudible: boolean;
   currentTabGroupId: number | null;
+}
+
+interface VscodeSummaryResponse {
+  totalActiveMs: number;
+  sessions: number;
+  switches?: number;
+  switchHourly?: number[];
+  timeline?: Array<{
+    startTime: number;
+    endTime: number;
+    durationMs: number;
+  }>;
 }
 
 const trackingState: TrackingState = {
@@ -57,6 +74,7 @@ const trackingState: TrackingState = {
 
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
+let lastVscodeSyncAt = 0;
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
@@ -69,6 +87,7 @@ const messageHandlers: Record<
   'activity-ping': async (payload?: unknown) => handleActivityPing(payload as ActivityPingPayload),
   'metrics-request': async () => {
     await updateRestoredItems();
+    await syncVscodeMetrics(true);
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
     return { metrics, settings };
   },
@@ -77,6 +96,8 @@ const messageHandlers: Record<
     settingsCache = null;
     const settings = await getSettingsCache();
     applyIdleDetectionInterval(settings);
+    await syncBlockingRules(settings);
+    await syncVscodeMetrics(true);
     await refreshScore();
   }
 };
@@ -109,10 +130,6 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 chrome.tabs.onActivated.addListener(({ tabId }) => {
   void updateActiveTabContext(tabId, true);
   void syncCriticalStateToTab(tabId);
-});
-
-chrome.tabs.onRemoved.addListener(() => {
-  void updateRestoredItems();
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -190,6 +207,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes[StorageKeys.SETTINGS]) {
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
+    void syncBlockingRules(settingsCache);
     void refreshScore();
   }
 
@@ -204,6 +222,7 @@ chrome.sessions.onChanged.addListener(() => {
 
 chrome.tabs.onRemoved.addListener(() => {
   void bumpRestoredItems(1);
+  void updateRestoredItems();
 });
 
 async function initialize(): Promise<void> {
@@ -219,10 +238,12 @@ async function initialize(): Promise<void> {
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
   if (settingsCache) {
     applyIdleDetectionInterval(settingsCache);
+    await syncBlockingRules(settingsCache);
   }
   await scheduleTrackingAlarm();
   await scheduleMidnightAlarm();
   await hydrateActiveTab();
+  await syncVscodeMetrics(true);
 
   initializing = false;
 }
@@ -233,6 +254,7 @@ async function handleTrackingTick(): Promise<void> {
   await ensureDailyCache();
 
   await accumulateSlice();
+  await syncVscodeMetrics();
 }
 
 async function handleMidnightReset(): Promise<void> {
@@ -325,20 +347,31 @@ async function accumulateSlice(): Promise<void> {
 
   trackingState.lastTimestamp = now;
 
+  const settings = await getSettingsCache();
+  if (!trackingState.browserFocused) {
+    await syncVscodeMetrics(true);
+  }
   const metrics = await getMetricsCache();
 
   if (!trackingState.browserFocused) {
-    metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + elapsed;
-    recordTimelineSegment(metrics, {
-      category: 'inactive',
-      domain: 'Navegador em segundo plano',
-      durationMs: elapsed,
-      startTime: sliceStart,
-      endTime: now
-    });
-    metrics.inactiveMs += elapsed;
-    recordHourlyContribution(metrics, 'inactive', sliceStart, elapsed);
-    await persistMetrics();
+    const overlapMs = calculateVscodeOverlap(metrics.vscodeTimeline ?? [], sliceStart, now);
+    const inactivePortion = Math.max(0, elapsed - overlapMs);
+
+    if (inactivePortion > 0) {
+      metrics.windowUnfocusedMs = (metrics.windowUnfocusedMs ?? 0) + inactivePortion;
+      recordTimelineSegment(metrics, {
+        category: 'inactive',
+        domain: 'Navegador em segundo plano',
+        durationMs: inactivePortion,
+        startTime: sliceStart,
+        endTime: now
+      });
+      metrics.inactiveMs += inactivePortion;
+      recordHourlyContribution(metrics, 'inactive', sliceStart, inactivePortion);
+      await persistMetrics();
+    } else {
+      trackingState.lastTimestamp = now;
+    }
     return;
   }
 
@@ -360,7 +393,6 @@ async function accumulateSlice(): Promise<void> {
     return;
   }
 
-  const settings = await getSettingsCache();
   const category = classifyDomain(trackingState.currentDomain, settings);
 
   const stats = metrics.domains[trackingState.currentDomain] ?? {
@@ -401,6 +433,28 @@ async function accumulateSlice(): Promise<void> {
   recordHourlyContribution(metrics, category, sliceStart, elapsed);
 
   await persistMetrics();
+}
+
+function calculateVscodeOverlap(timeline: TimelineEntry[], start: number, end: number): number {
+  if (!timeline.length) {
+    return 0;
+  }
+
+  let overlap = 0;
+  for (const entry of timeline) {
+    const entryStart = entry.startTime ?? 0;
+    const entryEnd = entry.endTime ?? 0;
+    if (entryEnd <= start || entryStart >= end) {
+      continue;
+    }
+    const clampedStart = Math.max(entryStart, start);
+    const clampedEnd = Math.min(entryEnd, end);
+    if (clampedEnd > clampedStart) {
+      overlap += clampedEnd - clampedStart;
+    }
+  }
+
+  return overlap;
 }
 
 async function finalizeCurrentDomainSlice(): Promise<void> {
@@ -515,6 +569,25 @@ async function ensureDailyCache(): Promise<void> {
   if (typeof metricsCache.restoredItems !== 'number') {
     metricsCache.restoredItems = 0;
   }
+
+  if (typeof metricsCache.vscodeActiveMs !== 'number') {
+    metricsCache.vscodeActiveMs = 0;
+  }
+
+  if (typeof metricsCache.vscodeSessions !== 'number') {
+    metricsCache.vscodeSessions = 0;
+  }
+
+  if (!Array.isArray(metricsCache.vscodeTimeline)) {
+    metricsCache.vscodeTimeline = [];
+  }
+
+  if (typeof metricsCache.vscodeSwitches !== 'number') {
+    metricsCache.vscodeSwitches = 0;
+  }
+  if (!Array.isArray(metricsCache.vscodeSwitchHourly) || metricsCache.vscodeSwitchHourly.length !== 24) {
+    metricsCache.vscodeSwitchHourly = Array.from({ length: 24 }, () => 0);
+  }
 }
 
 async function getMetricsCache(): Promise<DailyMetrics> {
@@ -528,6 +601,112 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   }
 
   return settingsCache;
+}
+
+function clearCachedVscodeMetrics(metrics: DailyMetrics): boolean {
+  let changed = false;
+
+  if (typeof metrics.vscodeActiveMs !== 'number' || metrics.vscodeActiveMs !== 0) {
+    metrics.vscodeActiveMs = 0;
+    changed = true;
+  }
+
+  if (typeof metrics.vscodeSessions !== 'number' || metrics.vscodeSessions !== 0) {
+    metrics.vscodeSessions = 0;
+    changed = true;
+  }
+
+  if (typeof metrics.vscodeSwitches !== 'number' || metrics.vscodeSwitches !== 0) {
+    metrics.vscodeSwitches = 0;
+    changed = true;
+  }
+
+  if (Array.isArray(metrics.vscodeTimeline) && metrics.vscodeTimeline.length) {
+    metrics.vscodeTimeline = [];
+    changed = true;
+  }
+
+  const needsSwitchHourlyReset =
+    !Array.isArray(metrics.vscodeSwitchHourly) ||
+    metrics.vscodeSwitchHourly.length !== 24 ||
+    metrics.vscodeSwitchHourly.some((value) => value !== 0);
+
+  if (needsSwitchHourlyReset) {
+    metrics.vscodeSwitchHourly = Array.from({ length: 24 }, () => 0);
+    changed = true;
+  }
+
+  return changed;
+}
+
+/**
+ * Consulta o SaulDaemon local para trazer o resumo diário de uso do VS Code.
+ * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
+ * Resposta: { totalActiveMs: number; sessions: number }
+ */
+async function syncVscodeMetrics(force = false): Promise<void> {
+  const settings = await getSettingsCache();
+  const metrics = await getMetricsCache();
+  const pairingKey = settings.vscodePairingKey;
+  const integrationDisabled =
+    !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
+
+  if (integrationDisabled) {
+    const cleared = clearCachedVscodeMetrics(metrics);
+    if (cleared) {
+      await persistMetrics();
+    }
+    lastVscodeSyncAt = 0;
+    return;
+  }
+
+  const now = Date.now();
+  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
+    return;
+  }
+
+  lastVscodeSyncAt = now;
+
+  let url: URL;
+  try {
+    url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
+  } catch {
+    return;
+  }
+  url.searchParams.set('date', getTodayKey());
+  url.searchParams.set('key', pairingKey);
+
+  try {
+    const response = await fetch(url.toString());
+    if (!response.ok) {
+      return;
+    }
+
+    const summary = (await response.json()) as VscodeSummaryResponse;
+    metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+    metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+    metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
+    metrics.vscodeSwitchHourly =
+      Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
+        ? summary.switchHourly
+        : Array.from({ length: 24 }, () => 0);
+    metrics.vscodeTimeline =
+      Array.isArray(summary.timeline) && summary.timeline.length
+        ? summary.timeline.map((entry) => ({
+            startTime: entry.startTime,
+            endTime: entry.endTime,
+            durationMs: entry.durationMs,
+            domain: 'VS Code (IDE)',
+            category: 'productive' as const
+          }))
+        : [];
+
+    await persistMetrics();
+
+    lastVscodeSyncAt = now;
+  } catch (error) {
+    console.warn('Falha ao sincronizar métricas do VS Code', error);
+  }
 }
 
 async function handleNavigationEvent(
@@ -551,6 +730,63 @@ async function handleNavigationEvent(
     await updateActiveTabContext(tabId, false, tab);
   } catch {
     // ignore lookup errors
+  }
+}
+
+async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
+  if (!chrome.declarativeNetRequest?.updateDynamicRules) {
+    return;
+  }
+  if (!settings) {
+    return;
+  }
+
+  try {
+    const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+    const ownedRuleIds = existingRules
+      .filter((rule) => rule.id >= BLOCK_RULE_ID_BASE && rule.id <= BLOCK_RULE_MAX)
+      .map((rule) => rule.id);
+
+    const normalizedDomains = (settings.procrastinationDomains ?? [])
+      .map((domain) => extractDomain(domain) ?? normalizeDomain(domain))
+      .map((domain) => normalizeDomain(domain ?? ''))
+      .filter((domain) => Boolean(domain))
+      .slice(0, BLOCK_RULE_MAX - BLOCK_RULE_ID_BASE + 1);
+
+    const addRules: chrome.declarativeNetRequest.Rule[] = settings.blockProcrastination
+      ? normalizedDomains.map((domain, index) => ({
+          id: BLOCK_RULE_ID_BASE + index,
+          priority: 1,
+          action: {
+            type: chrome.declarativeNetRequest.RuleActionType.REDIRECT,
+            redirect: {
+              extensionPath: BLOCK_PAGE_PATH
+            }
+          },
+          condition: {
+            urlFilter: `||${domain}^`,
+            resourceTypes: [
+              chrome.declarativeNetRequest.ResourceType.MAIN_FRAME,
+              chrome.declarativeNetRequest.ResourceType.SUB_FRAME
+            ]
+          }
+        }))
+      : [];
+
+    const removeRuleIds = Array.from(
+      new Set([...ownedRuleIds, ...addRules.map((rule) => rule.id)])
+    );
+
+    if (!removeRuleIds.length && !addRules.length) {
+      return;
+    }
+
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds,
+      addRules
+    });
+  } catch (error) {
+    console.warn('Falha ao sincronizar regras de bloqueio', error);
   }
 }
 
@@ -741,7 +977,7 @@ function sendCriticalMessageToTab(
 async function updateRestoredItems(): Promise<void> {
   try {
     const metrics = await getMetricsCache();
-    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 50 });
+    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 100 });
     const today = getTodayKey();
 
     if (!items.length && (metrics.restoredItems ?? 0) > 0) {
@@ -768,11 +1004,14 @@ async function updateRestoredItems(): Promise<void> {
       return acc;
     }, 0);
 
-    if (countToday === metrics.restoredItems) {
+    const current = metrics.restoredItems ?? 0;
+    const next = Math.max(current, countToday);
+
+    if (next === current) {
       return;
     }
 
-    metrics.restoredItems = countToday;
+    metrics.restoredItems = next;
     await persistMetrics();
   } catch (error) {
     console.warn('Falha ao atualizar abas fechadas', error);

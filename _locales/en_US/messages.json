@@ -362,6 +362,57 @@
   "options_openai_hint": {
     "message": "Stored locally to generate narratives in the report."
   },
+  "options_vscode_heading": {
+    "message": "VS Code integration"
+  },
+  "options_vscode_toggle_label": {
+    "message": "Include VS Code focus time"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Calls the local SaulDaemon (localhost) before refreshing your score."
+  },
+  "options_vscode_url_label": {
+    "message": "Local backend URL"
+  },
+  "options_vscode_url_hint": {
+    "message": "Only talks to localhost; nothing leaves your machine."
+  },
+  "options_vscode_key_label": {
+    "message": "Pairing key"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Paste the SaulDaemon key"
+  },
+  "options_vscode_key_hint": {
+    "message": "Must match the key configured in SaulDaemon/VS Code."
+  },
+  "options_vscode_key_generate": {
+    "message": "Generate new key"
+  },
+  "options_vscode_key_generated": {
+    "message": "New key created."
+  },
+  "options_vscode_key_copy": {
+    "message": "Copy key"
+  },
+  "options_vscode_key_copied": {
+    "message": "Key copied."
+  },
+  "options_vscode_key_copy_error": {
+    "message": "No key to copy."
+  },
+  "label_vscode": {
+    "message": "VS Code (IDE)"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS Code"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (min)"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS Code"
+  },
   "options_critical_threshold_label": {
     "message": "Quake mode threshold (0–100)"
   },
@@ -404,6 +455,12 @@
   "options_procrastination_hint": {
     "message": "Here live the temptations. If you love a site, it probably belongs here."
   },
+  "options_procrastination_block_toggle_label": {
+    "message": "Block access to this list"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "When enabled, Saul blocks navigation to these sites using local Chrome rules."
+  },
   "options_procrastination_placeholder": {
     "message": "e.g. youtube.com"
   },
@@ -422,8 +479,32 @@
   "options_status_list_updated": {
     "message": "List updated."
   },
+  "options_status_blocklist_saved": {
+    "message": "Blocking preference updated."
+  },
   "options_status_domain_removed": {
     "message": "Domain removed."
+  },
+  "block_page_title": {
+    "message": "Saul blocked this domain"
+  },
+  "block_page_heading": {
+    "message": "Saul blocked this domain"
+  },
+  "block_page_body": {
+    "message": "You marked this site as procrastination. Close the tab or adjust the list if you change your mind."
+  },
+  "block_page_back": {
+    "message": "Go back"
+  },
+  "block_page_options": {
+    "message": "Open settings"
+  },
+  "block_page_local_note": {
+    "message": "Local block — nothing leaves your browser."
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman disappointed"
   },
   "options_status_schedule_updated": {
     "message": "Schedule updated."
@@ -709,6 +790,90 @@
   },
   "report_ai_error_generic": {
     "message": "Saul could not convince the digital judge. Try again later."
+  },
+  "report_share_report_label": {
+    "message": "Share highlights"
+  },
+  "report_share_menu_label": {
+    "message": "Share"
+  },
+  "report_share_argument_label": {
+    "message": "Share Saul's argument"
+  },
+  "report_share_post_label": {
+    "message": "Copy post (social)"
+  },
+  "report_share_post_argument_label": {
+    "message": "Copy argument post"
+  },
+  "report_share_menu_copy": {
+    "message": "Copy text"
+  },
+  "report_share_menu_highlights": {
+    "message": "Highlights"
+  },
+  "report_share_menu_argument": {
+    "message": "Saul's argument"
+  },
+  "report_share_menu_native": {
+    "message": "Native share"
+  },
+  "report_share_menu_native_action": {
+    "message": "System share sheet"
+  },
+  "report_share_error_no_metrics": {
+    "message": "No data to share."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman — Highlights"
+  },
+  "report_share_success": {
+    "message": "Share sheet opened! If it doesn't appear, we copied it to your clipboard."
+  },
+  "report_share_error": {
+    "message": "Couldn't share right now."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Generate Saul's argument before sharing."
+  },
+  "report_share_argument_title": {
+    "message": "Saul's Argument"
+  },
+  "report_share_index_label": {
+    "message": "Index"
+  },
+  "report_share_headline": {
+    "message": "Objection! Case highlights"
+  },
+  "report_share_opening": {
+    "message": "My client worked hard and I have evidence."
+  },
+  "report_share_cta": {
+    "message": "Brought to you by Saul Goodman."
+  },
+  "report_share_copy_success": {
+    "message": "Post copied. Paste on LinkedIn, Twitter, anywhere."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Text copied. Paste it into LinkedIn before posting."
+  },
+  "report_share_copy_instagram": {
+    "message": "Text copied. Open Instagram and paste before posting."
+  },
+  "report_share_copy_error": {
+    "message": "Couldn't copy the post now."
+  },
+  "report_share_hint_linkedin": {
+    "message": "LinkedIn won't prefill text: paste the copied content into the post."
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web can't prefill text: paste what we copied into the posting box."
+  },
+  "report_share_social_tagline": {
+    "message": "Objection! My client put in the work."
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #AntiProcrastination"
   },
   "report_pdf_title": {
     "message": "Detailed report — Saul Goodman"

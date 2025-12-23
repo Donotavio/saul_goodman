@@ -12,12 +12,20 @@ const productiveInput = document.getElementById('productiveInput') as HTMLInputE
 const procrastinationInput = document.getElementById('procrastinationInput') as HTMLInputElement;
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
+const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
 const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLInputElement;
 const inactivityThresholdEl = document.getElementById('inactivityThreshold') as HTMLInputElement;
 const localeSelectEl = document.getElementById('localeSelect') as HTMLSelectElement;
 const openAiKeyInput = document.getElementById('openAiKey') as HTMLInputElement;
+const vscodeIntegrationEnabledEl = document.getElementById(
+  'vscodeIntegrationEnabled'
+) as HTMLInputElement;
+const vscodeLocalApiUrlEl = document.getElementById('vscodeLocalApiUrl') as HTMLInputElement;
+const vscodePairingKeyEl = document.getElementById('vscodePairingKey') as HTMLInputElement;
+const generateVscodeKeyButton = document.getElementById('generateVscodeKey') as HTMLButtonElement;
+const copyVscodeKeyButton = document.getElementById('copyVscodeKey') as HTMLButtonElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
@@ -70,6 +78,14 @@ function attachListeners(): void {
     }
   });
 
+  blockProcrastinationEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.blockProcrastination = blockProcrastinationEl.checked;
+    void persistSettings('options_status_blocklist_saved');
+  });
+
   resetButton.addEventListener('click', () => {
     const confirmMessage =
       i18n?.t('options_confirm_reset') ?? 'This will restore the default values. Continue?';
@@ -101,6 +117,21 @@ function attachListeners(): void {
     renderWorkSchedule();
     void persistSettings('options_status_schedule_updated');
   });
+  generateVscodeKeyButton?.addEventListener('click', () => {
+    const newKey = generatePairingKey();
+    if (vscodePairingKeyEl) {
+      vscodePairingKeyEl.value = newKey;
+    }
+    if (currentSettings) {
+      currentSettings.vscodePairingKey = newKey;
+      void persistSettings('options_vscode_key_generated');
+    } else {
+      showStatus(newKey);
+    }
+  });
+  copyVscodeKeyButton?.addEventListener('click', () => {
+    void copyPairingKey();
+  });
 }
 
 async function hydrate(): Promise<void> {
@@ -126,10 +157,25 @@ function renderForms(): void {
     localeSelectEl.value = currentSettings.localePreference ?? 'auto';
   }
   openAiKeyInput.value = currentSettings.openAiKey ?? '';
+  if (vscodeIntegrationEnabledEl) {
+    vscodeIntegrationEnabledEl.checked = Boolean(currentSettings.vscodeIntegrationEnabled);
+  }
+  if (vscodeLocalApiUrlEl) {
+    vscodeLocalApiUrlEl.value =
+      currentSettings.vscodeLocalApiUrl && currentSettings.vscodeLocalApiUrl.trim().length > 0
+        ? currentSettings.vscodeLocalApiUrl
+        : 'http://127.0.0.1:3123';
+  }
+  if (vscodePairingKeyEl) {
+    vscodePairingKeyEl.value = currentSettings.vscodePairingKey ?? '';
+  }
   criticalThresholdEl.value = (
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
   criticalSoundEnabledEl.checked = Boolean(currentSettings.criticalSoundEnabled);
+  if (blockProcrastinationEl) {
+    blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
+  }
   renderWorkSchedule();
 
   renderDomainList('productiveDomains', productiveListEl);
@@ -194,6 +240,17 @@ async function handleWeightsSubmit(): Promise<void> {
   const thresholdSeconds = Math.max(10, parseInt(inactivityThresholdEl.value, 10));
   currentSettings.inactivityThresholdMs = thresholdSeconds * 1000;
   currentSettings.openAiKey = openAiKeyInput.value.trim();
+  if (vscodeIntegrationEnabledEl) {
+    currentSettings.vscodeIntegrationEnabled = vscodeIntegrationEnabledEl.checked;
+  }
+  if (vscodeLocalApiUrlEl) {
+    const url = vscodeLocalApiUrlEl.value.trim();
+    currentSettings.vscodeLocalApiUrl = url.length > 0 ? url : 'http://127.0.0.1:3123';
+  }
+  if (vscodePairingKeyEl) {
+    const key = vscodePairingKeyEl.value.trim();
+    currentSettings.vscodePairingKey = key.length > 0 ? key : '';
+  }
   currentSettings.criticalScoreThreshold = Math.min(
     100,
     Math.max(0, parseInt(criticalThresholdEl.value, 10))
@@ -397,6 +454,36 @@ function returnToPopup(): void {
     }
     closeCurrentTab();
   });
+}
+
+function generatePairingKey(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `sg-${Math.random().toString(36).slice(2, 10)}-${Date.now().toString(36)}`;
+}
+
+async function copyPairingKey(): Promise<void> {
+  const value = vscodePairingKeyEl?.value?.trim() ?? '';
+  if (!value) {
+    showStatus(i18n?.t('options_vscode_key_copy_error') ?? 'Nenhuma chave para copiar.', true);
+    return;
+  }
+  try {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = value;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+    showStatus(i18n?.t('options_vscode_key_copied') ?? 'Chave copiada.');
+  } catch {
+    showStatus(i18n?.t('options_vscode_key_copy_error') ?? 'Falha ao copiar a chave.', true);
+  }
 }
 
 function closeCurrentTab(): void {

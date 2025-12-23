@@ -82,6 +82,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
     'valorant.com',
     'pokemongolive.com'
   ],
+  blockProcrastination: false,
   weights: {
     procrastinationWeight: 0.6,
     tabSwitchWeight: 0.25,
@@ -93,7 +94,10 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   openAiKey: '',
   criticalScoreThreshold: 90,
   workSchedule: DEFAULT_WORK_SCHEDULE,
-  criticalSoundEnabled: false
+  criticalSoundEnabled: false,
+  vscodeIntegrationEnabled: false,
+  vscodeLocalApiUrl: 'http://127.0.0.1:3123',
+  vscodePairingKey: ''
 };
 
 export function createEmptyHourly(): HourlyBucket[] {
@@ -129,7 +133,12 @@ export function createDefaultMetrics(): DailyMetrics {
     audibleProcrastinationMs: 0,
     spaNavigations: 0,
     groupedMs: 0,
-    restoredItems: 0
+    restoredItems: 0,
+    vscodeActiveMs: 0,
+    vscodeSessions: 0,
+    vscodeTimeline: [],
+    vscodeSwitches: 0,
+    vscodeSwitchHourly: createEmptyNumberHourly()
   };
 }
 
@@ -152,6 +161,10 @@ export function createEmptyTabSwitchHourly(): TabSwitchHourlyBucket[] {
     hour,
     ...createDefaultTabSwitchBreakdown()
   }));
+}
+
+function createEmptyNumberHourly(): number[] {
+  return Array.from({ length: 24 }, () => 0);
 }
 
 export function getDefaultSettings(): ExtensionSettings {
