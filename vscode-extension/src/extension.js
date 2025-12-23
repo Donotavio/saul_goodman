@@ -7,6 +7,7 @@ const path = require('path');
 const child_process = require('child_process');
 
 let statusBarItem = null;
+let statusPollTimer = null;
 
 function activate(context) {
   const tracker = new ActivityTracker();
@@ -21,7 +22,10 @@ function activate(context) {
 }
 
 function deactivate() {
-  // noop
+  if (statusPollTimer) {
+    clearInterval(statusPollTimer);
+    statusPollTimer = null;
+  }
 }
 
 class ActivityTracker {
@@ -323,25 +327,77 @@ function initStatusBar(context) {
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
   void updateStatusBar('unknown');
+  startStatusPolling();
 }
 
-async function updateStatusBar(state, port) {
+async function updateStatusBar(state, port, stats) {
   if (!statusBarItem) {
     return;
   }
   if (state === 'ok') {
-    statusBarItem.text = `$(debug-start) SaulDaemon ON${port ? ` :${port}` : ''}`;
+    if (stats && typeof stats.index === 'number') {
+      statusBarItem.text = `$(law) Saul Index: ${Math.round(stats.index)}`;
+      statusBarItem.tooltip = `Índice ${stats.index} — atualizado em ${formatTimestamp(stats.updatedAt)}${port ? ` (porta ${port})` : ''}`;
+    } else {
+      statusBarItem.text = `$(debug-start) SaulDaemon ON${port ? ` :${port}` : ''}`;
+      statusBarItem.tooltip = 'SaulDaemon conectado';
+    }
     statusBarItem.color = undefined;
   } else if (state === 'error') {
     statusBarItem.text = '$(error) SaulDaemon OFF';
     statusBarItem.color = new vscode.ThemeColor('errorForeground');
+    statusBarItem.tooltip = 'SaulDaemon indisponível';
   } else if (state === 'disabled') {
     statusBarItem.text = '$(circle-slash) SaulDaemon disabled';
     statusBarItem.color = undefined;
+    statusBarItem.tooltip = 'Integração VS Code desativada';
   } else {
     statusBarItem.text = '$(loading~spin) SaulDaemon ...';
     statusBarItem.color = undefined;
+    statusBarItem.tooltip = 'Verificando SaulDaemon';
   }
+}
+
+function startStatusPolling() {
+  const run = async () => {
+    const config = readConfig();
+    if (!config.enabled) {
+      await updateStatusBar('disabled');
+      return;
+    }
+    const key = config.pairingKey?.trim();
+    if (!key) {
+      await updateStatusBar('error');
+      return;
+    }
+    const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
+    let endpoint;
+    try {
+      endpoint = new URL('/v1/tracking/index', baseUrl);
+    } catch {
+      await updateStatusBar('error');
+      return;
+    }
+    endpoint.searchParams.set('key', key);
+    endpoint.searchParams.set('date', new Date().toISOString().slice(0, 10));
+
+    try {
+      const res = await fetchWithTimeout(endpoint.toString(), 4000);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const body = await res.json();
+      await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), body);
+    } catch (error) {
+      await updateStatusBar('error');
+    }
+  };
+
+  if (statusPollTimer) {
+    clearInterval(statusPollTimer);
+  }
+  void run();
+  statusPollTimer = setInterval(run, 60000);
 }
 
 async function postHeartbeat(apiBase, payload) {

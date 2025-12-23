@@ -86,7 +86,9 @@ function ensureEntry(key, dateKey) {
       switches: 0,
       sessionIds: [],
       timeline: [],
-      switchHourly: Array.from({ length: 24 }, () => 0)
+      switchHourly: Array.from({ length: 24 }, () => 0),
+      index: null,
+      indexUpdatedAt: null
     };
     return state.byKey[key][dateKey];
   }
@@ -109,6 +111,12 @@ function ensureEntry(key, dateKey) {
   }
   if (!Array.isArray(entry.timeline)) {
     entry.timeline = [];
+  }
+  if (typeof entry.index !== 'number') {
+    entry.index = null;
+  }
+  if (typeof entry.indexUpdatedAt !== 'number') {
+    entry.indexUpdatedAt = null;
   }
   return entry;
 }
@@ -259,8 +267,59 @@ function handleSummary(res, url) {
     sessions: entry.sessions ?? 0,
     switches,
     switchHourly,
-    timeline: Array.isArray(entry.timeline) ? entry.timeline : []
+    timeline: Array.isArray(entry.timeline) ? entry.timeline : [],
+    index: typeof entry.index === 'number' ? entry.index : null,
+    indexUpdatedAt: typeof entry.indexUpdatedAt === 'number' ? entry.indexUpdatedAt : null
   });
+}
+
+async function handleIndex(req, res, url) {
+  const method = req.method ?? 'GET';
+  const keyFromQuery = url.searchParams.get('key') ?? '';
+
+  if (method === 'GET') {
+    if (!validateKey(keyFromQuery)) {
+      sendError(res, 401, 'Invalid key');
+      return;
+    }
+    const dateKey = parseDateKey(url.searchParams.get('date'));
+    const entry = ensureEntry(keyFromQuery, dateKey);
+    sendJson(res, 200, {
+      index: typeof entry.index === 'number' ? entry.index : null,
+      updatedAt: typeof entry.indexUpdatedAt === 'number' ? entry.indexUpdatedAt : null,
+      productiveMs: entry.totalActiveMs ?? 0,
+      sessions: entry.sessions ?? 0
+    });
+    return;
+  }
+
+  if (method === 'POST') {
+    try {
+      const body = await readJsonBody(req);
+      const key = body.key ?? keyFromQuery;
+      if (!validateKey(key)) {
+        sendError(res, 401, 'Invalid key');
+        return;
+      }
+      const indexValue = Number(body.index);
+      if (!Number.isFinite(indexValue)) {
+        sendError(res, 400, 'index must be a number');
+        return;
+      }
+      const timestamp = Number(body.updatedAt ?? Date.now());
+      const dateKey = parseDateKey(body.date ?? url.searchParams.get('date'));
+      const entry = ensureEntry(key, dateKey);
+      entry.index = indexValue;
+      entry.indexUpdatedAt = Number.isFinite(timestamp) ? timestamp : Date.now();
+      await persistState();
+      sendNoContent(res);
+    } catch (error) {
+      sendError(res, 400, error.message ?? 'Invalid payload');
+    }
+    return;
+  }
+
+  sendError(res, 405, 'Method not allowed');
 }
 
 async function start() {
@@ -285,6 +344,11 @@ async function start() {
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/tracking/vscode/summary') {
       handleSummary(res, parsedUrl);
+      return;
+    }
+
+    if (parsedUrl.pathname === '/v1/tracking/index') {
+      await handleIndex(req, res, parsedUrl);
       return;
     }
 

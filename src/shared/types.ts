@@ -68,6 +68,13 @@ export interface DailyMetrics {
   vscodeSwitchHourly?: number[];
 }
 
+export interface ApiStats {
+  index: number;
+  updatedAt: number;
+  productiveMs: number;
+  procrastinationMs: number;
+}
+
 export interface TabSwitchBreakdown {
   productiveToProductive: number;
   productiveToProcrastination: number;

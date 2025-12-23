@@ -9,7 +9,8 @@ import {
   createEmptyTimeline,
   getDailyMetrics,
   getSettings,
-  saveDailyMetrics
+  saveDailyMetrics,
+  saveSettings
 } from '../shared/storage.js';
 import {
   ActivityPingPayload,
@@ -555,6 +556,7 @@ async function persistMetrics(): Promise<void> {
   metricsCache.lastUpdated = Date.now();
 
   await saveDailyMetrics(metricsCache);
+  void publishIndexToDaemon(metricsCache, settings);
   await updateBadgeText(metricsCache.currentIndex);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
@@ -568,6 +570,7 @@ async function refreshScore(): Promise<void> {
   metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
 
   await saveDailyMetrics(metricsCache);
+  void publishIndexToDaemon(metricsCache, settings);
   await updateBadgeText(metricsCache.currentIndex);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
 }
@@ -650,6 +653,51 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   }
 
   return settingsCache;
+}
+
+async function publishIndexToDaemon(
+  metrics: DailyMetrics,
+  settings: ExtensionSettings
+): Promise<void> {
+  try {
+    if (!settings.vscodeIntegrationEnabled) {
+      return;
+    }
+    const key = settings.vscodePairingKey?.trim();
+    if (!key) {
+      return;
+    }
+    const baseUrl = (settings.vscodeLocalApiUrl?.trim() || 'http://127.0.0.1:3123').trim();
+    let endpoint: URL;
+    try {
+      endpoint = new URL('/v1/tracking/index', baseUrl);
+    } catch {
+      return;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    try {
+      await fetch(endpoint.toString(), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key,
+          index: metrics.currentIndex,
+          updatedAt: metrics.lastUpdated,
+          date: metrics.dateKey,
+          productiveMs: metrics.productiveMs,
+          procrastinationMs: metrics.procrastinationMs
+        }),
+        signal: controller.signal
+      });
+    } catch (error) {
+      console.warn('Falha ao publicar índice para o SaulDaemon', error);
+    } finally {
+      clearTimeout(timer);
+    }
+  } catch (error) {
+    console.warn('Erro inesperado ao publicar índice', error);
+  }
 }
 
 function clearCachedVscodeMetrics(metrics: DailyMetrics): boolean {
