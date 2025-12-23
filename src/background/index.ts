@@ -131,10 +131,6 @@ chrome.tabs.onActivated.addListener(({ tabId }) => {
   void syncCriticalStateToTab(tabId);
 });
 
-chrome.tabs.onRemoved.addListener(() => {
-  void updateRestoredItems();
-});
-
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (!tab.active) {
     return;
@@ -966,11 +962,14 @@ async function updateRestoredItems(): Promise<void> {
       return acc;
     }, 0);
 
-    if (countToday === metrics.restoredItems) {
+    const current = metrics.restoredItems ?? 0;
+    const next = Math.max(current, countToday);
+
+    if (next === current) {
       return;
     }
 
-    metrics.restoredItems = countToday;
+    metrics.restoredItems = next;
     await persistMetrics();
   } catch (error) {
     console.warn('Falha ao atualizar abas fechadas', error);
