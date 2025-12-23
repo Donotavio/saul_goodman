@@ -36,6 +36,27 @@ body {
   line-height: 1.6;
 }
 
+.blog-hero-visual {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.blog-hero-visual img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--black);
+  background: #fff;
+  padding: 6px;
+}
+
+.blog-hero-visual span {
+  font-weight: 700;
+  color: var(--brown);
+}
+
 .blog-categories {
   display: flex;
   flex-wrap: wrap;
