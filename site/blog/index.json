@@ -85,6 +85,28 @@
       "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
     },
     {
+      "title": "Mutantes no Código: A Revolução que Você Não Pediu",
+      "url": "./post/?post=2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
+      "markdown": "2025/2025-12-23-mutantes-no-codigo-a-revolucao-que-voce-nao-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "mutation-testing",
+        "Stryker",
+        "qualidade",
+        "dev",
+        "sarcasmo"
+      ],
+      "excerpt": "Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...",
+      "source_title": "Mutation Testing com Stryker",
+      "source_url": "https://dev.to/lucaspereiradesouzat/mutation-testing-com-stryker-1360",
+      "source_published_at": "Tue, 23 Dec 2025 16:15:41 +0000",
+      "title_en": "Mutants in Code: The Revolution You Didn't Ask For",
+      "title_es": "Mutantes en el Código: La Revolución que No Pediste",
+      "excerpt_en": "Discover how Stryker turns your code into a battlefield. And you thought debugging was complicated...",
+      "excerpt_es": "Descubre cómo Stryker transforma tu código en un campo de batalla. Y tú pensando que depurar era complicado..."
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
       "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
       "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
