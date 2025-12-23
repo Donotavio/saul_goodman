@@ -52,17 +52,39 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+const isDynamicResource = (request) => {
+  try {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+    return pathname.endsWith('/blog/index.json') || pathname.endsWith('/blog/rss.xml');
+  } catch {
+    return false;
+  }
+};
+
+const cacheAndReturn = async (request, response) => {
+  const responseClone = response.clone();
+  const cache = await caches.open(CACHE_NAME);
+  cache.put(request, responseClone);
+  return response;
+};
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  if (isDynamicResource(event.request)) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => cacheAndReturn(event.request, networkResponse))
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) return cachedResponse;
       return fetch(event.request)
-        .then((response) => {
-          const cloned = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, cloned));
-          return response;
-        })
+        .then((response) => cacheAndReturn(event.request, response))
         .catch((error) => Promise.reject(error));
     })
   );
