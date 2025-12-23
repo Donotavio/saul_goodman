@@ -139,7 +139,12 @@ async function fetchCandidates(config, posted) {
 
   for (const feed of config.feeds) {
     try {
-      const response = await fetch(feed.url, { headers: { Accept: 'application/rss+xml,application/atom+xml,text/xml' } });
+      const response = await fetch(feed.url, {
+        headers: {
+          Accept: 'application/rss+xml,application/atom+xml,text/xml',
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0 Safari/537.36',
+        },
+      });
       if (!response.ok) {
         console.warn(`Feed ${feed.url} retornou ${response.status}`);
         continue;

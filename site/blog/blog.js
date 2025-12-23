@@ -42,6 +42,16 @@ const BLOG_TRANSLATIONS = {
     metaSource: 'Fonte',
     metaSourceUrl: 'URL da fonte',
     metaPublishedAt: 'Publicado em',
+    mediaTaglineProcrastinacao: 'Osciloscópios emocionais e sarcasmo terapêutico.',
+    mediaTaglineFoco: 'Foco e atenção sob interrogatório diário.',
+    mediaTaglineDev: 'Performance dev julgada por métricas reais.',
+    mediaTaglineRemoto: 'Home office sem álibi e sem modo fantasma.',
+    shareTitle: 'Compartilhar',
+    shareTwitter: 'Twitter',
+    shareLinkedin: 'LinkedIn',
+    shareCopy: 'Copiar link',
+    shareCopied: 'Link copiado!',
+    shareCopyPrompt: 'Copie o link para compartilhar:'
   },
   en: {
     languageLabel: 'Select language',
@@ -79,6 +89,16 @@ const BLOG_TRANSLATIONS = {
     metaSource: 'Source',
     metaSourceUrl: 'Source URL',
     metaPublishedAt: 'Published at',
+    mediaTaglineProcrastinacao: 'Mental oscilloscopes meet Saul’s therapeutic sarcasm.',
+    mediaTaglineFoco: 'Focus and attention under daily questioning.',
+    mediaTaglineDev: 'Dev performance judged by hard metrics.',
+    mediaTaglineRemoto: 'Remote work with zero ghost-mode excuses.',
+    shareTitle: 'Share',
+    shareTwitter: 'Twitter',
+    shareLinkedin: 'LinkedIn',
+    shareCopy: 'Copy link',
+    shareCopied: 'Link copied!',
+    shareCopyPrompt: 'Copy this link to share:'
   },
   es: {
     languageLabel: 'Seleccionar idioma',
@@ -120,6 +140,12 @@ const BLOG_TRANSLATIONS = {
     mediaTaglineFoco: 'Foco digital bajo interrogatorio permanente.',
     mediaTaglineDev: 'Performance dev con jurado técnico.',
     mediaTaglineRemoto: 'Trabajo remoto sin coartada ni modo fantasma.',
+    shareTitle: 'Compartir',
+    shareTwitter: 'Twitter',
+    shareLinkedin: 'LinkedIn',
+    shareCopy: 'Copiar enlace',
+    shareCopied: '¡Enlace copiado!',
+    shareCopyPrompt: 'Copia este enlace para compartir:'
   },
 };
 
@@ -494,6 +520,20 @@ function formatDate(dateStr) {
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
+function formatDateTime(dateStr) {
+  const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return dateStr;
+  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  return date.toLocaleString(locale, {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+}
+
 function buildPostLink(post) {
   const path = (post.markdown || post.path || '').replace(/^\//, '') || post.url;
   if (!path) return '#';
@@ -577,6 +617,8 @@ async function renderIndex() {
 }
 
 function renderMetadata(meta, container) {
+  const target = container || document.querySelector('.metadata-panel') || document.querySelector('.metadata-footer');
+  if (!target) return;
   const dl = document.createElement('dl');
 
   const add = (label, value) => {
@@ -584,19 +626,80 @@ function renderMetadata(meta, container) {
     const dt = document.createElement('dt');
     dt.textContent = label;
     const dd = document.createElement('dd');
-    dd.textContent = Array.isArray(value) ? value.join(', ') : value;
+    if (value instanceof HTMLElement) {
+      dd.appendChild(value);
+    } else if (Array.isArray(value)) {
+      dd.textContent = value.join(', ');
+    } else {
+      dd.textContent = value;
+    }
     dl.append(dt, dd);
   };
 
   add(t('metaCategory'), getCategoryLabel(meta.category));
-  const tagValue = Array.isArray(meta.tags) ? meta.tags.join(', ') : meta.tags;
-  add(t('metaTags'), tagValue);
+  const tagValue = Array.isArray(meta.tags)
+    ? meta.tags
+    : typeof meta.tags === 'string'
+    ? meta.tags.split(',').map((tag) => tag.trim()).filter(Boolean)
+    : [];
+  if (tagValue.length) {
+    const list = document.createElement('ul');
+    tagValue.forEach((tag) => {
+      const item = document.createElement('li');
+      item.textContent = tag;
+      list.appendChild(item);
+    });
+    add(t('metaTags'), list);
+  } else {
+    add(t('metaTags'), '—');
+  }
   add(t('metaSource'), meta.source_title);
   add(t('metaSourceUrl'), meta.source_url);
-  add(t('metaPublishedAt'), meta.source_published_at);
+  add(t('metaPublishedAt'), formatDateTime(meta.source_published_at));
 
-  container.innerHTML = '';
-  container.appendChild(dl);
+  target.innerHTML = '';
+  target.appendChild(dl);
+}
+
+function setupShareButtons(meta, localizedTitle) {
+  const container = document.querySelector('.post-share');
+  if (!container) return;
+  const feedback = container.querySelector('.share-feedback');
+  if (feedback) {
+    feedback.hidden = true;
+    feedback.textContent = t('shareCopied');
+  }
+  const url = window.location.href;
+  const shareLinks = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(localizedTitle)}&url=${encodeURIComponent(url)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+  };
+
+  container.querySelectorAll('.share-btn').forEach((btn) => {
+    const type = btn.dataset.share;
+    btn.onclick = null;
+    if (type === 'copy') {
+      btn.onclick = async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(url);
+            if (feedback) {
+              feedback.hidden = false;
+              setTimeout(() => {
+                feedback.hidden = true;
+              }, 2000);
+            }
+          } else {
+            window.prompt(t('shareCopyPrompt'), url);
+          }
+        } catch (error) {
+          window.prompt(t('shareCopyPrompt'), url);
+        }
+      };
+    } else if (shareLinks[type]) {
+      btn.onclick = () => window.open(shareLinks[type], '_blank', 'noopener');
+    }
+  });
 }
 
 function sanitizePostPath(value) {
@@ -647,10 +750,12 @@ async function renderPost() {
   const params = new URLSearchParams(window.location.search);
   const postParam = sanitizePostPath(params.get('post'));
   const postContainer = document.querySelector('.post-body');
+  const metadataPanel = document.querySelector('.metadata-panel');
   const footer = document.querySelector('.metadata-footer');
   if (!postParam || !postContainer) {
     postContainer.innerHTML = `<div class="empty-state">${t('postNotFound')}</div>`;
     postContainer.removeAttribute('data-i18n');
+    if (metadataPanel) metadataPanel.innerHTML = '';
     if (footer) footer.innerHTML = '';
     return;
   }
@@ -663,6 +768,7 @@ async function renderPost() {
     if (!data.title || !data.date) {
       postContainer.innerHTML = `<div class="empty-state">${t('postInvalid')}</div>`;
       postContainer.removeAttribute('data-i18n');
+      if (metadataPanel) metadataPanel.innerHTML = '';
       if (footer) footer.innerHTML = '';
       return;
     }
@@ -689,11 +795,13 @@ async function renderPost() {
     postContainer.innerHTML = markdownToHtml(cleanedBody);
     postContainer.removeAttribute('data-i18n');
 
-    if (footer) renderMetadata(data, footer);
+    if (metadataPanel || footer) renderMetadata(data, metadataPanel || footer);
+    setupShareButtons(data, localizedTitle);
   } catch (error) {
     console.error('Failed to load blog post', error);
     postContainer.innerHTML = `<div class="empty-state">${t('postLoadError')}: ${error.message}</div>`;
     postContainer.removeAttribute('data-i18n');
+    if (metadataPanel) metadataPanel.innerHTML = '';
     if (footer) footer.innerHTML = '';
   }
 }
