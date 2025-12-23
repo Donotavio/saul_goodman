@@ -9,6 +9,146 @@ const child_process = require('child_process');
 let statusBarItem = null;
 let statusPollTimer = null;
 
+const SUPPORTED_LANGUAGES = ['en-US', 'pt-BR', 'es-419'];
+const DEFAULT_LANGUAGE = 'en-US';
+const LANGUAGE_ALIASES = {
+  'en': 'en-US',
+  'en-us': 'en-US',
+  'pt': 'pt-BR',
+  'pt-br': 'pt-BR',
+  'es': 'es-419',
+  'es-419': 'es-419'
+};
+
+const MESSAGES = {
+  'en-US': {
+    'status.index.text': 'Saul Index: {index}',
+    'status.index.tooltip': 'Index {index} — updated at {time}{port}',
+    'status.portSuffix': ' (port {port})',
+    'status.on.text': 'SaulDaemon ON{port}',
+    'status.on.tooltip': 'SaulDaemon connected',
+    'status.off.text': 'SaulDaemon OFF',
+    'status.off.tooltip': 'SaulDaemon unavailable',
+    'status.disabled.text': 'SaulDaemon disabled',
+    'status.disabled.tooltip': 'VS Code integration is disabled',
+    'status.loading.text': 'Checking SaulDaemon...',
+    'status.loading.tooltip': 'Checking SaulDaemon',
+    'prepare.keyTitle': 'Saul Goodman: pairing key',
+    'prepare.keyPrompt': 'Enter the same key configured in the Chrome extension.',
+    'prepare.portTitle': 'Saul Goodman: daemon port',
+    'prepare.portPrompt': 'Local HTTP port of the daemon.',
+    'prepare.missingDaemon': 'Cannot find saul-daemon/index.cjs. Open the repository root before starting the daemon.',
+    'prepare.started': 'SaulDaemon started in background (port {port}, key {key}). Logs saved at {logFile}.',
+    'prepare.startFailed': 'Failed to start SaulDaemon: {error}',
+    'prompt.missingKey.title': 'Saul Goodman: configure a pairing key',
+    'prompt.missingKey.prompt': 'Enter the same key configured in the Chrome extension.',
+    'prompt.missingKey.warning': 'Without a pairing key we cannot send active time. Open settings now?',
+    'prompt.missingKey.openSettings': 'Open settings',
+    'test.healthSuccess': 'SaulDaemon responded at {origin}',
+    'test.healthStatus': 'SaulDaemon responded with status {status} at {origin}',
+    'test.healthFailure': 'SaulDaemon did not respond at {origin}: {error}'
+  },
+  'pt-BR': {
+    'status.index.text': 'Índice do Saul: {index}',
+    'status.index.tooltip': 'Índice {index} — atualizado em {time}{port}',
+    'status.portSuffix': ' (porta {port})',
+    'status.on.text': 'SaulDaemon ON{port}',
+    'status.on.tooltip': 'SaulDaemon conectado',
+    'status.off.text': 'SaulDaemon OFF',
+    'status.off.tooltip': 'SaulDaemon indisponível',
+    'status.disabled.text': 'SaulDaemon desativado',
+    'status.disabled.tooltip': 'Integração VS Code desativada',
+    'status.loading.text': 'Verificando SaulDaemon...',
+    'status.loading.tooltip': 'Verificando SaulDaemon',
+    'prepare.keyTitle': 'Saul Goodman: pairing key do SaulDaemon',
+    'prepare.keyPrompt': 'Use a mesma chave configurada na extensão Chrome.',
+    'prepare.portTitle': 'Saul Goodman: porta do SaulDaemon',
+    'prepare.portPrompt': 'Porta HTTP local do daemon.',
+    'prepare.missingDaemon': 'Pasta saul-daemon/index.cjs não encontrada. Abra o repositório raiz antes de iniciar o daemon.',
+    'prepare.started': 'SaulDaemon iniciado em background (porta {port}, key {key}). Logs em {logFile}.',
+    'prepare.startFailed': 'Falha ao iniciar SaulDaemon: {error}',
+    'prompt.missingKey.title': 'Saul Goodman: configure uma pairing key',
+    'prompt.missingKey.prompt': 'Digite a mesma chave configurada na extensão Chrome.',
+    'prompt.missingKey.warning': 'Sem pairing key não enviaremos tempo. Abrir configurações agora?',
+    'prompt.missingKey.openSettings': 'Abrir configurações',
+    'test.healthSuccess': 'SaulDaemon respondeu em {origin}',
+    'test.healthStatus': 'SaulDaemon respondeu com status {status} em {origin}',
+    'test.healthFailure': 'SaulDaemon não respondeu em {origin}: {error}'
+  },
+  'es-419': {
+    'status.index.text': 'Índice de Saul: {index}',
+    'status.index.tooltip': 'Índice {index} — actualizado a las {time}{port}',
+    'status.portSuffix': ' (puerto {port})',
+    'status.on.text': 'SaulDaemon ON{port}',
+    'status.on.tooltip': 'SaulDaemon conectado',
+    'status.off.text': 'SaulDaemon OFF',
+    'status.off.tooltip': 'SaulDaemon no disponible',
+    'status.disabled.text': 'SaulDaemon deshabilitado',
+    'status.disabled.tooltip': 'Integración VS Code desactivada',
+    'status.loading.text': 'Verificando SaulDaemon...',
+    'status.loading.tooltip': 'Verificando SaulDaemon',
+    'prepare.keyTitle': 'Saul Goodman: clave de emparejamiento',
+    'prepare.keyPrompt': 'Usa la misma clave configurada en la extensión de Chrome.',
+    'prepare.portTitle': 'Saul Goodman: puerto del SaulDaemon',
+    'prepare.portPrompt': 'Puerto HTTP local del daemon.',
+    'prepare.missingDaemon': 'No se encontró saul-daemon/index.cjs. Abre la raíz del repositorio antes de iniciar el daemon.',
+    'prepare.started': 'SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}.',
+    'prepare.startFailed': 'Error al iniciar SaulDaemon: {error}',
+    'prompt.missingKey.title': 'Saul Goodman: configura una clave',
+    'prompt.missingKey.prompt': 'Ingresa la misma clave configurada en la extensión de Chrome.',
+    'prompt.missingKey.warning': 'Sin clave de emparejamiento no enviaremos tiempo. ¿Abrir configuraciones ahora?',
+    'prompt.missingKey.openSettings': 'Abrir configuraciones',
+    'test.healthSuccess': 'SaulDaemon respondió en {origin}',
+    'test.healthStatus': 'SaulDaemon respondió con estado {status} en {origin}',
+    'test.healthFailure': 'SaulDaemon no respondió en {origin}: {error}'
+  }
+};
+
+function getPreferredLanguage() {
+  try {
+    const config = vscode.workspace.getConfiguration('saulGoodman');
+    const configured = config.get('language', 'auto');
+    if (configured && configured !== 'auto' && SUPPORTED_LANGUAGES.includes(configured)) {
+      return configured;
+    }
+  } catch {
+    // ignore configuration errors
+  }
+  const envLang = (vscode.env.language ?? '').toLowerCase();
+  if (LANGUAGE_ALIASES[envLang]) {
+    return LANGUAGE_ALIASES[envLang];
+  }
+  const short = envLang.split('-')[0];
+  if (LANGUAGE_ALIASES[short]) {
+    return LANGUAGE_ALIASES[short];
+  }
+  return DEFAULT_LANGUAGE;
+}
+
+function localize(key, params) {
+  const lang = getPreferredLanguage();
+  const bundle = MESSAGES[lang] ?? MESSAGES[DEFAULT_LANGUAGE];
+  const fallback = MESSAGES[DEFAULT_LANGUAGE];
+  const template = bundle[key] ?? fallback[key] ?? key;
+  return formatMessage(template, params);
+}
+
+function formatMessage(message, params = {}) {
+  return message.replace(/\{(\w+)\}/g, (match, token) => {
+    const value = params[token];
+    return value === undefined || value === null ? '' : String(value);
+  });
+}
+
+function formatTimestamp(value) {
+  const lang = getPreferredLanguage();
+  const date = new Date(typeof value === 'number' ? value : Date.now());
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+  return date.toLocaleString(lang);
+}
+
 function activate(context) {
   const tracker = new ActivityTracker();
   context.subscriptions.push(tracker);
@@ -193,8 +333,8 @@ function readConfig() {
 async function prepareDaemonCommand() {
   const config = readConfig();
   const keyInput = await vscode.window.showInputBox({
-    title: 'Saul Goodman: pairing key do SaulDaemon',
-    prompt: 'Use a mesma chave da extensão Chrome',
+    title: localize('prepare.keyTitle'),
+    prompt: localize('prepare.keyPrompt'),
     value: config.pairingKey?.trim() || '',
     ignoreFocusOut: true
   });
@@ -207,8 +347,8 @@ async function prepareDaemonCommand() {
     .update('pairingKey', key, vscode.ConfigurationTarget.Global);
 
   const portInput = await vscode.window.showInputBox({
-    title: 'Saul Goodman: porta do SaulDaemon',
-    prompt: 'Porta HTTP local do daemon',
+    title: localize('prepare.portTitle'),
+    prompt: localize('prepare.portPrompt'),
     value: inferPortFromApiBase(config.apiBase) || '3123',
     ignoreFocusOut: true
   });
@@ -223,9 +363,7 @@ async function prepareDaemonCommand() {
   const daemonExists = Boolean(daemonIndex && fs.existsSync(daemonIndex));
 
   if (!daemonExists) {
-    vscode.window.showErrorMessage(
-      'Pasta saul-daemon/index.cjs não encontrada. Abra o repositório raiz antes de iniciar o daemon.'
-    );
+    vscode.window.showErrorMessage(localize('prepare.missingDaemon'));
     return;
   }
 
@@ -255,12 +393,12 @@ async function prepareDaemonCommand() {
       fs.closeSync(stderrFd);
     }
     vscode.window.showInformationMessage(
-      `SaulDaemon iniciado em background (porta ${port}, key ${key}). Logs: ${logFile}`
+      localize('prepare.started', { port, key, logFile })
     );
     void updateStatusBar('ok', port);
     tracker.reloadConfig?.();
   } catch (error) {
-    vscode.window.showErrorMessage(`Falha ao iniciar SaulDaemon: ${error.message}`);
+    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: error.message }));
     void updateStatusBar('error');
   }
 }
