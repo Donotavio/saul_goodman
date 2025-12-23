@@ -8,6 +8,7 @@ const child_process = require('child_process');
 
 let statusBarItem = null;
 let statusPollTimer = null;
+let trackerInstance = null;
 
 const SUPPORTED_LANGUAGES = ['en-US', 'pt-BR', 'es-419'];
 const DEFAULT_LANGUAGE = 'en-US';
@@ -156,8 +157,8 @@ function formatTimestamp(value) {
 }
 
 function activate(context) {
-  const tracker = new ActivityTracker();
-  context.subscriptions.push(tracker);
+  trackerInstance = new ActivityTracker();
+  context.subscriptions.push(trackerInstance);
   context.subscriptions.push(
     vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand())
   );
@@ -172,6 +173,8 @@ function deactivate() {
     clearInterval(statusPollTimer);
     statusPollTimer = null;
   }
+  trackerInstance?.dispose?.();
+  trackerInstance = null;
 }
 
 class ActivityTracker {
@@ -407,7 +410,7 @@ async function prepareDaemonCommand() {
       localize('prepare.started', { port, key, logFile })
     );
     void updateStatusBar('ok', port);
-    tracker.reloadConfig?.();
+    trackerInstance?.reloadConfig?.();
   } catch (error) {
     vscode.window.showErrorMessage(localize('prepare.startFailed', { error: error.message }));
     void updateStatusBar('error');
