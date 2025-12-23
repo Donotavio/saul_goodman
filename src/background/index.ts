@@ -97,6 +97,7 @@ const messageHandlers: Record<
     const settings = await getSettingsCache();
     applyIdleDetectionInterval(settings);
     await syncBlockingRules(settings);
+    await syncVscodeMetrics(true);
     await refreshScore();
   }
 };
@@ -602,24 +603,65 @@ async function getSettingsCache(): Promise<ExtensionSettings> {
   return settingsCache;
 }
 
+function clearCachedVscodeMetrics(metrics: DailyMetrics): boolean {
+  let changed = false;
+
+  if (typeof metrics.vscodeActiveMs !== 'number' || metrics.vscodeActiveMs !== 0) {
+    metrics.vscodeActiveMs = 0;
+    changed = true;
+  }
+
+  if (typeof metrics.vscodeSessions !== 'number' || metrics.vscodeSessions !== 0) {
+    metrics.vscodeSessions = 0;
+    changed = true;
+  }
+
+  if (typeof metrics.vscodeSwitches !== 'number' || metrics.vscodeSwitches !== 0) {
+    metrics.vscodeSwitches = 0;
+    changed = true;
+  }
+
+  if (Array.isArray(metrics.vscodeTimeline) && metrics.vscodeTimeline.length) {
+    metrics.vscodeTimeline = [];
+    changed = true;
+  }
+
+  const needsSwitchHourlyReset =
+    !Array.isArray(metrics.vscodeSwitchHourly) ||
+    metrics.vscodeSwitchHourly.length !== 24 ||
+    metrics.vscodeSwitchHourly.some((value) => value !== 0);
+
+  if (needsSwitchHourlyReset) {
+    metrics.vscodeSwitchHourly = Array.from({ length: 24 }, () => 0);
+    changed = true;
+  }
+
+  return changed;
+}
+
 /**
  * Consulta o SaulDaemon local para trazer o resumo diário de uso do VS Code.
  * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
  * Resposta: { totalActiveMs: number; sessions: number }
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
-  const now = Date.now();
-  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
+  const settings = await getSettingsCache();
+  const metrics = await getMetricsCache();
+  const pairingKey = settings.vscodePairingKey;
+  const integrationDisabled =
+    !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
+
+  if (integrationDisabled) {
+    const cleared = clearCachedVscodeMetrics(metrics);
+    if (cleared) {
+      await persistMetrics();
+    }
+    lastVscodeSyncAt = 0;
     return;
   }
 
-  const settings = await getSettingsCache();
-
-  if (
-    !settings.vscodeIntegrationEnabled ||
-    !settings.vscodeLocalApiUrl ||
-    !settings.vscodePairingKey
-  ) {
+  const now = Date.now();
+  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
     return;
   }
 
@@ -632,7 +674,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     return;
   }
   url.searchParams.set('date', getTodayKey());
-  url.searchParams.set('key', settings.vscodePairingKey);
+  url.searchParams.set('key', pairingKey);
 
   try {
     const response = await fetch(url.toString());
@@ -641,7 +683,6 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     }
 
     const summary = (await response.json()) as VscodeSummaryResponse;
-    const metrics = await getMetricsCache();
     metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
     metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
     metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
