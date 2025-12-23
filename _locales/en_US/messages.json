@@ -473,6 +473,9 @@
   "options_vscode_test_unauthorized": {
     "message": "Pairing key mismatch. Use the same key in Chrome and VS Code."
   },
+  "options_vscode_test_restart_hint": {
+    "message": "Se a chave estiver correta, reinicie o SaulDaemon com a nova key e teste novamente."
+  },
   "label_vscode": {
     "message": "VS Code (IDE)"
   },

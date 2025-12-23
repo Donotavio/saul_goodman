@@ -453,7 +453,7 @@
     "message": "Probando conexión..."
   },
   "options_vscode_test_success": {
-    "message": "SaulDaemon respondió en {origin}."
+    "message": "SaulDaemon respondió en {origin}. Sesiones hoy: {sessions}. Minutos activos: {minutes}."
   },
   "options_vscode_test_error": {
     "message": "Fallo al conectar con SaulDaemon ({reason})."
@@ -471,7 +471,7 @@
     "message": "Fallo al acceder a {origin}/health ({reason})."
   },
   "options_vscode_test_unauthorized": {
-    "message": "Clave distinta. Usa la misma key en Chrome y en VS Code."
+    "message": "Clave distinta. Usa la misma key en Chrome y en VS Code y reinicia el SaulDaemon antes de testar de nuevo."
   },
   "label_vscode": {
     "message": "VS Code (IDE)"

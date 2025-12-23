@@ -198,6 +198,9 @@ async function prepareDaemonCommand() {
     return;
   }
   const key = keyInput.trim() || 'sua-chave';
+  await vscode.workspace
+    .getConfiguration('saulGoodman')
+    .update('pairingKey', key, vscode.ConfigurationTarget.Global);
 
   const portInput = await vscode.window.showInputBox({
     title: 'Saul Goodman: porta do SaulDaemon',
@@ -251,6 +254,7 @@ async function prepareDaemonCommand() {
       `SaulDaemon iniciado em background (porta ${port}, key ${key}). Logs: ${logFile}`
     );
     void updateStatusBar('ok', port);
+    tracker.reloadConfig?.();
   } catch (error) {
     vscode.window.showErrorMessage(`Falha ao iniciar SaulDaemon: ${error.message}`);
     void updateStatusBar('error');
