@@ -1,75 +1,6 @@
 {
   "posts": [
     {
-      "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
-      "url": "./posts/2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios/",
-      "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
-      "date": "2025-12-23",
-      "category": "procrastinacao",
-      "tags": [
-        "debugging",
-        "procrastinação",
-        "desenvolvimento",
-        "tecnologia",
-        "humor"
-      ],
-      "excerpt": "Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.",
-      "tone": "incredulo",
-      "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
-      "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
-      "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
-      "source_url": "https://dev.to/mda2av/from-serial-ports-to-websockets-debugging-across-two-worlds-2l7o",
-      "source_published_at": "Tue, 23 Dec 2025 14:07:19 +0000",
-      "excerpt_en": "Oscilloscopes, endless tabs, and procrastination share the same courtroom in a developer's routine.",
-      "excerpt_es": "Osciloscopios, pestañas infinitas y procrastinación comparten la misma sala de juicio en la vida de un dev."
-    },
-    {
-      "title": "Foco? Só se for na Netflix!",
-      "url": "./posts/2025/2025-12-23-foco-so-se-for-na-netflix/",
-      "markdown": "2025/2025-12-23-foco-so-se-for-na-netflix.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "foco",
-        "procrastinação",
-        "dev",
-        "performance",
-        "iOS"
-      ],
-      "excerpt": "Foco é o novo preto, mas a procrastinação tá fazendo sucesso na passarela.",
-      "title_en": "Focus? Only if it's on Netflix!",
-      "title_es": "¿Foco? ¡Solo si es en Netflix!",
-      "tone": "incredulo",
-      "source_title": "iOS Developer",
-      "source_url": "https://remotive.com/remote-jobs/software-development/ios-developer-1956455",
-      "source_published_at": "Tue, 09 Dec 2025 21:16:18 GMT",
-      "excerpt_en": "Focus is the new black, but procrastination is strutting down the runway.",
-      "excerpt_es": "El foco es el nuevo negro, pero la procrastinación está triunfando en la pasarela."
-    },
-    {
-      "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
-      "url": "./posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/",
-      "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "supabase",
-        "kiro",
-        "performance",
-        "programação",
-        "sarcasmo"
-      ],
-      "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
-      "tone": "nao-corte",
-      "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
-      "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
-      "source_title": "The new Supabase power for Kiro",
-      "source_url": "https://dev.to/supabase/the-new-supabase-power-for-kiro-51df",
-      "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
-      "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
-      "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
-    },
-    {
       "title": "Login Hint: O Mistério Que Ninguém Pediu",
       "url": "./posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/",
       "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
@@ -116,6 +47,94 @@
       "excerpt_es": "Descubre cómo Stryker transforma tu código en un campo de batalla. Y tú pensando que depurar era complicado..."
     },
     {
+      "title": "Terraform: O Módulo que Faz Tudo, Menos Café",
+      "url": "./posts/2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe/",
+      "markdown": "2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "terraform",
+        "módulos",
+        "infraestrutura",
+        "devops",
+        "produtividade"
+      ],
+      "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
+      "tone": "like",
+      "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
+      "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
+      "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
+      "source_url": "https://dev.to/jeeva_5c84a254e90842940dd/terraform-day-15-modules-writing-reusable-scalable-infrastructure-code-jgc",
+      "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
+      "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
+      "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
+    },
+    {
+      "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
+      "url": "./posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/",
+      "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "supabase",
+        "kiro",
+        "performance",
+        "programação",
+        "sarcasmo"
+      ],
+      "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
+      "tone": "nao-corte",
+      "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
+      "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
+      "source_title": "The new Supabase power for Kiro",
+      "source_url": "https://dev.to/supabase/the-new-supabase-power-for-kiro-51df",
+      "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
+      "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
+      "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
+    },
+    {
+      "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
+      "url": "./posts/2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios/",
+      "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "date": "2025-12-23",
+      "category": "procrastinacao",
+      "tags": [
+        "debugging",
+        "procrastinação",
+        "desenvolvimento",
+        "tecnologia",
+        "humor"
+      ],
+      "excerpt": "Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.",
+      "tone": "incredulo",
+      "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
+      "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
+      "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
+      "source_url": "https://dev.to/mda2av/from-serial-ports-to-websockets-debugging-across-two-worlds-2l7o",
+      "source_published_at": "Tue, 23 Dec 2025 14:07:19 +0000",
+      "excerpt_en": "Oscilloscopes, endless tabs, and procrastination share the same courtroom in a developer's routine.",
+      "excerpt_es": "Osciloscopios, pestañas infinitas y procrastinación comparten la misma sala de juicio en la vida de un dev."
+    },
+    {
+      "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
+      "url": "./posts/2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo/",
+      "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
+      "date": "2025-12-23",
+      "category": "procrastinacao",
+      "tags": [
+        "foco",
+        "dev",
+        "performance",
+        "trabalho-remoto",
+        "Terraform"
+      ],
+      "excerpt": "Aprenda a procrastinar como um verdadeiro artista enquanto acha que está \"solucionando\" tudo com Terraform.",
+      "tone": "incredulo",
+      "source_title": "Cómo solucionarlo con Terraform?",
+      "source_url": "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb",
+      "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
+    },
+    {
       "title": "O Fim da Procrastinação? Conheça o Yapi, o Salvador da Pátria Dev!",
       "url": "./posts/2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev/",
       "markdown": "2025/2025-12-23-o-fim-da-procrastinacao-conheca-o-yapi-o-salvador-da-patria-dev.md",
@@ -138,46 +157,27 @@
       "excerpt_es": "Yapi promete revolucionar tu productividad, pero ¿es eso realmente posible en un mundo de procrastinación incesante?"
     },
     {
-      "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
-      "url": "./posts/2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo/",
-      "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
-      "date": "2025-12-23",
-      "category": "procrastinacao",
-      "tags": [
-        "foco",
-        "dev",
-        "performance",
-        "trabalho-remoto",
-        "Terraform"
-      ],
-      "excerpt": "Aprenda a procrastinar como um verdadeiro artista enquanto acha que está \"solucionando\" tudo com Terraform.",
-      "tone": "incredulo",
-      "source_title": "Cómo solucionarlo con Terraform?",
-      "source_url": "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb",
-      "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
-    },
-    {
-      "title": "Terraform: O Módulo que Faz Tudo, Menos Café",
-      "url": "./posts/2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe/",
-      "markdown": "2025/2025-12-23-terraform-o-modulo-que-faz-tudo-menos-cafe.md",
+      "title": "Foco? Só se for na Netflix!",
+      "url": "./posts/2025/2025-12-23-foco-so-se-for-na-netflix/",
+      "markdown": "2025/2025-12-23-foco-so-se-for-na-netflix.md",
       "date": "2025-12-23",
       "category": "dev-performance",
       "tags": [
-        "terraform",
-        "módulos",
-        "infraestrutura",
-        "devops",
-        "produtividade"
+        "foco",
+        "procrastinação",
+        "dev",
+        "performance",
+        "iOS"
       ],
-      "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
-      "tone": "like",
-      "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
-      "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
-      "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
-      "source_url": "https://dev.to/jeeva_5c84a254e90842940dd/terraform-day-15-modules-writing-reusable-scalable-infrastructure-code-jgc",
-      "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
-      "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
-      "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
+      "excerpt": "Foco é o novo preto, mas a procrastinação tá fazendo sucesso na passarela.",
+      "title_en": "Focus? Only if it's on Netflix!",
+      "title_es": "¿Foco? ¡Solo si es en Netflix!",
+      "tone": "incredulo",
+      "source_title": "iOS Developer",
+      "source_url": "https://remotive.com/remote-jobs/software-development/ios-developer-1956455",
+      "source_published_at": "Tue, 09 Dec 2025 21:16:18 GMT",
+      "excerpt_en": "Focus is the new black, but procrastination is strutting down the runway.",
+      "excerpt_es": "El foco es el nuevo negro, pero la procrastinación está triunfando en la pasarela."
     },
     {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",

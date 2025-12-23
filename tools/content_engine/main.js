@@ -557,6 +557,22 @@ function ensureExcerpt(metadata, body) {
   return clean.split(' ').slice(0, 40).join(' ');
 }
 
+function getSortTime(value) {
+  if (!value) return 0;
+  const trimmed = String(value).trim();
+  if (!trimmed) return 0;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const date = new Date(`${trimmed}T00:00:00Z`);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  }
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
+function getPostSortTime(post) {
+  return getSortTime(post.source_published_at || post.date);
+}
+
 async function savePost(markdown, metadata) {
   const date = metadata.date || new Date().toISOString().slice(0, 10);
   const year = date.slice(0, 4);
@@ -600,7 +616,7 @@ async function updateIndex(metadata, markdownPath, body = '') {
 
   index.posts = index.posts.filter((p) => p.markdown !== markdownPath);
   index.posts.push(entry);
-  index.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  index.posts.sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
 
   if (DRY_RUN) {
     console.log('[dry-run] Índice atualizado na memória');

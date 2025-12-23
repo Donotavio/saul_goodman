@@ -98,6 +98,22 @@ function ensureExcerpt(metadata, body) {
   return clean.split(' ').slice(0, 40).join(' ');
 }
 
+function getSortTime(value) {
+  if (!value) return 0;
+  const trimmed = String(value).trim();
+  if (!trimmed) return 0;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const date = new Date(`${trimmed}T00:00:00Z`);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  }
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
+function getPostSortTime(post) {
+  return getSortTime(post.source_published_at || post.date);
+}
+
 async function buildIndex() {
   const markdownFiles = await readDirRecursive(POSTS_DIR);
   if (!markdownFiles.length) {
@@ -136,7 +152,7 @@ async function buildIndex() {
     await writePostPage({ relativePath, metadata, excerpt, dryRun: DRY_RUN });
   }
 
-  posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  posts.sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
   const payload = { posts };
 
   await writeRssFeed(posts, DRY_RUN);

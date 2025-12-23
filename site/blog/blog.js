@@ -613,6 +613,12 @@ function formatDateTime(dateStr) {
   });
 }
 
+function getPostSortTime(post) {
+  const raw = post?.source_published_at || post?.date;
+  const parsed = parseDateValue(raw);
+  return parsed ? parsed.getTime() : 0;
+}
+
 function normalizeCanonicalUrl(value) {
   if (!value) return '';
   const url = new URL(value, window.location.href);
@@ -739,13 +745,7 @@ function renderCards(posts, container) {
   }
 
   posts
-    .sort((a, b) => {
-      const left = parseDateValue(b.date);
-      const right = parseDateValue(a.date);
-      const leftTime = left ? left.getTime() : 0;
-      const rightTime = right ? right.getTime() : 0;
-      return leftTime - rightTime;
-    })
+    .sort((a, b) => getPostSortTime(b) - getPostSortTime(a))
     .forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-card';

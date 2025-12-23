@@ -615,6 +615,12 @@ const formatBlogDate = (value) => {
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
+const getPostSortTime = (post) => {
+  const raw = post?.source_published_at || post?.date;
+  const parsed = parseDateValue(raw);
+  return parsed ? parsed.getTime() : 0;
+};
+
 const getLocalizedValue = (data, key) => {
   if (!data) return '';
   if (currentLanguage !== 'pt') {
@@ -682,13 +688,7 @@ const renderBlogPreview = async () => {
 
   try {
     const posts = await loadBlogPreviewPosts();
-    const ordered = [...posts].sort((a, b) => {
-      const left = parseDateValue(b.date);
-      const right = parseDateValue(a.date);
-      const leftTime = left ? left.getTime() : 0;
-      const rightTime = right ? right.getTime() : 0;
-      return leftTime - rightTime;
-    });
+    const ordered = [...posts].sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
     const trimmed = ordered.slice(0, BLOG_PREVIEW_LIMIT);
     container.innerHTML = '';
     if (!trimmed.length) {
