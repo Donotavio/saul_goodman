@@ -273,6 +273,19 @@
             <p class="hint" data-i18n="options_procrastination_hint">
               Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.
             </p>
+            <label class="toggle field" for="blockProcrastination">
+              <span data-i18n="options_procrastination_block_toggle_label">
+                Bloquear acesso aos domínios desta lista
+              </span>
+              <input type="checkbox" id="blockProcrastination" aria-describedby="blockProcrastinationHint" />
+              <small
+                id="blockProcrastinationHint"
+                class="hint"
+                data-i18n="options_procrastination_block_toggle_hint"
+              >
+                Ativando, Saul bloqueia a navegação para estes domínios via regras locais do Chrome.
+              </small>
+            </label>
             <form id="procrastinationForm" class="domain-form">
               <input
                 type="text"

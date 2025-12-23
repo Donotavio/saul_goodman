@@ -455,6 +455,12 @@
   "options_procrastination_hint": {
     "message": "Aqui vivem as tentações. Se você ama um site, ele provavelmente pertence aqui."
   },
+  "options_procrastination_block_toggle_label": {
+    "message": "Bloquear acesso aos domínios desta lista"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Quando ativo, o Saul bloqueia as navegações para esses sites usando regras locais do Chrome."
+  },
   "options_procrastination_placeholder": {
     "message": "ex.: youtube.com"
   },
@@ -473,8 +479,32 @@
   "options_status_list_updated": {
     "message": "Lista atualizada."
   },
+  "options_status_blocklist_saved": {
+    "message": "Preferência de bloqueio atualizada."
+  },
   "options_status_domain_removed": {
     "message": "Domínio removido."
+  },
+  "block_page_title": {
+    "message": "Saul bloqueou este domínio"
+  },
+  "block_page_heading": {
+    "message": "Saul bloqueou este domínio"
+  },
+  "block_page_body": {
+    "message": "Você marcou este site como procrastinação. Feche a aba ou ajuste a lista se mudar de ideia."
+  },
+  "block_page_back": {
+    "message": "Voltar"
+  },
+  "block_page_options": {
+    "message": "Abrir configurações"
+  },
+  "block_page_local_note": {
+    "message": "Bloqueio local — nada sai do seu navegador."
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman desapontado"
   },
   "options_status_schedule_updated": {
     "message": "Agenda atualizada."

@@ -717,6 +717,15 @@ blockquote p {
   animation-delay: 0.3s;
 }
 
+.reaction-card.block img {
+  width: 200px;
+  animation-delay: 0.15s;
+}
+
+.reaction-card.block .reaction-badge {
+  color: var(--brown);
+}
+
 .reaction-bubble {
   background: var(--yellow);
   border: 2px solid var(--black);
@@ -733,6 +742,10 @@ blockquote p {
   font-weight: 600;
   color: var(--brown);
   font-size: 0.95rem;
+}
+
+.reaction-card.block .reaction-bubble {
+  background: #ffece6;
 }
 
 .reaction-card::after {

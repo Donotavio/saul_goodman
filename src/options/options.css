@@ -161,7 +161,7 @@ main {
 
 .panel.two-columns .panel-block,
 .panel.two-columns > div {
-  max-height: 360px;
+  max-height: 520px;
   overflow-y: auto;
   padding-right: 8px;
 }
