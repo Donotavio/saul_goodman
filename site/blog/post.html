@@ -27,23 +27,33 @@
       <a class="brand" href="../index.html#home">Saul Goodman</a>
       <div class="nav-actions">
         <div class="nav-links">
-          <a href="./index.html">Blog</a>
-          <a href="./procrastinacao/">Procrastinação</a>
-          <a href="./foco-atencao/">Foco &amp; Atenção</a>
+          <a href="./index.html" data-i18n="navBlog">Blog</a>
+          <a href="./procrastinacao/" data-category-label="procrastinacao">Procrastinação</a>
+          <a href="./foco-atencao/" data-category-label="foco-atencao">Foco &amp; Atenção</a>
+          <a href="./dev-performance/" data-category-label="dev-performance">Performance Dev</a>
+          <a href="./trabalho-remoto/" data-category-label="trabalho-remoto">Trabalho Remoto</a>
+        </div>
+        <div class="language-switcher">
+          <label class="sr-only" for="blog-language-select" data-i18n="languageLabel">Selecionar idioma</label>
+          <select id="blog-language-select" aria-label="Selecionar idioma">
+            <option value="pt">PT</option>
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+          </select>
         </div>
         <a class="nav-cta" href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/" target="_blank" rel="noreferrer">
-          Instalar
+          <span data-i18n="navCta">Instalar</span>
         </a>
       </div>
     </nav>
 
     <main class="post-page">
-      <p class="breadcrumb"><a href="./index.html">Blog</a> › <span class="current">Artigo</span></p>
+      <p class="breadcrumb"><a href="./index.html" data-i18n="breadcrumbBlog">Blog</a> › <span class="current" data-i18n="breadcrumbArticle">Artigo</span></p>
       <header class="post-header">
-        <h1>Carregando artigo...</h1>
+        <h1 data-i18n="postLoadingTitle">Carregando artigo...</h1>
         <div class="blog-meta">...</div>
       </header>
-      <article class="post-body">Carregando...</article>
+      <article class="post-body" data-i18n="postLoadingBody">Carregando...</article>
       <div class="metadata-footer"></div>
     </main>
 

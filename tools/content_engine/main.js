@@ -19,6 +19,10 @@ const RETRIES = 2;
 const TIMEOUT_MS = 30000;
 const DRY_RUN = process.argv.includes('--dry-run') || process.env.DRY_RUN === 'true';
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
+const TRANSLATION_TARGETS = [
+  { code: 'en', label: 'inglês', display: 'English' },
+  { code: 'es', label: 'espanhol', display: 'Spanish' },
+];
 
 async function readJson(file, fallback) {
   try {
@@ -196,7 +200,7 @@ Conteúdo (800-1200 palavras) com as seções:
 Mantenha voz de Saul Goodman: ácido, esperto, mas não agressivo.`;
 }
 
-async function callLLM(prompt) {
+async function callLLM(prompt, options = {}) {
   const apiKey = process.env.LLM_API_KEY;
   if (!apiKey) throw new Error('LLM_API_KEY ausente');
 
@@ -220,11 +224,14 @@ async function callLLM(prompt) {
         body: JSON.stringify({
           model,
           messages: [
-            { role: 'system', content: 'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.' },
+            {
+              role: 'system',
+              content: options.systemPrompt || 'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.',
+            },
             { role: 'user', content: prompt },
           ],
           temperature: 0.7,
-          max_tokens: 1200,
+          max_tokens: options.maxTokens || 1200,
         }),
         signal: controller.signal,
       });
@@ -247,6 +254,111 @@ async function callLLM(prompt) {
   throw lastError || new Error('Falha desconhecida ao chamar LLM');
 }
 
+function parseJsonBlock(text) {
+  const cleaned = text.trim().replace(/```json/gi, '```').replace(/```/g, '').trim();
+  try {
+    return JSON.parse(cleaned);
+  } catch (error) {
+    const start = cleaned.indexOf('{');
+    const end = cleaned.lastIndexOf('}');
+    if (start === -1 || end === -1 || end <= start) throw new Error('Resposta JSON inválida');
+    return JSON.parse(cleaned.slice(start, end + 1));
+  }
+}
+
+async function translateArticle(metadata, body, target) {
+  const prompt = `Traduza o artigo abaixo para ${target.label} (${target.display}).
+Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais. Responda em JSON com as chaves "title", "excerpt" e "body" (body deve ser markdown completo com as mesmas seções).
+
+TÍTULO: ${metadata.title}
+EXCERPT: ${metadata.excerpt}
+ARTIGO:
+${body}`;
+  const response = await callLLM(prompt, {
+    systemPrompt:
+      'Você é um tradutor profissional que converte textos em diferentes idiomas mantendo sarcasmo e clareza. Responda apenas no idioma solicitado.',
+    maxTokens: 1800,
+  });
+  const json = parseJsonBlock(response);
+  if (!json.body || !json.title) throw new Error('Tradução sem body ou title');
+  return {
+    lang: target.code,
+    title: json.title.trim(),
+    excerpt: (json.excerpt || '').trim(),
+    body: json.body.trim(),
+  };
+}
+
+async function generateTranslations(metadata, body) {
+  if (DRY_RUN) return [];
+  const results = [];
+  for (const target of TRANSLATION_TARGETS) {
+    try {
+      console.log(`Traduzindo artigo para ${target.display}...`);
+      const translated = await translateArticle(metadata, body, target);
+      results.push(translated);
+    } catch (error) {
+      console.warn(`Falha na tradução (${target.code}): ${error.message}`);
+    }
+  }
+  return results;
+}
+
+function buildFrontmatter(metadata) {
+  const preferredOrder = [
+    'title',
+    'title_en',
+    'title_es',
+    'date',
+    'category',
+    'tags',
+    'source_title',
+    'source_url',
+    'source_published_at',
+    'excerpt',
+    'excerpt_en',
+    'excerpt_es',
+  ];
+  const seen = new Set();
+  const lines = [];
+
+  const pushLine = (key, value) => {
+    if (value === undefined || value === null || value === '') return;
+    if (Array.isArray(value)) {
+      const arr = value.map((item) => JSON.stringify(item)).join(', ');
+      lines.push(`${key}: [${arr}]`);
+    } else if (typeof value === 'string') {
+      if (key === 'date') {
+        lines.push(`${key}: ${value}`);
+      } else {
+        lines.push(`${key}: ${JSON.stringify(value)}`);
+      }
+    } else {
+      lines.push(`${key}: ${value}`);
+    }
+    seen.add(key);
+  };
+
+  preferredOrder.forEach((key) => pushLine(key, metadata[key]));
+  Object.keys(metadata)
+    .filter((key) => !seen.has(key))
+    .sort()
+    .forEach((key) => pushLine(key, metadata[key]));
+
+  return lines.join('\n');
+}
+
+function buildMarkdown(metadata, body, translations) {
+  const frontmatter = buildFrontmatter(metadata);
+  let content = `---\n${frontmatter}\n---\n\n${body.trim()}\n`;
+  translations
+    .filter((entry) => entry.body)
+    .forEach((entry) => {
+      content += `\n<!--lang:${entry.lang}-->\n${entry.body.trim()}\n`;
+    });
+  return `${content.trim()}\n`;
+}
+
 function extractFrontmatter(markdown) {
   const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
   if (!match) throw new Error('Conteúdo sem frontmatter');
@@ -263,7 +375,7 @@ function extractFrontmatter(markdown) {
       data[key] = value
         .slice(1, -1)
         .split(',')
-        .map((v) => v.trim())
+        .map((v) => v.trim().replace(/^"|"$/g, '').replace(/^'|'$/g, ''))
         .filter(Boolean);
     } else {
       data[key] = value.replace(/^"|"$/g, '');
@@ -295,7 +407,7 @@ function validateGenerated(content) {
     data.excerpt = clean.split(' ').slice(0, 40).join(' ');
   }
 
-  return { metadata: data, body, markdown: content.trim() };
+  return { metadata: data, body };
 }
 
 async function ensureIndexFile() {
@@ -340,7 +452,7 @@ async function updateIndex(metadata, markdownPath, body = '') {
   const index = await ensureIndexFile();
   const entry = {
     title: metadata.title,
-    url: `./post.html?post=${markdownPath}`,
+    url: `./post/?post=${markdownPath}`,
     markdown: markdownPath,
     date: metadata.date,
     category: metadata.category,
@@ -350,6 +462,10 @@ async function updateIndex(metadata, markdownPath, body = '') {
     source_url: metadata.source_url,
     source_published_at: metadata.source_published_at,
   };
+  if (metadata.title_en) entry.title_en = metadata.title_en;
+  if (metadata.title_es) entry.title_es = metadata.title_es;
+  if (metadata.excerpt_en) entry.excerpt_en = metadata.excerpt_en;
+  if (metadata.excerpt_es) entry.excerpt_es = metadata.excerpt_es;
 
   index.posts = index.posts.filter((p) => p.markdown !== markdownPath);
   index.posts.push(entry);
@@ -408,9 +524,15 @@ async function run() {
 
   const prompt = buildPrompt(best);
   const generated = await callLLM(prompt);
-  const { metadata, markdown, body } = validateGenerated(generated);
+  const { metadata, body } = validateGenerated(generated);
+  const translations = await generateTranslations(metadata, body);
+  translations.forEach((entry) => {
+    if (entry.title) metadata[`title_${entry.lang}`] = entry.title;
+    if (entry.excerpt) metadata[`excerpt_${entry.lang}`] = entry.excerpt;
+  });
+  const finalMarkdown = buildMarkdown(metadata, body, translations);
 
-  const { relativePath } = await savePost(markdown, metadata);
+  const { relativePath } = await savePost(finalMarkdown, metadata);
   await updateIndex(metadata, relativePath, body);
   await updateState(posted, metadata.source_url, relativePath);
 

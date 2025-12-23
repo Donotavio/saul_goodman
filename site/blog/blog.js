@@ -2,15 +2,311 @@ const scriptUrl = document.currentScript?.src || import.meta.url;
 const blogBase = new URL('./', scriptUrl);
 const indexUrl = new URL('index.json', blogBase);
 const postsBase = new URL('posts/', blogBase);
-const CATEGORY_LABELS = {
-  'procrastinacao': 'Procrastinação',
-  'foco-atencao': 'Foco & Atenção',
-  'dev-performance': 'Performance Dev',
-  'trabalho-remoto': 'Trabalho Remoto',
+
+const BLOG_TRANSLATIONS = {
+  pt: {
+    languageLabel: 'Selecionar idioma',
+    navProcess: 'Processo',
+    navDemo: 'Demonstração',
+    navClients: 'Clientes',
+    navBlog: 'Blog',
+    navCta: 'Instalar',
+    blogHeroEyebrow: 'Blog do Saul Goodman',
+    blogHeroTitle: 'Opiniões jurídicas sobre procrastinação digital',
+    blogHeroLead:
+      'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul, direto ao ponto, sem coach barato.',
+    blogCategoryAll: 'Todos',
+    categoryEyebrow: 'Categoria',
+    categoryProcrastinacaoTitle: 'Procrastinação sob investigação',
+    categoryProcrastinacaoLead:
+      'Casos reais de atrasos, preguiça digital e tab hunting que o Saul adora processar.',
+    categoryFocoTitle: 'Foco & Atenção em julgamento',
+    categoryFocoLead:
+      'Pesquisas e tretas do dia a dia sobre manter a cabeça no código sem sucumbir ao feed.',
+    categoryDevTitle: 'Performance dev com réu confesso',
+    categoryDevLead: 'Produtividade realista para quem vive entre VS Code, PRs e reuniões remotas.',
+    categoryRemotoTitle: 'Trabalho remoto sem álibi',
+    categoryRemotoLead: 'Histórias e achados sobre home office, Slack aberto e a arte de não sumir do Zoom.',
+    breadcrumbBlog: 'Blog',
+    breadcrumbArticle: 'Artigo',
+    postLoadingTitle: 'Carregando artigo...',
+    postLoadingBody: 'Carregando...',
+    readArticle: 'Ler artigo',
+    blogEmptyState: 'Nenhum artigo publicado por aqui ainda.',
+    blogError: 'Erro ao carregar blog',
+    postNotFound: 'Post não encontrado.',
+    postInvalid: 'Post inválido ou sem metadados.',
+    postLoadError: 'Erro ao carregar este artigo.',
+    metaCategory: 'Categoria',
+    metaTags: 'Tags',
+    metaSource: 'Fonte',
+    metaSourceUrl: 'URL da fonte',
+    metaPublishedAt: 'Publicado em',
+  },
+  en: {
+    languageLabel: 'Select language',
+    navProcess: 'Process',
+    navDemo: 'Demo',
+    navClients: 'Clients',
+    navBlog: 'Blog',
+    navCta: 'Install',
+    blogHeroEyebrow: 'Saul Goodman Blog',
+    blogHeroTitle: 'Legal takes on digital procrastination',
+    blogHeroLead:
+      "Sarcastic takes on focus, attention, and dev performance. Weekly articles written in Saul's tone—no coach vibe.",
+    blogCategoryAll: 'All',
+    categoryEyebrow: 'Category',
+    categoryProcrastinacaoTitle: 'Procrastination under investigation',
+    categoryProcrastinacaoLead: 'Real cases of delay, digital laziness, and tab hunting Saul loves to prosecute.',
+    categoryFocoTitle: 'Focus & Attention on trial',
+    categoryFocoLead: 'Daily studies and drama about keeping your head in the code without surrendering to feeds.',
+    categoryDevTitle: 'Dev performance with a guilty plea',
+    categoryDevLead: 'Practical productivity for anyone juggling VS Code, PRs, and remote meetings.',
+    categoryRemotoTitle: 'Remote work with no alibi',
+    categoryRemotoLead: 'Stories about home office, Slack presence, and avoiding a Zoom disappearance.',
+    breadcrumbBlog: 'Blog',
+    breadcrumbArticle: 'Article',
+    postLoadingTitle: 'Loading article...',
+    postLoadingBody: 'Loading...',
+    readArticle: 'Read article',
+    blogEmptyState: 'No articles published here yet.',
+    blogError: 'Failed to load blog',
+    postNotFound: 'Post not found.',
+    postInvalid: 'Invalid post or missing metadata.',
+    postLoadError: 'Error while loading this article.',
+    metaCategory: 'Category',
+    metaTags: 'Tags',
+    metaSource: 'Source',
+    metaSourceUrl: 'Source URL',
+    metaPublishedAt: 'Published at',
+  },
+  es: {
+    languageLabel: 'Seleccionar idioma',
+    navProcess: 'Proceso',
+    navDemo: 'Demostración',
+    navClients: 'Clientes',
+    navBlog: 'Blog',
+    navCta: 'Instalar',
+    blogHeroEyebrow: 'Blog de Saul Goodman',
+    blogHeroTitle: 'Opiniones legales sobre la procrastinación digital',
+    blogHeroLead:
+      'Relatos sarcásticos sobre foco, atención y performance dev. Artículos semanales en tono Saul, sin coach barato.',
+    blogCategoryAll: 'Todos',
+    categoryEyebrow: 'Categoría',
+    categoryProcrastinacaoTitle: 'Procrastinación bajo investigación',
+    categoryProcrastinacaoLead: 'Casos reales de retrasos, pereza digital y caza de pestañas que Saul disfruta procesar.',
+    categoryFocoTitle: 'Enfoque y Atención en juicio',
+    categoryFocoLead: 'Estudios y dramas diarios sobre mantener la cabeza en el código sin caer en el feed.',
+    categoryDevTitle: 'Rendimiento dev con confesión',
+    categoryDevLead: 'Productividad realista para quienes viven entre VS Code, PRs y reuniones remotas.',
+    categoryRemotoTitle: 'Trabajo remoto sin coartada',
+    categoryRemotoLead: 'Historias y hallazgos sobre home office, Slack abierto y el arte de no desaparecer de Zoom.',
+    breadcrumbBlog: 'Blog',
+    breadcrumbArticle: 'Artículo',
+    postLoadingTitle: 'Cargando artículo...',
+    postLoadingBody: 'Cargando...',
+    readArticle: 'Leer artículo',
+    blogEmptyState: 'Aún no hay artículos publicados aquí.',
+    blogError: 'Error al cargar el blog',
+    postNotFound: 'Artículo no encontrado.',
+    postInvalid: 'Artículo inválido o sin metadatos.',
+    postLoadError: 'Error al cargar este artículo.',
+    metaCategory: 'Categoría',
+    metaTags: 'Etiquetas',
+    metaSource: 'Fuente',
+    metaSourceUrl: 'URL de la fuente',
+    metaPublishedAt: 'Publicado el',
+  },
 };
 
-function getCategoryLabel(value) {
-  return CATEGORY_LABELS[value] || value || '';
+const CATEGORY_LABELS = {
+  pt: {
+    'procrastinacao': 'Procrastinação',
+    'foco-atencao': 'Foco & Atenção',
+    'dev-performance': 'Performance Dev',
+    'trabalho-remoto': 'Trabalho Remoto',
+  },
+  en: {
+    'procrastinacao': 'Procrastination',
+    'foco-atencao': 'Focus & Attention',
+    'dev-performance': 'Dev Performance',
+    'trabalho-remoto': 'Remote Work',
+  },
+  es: {
+    'procrastinacao': 'Procrastinación',
+    'foco-atencao': 'Enfoque y Atención',
+    'dev-performance': 'Rendimiento Dev',
+    'trabalho-remoto': 'Trabajo Remoto',
+  },
+};
+
+const CATEGORY_TITLE_KEYS = {
+  'procrastinacao': 'categoryProcrastinacaoTitle',
+  'foco-atencao': 'categoryFocoTitle',
+  'dev-performance': 'categoryDevTitle',
+  'trabalho-remoto': 'categoryRemotoTitle',
+};
+
+const DATE_LOCALE = {
+  pt: 'pt-BR',
+  en: 'en-US',
+  es: 'es-ES',
+};
+
+const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
+const defaultLanguage = 'pt';
+let currentLanguage = defaultLanguage;
+
+function getDictionary(lang = currentLanguage) {
+  return BLOG_TRANSLATIONS[lang] || BLOG_TRANSLATIONS[defaultLanguage];
+}
+
+function t(key, lang = currentLanguage) {
+  const dictionary = getDictionary(lang);
+  return dictionary[key] || BLOG_TRANSLATIONS[defaultLanguage][key] || key;
+}
+
+function getCategoryLabel(value, lang = currentLanguage) {
+  if (!value) return '';
+  const labels = CATEGORY_LABELS[lang] || CATEGORY_LABELS[defaultLanguage];
+  return labels[value] || value;
+}
+
+function getLocalizedValue(source, key, lang = currentLanguage) {
+  if (!source) return undefined;
+  const localizedKey = `${key}_${lang}`;
+  return source[localizedKey] || source[key];
+}
+
+function extractLocalizedBodies(body) {
+  const sections = {};
+  const markerRegex = /<!--lang:(pt|en|es)-->/gi;
+  let match;
+  let lastIndex = 0;
+  let currentLang = 'pt';
+  while ((match = markerRegex.exec(body)) !== null) {
+    const chunk = body.slice(lastIndex, match.index);
+    if (chunk.trim()) {
+      sections[currentLang] = (sections[currentLang] || '') + chunk.trim();
+    }
+    currentLang = match[1].toLowerCase();
+    lastIndex = markerRegex.lastIndex;
+  }
+  const tail = body.slice(lastIndex);
+  if (tail.trim()) {
+    sections[currentLang] = (sections[currentLang] || '') + tail.trim();
+  }
+  if (!sections.pt && sections[currentLang] && currentLang !== 'pt') {
+    sections.pt = body;
+  }
+  return sections;
+}
+
+function updateCategoryLabels(lang = currentLanguage) {
+  document.querySelectorAll('[data-category-chip]').forEach((chip) => {
+    const key = chip.getAttribute('data-category-chip');
+    if (!key) return;
+    if (key === 'all') {
+      chip.textContent = t('blogCategoryAll', lang);
+    } else {
+      chip.textContent = getCategoryLabel(key, lang);
+    }
+  });
+  document.querySelectorAll('[data-category-label]').forEach((element) => {
+    const key = element.getAttribute('data-category-label');
+    if (!key) return;
+    element.textContent = getCategoryLabel(key, lang);
+  });
+}
+
+function normalizeLanguage(value) {
+  if (!value) return defaultLanguage;
+  const lower = value.toLowerCase();
+  if (lower.startsWith('pt')) return 'pt';
+  if (lower.startsWith('en')) return 'en';
+  if (lower.startsWith('es')) return 'es';
+  return lower;
+}
+
+function detectLanguage() {
+  try {
+    const stored = localStorage.getItem('saul-language');
+    if (stored) {
+      const normalized = normalizeLanguage(stored);
+      if (supportedLanguages.includes(normalized)) return normalized;
+    }
+  } catch (error) {
+    // localStorage might be unavailable (Safari private mode). Ignore.
+  }
+  if (Array.isArray(navigator.languages)) {
+    for (const lang of navigator.languages) {
+      const normalized = normalizeLanguage(lang);
+      if (supportedLanguages.includes(normalized)) return normalized;
+    }
+  }
+  const navigatorLang = normalizeLanguage(navigator.language || navigator.userLanguage || '');
+  return supportedLanguages.includes(navigatorLang) ? navigatorLang : defaultLanguage;
+}
+
+function applyTranslations(lang) {
+  currentLanguage = supportedLanguages.includes(lang) ? lang : defaultLanguage;
+  const dictionary = getDictionary(currentLanguage);
+  document.documentElement.lang = currentLanguage === 'pt' ? 'pt-BR' : currentLanguage;
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const key = element.getAttribute('data-i18n');
+    const text = dictionary[key];
+    if (typeof text === 'string') {
+      element.textContent = text;
+    }
+  });
+  const selector = document.getElementById('blog-language-select');
+  if (selector) {
+    if (selector.value !== currentLanguage) {
+      selector.value = currentLanguage;
+    }
+    selector.setAttribute('aria-label', dictionary.languageLabel);
+  }
+  const srLabel = document.querySelector('label[for="blog-language-select"]');
+  if (srLabel) {
+    srLabel.textContent = dictionary.languageLabel;
+  }
+  updateCategoryLabels(currentLanguage);
+
+  const view = document.body.dataset.blogView;
+  if (view === 'post') {
+    document.title = `${t('breadcrumbArticle')} — ${t('blogHeroEyebrow')}`;
+  } else {
+    const category = document.body.dataset.blogCategory;
+    if (category && CATEGORY_TITLE_KEYS[category]) {
+      document.title = `${t(CATEGORY_TITLE_KEYS[category])} — ${t('blogHeroEyebrow')}`;
+    } else {
+      document.title = t('blogHeroEyebrow');
+    }
+  }
+}
+
+function bindLanguageSelector() {
+  const selector = document.getElementById('blog-language-select');
+  if (!selector) return;
+  selector.addEventListener('change', (event) => {
+    const value = normalizeLanguage(event.target.value);
+    try {
+      localStorage.setItem('saul-language', value);
+    } catch (error) {
+      // ignore
+    }
+    applyTranslations(value);
+    renderCurrentView();
+  });
+}
+
+function renderCurrentView() {
+  const view = document.body.dataset.blogView;
+  if (view === 'post') {
+    renderPost();
+  } else {
+    renderIndex();
+  }
 }
 
 function escapeHtml(text) {
@@ -126,7 +422,8 @@ async function fetchText(url) {
 function formatDate(dateStr) {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return dateStr;
-  return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 function buildPostLink(post) {
@@ -140,7 +437,7 @@ function buildPostLink(post) {
 function renderCards(posts, container) {
   container.innerHTML = '';
   if (!posts.length) {
-    container.innerHTML = '<div class="empty-state">Nenhum artigo publicado por aqui ainda.</div>';
+    container.innerHTML = `<div class="empty-state">${t('blogEmptyState')}</div>`;
     return;
   }
 
@@ -151,7 +448,7 @@ function renderCards(posts, container) {
       card.className = 'blog-card';
 
       const title = document.createElement('h3');
-      title.textContent = post.title;
+      title.textContent = getLocalizedValue(post, 'title') || post.title;
       card.appendChild(title);
 
       const meta = document.createElement('div');
@@ -159,9 +456,10 @@ function renderCards(posts, container) {
       meta.textContent = `${formatDate(post.date)} · ${getCategoryLabel(post.category)}`;
       card.appendChild(meta);
 
-      if (post.excerpt) {
+      const excerptText = getLocalizedValue(post, 'excerpt') || post.excerpt;
+      if (excerptText) {
         const excerpt = document.createElement('p');
-        excerpt.textContent = post.excerpt;
+        excerpt.textContent = excerptText;
         card.appendChild(excerpt);
       }
 
@@ -179,7 +477,7 @@ function renderCards(posts, container) {
       const link = document.createElement('a');
       link.className = 'read-more';
       link.href = buildPostLink(post);
-      link.textContent = 'Ler artigo';
+      link.textContent = t('readArticle');
       card.appendChild(link);
 
       container.appendChild(card);
@@ -196,7 +494,8 @@ async function renderIndex() {
     renderCards(filtered, listContainer);
   } catch (error) {
     const listContainer = document.getElementById('blog-list');
-    if (listContainer) listContainer.innerHTML = `<div class="empty-state">Erro ao carregar blog: ${error.message}</div>`;
+    if (listContainer)
+      listContainer.innerHTML = `<div class="empty-state">${t('blogError')}: ${error.message}</div>`;
   }
 }
 
@@ -212,11 +511,12 @@ function renderMetadata(meta, container) {
     dl.append(dt, dd);
   };
 
-  add('Categoria', getCategoryLabel(meta.category));
-  add('Tags', meta.tags && meta.tags.join(', '));
-  add('Fonte', meta.source_title);
-  add('URL da fonte', meta.source_url);
-  add('Publicado em', meta.source_published_at);
+  add(t('metaCategory'), getCategoryLabel(meta.category));
+  const tagValue = Array.isArray(meta.tags) ? meta.tags.join(', ') : meta.tags;
+  add(t('metaTags'), tagValue);
+  add(t('metaSource'), meta.source_title);
+  add(t('metaSourceUrl'), meta.source_url);
+  add(t('metaPublishedAt'), meta.source_published_at);
 
   container.innerHTML = '';
   container.appendChild(dl);
@@ -231,8 +531,11 @@ async function renderPost() {
   const params = new URLSearchParams(window.location.search);
   const postParam = sanitizePostPath(params.get('post'));
   const postContainer = document.querySelector('.post-body');
+  const footer = document.querySelector('.metadata-footer');
   if (!postParam || !postContainer) {
-    postContainer.innerHTML = '<div class="empty-state">Post não encontrado.</div>';
+    postContainer.innerHTML = `<div class="empty-state">${t('postNotFound')}</div>`;
+    postContainer.removeAttribute('data-i18n');
+    if (footer) footer.innerHTML = '';
     return;
   }
 
@@ -242,34 +545,46 @@ async function renderPost() {
     const { data, body } = parseFrontmatter(raw);
 
     if (!data.title || !data.date) {
-      postContainer.innerHTML = '<div class="empty-state">Post inválido ou sem metadados.</div>';
+      postContainer.innerHTML = `<div class="empty-state">${t('postInvalid')}</div>`;
+      postContainer.removeAttribute('data-i18n');
+      if (footer) footer.innerHTML = '';
       return;
     }
 
     const header = document.querySelector('.post-header h1');
     const meta = document.querySelector('.post-header .blog-meta');
     const breadcrumbCurrent = document.querySelector('.breadcrumb .current');
-    if (header) header.textContent = data.title;
+    const localizedTitle = getLocalizedValue(data, 'title') || data.title;
+    if (header) {
+      header.textContent = localizedTitle;
+      header.removeAttribute('data-i18n');
+    }
     if (meta) meta.textContent = `${formatDate(data.date)} · ${getCategoryLabel(data.category)}`;
-    if (breadcrumbCurrent) breadcrumbCurrent.textContent = data.title;
-    if (data.title) document.title = `${data.title} — Blog do Saul`;
+    if (breadcrumbCurrent) {
+      breadcrumbCurrent.textContent = localizedTitle;
+      breadcrumbCurrent.removeAttribute('data-i18n');
+    }
+    if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
 
-    postContainer.innerHTML = markdownToHtml(body);
+    const localizedBodies = extractLocalizedBodies(body);
+    const selectedBody = localizedBodies[currentLanguage] || localizedBodies.pt || body;
+    postContainer.innerHTML = markdownToHtml(selectedBody);
+    postContainer.removeAttribute('data-i18n');
 
-    const footer = document.querySelector('.metadata-footer');
     if (footer) renderMetadata(data, footer);
   } catch (error) {
-    postContainer.innerHTML = `<div class="empty-state">Erro ao carregar este artigo: ${error.message}</div>`;
+    console.error('Failed to load blog post', error);
+    postContainer.innerHTML = `<div class="empty-state">${t('postLoadError')}: ${error.message}</div>`;
+    postContainer.removeAttribute('data-i18n');
+    if (footer) footer.innerHTML = '';
   }
 }
 
 function init() {
-  const view = document.body.dataset.blogView;
-  if (view === 'post') {
-    renderPost();
-  } else {
-    renderIndex();
-  }
+  const detected = detectLanguage();
+  applyTranslations(detected);
+  bindLanguageSelector();
+  renderCurrentView();
 }
 
 document.addEventListener('DOMContentLoaded', init);

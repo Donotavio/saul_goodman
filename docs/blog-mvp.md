@@ -6,6 +6,8 @@
 - Índice para consumo do site/extensões em `site/blog/index.json` (title, url, markdown, date, category, tags, excerpt, source_*).
 - Páginas públicas: `/site/blog/index.html`, categorias `/site/blog/<categoria>/index.html` e `post.html?post=<path>` para renderizar cada Markdown no navegador.
 - Estado de duplicidade salvo em `tools/content_engine/state/posted.json` (chaves das fontes já publicadas).
+- UI do blog replica o seletor PT/EN/ES do site: detecta idioma via `localStorage`/navegador, atualiza hero/nav/chips e permite troca manual em qualquer página.
+- Cada post traz traduções EN/ES incorporadas no próprio Markdown: frontmatter define `title_<lang>`/`excerpt_<lang>` e o corpo usa blocos `<!--lang:xx-->` para que o frontend carregue a versão correta.
 
 ## Content Engine
 

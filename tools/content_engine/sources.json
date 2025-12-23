@@ -1,9 +1,24 @@
 {
   "window_days": 14,
   "feeds": [
-    { "name": "HN Melhor", "url": "https://hnrss.org/frontpage" },
+    { "name": "Hacker News - Frontpage RSS", "url": "https://hnrss.org/frontpage" },
     { "name": "Dev.to", "url": "https://dev.to/feed" },
-    { "name": "HBR - Productivity", "url": "https://feeds.harvardbusiness.org/harvardbusiness/productivity" }
+    { "name": "LifeHack", "url": "https://www.lifehack.org/feed" },
+    { "name": "Asian Efficiency Blog", "url": "https://asianefficiency.com/feed" },
+    { "name": "ProductivityShift", "url": "https://productivityshift.com/feed" },
+    { "name": "Atlassian Productivity Blog", "url": "https://www.atlassian.com/blog/productivity/rss" },
+    { "name": "Hive Blog - Productivity", "url": "https://hive.com/blog/feed" },
+    { "name": "Buffer Blog", "url": "https://buffer.com/resources/feed" },
+    { "name": "Remotive News", "url": "https://remotive.com/blog/rss" },
+    { "name": "Grow Remote Blog", "url": "https://growremote.ie/feed" },
+    { "name": "NoDesk Remote Work", "url": "https://nodesk.co/feed" },
+    { "name": "Virtual Work Insider", "url": "https://virtualworkinsider.com/feed" },
+    { "name": "HubSpot Remote Work", "url": "https://blog.hubspot.com/topic-remote-work/rss.xml" },
+    { "name": "Remote Work Radar", "url": "https://remoteworkradar.com/rss" },
+    { "name": "Martin Fowler - Software Engineering", "url": "https://martinfowler.com/feed.atom" },
+    { "name": "Scott Berkun Blog", "url": "https://scottberkun.com/feed" },
+    { "name": "GitHub Blog", "url": "https://github.blog/feed/" },
+    { "name": "Netflix TechBlog", "url": "https://netflixtechblog.com/rss" }
   ],
   "keywords": [
     "procrastinação",
@@ -16,6 +31,10 @@
     "trabalho remoto",
     "dev",
     "engenharia",
-    "concentração"
+    "concentração",
+    "comportamento",
+    "psicologia",
+    "UX",
+    "tecnologia"
   ]
 }

@@ -2,7 +2,7 @@
   "posts": [
     {
       "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
-      "url": "./post.html?post=2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
+      "url": "./post/?post=2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
       "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
       "date": "2025-12-23",
       "category": "procrastinacao",
@@ -19,7 +19,31 @@
       "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
     },
     {
+      "title": "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?",
+      "url": "./post/?post=2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "markdown": "2025/2025-12-23-debugando-a-vida-o-que-a-procrastinacao-tem-a-ver-com-osciloscopios.md",
+      "date": "2025-12-23",
+      "category": "procrastinacao",
+      "tags": [
+        "debugging",
+        "procrastinação",
+        "desenvolvimento",
+        "tecnologia",
+        "humor"
+      ],
+      "excerpt": "A vida é uma grande sessão de debugging, onde a procrastinação é o software que nunca para de falhar.",
+      "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
+      "source_url": "https://dev.to/mda2av/from-serial-ports-to-websockets-debugging-across-two-worlds-2l7o",
+      "source_published_at": "Tue, 23 Dec 2025 14:07:19 +0000",
+      "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
+      "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
+      "excerpt_en": "Life is one big debugging session, where procrastination is the software that never stops failing.",
+      "excerpt_es": "La vida es una gran sesión de depuración, donde la procrastinación es el software que nunca deja de fallar."
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
+      "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
+      "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
       "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
       "date": "2025-01-05",
@@ -31,6 +55,8 @@
         "vscode"
       ],
       "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
+      "excerpt_en": "When the squad calls ten standups and VS Code never reaches the foreground, the focus judge bangs the gavel and bans multitasking.",
+      "excerpt_es": "Cuando el equipo convoca diez standups y VS Code nunca llega al frente, el juez del foco golpea el mazo y prohíbe el multitasking.",
       "source_title": "Pesquisa sobre context switching em times remotos",
       "source_url": "https://example.com/estudo-context-switching",
       "source_published_at": "2024-12-12T00:00:00Z"

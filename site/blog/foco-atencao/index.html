@@ -27,26 +27,36 @@
       <a class="brand" href="../../index.html#home">Saul Goodman</a>
       <div class="nav-actions">
         <div class="nav-links">
-          <a href="../index.html">Blog</a>
-          <a href="../procrastinacao/">Procrastinação</a>
-          <a href="../foco-atencao/">Foco &amp; Atenção</a>
+          <a href="../index.html" data-i18n="navBlog">Blog</a>
+          <a href="../procrastinacao/" data-category-label="procrastinacao">Procrastinação</a>
+          <a href="../foco-atencao/" data-category-label="foco-atencao">Foco &amp; Atenção</a>
+          <a href="../dev-performance/" data-category-label="dev-performance">Performance Dev</a>
+          <a href="../trabalho-remoto/" data-category-label="trabalho-remoto">Trabalho Remoto</a>
+        </div>
+        <div class="language-switcher">
+          <label class="sr-only" for="blog-language-select" data-i18n="languageLabel">Selecionar idioma</label>
+          <select id="blog-language-select" aria-label="Selecionar idioma">
+            <option value="pt">PT</option>
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+          </select>
         </div>
         <a class="nav-cta" href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/" target="_blank" rel="noreferrer">
-          Instalar
+          <span data-i18n="navCta">Instalar</span>
         </a>
       </div>
     </nav>
 
     <main class="blog-page">
       <header class="blog-hero">
-        <p class="eyebrow">Categoria</p>
-        <h1>Foco &amp; Atenção em julgamento</h1>
-        <p class="lead">Pesquisas e tretas do dia a dia sobre manter a cabeça no código sem sucumbir ao feed.</p>
+        <p class="eyebrow" data-i18n="categoryEyebrow">Categoria</p>
+        <h1 data-i18n="categoryFocoTitle">Foco &amp; Atenção em julgamento</h1>
+        <p class="lead" data-i18n="categoryFocoLead">Pesquisas e tretas do dia a dia sobre manter a cabeça no código sem sucumbir ao feed.</p>
         <div class="blog-categories">
-          <a class="chip" href="../index.html">Todos</a>
-          <a class="chip" href="../procrastinacao/">Procrastinação</a>
-          <a class="chip" href="../dev-performance/">Performance Dev</a>
-          <a class="chip" href="../trabalho-remoto/">Trabalho Remoto</a>
+          <a class="chip" href="../index.html" data-category-chip="all">Todos</a>
+          <a class="chip" href="../procrastinacao/" data-category-chip="procrastinacao">Procrastinação</a>
+          <a class="chip" href="../dev-performance/" data-category-chip="dev-performance">Performance Dev</a>
+          <a class="chip" href="../trabalho-remoto/" data-category-chip="trabalho-remoto">Trabalho Remoto</a>
         </div>
       </header>
       <section class="blog-list" id="blog-list" aria-live="polite"></section>
