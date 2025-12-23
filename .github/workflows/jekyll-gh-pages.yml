@@ -4,6 +4,11 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Blog Content Engine
+    types:
+      - completed
 
 permissions:
   contents: read
