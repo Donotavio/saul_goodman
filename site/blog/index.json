@@ -2,7 +2,7 @@
   "posts": [
     {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
-      "url": "./post.html?post=2025/2025-01-05-sprint-sem-prova.md",
+      "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
       "date": "2025-01-05",
       "category": "dev-performance",
