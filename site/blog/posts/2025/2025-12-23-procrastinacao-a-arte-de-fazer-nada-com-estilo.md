@@ -30,11 +30,3 @@ A verdade é que a procrastinação é uma forma de arte que muitos dominam, e a
 ## Conclusão em tom de julgamento
 
 No final das contas, procrastinação é uma escolha. E se você escolhe ser um artista nesse campo, que assim seja. Mas não venha me dizer que o Terraform vai salvar seu dia. No máximo, ele pode te dar mais tempo para procrastinar com estilo. E se você não está feliz com isso, talvez seja hora de olhar para o espelho e se perguntar: "O que eu estou realmente fazendo com a minha vida?"
-
----
-
-category: procrastinacao  
-tags: [foco, dev, performance, trabalho-remoto, Terraform]  
-source_title: "Cómo solucionarlo con Terraform?"  
-source_url: "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb"  
-source_published_at: Tue, 23 Dec 2025 13:13:18 +0000

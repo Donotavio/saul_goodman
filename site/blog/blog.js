@@ -153,6 +153,15 @@ const DATE_LOCALE = {
   es: 'es-ES',
 };
 
+const CATEGORY_IMAGES = {
+  'procrastinacao': '../assets/saul_incredulo.png',
+  'foco-atencao': '../assets/saul_like.png',
+  'dev-performance': '../assets/saul_nao_corte.png',
+  'trabalho-remoto': '../assets/logotipo_saul_goodman.png',
+};
+
+const BLOG_LOGO = new URL('../assets/logotipo_saul_goodman.png', blogBase).toString();
+
 const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
@@ -178,6 +187,25 @@ function getLocalizedValue(source, key, lang = currentLanguage) {
   return source[localizedKey] || source[key];
 }
 
+function stripMetadataSection(markdown = '') {
+  const markers = ['**Metadados**', '**Metadatos**', '**Metadata**'];
+  let result = markdown;
+  markers.forEach((marker) => {
+    const idx = result.lastIndexOf(marker);
+    if (idx !== -1) {
+      result = result.slice(0, idx).trim();
+    }
+  });
+  return result.trim();
+}
+
+function getCategoryArtwork(category) {
+  const relPath = CATEGORY_IMAGES[category] || '../assets/logotipo_saul_goodman.png';
+  const src = new URL(relPath, blogBase).toString();
+  const alt = `${getCategoryLabel(category)} — Saul Goodman`;
+  return { src, alt };
+}
+
 function extractLocalizedBodies(body) {
   const sections = {};
   const markerRegex = /<!--lang:(pt|en|es)-->/gi;
@@ -199,6 +227,9 @@ function extractLocalizedBodies(body) {
   if (!sections.pt && sections[currentLang] && currentLang !== 'pt') {
     sections.pt = body;
   }
+  Object.keys(sections).forEach((lang) => {
+    sections[lang] = stripMetadataSection(sections[lang]);
+  });
   return sections;
 }
 
@@ -397,10 +428,10 @@ function parseFrontmatter(content) {
       data[key] = value
         .slice(1, -1)
         .split(',')
-        .map((v) => v.trim())
+        .map((v) => v.trim().replace(/^"|"$/g, '').replace(/^'|'$/g, ''))
         .filter(Boolean);
     } else {
-      data[key] = value.replace(/^"|"$/g, '');
+      data[key] = value.replace(/^"|"$/g, '').replace(/^'|'$/g, '');
     }
   }
 
@@ -446,6 +477,15 @@ function renderCards(posts, container) {
     .forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-card';
+
+      const artwork = getCategoryArtwork(post.category);
+      const thumb = document.createElement('div');
+      thumb.className = 'blog-card-thumb';
+      const thumbImg = document.createElement('img');
+      thumbImg.src = artwork.src;
+      thumbImg.alt = artwork.alt;
+      thumb.appendChild(thumbImg);
+      card.appendChild(thumb);
 
       const title = document.createElement('h3');
       title.textContent = getLocalizedValue(post, 'title') || post.title;
@@ -523,8 +563,46 @@ function renderMetadata(meta, container) {
 }
 
 function sanitizePostPath(value) {
-  if (!value || value.includes('..')) return null;
-  return value.replace(/^\//, '');
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith('/') || trimmed.startsWith('\\')) return null;
+  if (trimmed.startsWith('//')) return null;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return null;
+
+  const normalized = trimmed.replace(/^\.\/+/, '');
+  let decoded;
+  try {
+    decoded = decodeURIComponent(normalized);
+  } catch {
+    return null;
+  }
+  if (!decoded || decoded.includes('..') || decoded.startsWith('/') || decoded.startsWith('\\')) return null;
+
+  let candidate;
+  try {
+    candidate = new URL(normalized, postsBase);
+  } catch {
+    return null;
+  }
+  if (candidate.origin !== postsBase.origin) return null;
+  if (!candidate.pathname.startsWith(postsBase.pathname)) return null;
+
+  return normalized;
+}
+
+function updatePostMedia(category) {
+  const artwork = getCategoryArtwork(category);
+  const heroImage = document.querySelector('.post-category-image');
+  if (heroImage) {
+    heroImage.src = artwork.src;
+    heroImage.alt = artwork.alt;
+  }
+  const heroLogo = document.querySelector('.post-logo');
+  if (heroLogo) {
+    heroLogo.src = BLOG_LOGO;
+    heroLogo.alt = 'Saul Goodman logo';
+  }
 }
 
 async function renderPost() {
@@ -565,10 +643,12 @@ async function renderPost() {
       breadcrumbCurrent.removeAttribute('data-i18n');
     }
     if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
+    updatePostMedia(data.category);
 
     const localizedBodies = extractLocalizedBodies(body);
     const selectedBody = localizedBodies[currentLanguage] || localizedBodies.pt || body;
-    postContainer.innerHTML = markdownToHtml(selectedBody);
+    const cleanedBody = stripMetadataSection(selectedBody);
+    postContainer.innerHTML = markdownToHtml(cleanedBody);
     postContainer.removeAttribute('data-i18n');
 
     if (footer) renderMetadata(data, footer);

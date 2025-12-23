@@ -195,7 +195,8 @@ Conteúdo (800-1200 palavras) com as seções:
 4) Tradução pro mundo digital (abas, redes, VS Code, remoto)
 5) Análise do Saul (interpretação + confronto elegante)
 6) Conclusão em tom de julgamento (1-2 frases)
-7) Metadados no final listando category, tags, source_title, source_url, source_published_at.
+
+Não repita metadados no corpo; use apenas o frontmatter para detalhes técnicos.
 
 Mantenha voz de Saul Goodman: ácido, esperto, mas não agressivo.`;
 }
@@ -360,7 +361,8 @@ function buildMarkdown(metadata, body, translations) {
 }
 
 function extractFrontmatter(markdown) {
-  const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
+  const normalized = markdown.trimStart();
+  const match = normalized.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
   if (!match) throw new Error('Conteúdo sem frontmatter');
   const frontmatter = match[1];
   const body = match[2].trim();

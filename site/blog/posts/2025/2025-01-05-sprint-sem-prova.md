@@ -29,13 +29,6 @@ Saul olha para esse roteiro e pergunta: quem autorizou tanta testemunha inútil 
 ## Conclusão
 Sentença: multitasking sem provas é considerado desacato ao foco. Silencie as notificações ou prepare-se para pagar honorários em forma de noites extras.
 
-**Metadados**
-category: dev-performance
-tags: dev, foco, sprint, vscode
-source_title: Pesquisa sobre context switching em times remotos
-source_url: https://example.com/estudo-context-switching
-source_published_at: 2024-12-12T00:00:00Z
-
 <!--lang:en-->
 # Sprint Without Evidence: The Focus Jury Convicts Multitasking
 
@@ -53,13 +46,6 @@ Saul looks at that script and asks who authorized so many useless witnesses insi
 ## Conclusion
 Verdict: multitasking without proof counts as contempt of focus. Silence the notifications or start paying fees in the form of extra late-night commits.
 
-**Metadata**
-category: dev-performance
-tags: dev, focus, sprint, vscode
-source_title: Research on context switching in remote teams
-source_url: https://example.com/estudo-context-switching
-source_published_at: 2024-12-12T00:00:00Z
-
 <!--lang:es-->
 # Sprint sin pruebas: el jurado del foco condena el multitasking
 
@@ -76,10 +62,3 @@ Saul mira ese guion y pregunta quién autorizó tantos testigos inútiles. Si ca
 
 ## Conclusión
 Sentencia: multitasking sin pruebas es desacato al foco. Silencia las notificaciones o prepárate para pagar honorarios en horas extra nocturnas.
-
-**Metadatos**
-category: dev-performance
-tags: dev, foco, sprint, vscode
-source_title: Investigación sobre context switching en equipos remotos
-source_url: https://example.com/estudo-context-switching
-source_published_at: 2024-12-12T00:00:00Z
