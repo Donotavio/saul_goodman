@@ -568,16 +568,32 @@ async function fetchText(url) {
   return response.text();
 }
 
+function parseDateValue(value) {
+  if (!value || typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const dateOnlyMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (dateOnlyMatch) {
+    const year = Number(dateOnlyMatch[1]);
+    const month = Number(dateOnlyMatch[2]) - 1;
+    const day = Number(dateOnlyMatch[3]);
+    const date = new Date(year, month, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return dateStr;
+  const date = parseDateValue(dateStr);
+  if (!date) return dateStr;
   const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 function formatDateTime(dateStr) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return dateStr;
+  const date = parseDateValue(dateStr);
+  if (!date) return dateStr;
   const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
   return date.toLocaleString(locale, {
     day: '2-digit',
@@ -605,7 +621,13 @@ function renderCards(posts, container) {
   }
 
   posts
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .sort((a, b) => {
+      const left = parseDateValue(b.date);
+      const right = parseDateValue(a.date);
+      const leftTime = left ? left.getTime() : 0;
+      const rightTime = right ? right.getTime() : 0;
+      return leftTime - rightTime;
+    })
     .forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-card';
