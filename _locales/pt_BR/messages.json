@@ -116,6 +116,45 @@
   "popup_top_domains_title": {
     "message": "Top 5 domínios"
   },
+  "popup_blog_badge": {
+    "message": "Saul indica leitura"
+  },
+  "popup_blog_section_title": {
+    "message": "Sugestão direta do blog"
+  },
+  "popup_blog_section_subtitle": {
+    "message": "Usamos seus números para apontar um artigo no tom Saul."
+  },
+  "popup_blog_button_all": {
+    "message": "Abrir blog"
+  },
+  "popup_blog_loading": {
+    "message": "Caçando caso perfeito..."
+  },
+  "popup_blog_error": {
+    "message": "Não consegui buscar o blog agora."
+  },
+  "popup_blog_empty": {
+    "message": "Nenhum artigo disponível por aqui."
+  },
+  "popup_blog_cta": {
+    "message": "Ler agora"
+  },
+  "popup_blog_category_prefix": {
+    "message": "Categoria: {category}"
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "Porque sua procrastinação ultrapassou o limite legal hoje."
+  },
+  "popup_blog_reason_foco": {
+    "message": "Baseado no foco disperso e nas abas sem dono."
+  },
+  "popup_blog_reason_dev": {
+    "message": "Para turbinar performance dev sem coach barato."
+  },
+  "popup_blog_reason_remoto": {
+    "message": "Para sobreviver ao home office sem sumir do Zoom."
+  },
   "popup_options_button": {
     "message": "Configurar"
   },

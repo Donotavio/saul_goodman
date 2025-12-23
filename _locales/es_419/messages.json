@@ -116,6 +116,45 @@
   "popup_top_domains_title": {
     "message": "Top 5 dominios"
   },
+  "popup_blog_badge": {
+    "message": "Saul recomienda lectura"
+  },
+  "popup_blog_section_title": {
+    "message": "Recomendación directa del blog"
+  },
+  "popup_blog_section_subtitle": {
+    "message": "Leemos tus números y apuntamos un artículo con tono Saul."
+  },
+  "popup_blog_button_all": {
+    "message": "Abrir blog"
+  },
+  "popup_blog_loading": {
+    "message": "Buscando el caso perfecto..."
+  },
+  "popup_blog_error": {
+    "message": "No pude llegar al blog ahora."
+  },
+  "popup_blog_empty": {
+    "message": "No hay artículos disponibles por aquí."
+  },
+  "popup_blog_cta": {
+    "message": "Leer ahora"
+  },
+  "popup_blog_category_prefix": {
+    "message": "Categoría: {category}"
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "Porque tu procrastinación cruzó el límite legal hoy."
+  },
+  "popup_blog_reason_foco": {
+    "message": "Basado en el foco disperso de hoy."
+  },
+  "popup_blog_reason_dev": {
+    "message": "Para subir el rendimiento dev sin coach barato."
+  },
+  "popup_blog_reason_remoto": {
+    "message": "Para sobrevivir al trabajo remoto sin volverte un fantasma."
+  },
   "popup_options_button": {
     "message": "Configurar"
   },
