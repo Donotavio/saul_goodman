@@ -14,14 +14,14 @@
         "dev"
       ],
       "excerpt": "Aprenda como procrastinar enquanto tenta compilar Tauri para RISC-V. O novo hobby de quem não tem o que fazer.",
+      "title_en": "Procrastination: The New Extreme Sport of Programming",
+      "title_es": "Procrastinación: El Nuevo Deporte Extremo de la Programación",
+      "tone": "incredulo",
       "source_title": "The Old Dog Learns a New Trick: Cross-Compiling Tauri CLI for RISC-V",
       "source_url": "https://dev.to/gounthar/the-old-dog-learns-a-new-trick-cross-compiling-tauri-cli-for-risc-v-ibn",
       "source_published_at": "Tue, 23 Dec 2025 22:01:34 +0000",
-      "title_en": "Procrastination: The New Extreme Sport of Programming",
-      "title_es": "Procrastinación: El Nuevo Deporte Extremo de la Programación",
       "excerpt_en": "Learn how to procrastinate while attempting to compile Tauri for RISC-V. The new hobby for those with nothing to do.",
-      "excerpt_es": "Aprende cómo procrastinar mientras intentas compilar Tauri para RISC-V. El nuevo pasatiempo de quienes no tienen nada que hacer.",
-      "tone": "incredulo"
+      "excerpt_es": "Aprende cómo procrastinar mientras intentas compilar Tauri para RISC-V. El nuevo pasatiempo de quienes no tienen nada que hacer."
     },
     {
       "title": "Login Hint: O Mistério Que Ninguém Pediu",
@@ -178,6 +178,29 @@
       "source_published_at": "Mon, 22 Dec 2025 08:49:47 +0000",
       "excerpt_en": "Yapi promises to revolutionize your productivity, but is that really possible in a world of endless procrastination?",
       "excerpt_es": "Yapi promete revolucionar tu productividad, pero ¿es eso realmente posible en un mundo de procrastinación incesante?"
+    },
+    {
+      "title": "Procrastinação: O Melhor Amigo do Desenvolvedor Moderno",
+      "url": "./posts/2025/2025-12-23-procrastinacao-o-melhor-amigo-do-desenvolvedor-moderno/",
+      "markdown": "2025/2025-12-23-procrastinacao-o-melhor-amigo-do-desenvolvedor-moderno.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "foco",
+        "procrastinação",
+        "produtividade",
+        "dev",
+        "AI"
+      ],
+      "excerpt": "Como a procrastinação se tornou a aliada secreta dos devs e a performance nunca foi tão divertida.",
+      "title_en": "Procrastination: The Best Friend of the Modern Developer",
+      "title_es": "Procrastinación: El Mejor Amigo del Desarrollador Moderno",
+      "tone": "incredulo",
+      "source_title": "AI Trainer",
+      "source_url": "https://remotive.com/remote-jobs/ai-ml/ai-trainer-2087694",
+      "source_published_at": "Wed, 17 Dec 2025 06:58:48 GMT",
+      "excerpt_en": "How procrastination has become the secret ally of devs and performance has never been so much fun.",
+      "excerpt_es": "Cómo la procrastinación se ha convertido en la aliada secreta de los devs y la performance nunca fue tan divertida."
     },
     {
       "title": "Foco? Só se for na Netflix!",
