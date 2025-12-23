@@ -64,11 +64,11 @@ function scoreItem(item, keywords) {
 function decodeHtml(value) {
   if (!value) return '';
   return value
-    .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&');
 }
 
 function extractTag(block, tag) {
@@ -201,7 +201,8 @@ async function callLLM(prompt) {
   if (!apiKey) throw new Error('LLM_API_KEY ausente');
 
   const model = process.env.LLM_MODEL || 'gpt-4o-mini';
-  const baseUrl = (process.env.LLM_BASE_URL || (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1/' : 'https://api.openai.com/v1/')).replace(/\/$/, '/');
+  const base = process.env.LLM_BASE_URL || (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
+  const baseUrl = base.endsWith('/') ? base : `${base}/`;
   const endpoint = 'chat/completions';
   const url = `${baseUrl}${endpoint}`;
 

@@ -1,12 +1,35 @@
 {
   "posts": [
     {
+      "title": "Procrastinação: A Arte de Fazer Nada com Estilo",
+      "url": "./post.html?post=2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
+      "markdown": "2025/2025-12-23-procrastinacao-a-arte-de-fazer-nada-com-estilo.md",
+      "date": "2025-12-23",
+      "category": "procrastinacao",
+      "tags": [
+        "foco",
+        "dev",
+        "performance",
+        "trabalho-remoto",
+        "Terraform"
+      ],
+      "excerpt": "Aprenda a procrastinar como um verdadeiro artista enquanto acha que está \"solucionando\" tudo com Terraform.",
+      "source_title": "Cómo solucionarlo con Terraform?",
+      "source_url": "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb",
+      "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
       "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
       "date": "2025-01-05",
       "category": "dev-performance",
-      "tags": ["dev", "foco", "sprint", "vscode"],
+      "tags": [
+        "dev",
+        "foco",
+        "sprint",
+        "vscode"
+      ],
       "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
       "source_title": "Pesquisa sobre context switching em times remotos",
       "source_url": "https://example.com/estudo-context-switching",
