@@ -116,6 +116,10 @@ const BLOG_TRANSLATIONS = {
     metaSource: 'Fuente',
     metaSourceUrl: 'URL de la fuente',
     metaPublishedAt: 'Publicado el',
+    mediaTaglineProcrastinacao: 'Osciloscopios mentales y sarcasmo terapéutico.',
+    mediaTaglineFoco: 'Foco digital bajo interrogatorio permanente.',
+    mediaTaglineDev: 'Performance dev con jurado técnico.',
+    mediaTaglineRemoto: 'Trabajo remoto sin coartada ni modo fantasma.',
   },
 };
 
@@ -145,6 +149,27 @@ const CATEGORY_TITLE_KEYS = {
   'foco-atencao': 'categoryFocoTitle',
   'dev-performance': 'categoryDevTitle',
   'trabalho-remoto': 'categoryRemotoTitle',
+};
+
+const CATEGORY_TAGLINES = {
+  pt: {
+    'procrastinacao': 'Osciloscópios emocionais e sarcasmo terapêutico.',
+    'foco-atencao': 'Foco e atenção sob interrogatório diário.',
+    'dev-performance': 'Performance dev julgada por métricas reais.',
+    'trabalho-remoto': 'Home office sem álibi e sem modo fantasma.',
+  },
+  en: {
+    'procrastinacao': 'Mental oscilloscopes meet Saul’s therapeutic sarcasm.',
+    'foco-atencao': 'Focus and attention under daily questioning.',
+    'dev-performance': 'Dev performance judged by hard metrics.',
+    'trabalho-remoto': 'Remote work with zero ghost-mode excuses.',
+  },
+  es: {
+    'procrastinacao': 'Osciloscopios mentales y sarcasmo terapéutico.',
+    'foco-atencao': 'Enfoque y atención bajo interrogatorio diario.',
+    'dev-performance': 'Rendimiento dev juzgado por métricas reales.',
+    'trabalho-remoto': 'Trabajo remoto sin coartada ni modo fantasma.',
+  },
 };
 
 const DATE_LOCALE = {
@@ -247,6 +272,19 @@ function updateCategoryLabels(lang = currentLanguage) {
     if (!key) return;
     element.textContent = getCategoryLabel(key, lang);
   });
+}
+
+function updateMediaCopy(category, lang = currentLanguage) {
+  const titleEl = document.querySelector('[data-media-title]');
+  if (titleEl) {
+    const key = CATEGORY_TITLE_KEYS[category];
+    titleEl.textContent = key ? t(key, lang) : getCategoryLabel(category, lang);
+  }
+  const taglineEl = document.querySelector('[data-media-tagline]');
+  if (taglineEl) {
+    const taglines = CATEGORY_TAGLINES[lang] || CATEGORY_TAGLINES[defaultLanguage];
+    taglineEl.textContent = taglines[category] || taglines.procrastinacao;
+  }
 }
 
 function normalizeLanguage(value) {
@@ -602,6 +640,7 @@ function updatePostMedia(category) {
     heroLogo.src = BLOG_LOGO;
     heroLogo.alt = 'Saul Goodman logo';
   }
+  updateMediaCopy(category);
 }
 
 async function renderPost() {
