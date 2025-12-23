@@ -24,6 +24,29 @@
       "excerpt_es": "Osciloscopios, pestañas infinitas y procrastinación comparten la misma sala de juicio en la vida de un dev."
     },
     {
+      "title": "Foco? Só se for na Netflix!",
+      "url": "./posts/2025/2025-12-23-foco-so-se-for-na-netflix/",
+      "markdown": "2025/2025-12-23-foco-so-se-for-na-netflix.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "foco",
+        "procrastinação",
+        "dev",
+        "performance",
+        "iOS"
+      ],
+      "excerpt": "Foco é o novo preto, mas a procrastinação tá fazendo sucesso na passarela.",
+      "title_en": "Focus? Only if it's on Netflix!",
+      "title_es": "¿Foco? ¡Solo si es en Netflix!",
+      "tone": "incredulo",
+      "source_title": "iOS Developer",
+      "source_url": "https://remotive.com/remote-jobs/software-development/ios-developer-1956455",
+      "source_published_at": "Tue, 09 Dec 2025 21:16:18 GMT",
+      "excerpt_en": "Focus is the new black, but procrastination is strutting down the runway.",
+      "excerpt_es": "El foco es el nuevo negro, pero la procrastinación está triunfando en la pasarela."
+    },
+    {
       "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
       "url": "./posts/2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu/",
       "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
@@ -45,6 +68,29 @@
       "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
       "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
       "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
+    },
+    {
+      "title": "Login Hint: O Mistério Que Ninguém Pediu",
+      "url": "./posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/",
+      "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "Azure",
+        "SWA",
+        "login_hint",
+        "dev",
+        "procrastinação"
+      ],
+      "excerpt": "Você sabia que o `login_hint` não funcionava nas Azure Static Web Apps? Agora já sabe. E o que fazer com isso?",
+      "title_en": "Login Hint: The Mystery No One Asked For",
+      "title_es": "Login Hint: El Misterio Que Nadie Pidió",
+      "tone": "incredulo",
+      "source_title": "Azure Static Web Apps: login_hint now works",
+      "source_url": "https://dev.to/andrewelans/azure-static-web-apps-add-loginhint-with-functions-37jb",
+      "source_published_at": "Tue, 23 Dec 2025 17:37:22 +0000",
+      "excerpt_en": "Did you know that the `login_hint` didn't work on Azure Static Web Apps? Now you do. So what to do with that?",
+      "excerpt_es": "¿Sabías que el `login_hint` no funcionaba en las Azure Static Web Apps? Ahora ya lo sabes. ¿Y qué hacer con eso?"
     },
     {
       "title": "Mutantes no Código: A Revolução que Você Não Pediu",
@@ -132,29 +178,6 @@
       "source_published_at": "Tue, 23 Dec 2025 15:35:37 +0000",
       "excerpt_en": "Terraform modules: the solution for you to not do anything new.",
       "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
-    },
-    {
-      "title": "Login Hint: O Mistério Que Ninguém Pediu",
-      "url": "./posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/",
-      "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
-      "date": "2025-12-23",
-      "category": "dev-performance",
-      "tags": [
-        "Azure",
-        "SWA",
-        "login_hint",
-        "dev",
-        "procrastinação"
-      ],
-      "excerpt": "Você sabia que o `login_hint` não funcionava nas Azure Static Web Apps? Agora já sabe. E o que fazer com isso?",
-      "source_title": "Azure Static Web Apps: login_hint now works",
-      "source_url": "https://dev.to/andrewelans/azure-static-web-apps-add-loginhint-with-functions-37jb",
-      "source_published_at": "Tue, 23 Dec 2025 17:37:22 +0000",
-      "title_en": "Login Hint: The Mystery No One Asked For",
-      "title_es": "Login Hint: El Misterio Que Nadie Pidió",
-      "excerpt_en": "Did you know that the `login_hint` didn't work on Azure Static Web Apps? Now you do. So what to do with that?",
-      "excerpt_es": "¿Sabías que el `login_hint` no funcionaba en las Azure Static Web Apps? Ahora ya lo sabes. ¿Y qué hacer con eso?",
-      "tone": "incredulo"
     },
     {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",

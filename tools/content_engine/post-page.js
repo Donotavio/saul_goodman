@@ -39,7 +39,8 @@ function escapeAttribute(value) {
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, '&#39;');
 }
 
 function escapeText(value) {
@@ -104,6 +105,7 @@ function buildPostPageHtml({
 }) {
   const pageTitle = `${title} - ${BLOG_TITLE}`;
   const escapedTitle = escapeText(pageTitle);
+  const escapedTitleAttribute = escapeAttribute(pageTitle);
   const escapedDescription = escapeAttribute(description);
   const escapedCanonical = escapeAttribute(canonicalUrl);
   const escapedImage = escapeAttribute(imageUrl);
@@ -141,14 +143,14 @@ function buildPostPageHtml({
     <link rel="canonical" href="${escapedCanonical}" />
     <link rel="alternate" type="application/rss+xml" title="${BLOG_TITLE}" href="${RSS_URL}" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="${escapedTitle}" />
+    <meta property="og:title" content="${escapedTitleAttribute}" />
     <meta property="og:description" content="${escapedDescription}" />
     <meta property="og:url" content="${escapedCanonical}" />
     <meta property="og:image" content="${escapedImage}" />
     <meta property="og:site_name" content="Saul Goodman" />
     <meta property="article:published_time" content="${escapeAttribute(publishedTime)}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${escapedTitle}" />
+    <meta name="twitter:title" content="${escapedTitleAttribute}" />
     <meta name="twitter:description" content="${escapedDescription}" />
     <meta name="twitter:image" content="${escapedImage}" />
     <link rel="icon" type="image/png" href="../../../../assets/logotipo_saul_goodman.png" />
