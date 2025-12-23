@@ -361,14 +361,17 @@ function buildMarkdown(metadata, body, translations) {
 }
 
 function extractFrontmatter(markdown) {
-  const normalized = markdown.trimStart();
-  const match = normalized.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
-  if (!match) throw new Error('Conteúdo sem frontmatter');
-  const frontmatter = match[1];
-  const body = match[2].trim();
+  const normalized = markdown.replace(/^[\uFEFF]+/, '').replace(/\r\n?/g, '\n');
+  const startIdx = normalized.indexOf('---\n');
+  if (startIdx === -1) throw new Error('Conteúdo sem frontmatter');
+  const slice = normalized.slice(startIdx + 4);
+  const endIdx = slice.indexOf('\n---');
+  if (endIdx === -1) throw new Error('Conteúdo sem frontmatter');
+  const frontmatter = slice.slice(0, endIdx);
+  const body = slice.slice(endIdx + 4).trim();
   const data = {};
 
-  for (const line of frontmatter.split(/\r?\n/)) {
+  for (const line of frontmatter.split(/\n/)) {
     const [rawKey, ...rawValue] = line.split(':');
     if (!rawKey || rawValue.length === 0) continue;
     const key = rawKey.trim();

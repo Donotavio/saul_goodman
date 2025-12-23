@@ -41,6 +41,28 @@
       "excerpt_es": "La vida es una gran sesión de depuración, donde la procrastinación es el software que nunca deja de fallar."
     },
     {
+      "title": "Kiro e Supabase: O Casamento Que Ninguém Pediu",
+      "url": "./post/?post=2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "markdown": "2025/2025-12-23-kiro-e-supabase-o-casamento-que-ninguem-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "supabase",
+        "kiro",
+        "performance",
+        "programação",
+        "sarcasmo"
+      ],
+      "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
+      "source_title": "The new Supabase power for Kiro",
+      "source_url": "https://dev.to/supabase/the-new-supabase-power-for-kiro-51df",
+      "source_published_at": "Tue, 23 Dec 2025 14:18:00 +0000",
+      "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
+      "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
+      "excerpt_en": "Kiro now has superpowers with Supabase. Because who doesn’t want another tool to procrastinate with, right?",
+      "excerpt_es": "Kiro ahora tiene superpoderes con Supabase. Porque, ¿quién no quiere más una herramienta para procrastinar, verdad?"
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
       "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
       "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
