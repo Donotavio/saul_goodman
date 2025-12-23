@@ -12,6 +12,7 @@ const productiveInput = document.getElementById('productiveInput') as HTMLInputE
 const procrastinationInput = document.getElementById('procrastinationInput') as HTMLInputElement;
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
+const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
 const inactivityWeightEl = document.getElementById('inactivityWeight') as HTMLInputElement;
@@ -75,6 +76,14 @@ function attachListeners(): void {
     if (target?.dataset.domain) {
       void removeDomain('procrastinationDomains', target.dataset.domain);
     }
+  });
+
+  blockProcrastinationEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.blockProcrastination = blockProcrastinationEl.checked;
+    void persistSettings('options_status_blocklist_saved');
   });
 
   resetButton.addEventListener('click', () => {
@@ -164,6 +173,9 @@ function renderForms(): void {
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
   criticalSoundEnabledEl.checked = Boolean(currentSettings.criticalSoundEnabled);
+  if (blockProcrastinationEl) {
+    blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
+  }
   renderWorkSchedule();
 
   renderDomainList('productiveDomains', productiveListEl);

@@ -22,7 +22,7 @@ import {
   RuntimeMessageType,
   TimelineEntry
 } from '../shared/types.js';
-import { classifyDomain, extractDomain } from '../shared/utils/domain.js';
+import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -34,6 +34,9 @@ const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const VSCODE_SYNC_MIN_INTERVAL_MS = 5 * 60 * 1000; // 5 minutos
+const BLOCK_RULE_ID_BASE = 50_000;
+const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
+const BLOCK_PAGE_PATH = '/src/block/block.html';
 
 interface TrackingState {
   currentDomain: string | null;
@@ -93,6 +96,7 @@ const messageHandlers: Record<
     settingsCache = null;
     const settings = await getSettingsCache();
     applyIdleDetectionInterval(settings);
+    await syncBlockingRules(settings);
     await refreshScore();
   }
 };
@@ -206,6 +210,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes[StorageKeys.SETTINGS]) {
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
+    void syncBlockingRules(settingsCache);
     void refreshScore();
   }
 
@@ -235,6 +240,7 @@ async function initialize(): Promise<void> {
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
   if (settingsCache) {
     applyIdleDetectionInterval(settingsCache);
+    await syncBlockingRules(settingsCache);
   }
   await scheduleTrackingAlarm();
   await scheduleMidnightAlarm();
@@ -686,6 +692,63 @@ async function handleNavigationEvent(
     await updateActiveTabContext(tabId, false, tab);
   } catch {
     // ignore lookup errors
+  }
+}
+
+async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
+  if (!chrome.declarativeNetRequest?.updateDynamicRules) {
+    return;
+  }
+  if (!settings) {
+    return;
+  }
+
+  try {
+    const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+    const ownedRuleIds = existingRules
+      .filter((rule) => rule.id >= BLOCK_RULE_ID_BASE && rule.id <= BLOCK_RULE_MAX)
+      .map((rule) => rule.id);
+
+    const normalizedDomains = (settings.procrastinationDomains ?? [])
+      .map((domain) => extractDomain(domain) ?? normalizeDomain(domain))
+      .map((domain) => normalizeDomain(domain ?? ''))
+      .filter((domain) => Boolean(domain))
+      .slice(0, BLOCK_RULE_MAX - BLOCK_RULE_ID_BASE + 1);
+
+    const addRules: chrome.declarativeNetRequest.Rule[] = settings.blockProcrastination
+      ? normalizedDomains.map((domain, index) => ({
+          id: BLOCK_RULE_ID_BASE + index,
+          priority: 1,
+          action: {
+            type: chrome.declarativeNetRequest.RuleActionType.REDIRECT,
+            redirect: {
+              extensionPath: BLOCK_PAGE_PATH
+            }
+          },
+          condition: {
+            urlFilter: `||${domain}^`,
+            resourceTypes: [
+              chrome.declarativeNetRequest.ResourceType.MAIN_FRAME,
+              chrome.declarativeNetRequest.ResourceType.SUB_FRAME
+            ]
+          }
+        }))
+      : [];
+
+    const removeRuleIds = Array.from(
+      new Set([...ownedRuleIds, ...addRules.map((rule) => rule.id)])
+    );
+
+    if (!removeRuleIds.length && !addRules.length) {
+      return;
+    }
+
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds,
+      addRules
+    });
+  } catch (error) {
+    console.warn('Falha ao sincronizar regras de bloqueio', error);
   }
 }
 

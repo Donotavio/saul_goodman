@@ -82,6 +82,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
     'valorant.com',
     'pokemongolive.com'
   ],
+  blockProcrastination: false,
   weights: {
     procrastinationWeight: 0.6,
     tabSwitchWeight: 0.25,

@@ -455,6 +455,12 @@
   "options_procrastination_hint": {
     "message": "Aqui vivem as tentações. Se você ama um site, ele provavelmente pertence aqui."
   },
+  "options_procrastination_block_toggle_label": {
+    "message": "Bloquear acesso aos domínios desta lista"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Quando ativo, o Saul bloqueia as navegações para esses sites usando regras locais do Chrome."
+  },
   "options_procrastination_placeholder": {
     "message": "ex.: youtube.com"
   },
@@ -472,6 +478,9 @@
   },
   "options_status_list_updated": {
     "message": "Lista atualizada."
+  },
+  "options_status_blocklist_saved": {
+    "message": "Preferência de bloqueio atualizada."
   },
   "options_status_domain_removed": {
     "message": "Domínio removido."

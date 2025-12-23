@@ -101,6 +101,7 @@ export type LocalePreference = 'auto' | SupportedLocale;
 export interface ExtensionSettings {
   productiveDomains: string[];
   procrastinationDomains: string[];
+  blockProcrastination?: boolean;
   weights: WeightConfig;
   inactivityThresholdMs: number;
   locale: SupportedLocale;
@@ -162,6 +163,7 @@ export interface DomainListChange {
 export interface OptionsFormState {
   productiveDomains: string[];
   procrastinationDomains: string[];
+  blockProcrastination?: boolean;
   weights: WeightConfig;
   inactivityThresholdMs: number;
   openAiKey?: string;
