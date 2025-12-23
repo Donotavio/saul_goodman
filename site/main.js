@@ -583,6 +583,14 @@ const DATE_LOCALE = {
   en: 'en-US',
   es: 'es-ES',
 };
+const runWhenIdle = (task) => {
+  if (typeof task !== 'function') return;
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(task, { timeout: 1500 });
+    return;
+  }
+  window.setTimeout(task, 0);
+};
 let blogPreviewPosts = null;
 let blogPreviewPromise = null;
 
@@ -706,6 +714,10 @@ const renderBlogPreview = async () => {
       const image = document.createElement('img');
       image.src = getBlogArtwork(post);
       image.alt = t('blogPreviewImageAlt');
+      image.width = 220;
+      image.height = 220;
+      image.loading = 'lazy';
+      image.decoding = 'async';
       card.appendChild(image);
 
       const meta = document.createElement('div');
@@ -1057,23 +1069,36 @@ const startQuakeDemo = () => {
 };
 
 const setupParallax = () => {
-  window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-    const offset = window.scrollY;
-    hero.style.backgroundPosition = `center ${offset * 0.25}px`;
-  });
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  hero.style.backgroundPosition = 'center 0px';
+  let ticking = false;
+  const updatePosition = () => {
+    hero.style.backgroundPosition = `center ${window.scrollY * 0.25}px`;
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updatePosition);
+    },
+    { passive: true }
+  );
 };
 
 window.addEventListener('DOMContentLoaded', () => {
   setupLightbox();
   applyTranslations(detectLanguage());
   bindLanguageSelector();
-  renderBlogPreview();
-  setupCarousels();
-  setupCounters();
-  setupParallax();
-  setupIntroAudio();
+  runWhenIdle(() => {
+    renderBlogPreview();
+    setupCarousels();
+    setupCounters();
+    setupParallax();
+    setupIntroAudio();
+  });
   document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-quake-trigger]');
     if (trigger) {
