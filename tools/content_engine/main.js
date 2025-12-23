@@ -301,6 +301,10 @@ async function ensureIndexFile() {
   const current = await readJson(INDEX_PATH, null);
   if (current) return current;
   const fallback = { posts: [] };
+  if (DRY_RUN) {
+    console.log('[dry-run] Índice ausente; usando fallback em memória');
+    return fallback;
+  }
   await writeJson(INDEX_PATH, fallback);
   return fallback;
 }
