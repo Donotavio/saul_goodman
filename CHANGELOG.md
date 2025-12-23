@@ -10,3 +10,6 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 - Bloqueio de procrastinação: opção de bloquear domínios via `declarativeNetRequest` e página de bloqueio com i18n.
 - Experiência do usuário: opções reestruturadas com melhor acessibilidade; compartilhamento social com suporte multi-plataforma e i18n; lightbox do site refeito sem `innerHTML` inseguro.
 - Novidades na extensão: notificação local pós-update com link para o changelog (requer permissão `notifications`) para avisar o usuário das features recém-publicadas e botão “Ver novidades” no popup para disparar/testar o aviso manualmente.
+- Chrome ↔ VS Code ↔ SaulDaemon: background publica o índice diariamente em `/v1/tracking/index`, daemon persiste o valor por pairing key e a extensão VS Code exibe o “Saul Index” na status bar com tooltip.
+- I18n na extensão VS Code: suporte a `auto`, `pt-BR`, `en-US`, `es-419` com `saulGoodman.language`; prompts, health check, logs e status bar usam strings localizadas.
+- Persistência da pairing key no VS Code ao preparar o daemon, mais mensagens claras para reinício e testes de conexão.

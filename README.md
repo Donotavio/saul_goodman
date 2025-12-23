@@ -2,6 +2,10 @@
 
 ![Logotipo Saul Goodman](src/img/logotipo_saul_goodman.ico "Logotipo Saul Goodman")
 
+[![Site oficial](https://img.shields.io/badge/Site-oficial-111111?logo=googlechrome&logoColor=white)](https://donotavio.github.io/saul_goodman/)
+[![Disponível na Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Saul%20Goodman-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/saul-goodman/fllkkpfaajgppbnlfoebeendceckcffe)
+[![Extensão VS Code](https://img.shields.io/badge/VS%20Code%20Marketplace-Saul%20Goodman-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode)
+
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-4.5-ff6384?logo=chartdotjs&logoColor=white)
@@ -15,6 +19,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
 - **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do “modo terremoto”, idioma da interface (auto/pt-BR/en-US/es-419) e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
+- **Teste de conexão com SaulDaemon** direto nas opções: valida URL, pairing key e exibe sessões/minutos do dia.
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
 - **Tooltips educativos**: cada métrica possui um ícone de informação que explica como o número foi calculado.
@@ -101,8 +106,12 @@ saul_goodman/
   - Gere um `.vsix` com `npm install && npm run build && vsce package` (ou instale pela Marketplace quando publicada).
   - Use o comando **Saul Goodman: preparar comando do SaulDaemon** para preencher o terminal com o start (port/chave) em modo não bloqueante.
   - Configure a mesma chave/porta da options page; o daemon e o Chrome nunca enviam dados para fora.
+  - O botão **“Testar conexão”** nas opções chama `/health` e `/v1/tracking/vscode/summary` para confirmar URL/key e retorna sessões/minutos do dia.
 
 Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo produtivo, inclui `vscodeSessions`, trocas por hora de VS Code no gráfico de abas e mistura a timeline do editor na narrativa do relatório.
+
+- A extensão VS Code exibe o **Índice do Saul** diretamente na barra de status (atualizado a cada minuto via SaulDaemon) e alerta quando o daemon está offline.
+- Mensagens da extensão VS Code estão localizadas (`pt-BR`, `en-US`, `es-419`) e podem ser forçadas via configuração `saulGoodman.language` (padrão: seguir o idioma do VS Code).
 
 ## Fluxo de desenvolvimento
 

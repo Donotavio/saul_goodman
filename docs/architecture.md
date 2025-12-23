@@ -6,7 +6,7 @@
 - **ES Modules**: TypeScript compila para módulos ES nativos, o que mantém o worker organizado em funções.
 - **Sem backend externo**: todo armazenamento fica em `chrome.storage.local` e o badge reflete o estado atual.
 - **Daemon local (opcional)**: `saul-daemon/index.cjs` recebe batimentos do VS Code (HTTP `localhost`) e devolve resumo diário para o background somar ao tempo produtivo.
-- **Extensão VS Code (opcional)**: `vscode-extension/` envia heartbeats e tem o comando “Saul Goodman: preparar comando do SaulDaemon” que preenche o terminal com `PAIRING_KEY`/`PORT`.
+- **Extensão VS Code (opcional)**: `vscode-extension/` envia heartbeats, mostra o Índice do Saul na status bar (consulta `/v1/tracking/index`) e tem o comando “Saul Goodman: preparar comando do SaulDaemon” que preenche o terminal com `PAIRING_KEY`/`PORT`.
 - **I18n**: strings em `_locales/{pt_BR,en_US,es_419}`; o popup/options usam `localePreference` (`auto` segue idioma do Chrome) via `createI18n`.
 
 ## Fluxo de dados
@@ -33,11 +33,15 @@
    - Gerencia os blocos de horários de trabalho (`workSchedule`). Usuário pode adicionar/remover intervalos e o background usa esses dados para detectar expediente/oferta de horas extras.
 5. **Site institucional (`site/`)**
    - HTML/CSS/JS independentes apresentam a extensão, seguindo a mesma identidade visual para campanhas e divulgação.
-6. **SaulDaemon (`saul-daemon/`)**
-   - Node CJS que persiste `data/vscode-usage.json` por data (`totalActiveMs`, `sessions`, `switches`, `switchHourly`, `timeline`).
-   - Endpoint `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY` responde o resumo consumido pelo background.
-7. **Extensão VS Code (`vscode-extension/`)**
-   - Envia batimentos para o daemon, pede chave/porta quando ausentes e pode iniciar o daemon em terminal próprio com logs sem bloquear o usuário.
+6. **SaulDaemon (`saul-daemon/`)
+
+- Node CJS que persiste `data/vscode-usage.json` por data (`totalActiveMs`, `sessions`, `switches`, `switchHourly`, `timeline`).
+- Endpoint `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY` responde o resumo consumido pelo background.
+- Endpoint `POST /v1/tracking/index` recebe o índice diário publicado pelo Chrome e `GET /v1/tracking/index` devolve índice/sessões/minutos para o VS Code.
+
+1. **Extensão VS Code (`vscode-extension/`)
+
+- Envia batimentos para o daemon, pede chave/porta quando ausentes, pode iniciar o daemon em terminal próprio com logs sem bloquear o usuário e exibe o Índice do Saul na status bar com mensagens traduzidas (`pt-BR`, `en-US`, `es-419`).
 
 ## Estrutura dos dados
 
