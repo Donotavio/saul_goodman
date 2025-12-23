@@ -34,6 +34,9 @@ const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const VSCODE_SYNC_MIN_INTERVAL_MS = 5 * 60 * 1000; // 5 minutos
+const RELEASE_NOTIFICATION_ID = 'sg:release-notes';
+const LAST_NOTIFIED_VERSION_KEY = 'sg:last-notified-version';
+const CHANGELOG_URL = 'https://github.com/Donotavio/saul_goodman/blob/main/CHANGELOG.md';
 const BLOCK_RULE_ID_BASE = 50_000;
 const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
 const BLOCK_PAGE_PATH = '/src/block/block.html';
@@ -79,6 +82,7 @@ let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
 let lastCriticalScore = -Infinity;
+let releaseNotesClickRegistered = false;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -99,6 +103,13 @@ const messageHandlers: Record<
     await syncBlockingRules(settings);
     await syncVscodeMetrics(true);
     await refreshScore();
+  },
+  'release-notes': async (payload?: unknown) => {
+    const reset = Boolean((payload as { reset?: boolean })?.reset);
+    if (reset) {
+      await chrome.storage.local.remove(LAST_NOTIFIED_VERSION_KEY);
+    }
+    await notifyReleaseNotesIfNeeded(true);
   }
 };
 
@@ -244,6 +255,7 @@ async function initialize(): Promise<void> {
   await scheduleMidnightAlarm();
   await hydrateActiveTab();
   await syncVscodeMetrics(true);
+  await notifyReleaseNotesIfNeeded();
 
   initializing = false;
 }
@@ -637,6 +649,63 @@ function clearCachedVscodeMetrics(metrics: DailyMetrics): boolean {
   }
 
   return changed;
+}
+
+async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
+  const version = chrome.runtime.getManifest().version;
+  if (!version) {
+    return;
+  }
+
+  const stored = await chrome.storage.local.get(LAST_NOTIFIED_VERSION_KEY);
+  if (!forceOpen && stored[LAST_NOTIFIED_VERSION_KEY] === version) {
+    return;
+  }
+
+  const changelogUrl = CHANGELOG_URL || chrome.runtime.getURL('CHANGELOG.md');
+
+  const openTab = async (): Promise<void> => {
+    try {
+      await chrome.tabs.create({ url: changelogUrl });
+    } catch {
+      // ignore tab creation errors
+    }
+  };
+
+  if (chrome.notifications?.create) {
+    if (!releaseNotesClickRegistered) {
+      chrome.notifications.onClicked.addListener(async (notificationId) => {
+        if (notificationId !== RELEASE_NOTIFICATION_ID) {
+          return;
+        }
+        await openTab();
+        try {
+          await chrome.notifications.clear(RELEASE_NOTIFICATION_ID);
+        } catch {
+          // ignore notification clear errors
+        }
+      });
+      releaseNotesClickRegistered = true;
+    }
+
+    try {
+      await chrome.notifications.create(RELEASE_NOTIFICATION_ID, {
+        type: 'basic',
+        iconUrl: chrome.runtime.getURL('src/img/logotipo_saul_goodman.png'),
+        title: `Novidades — v${version}`,
+        message: 'A extensão foi atualizada. Clique para ver o changelog.'
+      });
+      if (forceOpen) {
+        await openTab();
+      }
+    } catch {
+      await openTab();
+    }
+  } else {
+    await openTab();
+  }
+
+  await chrome.storage.local.set({ [LAST_NOTIFIED_VERSION_KEY]: version });
 }
 
 /**

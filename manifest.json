@@ -33,7 +33,8 @@
     "webNavigation",
     "tabGroups",
     "sessions",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "notifications"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -57,7 +58,8 @@
         "src/block/block.html",
         "src/block/block.js",
         "site/assets/*",
-        "store-assets/audio/*"
+        "store-assets/audio/*",
+        "CHANGELOG.md"
       ],
       "matches": [
         "<all_urls>"
