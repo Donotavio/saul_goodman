@@ -13,6 +13,7 @@ const BLOG_TITLE = 'Blog do Saul Goodman';
 const BLOG_DESCRIPTION =
   'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.';
 const GA_MEASUREMENT_ID = 'G-JM4SE32S0M';
+const GTM_CONTAINER_ID = 'GTM-PXR32RVF';
 const CATEGORY_TONE = {
   'procrastinacao': 'incredulo',
   'foco-atencao': 'like',
@@ -139,6 +140,23 @@ function buildPostPageHtml({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${escapedTitle}</title>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js',
+        });
+        const f = d.getElementsByTagName(s)[0];
+        const j = d.createElement(s);
+        const dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', '${GTM_CONTAINER_ID}');
+    </script>
+    <!-- End Google Tag Manager -->
     <meta name="description" content="${escapedDescription}" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="${escapedCanonical}" />
@@ -185,6 +203,16 @@ ${jsonLdContent}
     </script>
   </head>
   <body data-blog-view="post" data-blog-post="${escapeAttribute(relativePath)}">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden;"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <nav class="site-nav">
       <a class="brand" href="../../../../index.html#home">Saul Goodman</a>
       <div class="nav-actions">
