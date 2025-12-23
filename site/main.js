@@ -573,10 +573,10 @@ const BLOG_CATEGORY_TONES = {
   'trabalho-remoto': 'nao-corte',
 };
 const BLOG_TONE_ARTWORK = {
-  'incredulo': 'assets/saul_incredulo.png',
-  'like': 'assets/saul_like.png',
-  'nao-corte': 'assets/saul_nao_corte.png',
-  'default': 'assets/logotipo_saul_goodman.png',
+  'incredulo': 'assets/saul_incredulo-320.png',
+  'like': 'assets/saul_like-320.png',
+  'nao-corte': 'assets/saul_nao_corte-320.png',
+  'default': 'assets/logotipo_saul_goodman-420.png',
 };
 const DATE_LOCALE = {
   pt: 'pt-BR',
@@ -590,6 +590,13 @@ const runWhenIdle = (task) => {
     return;
   }
   window.setTimeout(task, 0);
+};
+const registerServiceWorker = () => {
+  if (!('serviceWorker' in navigator)) return;
+  const swUrl = new URL('sw.js', document.baseURI).toString();
+  navigator.serviceWorker
+    .register(swUrl)
+    .catch((error) => console.error('Service worker registration failed', error));
 };
 let blogPreviewPosts = null;
 let blogPreviewPromise = null;
@@ -718,6 +725,14 @@ const renderBlogPreview = async () => {
       image.height = 220;
       image.loading = 'lazy';
       image.decoding = 'async';
+      const match = image.src.match(/-(\d+)(?=\.png$)/);
+      const baseWidth = match ? Number(match[1]) : 220;
+      const fallbackImage = match ? image.src.replace(match[0], '') : image.src;
+      const fallbackWidth = Math.max(baseWidth * 2, 800);
+      image.srcset = match
+        ? `${image.src} ${baseWidth}w, ${fallbackImage} ${fallbackWidth}w`
+        : `${image.src} ${baseWidth}w`;
+      image.sizes = '220px';
       card.appendChild(image);
 
       const meta = document.createElement('div');
@@ -1098,6 +1113,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setupCounters();
     setupParallax();
     setupIntroAudio();
+    registerServiceWorker();
   });
   document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-quake-trigger]');
