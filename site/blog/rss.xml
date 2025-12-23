@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Tue, 23 Dec 2025 22:01:34 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 23:10:00 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Steam Machines: O Retorno do Rei ou o Último Suspiro?</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro/</guid>
+      <pubDate>Tue, 23 Dec 2025 23:10:00 GMT</pubDate>
+      <description><![CDATA[Um olhar sarcástico sobre a nova era das Steam Machines e o futuro da tecnologia de consumo.]]></description>
+    </item>
+
     <item>
       <title>Procrastinação: O Novo Esporte Radical da Programação</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2025/2025-12-23-procrastinacao-o-novo-esporte-radical-da-programacao/</link>

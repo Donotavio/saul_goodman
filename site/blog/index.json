@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Steam Machines: O Retorno do Rei ou o Último Suspiro?",
+      "url": "./posts/2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro/",
+      "markdown": "2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "tecnologia",
+        "Steam",
+        "hardware",
+        "software",
+        "futuro"
+      ],
+      "excerpt": "Um olhar sarcástico sobre a nova era das Steam Machines e o futuro da tecnologia de consumo.",
+      "title_en": "Steam Machines: The Return of the King or the Last Gasp?",
+      "title_es": "Steam Machines: ¿El Regreso del Rey o el Último Suspiro?",
+      "tone": "incredulo",
+      "source_title": "From Steam Machines to Home Robots: Where Consumer Tech Is Actually Heading",
+      "source_url": "https://dev.to/deeppressanalysis/from-steam-machines-to-home-robots-where-consumer-tech-is-actually-heading-7af",
+      "source_published_at": "Tue, 23 Dec 2025 23:10:00 +0000",
+      "excerpt_en": "A sarcastic look at the new era of Steam Machines and the future of consumer technology.",
+      "excerpt_es": "Una mirada sarcástica sobre la nueva era de las Steam Machines y el futuro de la tecnología de consumo."
+    },
+    {
       "title": "Procrastinação: O Novo Esporte Radical da Programação",
       "url": "./posts/2025/2025-12-23-procrastinacao-o-novo-esporte-radical-da-programacao/",
       "markdown": "2025/2025-12-23-procrastinacao-o-novo-esporte-radical-da-programacao.md",
