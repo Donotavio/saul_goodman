@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Procrastinação: O Novo Esporte Radical da Programação",
+      "url": "./posts/2025/2025-12-23-procrastinacao-o-novo-esporte-radical-da-programacao/",
+      "markdown": "2025/2025-12-23-procrastinacao-o-novo-esporte-radical-da-programacao.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "programação",
+        "RISC-V",
+        "Tauri",
+        "procrastinação",
+        "dev"
+      ],
+      "excerpt": "Aprenda como procrastinar enquanto tenta compilar Tauri para RISC-V. O novo hobby de quem não tem o que fazer.",
+      "source_title": "The Old Dog Learns a New Trick: Cross-Compiling Tauri CLI for RISC-V",
+      "source_url": "https://dev.to/gounthar/the-old-dog-learns-a-new-trick-cross-compiling-tauri-cli-for-risc-v-ibn",
+      "source_published_at": "Tue, 23 Dec 2025 22:01:34 +0000",
+      "title_en": "Procrastination: The New Extreme Sport of Programming",
+      "title_es": "Procrastinación: El Nuevo Deporte Extremo de la Programación",
+      "excerpt_en": "Learn how to procrastinate while attempting to compile Tauri for RISC-V. The new hobby for those with nothing to do.",
+      "excerpt_es": "Aprende cómo procrastinar mientras intentas compilar Tauri para RISC-V. El nuevo pasatiempo de quienes no tienen nada que hacer.",
+      "tone": "incredulo"
+    },
+    {
       "title": "Login Hint: O Mistério Que Ninguém Pediu",
       "url": "./posts/2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu/",
       "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
