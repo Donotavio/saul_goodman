@@ -233,7 +233,8 @@ function renderReport(metrics: DailyMetrics): void {
   renderStoryList(metrics, kpis);
   const domainsWithVscode = getDomainsWithVscode(metrics);
   renderRankings(domainsWithVscode);
-  renderTimeline(mergeTimelines(metrics, domainsWithVscode));
+  const mergedTimeline = mergeTimelines(metrics, domainsWithVscode);
+  renderTimeline(mergedTimeline);
   renderDomainBreakdownChart(domainsWithVscode);
   timelineStartHourInput.value = timelineFilter.start.toString();
   timelineEndHourInput.value = timelineFilter.end.toString();
