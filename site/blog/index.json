@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Você está procrastinando? Aqui está uma VPC pública para te distrair!",
+      "url": "./posts/2025/2025-12-23-voce-esta-procrastinando-aqui-esta-uma-vpc-publica-para-te-distrair/",
+      "markdown": "2025/2025-12-23-voce-esta-procrastinando-aqui-esta-uma-vpc-publica-para-te-distrair.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "procrastinação",
+        "VPC",
+        "devops",
+        "EC2",
+        "internet"
+      ],
+      "excerpt": "Procrastinação? Que tal criar uma VPC pública para esquecer de tudo?",
+      "title_en": "Are You Procrastinating? Here’s a Public VPC to Distract You!",
+      "title_es": "¿Estás procrastinando? ¡Aquí tienes una VPC pública para distraerte!",
+      "tone": "incredulo",
+      "source_title": "Day 27.Configuring a Public VPC with an EC2 Instance for Internet Access",
+      "source_url": "https://dev.to/thukhakyawe_cloud/day-27configuring-a-public-vpc-with-an-ec2-instance-for-internet-access-4n4l",
+      "source_published_at": "Tue, 23 Dec 2025 23:18:51 +0000",
+      "excerpt_en": "Procrastination? How about creating a public VPC to forget everything?",
+      "excerpt_es": "¿Procrastinación? ¿Qué tal crear una VPC pública para olvidarte de todo?"
+    },
+    {
       "title": "Steam Machines: O Retorno do Rei ou o Último Suspiro?",
       "url": "./posts/2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro/",
       "markdown": "2025/2025-12-23-steam-machines-o-retorno-do-rei-ou-o-ultimo-suspiro.md",
