@@ -2,7 +2,7 @@
   "name": "saul-goodman-vscode",
   "displayName": "Saul Goodman VS Code Bridge",
   "description": "Envia tempo ativo do VS Code para o SaulDaemon local usado pela extensão Chrome.",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "publisher": "donotavio",
   "license": "MIT",
   "repository": {
