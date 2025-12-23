@@ -134,6 +134,29 @@
       "excerpt_es": "Módulos de Terraform: la solución para que no hagas nada nuevo."
     },
     {
+      "title": "Login Hint: O Mistério Que Ninguém Pediu",
+      "url": "./post/?post=2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
+      "markdown": "2025/2025-12-23-login-hint-o-misterio-que-ninguem-pediu.md",
+      "date": "2025-12-23",
+      "category": "dev-performance",
+      "tags": [
+        "Azure",
+        "SWA",
+        "login_hint",
+        "dev",
+        "procrastinação"
+      ],
+      "excerpt": "Você sabia que o `login_hint` não funcionava nas Azure Static Web Apps? Agora já sabe. E o que fazer com isso?",
+      "source_title": "Azure Static Web Apps: login_hint now works",
+      "source_url": "https://dev.to/andrewelans/azure-static-web-apps-add-loginhint-with-functions-37jb",
+      "source_published_at": "Tue, 23 Dec 2025 17:37:22 +0000",
+      "title_en": "Login Hint: The Mystery No One Asked For",
+      "title_es": "Login Hint: El Misterio Que Nadie Pidió",
+      "excerpt_en": "Did you know that the `login_hint` didn't work on Azure Static Web Apps? Now you do. So what to do with that?",
+      "excerpt_es": "¿Sabías que el `login_hint` no funcionaba en las Azure Static Web Apps? Ahora ya lo sabes. ¿Y qué hacer con eso?",
+      "tone": "incredulo"
+    },
+    {
       "title": "Sprint sem prova: o júri do foco condena o multitasking",
       "url": "./post/?post=2025/2025-01-05-sprint-sem-prova.md",
       "markdown": "2025/2025-01-05-sprint-sem-prova.md",
