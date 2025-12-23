@@ -137,6 +137,12 @@
   "popup_export_report": {
     "message": "Abrir relatório"
   },
+  "popup_release_notes_button": {
+    "message": "Ver novidades"
+  },
+  "popup_release_notes_error": {
+    "message": "Não consegui abrir as novidades. Recarregue a extensão e tente de novo."
+  },
   "popup_privacy_note": {
     "message": "Todos os dados ficam no seu navegador. Saul honra o sigilo advogado-cliente."
   },

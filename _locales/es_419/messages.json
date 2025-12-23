@@ -137,6 +137,12 @@
   "popup_export_report": {
     "message": "Abrir informe"
   },
+  "popup_release_notes_button": {
+    "message": "Ver novedades"
+  },
+  "popup_release_notes_error": {
+    "message": "No pude abrir las novedades. Recarga la extensión e inténtalo de nuevo."
+  },
   "popup_privacy_note": {
     "message": "Todos los datos se quedan en tu navegador. Saul respeta el privilegio abogado-cliente."
   },

@@ -42,6 +42,7 @@ const chartCanvas = document.getElementById('productivityChart') as HTMLCanvasEl
 const csvExportButton = document.getElementById('csvExportButton') as HTMLButtonElement;
 const pdfExportButton = document.getElementById('pdfExportButton') as HTMLButtonElement;
 const reportButton = document.getElementById('reportButton') as HTMLButtonElement;
+const releaseNotesButton = document.getElementById('releaseNotesButton') as HTMLButtonElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -99,6 +100,7 @@ function attachListeners(): void {
   reportButton.addEventListener('click', () => {
     void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
   });
+  releaseNotesButton?.addEventListener('click', () => void triggerReleaseNotes());
   criticalCloseButton?.addEventListener('click', () => {
     criticalOverlayEl?.classList.add('hidden');
     criticalOverlayDismissed = true;
@@ -695,4 +697,25 @@ function getRandomCriticalMessage(threshold: number): string {
     return i18n.t(template.key, { threshold });
   }
   return i18n.t(template.key);
+}
+
+async function triggerReleaseNotes(): Promise<void> {
+  if (releaseNotesButton) {
+    releaseNotesButton.disabled = true;
+    releaseNotesButton.setAttribute('aria-busy', 'true');
+  }
+  try {
+    await sendRuntimeMessage('release-notes', { reset: true });
+  } catch (error) {
+    console.error(error);
+    alert(
+      i18n?.t('popup_release_notes_error') ??
+        'Não consegui abrir as novidades. Recarregue a extensão e tente de novo.'
+    );
+  } finally {
+    if (releaseNotesButton) {
+      releaseNotesButton.disabled = false;
+      releaseNotesButton.removeAttribute('aria-busy');
+    }
+  }
 }

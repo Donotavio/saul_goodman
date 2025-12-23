@@ -9,3 +9,4 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 - Foco e produtividade: tempo de IDE somado às métricas produtivas e gráficos; geração de IDs de sessão com `crypto.randomBytes` quando disponível.
 - Bloqueio de procrastinação: opção de bloquear domínios via `declarativeNetRequest` e página de bloqueio com i18n.
 - Experiência do usuário: opções reestruturadas com melhor acessibilidade; compartilhamento social com suporte multi-plataforma e i18n; lightbox do site refeito sem `innerHTML` inseguro.
+- Novidades na extensão: notificação local pós-update com link para o changelog (requer permissão `notifications`) para avisar o usuário das features recém-publicadas e botão “Ver novidades” no popup para disparar/testar o aviso manualmente.

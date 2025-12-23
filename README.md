@@ -31,7 +31,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Chart.js** vendorizado (UMD local em `src/vendor/chart.umd.js`).
 - **chrome.storage.local** para métricas diárias e configurações.
 - **Sem frameworks**: todo HTML/CSS escrito manualmente.
-- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos) e `sessions` (itens fechados recentes) para KPIs adicionais no relatório. Tudo permanece local.
+- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos), `sessions` (itens fechados recentes) e `notifications` (avisar sobre novidades) para KPIs adicionais no relatório. Tudo permanece local.
 
 ```text
 saul_goodman/

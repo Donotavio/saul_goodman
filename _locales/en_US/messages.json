@@ -137,6 +137,12 @@
   "popup_export_report": {
     "message": "Open report"
   },
+  "popup_release_notes_button": {
+    "message": "See what's new"
+  },
+  "popup_release_notes_error": {
+    "message": "Couldn't open the release notes. Reload the extension and try again."
+  },
   "popup_privacy_note": {
     "message": "All data stays in your browser. Saul honors attorney–client privilege."
   },

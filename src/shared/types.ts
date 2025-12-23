@@ -146,7 +146,8 @@ export type RuntimeMessageType =
   | 'activity-ping'
   | 'metrics-request'
   | 'clear-data'
-  | 'settings-updated';
+  | 'settings-updated'
+  | 'release-notes';
 
 export interface PopupData {
   metrics: DailyMetrics;
