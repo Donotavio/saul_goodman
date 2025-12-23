@@ -204,18 +204,19 @@ const DATE_LOCALE = {
   es: 'es-ES',
 };
 
-const BLOG_LOGO = '/assets/logotipo_saul_goodman.png';
+const assetsBase = new URL('../assets/', blogBase);
+const BLOG_LOGO = new URL('logotipo_saul_goodman.png', assetsBase).toString();
 const TONE_ARTWORK = {
   'incredulo': {
-    src: '/assets/saul_incredulo.png',
+    src: new URL('saul_incredulo.png', assetsBase).toString(),
     alt: 'Saul Goodman incrédulo',
   },
   'like': {
-    src: '/assets/saul_like.png',
+    src: new URL('saul_like.png', assetsBase).toString(),
     alt: 'Saul Goodman aprovando',
   },
   'nao-corte': {
-    src: '/assets/saul_nao_corte.png',
+    src: new URL('saul_nao_corte.png', assetsBase).toString(),
     alt: 'Saul Goodman julgando',
   },
 };
