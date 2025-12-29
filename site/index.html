@@ -169,17 +169,6 @@
           </a>
           <a class="ghost" href="#como-funciona" data-i18n="heroSecondaryCta">Veja como funciona</a>
         </div>
-        <!-- Indicador animado no hero reforça o valor da extensão logo no primeiro scroll -->
-        <div class="hero-gauge" data-gauge>
-          <div class="gauge-head">
-            <span data-i18n="heroGaugeLabel">Índice ao vivo</span>
-            <span class="gauge-value" data-gauge-value aria-live="polite">0%</span>
-          </div>
-          <div class="gauge-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <span class="gauge-fill" data-gauge-fill></span>
-          </div>
-          <p class="gauge-caption" data-i18n="heroGaugeHint">Acima de 70% Saul solta o terremoto.</p>
-        </div>
       </div>
       <div class="hero-visual" data-reveal>
         <img
@@ -197,7 +186,7 @@
     </header>
 
     <!-- Destaque visual dos recursos principais para gerar compreensão imediata -->
-    <section class="section feature-showcase" id="recursos">
+    <section class="section feature-showcase" id="recursos" data-parallax>
       <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="featureSectionEyebrow">Recursos principais</p>
         <h2 data-i18n="featureSectionTitle">O pacote completo anti-procrastinação.</h2>
@@ -205,47 +194,74 @@
           Cada cartão mistura humor e clareza, explicando em segundos o que Saul faz dentro do seu navegador.
         </p>
       </div>
-      <div class="feature-grid">
-        <article class="feature-card" data-reveal>
-          <span class="feature-icon feature-icon-radar" aria-hidden="true"></span>
-          <h3 data-i18n="featureRealtimeTitle">Rastreamento em tempo real</h3>
-          <p data-i18n="featureRealtimeBody">
-            O badge acompanha cada aba e transforma o seu dia em um índice claro de foco versus distração.
-          </p>
-          <span class="feature-hint" data-i18n="featureRealtimeHint">“Saul está de olho nas suas 37 abas.”</span>
-        </article>
-        <article class="feature-card" data-reveal>
-          <span class="feature-icon feature-icon-lists" aria-hidden="true"></span>
-          <h3 data-i18n="featureCustomTitle">Listas e pesos sob medida</h3>
-          <p data-i18n="featureCustomBody">
-            Ajuste domínios produtivos, vilões, pesos por horário e limites de terremoto conforme o seu dia.
-          </p>
-          <span class="feature-hint" data-i18n="featureCustomHint">“Planilha vale ouro, feed infinito vira vilão.”</span>
-        </article>
-        <article class="feature-card" data-reveal>
-          <span class="feature-icon feature-icon-quake" aria-hidden="true"></span>
-          <h3 data-i18n="featureQuakeTitle">Modo terremoto cinematográfico</h3>
-          <p data-i18n="featureQuakeBody">
-            Tremor na tela, sirene e Saul no overlay avisando que a procrastinação foi pega em flagrante.
-          </p>
-          <span class="feature-hint" data-i18n="featureQuakeHint">“Peguei você: volte para a aba produtiva já!”</span>
-        </article>
-        <article class="feature-card" data-reveal>
-          <span class="feature-icon feature-icon-report" aria-hidden="true"></span>
-          <h3 data-i18n="featureReportTitle">Relatório dramatizado</h3>
-          <p data-i18n="featureReportBody">
-            Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para defender o foco na daily.
-          </p>
-          <span class="feature-hint" data-i18n="featureReportHint">“Aqui estão as provas para o chefe (e para você).”</span>
-        </article>
-        <article class="feature-card" data-reveal>
-          <span class="feature-icon feature-icon-privacy" aria-hidden="true"></span>
-          <h3 data-i18n="featurePrivacyTitle">Privacidade total</h3>
-          <p data-i18n="featurePrivacyBody">
-            Tudo roda em <code>chrome.storage.local</code>, sem servidores externos nem vazamentos dramáticos.
-          </p>
-          <span class="feature-hint" data-i18n="featurePrivacyHint">“Nem o juiz tem acesso aos seus dados.”</span>
-        </article>
+      <div class="feature-carousel" data-feature-carousel>
+        <button class="feature-nav" type="button" data-action="prev">
+          <span aria-hidden="true">‹</span>
+          <span class="sr-only" data-i18n="featurePrevLabel">Anterior</span>
+        </button>
+        <div class="feature-track">
+          <article class="feature-card" data-feature-card>
+            <span class="feature-icon feature-icon-radar" aria-hidden="true"></span>
+            <h3 data-i18n="featureRealtimeTitle">Rastreamento em tempo real</h3>
+            <p data-i18n="featureRealtimeBody">
+              O badge acompanha cada aba e transforma o seu dia em um índice claro de foco versus distração.
+            </p>
+            <span class="feature-hint" data-i18n="featureRealtimeHint">“Saul está de olho nas suas 37 abas.”</span>
+          </article>
+          <article class="feature-card" data-feature-card>
+            <span class="feature-icon feature-icon-lists" aria-hidden="true"></span>
+            <h3 data-i18n="featureCustomTitle">Listas e pesos sob medida</h3>
+            <p data-i18n="featureCustomBody">
+              Ajuste domínios produtivos, vilões, pesos por horário e limites de terremoto conforme o seu dia.
+            </p>
+            <span class="feature-hint" data-i18n="featureCustomHint">“Planilha vale ouro, feed infinito vira vilão.”</span>
+          </article>
+          <article class="feature-card quake-card" data-feature-card data-quake-tilt>
+            <span class="feature-icon feature-icon-quake" aria-hidden="true"></span>
+            <h3 data-i18n="featureQuakeTitle">Modo terremoto cinematográfico</h3>
+            <p data-i18n="featureQuakeBody">
+              Tremor na tela, sirene e Saul no overlay avisando que a procrastinação foi pega em flagrante.
+            </p>
+            <button class="ghost mini-cta" type="button" data-quake-trigger data-i18n="featureQuakeTest">
+              Testar alerta
+            </button>
+            <span class="feature-hint" data-i18n="featureQuakeHint">“Peguei você: volte para a aba produtiva já!”</span>
+          </article>
+          <article class="feature-card" data-feature-card>
+            <span class="feature-icon feature-icon-report" aria-hidden="true"></span>
+            <h3 data-i18n="featureReportTitle">Relatório dramatizado</h3>
+            <p data-i18n="featureReportBody">
+              Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para defender o foco na daily.
+            </p>
+            <span class="feature-hint" data-i18n="featureReportHint">“Aqui estão as provas para o chefe (e para você).”</span>
+          </article>
+          <article class="feature-card" data-feature-card>
+            <span class="feature-icon feature-icon-privacy" aria-hidden="true"></span>
+            <h3 data-i18n="featurePrivacyTitle">Privacidade total</h3>
+            <p data-i18n="featurePrivacyBody">
+              Tudo roda em <code>chrome.storage.local</code>, sem servidores externos nem vazamentos dramáticos.
+            </p>
+            <span class="feature-hint" data-i18n="featurePrivacyHint">“Nem o juiz tem acesso aos seus dados.”</span>
+          </article>
+          <article class="feature-card gauge-card" data-feature-card data-gauge data-gauge-target="78">
+            <span class="feature-icon feature-icon-gauge" aria-hidden="true"></span>
+            <h3 data-i18n="featureGaugeTitle">Procrastination Index</h3>
+            <div class="gauge-widget">
+              <div class="gauge-head">
+                <span data-i18n="featureGaugeLabel">Seu status agora</span>
+                <span class="gauge-value" data-gauge-value aria-live="polite">0%</span>
+              </div>
+              <div class="gauge-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <span class="gauge-fill" data-gauge-fill></span>
+              </div>
+              <p class="gauge-caption" data-i18n="featureGaugeHint">Acima de 70% Saul prepara o terremoto.</p>
+            </div>
+          </article>
+        </div>
+        <button class="feature-nav" type="button" data-action="next">
+          <span aria-hidden="true">›</span>
+          <span class="sr-only" data-i18n="featureNextLabel">Próximo</span>
+        </button>
       </div>
     </section>
 
@@ -259,27 +275,36 @@
         </p>
       </div>
       <div class="steps-grid">
-        <article class="step-card" data-reveal>
-          <h3 data-i18n="process1Title">Monitora suas abas ativas</h3>
+        <details class="step-card" data-reveal data-accordion>
+          <summary>
+            <span data-i18n="process1Title">Monitora suas abas ativas</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
           <p data-i18n="process1Body">
             O ícone do Saul acompanha o que está aberto e entende imediatamente se você está estudando, trabalhando ou
             caindo no feed eterno.
           </p>
-        </article>
-        <article class="step-card" data-reveal>
-          <h3 data-i18n="process2Title">Detecta distrações</h3>
+        </details>
+        <details class="step-card" data-reveal data-accordion>
+          <summary>
+            <span data-i18n="process2Title">Detecta distrações</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
           <p data-i18n="process2Body">
             Domínios produtivos e vilões ficam configurados de forma simples. Se você fugir do plano, o alerta entra em
             ação com vibração, som e um “ei!” nada discreto.
           </p>
-        </article>
-        <article class="step-card" data-reveal>
-          <h3 data-i18n="process3Title">Gera provas utilizáveis</h3>
+        </details>
+        <details class="step-card" data-reveal data-accordion>
+          <summary>
+            <span data-i18n="process3Title">Gera provas utilizáveis</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
           <p data-i18n="process3Body">
             Ao final do dia você recebe um relatório direto, com gráfico, resumo e plano de ação para ajustar o próximo
             round.
           </p>
-        </article>
+        </details>
       </div>
     </section>
 
@@ -406,23 +431,51 @@
         <p class="eyebrow" data-i18n="testimonialsEyebrow">Testemunhos</p>
         <h2 data-i18n="testimonialsTitle">Clientes absolvidos.</h2>
       </div>
-      <div class="testimonials">
-        <blockquote data-reveal>
-          <p data-i18n="testimonial1Quote">“Saul me lembrou que trocar 40 abas por hora é crime.”</p>
-          <cite data-i18n="testimonial1Cite">— Cliente anônimo</cite>
-        </blockquote>
-        <blockquote data-reveal>
-          <p data-i18n="testimonial2Quote">“O relatório virou peça de defesa na reunião com o chefe.”</p>
-          <cite data-i18n="testimonial2Cite">— Engenheiro arrependido</cite>
-        </blockquote>
-        <blockquote data-reveal>
-          <p data-i18n="testimonial3Quote">“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”</p>
-          <cite data-i18n="testimonial3Cite">— Product Manager</cite>
-        </blockquote>
+      <div class="testimonials-slider" data-testimonials>
+        <div class="testimonials-track">
+          <article class="testimonial-card" data-testimonial>
+            <p data-i18n="testimonial1Quote">“Saul me lembrou que trocar 40 abas por hora é crime.”</p>
+            <cite data-i18n="testimonial1Cite">— Cliente anônimo</cite>
+          </article>
+          <article class="testimonial-card" data-testimonial>
+            <p data-i18n="testimonial2Quote">“O relatório virou peça de defesa na reunião com o chefe.”</p>
+            <cite data-i18n="testimonial2Cite">— Engenheiro arrependido</cite>
+          </article>
+          <article class="testimonial-card" data-testimonial>
+            <p data-i18n="testimonial3Quote">“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”</p>
+            <cite data-i18n="testimonial3Cite">— Product Manager</cite>
+          </article>
+        </div>
+        <div class="testimonial-controls">
+          <button class="testimonial-nav" type="button" data-action="prev">
+            <span aria-hidden="true">‹</span>
+            <span class="sr-only" data-i18n="testimonialPrev">Anterior</span>
+          </button>
+          <button class="testimonial-nav" type="button" data-action="next">
+            <span aria-hidden="true">›</span>
+            <span class="sr-only" data-i18n="testimonialNext">Próximo</span>
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- Manifesto, timeline, demo interativa do terremoto e integrações longas foram condensados em seções mais curtas para minimizar a sobrecarga na leitura principal. -->
+    <section class="section blog-preview" id="blog-preview">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow" data-i18n="blogPreviewEyebrow">Blog do Saul</p>
+        <h2 data-i18n="blogPreviewTitle">Últimos casos do tribunal digital.</h2>
+        <p class="section-lead" data-i18n="blogPreviewLead">
+          Leia os artigos mais recentes e veja como Saul defende o seu foco com sarcasmo jurídico.
+        </p>
+      </div>
+      <div class="blog-preview-grid" id="blog-preview-list" aria-live="polite">
+        <div class="blog-preview-state" data-i18n="blogPreviewLoading">Carregando artigos...</div>
+      </div>
+      <div class="hero-cta blog-preview-actions">
+        <a class="ghost" href="blog/index.html" data-i18n="blogPreviewCta">Ver todos os artigos</a>
+      </div>
+    </section>
+
     <section class="section trust" id="privacidade">
       <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="trustEyebrow">Privacidade &amp; confiança</p>
@@ -485,6 +538,26 @@
         </details>
       </div>
     </section>
+
+    <!-- Barra fixa mantém o CTA visível após o herói sem poluir a dobra em mobile -->
+    <div class="sticky-cta" data-sticky-cta aria-live="polite">
+      <button class="sticky-collapse" type="button" aria-expanded="true" data-sticky-toggle>
+        <span aria-hidden="true">☰</span>
+        <span class="sr-only" data-i18n="stickyToggleLabel">Alternar CTA</span>
+      </button>
+      <div class="sticky-content">
+        <span data-i18n="stickyCtaText">Saul está pronto para vigiar suas abas.</span>
+        <a
+          class="primary"
+          href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/"
+          target="_blank"
+          rel="noreferrer"
+          data-i18n="stickyCtaButton"
+        >
+          Install on Chrome
+        </a>
+      </div>
+    </div>
 
     <section class="section developers" id="developers">
       <div class="section-head" data-reveal>

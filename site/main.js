@@ -23,7 +23,7 @@ const translations = {
     heroConfidence3: 'Relatório com storytelling IA',
     heroBadge: '“Em caso de preguiça... CALL SAUL!”',
     reasonsEyebrow: 'Benefícios chave',
-    reasonsTitle: 'Why use Saul Goodman?',
+    reasonsTitle: 'Por que usar Saul Goodman?',
     reasonsLead: 'Menos texto, mais clareza: cada cartão resume o valor da extensão.',
     reason1Title: 'Foco guiado',
     reason1Body: 'O índice no popup mostra seu status em tempo real para você decidir o próximo passo.',
@@ -57,6 +57,12 @@ const translations = {
     featurePrivacyBody:
       'Tudo roda em <code>chrome.storage.local</code> e fica no seu navegador, sem servidores externos.',
     featurePrivacyHint: '“Nem o juiz tem acesso aos seus dados.”',
+    featureGaugeTitle: 'Índice de procrastinação',
+    featureGaugeLabel: 'Seu status agora',
+    featureGaugeHint: 'Acima de 70% Saul prepara o terremoto.',
+    featureQuakeTest: 'Testar alerta',
+    featurePrevLabel: 'Anterior',
+    featureNextLabel: 'Próximo',
     processEyebrow: 'Como funciona',
     processTitle: 'Saul prende a procrastinação em três passos.',
     processLead:
@@ -137,7 +143,7 @@ const translations = {
       'O overlay bloqueia as abas vilãs, exibe CTA direto e pode tocar sirene opcional. É impossível ignorar — e esse é o ponto.',
     quakeButton: 'Testar tremor agora',
     quakeTip: 'Fique tranquilo: o demo dura só alguns segundos.',
-    quakeCallout: 'Earthquake incoming!',
+    quakeCallout: 'Terremoto à vista!',
     quakeDisplayCopy: 'Volte ao foco ou Saul aumenta os honorários.',
     splitPopupTitle: 'Popup de plantão',
     splitPopupBody:
@@ -203,6 +209,8 @@ const translations = {
     testimonial2Cite: '— Engenheiro arrependido',
     testimonial3Quote: '“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”',
     testimonial3Cite: '— Product Manager',
+    testimonialPrev: 'Anterior',
+    testimonialNext: 'Próximo',
     trustEyebrow: 'Privacidade & confiança',
     trustTitle: 'Tudo fica entre você e seu navegador.',
     trustLead: 'O tom sarcástico continua, mas com transparência total sobre dados e alertas.',
@@ -217,6 +225,9 @@ const translations = {
     finalCtaBody:
       'Clique, instale e configure seus domínios em minutos. Saul lembra você do foco antes que a aba vilã vença.',
     finalPrimary: 'Install on Chrome',
+    stickyCtaText: 'Saul está pronto para vigiar suas abas.',
+    stickyCtaButton: 'Install on Chrome',
+    stickyToggleLabel: 'Alternar CTA',
     faq1Question: 'É grátis?',
     faq1Answer: 'Totalmente. Saul só cobra atenção e senso de humor.',
     faq2Question: 'Meus dados saem do navegador?',
@@ -298,6 +309,12 @@ const translations = {
     featurePrivacyBody:
       'Everything runs inside <code>chrome.storage.local</code>; no external servers or leaked verdicts.',
     featurePrivacyHint: '“Not even the judge sees your data.”',
+    featureGaugeTitle: 'Índice de procrastinación',
+    featureGaugeLabel: 'Live status',
+    featureGaugeHint: 'When it crosses 70%, Saul prepares the quake.',
+    featureQuakeTest: 'Test alert',
+    featurePrevLabel: 'Previous card',
+    featureNextLabel: 'Next card',
     processEyebrow: 'How it works',
     processTitle: 'Saul locks procrastination in three steps.',
     processLead:
@@ -442,6 +459,8 @@ const translations = {
     testimonial2Cite: '— Regretful engineer',
     testimonial3Quote: '“Earthquake mode saved my sprint. Fees gladly paid.”',
     testimonial3Cite: '— Product Manager',
+    testimonialPrev: 'Previous testimonial',
+    testimonialNext: 'Next testimonial',
     trustEyebrow: 'Privacy & trust',
     trustTitle: 'Everything stays between you and your browser.',
     trustLead: 'Playful tone, serious security: here’s how data and alerts really work.',
@@ -456,6 +475,9 @@ const translations = {
     finalCtaBody:
       'Install, set your domains, and get nudged back to focus before villain tabs win the day.',
     finalPrimary: 'Install on Chrome',
+    stickyCtaText: 'Saul is ready to watch your tabs.',
+    stickyCtaButton: 'Install on Chrome',
+    stickyToggleLabel: 'Toggle CTA',
     faq1Question: 'Is it free?',
     faq1Answer: 'Totally. Saul only charges attention and humor.',
     faq2Question: 'Do my data leave the browser?',
@@ -536,6 +558,12 @@ const translations = {
     featurePrivacyBody:
       'Todo corre en <code>chrome.storage.local</code>; nada sale a servidores externos.',
     featurePrivacyHint: '“Ni el juez ve tus datos.”',
+    featureGaugeTitle: 'Procrastination Index',
+    featureGaugeLabel: 'Tu estado ahora',
+    featureGaugeHint: 'Si pasa del 70%, Saul prepara el temblor.',
+    featureQuakeTest: 'Probar alerta',
+    featurePrevLabel: 'Tarjeta anterior',
+    featureNextLabel: 'Siguiente tarjeta',
     processEyebrow: 'Cómo funciona',
     processTitle: 'Saul encierra la procrastinación en tres pasos.',
     processLead:
@@ -683,6 +711,8 @@ const translations = {
     testimonial2Cite: '— Ingeniero arrepentido',
     testimonial3Quote: '“El modo terremoto salvó mi sprint. Honorarios pagados con gusto.”',
     testimonial3Cite: '— Product Manager',
+    testimonialPrev: 'Testimonio anterior',
+    testimonialNext: 'Siguiente testimonio',
     trustEyebrow: 'Privacidad y confianza',
     trustTitle: 'Todo queda entre tú y tu navegador.',
     trustLead: 'El tono sigue divertido, pero la explicación es directa sobre datos y alertas.',
@@ -697,6 +727,9 @@ const translations = {
     finalCtaBody:
       'Instala, configura tus dominios y recibe avisos antes de que las pestañas villanas ganen el día.',
     finalPrimary: 'Install on Chrome',
+    stickyCtaText: 'Saul está listo para vigilar tus pestañas.',
+    stickyCtaButton: 'Install on Chrome',
+    stickyToggleLabel: 'Alternar CTA',
     faq1Question: '¿Es gratis?',
     faq1Answer: 'Totalmente. Saul solo cobra atención y sentido del humor.',
     faq2Question: '¿Mis datos salen del navegador?',
@@ -782,7 +815,6 @@ let blogPreviewPosts = null;
 let blogPreviewPromise = null;
 let scrollRevealObserver;
 let quakeHighlightObserver;
-let gaugeIntervalId;
 
 const getDictionary = () => translations[currentLanguage] || translations[defaultLanguage];
 const t = (key) => {
@@ -900,6 +932,7 @@ const renderBlogPreview = async () => {
     trimmed.forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-preview-card';
+      registerRevealTarget(card);
 
       const image = document.createElement('img');
       image.src = getBlogArtwork(post);
@@ -1268,27 +1301,42 @@ const startQuakeDemo = () => {
 
 const setupParallax = () => {
   const hero = document.querySelector('.hero');
-  if (!hero) return;
-  hero.style.backgroundPosition = 'center 0px';
-  let ticking = false;
-  const updatePosition = () => {
-    hero.style.backgroundPosition = `center ${window.scrollY * 0.25}px`;
-    ticking = false;
+  if (hero) {
+    hero.style.backgroundPosition = 'center 0px';
+    let ticking = false;
+    const updatePosition = () => {
+      hero.style.backgroundPosition = `center ${window.scrollY * 0.25}px`;
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updatePosition);
+      },
+      { passive: true }
+    );
+  }
+};
+
+const setupSectionParallax = () => {
+  const sections = Array.from(document.querySelectorAll('[data-parallax]'));
+  if (!sections.length) return;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (motionQuery.matches) return;
+  const update = () => {
+    sections.forEach((section) => {
+      const top = section.getBoundingClientRect().top;
+      section.style.setProperty('--parallax-offset', `${top * 0.08}px`);
+    });
   };
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(updatePosition);
-    },
-    { passive: true }
-  );
+  update();
+  window.addEventListener('scroll', update, { passive: true });
 };
 
 const setupScrollReveal = () => {
   const elements = document.querySelectorAll('[data-reveal]');
-  if (!elements.length) return;
   if (!('IntersectionObserver' in window)) {
     elements.forEach((element) => element.classList.add('is-visible'));
     return;
@@ -1309,36 +1357,158 @@ const setupScrollReveal = () => {
   elements.forEach((element) => scrollRevealObserver.observe(element));
 };
 
-const setupGauge = () => {
-  const gauge = document.querySelector('[data-gauge]');
-  if (!gauge || gauge.dataset.gaugeReady === 'true') return;
-  const fill = gauge.querySelector('[data-gauge-fill]');
-  const value = gauge.querySelector('[data-gauge-value]');
-  const bar = gauge.querySelector('[role=\"progressbar\"]');
-  if (!fill || !value || !bar) return;
-  gauge.dataset.gaugeReady = 'true';
-  let current = 32;
-  let direction = 1;
-  const render = () => {
-    const clamped = Math.max(0, Math.min(100, Math.round(current)));
-    fill.style.width = `${clamped}%`;
-    value.textContent = `${clamped}%`;
-    bar.setAttribute('aria-valuenow', String(clamped));
-    gauge.setAttribute('data-gauge-state', clamped >= 70 ? 'alert' : 'focus');
-  };
-  const tick = () => {
-    const delta = Math.random() * 6 + 3;
-    current += delta * direction;
-    if (current >= 87) {
-      direction = -1;
-    } else if (current <= 24) {
-      direction = 1;
+const registerRevealTarget = (element) => {
+  if (!element) return;
+  if (!element.hasAttribute('data-reveal')) {
+    element.setAttribute('data-reveal', '');
+  }
+  if (scrollRevealObserver) {
+    scrollRevealObserver.observe(element);
+  } else {
+    element.classList.add('is-visible');
+  }
+};
+
+// Anima o gauge para explicar visualmente o índice de procrastinação mesmo sem dados reais.
+const setupGauges = () => {
+  const gauges = document.querySelectorAll('[data-gauge]');
+  if (!gauges.length) return;
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const animateGauge = (gauge) => {
+    if (gauge.dataset.gaugeStarted === 'true') return;
+    gauge.dataset.gaugeStarted = 'true';
+    const fill = gauge.querySelector('[data-gauge-fill]');
+    const value = gauge.querySelector('[data-gauge-value]');
+    const bar = gauge.querySelector('[role=\"progressbar\"]');
+    const target = Number(gauge.dataset.gaugeTarget) || 72;
+    if (!fill || !value || !bar) return;
+    if (motionQuery.matches) {
+      fill.style.width = `${target}%`;
+      value.textContent = `${target}%`;
+      bar.setAttribute('aria-valuenow', String(target));
+      return;
     }
-    render();
+    const duration = 2200;
+    let startTime = null;
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const currentValue = Math.round(progress * target);
+      fill.style.width = `${currentValue}%`;
+      value.textContent = `${currentValue}%`;
+      bar.setAttribute('aria-valuenow', String(currentValue));
+      gauge.setAttribute('data-gauge-state', currentValue >= 70 ? 'alert' : 'focus');
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
   };
-  render();
-  gaugeIntervalId = window.setInterval(tick, 2600);
-  gauge.addEventListener('mouseenter', tick);
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animateGauge(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.45 }
+    );
+    gauges.forEach((gauge) => observer.observe(gauge));
+  } else {
+    gauges.forEach((gauge) => animateGauge(gauge));
+  }
+};
+
+// Carrossel horizontal destaca cada feature sem exigir rolagem longa.
+const setupFeatureCarousel = () => {
+  document.querySelectorAll('[data-feature-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('.feature-track');
+    const cards = carousel.querySelectorAll('[data-feature-card]');
+    const prev = carousel.querySelector('[data-action="prev"]');
+    const next = carousel.querySelector('[data-action="next"]');
+    if (!track || !cards.length) return;
+    const scrollByCard = (direction) => {
+      const cardWidth = cards[0].offsetWidth || 320;
+      track.scrollBy({ left: direction * (cardWidth + 18), behavior: 'smooth' });
+    };
+    prev?.addEventListener('click', () => scrollByCard(-1));
+    next?.addEventListener('click', () => scrollByCard(1));
+  });
+};
+
+// Micro interação que chacoalha o card do modo terremoto e antecipa a experiência dramática.
+const setupQuakeTilt = () => {
+  document.querySelectorAll('[data-quake-tilt]').forEach((card) => {
+    const toggle = (state) => card.classList.toggle('is-shaking', state);
+    card.addEventListener('pointerenter', () => toggle(true));
+    card.addEventListener('pointerleave', () => toggle(false));
+    card.addEventListener('focusin', () => toggle(true));
+    card.addEventListener('focusout', () => toggle(false));
+  });
+};
+
+// Slider cíclico mantém depoimentos em movimento sem poluir o layout.
+const setupTestimonials = () => {
+  const slider = document.querySelector('[data-testimonials]');
+  if (!slider) return;
+  const cards = slider.querySelectorAll('[data-testimonial]');
+  const prev = slider.querySelector('[data-action="prev"]');
+  const next = slider.querySelector('[data-action="next"]');
+  if (!cards.length) return;
+  let index = 0;
+  let timer;
+  const setActive = (idx) => {
+    index = (idx + cards.length) % cards.length;
+    cards.forEach((card, cardIndex) => {
+      card.classList.toggle('is-active', cardIndex === index);
+    });
+  };
+  const startAutoRotate = () => {
+    stopAutoRotate();
+    timer = window.setInterval(() => setActive(index + 1), 6000);
+  };
+  const stopAutoRotate = () => {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  };
+  prev?.addEventListener('click', () => setActive(index - 1));
+  next?.addEventListener('click', () => setActive(index + 1));
+  slider.addEventListener('pointerenter', stopAutoRotate);
+  slider.addEventListener('pointerleave', startAutoRotate);
+  setActive(0);
+  startAutoRotate();
+};
+
+// Barra fixa garante CTA sempre acessível e recolhível em telas pequenas.
+const setupStickyCta = () => {
+  const bar = document.querySelector('[data-sticky-cta]');
+  if (!bar) return;
+  const toggleBtn = bar.querySelector('[data-sticky-toggle]');
+  const hero = document.querySelector('.hero');
+  let collapsed = false;
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    collapsed = true;
+    bar.classList.add('is-collapsed');
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+  } else {
+    toggleBtn?.setAttribute('aria-expanded', 'true');
+  }
+  const evaluateVisibility = () => {
+    const heroHeight = hero?.offsetHeight || 520;
+    const shouldShow = window.scrollY > heroHeight * 0.7;
+    bar.classList.toggle('is-visible', shouldShow);
+  };
+  toggleBtn?.addEventListener('click', () => {
+    collapsed = !collapsed;
+    bar.classList.toggle('is-collapsed', collapsed);
+    toggleBtn.setAttribute('aria-expanded', (!collapsed).toString());
+  });
+  window.addEventListener('scroll', evaluateVisibility, { passive: true });
+  evaluateVisibility();
 };
 
 const setupQuakeHighlight = () => {
@@ -1369,13 +1539,18 @@ window.addEventListener('DOMContentLoaded', () => {
   applyTranslations(detectLanguage());
   bindLanguageSelector();
   setupScrollReveal();
-  setupGauge();
+  setupGauges();
+  setupFeatureCarousel();
+  setupQuakeTilt();
+  setupTestimonials();
+  setupStickyCta();
   setupQuakeHighlight();
   runWhenIdle(() => {
     renderBlogPreview();
     setupCarousels();
     setupCounters();
     setupParallax();
+    setupSectionParallax();
     setupIntroAudio();
     registerServiceWorker();
   });
