@@ -195,11 +195,13 @@ test('exportPdf writes fairness status line', async () => {
   const textCalls: string[] = [];
   class FakeDoc {
     setFontSize(): void {}
+    setFont(): void {}
     text(content: string | string[], _x: number, _y: number): void {
       const value = Array.isArray(content) ? content.join(' ') : content;
       textCalls.push(value);
     }
     addImage(): void {}
+    addPage(): void {}
     splitTextToSize(text: string): string[] {
       return [text];
     }
@@ -220,4 +222,61 @@ test('exportPdf writes fairness status line', async () => {
   const fairnessLine = textCalls.find((line) => line.startsWith('Status:'));
   assert.ok(fairnessLine);
   assert.ok(fairnessLine?.includes('Modo pessoal — sem pontuação.'));
+});
+
+test('exportPdf renders context and composition pages with fairness reason', async () => {
+  const report = await reportModulePromise;
+  const metrics = createDefaultMetrics();
+  metrics.contextDurations = { work: 40000, personal: 30000, leisure: 20000, study: 10000 };
+  metrics.contextIndices = { work: 80, personal: 0, leisure: 65, study: 72 };
+  metrics.productiveMs = 2 * 3600000;
+  metrics.procrastinationMs = 1800000;
+  metrics.inactiveMs = 900000;
+  metrics.domains['neutral.test'] = {
+    domain: 'neutral.test',
+    category: 'neutral',
+    milliseconds: 300000
+  };
+  const fairness: FairnessSummary = {
+    rule: 'holiday',
+    manualOverrideActive: false,
+    contextMode: { value: 'work', updatedAt: Date.now() },
+    holidayNeutral: true,
+    isHolidayToday: true
+  };
+
+  const textCalls: string[] = [];
+  class FakeDoc {
+    setFontSize(): void {}
+    setFont(): void {}
+    text(content: string | string[], _x: number, _y: number): void {
+      const value = Array.isArray(content) ? content.join(' ') : content;
+      textCalls.push(value);
+    }
+    addImage(): void {}
+    addPage(): void {}
+    splitTextToSize(text: string): string[] {
+      return [text];
+    }
+    save(): void {}
+  }
+
+  (globalThis as any).jspdf = {
+    jsPDF: class {
+      constructor() {
+        return new FakeDoc();
+      }
+    }
+  };
+
+  report.__setReportTestState({ metrics, fairness });
+  await report.exportPdf();
+
+  const hasContextTitle = textCalls.some((line) => line.includes('Context breakdown'));
+  const hasCompositionTitle = textCalls.some((line) => line.includes('Composition summary'));
+  assert.equal(hasContextTitle, true);
+  assert.equal(hasCompositionTitle, true);
+  const reasonLine = textCalls.find((line) => line.includes('Reason:'));
+  assert.ok(reasonLine);
+  assert.ok(reasonLine?.includes('Holiday'));
 });

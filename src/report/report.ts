@@ -121,6 +121,20 @@ const REPORT_FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
   report_fairness_holiday_detected: 'Feriado detectado — sem penalidades.'
 };
 
+const REPORT_FAIRNESS_REASON_KEY_BY_RULE: Partial<Record<FairnessRule, string>> = {
+  'manual-override': 'report_pdf_fairness_reason_manual',
+  'context-personal': 'report_pdf_fairness_reason_context',
+  'context-leisure': 'report_pdf_fairness_reason_context',
+  'context-study': 'report_pdf_fairness_reason_context',
+  holiday: 'report_pdf_fairness_reason_holiday'
+};
+
+const REPORT_FAIRNESS_REASON_FALLBACKS: Record<string, string> = {
+  report_pdf_fairness_reason_manual: 'Manual override',
+  report_pdf_fairness_reason_context: 'Context safeguard active',
+  report_pdf_fairness_reason_holiday: 'Holiday neutralization'
+};
+
 const CONTEXT_ORDER: ContextModeValue[] = ['work', 'personal', 'leisure', 'study'];
 
 let hourlyChart: ChartInstance = null;
@@ -408,6 +422,22 @@ function getFairnessHintText(summary?: FairnessSummary | null): string | null {
     return null;
   }
   const fallback = REPORT_FAIRNESS_HOLIDAY_FALLBACKS[key] ?? '';
+  return i18n?.t(key) ?? fallback;
+}
+
+/**
+ * Returns the translated reason behind a fairness override when active.
+ * @param rule Applied fairness rule for the day.
+ */
+function formatFairnessReason(rule: FairnessRule): string | null {
+  if (rule === 'normal') {
+    return null;
+  }
+  const key = REPORT_FAIRNESS_REASON_KEY_BY_RULE[rule];
+  if (!key) {
+    return null;
+  }
+  const fallback = REPORT_FAIRNESS_REASON_FALLBACKS[key] ?? '';
   return i18n?.t(key) ?? fallback;
 }
 
@@ -816,6 +846,45 @@ function mergeTimelines(metrics: DailyMetrics, domains: Record<string, DomainSta
   return [...metrics.timeline, ...vscodeEntries].sort((a, b) => a.startTime - b.startTime);
 }
 
+interface CompositionRow {
+  label: string;
+  time: string;
+  share: string;
+}
+
+function buildCompositionRows(metrics: DailyMetrics): CompositionRow[] {
+  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const neutralDomainMs = Object.values(metrics.domains)
+    .filter((domain) => domain.category === 'neutral')
+    .reduce((acc, domain) => acc + domain.milliseconds, 0);
+  const rows = [
+    {
+      label: i18n?.t('popup_chart_label_productive') ?? 'Productive',
+      value: metrics.productiveMs + vscodeMs
+    },
+    {
+      label: i18n?.t('popup_chart_label_procrastination') ?? 'Procrastination',
+      value: metrics.procrastinationMs
+    },
+    {
+      label: i18n?.t('report_category_neutral') ?? 'Neutral',
+      value: metrics.inactiveMs + neutralDomainMs
+    }
+  ];
+  const total = rows.reduce((acc, row) => acc + row.value, 0);
+  return rows.map((row) => ({
+    label: row.label,
+    time: formatDuration(row.value),
+    share: total > 0 ? `${((row.value / total) * 100).toFixed(1)}%` : '--'
+  }));
+}
+
+/**
+ * Builds the detailed PDF report highlighting fairness, context and composition intelligence.
+ * Page 1 shows the headline metrics plus fairness status, page 2 lists context breakdown,
+ * and page 3 summarizes composition along with the narrative and AI argument.
+ * @returns Promise resolved once the PDF has been generated and downloaded.
+ */
 export async function exportPdf(): Promise<void> {
   if (!latestMetrics) {
     return;
@@ -826,65 +895,199 @@ export async function exportPdf(): Promise<void> {
     return;
   }
 
-  const doc = new jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+  const doc = new jspdf.jsPDF({ unit: 'mm', format: 'a4' });
   const metrics = latestMetrics;
   const kpis = calculateKpis(metrics);
-
-  doc.setFontSize(18);
-  doc.text(i18n?.t('report_pdf_title') ?? 'Detailed report — Saul Goodman', 14, 18);
-  doc.setFontSize(12);
-  doc.text(`Data: ${reportDateEl.textContent}`, 14, 26);
   const fairnessStatus = getFairnessStatusText(latestFairness);
-  const fairnessHint = fairnessStatus.rule === 'holiday' ? getFairnessHintText(latestFairness) : null;
-  const fairnessLine = fairnessHint
-    ? `${fairnessStatus.text} (${fairnessHint})`
-    : fairnessStatus.text;
-  doc.text(`Status: ${fairnessLine}`, 14, 32);
-  doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${metrics.currentIndex}`, 14, 40);
-  doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 46);
-  doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 52);
-
-  const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
-  if (metrics.currentIndex >= criticalThreshold) {
-    const logoPath = chrome.runtime.getURL('src/img/saul_incredulo.png');
-    const img = await loadImageBase64(logoPath);
-    if (img) {
-      doc.addImage(img, 'PNG', 205, 18, 24, 24);
-    }
-  }
-
-  if (hourlyChart) {
-    const img = hourlyChart.toBase64Image();
-    doc.addImage(img, 'PNG', 14, 58, 180, 75);
-  }
-
-  if (compositionChart) {
-    const img = compositionChart.toBase64Image();
-    doc.addImage(img, 'PNG', 205, 58, 90, 80);
-  }
-
-  doc.setFontSize(12);
-  doc.text('Narrativa chave:', 14, 140);
-
+  const fairnessHint = getFairnessHintText(latestFairness);
+  const fairnessLine = fairnessStatus.text;
+  const fairnessReason = formatFairnessReason(fairnessStatus.rule);
   const narratives =
     latestTimelineNarrative.length > 0
       ? latestTimelineNarrative.slice(0, 6)
       : ['Sem registros na timeline.'];
-
-  let cursorY = 148;
-  narratives.forEach((line) => {
-    doc.text(line, 14, cursorY);
-    cursorY += 6;
-  });
-
   const aiText = aiNarrativeEl.textContent?.trim();
-  if (aiText) {
-    doc.text('Argumento do Saul:', 205, 140);
-    const wrapped = doc.splitTextToSize(aiText, 90);
-    doc.text(wrapped, 205, 148);
-  }
+
+  await renderOverviewPage();
+  renderContextBreakdownPage();
+  renderCompositionPage();
 
   doc.save(`relatorio-saul-goodman-${metrics.dateKey}.pdf`);
+
+  async function renderOverviewPage(): Promise<void> {
+    const margin = 14;
+    doc.setFontSize(18);
+    doc.text(i18n?.t('report_pdf_title') ?? 'Detailed report — Saul Goodman', margin, 20);
+    doc.setFontSize(12);
+    doc.text(
+      `${i18n?.t('popup_pdf_date') ?? 'Date'}: ${reportDateEl.textContent ?? metrics.dateKey}`,
+      margin,
+      30
+    );
+
+    const fairnessLabel = i18n?.t('report_pdf_status_label') ?? 'Status';
+    doc.setFont(undefined, 'bold');
+    doc.text(i18n?.t('report_pdf_overview_heading') ?? 'Daily overview', margin, 40);
+    doc.setFont(undefined, 'normal');
+
+    let cursor = 48;
+    doc.text(`${fairnessLabel}: ${fairnessLine}`, margin, cursor);
+    if (fairnessHint) {
+      cursor += 6;
+      doc.text(fairnessHint, margin, cursor);
+    }
+    if (fairnessReason) {
+      cursor += 6;
+      const reasonLabel = i18n?.t('report_pdf_fairness_reason_label') ?? 'Reason';
+      doc.text(`${reasonLabel}: ${fairnessReason}`, margin, cursor);
+    }
+
+    const indexValue =
+      fairnessStatus.rule === 'normal'
+        ? metrics.currentIndex.toString()
+        : i18n?.t('report_pdf_index_neutralized') ?? 'Index neutralized';
+    cursor += 6;
+    doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${indexValue}`, margin, cursor);
+    cursor += 6;
+    doc.text(
+      `${i18n?.t('popup_kpi_focus_label') ?? 'Focus'}: ${formatPercentage(kpis.focusRate)}`,
+      margin,
+      cursor
+    );
+    cursor += 6;
+    doc.text(
+      `${i18n?.t('popup_pdf_switches') ?? 'Tab switches'}: ${metrics.tabSwitches}`,
+      margin,
+      cursor
+    );
+    cursor += 10;
+
+    const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
+    if (metrics.currentIndex >= criticalThreshold) {
+      const logoPath = chrome.runtime.getURL('src/img/saul_incredulo.png');
+      const badge = await loadImageBase64(logoPath);
+      if (badge) {
+        doc.addImage(badge, 'PNG', 165, 14, 25, 25);
+      }
+    }
+
+    if (hourlyChart) {
+      const img = hourlyChart.toBase64Image();
+      doc.addImage(img, 'PNG', margin, cursor, 180, 60);
+      cursor += 70;
+    }
+
+    doc.setFont(undefined, 'bold');
+    doc.text(i18n?.t('popup_pdf_top_domains') ?? 'Top domains', margin, cursor);
+    doc.setFont(undefined, 'normal');
+    cursor += 6;
+    Object.values(metrics.domains)
+      .sort((a, b) => b.milliseconds - a.milliseconds)
+      .slice(0, 5)
+      .forEach((domain) => {
+        if (cursor > 270) {
+          doc.addPage();
+          cursor = 20;
+        }
+        doc.text(
+          `${domain.domain} — ${domain.category} — ${formatDuration(domain.milliseconds)}`,
+          margin,
+          cursor
+        );
+        cursor += 6;
+      });
+  }
+
+  function renderContextBreakdownPage(): void {
+    const margin = 14;
+    doc.addPage();
+    doc.setFontSize(16);
+    doc.text(i18n?.t('report_pdf_context_title') ?? 'Context breakdown', margin, 20);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text(i18n?.t('report_pdf_context_header_context') ?? 'Context', margin, 30);
+    doc.text(i18n?.t('report_pdf_context_header_time') ?? 'Time spent', margin + 70, 30);
+    doc.text(i18n?.t('report_pdf_context_header_index') ?? 'Context index', margin + 140, 30);
+    doc.setFont(undefined, 'normal');
+
+    const durations: Record<ContextModeValue, number> = {
+      work: 0,
+      personal: 0,
+      leisure: 0,
+      study: 0,
+      ...(metrics.contextDurations ?? {})
+    };
+    const indices: Record<ContextModeValue, number | undefined> = {
+      work: undefined,
+      personal: undefined,
+      leisure: undefined,
+      study: undefined,
+      ...(metrics.contextIndices ?? {})
+    };
+    let rowY = 38;
+    CONTEXT_ORDER.forEach((context) => {
+      const label = i18n?.t(`popup_context_option_${context}`) ?? context;
+      const durationLabel = formatDuration(durations[context] ?? 0);
+      const indexValue = indices[context];
+      doc.text(label, margin, rowY);
+      doc.text(durationLabel, margin + 70, rowY);
+      doc.text(formatPercentage(typeof indexValue === 'number' ? indexValue : null), margin + 140, rowY);
+      rowY += 8;
+    });
+  }
+
+  function renderCompositionPage(): void {
+    const margin = 14;
+    doc.addPage();
+    doc.setFontSize(16);
+    doc.text(i18n?.t('report_pdf_composition_title') ?? 'Composition summary', margin, 20);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text(i18n?.t('report_pdf_composition_header_category') ?? 'Category', margin, 30);
+    doc.text(i18n?.t('report_pdf_composition_header_time') ?? 'Time', margin + 70, 30);
+    doc.text(i18n?.t('report_pdf_composition_header_share') ?? 'Share', margin + 140, 30);
+    doc.setFont(undefined, 'normal');
+
+    const compositionRows = buildCompositionRows(metrics);
+    let rowY = 38;
+    compositionRows.forEach((row) => {
+      doc.text(row.label, margin, rowY);
+      doc.text(row.time, margin + 70, rowY);
+      doc.text(row.share, margin + 140, rowY);
+      rowY += 8;
+    });
+
+    if (compositionChart) {
+      const img = compositionChart.toBase64Image();
+      doc.addImage(img, 'PNG', margin, rowY + 4, 180, 60);
+      rowY += 70;
+    }
+
+    doc.setFont(undefined, 'bold');
+    doc.text(i18n?.t('report_pdf_narrative_title') ?? 'Key narrative', margin, rowY + 10);
+    doc.setFont(undefined, 'normal');
+    let narrativeCursor = rowY + 18;
+    narratives.forEach((line) => {
+      if (narrativeCursor > 270) {
+        doc.addPage();
+        narrativeCursor = 20;
+      }
+      doc.text(line, margin, narrativeCursor);
+      narrativeCursor += 6;
+    });
+
+    if (aiText) {
+      if (narrativeCursor > 260) {
+        doc.addPage();
+        narrativeCursor = 20;
+      }
+      doc.setFont(undefined, 'bold');
+      doc.text(i18n?.t('report_pdf_ai_title') ?? "Saul's argument", margin, narrativeCursor + 4);
+      doc.setFont(undefined, 'normal');
+      const wrapped = doc.splitTextToSize(aiText, 180);
+      doc.text(wrapped, margin, narrativeCursor + 12);
+    }
+  }
 }
 
 async function shareReportSummary(): Promise<void> {

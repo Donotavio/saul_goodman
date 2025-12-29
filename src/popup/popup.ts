@@ -6,7 +6,8 @@ import {
   PopupData,
   RuntimeMessageType,
   SupportedLocale,
-  ContextModeValue
+  ContextModeValue,
+  ContextHistory
 } from '../shared/types.js';
 import { formatDuration } from '../shared/utils/time.js';
 import {
@@ -20,6 +21,8 @@ import { pickScoreMessageKey } from '../shared/score.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { setManualOverride } from '../shared/utils/manual-override.js';
 import { setContextMode } from '../shared/utils/context.js';
+import { LocalStorageKey, readLocalStorage } from '../shared/utils/storage.js';
+import { buildDetailedCsvSection } from '../shared/utils/csv-detail.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -195,7 +198,7 @@ function attachListeners(): void {
   optionsButton.addEventListener('click', () => {
     void chrome.runtime.openOptionsPage();
   });
-  csvExportButton.addEventListener('click', () => handleCsvExport());
+  csvExportButton.addEventListener('click', () => void handleCsvExport());
   pdfExportButton.addEventListener('click', () => void handlePdfExport());
   reportButton.addEventListener('click', () => {
     void chrome.tabs.create({ url: chrome.runtime.getURL('src/report/report.html') });
@@ -593,7 +596,7 @@ function formatMinutesValue(ms: number): string {
   return (ms / 60000).toFixed(1);
 }
 
-function handleCsvExport(): void {
+async function handleCsvExport(): Promise<void> {
   if (!latestData) {
     alert(
       i18n?.t('popup_alert_no_data') ??
@@ -602,12 +605,22 @@ function handleCsvExport(): void {
     return;
   }
 
+  const contextHistory =
+    (await readLocalStorage<ContextHistory>(LocalStorageKey.CONTEXT_HISTORY)) ?? [];
   const kpis = calculateKpis(latestData.metrics);
-  const csvContent = buildCsv(latestData.metrics, kpis);
+  const csvContent = buildCsv(latestData.metrics, kpis, {
+    fairness: latestFairness,
+    contextHistory
+  });
   downloadTextFile(csvContent, `saul-goodman-${latestData.metrics.dateKey}.csv`, 'text/csv;charset=utf-8;');
 }
 
-function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
+interface BuildCsvOptions {
+  fairness?: FairnessSummary | null;
+  contextHistory?: ContextHistory;
+}
+
+function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis, options: BuildCsvOptions = {}): string {
   const lines: string[] = [];
   const vscodeMs = metrics.vscodeActiveMs ?? 0;
   const totalProductive = metrics.productiveMs + vscodeMs;
@@ -676,6 +689,28 @@ function buildCsv(metrics: DailyMetrics, kpis: CalculatedKpis): string {
         [domain.domain, domain.category, formatMinutesValue(domain.milliseconds)].join(',')
       );
     });
+
+  const detailedLines = buildDetailedCsvSection({
+    metrics,
+    contextHistory: options.contextHistory,
+    fairness: options.fairness ?? null,
+    domainLabelFormatter: formatDomainLabel,
+    labels: {
+      sectionTitle: i18n?.t('popup_csv_detailed_title') ?? 'Detailed activity timeline',
+      startTime: i18n?.t('popup_csv_detailed_column_start') ?? 'Start time',
+      endTime: i18n?.t('popup_csv_detailed_column_end') ?? 'End time',
+      duration: i18n?.t('popup_csv_detailed_column_duration') ?? 'Duration (ms)',
+      domain: i18n?.t('popup_csv_detailed_column_domain') ?? 'Domain',
+      category: i18n?.t('popup_csv_detailed_column_category') ?? 'Category',
+      context: i18n?.t('popup_csv_detailed_column_context') ?? 'Context',
+      fairnessRule: i18n?.t('popup_csv_detailed_column_fairness') ?? 'Fairness rule'
+    }
+  });
+
+  if (detailedLines.length) {
+    lines.push('');
+    lines.push(...detailedLines);
+  }
 
   return lines.join('\n');
 }

@@ -380,6 +380,30 @@
   "popup_csv_minutes": {
     "message": "Minutes"
   },
+  "popup_csv_detailed_title": {
+    "message": "Detailed activity timeline"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "Start time (ISO)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "End time (ISO)"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "Duration (ms)"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "Domain"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "Category"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "Context"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "Fairness rule"
+  },
   "popup_alert_pdf_missing": {
     "message": "PDF module unavailable."
   },
@@ -412,6 +436,57 @@
   },
   "popup_pdf_top_domains": {
     "message": "Top domains"
+  },
+  "report_pdf_overview_heading": {
+    "message": "Daily overview"
+  },
+  "report_pdf_status_label": {
+    "message": "Status"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "Reason"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "Manual override"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Context safeguard active"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Holiday neutralization"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "Index neutralized"
+  },
+  "report_pdf_context_title": {
+    "message": "Context breakdown"
+  },
+  "report_pdf_context_header_context": {
+    "message": "Context"
+  },
+  "report_pdf_context_header_time": {
+    "message": "Time spent"
+  },
+  "report_pdf_context_header_index": {
+    "message": "Context index"
+  },
+  "report_pdf_composition_title": {
+    "message": "Composition summary"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "Category"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "Time"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "Share"
+  },
+  "report_pdf_narrative_title": {
+    "message": "Key narrative"
+  },
+  "report_pdf_ai_title": {
+    "message": "Saul's argument"
   },
   "popup_critical_message_1": {
     "message": "Client, with index {threshold} not even I can defend you. Risk fees apply!"
@@ -562,6 +637,12 @@
   },
   "options_vscode_test_invalid_url": {
     "message": "Invalid URL. Try something like http://127.0.0.1:3123."
+  },
+  "options_vscode_install_link": {
+    "message": "Install VS Code extension"
+  },
+  "options_vscode_install_hint": {
+    "message": "Download the official VS Code companion to send focus sessions to the extension."
   },
   "options_vscode_test_health_error": {
     "message": "Failed to reach {origin}/health ({reason})."

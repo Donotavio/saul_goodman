@@ -380,6 +380,30 @@
   "popup_csv_minutes": {
     "message": "Minutos"
   },
+  "popup_csv_detailed_title": {
+    "message": "Cronología detallada"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "Inicio (ISO)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "Fin (ISO)"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "Duración (ms)"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "Dominio"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "Categoría"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "Contexto"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "Regla de equidad"
+  },
   "popup_alert_pdf_missing": {
     "message": "Módulo PDF no disponible."
   },
@@ -412,6 +436,57 @@
   },
   "popup_pdf_top_domains": {
     "message": "Dominios principales"
+  },
+  "report_pdf_overview_heading": {
+    "message": "Panorama diario"
+  },
+  "report_pdf_status_label": {
+    "message": "Estado"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "Motivo"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "Ignorado manualmente"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Contexto protegido activo"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Feriado neutralizó el índice"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "Índice neutralizado"
+  },
+  "report_pdf_context_title": {
+    "message": "Desglose por contexto"
+  },
+  "report_pdf_context_header_context": {
+    "message": "Contexto"
+  },
+  "report_pdf_context_header_time": {
+    "message": "Tiempo dedicado"
+  },
+  "report_pdf_context_header_index": {
+    "message": "Índice del contexto"
+  },
+  "report_pdf_composition_title": {
+    "message": "Resumen de composición"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "Categoría"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "Tiempo"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "Participación"
+  },
+  "report_pdf_narrative_title": {
+    "message": "Narrativa clave"
+  },
+  "report_pdf_ai_title": {
+    "message": "Argumento de Saul"
   },
   "popup_critical_message_1": {
     "message": "Cliente, con índice {threshold} ni yo puedo defenderte. ¡Aplican honorarios de riesgo!"
@@ -562,6 +637,12 @@
   },
   "options_vscode_test_invalid_url": {
     "message": "URL inválida. Usa algo como http://127.0.0.1:3123."
+  },
+  "options_vscode_install_link": {
+    "message": "Instalar extensión de VS Code"
+  },
+  "options_vscode_install_hint": {
+    "message": "Descarga la extensión oficial de VS Code para enviar las sesiones de enfoque."
   },
   "options_vscode_test_health_error": {
     "message": "Fallo al acceder a {origin}/health ({reason})."
