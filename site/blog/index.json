@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Vestidos de Rede: Ou Como a Procrastinação é o Novo Preto",
+      "url": "./posts/2025/2025-12-29-vestidos-de-rede-ou-como-a-procrastinacao-e-o-novo-preto/",
+      "markdown": "2025/2025-12-29-vestidos-de-rede-ou-como-a-procrastinacao-e-o-novo-preto.md",
+      "date": "2025-12-29",
+      "category": "dev-performance",
+      "tags": [
+        "foco",
+        "procrastinação",
+        "desempenho",
+        "dev",
+        "moda"
+      ],
+      "excerpt": "Vestidos de rede são a nova sensação, mas será que eles ajudam você a procrastinar com estilo?",
+      "title_en": "Net Dresses: Or How Procrastination is the New Black",
+      "title_es": "Vestidos de Red: O Cómo la Procrastinación es el Nuevo Negro",
+      "tone": "incredulo",
+      "source_title": "Net Fabric Dresses: Effortless Grace in Layered Design",
+      "source_url": "https://dev.to/houseofsiyaab/net-fabric-dresses-effortless-grace-in-layered-design-1kpe",
+      "source_published_at": "Mon, 29 Dec 2025 10:47:55 +0000",
+      "excerpt_en": "Net dresses are the new sensation, but do they help you procrastinate in style?",
+      "excerpt_es": "Los vestidos de red son la nueva sensación, pero ¿realmente te ayudan a procrastinar con estilo?"
+    },
+    {
       "title": "Você está procrastinando? Aqui está uma VPC pública para te distrair!",
       "url": "./posts/2025/2025-12-23-voce-esta-procrastinando-aqui-esta-uma-vpc-publica-para-te-distrair/",
       "markdown": "2025/2025-12-23-voce-esta-procrastinando-aqui-esta-uma-vpc-publica-para-te-distrair.md",
