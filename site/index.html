@@ -177,6 +177,17 @@
         <div class="hero-languages">
           <span data-i18n="multilingualLabel">Disponível em PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸</span>
         </div>
+        <!-- Indicador animado no hero reforça o valor da extensão logo no primeiro scroll -->
+        <div class="gauge-widget hero-gauge" data-gauge data-gauge-target="78">
+          <div class="gauge-head">
+            <span data-i18n="featureGaugeLabel">Seu status agora</span>
+            <span class="gauge-value" data-gauge-value aria-live="polite">0%</span>
+          </div>
+          <div class="gauge-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span class="gauge-fill" data-gauge-fill></span>
+          </div>
+          <p class="gauge-caption" data-i18n="featureGaugeHint">Acima de 70% Saul prepara o terremoto.</p>
+        </div>
       </div>
       <div class="hero-visual" data-reveal>
         <img
