@@ -1149,6 +1149,8 @@ blockquote p {
     padding: 0 6vw;
     transform-origin: top;
     transition: max-height 0.3s ease;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    border-bottom: 2px solid var(--black);
   }
 
   .site-nav .nav-actions.is-open {
@@ -1159,7 +1161,15 @@ blockquote p {
 
   .site-nav .nav-links {
     flex-direction: column;
-    gap: 12px;
+    gap: 0;
+    width: 100%;
+  }
+
+  .site-nav .nav-links a {
+    display: block;
+    padding: 12px 0;
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .language-switcher,
@@ -1171,6 +1181,11 @@ blockquote p {
   .nav-cta {
     text-align: center;
     width: 100%;
+  }
+
+  .sponsor-button {
+    order: 5;
+    text-align: center;
   }
 
   /* Hero empilha elementos para leitura confortável */
