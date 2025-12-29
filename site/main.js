@@ -23,6 +23,11 @@ const translations = {
     heroConfidence2: 'Lista negra & lista VIP de domínios',
     heroConfidence3: 'Relatório com storytelling IA',
     heroBadge: '“Em caso de preguiça... CALL SAUL!”',
+    multilingualLabel: 'Disponível em PT · EN · ES',
+    socialProofCaption: 'Saul já ajuda milhares de pessoas a vigiar o foco diariamente.',
+    socialProofMetricLabel: 'Usuários satisfeitos',
+    ratingBadgeAlt: 'Nota média na Chrome Web Store',
+    usersBadgeAlt: 'Usuários na Chrome Web Store',
     reasonsEyebrow: 'Benefícios chave',
     reasonsTitle: 'Por que usar Saul Goodman?',
     reasonsLead: 'Menos texto, mais clareza: cada cartão resume o valor da extensão.',
@@ -126,6 +131,7 @@ const translations = {
     blogPreviewCta: 'Ver todos os artigos',
     blogPreviewRead: 'Ler artigo',
     blogPreviewImageAlt: 'Ilustração Saul Goodman',
+    feedbackLink: 'Dar feedback',
     demoEyebrow: 'Demonstração rápida',
     demoTitle: 'Veja onde você decide e onde Saul cobra.',
     demoLead:
@@ -288,6 +294,11 @@ const translations = {
     heroConfidence2: 'Blacklist & VIP domain lists',
     heroConfidence3: 'Report with AI storytelling',
     heroBadge: '“When laziness strikes... CALL SAUL!”',
+    multilingualLabel: 'Available in PT · EN · ES',
+    socialProofCaption: 'Saul already helps thousands keep their focus.',
+    socialProofMetricLabel: 'Happy users',
+    ratingBadgeAlt: 'Average rating on Chrome Web Store',
+    usersBadgeAlt: 'Users on Chrome Web Store',
     reasonsEyebrow: 'Key benefits',
     reasonsTitle: 'Why use Saul Goodman?',
     reasonsLead: 'Four quick cards explain the value with zero fluff.',
@@ -390,6 +401,7 @@ const translations = {
     blogPreviewCta: 'See all articles',
     blogPreviewRead: 'Read article',
     blogPreviewImageAlt: 'Saul Goodman illustration',
+    feedbackLink: 'Give feedback',
     demoEyebrow: 'Quick demo',
     demoTitle: 'See where you decide and where Saul intervenes.',
     demoLead: 'One glance is enough: popup for instant reactions, report for end-of-day decisions.',
@@ -550,6 +562,11 @@ const translations = {
     heroConfidence2: 'Lista negra y lista VIP de dominios',
     heroConfidence3: 'Informe con narrativa IA',
     heroBadge: '“En caso de pereza... CALL SAUL!”',
+    multilingualLabel: 'Disponible en PT · EN · ES',
+    socialProofCaption: 'Saul ya ayuda a miles de personas a cuidar el foco.',
+    socialProofMetricLabel: 'Usuarios satisfechos',
+    ratingBadgeAlt: 'Calificación en Chrome Web Store',
+    usersBadgeAlt: 'Usuarios en la Chrome Web Store',
     reasonsEyebrow: 'Beneficios clave',
     reasonsTitle: 'Why use Saul Goodman?',
     reasonsLead: 'Cuatro tarjetas, cuatro motivos claros. Nada de rodeos.',
@@ -654,6 +671,7 @@ const translations = {
     blogPreviewCta: 'Ver todos los artículos',
     blogPreviewRead: 'Leer artículo',
     blogPreviewImageAlt: 'Ilustración de Saul Goodman',
+    feedbackLink: 'Enviar feedback',
     demoEyebrow: 'Demo rápida',
     demoTitle: 'Mira dónde decides y dónde Saul interviene.',
     demoLead: 'Popup para reacciones inmediatas, informe para cerrar el día. Solo eso.',
@@ -854,6 +872,8 @@ let blogPreviewPosts = null;
 let blogPreviewPromise = null;
 let scrollRevealObserver;
 let quakeHighlightObserver;
+let stickyCtaLastState = false;
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const getDictionary = () => translations[currentLanguage] || translations[defaultLanguage];
 const t = (key) => {
@@ -1210,30 +1230,59 @@ const bindLanguageSelector = () => {
 };
 
 const setupCounters = () => {
-  const counters = document.querySelectorAll('[data-counter]');
-  const counterObserver = new IntersectionObserver(
-    (entries, observer) => {
+  const legacyCounters = document.querySelectorAll('[data-counter]');
+  const newCounters = document.querySelectorAll('[data-count]');
+  if (!legacyCounters.length && !newCounters.length) return;
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
-        const target = Number(el.getAttribute('data-counter')) || 0;
-        let current = 0;
-        const step = Math.max(1, Math.floor(target / 40));
-        const interval = setInterval(() => {
-          current += step;
-          if (current >= target) {
+        const isLegacy = el.hasAttribute('data-counter');
+        const targetAttr = isLegacy ? 'data-counter' : 'data-count';
+        const target = Number(el.getAttribute(targetAttr)) || 0;
+        let count = 0;
+        if (el.dataset.counted === 'true') return;
+        el.dataset.counted = 'true';
+        if (!isLegacy && motionPreference.matches) {
+          el.textContent = target.toLocaleString();
+          return;
+        }
+        const duration = isLegacy ? 40 : 1500;
+        const step = isLegacy ? Math.max(1, Math.floor(target / 40)) : null;
+        let startTime = null;
+        const update = () => {
+          count += step;
+          if (count >= target) {
             el.textContent = target.toString();
-            clearInterval(interval);
-          } else {
-            el.textContent = current.toString();
+            return false;
           }
-        }, 40);
-        observer.unobserve(el);
+          el.textContent = count.toString();
+          return true;
+        };
+        if (isLegacy) {
+          const interval = setInterval(() => {
+            if (!update()) clearInterval(interval);
+          }, duration);
+        } else {
+          const animate = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const currentValue = Math.floor(progress * target);
+            el.textContent = currentValue.toLocaleString();
+            if (progress < 1) {
+              window.requestAnimationFrame(animate);
+            }
+          };
+          window.requestAnimationFrame(animate);
+        }
+        obs.unobserve(el);
       });
     },
-    { threshold: 0.4 }
+    { threshold: 0.5 }
   );
-  counters.forEach((counter) => counterObserver.observe(counter));
+  legacyCounters.forEach((counter) => observer.observe(counter));
+  newCounters.forEach((counter) => observer.observe(counter));
 };
 
 const setupIntroAudio = () => {
@@ -1552,6 +1601,54 @@ const setupStickyCta = () => {
   syncAria();
 };
 
+// Contador animado para reforçar o número de usuários (dispara ao entrar na viewport)
+const setupCounters = () => {
+  const counters = document.querySelectorAll('[data-count]');
+  if (!counters.length) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.getAttribute('data-count')) || 0;
+        if (el.dataset.counted === 'true') return;
+        el.dataset.counted = 'true';
+        if (motionPreference.matches) {
+          el.textContent = target.toLocaleString();
+          return;
+        }
+        const duration = 1500;
+        let startTime = null;
+        const step = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const currentValue = Math.floor(progress * target);
+          el.textContent = currentValue.toLocaleString();
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      });
+    },
+    { threshold: 0.5 }
+  );
+  counters.forEach((counter) => observer.observe(counter));
+};
+
+// Ajusta cor da sticky CTA ao rolar para reforçar urgência
+const setupStickyColorToggle = () => {
+  const bar = document.querySelector('[data-sticky-cta]');
+  if (!bar) return;
+  const onScroll = () => {
+    const shouldActive = window.scrollY > 560;
+    if (shouldActive === stickyCtaLastState) return;
+    stickyCtaLastState = shouldActive;
+    bar.classList.toggle('sticky-active', shouldActive);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+};
+
 const setupQuakeHighlight = () => {
   const section = document.querySelector('[data-quake-section]');
   if (!section) return;
@@ -1586,6 +1683,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupQuakeTilt();
   setupTestimonials();
   setupStickyCta();
+  setupStickyColorToggle();
   setupQuakeHighlight();
   runWhenIdle(() => {
     renderBlogPreview();

@@ -229,11 +229,11 @@ body {
 }
 
 .hero-cta a:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.03);
 }
 
 .hero-cta a {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero-visual {
@@ -1035,7 +1035,7 @@ blockquote p {
   left: 50%;
   bottom: 16px;
   transform: translate(-50%, 160%);
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
   z-index: 50;
   background: #fff7d9;
   border: 2px solid var(--black);
@@ -1049,6 +1049,11 @@ blockquote p {
 
 .sticky-cta.is-visible {
   transform: translate(-50%, 0);
+}
+
+.sticky-cta.sticky-active {
+  background: #ffe3a3;
+  box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.25);
 }
 
 .sticky-content {
@@ -1255,12 +1260,20 @@ blockquote p {
     grid-template-columns: 1fr;
   }
 
-  .demo-card,
-  .benefit-card,
-  .trust-card,
-  .feature-card {
-    min-width: 100%;
-  }
+.demo-card:hover,
+.benefit-card:hover,
+.trust-card:hover,
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.demo-card,
+.benefit-card,
+.trust-card,
+.feature-card {
+  min-width: 100%;
+}
 
   .sticky-cta {
     bottom: 8px;
@@ -1591,4 +1604,56 @@ blockquote p {
 
 [data-quake-tilt].is-shaking {
   animation: quakeShiver 0.5s linear;
+}
+.hero-languages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--brown);
+  font-size: 0.9rem;
+}
+
+.flag-group {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.flag-group img {
+  border: 1px solid var(--black);
+  border-radius: 2px;
+}
+
+.social-proof {
+  text-align: center;
+  background: #fffef4;
+}
+
+.badge-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.badge-row img {
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  background: #fff;
+  padding: 4px 6px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.social-metrics {
+  margin-top: 10px;
+  font-weight: 800;
+  color: var(--brown);
+}
+
+.metric-value {
+  display: inline-block;
+  font-size: 1.8rem;
+  color: var(--red);
+  margin-left: 8px;
 }
