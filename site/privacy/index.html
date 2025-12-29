@@ -4,21 +4,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="privacyTitle">Política de Privacidade</title>
-    <link rel="icon" type="image/png" href="assets/logotipo_saul_goodman.png" />
+    <link rel="icon" type="image/png" href="../assets/logotipo_saul_goodman.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-    <script type="module" src="privacy.js" defer></script>
+    <script type="module" src="../privacy.js" defer></script>
   </head>
-  <body class="privacy-page">
+  <body class="privacy-page document-page">
     <nav class="site-nav">
-      <a class="brand" href="./#home">Saul Goodman</a>
-      <a class="ghost" href="./#home" data-i18n="backToHome">Voltar ao site</a>
+      <a class="brand" href="../#home">Saul Goodman</a>
+      <div class="nav-actions">
+        <div class="language-switcher">
+          <label class="sr-only" for="language-select" data-i18n="languageLabel">Selecionar idioma</label>
+          <select id="language-select" aria-label="Selecionar idioma">
+            <option value="pt">PT</option>
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+          </select>
+        </div>
+        <a class="nav-cta" href="../#home" data-i18n="backToHome">Voltar ao site</a>
+      </div>
     </nav>
     <main class="privacy-content">
       <header class="privacy-hero" data-reveal>
@@ -38,10 +48,11 @@
         <p data-i18n="footerBody">Instale, liste seus vilões e deixe Saul cobrar os honorários do foco.</p>
       </div>
       <div class="footer-links">
-        <a href="../docs/architecture.md" target="_blank" data-i18n="footerLinkArchitecture">Arquitetura</a>
-        <a href="../docs/indicators.md" target="_blank" data-i18n="footerLinkIndicators">Indicadores</a>
-        <a href="../README.md" target="_blank" data-i18n="footerLinkGithub">GitHub</a>
-        <a href="privacy.html" data-i18n="footerPrivacyLink">Política de Privacidade</a>
+        <a href="../../docs/architecture.md" target="_blank" data-i18n="footerLinkArchitecture">Arquitetura</a>
+        <a href="../../docs/indicators.md" target="_blank" data-i18n="footerLinkIndicators">Indicadores</a>
+        <a href="../../README.md" target="_blank" data-i18n="footerLinkGithub">GitHub</a>
+        <a href="../privacy/" data-i18n="footerPrivacyLink">Política de Privacidade</a>
+        <a href="../changelog/" data-i18n="footerChangelogLink">Changelog</a>
       </div>
       <p class="privacy" data-i18n="footerPrivacy">Dados 100% locais. Nem o juiz vê.</p>
     </footer>

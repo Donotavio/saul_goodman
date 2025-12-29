@@ -1,3 +1,4 @@
+<!--lang:pt-->
 # Política de Privacidade — Saul Goodman Extension
 
 Última atualização: 2025-12-02
@@ -49,4 +50,110 @@
 
 ## Contato
 
-- Suporte: informe seu email ou URL oficial de suporte aqui.
+- Suporte: ribeitemp@gmail.com
+<!--lang:en-->
+# Privacy Policy — Saul Goodman Extension
+
+Last update: 2025-12-02
+
+## What we collect and where it lives
+
+- The extension runs 100% locally in your browser. Metrics (time per domain, idle time, tab switches), settings, and preferences stay in `chrome.storage.local`.
+- The context history (`sg:context-history`) keeps only the selected mode plus start/end timestamps to compose the report. It resets every day and never leaves your browser.
+- We never store page content — only the domain/hostname used for classification.
+- We do not log or transmit keystrokes. Keyboard, mouse, and scroll events are used solely as “activity pings” without payload.
+
+## Network
+
+- By default **no data leaves your browser**.
+- If you enter an OpenAI API key in the options, the detailed report sends a daily summary (index, aggregated metrics, top domains, snippets of the timeline) to the OpenAI API purely to generate the narrative. Nothing else is transmitted.
+- When you enable automatic holiday detection and manually provide the ISO-3166 country code, the background script issues GET calls to the public [Nager.Date](https://date.nager.at) endpoint (`/api/v3/PublicHolidays/{year}/{country}`) just to download the yearly list of national holidays. No personal data is sent; the feature is optional and the results stay cached in `chrome.storage.local` for up to 7 days.
+- We never send page content or personally identifiable data — only the aggregates described above.
+
+## Sharing and ads
+
+- We do not sell, trade, or share any data with third parties.
+- We do not use the collected data for advertising.
+
+## Permissions
+
+- `tabs` / `activeTab`: read the active URL to classify the domain.
+- `storage`: persist metrics and settings locally.
+- `alarms`: schedule time counting and the daily reset.
+- `idle`: rely on Chrome’s native idle API to avoid counting inactive time as productive.
+- `windows`: detect when the browser loses focus to measure background time.
+- `webNavigation`: observe SPA route changes (YouTube, LinkedIn, Slack web) and count internal navigations.
+- `tabGroups`: detect grouped tabs for group-time metrics.
+- `sessions`: track recently closed/reopened tabs or windows as a KPI in the report.
+- `https://date.nager.at/*`: request the public holiday list only when you enable the option.
+- `https://api.openai.com/*`: generate the narrative only if you provide your API key.
+- `http://127.0.0.1/*` and `http://localhost/*`: communicate with the local SaulDaemon when the VS Code integration is enabled.
+- All scripts are local (Manifest V3); no remote code is executed.
+
+## Retention and control
+
+- Data lives solely in your profile’s `chrome.storage.local`. Remove it by clearing the storage, uninstalling the extension, or using your browser’s tools.
+- Temporary states (manual override and context) reset daily. The holiday cache expires after 7 days.
+- There is no backup or syncing to external servers.
+
+## Security
+
+- Manifest V3 with an ES module service worker.
+- No sensitive content collection and no remote script execution.
+
+## Contact
+
+- Support: ribeitemp@gmail.com
+<!--lang:es-->
+# Política de Privacidad — Saul Goodman Extension
+
+Última actualización: 2025-12-02
+
+## Qué recopilamos y dónde se guarda
+
+- La extensión funciona 100% local en tu navegador. Las métricas (tiempo por dominio, inactividad, cambios de pestaña), configuraciones y preferencias viven únicamente en `chrome.storage.local`.
+- El historial de contexto (`sg:context-history`) almacena solo el modo elegido y las marcas de tiempo de inicio/fin para generar el informe. Se restablece diariamente y nunca sale de tu navegador.
+- No almacenamos el contenido de las páginas; solo el dominio/hostname usado para la clasificación.
+- No registramos ni enviamos pulsaciones de teclado. Los eventos de teclado, mouse o scroll sirven únicamente como “ping” de actividad sin contenido.
+
+## Red
+
+- Por defecto **ningún dato sale de tu navegador**.
+- Si proporcionas una clave de OpenAI en las opciones, el informe detallado envía un resumen diario (índice, métricas agregadas, dominios destacados y partes de la línea de tiempo) a la API de OpenAI únicamente para generar la narrativa. Nada más se transmite.
+- Si activas la detección automática de feriados e informas el código ISO-3166 del país, el service worker realiza solicitudes GET al endpoint público [Nager.Date](https://date.nager.at) (`/api/v3/PublicHolidays/{año}/{país}`) solo para descargar la lista anual de feriados nacionales. No se envían datos personales; es opcional y el resultado se almacena en `chrome.storage.local` por hasta 7 días.
+- Ninguna solicitud envía contenido de las páginas que visitas ni datos personales; solo usamos los agregados descritos arriba.
+
+## Compartir y anuncios
+
+- No vendemos, intercambiamos ni compartimos datos con terceros.
+- No utilizamos la información para fines publicitarios.
+
+## Permisos
+
+- `tabs` / `activeTab`: leer la URL activa para clasificar el dominio.
+- `storage`: guardar métricas y configuraciones de forma local.
+- `alarms`: programar el conteo de tiempo y el reinicio diario.
+- `idle`: usar la API nativa de inactividad de Chrome para no contar tiempo ocioso como productivo.
+- `windows`: detectar cuando el navegador pierde foco para medir tiempo en segundo plano.
+- `webNavigation`: detectar cambios de ruta en SPA (YouTube, LinkedIn, Slack web) y contar navegaciones internas.
+- `tabGroups`: identificar pestañas agrupadas para las métricas de tiempo en grupos.
+- `sessions`: contar pestañas o ventanas cerradas/reabiertas recientemente como KPI en el informe.
+- `https://date.nager.at/*`: consultar la lista pública de feriados solo cuando habilites la opción.
+- `https://api.openai.com/*`: generar la narrativa únicamente si proporcionas tu clave.
+- `http://127.0.0.1/*` y `http://localhost/*`: comunicarse con el SaulDaemon local cuando la integración con VS Code está habilitada.
+- Todos los scripts son locales (Manifest V3), sin código remoto.
+
+## Retención y control
+
+- Los datos permanecen en el `chrome.storage.local` de tu perfil. Puedes eliminarlos limpiando el storage, desinstalando la extensión o usando las herramientas del navegador.
+- Los estados temporales (override manual y contexto) se sobrescriben a diario; el caché de feriados expira automáticamente después de 7 días.
+- No existe copia de seguridad ni sincronización con servidores externos.
+
+## Seguridad
+
+- Manifest V3 con service worker en ES modules.
+- Sin recopilación de contenido sensible; sin ejecución de scripts remotos.
+
+## Contacto
+
+- Soporte: ribeitemp@gmail.com

@@ -756,6 +756,52 @@ details[open] .accordion-icon::after {
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.08);
 }
 
+.transparency-links {
+  margin-top: 32px;
+  padding: 28px;
+  border: 2px dashed var(--black);
+  border-radius: 20px;
+  background: #fffef4;
+  text-align: center;
+}
+
+.transparency-links h3 {
+  margin: 10px 0 8px;
+  font-size: 1.7rem;
+}
+
+.transparency-links p {
+  max-width: 640px;
+  margin: 0 auto 16px;
+  line-height: 1.5;
+}
+
+.transparency-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 2px solid var(--black);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--brown);
+  background: #fff;
+  min-width: 220px;
+}
+
+.pill-link.primary {
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
 .testimonials-slider {
   position: relative;
   max-width: 640px;
@@ -1228,6 +1274,27 @@ blockquote p {
     text-align: center;
   }
 
+  .document-page .site-nav {
+    position: relative;
+  }
+
+  .document-page .site-nav .nav-actions {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    flex-direction: row;
+    gap: 12px;
+    padding: 0;
+    box-shadow: none;
+    border-bottom: 0;
+  }
+
+  .document-page .nav-cta,
+  .document-page .language-switcher {
+    width: auto;
+    align-self: center;
+  }
+
   /* Hero empilha elementos para leitura confortável */
   .hero {
     flex-direction: column;
@@ -1274,6 +1341,19 @@ blockquote p {
   .trust-grid,
   .blog-preview-grid {
     grid-template-columns: 1fr;
+  }
+
+  .transparency-links {
+    text-align: left;
+    padding: 24px;
+  }
+
+  .transparency-cta {
+    flex-direction: column;
+  }
+
+  .pill-link {
+    width: 100%;
   }
 
 .demo-card:hover,
@@ -1650,22 +1730,26 @@ blockquote p {
   padding: 4px 6px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
 }
-.privacy-page .site-nav {
+.privacy-page .site-nav,
+.changelog-page .site-nav {
   position: relative;
 }
 
-.privacy-content {
+.privacy-content,
+.changelog-content {
   padding: 96px 8vw 64px;
   min-height: 70vh;
   background: #fffdf5;
 }
 
-.privacy-hero {
+.privacy-hero,
+.changelog-hero {
   text-align: center;
   margin-bottom: 32px;
 }
 
-.privacy-body {
+.privacy-body,
+.changelog-body {
   border: 2px solid var(--black);
   border-radius: 18px;
   padding: 32px;
@@ -1675,16 +1759,22 @@ blockquote p {
 
 .privacy-body h1,
 .privacy-body h2,
-.privacy-body h3 {
+.privacy-body h3,
+.changelog-body h1,
+.changelog-body h2,
+.changelog-body h3 {
   color: var(--brown);
 }
 
 .privacy-body p,
-.privacy-body li {
+.privacy-body li,
+.changelog-body p,
+.changelog-body li {
   line-height: 1.6;
 }
 
-.privacy-body a {
+.privacy-body a,
+.changelog-body a {
   color: var(--red);
   text-decoration: underline;
 }

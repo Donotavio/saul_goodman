@@ -1,12 +1,11 @@
 import '../main.js';
 
-const PRIVACY_URL =
-  'https://raw.githubusercontent.com/Donotavio/saul_goodman/main/docs/privacy-policy.md';
+const CHANGELOG_URL =
+  'https://raw.githubusercontent.com/Donotavio/saul_goodman/main/CHANGELOG.md';
 
+const container = document.querySelector('[data-changelog-article]');
+const loadingText = container?.querySelector('[data-i18n="changelogLoading"]');
 const prefersNoMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const container = document.querySelector('[data-privacy-article]');
-const loadingText = container?.querySelector('[data-i18n="privacyLoading"]');
 const FALLBACK_LANG = 'pt';
 const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
 
@@ -38,27 +37,27 @@ const extractLocalizedMarkdown = (markdown, lang) => {
   return markdown;
 };
 
-const renderPrivacy = async () => {
+const renderChangelog = async () => {
   if (!container) return;
   try {
-    const response = await fetch(PRIVACY_URL, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Erro ao buscar política (${response.status})`);
+    const response = await fetch(CHANGELOG_URL, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Erro ao buscar changelog (${response.status})`);
     const markdown = await response.text();
     const localized = extractLocalizedMarkdown(markdown, getDocumentLanguage());
     const html = marked.parse(localized);
     container.innerHTML = html;
     container.classList.add('document-ready');
   } catch (error) {
-    console.error('Falha ao carregar política de privacidade', error);
+    console.error('Falha ao carregar changelog', error);
     container.innerHTML =
-      '<p data-i18n="privacyError">Não foi possível carregar a política agora. Tente novamente mais tarde.</p>';
+      '<p data-i18n="changelogError">Não foi possível carregar o changelog agora. Tente novamente mais tarde.</p>';
   }
 };
 
-const handleLanguageChange = () => renderPrivacy();
+const handleLanguageChange = () => renderChangelog();
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderPrivacy();
+  renderChangelog();
   if (loadingText && prefersNoMotion) {
     loadingText.style.animation = 'none';
   }
@@ -67,6 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
-    renderPrivacy();
+    renderChangelog();
   }
 });
