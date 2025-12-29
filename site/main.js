@@ -69,6 +69,12 @@ const translations = {
     featureQuakeTest: 'Testar alerta',
     featurePrevLabel: 'Anterior',
     featureNextLabel: 'Próximo',
+    privacyTitle: 'Política de Privacidade',
+    privacyEyebrow: 'Transparência total',
+    privacyHeading: 'Política de Privacidade',
+    privacySubheading: 'Abaixo você encontra a versão mais recente da política publicada no repositório.',
+    privacyLoading: 'Carregando política diretamente do repositório...',
+    privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
     processEyebrow: 'Como funciona',
     processTitle: 'Saul prende a procrastinação em três passos.',
     processLead:
@@ -268,7 +274,8 @@ const translations = {
     footerLinkArchitecture: 'Arquitetura',
     footerLinkIndicators: 'Indicadores',
     footerLinkGithub: 'GitHub',
-    footerPrivacy: 'Dados 100% locais. Nem o juiz vê.'
+    footerPrivacy: 'Dados 100% locais. Nem o juiz vê.',
+    footerPrivacyLink: 'Política de Privacidade'
   },
   en: {
     navProcess: 'How it works',
@@ -536,7 +543,8 @@ const translations = {
     footerLinkArchitecture: 'Architecture',
     footerLinkIndicators: 'Indicators',
     footerLinkGithub: 'GitHub',
-    footerPrivacy: '100% local data. Not even the judge sees it.'
+    footerPrivacy: '100% local data. Not even the judge sees it.',
+    footerPrivacyLink: 'Privacy Policy'
   },
   es: {
     navProcess: 'Cómo funciona',
@@ -807,7 +815,8 @@ const translations = {
     footerLinkArchitecture: 'Arquitectura',
     footerLinkIndicators: 'Indicadores',
     footerLinkGithub: 'GitHub',
-    footerPrivacy: 'Datos 100% locales. Ni el juez los ve.'
+    footerPrivacy: 'Datos 100% locales. Ni el juez los ve.',
+    footerPrivacyLink: 'Política de Privacidad'
   }
 };
 

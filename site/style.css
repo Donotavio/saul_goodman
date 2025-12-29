@@ -1650,3 +1650,41 @@ blockquote p {
   padding: 4px 6px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
 }
+.privacy-page .site-nav {
+  position: relative;
+}
+
+.privacy-content {
+  padding: 96px 8vw 64px;
+  min-height: 70vh;
+  background: #fffdf5;
+}
+
+.privacy-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.privacy-body {
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  padding: 32px;
+  background: #fff;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.privacy-body h1,
+.privacy-body h2,
+.privacy-body h3 {
+  color: var(--brown);
+}
+
+.privacy-body p,
+.privacy-body li {
+  line-height: 1.6;
+}
+
+.privacy-body a {
+  color: var(--red);
+  text-decoration: underline;
+}
