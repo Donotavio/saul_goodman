@@ -1,3 +1,4 @@
+<!--lang:pt-->
 # Changelog
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
@@ -154,3 +155,319 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 - Página de opções trouxe listas de domínios produtivos/vilões, ajuste de pesos, schedulers de horário comercial (com bônus overtime) e configurações do modo terremoto.
 - Relatório detalhado incluiu timeline por hora, ranking de domínios, exportação CSV/PDF e narrativa com IA (OpenAI) usando markdown.
 - Experiência boisterous com toasts sarcásticos multi-aba, overlay e sirene do modo terremoto, gráficos de trocas de abas por hora, assets otimizados e documentação base (README/arquitetura/indicadores).
+
+<!--lang:en-->
+# Changelog
+
+All releases are published via CI/CD; the version is bumped automatically during the build.
+
+## [1.15.0] - 2025-12-29
+
+- The content engine gained five new categories (marketing, product, UX design, career, and business) with automatic rotation, dedicated keywords, and fallback rules that improve post classification accuracy.
+- Added eight new RSS sources (UX Collective, NN/g, Mind the Product, HubSpot, Rock Content, RD Station, Harvard Business Review, and Fast Company) plus extra parser heuristics to broaden the content pool.
+- The blog workflow now runs every Monday, Wednesday, and Friday at 08:00 BRT, speeding up publication cadence.
+
+## [1.14.1] - 2025-12-29
+
+- Fully rebuilt the landing page with an animated hero + gauge, interactive feature carousel, quake-mode demo, onboarding accordion, testimonial slider, and sticky CTAs for both desktop and mobile.
+- Mobile navigation now uses a hamburger menu with improved focus/hover states, consistent spacing, translated copy, emoji flags (instead of images), unified button wording, and links without `index.html`.
+- The social proof section received multilingual badges, public Chrome Web Store metrics, a dedicated feedback CTA (with the new email), and equivalent links inside the sticky CTAs.
+- Added a VS Code install link in the developer area and a Markdown-driven privacy page that renders directly on the site.
+
+## [1.14.0] - 2025-12-29
+
+- Detailed CSV export now includes the full timeline, preserves idle minutes, and the report PDF gained new storytelling/context sections.
+- Simplified the return flow to the popup after leaving the options page and turned the VS Code link into a button with programmatic navigation.
+
+## [1.13.0] - 2025-12-29
+
+- Introduced Reasonable Doubt mode: daily manual override, holiday detection, context adjustments (productive/neutral/procrastination), and a redesigned options page with autosave for VS Code + critical mode settings.
+- The detailed report now shows a banner comparing hypothetical scores, a context breakdown panel (time and index), and a collapsible tooltip explaining how each adjustment affects the results.
+- Restricted manifest permissions to the required endpoints, added date helpers with zero padding plus JSDoc, and hardened VS Code metric validation/cleanup.
+
+## [1.12.0] - 2025-12-23
+
+- The content-engine workflow now triggers the blog (Jekyll) deploy as soon as a new article is published, keeping the weekly cadence automated in GitHub Actions.
+
+## [1.11.1] - 2025-12-23
+
+- Bumped the service worker cache version to ensure blog assets refresh right after rollout.
+
+## [1.11.0] - 2025-12-23
+
+- Service worker now uses a network-first strategy for dynamic blog resources, falling back to cache only when offline.
+- The content engine’s weekly publication automation remains enabled.
+
+## [1.10.0] - 2025-12-23
+
+- Build pipeline now caches npm dependencies, and the content engine uses hints from feeds to infer categories earlier in the process.
+
+## [1.9.0] - 2025-12-23
+
+- The content engine rebuilds `site/blog/index.json` on every run, and the parser became resilient to translation fields via flexible mappings and regex.
+
+## [1.8.0] - 2025-12-23
+
+- The site now serves responsive images with `srcset/sizes`, compressed variants, lazy loading, and a dedicated service worker cache to reduce transfers.
+
+## [1.7.0] - 2025-12-23
+
+- The VS Code extension now manages the `ActivityTracker` lifecycle globally to prevent leaks when toggling the integration.
+
+## [1.6.1] - 2025-12-23
+
+- Optimized the landing page by compressing assets, enabling lazy loading, and deferring scripts to improve performance metrics.
+
+## [1.6.0] - 2025-12-23
+
+- The VS Code extension gained explicit activation events and we distributed the VSIX v1.5.0 package (with `package-lock.json`) for easier manual installs.
+
+## [1.5.0] - 2025-12-23
+
+- Chrome ↔ SaulDaemon ↔ VS Code integration became complete: shared timeline, index sync, bi-directional switch tracking, and IDE metrics blended into popup/report charts.
+- The options page received a connection-test button with health check/session info, pairing-key validation, and localized feedback; the key now persists and auth errors show recovery guidance.
+- The VS Code extension now ships full i18n (`auto`, pt-BR, en-US, es-419), exposes `saulGoodman.language`, and localizes commands/logs/status bar alongside dedicated docs.
+- The detailed report now shows a neutral category on the hourly chart, improved idle metrics, and a unified Chrome+VS Code timeline.
+
+## [1.4.1] - 2025-12-23
+
+- The blog is instrumented with Google Analytics → Google Tag Manager, Search Console verification, and sorting that prioritizes `source_published_at`.
+- Published a new focus vs. procrastination article and refreshed the SEO/RSS documentation.
+
+## [1.4.0] - 2025-12-23
+
+- Launched the multilingual blog (PT/EN/ES) with a new layout (sidebar, badges, artwork per category/tone, social sharing) and automatic translations.
+- Built the automated content engine with a GitHub Actions workflow (`--dry-run`, safe date parser, `YYYY-MM-DD` support, and `/posts/YYYY/<slug>/` URLs).
+- The popup now recommends articles based on daily metrics and posts gained tone/category artwork.
+
+## [1.3.2] - 2025-12-23
+
+- The `AGENTS.md` documentation was condensed for quicker reading.
+
+## [1.3.1] - 2025-12-23
+
+- Published the VS Code extension v1.3.0 VSIX package to simplify manual/offline installations.
+
+## [1.3.0] - 2025-12-23
+
+- The extension now shows a local post-update notification with a changelog link and a “See what’s new” button in the popup to trigger it manually.
+
+## [1.2.0] - 2025-12-23
+
+- Debuted the VS Code + SaulDaemon integration: local daemon, pairing key prompt, start/health-check commands, status bar with the Saul Index, and a unified timeline in the report.
+- VS Code active time now counts toward productive score; session IDs use `crypto.randomBytes`, force sync/cleanup runs when disabling the integration, and the daemon received extra validation.
+- Added optional procrastination blocking via `declarativeNetRequest` plus a translated block page.
+- The popup gained multi-platform sharing, options were restructured with semantic HTML/ARIA, and the site features a CTA to install the VS Code extension.
+
+## [1.1.2] - 2025-12-05
+
+- Optimized restored-tab tracking with early returns/delta updates and synced versions across every package.
+
+## [1.1.1] - 2025-12-05
+
+- Started recording daily sessions and fixed the restored-items counter to avoid duplicates.
+
+## [1.1.0] - 2025-12-04
+
+- The landing page gained interactive demos, a safe lightbox, and a quake-mode simulation so users can preview the experience before installing the extension.
+
+## [1.0.12] - 2025-12-04
+
+- Added the complete MIT License text to the repository.
+
+## [1.0.11] - 2025-12-04
+
+- GitHub Actions workflows now declare explicit permissions to satisfy security alerts.
+
+## [1.0.10] - 2025-12-04
+
+- Another critical workflow was updated with the minimum permissions required by code scanning.
+
+## [1.0.9] - 2025-12-04
+
+- Moved the sponsor button to the main navigation and switched to the official GitHub Sponsors badge.
+
+## [1.0.8] - 2025-12-04
+
+- Added the security policy (`SECURITY.md`) with supported versions and a vulnerability contact channel.
+
+## [1.0.7] - 2025-12-04
+
+- The official site gained a support section with GitHub Sponsors integration.
+
+## [1.0.6] - 2025-12-04
+
+- Install links now point directly to the official Chrome Web Store listing with `rel="noreferrer"`.
+
+## [1.0.5] - 2025-12-04
+
+- Updated public install links and badges to reflect the Chrome Web Store launch.
+
+## [1.0.4] - 2025-12-04
+
+- The landing page added localization support with a language selector and `data-i18n` attributes.
+
+## [1.0.3] - 2025-12-04
+
+- Initial release: MV3 service worker tracking productive vs. procrastination time, popup with Chart.js, and real-time Saul Index badge.
+- Options page introduced productive/villain domain lists, weight adjustments, work-hours scheduler (with overtime bonus), and quake-mode settings.
+- Detailed report shipped hourly timeline, domain rankings, CSV/PDF export, and OpenAI-powered storytelling.
+- Delivered the signature experience: sarcastic multi-tab toasts, quake overlay + siren, tab-switch graphs, optimized assets, and baseline docs (README/architecture/indicators).
+
+<!--lang:es-->
+# Changelog
+
+Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.15.0] - 2025-12-29
+
+- El content engine incorporó cinco categorías nuevas (marketing, producto, UX design, carrera y negocios) con rotación automática, palabras clave dedicadas y reglas fallback para clasificar posts con más precisión.
+- Sumamos ocho feeds RSS (UX Collective, NN/g, Mind the Product, HubSpot, Rock Content, RD Station, Harvard Business Review y Fast Company) además de heurísticas extra en el parser para ampliar el repertorio.
+- El workflow del blog ahora corre los lunes, miércoles y viernes a las 08:00 BRT, acelerando la cadencia de publicaciones.
+
+## [1.14.1] - 2025-12-29
+
+- Reescribimos la landing page con hero y gauge animados, carrusel interactivo de features, demo del modo terremoto, onboarding en accordion, slider de testimonios y CTA fijo para desktop/mobile.
+- La navegación móvil ganó menú hamburguesa con mejores estados de foco/hover, espaciado consistente y textos traducidos; las banderas se cambiaron por emojis, los botones usan la misma copia y los enlaces dejaron de apuntar a `index.html`.
+- La sección de prueba social recibió badges multilingües, métricas públicas de la Chrome Web Store, un CTA dedicado para feedback (con nuevo email) y enlaces equivalentes en los CTAs fijos.
+- Agregamos el enlace de instalación de la extensión VS Code en la sección técnica y una página de privacidad que renderiza Markdown directamente.
+
+## [1.14.0] - 2025-12-29
+
+- La exportación CSV detallada ahora incluye la timeline completa, preserva los minutos inactivos y el PDF del informe ganó secciones nuevas para storytelling y contexto.
+- Simplificamos el regreso al popup al salir de opciones y convertimos el enlace de VS Code en un botón con navegación programática.
+
+## [1.13.0] - 2025-12-29
+
+- Lanzamos el modo Duda Razonable: override manual diario, detección de feriados, ajustes por contexto productivo/neutro/procrastinación y nuevo layout en opciones con autosave para VS Code y modo crítico.
+- El informe detallado ahora muestra un banner comparando índices hipotéticos, panel de breakdown por contexto (tiempo y puntaje) y tooltip plegable explicando cada ajuste.
+- Restringimos permisos del manifest solo a los endpoints necesarios, añadimos helpers de fecha con zero padding + JSDoc y reforzamos validaciones/limpieza de métricas VS Code.
+
+## [1.12.0] - 2025-12-23
+
+- El workflow del content engine dispara el deploy del blog (Jekyll) así que publica un artículo nuevo y mantiene la cadencia semanal automatizada en GitHub Actions.
+
+## [1.11.1] - 2025-12-23
+
+- Incrementamos la versión del caché del service worker para garantizar que los assets del blog se actualicen después del rollout.
+
+## [1.11.0] - 2025-12-23
+
+- El service worker ahora usa estrategia network-first para recursos dinámicos del blog y solo cae al caché en modo offline.
+- Mantuvimos la publicación semanal automática del content engine.
+
+## [1.10.0] - 2025-12-23
+
+- El pipeline de build ganó caché de dependencias npm y el content engine usa pistas de los feeds para inferir categorías antes del procesamiento completo.
+
+## [1.9.0] - 2025-12-23
+
+- El content engine reconstruye `site/blog/index.json` en cada ejecución y el parser quedó resiliente a campos de traducción gracias a mapeos flexibles y regex.
+
+## [1.8.0] - 2025-12-23
+
+- El sitio ahora sirve imágenes responsivas con `srcset/sizes`, versiones comprimidas, lazy loading y caché dedicada en el service worker para reducir transferencias.
+
+## [1.7.0] - 2025-12-23
+
+- La extensión VS Code gestiona el ciclo de vida de `ActivityTracker` de forma global para evitar fugas al activar/desactivar la integración.
+
+## [1.6.1] - 2025-12-23
+
+- Optimizamos la landing page con compresión de assets, lazy loading y scripts diferidos para mejorar las métricas de performance.
+
+## [1.6.0] - 2025-12-23
+
+- La extensión VS Code ganó eventos de activación explícitos y distribuimos el paquete VSIX v1.5.0 (con `package-lock.json`) para facilitar instalaciones manuales.
+
+## [1.5.0] - 2025-12-23
+
+- La integración Chrome ↔ SaulDaemon ↔ VS Code quedó completa: timeline compartida, sincronización del índice, tracking bidireccional de cambios y métricas de IDE sumadas a los gráficos del popup e informe.
+- Opciones recibió botón de test de conexión con health check/sesiones, validación de pairing key y feedback localizado; la clave persiste y los errores de autenticación explican cómo resolver.
+- La extensión VS Code obtuvo i18n completo (`auto`, pt-BR, en-US, es-419), configuración `saulGoodman.language`, strings localizadas en comandos/logs/status bar y documentación dedicada.
+- El informe muestra categoría neutra en el gráfico horario, métricas de inactividad más precisas y timeline unificada entre Chrome/VS Code.
+
+## [1.4.1] - 2025-12-23
+
+- Instrumentamos el blog con Google Analytics → Google Tag Manager, verificación del Search Console y orden que prioriza `source_published_at`.
+- Publicamos un nuevo artículo sobre foco vs. procrastinación y actualizamos la documentación de SEO/RSS.
+
+## [1.4.0] - 2025-12-23
+
+- Lanzamos el blog multilingüe (PT/EN/ES) con layout nuevo (sidebar, badges, artwork por categoría/tono, sharing social) y traducción automática.
+- Creamos el content engine automatizado con workflow en GitHub Actions (`--dry-run`, parser de fechas seguro, soporte `YYYY-MM-DD` y URLs `/posts/YYYY/<slug>/`).
+- El popup empezó a recomendar artículos según las métricas del día y los posts ganaron sistema de arte por tono/categoría.
+
+## [1.3.2] - 2025-12-23
+
+- La documentación `AGENTS.md` se condensó para lectura rápida.
+
+## [1.3.1] - 2025-12-23
+
+- Publicamos el paquete VSIX de la extensión VS Code v1.3.0 para facilitar instalaciones manuales/remotas.
+
+## [1.3.0] - 2025-12-23
+
+- La extensión muestra una notificación local después del update con link al changelog y botón “Ver novedades” en el popup para activarlo manualmente.
+
+## [1.2.0] - 2025-12-23
+
+- Debutó la integración VS Code + SaulDaemon: daemon local, pairing key con prompt dedicado, comandos para iniciar/health check, status bar con el Saul Index y timeline unificada en el informe.
+- El tiempo activo de VS Code suma al puntaje productivo; los IDs de sesión usan `crypto.randomBytes`, agregamos force sync/clean-up al desactivar la integración y el daemon ganó validaciones extra.
+- Habilitamos el bloqueo opcional de dominios procrastinadores usando `declarativeNetRequest` y página de bloqueo traducida.
+- El popup sumó sharing multi-plataforma, opciones fueron reestructuradas con semántica/ARIA y el sitio ganó CTA para instalar la extensión VS Code.
+
+## [1.1.2] - 2025-12-05
+
+- Optimizamos el tracking de pestañas restauradas con early returns/deltas y sincronizamos versiones en todos los paquetes.
+
+## [1.1.1] - 2025-12-05
+
+- Empezamos a registrar sesiones diarias y corregimos el conteo de ítems restaurados para evitar duplicidad.
+
+## [1.1.0] - 2025-12-04
+
+- La landing page ganó demos interactivas, lightbox seguro y simulación del modo terremoto para mostrar la experiencia sin instalar la extensión.
+
+## [1.0.12] - 2025-12-04
+
+- Sumamos el texto completo de la licencia MIT al repositorio.
+
+## [1.0.11] - 2025-12-04
+
+- Los workflows de GitHub Actions recibieron permisos explícitos para cumplir los avisos de seguridad.
+
+## [1.0.10] - 2025-12-04
+
+- Otro workflow crítico se actualizó con los permisos mínimos exigidos por code scanning.
+
+## [1.0.9] - 2025-12-04
+
+- Movimos el botón de patrocinio al menú principal y usamos el badge oficial de GitHub Sponsors.
+
+## [1.0.8] - 2025-12-04
+
+- Añadimos la política de seguridad (`SECURITY.md`) con versiones soportadas y canal de contacto para vulnerabilidades.
+
+## [1.0.7] - 2025-12-04
+
+- La página oficial ganó sección de apoyo con integración GitHub Sponsors.
+
+## [1.0.6] - 2025-12-04
+
+- Los enlaces de instalación ahora apuntan directamente a la Chrome Web Store oficial con `rel="noreferrer"`.
+
+## [1.0.5] - 2025-12-04
+
+- Actualizamos los enlaces públicos de instalación y badges para reflejar el lanzamiento en la Chrome Web Store.
+
+## [1.0.4] - 2025-12-04
+
+- La landing page recibió soporte de idiomas con selector y atributos `data-i18n`.
+
+## [1.0.3] - 2025-12-04
+
+- Release inicial: service worker MV3 rastreando tiempo productivo vs. procrastinación, popup con Chart.js y cálculo del Índice Saul en tiempo real.
+- Opciones trajo listas de dominios productivos/villanos, ajuste de pesos, horarios laborales (con bono overtime) y configuraciones del modo terremoto.
+- El informe detallado incluyó timeline por hora, ranking de dominios, exportación CSV/PDF y narrativa IA (OpenAI) en markdown.
+- Experiencia completa con toasts sarcásticos multi-pestaña, overlay y sirena del modo terremoto, gráficos de cambios de pestaña por hora, assets optimizados y documentación base (README/arquitectura/indicadores).

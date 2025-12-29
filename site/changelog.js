@@ -6,6 +6,36 @@ const CHANGELOG_URL =
 const container = document.querySelector('[data-changelog-article]');
 const loadingText = container?.querySelector('[data-i18n="changelogLoading"]');
 const prefersNoMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FALLBACK_LANG = 'pt';
+const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
+
+const resolveLanguage = (value) => {
+  if (!value) return null;
+  const normalized = value.toLowerCase();
+  if (normalized.startsWith('en')) return 'en';
+  if (normalized.startsWith('es')) return 'es';
+  if (normalized.startsWith('pt')) return 'pt';
+  return null;
+};
+
+const getDocumentLanguage = () => {
+  const stored = resolveLanguage(localStorage.getItem('saul-language'));
+  if (stored) return stored;
+  const attr = resolveLanguage(document.documentElement.lang);
+  return attr || FALLBACK_LANG;
+};
+
+const extractLocalizedMarkdown = (markdown, lang) => {
+  const pattern = new RegExp(`<!--lang:${lang}-->[\\s\\S]*?(?=<!--lang:|$)`, 'i');
+  const match = markdown.match(pattern);
+  if (match) {
+    return match[0].replace(new RegExp(`<!--lang:${lang}-->`, 'i'), '').trim();
+  }
+  if (lang !== FALLBACK_LANG) {
+    return extractLocalizedMarkdown(markdown, FALLBACK_LANG);
+  }
+  return markdown;
+};
 
 const renderChangelog = async () => {
   if (!container) return;
@@ -13,7 +43,8 @@ const renderChangelog = async () => {
     const response = await fetch(CHANGELOG_URL, { cache: 'no-store' });
     if (!response.ok) throw new Error(`Erro ao buscar changelog (${response.status})`);
     const markdown = await response.text();
-    const html = marked.parse(markdown);
+    const localized = extractLocalizedMarkdown(markdown, getDocumentLanguage());
+    const html = marked.parse(localized);
     container.innerHTML = html;
     container.classList.add('document-ready');
   } catch (error) {
@@ -23,9 +54,18 @@ const renderChangelog = async () => {
   }
 };
 
+const handleLanguageChange = () => renderChangelog();
+
 document.addEventListener('DOMContentLoaded', () => {
   renderChangelog();
   if (loadingText && prefersNoMotion) {
     loadingText.style.animation = 'none';
+  }
+  document.addEventListener(LANGUAGE_CHANGED_EVENT, handleLanguageChange);
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    renderChangelog();
   }
 });

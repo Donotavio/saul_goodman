@@ -70,19 +70,19 @@ const translations = {
     featurePrevLabel: 'Anterior',
     featureNextLabel: 'Próximo',
     backToHome: 'Voltar ao site',
-    backToHome: 'Back to homepage',
-    privacyTitle: 'Privacy Policy',
-    privacyEyebrow: 'Full transparency',
-    privacyHeading: 'Privacy Policy',
-    privacySubheading: 'Here is the latest version of the policy published in the repository.',
-    privacyLoading: 'Loading the policy straight from the repository...',
-    privacyError: 'We could not load the policy right now. Try again in a moment.',
+    backToHome: 'Voltar ao site',
+    privacyTitle: 'Política de Privacidade',
+    privacyEyebrow: 'Transparência total',
+    privacyHeading: 'Política de Privacidade',
+    privacySubheading: 'Aqui está a versão mais recente publicada no repositório.',
+    privacyLoading: 'Carregando política diretamente do repositório...',
+    privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
     changelogTitle: 'Changelog',
-    changelogEyebrow: 'Everything documented',
-    changelogHeading: 'Official changelog',
-    changelogSubheading: 'Track every change per release directly from the repository.',
-    changelogLoading: 'Loading the changelog straight from the repository...',
-    changelogError: 'We could not load the changelog right now. Try again later.',
+    changelogEyebrow: 'Tudo documentado',
+    changelogHeading: 'Changelog oficial',
+    changelogSubheading: 'Veja todas as mudanças por versão direto do repositório.',
+    changelogLoading: 'Carregando changelog diretamente do repositório...',
+    changelogError: 'Não foi possível carregar o changelog agora. Tente novamente mais tarde.',
     privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
     changelogTitle: 'Changelog',
     changelogEyebrow: 'Tudo documentado',
@@ -1276,6 +1276,8 @@ const detectLanguage = () => {
   return supportedLanguages.includes(fromNavigator) ? fromNavigator : defaultLanguage;
 };
 
+const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
+
 const bindLanguageSelector = () => {
   const selector = document.getElementById('language-select');
   if (!selector) return;
@@ -1284,6 +1286,7 @@ const bindLanguageSelector = () => {
     localStorage.setItem('saul-language', value);
     applyTranslations(value);
     renderBlogPreview();
+    document.dispatchEvent(new CustomEvent(LANGUAGE_CHANGED_EVENT, { detail: value }));
   });
 };
 
@@ -1696,11 +1699,15 @@ const setupQuakeHighlight = () => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  setupLightbox();
+  const isDocumentPage = document.body?.classList.contains('document-page');
   applyTranslations(detectLanguage());
   bindLanguageSelector();
-  setupMobileMenu();
   setupScrollReveal();
+  if (isDocumentPage) {
+    return;
+  }
+  setupLightbox();
+  setupMobileMenu();
   setupGauges();
   setupFeatureCarousel();
   setupQuakeTilt();
