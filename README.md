@@ -36,7 +36,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Chart.js** vendorizado (UMD local em `src/vendor/chart.umd.js`).
 - **chrome.storage.local** para métricas diárias e configurações.
 - **Sem frameworks**: todo HTML/CSS escrito manualmente.
-- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos), `sessions` (itens fechados recentes) e `notifications` (avisar sobre novidades) para KPIs adicionais no relatório. Tudo permanece local.
+- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos), `sessions` (itens fechados recentes), `declarativeNetRequest` (bloqueio opcional dos vilões) e `notifications` (avisar sobre novidades). Os hosts `https://date.nager.at/*`, `https://api.openai.com/*`, `http://127.0.0.1/*` e `http://localhost/*` aparecem apenas quando você ativa feriados automáticos, storytelling IA ou a integração com o SaulDaemon — todos opcionais.
 
 ```text
 saul_goodman/
@@ -142,7 +142,13 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 
 ## Privacidade
 
-Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai do `chrome.storage.local` e não existe comunicação com servidores externos por padrão. Se você informar uma chave da OpenAI nas opções, apenas o relatório detalhado enviará o resumo diário (índice, métricas agregadas, top domínios e trechos da timeline) para a API da OpenAI com a finalidade de gerar a narrativa em tom Saul Goodman. Sem chave, nenhuma chamada externa acontece. Preferências locais (como o alerta sonoro do modo terremoto) também ficam somente no `chrome.storage.local`. O README e os docs explicam claramente o que é medido e como alterar listas/pesos.
+Todo o rastreamento acontece **apenas** no Chrome do usuário. Nenhum dado sai do `chrome.storage.local` por padrão. Três fluxos opcionais fazem chamadas adicionais:
+
+- **Narrativa IA**: se você informar uma chave da OpenAI nas opções, o relatório detalhado envia um resumo diário (índice, métricas agregadas, top domínios e trechos da timeline) para a API da OpenAI apenas para compor o texto sarcástico.
+- **Feriados automáticos**: ao ativar a opção e informar o código ISO do país, o background consulta o endpoint público [Nager.Date](https://date.nager.at) para baixar a lista anual de feriados; o cache fica salvo localmente por até 7 dias.
+- **Integração VS Code**: quando habilitada, o background conversa com o SaulDaemon rodando em `http://127.0.0.1:3123` para sincronizar minutos produtivos extras — tudo permanece no `localhost`.
+
+Preferências locais (como o alerta sonoro do modo terremoto, listas de domínios e fairness) continuam apenas no navegador. O README e os docs explicam claramente o que é medido e como alterar listas/pesos.
 
 ## Documentação complementar
 

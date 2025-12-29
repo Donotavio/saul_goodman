@@ -141,6 +141,7 @@ Todos os cartões exibem um tooltip descrevendo a métrica.
 
 ## Segurança & privacidade
 
-- Não há chamadas de rede; permissões mínimas: `storage`, `tabs`, `alarms`, `activeTab` e host `<all_urls>` apenas para saber URL.
+- Permissões do Manifest V3: `storage`, `tabs`, `alarms`, `activeTab`, `idle`, `windows`, `webNavigation`, `tabGroups`, `sessions`, `declarativeNetRequest` e `notifications`. Os hosts adicionais (`https://date.nager.at/*`, `https://api.openai.com/*`, `http://127.0.0.1/*`, `http://localhost/*`) são utilizados somente quando o usuário ativa as features correspondentes (feriados automáticos, narrativa OpenAI ou integração com SaulDaemon).
+- Chamadas de rede são opcionais: OpenAI recebe apenas o resumo diário para gerar a narrativa; Nager.Date entrega a lista anual de feriados com cache local; SaulDaemon opera em `localhost` para sincronizar o tempo produtivo vindo do VS Code. Sem essas opções, nada externo é consultado.
 - Manifest não inclui CSP customizado além do padrão; todos scripts são locais.
-- Documentação e UI lembram que os dados ficam no navegador do usuário.
+- Documentação e UI lembram que os dados ficam no navegador do usuário e explicam como ativar/desativar cada guard rail.

@@ -16,6 +16,12 @@
 - **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
 - **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
 - **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
+- **Justiça do dia**: card fixo logo abaixo do cabeçalho exibe o estado atual (normal, override manual, contexto pessoal/lazer/estudo ou feriado). Inclui:
+  - toggle “Ignorar hoje” que congela o índice, silencia alertas e mostra feedback imediato no `statusMessage`;
+  - seletor “Contexto atual” com opções Trabalho (default), Pessoal (neutraliza score), Lazer (aplica 30% das penalidades) e Estudos (reduz penalidades pela metade);
+  - mensagem auxiliar (`holidayStatus`) visível quando um feriado é detectado automaticamente;
+  - tooltip “Como funciona?” explicando os impactos e funcionando como âncora para screen readers (`aria-describedby=fairnessImpactHint`).
+- As mudanças do contexto precisam ser otimistas: desabilitar o select enquanto salva, restaurar o último valor em caso de erro e refletir o texto do banner imediatamente. O banner também precisa informar quando um feriado está neutralizando o dia para manter consistência com o relatório/exportações.
 - **Modo terremoto (limiar configurável, padrão 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Tocar sirene”). A sirene só toca se o usuário consentir e a escolha fica persistida; o overlay aparece em qualquer aba que não esteja marcada como produtiva (procrastinação ou neutro), reforçando na copy que mudar para uma aba produtiva libera o usuário para recuperar o score. Ao fechar o overlay ele só volta quando o score continua crítico.
 - **CTA**:
   - `Atualizar`: força `metrics-request`.
