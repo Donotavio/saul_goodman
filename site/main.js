@@ -6,6 +6,7 @@ const translations = {
     navClients: 'Depoimentos',
     navBlog: 'Blog',
     navCta: 'Instalar no Chrome',
+    mobileMenuToggle: 'Abrir menu',
     seoTitle: 'Saul Goodman - Extensão Anti-Procrastinação',
     seoDescription:
       'Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos.',
@@ -14,7 +15,7 @@ const translations = {
     heroTitle: 'Pare de procrastinar. Saul Goodman assume o caso.',
     heroSubtitle:
       'A extensão monitora suas abas, identifica distrações e pressiona você a voltar ao foco antes que o dia escapole. Tudo direto no seu Chrome, sem cadastros.',
-    heroPrimaryCta: 'Install on Chrome',
+    heroPrimaryCta: 'Instalar no Chrome',
     heroSecondaryCta: 'Veja como funciona',
     heroGaugeLabel: 'Índice ao vivo',
     heroGaugeHint: 'Acima de 70% Saul solta o terremoto.',
@@ -269,7 +270,8 @@ const translations = {
     navDemo: 'Demo',
     navClients: 'Testimonials',
     navBlog: 'Blog',
-    navCta: 'Instalar en Chrome',
+    navCta: 'Install on Chrome',
+    mobileMenuToggle: 'Open menu',
     seoTitle: 'Saul Goodman - Anti-Procrastination Extension',
     seoDescription:
       'Saul Goodman polices your tabs, fights procrastination, and delivers dramatic reports in your browser. Everything stays local, no external servers.',
@@ -530,7 +532,8 @@ const translations = {
     navDemo: 'Demo',
     navClients: 'Testimonios',
     navBlog: 'Blog',
-    navCta: 'Install on Chrome',
+    navCta: 'Instalar en Chrome',
+    mobileMenuToggle: 'Abrir menú',
     seoTitle: 'Saul Goodman - Extensión Anti-Procrastinación',
     seoDescription:
       'Saul Goodman vigila tus pestañas, combate la procrastinación y genera informes dramáticos en tu navegador. Todo queda local, sin servidores externos.',
@@ -539,7 +542,7 @@ const translations = {
     heroTitle: 'Detén la procrastinación. Saul Goodman toma el caso.',
     heroSubtitle:
       'Supervisa tus pestañas, detecta distracciones y te empuja de vuelta al foco antes de que el día se vaya. Todo en Chrome, sin registros.',
-    heroPrimaryCta: 'Install on Chrome',
+    heroPrimaryCta: 'Instalar en Chrome',
     heroSecondaryCta: 'Ver cómo funciona',
     heroGaugeLabel: 'Índice en vivo',
     heroGaugeHint: 'Si pasa del 70%, llega el terremoto.',
