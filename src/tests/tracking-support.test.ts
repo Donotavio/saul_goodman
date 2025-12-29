@@ -121,8 +121,8 @@ test('calculateProcrastinationIndex awards overtime bonus', () => {
     inactiveMs: 0,
     tabSwitches: 0
   });
-  const score = calculateProcrastinationIndex(metrics, defaultSettings);
-  assert.ok(score < 30, 'overtime produtivo deveria diminuir o índice');
+  const result = calculateProcrastinationIndex(metrics, defaultSettings);
+  assert.ok(result.score < 30, 'overtime produtivo deveria diminuir o índice');
 });
 
 test('recordTabSwitchCounts increments breakdown and hourly buckets', () => {

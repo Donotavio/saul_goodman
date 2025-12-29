@@ -1,10 +1,13 @@
 import {
   DailyMetrics,
   DomainStats,
+  FairnessRule,
+  FairnessSummary,
   HourlyBucket,
   LocalePreference,
   TimelineEntry,
-  WorkInterval
+  WorkInterval,
+  ContextModeValue
 } from '../shared/types.js';
 import {
   formatDuration,
@@ -32,6 +35,8 @@ const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
 const heroIndexEl = document.getElementById('heroIndex') as HTMLElement;
 const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
+const fairnessStatusReportEl = document.getElementById('fairnessStatusReport') as HTMLElement | null;
+const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -72,6 +77,12 @@ const unfocusedEl = document.getElementById('unfocusedValue') as HTMLElement | n
 const spaNavigationsEl = document.getElementById('spaNavigationsValue') as HTMLElement | null;
 const groupedTimeEl = document.getElementById('groupedTimeValue') as HTMLElement | null;
 const restoredItemsEl = document.getElementById('restoredItemsValue') as HTMLElement | null;
+const contextBreakdownSection = document.getElementById(
+  'contextBreakdownSection'
+) as HTMLElement | null;
+const contextBreakdownBody = document
+  .getElementById('contextBreakdownTable')
+  ?.querySelector('tbody') as HTMLTableSectionElement | null;
 
 const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
   { max: 25, key: 'report_hero_message_excellent' },
@@ -86,6 +97,31 @@ const REPORT_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolea
   { key: 'report_banner_message_3' },
   { key: 'report_banner_message_4' }
 ];
+
+const REPORT_FAIRNESS_STATUS_KEY_BY_RULE: Record<FairnessSummary['rule'], string> = {
+  'manual-override': 'report_fairness_status_manual',
+  'context-personal': 'report_fairness_status_personal',
+  'context-leisure': 'report_fairness_status_leisure',
+  'context-study': 'report_fairness_status_study',
+  holiday: 'report_fairness_status_holiday',
+  normal: 'report_fairness_status_default'
+};
+
+const REPORT_FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
+  report_fairness_status_manual: 'Dia ignorado manualmente.',
+  report_fairness_status_personal: 'Modo pessoal — sem pontuação.',
+  report_fairness_status_leisure: 'Modo lazer reduziu as cobranças.',
+  report_fairness_status_study: 'Modo estudo suavizou as penalidades.',
+  report_fairness_status_holiday: 'Feriado nacional neutralizou o índice.',
+  report_fairness_status_default: 'Dia útil normal.'
+};
+
+const REPORT_FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
+  report_fairness_holiday_active: 'Hoje é feriado, índice pausado automaticamente.',
+  report_fairness_holiday_detected: 'Feriado detectado — sem penalidades.'
+};
+
+const CONTEXT_ORDER: ContextModeValue[] = ['work', 'personal', 'leisure', 'study'];
 
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
@@ -111,6 +147,7 @@ let i18n: I18nService | null = null;
 let activeLocalePreference: LocalePreference = 'auto';
 let hasAiNarrative = false;
 let toastTimer: number | null = null;
+let latestFairness: FairnessSummary | null = null;
 const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,6 +219,7 @@ async function hydrate(): Promise<void> {
     latestSettings = response.settings ?? null;
     locale = latestSettings?.locale ?? 'pt-BR';
     openAiKey = latestSettings?.openAiKey ?? '';
+    latestFairness = response.fairness ?? null;
     renderReport(latestMetrics);
   } catch (error) {
     console.error(error);
@@ -235,6 +273,9 @@ function renderReport(metrics: DailyMetrics): void {
     restoredItemsEl.textContent = `${enriched.restoredItems ?? 0}`;
   }
 
+  renderFairnessSummary(latestFairness);
+  renderContextBreakdown(enriched.contextDurations, enriched.contextIndices);
+
   renderHourlyChart(enriched);
   renderTabSwitchChart(enriched);
   renderCompositionChart(enriched);
@@ -251,6 +292,138 @@ function renderReport(metrics: DailyMetrics): void {
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
   updateHeroLogo(enriched.currentIndex >= criticalThreshold);
   toggleCriticalBanner(enriched.currentIndex >= criticalThreshold);
+}
+
+/**
+ * Updates the fairness summary banner with the provided snapshot.
+ * @param summary Optional fairness summary; defaults to a neutral configuration.
+ */
+export function renderFairnessSummary(summary?: FairnessSummary | null): void {
+  if (!fairnessStatusReportEl) {
+    return;
+  }
+  const resolved = getFairnessFallback(summary);
+  const { text } = getFairnessStatusText(resolved);
+  fairnessStatusReportEl.textContent = text;
+  if (!fairnessHintReportEl) {
+    return;
+  }
+  const hintText = getFairnessHintText(resolved);
+  if (hintText) {
+    fairnessHintReportEl.textContent = hintText;
+    fairnessHintReportEl.hidden = false;
+    fairnessHintReportEl.classList.remove('hidden');
+  } else {
+    fairnessHintReportEl.hidden = true;
+    fairnessHintReportEl.classList.add('hidden');
+  }
+}
+
+/**
+ * Popula a tabela de contextos com as durações e índices hipotéticos.
+ * @param durations Mapa com milissegundos gastos por contexto.
+ * @param indices Mapa com os índices simulados por contexto.
+ */
+export function renderContextBreakdown(
+  durations?: Record<ContextModeValue, number>,
+  indices?: Record<ContextModeValue, number>
+): void {
+  if (!contextBreakdownSection || !contextBreakdownBody) {
+    return;
+  }
+  if (!durations && !indices) {
+    contextBreakdownSection.hidden = true;
+    contextBreakdownSection.classList.add('hidden');
+    contextBreakdownBody.innerHTML = '';
+    return;
+  }
+  contextBreakdownSection.hidden = false;
+  contextBreakdownSection.classList.remove('hidden');
+  contextBreakdownBody.innerHTML = '';
+
+  CONTEXT_ORDER.forEach((context) => {
+    const row = document.createElement('tr');
+    const labelCell = document.createElement('td');
+    labelCell.textContent = i18n?.t(`popup_context_option_${context}`) ?? context;
+    const durationCell = document.createElement('td');
+    durationCell.textContent = formatDuration(durations?.[context] ?? 0);
+    const indexCell = document.createElement('td');
+    const indexValue = indices?.[context];
+    indexCell.textContent = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    row.appendChild(labelCell);
+    row.appendChild(durationCell);
+    row.appendChild(indexCell);
+    contextBreakdownBody.appendChild(row);
+  });
+}
+
+/** 
+ * Resolves the fairness summary, guaranteeing a neutral structure when undefined.
+ * @param summary Snapshot provided by the background script (optional).
+ * @returns A summary object with safe defaults.
+ */
+function getFairnessFallback(summary?: FairnessSummary | null): FairnessSummary {
+  if (summary) {
+    return summary;
+  }
+  return {
+    rule: 'normal',
+    manualOverrideActive: false,
+    contextMode: { value: 'work', updatedAt: Date.now() },
+    holidayNeutral: false,
+    isHolidayToday: false
+  };
+}
+
+/**
+ * Maps a fairness summary to the translated status text.
+ * @param summary Fairness snapshot to describe.
+ * @returns Object containing the readable text and rule used for downstream decisions.
+ */
+function getFairnessStatusText(
+  summary?: FairnessSummary | null
+): { text: string; rule: FairnessRule } {
+  const resolved = getFairnessFallback(summary);
+  const key = REPORT_FAIRNESS_STATUS_KEY_BY_RULE[resolved.rule] ?? 'report_fairness_status_default';
+  const fallback =
+    REPORT_FAIRNESS_STATUS_FALLBACKS[key] ??
+    REPORT_FAIRNESS_STATUS_FALLBACKS.report_fairness_status_default;
+  const text = i18n?.t(key) ?? fallback;
+  return { text, rule: resolved.rule };
+}
+
+/**
+ * Returns the optional holiday hint text for the fairness banner.
+ * @param summary Fairness summary currently applied.
+ */
+function getFairnessHintText(summary?: FairnessSummary | null): string | null {
+  const resolved = getFairnessFallback(summary);
+  let key: string | null = null;
+  if (resolved.holidayNeutral) {
+    key = 'report_fairness_holiday_active';
+  } else if (resolved.isHolidayToday) {
+    key = 'report_fairness_holiday_detected';
+  }
+  if (!key) {
+    return null;
+  }
+  const fallback = REPORT_FAIRNESS_HOLIDAY_FALLBACKS[key] ?? '';
+  return i18n?.t(key) ?? fallback;
+}
+
+/**
+ * Builds the fairness line used in share/export flows.
+ * @param summary Snapshot describing whether the score was neutralized.
+ * @returns Localized string when the rule isn't normal; otherwise null.
+ */
+function buildFairnessShareLine(summary?: FairnessSummary | null): string | null {
+  const resolved = getFairnessFallback(summary);
+  const { text, rule } = getFairnessStatusText(resolved);
+  if (rule === 'normal') {
+    return null;
+  }
+  const label = i18n?.t('report_fairness_title') ?? 'Justiça do dia';
+  return `${label}: ${text}`;
 }
 
 function renderHourlyChart(metrics: DailyMetrics): void {
@@ -643,7 +816,7 @@ function mergeTimelines(metrics: DailyMetrics, domains: Record<string, DomainSta
   return [...metrics.timeline, ...vscodeEntries].sort((a, b) => a.startTime - b.startTime);
 }
 
-async function exportPdf(): Promise<void> {
+export async function exportPdf(): Promise<void> {
   if (!latestMetrics) {
     return;
   }
@@ -661,9 +834,15 @@ async function exportPdf(): Promise<void> {
   doc.text(i18n?.t('report_pdf_title') ?? 'Detailed report — Saul Goodman', 14, 18);
   doc.setFontSize(12);
   doc.text(`Data: ${reportDateEl.textContent}`, 14, 26);
-  doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${metrics.currentIndex}`, 14, 34);
-  doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 40);
-  doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 46);
+  const fairnessStatus = getFairnessStatusText(latestFairness);
+  const fairnessHint = fairnessStatus.rule === 'holiday' ? getFairnessHintText(latestFairness) : null;
+  const fairnessLine = fairnessHint
+    ? `${fairnessStatus.text} (${fairnessHint})`
+    : fairnessStatus.text;
+  doc.text(`Status: ${fairnessLine}`, 14, 32);
+  doc.text(`${i18n?.t('popup_pdf_index') ?? 'Index'}: ${metrics.currentIndex}`, 14, 40);
+  doc.text(`Foco ativo: ${formatPercentage(kpis.focusRate)}`, 14, 46);
+  doc.text(`Trocas de abas: ${metrics.tabSwitches}`, 14, 52);
 
   const criticalThreshold = latestSettings?.criticalScoreThreshold ?? 90;
   if (metrics.currentIndex >= criticalThreshold) {
@@ -676,12 +855,12 @@ async function exportPdf(): Promise<void> {
 
   if (hourlyChart) {
     const img = hourlyChart.toBase64Image();
-    doc.addImage(img, 'PNG', 14, 52, 180, 75);
+    doc.addImage(img, 'PNG', 14, 58, 180, 75);
   }
 
   if (compositionChart) {
     const img = compositionChart.toBase64Image();
-    doc.addImage(img, 'PNG', 205, 52, 90, 80);
+    doc.addImage(img, 'PNG', 205, 58, 90, 80);
   }
 
   doc.setFontSize(12);
@@ -750,7 +929,10 @@ async function shareNarrative(): Promise<void> {
   });
 }
 
-function buildShareSummaryText(metrics: DailyMetrics): string {
+export function buildShareSummaryText(
+  metrics: DailyMetrics,
+  fairnessSummary: FairnessSummary | null = latestFairness
+): string {
   const enriched = enrichMetricsWithVscode(metrics);
   const kpis = calculateKpis(enriched);
   const date = reportDateEl.textContent ?? enriched.dateKey;
@@ -766,7 +948,9 @@ function buildShareSummaryText(metrics: DailyMetrics): string {
   const timelineHighlights = latestTimelineNarrative.slice(0, 2).join(' • ');
   const cta = i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.';
 
+  const fairnessLine = buildFairnessShareLine(fairnessSummary);
   const lines = [
+    fairnessLine,
     `${headline} — ${date}`,
     `${indexLabel} ${enriched.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)} · ${switchesLabel} ${enriched.tabSwitches}`,
     `${i18n?.t('report_share_opening') ?? 'O cliente trabalhou e eu tenho provas.'} ${heroLine}`,
@@ -785,7 +969,10 @@ function buildShareSummaryText(metrics: DailyMetrics): string {
   return lines.filter(Boolean).join('\n');
 }
 
-function buildNarrativeShareText(metrics: DailyMetrics): string {
+export function buildNarrativeShareText(
+  metrics: DailyMetrics,
+  fairnessSummary: FairnessSummary | null = latestFairness
+): string {
   const enriched = enrichMetricsWithVscode(metrics);
   const kpis = calculateKpis(enriched);
   const date = reportDateEl.textContent ?? enriched.dateKey;
@@ -794,7 +981,9 @@ function buildNarrativeShareText(metrics: DailyMetrics): string {
   const narrative = aiNarrativeEl.textContent?.trim() ?? '';
   const cta = i18n?.t('report_share_cta') ?? 'Gerado pelo Saul Goodman.';
 
+  const fairnessLine = buildFairnessShareLine(fairnessSummary);
   const lines = [
+    fairnessLine,
     i18n?.t('report_share_argument_title') ?? 'Argumento do Saul',
     `${date} · ${indexLabel} ${enriched.currentIndex} · ${focusLabel} ${formatPercentage(kpis.focusRate)}`,
     narrative,
@@ -1172,6 +1361,9 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
       range: formatTimeRange(entry.startTime, entry.endTime, locale)
     }));
 
+  const fairness = getFairnessFallback(latestFairness);
+  const fairnessStatus = getFairnessStatusText(fairness).text;
+
   return {
     date: reportDateEl.textContent ?? metrics.dateKey,
     index: metrics.currentIndex,
@@ -1179,7 +1371,9 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
     tabSwitches: metrics.tabSwitches,
     topProductive: getTopEntries(metrics.domains, 'productive'),
     topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
-    timeline: timelineSnippets
+    timeline: timelineSnippets,
+    fairnessRule: fairness.rule,
+    fairnessStatus
   };
 }
 
@@ -1253,6 +1447,8 @@ interface AiPromptPayload {
   topProductive: Array<{ domain: string; duration: string }>;
   topProcrastination: Array<{ domain: string; duration: string }>;
   timeline: Array<{ domain: string; category: string; duration: string; range: string }>;
+  fairnessRule: FairnessRule;
+  fairnessStatus: string;
 }
 
 interface OpenAiResponse {
@@ -1270,6 +1466,7 @@ interface MetricsResponse {
     criticalScoreThreshold?: number;
     workSchedule?: WorkInterval[];
   };
+  fairness?: FairnessSummary;
 }
 
 function formatAiNarrative(text: string): string {
@@ -1289,6 +1486,30 @@ function formatParagraph(content: string): string {
   const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
   const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
   return `<p>${italic}</p>`;
+}
+
+/**
+ * Test hook to override internal report state without running the full hydrate flow.
+ * Only used inside unit tests.
+ */
+export function __setReportTestState(state: {
+  metrics?: DailyMetrics;
+  fairness?: FairnessSummary | null;
+  locale?: string;
+  i18nInstance?: I18nService | null;
+}): void {
+  if (state.metrics) {
+    latestMetrics = state.metrics;
+  }
+  if (state.fairness !== undefined) {
+    latestFairness = state.fairness;
+  }
+  if (state.locale) {
+    locale = state.locale;
+  }
+  if (state.i18nInstance !== undefined) {
+    i18n = state.i18nInstance;
+  }
 }
 
 function escapeHtml(value: string): string {

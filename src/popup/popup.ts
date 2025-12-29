@@ -1,10 +1,12 @@
 import {
   DailyMetrics,
   DomainStats,
+  FairnessSummary,
   LocalePreference,
   PopupData,
   RuntimeMessageType,
-  SupportedLocale
+  SupportedLocale,
+  ContextModeValue
 } from '../shared/types.js';
 import { formatDuration } from '../shared/utils/time.js';
 import {
@@ -16,6 +18,8 @@ import {
 } from '../shared/metrics.js';
 import { pickScoreMessageKey } from '../shared/score.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
+import { setManualOverride } from '../shared/utils/manual-override.js';
+import { setContextMode } from '../shared/utils/context.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -73,6 +77,10 @@ const blogStatusEl = document.getElementById('blogRecommendationStatus') as HTML
 const blogContentEl = document.getElementById('blogRecommendationContent') as HTMLElement | null;
 const blogReadButton = document.getElementById('blogReadButton') as HTMLButtonElement | null;
 const blogOpenButton = document.getElementById('blogOpenBlogButton') as HTMLButtonElement | null;
+const manualOverrideToggle = document.getElementById('manualOverrideToggle') as HTMLInputElement | null;
+const contextSelect = document.getElementById('contextSelect') as HTMLSelectElement | null;
+const fairnessStatusEl = document.getElementById('fairnessStatus') as HTMLElement | null;
+const holidayStatusEl = document.getElementById('holidayStatus') as HTMLElement | null;
 const manifestInfo = chrome.runtime.getManifest?.() ?? { homepage_url: undefined };
 const DEFAULT_SITE_BASE = 'https://donotavio.github.io/saul_goodman';
 const HOMEPAGE_BASE = (manifestInfo.homepage_url ?? DEFAULT_SITE_BASE).replace(/\/+$/, '');
@@ -142,6 +150,7 @@ const sirenPlayer = typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSir
 let i18n: I18nService | null = null;
 let activeLocalePreference: LocalePreference = 'auto';
 let latestKpis: CalculatedKpis | null = null;
+let latestFairness: FairnessSummary | null = null;
 let cachedBlogPosts: BlogPost[] | null = null;
 let blogFetchPromise: Promise<BlogPost[] | null> | null = null;
 let blogSelectedPostUrl: string | null = null;
@@ -152,6 +161,29 @@ const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean
   { key: 'popup_critical_message_3' },
   { key: 'popup_critical_message_4' }
 ];
+
+const FAIRNESS_STATUS_KEY_BY_RULE: Record<FairnessSummary['rule'], string> = {
+  'manual-override': 'popup_fairness_status_manual',
+  'context-personal': 'popup_fairness_status_personal',
+  'context-leisure': 'popup_fairness_status_leisure',
+  'context-study': 'popup_fairness_status_study',
+  holiday: 'popup_fairness_status_holiday',
+  normal: 'popup_fairness_status_default'
+};
+
+const FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
+  popup_fairness_status_manual: 'Dia ignorado por você.',
+  popup_fairness_status_personal: 'Modo pessoal ativo, sem pontuação.',
+  popup_fairness_status_leisure: 'Modo lazer reduz a pressão.',
+  popup_fairness_status_study: 'Modo estudo suaviza o índice.',
+  popup_fairness_status_holiday: 'Feriado nacional neutralizando o dia.',
+  popup_fairness_status_default: 'Dia útil normal.'
+};
+
+const FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
+  popup_fairness_holiday_active: 'Saul ignorou o índice porque hoje é feriado.',
+  popup_fairness_holiday_detected: 'Feriado detectado — sem penalizar este dia.'
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -192,6 +224,57 @@ function attachListeners(): void {
     }
     void chrome.tabs.create({ url: blogSelectedPostUrl });
   });
+  manualOverrideToggle?.addEventListener('change', () => {
+    const enabled = manualOverrideToggle.checked;
+    void handleManualOverrideToggle(enabled);
+  });
+  contextSelect?.addEventListener('change', () => {
+    const value = (contextSelect?.value as ContextModeValue) ?? 'work';
+    void handleContextChange(value);
+  });
+}
+
+async function handleManualOverrideToggle(enabled: boolean): Promise<void> {
+  if (!manualOverrideToggle) {
+    return;
+  }
+  manualOverrideToggle.disabled = true;
+  manualOverrideToggle.setAttribute('aria-busy', 'true');
+  try {
+    await setManualOverride(enabled);
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to toggle manual override', error);
+    manualOverrideToggle.checked = !enabled;
+  } finally {
+    manualOverrideToggle.disabled = false;
+    manualOverrideToggle.removeAttribute('aria-busy');
+  }
+}
+
+async function handleContextChange(value: ContextModeValue): Promise<void> {
+  if (!contextSelect) {
+    return;
+  }
+  const normalized: ContextModeValue = ['work', 'personal', 'leisure', 'study'].includes(value)
+    ? value
+    : 'work';
+  contextSelect.disabled = true;
+  contextSelect.setAttribute('aria-busy', 'true');
+  try {
+    await setContextMode(normalized);
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to update context mode', error);
+    if (latestFairness?.contextMode?.value) {
+      contextSelect.value = latestFairness.contextMode.value;
+    } else {
+      contextSelect.value = 'work';
+    }
+  } finally {
+    contextSelect.disabled = false;
+    contextSelect.removeAttribute('aria-busy');
+  }
 }
 
 async function hydrate(): Promise<void> {
@@ -203,12 +286,14 @@ async function hydrate(): Promise<void> {
     const preference = data.settings?.localePreference ?? 'auto';
     await ensureI18n(preference);
     latestData = data;
+    latestFairness = data.fairness ?? null;
     criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
     renderKpis(data.metrics);
     renderTopDomains(data.metrics);
     renderChart(data.metrics);
+    renderFairness(latestFairness);
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -237,6 +322,45 @@ function renderSummary(metrics: DailyMetrics): void {
   productiveTimeEl.textContent = formatDuration(totalProductive);
   procrastinationTimeEl.textContent = formatDuration(metrics.procrastinationMs);
   inactiveTimeEl.textContent = formatDuration(metrics.inactiveMs);
+}
+
+function renderFairness(summary?: FairnessSummary | null): void {
+  if (!manualOverrideToggle || !contextSelect || !fairnessStatusEl) {
+    return;
+  }
+  const fallback: FairnessSummary = summary ?? {
+    rule: 'normal',
+    manualOverrideActive: false,
+    contextMode: { value: 'work', updatedAt: Date.now() },
+    holidayNeutral: false,
+    isHolidayToday: false
+  };
+  manualOverrideToggle.checked = fallback.manualOverrideActive;
+  contextSelect.value = fallback.contextMode?.value ?? 'work';
+
+  const statusKey = FAIRNESS_STATUS_KEY_BY_RULE[fallback.rule] ?? 'popup_fairness_status_default';
+  fairnessStatusEl.textContent = translateFairnessStatus(statusKey);
+
+  if (holidayStatusEl) {
+    if (fallback.isHolidayToday) {
+      holidayStatusEl.hidden = false;
+      const holidayKey = fallback.holidayNeutral
+        ? 'popup_fairness_holiday_active'
+        : 'popup_fairness_holiday_detected';
+      holidayStatusEl.textContent =
+        i18n?.t(holidayKey) ?? FAIRNESS_HOLIDAY_FALLBACKS[holidayKey] ?? holidayKey;
+    } else {
+      holidayStatusEl.hidden = true;
+    }
+  }
+}
+
+function translateFairnessStatus(key: string): string {
+  const translated = i18n?.t(key);
+  if (translated && translated !== key) {
+    return translated;
+  }
+  return FAIRNESS_STATUS_FALLBACKS[key] ?? key;
 }
 
 function renderKpis(metrics: DailyMetrics): void {

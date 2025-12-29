@@ -32,11 +32,14 @@ const testVscodeConnectionButton = document.getElementById(
 const vscodeTestStatusEl = document.getElementById('vscodeTestStatus') as HTMLParagraphElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
+const holidayAutoEnabledEl = document.getElementById('holidayAutoEnabled') as HTMLInputElement;
+const holidayCountryCodeEl = document.getElementById('holidayCountryCode') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
 const workScheduleListEl = document.getElementById('workScheduleList') as HTMLDivElement;
 const addWorkIntervalButton = document.getElementById('addWorkIntervalButton') as HTMLButtonElement;
+const DEFAULT_VSCODE_URL = 'http://127.0.0.1:3123';
 
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
@@ -139,6 +142,40 @@ function attachListeners(): void {
   testVscodeConnectionButton?.addEventListener('click', () => {
     void testVscodeConnection();
   });
+  vscodeIntegrationEnabledEl?.addEventListener('change', () => {
+    void handleVscodeSettingsChange();
+  });
+  vscodeLocalApiUrlEl?.addEventListener('change', () => {
+    void handleVscodeSettingsChange();
+  });
+  vscodeLocalApiUrlEl?.addEventListener('blur', () => {
+    void handleVscodeSettingsChange();
+  });
+  vscodePairingKeyEl?.addEventListener('change', () => {
+    void handleVscodeSettingsChange();
+  });
+  vscodePairingKeyEl?.addEventListener('blur', () => {
+    void handleVscodeSettingsChange();
+  });
+  criticalThresholdEl?.addEventListener('change', () => {
+    void handleCriticalSettingsChange();
+  });
+  criticalThresholdEl?.addEventListener('blur', () => {
+    void handleCriticalSettingsChange();
+  });
+  criticalSoundEnabledEl?.addEventListener('change', () => {
+    void handleCriticalSettingsChange();
+  });
+  holidayAutoEnabledEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
+    void persistSettings('options_status_holiday_saved');
+  });
+  holidayCountryCodeEl?.addEventListener('change', () => {
+    handleHolidayCountryChange();
+  });
 }
 
 function setVscodeTestStatus(
@@ -188,7 +225,7 @@ async function testVscodeConnection(): Promise<void> {
     return;
   }
 
-  const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || 'http://127.0.0.1:3123').trim();
+  const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || DEFAULT_VSCODE_URL).trim();
   const pairingKey = vscodePairingKeyEl?.value.trim() ?? '';
 
   let summaryUrl: URL;
@@ -363,7 +400,7 @@ function renderForms(): void {
     vscodeLocalApiUrlEl.value =
       currentSettings.vscodeLocalApiUrl && currentSettings.vscodeLocalApiUrl.trim().length > 0
         ? currentSettings.vscodeLocalApiUrl
-        : 'http://127.0.0.1:3123';
+        : DEFAULT_VSCODE_URL;
   }
   if (vscodePairingKeyEl) {
     vscodePairingKeyEl.value = currentSettings.vscodePairingKey ?? '';
@@ -372,6 +409,12 @@ function renderForms(): void {
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
   criticalSoundEnabledEl.checked = Boolean(currentSettings.criticalSoundEnabled);
+  if (holidayAutoEnabledEl) {
+    holidayAutoEnabledEl.checked = Boolean(currentSettings.holidayAutoEnabled);
+  }
+  if (holidayCountryCodeEl) {
+    holidayCountryCodeEl.value = (currentSettings.holidayCountryCode ?? '').toUpperCase();
+  }
   if (blockProcrastinationEl) {
     blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
   }
@@ -439,22 +482,8 @@ async function handleWeightsSubmit(): Promise<void> {
   const thresholdSeconds = Math.max(10, parseInt(inactivityThresholdEl.value, 10));
   currentSettings.inactivityThresholdMs = thresholdSeconds * 1000;
   currentSettings.openAiKey = openAiKeyInput.value.trim();
-  if (vscodeIntegrationEnabledEl) {
-    currentSettings.vscodeIntegrationEnabled = vscodeIntegrationEnabledEl.checked;
-  }
-  if (vscodeLocalApiUrlEl) {
-    const url = vscodeLocalApiUrlEl.value.trim();
-    currentSettings.vscodeLocalApiUrl = url.length > 0 ? url : 'http://127.0.0.1:3123';
-  }
-  if (vscodePairingKeyEl) {
-    const key = vscodePairingKeyEl.value.trim();
-    currentSettings.vscodePairingKey = key.length > 0 ? key : '';
-  }
-  currentSettings.criticalScoreThreshold = Math.min(
-    100,
-    Math.max(0, parseInt(criticalThresholdEl.value, 10))
-  );
-  currentSettings.criticalSoundEnabled = criticalSoundEnabledEl.checked;
+  updateVscodeSettingsFromInputs();
+  updateCriticalSettingsFromInputs();
   currentSettings.workSchedule = sanitizeWorkSchedule(currentSettings.workSchedule);
   await persistSettings('options_status_weights_saved');
 }
@@ -644,6 +673,23 @@ async function handleLocaleChange(): Promise<void> {
   renderForms();
 }
 
+function handleHolidayCountryChange(): void {
+  if (!currentSettings || !holidayCountryCodeEl) {
+    return;
+  }
+  const raw = holidayCountryCodeEl.value.trim().toUpperCase();
+  if (raw && !/^[A-Z]{2}$/.test(raw)) {
+    showStatus(
+      i18n?.t('options_holiday_country_error') ?? 'Informe apenas duas letras, ex.: BR.',
+      true
+    );
+    holidayCountryCodeEl.value = (currentSettings.holidayCountryCode ?? '').toUpperCase();
+    return;
+  }
+  currentSettings.holidayCountryCode = raw;
+  void persistSettings('options_status_holiday_saved');
+}
+
 function returnToPopup(): void {
   const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
   chrome.tabs.create({ url: popupUrl }, () => {
@@ -660,6 +706,58 @@ function generatePairingKey(): string {
     return crypto.randomUUID();
   }
   return `sg-${Math.random().toString(36).slice(2, 10)}-${Date.now().toString(36)}`;
+}
+
+function updateVscodeSettingsFromInputs(): void {
+  if (!currentSettings) {
+    return;
+  }
+  if (vscodeIntegrationEnabledEl) {
+    currentSettings.vscodeIntegrationEnabled = Boolean(vscodeIntegrationEnabledEl.checked);
+  }
+  if (vscodeLocalApiUrlEl) {
+    const url = vscodeLocalApiUrlEl.value.trim();
+    const sanitized = url.length > 0 ? url : DEFAULT_VSCODE_URL;
+    currentSettings.vscodeLocalApiUrl = sanitized;
+    if (url.length === 0) {
+      vscodeLocalApiUrlEl.value = sanitized;
+    }
+  }
+  if (vscodePairingKeyEl) {
+    const key = vscodePairingKeyEl.value.trim();
+    currentSettings.vscodePairingKey = key.length > 0 ? key : '';
+  }
+}
+
+async function handleVscodeSettingsChange(): Promise<void> {
+  if (!currentSettings) {
+    return;
+  }
+  updateVscodeSettingsFromInputs();
+  await persistSettings('options_status_vscode_saved');
+}
+
+function updateCriticalSettingsFromInputs(): void {
+  if (!currentSettings) {
+    return;
+  }
+  if (criticalThresholdEl) {
+    const raw = parseInt(criticalThresholdEl.value, 10);
+    const sanitized = Number.isFinite(raw) ? Math.min(100, Math.max(0, raw)) : 0;
+    criticalThresholdEl.value = sanitized.toString();
+    currentSettings.criticalScoreThreshold = sanitized;
+  }
+  if (criticalSoundEnabledEl) {
+    currentSettings.criticalSoundEnabled = Boolean(criticalSoundEnabledEl.checked);
+  }
+}
+
+async function handleCriticalSettingsChange(): Promise<void> {
+  if (!currentSettings) {
+    return;
+  }
+  updateCriticalSettingsFromInputs();
+  await persistSettings('options_status_critical_saved');
 }
 
 async function copyPairingKey(): Promise<void> {

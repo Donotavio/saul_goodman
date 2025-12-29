@@ -27,6 +27,8 @@ Este documento descreve todas as métricas exibidas na UI, exportadas no CSV e r
 | `vscodeSwitches` | Trocas registradas no VS Code. | Lido de `saul-daemon` em `syncVscodeMetrics`. |
 | `vscodeSwitchHourly` | 24 buckets de trocas no VS Code. | Lido de `saul-daemon` e usado em conjunto com `tabSwitchHourly` no relatório. |
 | `vscodeTimeline` | Lista `{startTime, endTime, durationMs, domain, category}` originada do VS Code. | O daemon envia slices; o report insere como domínio sintético `VS Code (IDE)` com categoria `productive`. |
+| `contextDurations` | Mapa `ContextModeValue → ms` com o tempo gasto em cada modo. | Alimentado pelos segmentos de `contextHistory`; cada troca de contexto fecha o segmento anterior e abre um novo. |
+| `contextIndices` | Mapa `ContextModeValue → score` com o índice hipotético daquele contexto. | Calculado em `buildContextBreakdown`: executa `calculateProcrastinationIndex` forçando o contexto (`personal` sempre 0) sem override nem feriados. |
 
 ### Índice de procrastinação
 
@@ -68,6 +70,14 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
 
 > `totalTracked = productiveMs + vscodeActiveMs + procrastinationMs + inactiveMs` (tempo inativo inclui janela desfocada). Todos os outputs são formatados (porcentagem, minutos ou string `--` quando não há dados) em `popup.ts`.
 
+## Context breakdown (Reasonable Doubt Mode)
+
+- O histórico de contexto (`contextHistory`) fica em `chrome.storage.local['sg:context-history']`. Cada item `{ value, start, end? }` representa um trecho contínuo com um contexto ativo.
+- Ao iniciar o background, `hydrateContextHistoryState` lê esse array; se estiver vazio cria um segmento aberto usando o contexto atual. Toda mudança em `sg:context-mode` fecha o segmento anterior (`end = Date.now()`) e cria um novo para o valor selecionado.
+- Na virada do dia `handleMidnightReset` chama `finalizeContextHistoryForDay` para fechar o segmento vigente, alimentar `contextDurations/contextIndices` e só então limpar as métricas. Depois disso um novo array é criado para o próximo dia.
+- `contextDurations` é a soma de `(segment.end ?? now) - segment.start` agrupada por `value`. Esse mapa abastece o novo painel “Tempo por contexto” do relatório.
+- `contextIndices` roda `calculateProcrastinationIndex` três vezes (work/leisure/study) forçando o contexto informado e desligando override/feriado. Para `personal` o índice é sempre 0, pois o próprio modo neutraliza qualquer cobrança. Essa projeção é apenas informativa: manual override, feriados e neutralizações continuam com prioridade maior no cálculo real.
+
 ## Apresentação
 
 - **Popup**: cartões no painel “Indicadores extras” e resumos com tooltips explicativos.
@@ -76,6 +86,22 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
   - Popup: resumo rápido com gráfico Produtivo vs Procrastinação.
   - Relatório: usa os buckets horários e a narrativa (`timeline`) para montar imagens adicionais e texto detalhado.
 - **Relatório detalhado** (`src/report/report.html`): gráficos stacked por hora, doughnut de composição e lista narrativa baseada na timeline.
+
+## Justiça da pontuação (manual override, contexto e feriados)
+
+Para evitar punições injustas os guard rails abaixo são avaliados **antes** de `calculateProcrastinationIndex`:
+
+1. **Manual override** — estado salvo em `chrome.storage.local['sg:manual-override']` pelo popup. Ao marcar o dia atual como ignorado o índice fica travado em 0 até a virada do dia. Sempre tem prioridade máxima.
+2. **Context Mode** — `chrome.storage.local['sg:context-mode']` guarda o contexto ativo escolhido no popup:
+   - `work`: cálculo padrão.
+   - `personal`: neutraliza completamente o score.
+   - `leisure`: zera a penalidade por procrastinação e aplica peso baixo em produtividade.
+   - `study`: reduz a severidade (multiplicadores médios para os componentes).
+3. **Feriados nacionais** — ao ativar a opção na página de configurações e informar manualmente o código ISO-3166 do país, o background consulta a API pública [Nager.Date](https://date.nager.at/api/v3/PublicHolidays/%7Byear%7D/%7Bcountry%7D) apenas quando não há cache válido para `(ano, país)`. As respostas (`dates` no formato `YYYY-MM-DD`) ficam em `chrome.storage.local['sg:holidays-cache']` por 7 dias. Se o dia atual constar nessa lista, o score vira neutro. Nada é inferido automaticamente (sem IP/geo); o usuário define o país explicitamente e pode desativar a função a qualquer momento.
+
+O popup mostra qual regra está em vigor (override manual, contexto utilizado ou feriado detectado) e reforça que apenas o índice fica congelado — os dados continuam sendo coletados localmente.
+
+No relatório detalhado existe um banner “Justiça do dia” logo abaixo do hero. Ele reutiliza o mesmo `FairnessSummary` enviado pelo background e explica se o dia foi neutralizado por override manual, contexto pessoal/lazer/estudo ou feriado. O texto também aparece nos exports: PDFs exibem uma linha `Status: ...` no cabeçalho e os compartilhamentos (resumo e argumento) começam com a mesma frase sempre que o guard rail ativo não for `normal`. Quando `holidayNeutral === true`, o banner e os exports também mostram o hint “Hoje é feriado, índice pausado automaticamente.”
 
 ## Atualização / extensões futuras
 

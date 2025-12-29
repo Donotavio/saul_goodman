@@ -1,4 +1,8 @@
-import { calculateProcrastinationIndex } from '../shared/score.js';
+import {
+  calculateProcrastinationIndex,
+  type ScoreComputation,
+  type ScoreGuards
+} from '../shared/score.js';
 import {
   StorageKeys,
   clearDailyMetrics,
@@ -17,16 +21,35 @@ import {
   DailyMetrics,
   DomainCategory,
   ExtensionSettings,
+  FairnessSummary,
   HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
   RuntimeMessageType,
-  TimelineEntry
+  TimelineEntry,
+  ContextModeState,
+  ContextHistory,
+  ManualOverrideState,
+  HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
-import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
+import { getManualOverrideState, isManualOverrideActive } from '../shared/utils/manual-override.js';
+import { getContextMode } from '../shared/utils/context.js';
+import {
+  LocalStorageKey,
+  readLocalStorage,
+  writeLocalStorage
+} from '../shared/utils/storage.js';
+import {
+  buildContextBreakdown,
+  closeOpenContextSegment,
+  ensureContextHistoryInitialized,
+  startContextSegment
+} from '../shared/utils/context-history.js';
+import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -90,6 +113,13 @@ let globalCriticalState = false;
 let lastCriticalSoundPref = false;
 let lastCriticalScore = -Infinity;
 let releaseNotesClickRegistered = false;
+let manualOverrideState: ManualOverrideState | null = null;
+let contextModeState: ContextModeState | null = null;
+let contextHistory: ContextHistory = [];
+let holidaysCache: HolidaysCache = {};
+let holidayNeutralToday = false;
+let fairnessSnapshot: FairnessSummary | null = null;
+let lastScoreComputation: ScoreComputation | null = null;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -100,7 +130,7 @@ const messageHandlers: Record<
     await updateRestoredItems();
     await syncVscodeMetrics(true);
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
-    return { metrics, settings };
+    return { metrics, settings, fairness: getFairnessSummary() };
   },
   'clear-data': async () => clearTodayData(),
   'settings-updated': async () => {
@@ -230,11 +260,36 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
     void syncBlockingRules(settingsCache);
-    void refreshScore();
+    void (async () => {
+      await refreshHolidayNeutralState();
+      await refreshScore();
+    })();
   }
 
   if (changes[StorageKeys.METRICS]) {
     metricsCache = changes[StorageKeys.METRICS].newValue as DailyMetrics;
+  }
+
+  if (changes[LocalStorageKey.MANUAL_OVERRIDE]) {
+    manualOverrideState = changes[LocalStorageKey.MANUAL_OVERRIDE].newValue as ManualOverrideState;
+    updateFairnessSummary();
+    void refreshScore();
+  }
+
+  if (changes[LocalStorageKey.CONTEXT_MODE]) {
+    const change = changes[LocalStorageKey.CONTEXT_MODE];
+    contextModeState = change.newValue as ContextModeState;
+    void handleContextModeHistoryChange(change.oldValue as ContextModeState | undefined, contextModeState);
+    updateFairnessSummary();
+    void refreshScore();
+  }
+
+  if (changes[LocalStorageKey.HOLIDAYS_CACHE]) {
+    holidaysCache = (changes[LocalStorageKey.HOLIDAYS_CACHE].newValue as HolidaysCache) ?? {};
+  }
+
+  if (changes[LocalStorageKey.CONTEXT_HISTORY]) {
+    contextHistory = (changes[LocalStorageKey.CONTEXT_HISTORY].newValue as ContextHistory) ?? [];
   }
 });
 
@@ -255,6 +310,7 @@ async function initialize(): Promise<void> {
   initializing = true;
 
   await Promise.all([getSettingsCache(), getMetricsCache()]);
+  await hydrateFairnessState();
   await updateRestoredItems();
 
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
@@ -281,10 +337,13 @@ async function handleTrackingTick(): Promise<void> {
 }
 
 async function handleMidnightReset(): Promise<void> {
+  await finalizeContextHistoryForDay();
   metricsCache = await clearDailyMetrics();
+  await resetContextHistoryForNewDay();
   await updateBadgeText(metricsCache.currentIndex);
   await scheduleMidnightAlarm();
   trackingState.lastTimestamp = Date.now();
+  await handleMidnightFairnessReset();
 }
 
 async function hydrateActiveTab(): Promise<void> {
@@ -552,8 +611,11 @@ async function persistMetrics(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
+  applyContextBreakdown(metricsCache, settings);
+  const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
+  metricsCache.currentIndex = scoreResult.score;
   metricsCache.lastUpdated = Date.now();
+  updateFairnessSummary(scoreResult);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -567,7 +629,10 @@ async function refreshScore(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
+  applyContextBreakdown(metricsCache, settings);
+  const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
+  metricsCache.currentIndex = scoreResult.score;
+  updateFairnessSummary(scoreResult);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -994,6 +1059,7 @@ async function updateBadgeText(score: number): Promise<void> {
 
 async function clearTodayData(): Promise<void> {
   metricsCache = await clearDailyMetrics();
+  await resetContextHistoryForNewDay();
   trackingState.currentDomain = null;
   trackingState.currentTabId = null;
   trackingState.isIdle = false;
@@ -1056,7 +1122,161 @@ function applyIdleDetectionInterval(settings: ExtensionSettings): void {
   chrome.idle.setDetectionInterval(intervalSeconds);
 }
 
+/**
+ * Atualiza as métricas em memória com o detalhamento por contexto.
+ * @param metrics Métricas do dia corrente.
+ * @param settings Configurações atuais que influenciam nos índices hipotéticos.
+ */
+function applyContextBreakdown(metrics: DailyMetrics, settings: ExtensionSettings): void {
+  const breakdown = buildContextBreakdown({ history: contextHistory, metrics, settings });
+  metrics.contextDurations = breakdown.durations;
+  metrics.contextIndices = breakdown.indices;
+}
+
+/**
+ * Restaura o histórico de contexto armazenado localmente ou cria um segmento inicial.
+ */
+async function hydrateContextHistoryState(): Promise<void> {
+  const now = Date.now();
+  const activeContext =
+    contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  const stored = await readLocalStorage<ContextHistory>(LocalStorageKey.CONTEXT_HISTORY);
+  if (!stored?.length) {
+    contextHistory = ensureContextHistoryInitialized(undefined, activeContext, now);
+    await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+    return;
+  }
+  const last = stored[stored.length - 1];
+  if (typeof last?.end === 'number') {
+    contextHistory = ensureContextHistoryInitialized(stored, activeContext, now);
+    await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+    return;
+  }
+  contextHistory = stored;
+}
+
+/**
+ * Registra a transição de contexto criando novos segmentos temporais.
+ * @param previous Estado anterior do contexto, usado como referência.
+ * @param next Novo estado escolhido pelo usuário.
+ */
+async function handleContextModeHistoryChange(
+  previous: ContextModeState | undefined,
+  next: ContextModeState | null
+): Promise<void> {
+  if (!next) {
+    return;
+  }
+  const timestamp = next.updatedAt ?? Date.now();
+  const reference = previous ?? next;
+  contextHistory = ensureContextHistoryInitialized(contextHistory, reference, timestamp);
+  const last = contextHistory[contextHistory.length - 1];
+  if (last && last.value === next.value && typeof last.end !== 'number') {
+    return;
+  }
+  closeOpenContextSegment(contextHistory, timestamp);
+  startContextSegment(contextHistory, next.value, timestamp);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+  await persistMetrics();
+}
+
+/**
+ * Finaliza o segmento ativo antes de zerar as métricas diárias.
+ */
+async function finalizeContextHistoryForDay(): Promise<void> {
+  const now = Date.now();
+  const contextState = contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  contextHistory = ensureContextHistoryInitialized(contextHistory, contextState, now);
+  closeOpenContextSegment(contextHistory, now);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+  await persistMetrics();
+}
+
+/**
+ * Reinicia o histórico de contexto ao começar um novo dia.
+ */
+async function resetContextHistoryForNewDay(): Promise<void> {
+  const now = Date.now();
+  const contextState = contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  contextHistory = ensureContextHistoryInitialized([], contextState, now);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+}
+
 void initialize();
+
+function getScoreGuards(): ScoreGuards {
+  return {
+    manualOverride: manualOverrideState ?? undefined,
+    contextMode: contextModeState ?? undefined,
+    holidayNeutral: holidayNeutralToday
+  };
+}
+
+function getFairnessSummary(): FairnessSummary {
+  if (!fairnessSnapshot) {
+    updateFairnessSummary();
+  }
+  return (
+    fairnessSnapshot ?? {
+      rule: 'normal',
+      manualOverrideActive: false,
+      contextMode: contextModeState ?? { value: 'work', updatedAt: Date.now() },
+      holidayNeutral: false,
+      isHolidayToday: holidayNeutralToday
+    }
+  );
+}
+
+function updateFairnessSummary(result?: ScoreComputation): void {
+  if (result) {
+    lastScoreComputation = result;
+  }
+  const source = result ?? lastScoreComputation;
+  const context =
+    source?.contextMode ?? contextModeState ?? ({ value: 'work', updatedAt: Date.now() } as ContextModeState);
+  const manualActive =
+    source?.manualOverrideActive ?? isManualOverrideActive(manualOverrideState, getTodayKey());
+  const appliedRule =
+    manualActive && (!source || source.rule !== 'manual-override') ? 'manual-override' : source?.rule ?? 'normal';
+  const resolvedHolidayNeutral = source?.holidayNeutral ?? holidayNeutralToday;
+  fairnessSnapshot = {
+    rule: appliedRule,
+    manualOverrideActive: manualActive,
+    contextMode: context,
+    holidayNeutral: resolvedHolidayNeutral,
+    isHolidayToday: holidayNeutralToday
+  };
+}
+
+async function hydrateFairnessState(): Promise<void> {
+  manualOverrideState = await getManualOverrideState();
+  contextModeState = await getContextMode();
+  await hydrateContextHistoryState();
+  holidaysCache = (await readLocalStorage<HolidaysCache>(LocalStorageKey.HOLIDAYS_CACHE)) ?? {};
+  await refreshHolidayNeutralState();
+  updateFairnessSummary();
+}
+
+async function refreshHolidayNeutralState(): Promise<void> {
+  const settings = await getSettingsCache();
+  const resolution = await resolveHolidayNeutralState({
+    dateKey: getTodayKey(),
+    countryCode: settings.holidayCountryCode,
+    enabled: settings.holidayAutoEnabled,
+    cache: holidaysCache
+  });
+  holidayNeutralToday = resolution.isHoliday;
+  holidaysCache = resolution.cache;
+  if (resolution.source === 'api') {
+    await writeLocalStorage(LocalStorageKey.HOLIDAYS_CACHE, holidaysCache);
+  }
+  updateFairnessSummary();
+}
+
+async function handleMidnightFairnessReset(): Promise<void> {
+  manualOverrideState = await getManualOverrideState();
+  await refreshHolidayNeutralState();
+}
 
 async function ensureCriticalBroadcast(score: number, settings: ExtensionSettings): Promise<void> {
   const threshold = settings.criticalScoreThreshold ?? 90;
@@ -1145,7 +1365,7 @@ async function updateRestoredItems(): Promise<void> {
         return acc;
       }
       const d = new Date(ts);
-      const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+      const key = formatDateKey(d);
       if (key !== today) {
         return acc;
       }

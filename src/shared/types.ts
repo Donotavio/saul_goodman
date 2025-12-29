@@ -62,10 +62,20 @@ export interface DailyMetrics {
    */
   vscodeSwitches?: number;
 
-  /**
+  /** 
    * Trocas de contexto do VS Code por hora.
    */
   vscodeSwitchHourly?: number[];
+
+  /**
+   * Duração acumulada por contexto (ms) para o dia corrente.
+   */
+  contextDurations?: Record<ContextModeValue, number>;
+
+  /**
+   * Índice recalculado para cada contexto considerando o dia inteiro nesse modo.
+   */
+  contextIndices?: Record<ContextModeValue, number>;
 }
 
 export interface ApiStats {
@@ -117,6 +127,8 @@ export interface ExtensionSettings {
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
   criticalSoundEnabled?: boolean;
+  holidayAutoEnabled?: boolean;
+  holidayCountryCode?: string;
 
   /**
    * Ativa/desativa a integração com VS Code via backend local.
@@ -147,6 +159,7 @@ export interface RuntimeMessage<T = unknown> {
 export interface RuntimeMessageResponse {
   metrics?: DailyMetrics;
   settings?: ExtensionSettings;
+  fairness?: FairnessSummary;
 }
 
 export type RuntimeMessageType =
@@ -159,6 +172,61 @@ export type RuntimeMessageType =
 export interface PopupData {
   metrics: DailyMetrics;
   settings: ExtensionSettings;
+  fairness?: FairnessSummary;
+}
+
+export interface ManualOverrideState {
+  enabled: boolean;
+  date: string;
+}
+
+export type ContextModeValue = 'work' | 'personal' | 'leisure' | 'study';
+
+export interface ContextModeState {
+  value: ContextModeValue;
+  updatedAt: number;
+}
+
+/**
+ * Intervalo contínuo em que um contexto permaneceu ativo.
+ */
+export interface ContextSegment {
+  value: ContextModeValue;
+  start: number;
+  end?: number;
+}
+
+/**
+ * Histórico diário de segmentos de contexto.
+ */
+export type ContextHistory = ContextSegment[];
+
+export interface HolidaySettingsSnapshot {
+  enabled: boolean;
+  countryCode?: string;
+}
+
+export interface HolidayCacheEntry {
+  fetchedAt: number;
+  dates: string[];
+}
+
+export type HolidaysCache = Record<string, HolidayCacheEntry>;
+
+export type FairnessRule =
+  | 'manual-override'
+  | 'context-personal'
+  | 'context-leisure'
+  | 'context-study'
+  | 'holiday'
+  | 'normal';
+
+export interface FairnessSummary {
+  rule: FairnessRule;
+  manualOverrideActive: boolean;
+  contextMode: ContextModeState;
+  holidayNeutral: boolean;
+  isHolidayToday: boolean;
 }
 
 

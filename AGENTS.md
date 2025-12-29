@@ -1,40 +1,23 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-
-- Core source lives in `src/` with domain folders (`background/`, `content/`, `popup/`, `options/`, `report/`, `shared/utils/`, `tests/`). Build output mirrors under `dist/` and should never be hand-edited.
-- Icons stay in `src/img/`; landing-page assets sit under `site/assets/`; vendored libraries remain local in `src/vendor/` (e.g., Chart.js, jsPDF). Avoid CDN imports.
-- Documentation resides in `docs/` (architecture, indicators, UX/copy). Update it whenever flows, metrics, or tracking change.
-- Load locally via Chrome: `chrome://extensions` → Developer Mode → “Carregar sem compactação” → select the repo root (expects a built `dist/`).
+Core code lives under `src/`, arranged by feature domains (`background/`, `content/`, `popup/`, `options/`, `report/`, `shared/utils/`, `tests/`). Build artifacts mirror this layout in `dist/` and must never be edited directly. Icons belong in `src/img/`; landing-page files stay in `site/assets/`; vendored libraries (e.g., Chart.js, jsPDF) go into `src/vendor/` with version notes. Documentation updates reside in `docs/` whenever flows, metrics, or copy change. Load the unpacked extension via Chrome (`chrome://extensions` → Developer Mode → “Carregar sem compactação” → repo root) after running a build.
 
 ## Build, Test, and Development Commands
-
 - `npm install` — install dependencies (Node 18+).
-- `npm run build` — clean then compile TypeScript to `dist/` using `tsc`.
-- `npm run watch` — incremental rebuilds on file changes for faster iteration.
-- `npm test` — rebuild then execute Node’s test runner on `dist/tests/**/*.test.js`.
-- `npm run clean` — remove `dist/` when you need a fresh build.
+- `npm run build` — clean and compile TypeScript into `dist/` via `tsc`.
+- `npm run watch` — incremental TypeScript rebuilds during development.
+- `npm test` — rebuild, then execute Node’s test runner over `dist/tests/**/*.test.js`.
+- `npm run clean` — remove `dist/` before a pristine build.
 
 ## Coding Style & Naming Conventions
-
-- TypeScript ES modules; 2-space indentation; semicolons; explicit return types on exported functions.
-- Naming: PascalCase for interfaces/types, camelCase for functions/variables, UPPER_SNAKE_CASE for constants (e.g., `TRACKING_ALARM`).
-- Keep modules focused: background logic belongs in `background/`; UI scripts live with their pages; shared helpers go to `src/shared/utils/`.
+Use TypeScript ES modules with 2-space indentation and semicolons. Exported functions and helpers should declare explicit return types. Follow naming rules: PascalCase for interfaces/types, camelCase for variables and functions, and UPPER_SNAKE_CASE for constants (`TRACKING_ALARM`). Keep logic close to its domain (background logic in `src/background/`, UI scripts with their views, shared helpers in `src/shared/utils/`).
 
 ## Testing Guidelines
-
-- Author tests as `*.test.ts` in `src/tests/`; compiled JS runs under Node’s native test runner.
-- Prefer deterministic cases; mock Chrome APIs, time, and storage; avoid hitting the network.
-- Run `npm test` before PRs when changing scoring, storage, tab tracking, or report generation.
+Author deterministic specs in `src/tests/**/*.test.ts`; compiled JavaScript runs through Node’s native test runner. Mock Chrome APIs, timers, and storage to avoid flaky behavior. Run `npm test` before submitting changes to scoring, storage, tab tracking, or report generation features.
 
 ## Commit & Pull Request Guidelines
-
-- Commits: short, imperative subjects (e.g., “Add inactive time tracking”).
-- PRs: link related issues, describe user-visible impacts, and include before/after notes for popup/options changes; attach screenshots/GIFs for UI tweaks.
-- Keep PR scope small; update docs/README when permissions, metrics, or UX flows shift.
+Write commit subjects in the short, imperative style (“Add inactive time tracking”). Pull requests should link related issues, describe user-facing impacts, and include before/after notes or screenshots for popup/options work. Keep scope focused, and update docs/README when permissions, metrics, or UX flows change.
 
 ## Security & Configuration Tips
-
-- Respect privacy: persist data in `chrome.storage.local`; avoid new remote calls without explicit opt-in.
-- Guard optional OpenAI/API keys; avoid logging sensitive domain details.
-- When adding vendors, place files in `src/vendor/`, note version/source, and review permissions in `manifest.json`.
+Persist data in `chrome.storage.local`; avoid new remote calls without explicit opt-in. Protect optional API keys and omit sensitive domain logging. When adding vendors, place assets in `src/vendor/`, document source/version, and review `manifest.json` permissions accordingly.

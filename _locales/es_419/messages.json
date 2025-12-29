@@ -161,6 +161,102 @@
   "popup_loading": {
     "message": "Cargando..."
   },
+  "popup_fairness_title": {
+    "message": "Modo de equidad"
+  },
+  "popup_fairness_status_default": {
+    "message": "Día laboral normal."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Día ignorado manualmente."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Modo personal activo: sin puntaje."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo ocio suaviza el índice."
+  },
+  "popup_fairness_status_study": {
+    "message": "Modo estudio aplica pesos medianos."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "Feriado nacional detectado, índice neutralizado."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Ignorar hoy"
+  },
+  "popup_fairness_context_label": {
+    "message": "Contexto actual"
+  },
+  "popup_context_option_work": {
+    "message": "Trabajo"
+  },
+  "popup_context_option_personal": {
+    "message": "Personal"
+  },
+  "popup_context_option_leisure": {
+    "message": "Ocio"
+  },
+  "popup_context_option_study": {
+    "message": "Estudio"
+  },
+  "popup_fairness_note_label": {
+    "message": "Saul te lo cuenta"
+  },
+  "popup_fairness_note": {
+    "message": "Saul solo puntúa cuando tiene sentido. Ignorar hoy pone el índice en cero y silencia alertas. Contextos: Trabajo mantiene 100%, Personal neutraliza todo, Ocio cuenta solo 30 % del foco y omite villanos, Estudio reduce las penalidades a la mitad."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Feriado detectado — sin penalidades."
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Hoy es feriado, el puntaje está en pausa."
+  },
+  "report_fairness_title": {
+    "message": "Justicia del día"
+  },
+  "report_fairness_status_default": {
+    "message": "Día laboral normal."
+  },
+  "report_fairness_status_manual": {
+    "message": "Ignorado manualmente."
+  },
+  "report_fairness_status_personal": {
+    "message": "Modo personal — sin puntaje."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Modo ocio suaviza los cargos."
+  },
+  "report_fairness_status_study": {
+    "message": "Modo estudio reduce las penalizaciones."
+  },
+  "report_fairness_status_holiday": {
+    "message": "Feriado nacional neutralizó el índice."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Feriado detectado — sin penalidades."
+  },
+  "report_fairness_holiday_active": {
+    "message": "Hoy es feriado, puntaje en pausa automática."
+  },
+  "report_fairness_tooltip": {
+    "message": "El override manual, los modos de contexto o los feriados detectados pueden neutralizar el índice. Este banner avisa cuando sucede."
+  },
+  "report_context_breakdown_title": {
+    "message": "Desglose por contexto"
+  },
+  "report_context_breakdown_context": {
+    "message": "Contexto"
+  },
+  "report_context_breakdown_time": {
+    "message": "Tiempo"
+  },
+  "report_context_breakdown_index": {
+    "message": "Índice"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Mientras más cerca de 100% estás debiendo foco, mientras más cerca de 0% puedo decir que trabajaste — y Saul lo usará a tu favor."
+  },
   "popup_export_title": {
     "message": "Defiende tu enfoque"
   },
@@ -506,6 +602,30 @@
   "options_schedule_hint": {
     "message": "Cuéntale a Saul cuándo sucede tu turno oficial. Fuera de estos bloques, los minutos productivos valen el doble."
   },
+  "options_holiday_heading": {
+    "message": "Feriados y equidad"
+  },
+  "options_holiday_hint": {
+    "message": "Al activar, Saul consulta la API pública Nager.Date para saber si hoy es feriado nacional y neutraliza el índice."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Pausar el puntaje en feriados nacionales"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Solo llamamos a la API si habilitas y defines el país. Nada de ubicación automática."
+  },
+  "options_holiday_country_label": {
+    "message": "Código de país (ISO-3166)"
+  },
+  "options_holiday_country_hint": {
+    "message": "Ej.: BR, US, AR. Nunca lo inferimos por ti."
+  },
+  "options_holiday_country_error": {
+    "message": "Usa solo dos letras, por ejemplo BR o US."
+  },
+  "options_status_holiday_saved": {
+    "message": "Preferencias de feriados guardadas."
+  },
   "options_schedule_add": {
     "message": "Agregar intervalo"
   },
@@ -583,6 +703,12 @@
   },
   "options_status_weights_saved": {
     "message": "Pesos actualizados."
+  },
+  "options_status_vscode_saved": {
+    "message": "Integración con VS Code actualizada."
+  },
+  "options_status_critical_saved": {
+    "message": "Modo terremoto actualizado."
   },
   "options_status_language_saved": {
     "message": "Idioma actualizado."
