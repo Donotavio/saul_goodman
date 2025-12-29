@@ -1093,39 +1093,126 @@ blockquote p {
   pointer-events: none;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
+  /* Ajuste geral do container para telas estreitas */
   .site-nav {
-    flex-wrap: wrap;
-    gap: 12px;
+    padding: 12px 6vw;
+    position: fixed;
+    width: 100%;
+    background: rgba(255, 253, 245, 0.98);
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-toggle {
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 1.4rem;
+    padding: 4px 10px;
+    cursor: pointer;
   }
 
   .site-nav .nav-actions {
-    width: 100%;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 16px;
+    background: #fffdf5;
+    padding: 0 6vw;
+    transform-origin: top;
+    transition: max-height 0.3s ease;
+  }
+
+  .site-nav .nav-actions.is-open {
+    max-height: 600px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   .site-nav .nav-links {
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .sponsor-button {
-    order: 4;
+  .language-switcher,
+  .sponsor-button,
+  .nav-cta {
+    align-self: stretch;
+  }
+
+  .nav-cta {
+    text-align: center;
+    width: 100%;
   }
 
   .hero {
     flex-direction: column;
     text-align: center;
+    padding: 120px 6vw 48px;
+    gap: 32px;
+  }
+
+  .hero-copy h1 {
+    font-size: 2rem;
+  }
+
+  .hero-copy p {
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   .hero-cta {
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
-  .confidence {
+  .hero-cta a {
+    width: 100%;
     justify-content: center;
+  }
+
+  .hero-visual img {
+    width: min(70vw, 240px);
+    height: auto;
+  }
+
+  .feature-track {
+    padding: 6px 0;
+  }
+
+  .feature-nav {
+    display: none;
+  }
+
+  .steps-grid,
+  .why-grid,
+  .demo-grid,
+  .trust-grid,
+  .blog-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-card,
+  .benefit-card,
+  .trust-card,
+  .feature-card {
+    min-width: 100%;
+  }
+
+  .sticky-cta {
+    bottom: 8px;
   }
 }
 
@@ -1453,4 +1540,7 @@ blockquote p {
 
 [data-quake-tilt].is-shaking {
   animation: quakeShiver 0.5s linear;
+}
+.menu-toggle {
+  display: none;
 }

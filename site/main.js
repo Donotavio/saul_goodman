@@ -1502,13 +1502,15 @@ const setupStickyCta = () => {
     const shouldShow = window.scrollY > heroHeight * 0.7;
     bar.classList.toggle('is-visible', shouldShow);
   };
+  const syncAria = () => toggleBtn?.setAttribute('aria-expanded', (!collapsed).toString());
   toggleBtn?.addEventListener('click', () => {
     collapsed = !collapsed;
     bar.classList.toggle('is-collapsed', collapsed);
-    toggleBtn.setAttribute('aria-expanded', (!collapsed).toString());
+    syncAria();
   });
   window.addEventListener('scroll', evaluateVisibility, { passive: true });
   evaluateVisibility();
+  syncAria();
 };
 
 const setupQuakeHighlight = () => {
@@ -1538,6 +1540,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupLightbox();
   applyTranslations(detectLanguage());
   bindLanguageSelector();
+  setupMobileMenu();
   setupScrollReveal();
   setupGauges();
   setupFeatureCarousel();
@@ -1573,4 +1576,13 @@ const updateCarouselPreview = (carousel) => {
     previewLink.dataset.preview = src;
     previewLink.href = src;
   }
+};
+const setupMobileMenu = () => {
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', isOpen.toString());
+  });
 };

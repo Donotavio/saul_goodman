@@ -112,7 +112,11 @@
     <!-- End Google Tag Manager (noscript) -->
     <nav class="site-nav">
       <a class="brand" href="#home">Saul Goodman</a>
-      <div class="nav-actions">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="sr-only" data-i18n="mobileMenuToggle">Abrir menu</span>
+        <span aria-hidden="true">☰</span>
+      </button>
+      <div class="nav-actions" id="mobile-menu">
         <div class="nav-links">
           <a href="#como-funciona" data-i18n="navProcess">Como funciona</a>
           <a href="#beneficios" data-i18n="navBenefits">Benefícios</a>
