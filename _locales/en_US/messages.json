@@ -209,6 +209,36 @@
   "popup_fairness_holiday_active": {
     "message": "Today is a holiday, scoring paused automatically."
   },
+  "report_fairness_title": {
+    "message": "Fairness of the day"
+  },
+  "report_fairness_status_default": {
+    "message": "Normal workday."
+  },
+  "report_fairness_status_manual": {
+    "message": "Skipped by manual override."
+  },
+  "report_fairness_status_personal": {
+    "message": "Personal mode — no scoring."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Leisure mode softened the charges."
+  },
+  "report_fairness_status_study": {
+    "message": "Study mode reduced the penalties."
+  },
+  "report_fairness_status_holiday": {
+    "message": "National holiday neutralized the index."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Holiday detected — no penalties."
+  },
+  "report_fairness_holiday_active": {
+    "message": "Holiday mode active — index paused."
+  },
+  "report_fairness_tooltip": {
+    "message": "Manual override, context modes, or detected holidays can neutralize the score. This banner tells you when that happens."
+  },
   "popup_export_title": {
     "message": "Defend your focus"
   },

@@ -209,6 +209,36 @@
   "popup_fairness_holiday_active": {
     "message": "Hoje é feriado, índice pausado automaticamente."
   },
+  "report_fairness_title": {
+    "message": "Justiça do dia"
+  },
+  "report_fairness_status_default": {
+    "message": "Dia útil normal."
+  },
+  "report_fairness_status_manual": {
+    "message": "Dia ignorado manualmente."
+  },
+  "report_fairness_status_personal": {
+    "message": "Modo pessoal — sem pontuação."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Modo lazer reduziu as cobranças."
+  },
+  "report_fairness_status_study": {
+    "message": "Modo estudo suavizou as penalidades."
+  },
+  "report_fairness_status_holiday": {
+    "message": "Feriado nacional neutralizou o índice."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Feriado detectado — sem penalidades."
+  },
+  "report_fairness_holiday_active": {
+    "message": "Hoje é feriado, índice pausado automaticamente."
+  },
+  "report_fairness_tooltip": {
+    "message": "Override manual, contexto ou feriados podem neutralizar o índice. Registramos aqui sempre que isso acontecer."
+  },
   "popup_export_title": {
     "message": "Defenda seu foco"
   },

@@ -75,6 +75,37 @@
     </section>
 
     <main>
+      <section class="fairness-banner">
+        <div class="fairness-banner__body">
+          <h2>
+            <span data-i18n="report_fairness_title">Justiça do dia</span>
+            <span
+              class="info-icon"
+              aria-label="Explicação"
+              data-i18n-aria-label="popup_tooltip_aria"
+              data-tooltip="Manual override, contexto ou feriados podem neutralizar o índice. Registramos aqui sempre que isso acontecer."
+              data-i18n-tooltip="report_fairness_tooltip"
+            >
+              i
+            </span>
+          </h2>
+          <p
+            id="fairnessStatusReport"
+            data-i18n="report_fairness_status_default"
+          >
+            Dia útil normal.
+          </p>
+          <p
+            id="fairnessHintReport"
+            class="fairness-hint hidden"
+            hidden
+            data-i18n="report_fairness_holiday_detected"
+          >
+            Feriado detectado — sem penalidades.
+          </p>
+        </div>
+      </section>
+
       <section class="panel kpi-panel">
         <div class="panel-header">
           <h2>

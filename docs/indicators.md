@@ -91,6 +91,8 @@ Para evitar punições injustas os guard rails abaixo são avaliados **antes** d
 
 O popup mostra qual regra está em vigor (override manual, contexto utilizado ou feriado detectado) e reforça que apenas o índice fica congelado — os dados continuam sendo coletados localmente.
 
+No relatório detalhado existe um banner “Justiça do dia” logo abaixo do hero. Ele reutiliza o mesmo `FairnessSummary` enviado pelo background e explica se o dia foi neutralizado por override manual, contexto pessoal/lazer/estudo ou feriado. O texto também aparece nos exports: PDFs exibem uma linha `Status: ...` no cabeçalho e os compartilhamentos (resumo e argumento) começam com a mesma frase sempre que o guard rail ativo não for `normal`. Quando `holidayNeutral === true`, o banner e os exports também mostram o hint “Hoje é feriado, índice pausado automaticamente.”
+
 ## Atualização / extensões futuras
 
 - Novos KPIs devem ser adicionados a este documento com fórmula clara e campo de origem.
