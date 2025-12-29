@@ -172,8 +172,45 @@ main {
 
 .panel-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  align-items: start;
+  justify-items: stretch;
+}
+
+.settings-form,
+.panel-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.panel-stack .panel,
+.settings-form .panel {
+  width: 100%;
+}
+
+.settings-form {
+  margin: 0;
+  padding: 0;
+}
+
+.panel-stack .panel-section {
+  height: 100%;
+}
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 1100px) {
+  .panel-grid {
+    grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+    align-items: flex-start;
+  }
 }
 
 .panel.two-columns {
@@ -387,10 +424,10 @@ button {
 
 .schedule-row {
   display: grid;
-  grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr) max-content;
+  grid-template-columns: minmax(0, 1fr) minmax(48px, auto) minmax(0, 1fr) minmax(140px, max-content);
   align-items: center;
   column-gap: 16px;
-  row-gap: 8px;
+  row-gap: 12px;
   padding: 16px 18px;
   border-radius: 16px;
   border: 2px solid #111;
@@ -428,11 +465,12 @@ button {
   border: 2px solid #111;
   background: #fff;
   border-radius: 12px;
-  padding: 12px 22px;
+  padding: 12px 20px;
   cursor: pointer;
   font-weight: 700;
   justify-self: end;
-  min-width: 140px;
+  min-width: 0;
+  width: auto;
 }
 
 .schedule-row button:hover {
@@ -450,25 +488,21 @@ button {
   margin-top: 12px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .schedule-row {
-    grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
 
   .schedule-row button {
     grid-column: 1 / -1;
     justify-self: stretch;
+    width: 100%;
   }
 }
 
 @media (max-width: 650px) {
   .schedule-row {
     grid-template-columns: 1fr;
-  }
-
-  .schedule-row button {
-    justify-self: stretch;
-    width: 100%;
   }
 
   .schedule-row .to-label {

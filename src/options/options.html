@@ -28,9 +28,8 @@
 
     <main>
       <section class="panel-grid">
-        <div class="panel">
-          <h2 data-i18n="options_thresholds_heading">Limiares e Pesos</h2>
-          <form id="weightsForm" novalidate>
+        <form id="weightsForm" class="settings-form" novalidate>
+          <div class="panel language-panel">
             <fieldset class="field-group">
               <legend data-i18n="options_language_label">Idioma da interface</legend>
               <label class="field locale-select" for="localeSelect">
@@ -46,7 +45,10 @@
                 </small>
               </label>
             </fieldset>
+          </div>
 
+          <div class="panel weights-panel">
+            <h2 data-i18n="options_thresholds_heading">Limiares e Pesos</h2>
             <fieldset class="field-group">
               <legend data-i18n="options_thresholds_heading">Limiares e Pesos</legend>
               <label class="field" for="procrastinationWeight">
@@ -139,9 +141,99 @@
                 </small>
               </label>
             </fieldset>
+            <button type="submit" class="primary" data-i18n="options_save_weights">Salvar pesos</button>
+          </div>
 
+          <div class="panel critical-panel">
+            <h2 data-i18n="options_critical_threshold_label">Modo terremoto</h2>
             <fieldset class="field-group">
-              <legend data-i18n="options_vscode_heading">Integração com VS Code</legend>
+              <legend data-i18n="options_critical_threshold_label">Modo terremoto</legend>
+              <label class="field" for="criticalThreshold">
+                <span data-i18n="options_critical_threshold_label">Limiar do modo terremoto (0–100)</span>
+                <input
+                  type="number"
+                  id="criticalThreshold"
+                  min="0"
+                  max="100"
+                  step="5"
+                  required
+                  aria-describedby="criticalThresholdHint"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+                <small id="criticalThresholdHint" class="hint" data-i18n="options_critical_threshold_hint">
+                  Quando o índice atingir esse valor, Saul ativa o alerta crítico.
+                </small>
+              </label>
+
+              <label class="toggle field" for="criticalSoundEnabled">
+                <span data-i18n="options_critical_sound_label">Sirene automática do modo terremoto</span>
+                <input
+                  type="checkbox"
+                  id="criticalSoundEnabled"
+                  aria-describedby="criticalSoundHint"
+                />
+                <small id="criticalSoundHint" class="hint" data-i18n="options_critical_sound_hint">
+                  Quando ativo, a sirene toca sempre que o alerta crítico dispara.
+                </small>
+              </label>
+            </fieldset>
+          </div>
+        </form>
+
+        <div class="panel-stack">
+          <div class="panel schedule-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_schedule_heading">Horários de trabalho</h2>
+              <p class="hint" data-i18n="options_schedule_hint">
+                Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
+                períodos, minutos produtivos contam em dobro.
+              </p>
+              <div id="workScheduleList" class="schedule-list"></div>
+              <button
+                type="button"
+                id="addWorkIntervalButton"
+                class="ghost"
+                data-i18n="options_schedule_add"
+              >
+                Adicionar intervalo
+              </button>
+            </div>
+          </div>
+
+          <div class="panel holiday-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_holiday_heading">Feriados e contexto justo</h2>
+              <p class="hint" data-i18n="options_holiday_hint">
+                Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice.
+              </p>
+              <label class="toggle field" for="holidayAutoEnabled">
+                <span data-i18n="options_holiday_toggle_label">Pausar pontuação em feriados nacionais</span>
+                <input type="checkbox" id="holidayAutoEnabled" aria-describedby="holidayToggleHint" />
+                <small id="holidayToggleHint" class="hint" data-i18n="options_holiday_toggle_hint">
+                  Chamadas são feitas só quando você permite, usando o código do país informado abaixo.
+                </small>
+              </label>
+              <label class="field" for="holidayCountryCode">
+                <span data-i18n="options_holiday_country_label">Código do país (ISO-3166)</span>
+                <input
+                  type="text"
+                  id="holidayCountryCode"
+                  maxlength="2"
+                  autocomplete="off"
+                  inputmode="text"
+                  aria-describedby="holidayCountryHint"
+                />
+                <small id="holidayCountryHint" class="hint" data-i18n="options_holiday_country_hint">
+                  Ex.: BR, US, PT. Nunca usamos localização automática, só o código que você definir.
+                </small>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel vscode-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_vscode_heading">Integração com VS Code</h2>
               <label class="toggle field" for="vscodeIntegrationEnabled">
                 <span data-i18n="options_vscode_toggle_label">Somar sessões do VS Code como foco</span>
                 <input
@@ -194,94 +286,14 @@
                 </div>
                 <p id="vscodeTestStatus" class="inline-status" role="status" aria-live="polite"></p>
               </label>
-            </fieldset>
-
-            <fieldset class="field-group">
-              <legend data-i18n="options_critical_threshold_label">Modo terremoto</legend>
-              <label class="field" for="criticalThreshold">
-                <span data-i18n="options_critical_threshold_label">Limiar do modo terremoto (0–100)</span>
-                <input
-                  type="number"
-                  id="criticalThreshold"
-                  min="0"
-                  max="100"
-                  step="5"
-                  required
-                  aria-describedby="criticalThresholdHint"
-                  inputmode="numeric"
-                  autocomplete="off"
-                />
-                <small id="criticalThresholdHint" class="hint" data-i18n="options_critical_threshold_hint">
-                  Quando o índice atingir esse valor, Saul ativa o alerta crítico.
-                </small>
-              </label>
-
-              <label class="toggle field" for="criticalSoundEnabled">
-                <span data-i18n="options_critical_sound_label">Sirene automática do modo terremoto</span>
-                <input
-                  type="checkbox"
-                  id="criticalSoundEnabled"
-                  aria-describedby="criticalSoundHint"
-                />
-                <small id="criticalSoundHint" class="hint" data-i18n="options_critical_sound_hint">
-                  Quando ativo, a sirene toca sempre que o alerta crítico dispara.
-                </small>
-              </label>
-            </fieldset>
-
-            <button type="submit" class="primary" data-i18n="options_save_weights">Salvar pesos</button>
-          </form>
-        </div>
-
-        <div class="panel schedule-panel">
-          <h2 data-i18n="options_schedule_heading">Horários de trabalho</h2>
-          <p class="hint" data-i18n="options_schedule_hint">
-            Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
-            períodos, minutos produtivos contam em dobro.
-          </p>
-          <div id="workScheduleList" class="schedule-list"></div>
-          <button
-            type="button"
-            id="addWorkIntervalButton"
-            class="ghost"
-            data-i18n="options_schedule_add"
-          >
-            Adicionar intervalo
-          </button>
-        </div>
-
-        <div class="panel">
-          <h2 data-i18n="options_holiday_heading">Feriados e contexto justo</h2>
-          <p class="hint" data-i18n="options_holiday_hint">
-            Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice.
-          </p>
-          <label class="toggle field" for="holidayAutoEnabled">
-            <span data-i18n="options_holiday_toggle_label">Pausar pontuação em feriados nacionais</span>
-            <input type="checkbox" id="holidayAutoEnabled" aria-describedby="holidayToggleHint" />
-            <small id="holidayToggleHint" class="hint" data-i18n="options_holiday_toggle_hint">
-              Chamadas são feitas só quando você permite, usando o código do país informado abaixo.
-            </small>
-          </label>
-          <label class="field" for="holidayCountryCode">
-            <span data-i18n="options_holiday_country_label">Código do país (ISO-3166)</span>
-            <input
-              type="text"
-              id="holidayCountryCode"
-              maxlength="2"
-              autocomplete="off"
-              inputmode="text"
-              aria-describedby="holidayCountryHint"
-            />
-            <small id="holidayCountryHint" class="hint" data-i18n="options_holiday_country_hint">
-              Ex.: BR, US, PT. Nunca usamos localização automática, só o código que você definir.
-            </small>
-          </label>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="panel two-columns">
         <div class="domain-panel">
-          <div class="domain-panel-header">
+          <div class="domain-panel-header field-group">
             <h2 data-i18n="options_productive_heading">Domínios produtivos</h2>
             <p class="hint" data-i18n="options_productive_hint">
               Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.
@@ -300,7 +312,7 @@
         </div>
 
         <div class="domain-panel">
-          <div class="domain-panel-header">
+          <div class="domain-panel-header field-group">
             <h2 data-i18n="options_procrastination_heading">Domínios procrastinatórios</h2>
             <p class="hint" data-i18n="options_procrastination_hint">
               Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.
