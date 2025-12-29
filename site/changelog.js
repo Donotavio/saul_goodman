@@ -1,4 +1,4 @@
-import './main.js';
+import '../main.js';
 
 const CHANGELOG_URL =
   'https://raw.githubusercontent.com/Donotavio/saul_goodman/main/CHANGELOG.md';

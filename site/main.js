@@ -573,7 +573,19 @@ const translations = {
     footerLinkGithub: 'GitHub',
     footerPrivacy: '100% local data. Not even the judge sees it.',
     footerPrivacyLink: 'Privacy Policy',
-    footerChangelogLink: 'Changelog'
+    footerChangelogLink: 'Changelog',
+    privacyTitle: 'Privacy Policy',
+    privacyEyebrow: 'Full transparency',
+    privacyHeading: 'Privacy Policy',
+    privacySubheading: 'Here is the latest version of the policy published in the repository.',
+    privacyLoading: 'Loading the policy straight from the repository...',
+    privacyError: 'We could not load the policy right now. Try again in a moment.',
+    changelogTitle: 'Changelog',
+    changelogEyebrow: 'Everything documented',
+    changelogHeading: 'Official changelog',
+    changelogSubheading: 'Track every change per release directly from the repository.',
+    changelogLoading: 'Loading the changelog straight from the repository...',
+    changelogError: 'We could not load the changelog right now. Try again later.'
   },
   es: {
     navProcess: 'Cómo funciona',
@@ -865,7 +877,19 @@ const translations = {
     footerLinkGithub: 'GitHub',
     footerPrivacy: 'Datos 100% locales. Ni el juez los ve.',
     footerPrivacyLink: 'Política de Privacidad',
-    footerChangelogLink: 'Changelog'
+    footerChangelogLink: 'Changelog',
+    privacyTitle: 'Política de Privacidad',
+    privacyEyebrow: 'Transparencia total',
+    privacyHeading: 'Política de Privacidad',
+    privacySubheading: 'Aquí encuentras la versión más reciente publicada en el repositorio.',
+    privacyLoading: 'Cargando la política directo del repositorio...',
+    privacyError: 'No pudimos cargar la política ahora. Intenta más tarde.',
+    changelogTitle: 'Changelog',
+    changelogEyebrow: 'Todo documentado',
+    changelogHeading: 'Changelog oficial',
+    changelogSubheading: 'Revisa cada cambio por versión directo desde el repositorio.',
+    changelogLoading: 'Cargando el changelog directo del repositorio...',
+    changelogError: 'No pudimos cargar el changelog ahora. Intenta más tarde.'
   }
 };
 
