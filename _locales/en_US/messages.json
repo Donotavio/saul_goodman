@@ -659,6 +659,12 @@
   "options_status_weights_saved": {
     "message": "Weights updated."
   },
+  "options_status_vscode_saved": {
+    "message": "VS Code integration updated."
+  },
+  "options_status_critical_saved": {
+    "message": "Critical threshold updated."
+  },
   "options_status_language_saved": {
     "message": "Language updated."
   },

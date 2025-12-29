@@ -656,6 +656,12 @@
   "options_status_weights_saved": {
     "message": "Pesos atualizados."
   },
+  "options_status_vscode_saved": {
+    "message": "Integração com VS Code atualizada."
+  },
+  "options_status_critical_saved": {
+    "message": "Modo terremoto atualizado."
+  },
   "options_status_language_saved": {
     "message": "Idioma atualizado."
   },
