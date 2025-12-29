@@ -1614,16 +1614,6 @@ blockquote p {
   font-size: 0.9rem;
 }
 
-.flag-group {
-  display: inline-flex;
-  gap: 4px;
-}
-
-.flag-group img {
-  border: 1px solid var(--black);
-  border-radius: 2px;
-}
-
 .social-proof {
   text-align: center;
   background: #fffef4;

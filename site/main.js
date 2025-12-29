@@ -23,7 +23,7 @@ const translations = {
     heroConfidence2: 'Lista negra & lista VIP de domínios',
     heroConfidence3: 'Relatório com storytelling IA',
     heroBadge: '“Em caso de preguiça... CALL SAUL!”',
-    multilingualLabel: 'Disponível em PT · EN · ES',
+    multilingualLabel: 'Disponível em PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
     socialProofCaption: 'Saul já ajuda milhares de pessoas a vigiar o foco diariamente.',
     socialProofMetricLabel: 'Usuários satisfeitos',
     ratingBadgeAlt: 'Nota média na Chrome Web Store',
@@ -294,7 +294,7 @@ const translations = {
     heroConfidence2: 'Blacklist & VIP domain lists',
     heroConfidence3: 'Report with AI storytelling',
     heroBadge: '“When laziness strikes... CALL SAUL!”',
-    multilingualLabel: 'Available in PT · EN · ES',
+    multilingualLabel: 'Available in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
     socialProofCaption: 'Saul already helps thousands keep their focus.',
     socialProofMetricLabel: 'Happy users',
     ratingBadgeAlt: 'Average rating on Chrome Web Store',
@@ -562,7 +562,7 @@ const translations = {
     heroConfidence2: 'Lista negra y lista VIP de dominios',
     heroConfidence3: 'Informe con narrativa IA',
     heroBadge: '“En caso de pereza... CALL SAUL!”',
-    multilingualLabel: 'Disponible en PT · EN · ES',
+    multilingualLabel: 'Disponible en PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
     socialProofCaption: 'Saul ya ayuda a miles de personas a cuidar el foco.',
     socialProofMetricLabel: 'Usuarios satisfechos',
     ratingBadgeAlt: 'Calificación en Chrome Web Store',
@@ -1599,41 +1599,6 @@ const setupStickyCta = () => {
   window.addEventListener('scroll', evaluateVisibility, { passive: true });
   evaluateVisibility();
   syncAria();
-};
-
-// Contador animado para reforçar o número de usuários (dispara ao entrar na viewport)
-const setupCounters = () => {
-  const counters = document.querySelectorAll('[data-count]');
-  if (!counters.length) return;
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = Number(el.getAttribute('data-count')) || 0;
-        if (el.dataset.counted === 'true') return;
-        el.dataset.counted = 'true';
-        if (motionPreference.matches) {
-          el.textContent = target.toLocaleString();
-          return;
-        }
-        const duration = 1500;
-        let startTime = null;
-        const step = (timestamp) => {
-          if (!startTime) startTime = timestamp;
-          const progress = Math.min((timestamp - startTime) / duration, 1);
-          const currentValue = Math.floor(progress * target);
-          el.textContent = currentValue.toLocaleString();
-          if (progress < 1) {
-            window.requestAnimationFrame(step);
-          }
-        };
-        window.requestAnimationFrame(step);
-      });
-    },
-    { threshold: 0.5 }
-  );
-  counters.forEach((counter) => observer.observe(counter));
 };
 
 // Ajusta cor da sticky CTA ao rolar para reforçar urgência
