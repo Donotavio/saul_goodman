@@ -69,12 +69,27 @@ const translations = {
     featureQuakeTest: 'Testar alerta',
     featurePrevLabel: 'Anterior',
     featureNextLabel: 'Próximo',
-    privacyTitle: 'Política de Privacidade',
-    privacyEyebrow: 'Transparência total',
-    privacyHeading: 'Política de Privacidade',
-    privacySubheading: 'Abaixo você encontra a versão mais recente da política publicada no repositório.',
-    privacyLoading: 'Carregando política diretamente do repositório...',
+    backToHome: 'Voltar ao site',
+    backToHome: 'Back to homepage',
+    privacyTitle: 'Privacy Policy',
+    privacyEyebrow: 'Full transparency',
+    privacyHeading: 'Privacy Policy',
+    privacySubheading: 'Here is the latest version of the policy published in the repository.',
+    privacyLoading: 'Loading the policy straight from the repository...',
+    privacyError: 'We could not load the policy right now. Try again in a moment.',
+    changelogTitle: 'Changelog',
+    changelogEyebrow: 'Everything documented',
+    changelogHeading: 'Official changelog',
+    changelogSubheading: 'Track every change per release directly from the repository.',
+    changelogLoading: 'Loading the changelog straight from the repository...',
+    changelogError: 'We could not load the changelog right now. Try again later.',
     privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
+    changelogTitle: 'Changelog',
+    changelogEyebrow: 'Tudo documentado',
+    changelogHeading: 'Changelog oficial',
+    changelogSubheading: 'Veja tudo que mudou por versão, direto do repositório.',
+    changelogLoading: 'Carregando changelog diretamente do repositório...',
+    changelogError: 'Não foi possível carregar o changelog agora. Tente novamente mais tarde.',
     processEyebrow: 'Como funciona',
     processTitle: 'Saul prende a procrastinação em três passos.',
     processLead:
@@ -233,6 +248,11 @@ const translations = {
     trustCard2Body: 'O código é público. Se algo mudar, a comunidade vê primeiro.',
     trustCard3Title: 'Alertas transparentes',
     trustCard3Body: 'Você controla limiares e sons, podendo desligar em um clique.',
+    transparencyEyebrow: 'Transparência',
+    transparencyTitle: 'Política e changelog públicos.',
+    transparencyBody: 'Leia como tratamos seus dados e tudo que mudou a cada release — sem rodeios.',
+    transparencyPrivacyCta: 'Ler Política de Privacidade',
+    transparencyChangelogCta: 'Abrir changelog completo',
     lightboxClose: 'Fechar',
     finalCtaTitle: 'Hora de deixar Saul assumir o caso?',
     finalCtaBody:
@@ -276,7 +296,8 @@ const translations = {
     footerLinkIndicators: 'Indicadores',
     footerLinkGithub: 'GitHub',
     footerPrivacy: 'Dados 100% locais. Nem o juiz vê.',
-    footerPrivacyLink: 'Política de Privacidade'
+    footerPrivacyLink: 'Política de Privacidade',
+    footerChangelogLink: 'Changelog'
   },
   en: {
     navProcess: 'How it works',
@@ -504,6 +525,11 @@ const translations = {
     trustCard2Body: 'Every line is public so the community can audit changes.',
     trustCard3Title: 'Transparent alerts',
     trustCard3Body: 'You pick the threshold and can silence Saul whenever you need.',
+    transparencyEyebrow: 'Transparency',
+    transparencyTitle: 'Privacy & changelog in the open.',
+    transparencyBody: 'Read how we handle your data and every release note with zero fluff.',
+    transparencyPrivacyCta: 'Read the Privacy Policy',
+    transparencyChangelogCta: 'Open full changelog',
     lightboxClose: 'Close',
     finalCtaTitle: 'Ready to let Saul take over?',
     finalCtaBody:
@@ -546,7 +572,8 @@ const translations = {
     footerLinkIndicators: 'Indicators',
     footerLinkGithub: 'GitHub',
     footerPrivacy: '100% local data. Not even the judge sees it.',
-    footerPrivacyLink: 'Privacy Policy'
+    footerPrivacyLink: 'Privacy Policy',
+    footerChangelogLink: 'Changelog'
   },
   es: {
     navProcess: 'Cómo funciona',
@@ -618,6 +645,19 @@ const translations = {
     featureQuakeTest: 'Probar alerta',
     featurePrevLabel: 'Tarjeta anterior',
     featureNextLabel: 'Siguiente tarjeta',
+    backToHome: 'Volver al inicio',
+    privacyTitle: 'Política de Privacidad',
+    privacyEyebrow: 'Transparencia total',
+    privacyHeading: 'Política de Privacidad',
+    privacySubheading: 'Aquí encuentras la versión más reciente publicada en el repositorio.',
+    privacyLoading: 'Cargando la política directo del repositorio...',
+    privacyError: 'No pudimos cargar la política ahora. Intenta más tarde.',
+    changelogTitle: 'Changelog',
+    changelogEyebrow: 'Todo documentado',
+    changelogHeading: 'Changelog oficial',
+    changelogSubheading: 'Revisa cada cambio por versión directo desde el repositorio.',
+    changelogLoading: 'Cargando el changelog directo del repositorio...',
+    changelogError: 'No pudimos cargar el changelog ahora. Intenta más tarde.',
     processEyebrow: 'Cómo funciona',
     processTitle: 'Saul encierra la procrastinación en tres pasos.',
     processLead:
@@ -777,6 +817,11 @@ const translations = {
     trustCard2Body: 'El código es público para que la comunidad revise cada cambio.',
     trustCard3Title: 'Alertas transparentes',
     trustCard3Body: 'Tú eliges el umbral y puedes silenciar a Saul cuando lo necesites.',
+    transparencyEyebrow: 'Transparencia',
+    transparencyTitle: 'Política y changelog al frente.',
+    transparencyBody: 'Lee cómo tratamos tus datos y cada nota de versión sin rodeos.',
+    transparencyPrivacyCta: 'Ver Política de Privacidad',
+    transparencyChangelogCta: 'Abrir changelog completo',
     lightboxClose: 'Cerrar',
     finalCtaTitle: '¿Listo para dejar que Saul tome el caso?',
     finalCtaBody:
@@ -819,7 +864,8 @@ const translations = {
     footerLinkIndicators: 'Indicadores',
     footerLinkGithub: 'GitHub',
     footerPrivacy: 'Datos 100% locales. Ni el juez los ve.',
-    footerPrivacyLink: 'Política de Privacidad'
+    footerPrivacyLink: 'Política de Privacidad',
+    footerChangelogLink: 'Changelog'
   }
 };
 

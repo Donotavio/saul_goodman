@@ -17,7 +17,7 @@ const renderPrivacy = async () => {
     const markdown = await response.text();
     const html = marked.parse(markdown);
     container.innerHTML = html;
-    container.classList.add('privacy-ready');
+    container.classList.add('document-ready');
   } catch (error) {
     console.error('Falha ao carregar política de privacidade', error);
     container.innerHTML =
