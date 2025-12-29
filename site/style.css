@@ -406,9 +406,28 @@ body {
 }
 
 .mini-cta {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  padding: 6px 12px;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  background: #fffdf5;
+  color: var(--brown);
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mini-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.15);
+}
+
+.mini-cta:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
 }
 
 .gauge-card .gauge-widget {
