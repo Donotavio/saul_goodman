@@ -44,6 +44,15 @@ body {
   gap: 14px;
 }
 
+/* Botão do menu mobile começa oculto no desktop */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
 .site-nav .nav-links {
   display: flex;
   gap: 16px;
@@ -1001,6 +1010,7 @@ blockquote p {
   color: var(--brown);
 }
 
+/* Barra fixa para CTA final sem atrapalhar conteúdo */
 .sticky-cta {
   position: fixed;
   left: 50%;
@@ -1050,6 +1060,8 @@ blockquote p {
 .sticky-cta.is-collapsed {
   border-radius: 50%;
   padding: 6px;
+  width: auto;
+  gap: 0;
 }
 
 @media (max-width: 640px) {
@@ -1060,6 +1072,10 @@ blockquote p {
   .sticky-content {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .sticky-cta.is-collapsed {
+    width: auto;
   }
 }
 
@@ -1094,7 +1110,7 @@ blockquote p {
 }
 
 @media (max-width: 768px) {
-  /* Ajuste geral do container para telas estreitas */
+  /* Nav fixo com menu hambúrguer para liberar espaço */
   .site-nav {
     padding: 12px 6vw;
     position: fixed;
@@ -1104,23 +1120,22 @@ blockquote p {
 
   .brand {
     font-size: 1rem;
+    flex: 1;
   }
 
+  /* Hambúrguer visível e clicável */
   .menu-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .menu-toggle {
     border: 2px solid var(--black);
     border-radius: 10px;
     background: #fff;
-    font-size: 1.4rem;
     padding: 4px 10px;
-    cursor: pointer;
+    margin-left: 12px;
   }
 
+  /* Menu mobile abre em coluna e ocupa largura total */
   .site-nav .nav-actions {
     position: absolute;
     top: 100%;
@@ -1158,6 +1173,7 @@ blockquote p {
     width: 100%;
   }
 
+  /* Hero empilha elementos para leitura confortável */
   .hero {
     flex-direction: column;
     text-align: center;
@@ -1196,6 +1212,7 @@ blockquote p {
     display: none;
   }
 
+  /* Demais grids viram uma coluna para evitar zoom */
   .steps-grid,
   .why-grid,
   .demo-grid,
@@ -1540,7 +1557,4 @@ blockquote p {
 
 [data-quake-tilt].is-shaking {
   animation: quakeShiver 0.5s linear;
-}
-.menu-toggle {
-  display: none;
 }

@@ -5,7 +5,7 @@ const translations = {
     navDemo: 'Demo',
     navClients: 'Depoimentos',
     navBlog: 'Blog',
-    navCta: 'Install on Chrome',
+    navCta: 'Instalar no Chrome',
     seoTitle: 'Saul Goodman - Extensão Anti-Procrastinação',
     seoDescription:
       'Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos.',
@@ -257,7 +257,7 @@ const translations = {
     navDemo: 'Demo',
     navClients: 'Testimonials',
     navBlog: 'Blog',
-    navCta: 'Install on Chrome',
+    navCta: 'Instalar en Chrome',
     seoTitle: 'Saul Goodman - Anti-Procrastination Extension',
     seoDescription:
       'Saul Goodman polices your tabs, fights procrastination, and delivers dramatic reports in your browser. Everything stays local, no external servers.',
@@ -1577,6 +1577,7 @@ const updateCarouselPreview = (carousel) => {
     previewLink.href = src;
   }
 };
+// Menu mobile abre/fecha para evitar que os links tomem toda a largura no smartphone.
 const setupMobileMenu = () => {
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('mobile-menu');
