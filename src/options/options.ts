@@ -39,7 +39,12 @@ const statusMessageEl = document.getElementById('statusMessage') as HTMLParagrap
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
 const workScheduleListEl = document.getElementById('workScheduleList') as HTMLDivElement;
 const addWorkIntervalButton = document.getElementById('addWorkIntervalButton') as HTMLButtonElement;
+const installVscodeExtensionButton = document.getElementById(
+  'installVscodeExtensionButton'
+) as HTMLButtonElement | null;
 const DEFAULT_VSCODE_URL = 'http://127.0.0.1:3123';
+const VSCODE_MARKETPLACE_URL =
+  'https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode';
 
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
@@ -112,6 +117,9 @@ function attachListeners(): void {
 
   backToPopupButton?.addEventListener('click', () => {
     returnToPopup();
+  });
+  installVscodeExtensionButton?.addEventListener('click', () => {
+    openExternalLink(VSCODE_MARKETPLACE_URL);
   });
   addWorkIntervalButton.addEventListener('click', () => {
     if (!currentSettings) {
@@ -692,6 +700,10 @@ function handleHolidayCountryChange(): void {
 
 function returnToPopup(): void {
   const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
+  if (!chrome?.tabs?.create) {
+    window.location.href = popupUrl;
+    return;
+  }
   chrome.tabs.create({ url: popupUrl }, () => {
     if (chrome.runtime.lastError) {
       window.location.href = popupUrl;
@@ -781,6 +793,14 @@ async function copyPairingKey(): Promise<void> {
   } catch {
     showStatus(i18n?.t('options_vscode_key_copy_error') ?? 'Falha ao copiar a chave.', true);
   }
+}
+
+function openExternalLink(url: string): void {
+  if (chrome?.tabs?.create) {
+    void chrome.tabs.create({ url });
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function closeCurrentTab(): void {
