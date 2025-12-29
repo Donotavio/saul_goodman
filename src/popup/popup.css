@@ -154,6 +154,71 @@ p {
   color: #555;
 }
 
+.fairness-card {
+  background: #fff9e6;
+  border: 1px solid #f0d378;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.fairness-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.fairness-hint {
+  font-size: 0.75rem;
+  color: #a75500;
+  margin: 0;
+  text-align: right;
+}
+
+.fairness-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.fairness-controls .toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.fairness-controls input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+}
+
+.fairness-context {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.fairness-context select {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 0.9rem;
+}
+
+.fairness-note {
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 8px;
+}
+
 .summary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

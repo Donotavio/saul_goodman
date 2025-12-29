@@ -12,6 +12,7 @@
 
 - Por padrão **nenhum dado sai do seu navegador**.
 - Caso você informe uma chave da OpenAI nas opções, o relatório detalhado envia um resumo diário (índice, métricas agregadas, top domínios e trechos da timeline) para a API da OpenAI apenas para gerar a narrativa. Nada além disso é transmitido.
+- Se você ativar a detecção automática de feriados e informar manualmente o código ISO-3166 do país, o background faz chamadas GET para o endpoint público [Nager.Date](https://date.nager.at) (`/api/v3/PublicHolidays/{ano}/{país}`) somente para baixar a lista anual de feriados nacionais. Nenhum dado pessoal é enviado; tudo é opcional e o resultado fica armazenado em `chrome.storage.local` por até 7 dias.
 
 ## Compartilhamento e anúncios
 

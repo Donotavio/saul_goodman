@@ -249,6 +249,34 @@
             Adicionar intervalo
           </button>
         </div>
+
+        <div class="panel">
+          <h2 data-i18n="options_holiday_heading">Feriados e contexto justo</h2>
+          <p class="hint" data-i18n="options_holiday_hint">
+            Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice.
+          </p>
+          <label class="toggle field" for="holidayAutoEnabled">
+            <span data-i18n="options_holiday_toggle_label">Pausar pontuação em feriados nacionais</span>
+            <input type="checkbox" id="holidayAutoEnabled" aria-describedby="holidayToggleHint" />
+            <small id="holidayToggleHint" class="hint" data-i18n="options_holiday_toggle_hint">
+              Chamadas são feitas só quando você permite, usando o código do país informado abaixo.
+            </small>
+          </label>
+          <label class="field" for="holidayCountryCode">
+            <span data-i18n="options_holiday_country_label">Código do país (ISO-3166)</span>
+            <input
+              type="text"
+              id="holidayCountryCode"
+              maxlength="2"
+              autocomplete="off"
+              inputmode="text"
+              aria-describedby="holidayCountryHint"
+            />
+            <small id="holidayCountryHint" class="hint" data-i18n="options_holiday_country_hint">
+              Ex.: BR, US, PT. Nunca usamos localização automática, só o código que você definir.
+            </small>
+          </label>
+        </div>
       </section>
 
       <section class="panel two-columns">

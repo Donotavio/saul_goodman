@@ -1,4 +1,8 @@
-import { calculateProcrastinationIndex } from '../shared/score.js';
+import {
+  calculateProcrastinationIndex,
+  type ScoreComputation,
+  type ScoreGuards
+} from '../shared/score.js';
 import {
   StorageKeys,
   clearDailyMetrics,
@@ -17,16 +21,28 @@ import {
   DailyMetrics,
   DomainCategory,
   ExtensionSettings,
+  FairnessSummary,
   HourlyBucket,
   RuntimeMessage,
   RuntimeMessageResponse,
   RuntimeMessageType,
-  TimelineEntry
+  TimelineEntry,
+  ContextModeState,
+  ManualOverrideState,
+  HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
 import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
+import { getManualOverrideState, isManualOverrideActive } from '../shared/utils/manual-override.js';
+import { getContextMode } from '../shared/utils/context.js';
+import {
+  LocalStorageKey,
+  readLocalStorage,
+  writeLocalStorage
+} from '../shared/utils/storage.js';
+import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -90,6 +106,12 @@ let globalCriticalState = false;
 let lastCriticalSoundPref = false;
 let lastCriticalScore = -Infinity;
 let releaseNotesClickRegistered = false;
+let manualOverrideState: ManualOverrideState | null = null;
+let contextModeState: ContextModeState | null = null;
+let holidaysCache: HolidaysCache = {};
+let holidayNeutralToday = false;
+let fairnessSnapshot: FairnessSummary | null = null;
+let lastScoreComputation: ScoreComputation | null = null;
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -100,7 +122,7 @@ const messageHandlers: Record<
     await updateRestoredItems();
     await syncVscodeMetrics(true);
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
-    return { metrics, settings };
+    return { metrics, settings, fairness: getFairnessSummary() };
   },
   'clear-data': async () => clearTodayData(),
   'settings-updated': async () => {
@@ -230,11 +252,30 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
     void syncBlockingRules(settingsCache);
-    void refreshScore();
+    void (async () => {
+      await refreshHolidayNeutralState();
+      await refreshScore();
+    })();
   }
 
   if (changes[StorageKeys.METRICS]) {
     metricsCache = changes[StorageKeys.METRICS].newValue as DailyMetrics;
+  }
+
+  if (changes[LocalStorageKey.MANUAL_OVERRIDE]) {
+    manualOverrideState = changes[LocalStorageKey.MANUAL_OVERRIDE].newValue as ManualOverrideState;
+    updateFairnessSummary();
+    void refreshScore();
+  }
+
+  if (changes[LocalStorageKey.CONTEXT_MODE]) {
+    contextModeState = changes[LocalStorageKey.CONTEXT_MODE].newValue as ContextModeState;
+    updateFairnessSummary();
+    void refreshScore();
+  }
+
+  if (changes[LocalStorageKey.HOLIDAYS_CACHE]) {
+    holidaysCache = (changes[LocalStorageKey.HOLIDAYS_CACHE].newValue as HolidaysCache) ?? {};
   }
 });
 
@@ -255,6 +296,7 @@ async function initialize(): Promise<void> {
   initializing = true;
 
   await Promise.all([getSettingsCache(), getMetricsCache()]);
+  await hydrateFairnessState();
   await updateRestoredItems();
 
   chrome.action.setBadgeBackgroundColor({ color: '#000000' });
@@ -285,6 +327,7 @@ async function handleMidnightReset(): Promise<void> {
   await updateBadgeText(metricsCache.currentIndex);
   await scheduleMidnightAlarm();
   trackingState.lastTimestamp = Date.now();
+  await handleMidnightFairnessReset();
 }
 
 async function hydrateActiveTab(): Promise<void> {
@@ -552,8 +595,10 @@ async function persistMetrics(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
+  const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
+  metricsCache.currentIndex = scoreResult.score;
   metricsCache.lastUpdated = Date.now();
+  updateFairnessSummary(scoreResult);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -567,7 +612,9 @@ async function refreshScore(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  metricsCache.currentIndex = calculateProcrastinationIndex(metricsCache, settings);
+  const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
+  metricsCache.currentIndex = scoreResult.score;
+  updateFairnessSummary(scoreResult);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -1057,6 +1104,78 @@ function applyIdleDetectionInterval(settings: ExtensionSettings): void {
 }
 
 void initialize();
+
+function getScoreGuards(): ScoreGuards {
+  return {
+    manualOverride: manualOverrideState ?? undefined,
+    contextMode: contextModeState ?? undefined,
+    holidayNeutral: holidayNeutralToday
+  };
+}
+
+function getFairnessSummary(): FairnessSummary {
+  if (!fairnessSnapshot) {
+    updateFairnessSummary();
+  }
+  return (
+    fairnessSnapshot ?? {
+      rule: 'normal',
+      manualOverrideActive: false,
+      contextMode: contextModeState ?? { value: 'work', updatedAt: Date.now() },
+      holidayNeutral: false,
+      isHolidayToday: holidayNeutralToday
+    }
+  );
+}
+
+function updateFairnessSummary(result?: ScoreComputation): void {
+  if (result) {
+    lastScoreComputation = result;
+  }
+  const source = result ?? lastScoreComputation;
+  const context =
+    source?.contextMode ?? contextModeState ?? ({ value: 'work', updatedAt: Date.now() } as ContextModeState);
+  const manualActive =
+    source?.manualOverrideActive ?? isManualOverrideActive(manualOverrideState, getTodayKey());
+  const appliedRule =
+    manualActive && (!source || source.rule !== 'manual-override') ? 'manual-override' : source?.rule ?? 'normal';
+  fairnessSnapshot = {
+    rule: appliedRule,
+    manualOverrideActive: manualActive,
+    contextMode: context,
+    holidayNeutral: appliedRule === 'holiday',
+    isHolidayToday: holidayNeutralToday
+  };
+}
+
+async function hydrateFairnessState(): Promise<void> {
+  manualOverrideState = await getManualOverrideState();
+  contextModeState = await getContextMode();
+  holidaysCache = (await readLocalStorage<HolidaysCache>(LocalStorageKey.HOLIDAYS_CACHE)) ?? {};
+  await refreshHolidayNeutralState();
+  updateFairnessSummary();
+}
+
+async function refreshHolidayNeutralState(): Promise<void> {
+  const settings = await getSettingsCache();
+  const resolution = await resolveHolidayNeutralState({
+    dateKey: getTodayKey(),
+    countryCode: settings.holidayCountryCode,
+    enabled: settings.holidayAutoEnabled,
+    cache: holidaysCache
+  });
+  holidayNeutralToday = resolution.isHoliday;
+  holidaysCache = resolution.cache;
+  if (resolution.source === 'api') {
+    await writeLocalStorage(LocalStorageKey.HOLIDAYS_CACHE, holidaysCache);
+  }
+  updateFairnessSummary();
+}
+
+async function handleMidnightFairnessReset(): Promise<void> {
+  manualOverrideState = await getManualOverrideState();
+  await refreshHolidayNeutralState();
+}
 
 async function ensureCriticalBroadcast(score: number, settings: ExtensionSettings): Promise<void> {
   const threshold = settings.criticalScoreThreshold ?? 90;

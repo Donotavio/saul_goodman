@@ -161,6 +161,54 @@
   "popup_loading": {
     "message": "Loading..."
   },
+  "popup_fairness_title": {
+    "message": "Fairness mode"
+  },
+  "popup_fairness_status_default": {
+    "message": "Regular workday."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Day ignored manually."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Personal mode active — no scoring."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Leisure mode softens the index."
+  },
+  "popup_fairness_status_study": {
+    "message": "Study mode applies lighter weights."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "National holiday detected, index neutralized."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Ignore today"
+  },
+  "popup_fairness_context_label": {
+    "message": "Current context"
+  },
+  "popup_context_option_work": {
+    "message": "Work"
+  },
+  "popup_context_option_personal": {
+    "message": "Personal"
+  },
+  "popup_context_option_leisure": {
+    "message": "Leisure"
+  },
+  "popup_context_option_study": {
+    "message": "Study"
+  },
+  "popup_fairness_note": {
+    "message": "Manual override always wins. Saul only scores when it makes sense."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Holiday detected — no penalties."
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Today is a holiday, scoring paused automatically."
+  },
   "popup_export_title": {
     "message": "Defend your focus"
   },
@@ -508,6 +556,30 @@
   },
   "options_schedule_hint": {
     "message": "Tell Saul when your official shift happens. Outside these blocks, productive minutes count double."
+  },
+  "options_holiday_heading": {
+    "message": "Holidays & fairness"
+  },
+  "options_holiday_hint": {
+    "message": "When enabled, Saul calls the public Nager.Date API to see if today is a national holiday and neutralizes the index."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Pause scoring on national holidays"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Calls only happen if you opt in and provide a country code. No automatic location."
+  },
+  "options_holiday_country_label": {
+    "message": "Country code (ISO-3166)"
+  },
+  "options_holiday_country_hint": {
+    "message": "Ex.: BR, US, PT. We never infer this automatically."
+  },
+  "options_holiday_country_error": {
+    "message": "Use two letters such as BR or US."
+  },
+  "options_status_holiday_saved": {
+    "message": "Holiday preferences saved."
   },
   "options_schedule_add": {
     "message": "Add interval"

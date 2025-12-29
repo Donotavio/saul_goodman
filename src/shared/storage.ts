@@ -95,6 +95,8 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   criticalScoreThreshold: 90,
   workSchedule: DEFAULT_WORK_SCHEDULE,
   criticalSoundEnabled: false,
+  holidayAutoEnabled: false,
+  holidayCountryCode: '',
   vscodeIntegrationEnabled: false,
   vscodeLocalApiUrl: 'http://127.0.0.1:3123',
   vscodePairingKey: ''

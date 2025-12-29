@@ -117,6 +117,8 @@ export interface ExtensionSettings {
   criticalScoreThreshold?: number;
   workSchedule?: WorkInterval[];
   criticalSoundEnabled?: boolean;
+  holidayAutoEnabled?: boolean;
+  holidayCountryCode?: string;
 
   /**
    * Ativa/desativa a integração com VS Code via backend local.
@@ -147,6 +149,7 @@ export interface RuntimeMessage<T = unknown> {
 export interface RuntimeMessageResponse {
   metrics?: DailyMetrics;
   settings?: ExtensionSettings;
+  fairness?: FairnessSummary;
 }
 
 export type RuntimeMessageType =
@@ -159,6 +162,47 @@ export type RuntimeMessageType =
 export interface PopupData {
   metrics: DailyMetrics;
   settings: ExtensionSettings;
+  fairness?: FairnessSummary;
+}
+
+export interface ManualOverrideState {
+  enabled: boolean;
+  date: string;
+}
+
+export type ContextModeValue = 'work' | 'personal' | 'leisure' | 'study';
+
+export interface ContextModeState {
+  value: ContextModeValue;
+  updatedAt: number;
+}
+
+export interface HolidaySettingsSnapshot {
+  enabled: boolean;
+  countryCode?: string;
+}
+
+export interface HolidayCacheEntry {
+  fetchedAt: number;
+  dates: string[];
+}
+
+export type HolidaysCache = Record<string, HolidayCacheEntry>;
+
+export type FairnessRule =
+  | 'manual-override'
+  | 'context-personal'
+  | 'context-leisure'
+  | 'context-study'
+  | 'holiday'
+  | 'normal';
+
+export interface FairnessSummary {
+  rule: FairnessRule;
+  manualOverrideActive: boolean;
+  contextMode: ContextModeState;
+  holidayNeutral: boolean;
+  isHolidayToday: boolean;
 }
 
 

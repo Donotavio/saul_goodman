@@ -32,6 +32,8 @@ const testVscodeConnectionButton = document.getElementById(
 const vscodeTestStatusEl = document.getElementById('vscodeTestStatus') as HTMLParagraphElement;
 const criticalThresholdEl = document.getElementById('criticalThreshold') as HTMLInputElement;
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
+const holidayAutoEnabledEl = document.getElementById('holidayAutoEnabled') as HTMLInputElement;
+const holidayCountryCodeEl = document.getElementById('holidayCountryCode') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
@@ -138,6 +140,16 @@ function attachListeners(): void {
   });
   testVscodeConnectionButton?.addEventListener('click', () => {
     void testVscodeConnection();
+  });
+  holidayAutoEnabledEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
+    void persistSettings('options_status_holiday_saved');
+  });
+  holidayCountryCodeEl?.addEventListener('change', () => {
+    handleHolidayCountryChange();
   });
 }
 
@@ -372,6 +384,12 @@ function renderForms(): void {
     currentSettings.criticalScoreThreshold ?? 90
   ).toString();
   criticalSoundEnabledEl.checked = Boolean(currentSettings.criticalSoundEnabled);
+  if (holidayAutoEnabledEl) {
+    holidayAutoEnabledEl.checked = Boolean(currentSettings.holidayAutoEnabled);
+  }
+  if (holidayCountryCodeEl) {
+    holidayCountryCodeEl.value = (currentSettings.holidayCountryCode ?? '').toUpperCase();
+  }
   if (blockProcrastinationEl) {
     blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
   }
@@ -642,6 +660,23 @@ async function handleLocaleChange(): Promise<void> {
   await persistSettings('options_status_language_saved');
   await refreshTranslations();
   renderForms();
+}
+
+function handleHolidayCountryChange(): void {
+  if (!currentSettings || !holidayCountryCodeEl) {
+    return;
+  }
+  const raw = holidayCountryCodeEl.value.trim().toUpperCase();
+  if (raw && !/^[A-Z]{2}$/.test(raw)) {
+    showStatus(
+      i18n?.t('options_holiday_country_error') ?? 'Informe apenas duas letras, ex.: BR.',
+      true
+    );
+    holidayCountryCodeEl.value = (currentSettings.holidayCountryCode ?? '').toUpperCase();
+    return;
+  }
+  currentSettings.holidayCountryCode = raw;
+  void persistSettings('options_status_holiday_saved');
 }
 
 function returnToPopup(): void {

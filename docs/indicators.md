@@ -77,6 +77,20 @@ O número é arredondado e limitado entre 0–100. O badge e o popup exibem esse
   - Relatório: usa os buckets horários e a narrativa (`timeline`) para montar imagens adicionais e texto detalhado.
 - **Relatório detalhado** (`src/report/report.html`): gráficos stacked por hora, doughnut de composição e lista narrativa baseada na timeline.
 
+## Justiça da pontuação (manual override, contexto e feriados)
+
+Para evitar punições injustas os guard rails abaixo são avaliados **antes** de `calculateProcrastinationIndex`:
+
+1. **Manual override** — estado salvo em `chrome.storage.local['sg:manual-override']` pelo popup. Ao marcar o dia atual como ignorado o índice fica travado em 0 até a virada do dia. Sempre tem prioridade máxima.
+2. **Context Mode** — `chrome.storage.local['sg:context-mode']` guarda o contexto ativo escolhido no popup:
+   - `work`: cálculo padrão.
+   - `personal`: neutraliza completamente o score.
+   - `leisure`: zera a penalidade por procrastinação e aplica peso baixo em produtividade.
+   - `study`: reduz a severidade (multiplicadores médios para os componentes).
+3. **Feriados nacionais** — ao ativar a opção na página de configurações e informar manualmente o código ISO-3166 do país, o background consulta a API pública [Nager.Date](https://date.nager.at/api/v3/PublicHolidays/%7Byear%7D/%7Bcountry%7D) apenas quando não há cache válido para `(ano, país)`. As respostas (`dates` no formato `YYYY-MM-DD`) ficam em `chrome.storage.local['sg:holidays-cache']` por 7 dias. Se o dia atual constar nessa lista, o score vira neutro. Nada é inferido automaticamente (sem IP/geo); o usuário define o país explicitamente e pode desativar a função a qualquer momento.
+
+O popup mostra qual regra está em vigor (override manual, contexto utilizado ou feriado detectado) e reforça que apenas o índice fica congelado — os dados continuam sendo coletados localmente.
+
 ## Atualização / extensões futuras
 
 - Novos KPIs devem ser adicionados a este documento com fórmula clara e campo de origem.

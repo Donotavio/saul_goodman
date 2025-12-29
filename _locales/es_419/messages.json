@@ -161,6 +161,54 @@
   "popup_loading": {
     "message": "Cargando..."
   },
+  "popup_fairness_title": {
+    "message": "Modo de equidad"
+  },
+  "popup_fairness_status_default": {
+    "message": "Día laboral normal."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Día ignorado manualmente."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Modo personal activo: sin puntaje."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo ocio suaviza el índice."
+  },
+  "popup_fairness_status_study": {
+    "message": "Modo estudio aplica pesos medianos."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "Feriado nacional detectado, índice neutralizado."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Ignorar hoy"
+  },
+  "popup_fairness_context_label": {
+    "message": "Contexto actual"
+  },
+  "popup_context_option_work": {
+    "message": "Trabajo"
+  },
+  "popup_context_option_personal": {
+    "message": "Personal"
+  },
+  "popup_context_option_leisure": {
+    "message": "Ocio"
+  },
+  "popup_context_option_study": {
+    "message": "Estudio"
+  },
+  "popup_fairness_note": {
+    "message": "El override manual siempre gana. Saul solo puntúa cuando tiene sentido."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Feriado detectado — sin penalidades."
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Hoy es feriado, el puntaje está en pausa."
+  },
   "popup_export_title": {
     "message": "Defiende tu enfoque"
   },
@@ -505,6 +553,30 @@
   },
   "options_schedule_hint": {
     "message": "Cuéntale a Saul cuándo sucede tu turno oficial. Fuera de estos bloques, los minutos productivos valen el doble."
+  },
+  "options_holiday_heading": {
+    "message": "Feriados y equidad"
+  },
+  "options_holiday_hint": {
+    "message": "Al activar, Saul consulta la API pública Nager.Date para saber si hoy es feriado nacional y neutraliza el índice."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Pausar el puntaje en feriados nacionales"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Solo llamamos a la API si habilitas y defines el país. Nada de ubicación automática."
+  },
+  "options_holiday_country_label": {
+    "message": "Código de país (ISO-3166)"
+  },
+  "options_holiday_country_hint": {
+    "message": "Ej.: BR, US, AR. Nunca lo inferimos por ti."
+  },
+  "options_holiday_country_error": {
+    "message": "Usa solo dos letras, por ejemplo BR o US."
+  },
+  "options_status_holiday_saved": {
+    "message": "Preferencias de feriados guardadas."
   },
   "options_schedule_add": {
     "message": "Agregar intervalo"
