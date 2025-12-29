@@ -691,14 +691,7 @@ function handleHolidayCountryChange(): void {
 }
 
 function returnToPopup(): void {
-  const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
-  chrome.tabs.create({ url: popupUrl }, () => {
-    if (chrome.runtime.lastError) {
-      window.location.href = popupUrl;
-      return;
-    }
-    closeCurrentTab();
-  });
+  closeCurrentTab();
 }
 
 function generatePairingKey(): string {
