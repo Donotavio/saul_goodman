@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "As Reuniões Semanais que Ninguém Pediu: O Guia da Insatisfação",
+      "url": "./posts/2025/2025-12-29-as-reunioes-semanais-que-ninguem-pediu-o-guia-da-insatisfacao/",
+      "markdown": "2025/2025-12-29-as-reunioes-semanais-que-ninguem-pediu-o-guia-da-insatisfacao.md",
+      "date": "2025-12-29",
+      "category": "foco-atencao",
+      "tags": [
+        "produtividade",
+        "valores",
+        "procrastinação",
+        "negócios",
+        "design"
+      ],
+      "excerpt": "Aprenda a ser produtivo e infeliz com reuniões semanais que focam em valores, não em tarefas. Porque quem precisa de satisfação, não é mesmo?",
+      "title_en": "The Weekly Meetings Nobody Asked For: The Guide to Discontent",
+      "title_es": "Las Reuniones Semanales que Nadie Pidió: La Guía de la Insatisfacción",
+      "tone": "incredulo",
+      "source_title": "Why the Best Weekly Reviews Focus on Values, Not Tasks (TPS593)",
+      "source_url": "https://www.asianefficiency.com/podcasts/593-weekly-reviews-values-not-tasks/",
+      "source_published_at": "Mon, 29 Dec 2025 12:00:00 +0000",
+      "excerpt_en": "Learn to be productive and unhappy with weekly meetings that focus on values, not tasks. Because who needs satisfaction, right?",
+      "excerpt_es": "Aprende a ser productivo e infeliz con reuniones semanales que se centran en valores, no en tareas. Porque, ¿quién necesita satisfacción, verdad?"
+    },
+    {
       "title": "Vestidos de Rede: Ou Como a Procrastinação é o Novo Preto",
       "url": "./posts/2025/2025-12-29-vestidos-de-rede-ou-como-a-procrastinacao-e-o-novo-preto/",
       "markdown": "2025/2025-12-29-vestidos-de-rede-ou-como-a-procrastinacao-e-o-novo-preto.md",

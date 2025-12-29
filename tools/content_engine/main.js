@@ -13,7 +13,17 @@ const INDEX_PATH = path.join(BLOG_ROOT, 'index.json');
 const SOURCES_PATH = path.join(__dirname, 'sources.json');
 const STATE_PATH = path.join(__dirname, 'state', 'posted.json');
 
-const CATEGORY_OPTIONS = ['procrastinacao', 'foco-atencao', 'dev-performance', 'trabalho-remoto'];
+const CATEGORY_OPTIONS = [
+  'procrastinacao',
+  'foco-atencao',
+  'dev-performance',
+  'trabalho-remoto',
+  'marketing',
+  'produto',
+  'ux-design',
+  'carreira',
+  'negocios',
+];
 const CATEGORY_KEYWORD_HINTS = {
   'procrastinacao': 'procrastinacao',
   'procrastinação': 'procrastinacao',
@@ -37,7 +47,7 @@ const CATEGORY_KEYWORD_HINTS = {
   'engenharia': 'dev-performance',
   'engenharia de software': 'dev-performance',
   'tecnologia': 'dev-performance',
-  'ux': 'dev-performance',
+  'ux': 'ux-design',
   'programação': 'dev-performance',
   'programacao': 'dev-performance',
   'sprint': 'dev-performance',
@@ -46,11 +56,61 @@ const CATEGORY_KEYWORD_HINTS = {
   'home office': 'trabalho-remoto',
   'async': 'trabalho-remoto',
   'distributed': 'trabalho-remoto',
+  'marketing': 'marketing',
+  'marketing digital': 'marketing',
+  'marketing de conteúdo': 'marketing',
+  'marketing de conteudo': 'marketing',
+  'seo': 'marketing',
+  'content marketing': 'marketing',
+  'gestão de marketing': 'marketing',
+  'gestao de marketing': 'marketing',
+  'produto': 'produto',
+  'gestão de produto': 'produto',
+  'gestao de produto': 'produto',
+  'product management': 'produto',
+  'product manager': 'produto',
+  'roadmap': 'produto',
+  'ux design': 'ux-design',
+  'design ux': 'ux-design',
+  'design': 'ux-design',
+  'designer': 'ux-design',
+  'ui': 'ux-design',
+  'interface': 'ux-design',
+  'carreira': 'carreira',
+  'carreira tech': 'carreira',
+  'liderança': 'carreira',
+  'lideranca': 'carreira',
+  'mentoria': 'carreira',
+  'mentor': 'carreira',
+  'coach': 'carreira',
+  'coaching': 'carreira',
+  'gestão de pessoas': 'carreira',
+  'gestao de pessoas': 'carreira',
+  'negócios': 'negocios',
+  'negocios': 'negocios',
+  'negócio': 'negocios',
+  'negocio': 'negocios',
+  'empreendedorismo': 'negocios',
+  'empreendedor': 'negocios',
+  'empreendedores': 'negocios',
+  'startup': 'negocios',
+  'inovação': 'negocios',
+  'inovacao': 'negocios',
+  'business': 'negocios',
+  'saúde mental': 'foco-atencao',
+  'saude mental': 'foco-atencao',
+  'bem-estar': 'foco-atencao',
+  'bem estar': 'foco-atencao',
 };
 const FALLBACK_CATEGORY_RULES = [
   { category: 'procrastinacao', regex: /(procrastin|multitask|distraction|dopamine)/i },
   { category: 'foco-atencao', regex: /(focus|aten[cç][aã]o|concentr|mindfulness)/i },
   { category: 'trabalho-remoto', regex: /(remote work|home office|async|distributed|trabalho remoto)/i },
+  { category: 'marketing', regex: /(marketing|content|seo)/i },
+  { category: 'produto', regex: /(produto|gest[aã]o de produto|roadmap)/i },
+  { category: 'ux-design', regex: /(ux|design|interface|ui)/i },
+  { category: 'carreira', regex: /(carreira|lideran[cç]a|coach)/i },
+  { category: 'negocios', regex: /(neg[oó]cios|empreendedor)/i },
   { category: 'dev-performance', regex: /(dev|developer|code|engineering|sprint|deploy|pull request|commit)/i },
 ];
 const FEED_CATEGORY_HINTS = [
@@ -58,6 +118,11 @@ const FEED_CATEGORY_HINTS = [
   { pattern: /remote jobs/i, category: 'trabalho-remoto' },
   { pattern: /productivity|lifehack|asian efficiency|freedom/i, category: 'foco-atencao' },
   { pattern: /dev\.to|hacker news|time doctor|ali abdaal|springworks|virtual work/i, category: 'dev-performance' },
+  { pattern: /uxdesign|ux collective|nngroup|nielsen norman/i, category: 'ux-design' },
+  { pattern: /mind\s?the\s?product|mindtheproduct|\bproduct\b/i, category: 'produto' },
+  { pattern: /hubspot|rock content|rd station|marketing/i, category: 'marketing' },
+  { pattern: /career|leadership|lideran[cç]a|coaching/i, category: 'carreira' },
+  { pattern: /harvard business|hbr|fast company|fastcompany|neg[oó]cios|empreendedor/i, category: 'negocios' },
 ];
 const TONE_OPTIONS = ['incredulo', 'like', 'nao-corte'];
 const TONE_TAG_HINTS = {
@@ -142,21 +207,21 @@ function scoreItem(item, keywords) {
 function inferCategory(item, categoryScores, feedName) {
   const entries = Object.entries(categoryScores || {}).sort((a, b) => b[1] - a[1]);
   if (entries.length && entries[0][1] > 0) {
-    return entries[0][0];
+    return { category: entries[0][0], reason: 'keyword' };
   }
   const normalizedFeed = (feedName || '').toLowerCase();
   for (const hint of FEED_CATEGORY_HINTS) {
     if (hint.pattern.test(normalizedFeed)) {
-      return hint.category;
+      return { category: hint.category, reason: 'feed' };
     }
   }
   const text = `${item.title || ''} ${item.summary || ''}`.toLowerCase();
   for (const rule of FALLBACK_CATEGORY_RULES) {
     if (rule.regex.test(text)) {
-      return rule.category;
+      return { category: rule.category, reason: 'fallback' };
     }
   }
-  return 'dev-performance';
+  return { category: 'dev-performance', reason: 'default' };
 }
 
 function normalizeTone(value) {
@@ -251,7 +316,10 @@ async function loadConfig() {
 }
 
 async function loadPosted() {
-  return readJson(STATE_PATH, { entries: [] });
+  const state = await readJson(STATE_PATH, { entries: [], last_category_index: -1 });
+  if (!Array.isArray(state.entries)) state.entries = [];
+  if (typeof state.last_category_index !== 'number') state.last_category_index = -1;
+  return state;
 }
 
 function alreadyPosted(url, posted) {
@@ -284,14 +352,20 @@ async function fetchCandidates(config, posted) {
         if (alreadyPosted(item.link, posted)) continue;
 
         const { total: score, categoryScores } = scoreItem(item, config.keywords);
-        const categoryHint = inferCategory(item, categoryScores, feed.name);
+        const { category: categoryHint, reason: categoryReason } = inferCategory(item, categoryScores, feed.name);
+        let finalScore = score;
+        if (finalScore < MIN_SCORE) {
+          if (categoryReason === 'feed' || categoryReason === 'fallback') {
+            finalScore = MIN_SCORE;
+          }
+        }
         candidates.push({
           feed: feed.name,
           link: item.link,
           title: item.title || 'Sem título',
           summary: item.summary || '',
           published,
-          score,
+          score: finalScore,
           categoryHint,
         });
       }
@@ -303,9 +377,38 @@ async function fetchCandidates(config, posted) {
   return candidates.sort((a, b) => b.score - a.score);
 }
 
+function selectCandidate(candidates, lastCategoryIndex = -1) {
+  if (!candidates.length) return null;
+  const grouped = new Map();
+  candidates.forEach((candidate) => {
+    const category = candidate.categoryHint || 'dev-performance';
+    if (!grouped.has(category)) grouped.set(category, []);
+    grouped.get(category).push(candidate);
+  });
+
+  const totalCategories = CATEGORY_OPTIONS.length;
+  let currentIndex = typeof lastCategoryIndex === 'number' ? lastCategoryIndex : -1;
+  for (let i = 0; i < totalCategories; i += 1) {
+    currentIndex = (currentIndex + 1) % totalCategories;
+    const category = CATEGORY_OPTIONS[currentIndex];
+    const bucket = grouped.get(category);
+    if (bucket && bucket.length && bucket[0].score >= MIN_SCORE) {
+      return { candidate: bucket[0], rotationIndex: currentIndex };
+    }
+  }
+
+  const fallback = candidates.find((entry) => entry.score >= MIN_SCORE);
+  if (!fallback) return null;
+  const fallbackIndex = CATEGORY_OPTIONS.indexOf(fallback.categoryHint);
+  return {
+    candidate: fallback,
+    rotationIndex: fallbackIndex >= 0 ? fallbackIndex : lastCategoryIndex,
+  };
+}
+
 function buildPrompt(candidate) {
   const category = candidate.categoryHint || 'dev-performance';
-  return `Você é o Saul Goodman escrevendo sobre foco, procrastinação e performance dev.
+  return `Você é o Saul Goodman escrevendo sobre produtividade, marketing, UX/design, carreiras, negócios, procrastinação, foco e performance dev.
 Fonte selecionada: ${candidate.title} (${candidate.link}) publicada em ${candidate.published}.
 Resumo do item: ${candidate.summary?.slice(0, 400) || 'sem resumo'}.
 Resuma e reescreva em PT-BR com sarcasmo elegante, sem coach e sem propaganda.
@@ -645,16 +748,24 @@ async function updateIndex(metadata, markdownPath, body = '') {
   return entry;
 }
 
-async function updateState(posted, sourceUrl, markdownPath) {
+async function updateState(posted, sourceUrl, markdownPath, categoryIndex) {
+  const nextIndex =
+    typeof categoryIndex === 'number'
+      ? categoryIndex
+      : typeof posted.last_category_index === 'number'
+        ? posted.last_category_index
+        : -1;
   const updated = {
+    ...posted,
     entries: [
-      ...posted.entries,
+      ...(posted.entries || []),
       {
         source_url: sourceUrl,
         stored_as: markdownPath,
         created_at: new Date().toISOString(),
       },
     ],
+    last_category_index: nextIndex,
   };
 
   if (DRY_RUN) {
@@ -678,13 +789,17 @@ async function run() {
     return;
   }
 
-  const best = candidates.find((c) => c.score >= MIN_SCORE);
-  if (!best) {
+  const selection = selectCandidate(candidates, posted.last_category_index);
+  if (!selection) {
     console.log('Nenhum item atingiu o threshold de relevância.');
     return;
   }
 
-  console.log(`Selecionado: ${best.title} (score ${best.score}) [categoria: ${best.categoryHint}]`);
+  const { candidate: best, rotationIndex } = selection;
+  console.log(
+    `Selecionado: ${best.title} (score ${best.score}) [categoria: ${best.categoryHint}]` +
+      (typeof rotationIndex === 'number' ? ` (rotação idx ${rotationIndex})` : ''),
+  );
 
   const prompt = buildPrompt(best);
   const generated = await callLLM(prompt);
@@ -702,7 +817,7 @@ async function run() {
 
   const { relativePath } = await savePost(finalMarkdown, metadata);
   await updateIndex(metadata, relativePath, body);
-  await updateState(posted, metadata.source_url, relativePath);
+  await updateState(posted, metadata.source_url, relativePath, rotationIndex);
 
   console.log('Artigo gerado com sucesso.');
 }

@@ -2,7 +2,9 @@ name: Blog Content Engine
 
 on:
   schedule:
-    - cron: '0 11 * * 1' # 08:00 BRT on Mondays
+    - cron: '0 11 * * 1' # 08:00 BRT às segundas
+    - cron: '0 11 * * 3' # 08:00 BRT às quartas
+    - cron: '0 11 * * 5' # 08:00 BRT às sextas
   workflow_dispatch:
 
 permissions:

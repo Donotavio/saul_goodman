@@ -24,7 +24,15 @@
     { "name": "Steve Pavlina Blog RSS", "url": "https://stevepavlina.com/feed" },
     { "name": "TMetric Blog RSS", "url": "https://blog.tmetric.com/rss" },
     { "name": "Freedom.to Blog RSS", "url": "https://freedom.to/blog/feed" },
-    { "name": "Ali Abdaal Blog RSS", "url": "https://aliabdaal.com/feed" }
+    { "name": "Ali Abdaal Blog RSS", "url": "https://aliabdaal.com/feed" },
+    { "name": "UX Collective", "url": "https://uxdesign.cc/feed" },
+    { "name": "Nielsen Norman Group", "url": "https://www.nngroup.com/articles/rss/" },
+    { "name": "Mind the Product", "url": "https://www.mindtheproduct.com/feed/" },
+    { "name": "HubSpot Marketing Blog", "url": "https://blog.hubspot.com/marketing/rss.xml" },
+    { "name": "Rock Content", "url": "https://rockcontent.com/blog/feed/" },
+    { "name": "RD Station Blog", "url": "https://blog.rdstation.com/feed/" },
+    { "name": "Harvard Business Review", "url": "https://feeds.harvardbusiness.org/harvardbusiness" },
+    { "name": "Fast Company", "url": "https://www.fastcompany.com/rss" }
   ],
   "keywords": [
     "procrastinação",
@@ -42,6 +50,17 @@
     "psicologia",
     "comportamento",
     "UX",
-    "tecnologia"
+    "tecnologia",
+    "marketing digital",
+    "seo",
+    "gestão de produto",
+    "design",
+    "ux",
+    "negócios",
+    "carreira",
+    "liderança",
+    "inovação",
+    "saúde mental",
+    "bem-estar"
   ]
 }
