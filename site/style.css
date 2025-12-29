@@ -236,6 +236,17 @@ body {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.feedback-link {
+  border-color: rgba(0, 0, 0, 0.4);
+  color: var(--brown);
+  font-weight: 600;
+}
+
+.feedback-link:hover {
+  color: var(--black);
+  border-color: var(--black);
+}
+
 .hero-visual {
   position: relative;
   z-index: 1;
@@ -1062,6 +1073,11 @@ blockquote p {
   gap: 12px;
   font-weight: 700;
   color: var(--brown);
+}
+
+.sticky-content .feedback-link {
+  padding: 8px 14px;
+  font-size: 0.85rem;
 }
 
 .sticky-collapse {
