@@ -150,7 +150,7 @@
     </nav>
 
     <header class="hero" id="home">
-      <div class="hero-copy">
+      <div class="hero-copy" data-reveal>
         <p class="hero-eyebrow" data-i18n="heroTag">Extensão anti-procrastinação para gente real</p>
         <h1 data-i18n="heroTitle">Pare de procrastinar. Saul Goodman assume o caso.</h1>
         <p data-i18n="heroSubtitle">
@@ -169,8 +169,19 @@
           </a>
           <a class="ghost" href="#como-funciona" data-i18n="heroSecondaryCta">Veja como funciona</a>
         </div>
+        <!-- Indicador animado no hero reforça o valor da extensão logo no primeiro scroll -->
+        <div class="hero-gauge" data-gauge>
+          <div class="gauge-head">
+            <span data-i18n="heroGaugeLabel">Índice ao vivo</span>
+            <span class="gauge-value" data-gauge-value aria-live="polite">0%</span>
+          </div>
+          <div class="gauge-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span class="gauge-fill" data-gauge-fill></span>
+          </div>
+          <p class="gauge-caption" data-i18n="heroGaugeHint">Acima de 70% Saul solta o terremoto.</p>
+        </div>
       </div>
-      <div class="hero-visual">
+      <div class="hero-visual" data-reveal>
         <img
           src="assets/logotipo_saul_goodman-420.png"
           srcset="assets/logotipo_saul_goodman-420.png 420w, assets/logotipo_saul_goodman.png 1080w"
@@ -185,9 +196,62 @@
       </div>
     </header>
 
+    <!-- Destaque visual dos recursos principais para gerar compreensão imediata -->
+    <section class="section feature-showcase" id="recursos">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow" data-i18n="featureSectionEyebrow">Recursos principais</p>
+        <h2 data-i18n="featureSectionTitle">O pacote completo anti-procrastinação.</h2>
+        <p class="section-lead" data-i18n="featureSectionLead">
+          Cada cartão mistura humor e clareza, explicando em segundos o que Saul faz dentro do seu navegador.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card" data-reveal>
+          <span class="feature-icon feature-icon-radar" aria-hidden="true"></span>
+          <h3 data-i18n="featureRealtimeTitle">Rastreamento em tempo real</h3>
+          <p data-i18n="featureRealtimeBody">
+            O badge acompanha cada aba e transforma o seu dia em um índice claro de foco versus distração.
+          </p>
+          <span class="feature-hint" data-i18n="featureRealtimeHint">“Saul está de olho nas suas 37 abas.”</span>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-icon feature-icon-lists" aria-hidden="true"></span>
+          <h3 data-i18n="featureCustomTitle">Listas e pesos sob medida</h3>
+          <p data-i18n="featureCustomBody">
+            Ajuste domínios produtivos, vilões, pesos por horário e limites de terremoto conforme o seu dia.
+          </p>
+          <span class="feature-hint" data-i18n="featureCustomHint">“Planilha vale ouro, feed infinito vira vilão.”</span>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-icon feature-icon-quake" aria-hidden="true"></span>
+          <h3 data-i18n="featureQuakeTitle">Modo terremoto cinematográfico</h3>
+          <p data-i18n="featureQuakeBody">
+            Tremor na tela, sirene e Saul no overlay avisando que a procrastinação foi pega em flagrante.
+          </p>
+          <span class="feature-hint" data-i18n="featureQuakeHint">“Peguei você: volte para a aba produtiva já!”</span>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-icon feature-icon-report" aria-hidden="true"></span>
+          <h3 data-i18n="featureReportTitle">Relatório dramatizado</h3>
+          <p data-i18n="featureReportBody">
+            Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para defender o foco na daily.
+          </p>
+          <span class="feature-hint" data-i18n="featureReportHint">“Aqui estão as provas para o chefe (e para você).”</span>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-icon feature-icon-privacy" aria-hidden="true"></span>
+          <h3 data-i18n="featurePrivacyTitle">Privacidade total</h3>
+          <p data-i18n="featurePrivacyBody">
+            Tudo roda em <code>chrome.storage.local</code>, sem servidores externos nem vazamentos dramáticos.
+          </p>
+          <span class="feature-hint" data-i18n="featurePrivacyHint">“Nem o juiz tem acesso aos seus dados.”</span>
+        </article>
+      </div>
+    </section>
+
     <!-- Prévia do blog e manifesto completos saíram da home para reduzir distrações; visitantes agora seguem direto para o fluxo de valor. -->
     <section class="section how-it-works" id="como-funciona">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="processEyebrow">Como funciona</p>
         <h2 data-i18n="processTitle">Saul prende a procrastinação em três passos.</h2>
         <p class="section-lead" data-i18n="processLead">
@@ -195,21 +259,21 @@
         </p>
       </div>
       <div class="steps-grid">
-        <article class="step-card">
+        <article class="step-card" data-reveal>
           <h3 data-i18n="process1Title">Monitora suas abas ativas</h3>
           <p data-i18n="process1Body">
             O ícone do Saul acompanha o que está aberto e entende imediatamente se você está estudando, trabalhando ou
             caindo no feed eterno.
           </p>
         </article>
-        <article class="step-card">
+        <article class="step-card" data-reveal>
           <h3 data-i18n="process2Title">Detecta distrações</h3>
           <p data-i18n="process2Body">
             Domínios produtivos e vilões ficam configurados de forma simples. Se você fugir do plano, o alerta entra em
             ação com vibração, som e um “ei!” nada discreto.
           </p>
         </article>
-        <article class="step-card">
+        <article class="step-card" data-reveal>
           <h3 data-i18n="process3Title">Gera provas utilizáveis</h3>
           <p data-i18n="process3Body">
             Ao final do dia você recebe um relatório direto, com gráfico, resumo e plano de ação para ajustar o próximo
@@ -220,7 +284,7 @@
     </section>
 
     <section class="section why" id="beneficios">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="reasonsEyebrow">Benefícios chave</p>
         <h2 data-i18n="reasonsTitle">Why use Saul Goodman?</h2>
         <p class="section-lead" data-i18n="reasonsLead">
@@ -228,27 +292,61 @@
         </p>
       </div>
       <div class="why-grid">
-        <article class="benefit-card">
+        <article class="benefit-card" data-reveal>
           <h3 data-i18n="reason1Title">Foco guiado</h3>
           <p data-i18n="reason1Body">O índice no popup mostra seu status em tempo real para você decidir o próximo passo.</p>
         </article>
-        <article class="benefit-card">
+        <article class="benefit-card" data-reveal>
           <h3 data-i18n="reason2Title">Alertas impossíveis de ignorar</h3>
           <p data-i18n="reason2Body">Tela treme, Saul fala e você é lembrado de voltar ao trabalho antes que vire caos.</p>
         </article>
-        <article class="benefit-card">
+        <article class="benefit-card" data-reveal>
           <h3 data-i18n="reason3Title">Relatórios prontos para apresentar</h3>
           <p data-i18n="reason3Body">Os gráficos e resumos cabem em qualquer daily, 1:1 ou conversa com o cliente.</p>
         </article>
-        <article class="benefit-card">
+        <article class="benefit-card" data-reveal>
           <h3 data-i18n="reason4Title">Privacidade total</h3>
           <p data-i18n="reason4Body">Todos os dados permanecem no seu Chrome; nem Saul vê nada fora dali.</p>
         </article>
       </div>
     </section>
 
+    <!-- Seção terremoto recebe animação glitch para reforçar o alerta -->
+    <section class="section quake-highlight" id="terremoto" data-quake-section>
+      <div class="section-head" data-reveal>
+        <p class="eyebrow" data-i18n="quakeEyebrow">Modo terremoto</p>
+        <h2 data-i18n="quakeTitle">Quando Saul detecta vilões, a página treme junto.</h2>
+        <p class="section-lead" data-i18n="quakeLead">
+          O mesmo efeito dramático da extensão aparece aqui para mostrar a seriedade do alerta quando o índice passa do limite.
+        </p>
+      </div>
+      <div class="quake-grid">
+        <div class="quake-copy" data-reveal>
+          <p class="quake-micro" data-i18n="quakeMicro">“Peguei você no feed! Prepare-se para o abalo.”</p>
+          <p data-i18n="quakeBody">
+            O overlay bloqueia as abas vilãs, exibe CTA claro e ainda toca sirene opcional. É impossível ignorar — e esse é o ponto.
+          </p>
+          <button class="primary quake-button" type="button" data-quake-trigger data-i18n="quakeButton">
+            Testar tremor agora
+          </button>
+          <span class="quake-tip" data-i18n="quakeTip">Fique tranquilo: o demo dura só alguns segundos.</span>
+        </div>
+        <div class="quake-display" data-reveal>
+          <div class="quake-display-screen">
+            <span class="quake-alert" data-i18n="quakeCallout">Earthquake incoming!</span>
+            <div class="quake-bars">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <p data-i18n="quakeDisplayCopy">Volte ao foco ou Saul aumenta os honorários.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section demo" id="demo">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="demoEyebrow">Demonstração rápida</p>
         <h2 data-i18n="demoTitle">Veja onde você decide e onde Saul cobra.</h2>
         <p class="section-lead" data-i18n="demoLead">
@@ -256,7 +354,7 @@
         </p>
       </div>
       <div class="demo-grid">
-        <figure class="demo-card">
+        <figure class="demo-card" data-reveal>
           <img
             src="assets/screenshots/popup-indice-900.png"
             srcset="assets/screenshots/popup-indice-900.png 900w, assets/screenshots/popup-indice.png 1280w"
@@ -272,7 +370,7 @@
             <p data-i18n="demoPopupBody">Índice diário, domínios campeões e atalhos para exportar provas.</p>
           </figcaption>
         </figure>
-        <figure class="demo-card">
+        <figure class="demo-card" data-reveal>
           <img
             src="assets/screenshots/report-resumo-graficos-900.png"
             srcset="assets/screenshots/report-resumo-graficos-900.png 900w, assets/screenshots/report-resumo-graficos.png 1280w"
@@ -304,20 +402,20 @@
     </section>
 
     <section class="section" id="testemunhos">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="testimonialsEyebrow">Testemunhos</p>
         <h2 data-i18n="testimonialsTitle">Clientes absolvidos.</h2>
       </div>
       <div class="testimonials">
-        <blockquote>
+        <blockquote data-reveal>
           <p data-i18n="testimonial1Quote">“Saul me lembrou que trocar 40 abas por hora é crime.”</p>
           <cite data-i18n="testimonial1Cite">— Cliente anônimo</cite>
         </blockquote>
-        <blockquote>
+        <blockquote data-reveal>
           <p data-i18n="testimonial2Quote">“O relatório virou peça de defesa na reunião com o chefe.”</p>
           <cite data-i18n="testimonial2Cite">— Engenheiro arrependido</cite>
         </blockquote>
-        <blockquote>
+        <blockquote data-reveal>
           <p data-i18n="testimonial3Quote">“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”</p>
           <cite data-i18n="testimonial3Cite">— Product Manager</cite>
         </blockquote>
@@ -326,7 +424,7 @@
 
     <!-- Manifesto, timeline, demo interativa do terremoto e integrações longas foram condensados em seções mais curtas para minimizar a sobrecarga na leitura principal. -->
     <section class="section trust" id="privacidade">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="trustEyebrow">Privacidade &amp; confiança</p>
         <h2 data-i18n="trustTitle">Tudo fica entre você e seu navegador.</h2>
         <p class="section-lead" data-i18n="trustLead">
@@ -334,15 +432,15 @@
         </p>
       </div>
       <div class="trust-grid">
-        <article class="trust-card">
+        <article class="trust-card" data-reveal>
           <h3 data-i18n="trustCard1Title">100% local</h3>
           <p data-i18n="trustCard1Body">As métricas moram em <code>chrome.storage.local</code>. Nada é enviado para servidores.</p>
         </article>
-        <article class="trust-card">
+        <article class="trust-card" data-reveal>
           <h3 data-i18n="trustCard2Title">Open-source auditável</h3>
           <p data-i18n="trustCard2Body">O código está aberto para revisão. Qualquer pessoa pode inspecionar cada linha.</p>
         </article>
-        <article class="trust-card">
+        <article class="trust-card" data-reveal>
           <h3 data-i18n="trustCard3Title">Alertas transparentes</h3>
           <p data-i18n="trustCard3Body">Você escolhe quando o alerta dispara e pode desligá-lo a qualquer momento.</p>
         </article>
@@ -350,8 +448,8 @@
     </section>
 
     <section class="section cta" id="cta-final">
-      <h2 data-i18n="finalCtaTitle">Hora de deixar Saul assumir o caso?</h2>
-      <p data-i18n="finalCtaBody">
+      <h2 data-i18n="finalCtaTitle" data-reveal>Hora de deixar Saul assumir o caso?</h2>
+      <p data-i18n="finalCtaBody" data-reveal>
         Clique, instale e configure seus domínios em minutos. Saul lembra você do foco antes que a aba vilã vença.
       </p>
       <div class="hero-cta">
@@ -368,7 +466,7 @@
     </section>
 
     <section class="section faq-section" id="faq">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="faqEyebrow">Perguntas rápidas</p>
         <h2 data-i18n="faqTitle">FAQ direto ao ponto.</h2>
       </div>
@@ -389,16 +487,35 @@
     </section>
 
     <section class="section developers" id="developers">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <p class="eyebrow" data-i18n="devEyebrow">For developers</p>
         <h2 data-i18n="devTitle">Quer contribuir ou integrar?</h2>
         <p class="section-lead" data-i18n="devLead">
           Mantivemos os detalhes técnicos fora do fluxo principal. Leia os guias abaixo sem sair do contexto.
         </p>
       </div>
+      <p class="developer-body" data-i18n="devBody">
+        Integra com o daemon local e com a extensão VS Code para contar tempo de editor como minutos produtivos, mantendo tudo no localhost.
+      </p>
       <div class="developer-actions">
-        <a class="ghost" href="../README.md" target="_blank" rel="noreferrer" data-i18n="devCtaReadme">Abrir README</a>
-        <a class="ghost" href="../docs/architecture.md" target="_blank" rel="noreferrer" data-i18n="devCtaDocs">Ver docs</a>
+        <a
+          class="ghost"
+          href="https://github.com/Donotavio/saul_goodman?tab=readme-ov-file#saul-goodman--extens%C3%A3o-anti-procrastina%C3%A7%C3%A3o"
+          target="_blank"
+          rel="noreferrer"
+          data-i18n="devCtaReadme"
+        >
+          Abrir README
+        </a>
+        <a
+          class="ghost"
+          href="https://github.com/Donotavio/saul_goodman/blob/main/docs/architecture.md"
+          target="_blank"
+          rel="noreferrer"
+          data-i18n="devCtaDocs"
+        >
+          Ver docs
+        </a>
       </div>
     </section>
 
@@ -408,9 +525,17 @@
         <p data-i18n="footerBody">Instale, liste seus vilões e deixe Saul cobrar os honorários do foco.</p>
       </div>
       <div class="footer-links">
-        <a href="../docs/architecture.md" target="_blank" data-i18n="footerLinkArchitecture">Arquitetura</a>
+        <a
+          href="https://github.com/Donotavio/saul_goodman/blob/main/docs/architecture.md"
+          target="_blank"
+          data-i18n="footerLinkArchitecture"
+        >Arquitetura</a>
         <a href="../docs/indicators.md" target="_blank" data-i18n="footerLinkIndicators">Indicadores</a>
-        <a href="../README.md" target="_blank" data-i18n="footerLinkGithub">GitHub</a>
+        <a
+          href="https://github.com/Donotavio/saul_goodman?tab=readme-ov-file#saul-goodman--extens%C3%A3o-anti-procrastina%C3%A7%C3%A3o"
+          target="_blank"
+          data-i18n="footerLinkGithub"
+        >GitHub</a>
       </div>
       <p class="privacy" data-i18n="footerPrivacy">Dados 100% locais. Nem o juiz vê.</p>
     </footer>

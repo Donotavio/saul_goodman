@@ -16,6 +16,8 @@ const translations = {
       'A extensão monitora suas abas, identifica distrações e pressiona você a voltar ao foco antes que o dia escapole. Tudo direto no seu Chrome, sem cadastros.',
     heroPrimaryCta: 'Install on Chrome',
     heroSecondaryCta: 'Veja como funciona',
+    heroGaugeLabel: 'Índice ao vivo',
+    heroGaugeHint: 'Acima de 70% Saul solta o terremoto.',
     heroConfidence1: 'Modo terremoto personalizado',
     heroConfidence2: 'Lista negra & lista VIP de domínios',
     heroConfidence3: 'Relatório com storytelling IA',
@@ -31,6 +33,30 @@ const translations = {
     reason3Body: 'Os gráficos e resumos cabem em qualquer daily, 1:1 ou conversa com o cliente.',
     reason4Title: 'Privacidade total',
     reason4Body: 'Todos os dados permanecem no seu Chrome; nem Saul vê nada fora dali.',
+    featureSectionEyebrow: 'Recursos principais',
+    featureSectionTitle: 'O pacote completo anti-procrastinação.',
+    featureSectionLead:
+      'Cada cartão mistura humor e clareza para mostrar como Saul cuida do foco dentro do navegador.',
+    featureRealtimeTitle: 'Rastreamento em tempo real',
+    featureRealtimeBody:
+      'O badge monitora cada aba e atualiza o índice para você saber se é hora de virar o jogo.',
+    featureRealtimeHint: '“Saul está de olho nas suas 37 abas.”',
+    featureCustomTitle: 'Listas e pesos sob medida',
+    featureCustomBody:
+      'Defina domínios produtivos, vilões, pesos por horário e limite do terremoto conforme o seu dia.',
+    featureCustomHint: '“Planilha vale ouro, feed infinito vira vilão.”',
+    featureQuakeTitle: 'Modo terremoto cinematográfico',
+    featureQuakeBody:
+      'Tela treme, sirene toca e Saul aparece na frente das abas vilãs com um CTA impossível de ignorar.',
+    featureQuakeHint: '“Peguei você: volte para a aba produtiva já!”',
+    featureReportTitle: 'Relatório dramatizado',
+    featureReportBody:
+      'Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para prestar contas com estilo.',
+    featureReportHint: '“Aqui estão as provas para o chefe (e para você).”',
+    featurePrivacyTitle: 'Privacidade total',
+    featurePrivacyBody:
+      'Tudo roda em <code>chrome.storage.local</code> e fica no seu navegador, sem servidores externos.',
+    featurePrivacyHint: '“Nem o juiz tem acesso aos seus dados.”',
     processEyebrow: 'Como funciona',
     processTitle: 'Saul prende a procrastinação em três passos.',
     processLead:
@@ -102,6 +128,17 @@ const translations = {
     demoReportTitle: 'Relatório para planejar o dia',
     demoReportBody: 'Gráficos, narrativa leve e próximos passos sugeridos.',
     demoCta: 'View full demo',
+    quakeEyebrow: 'Modo terremoto',
+    quakeTitle: 'Quando Saul detecta vilões, a página treme junto.',
+    quakeLead:
+      'O mesmo efeito dramático da extensão aparece aqui para mostrar a seriedade do alerta quando o índice passa do limite.',
+    quakeMicro: '“Peguei você no feed! Prepare-se para o abalo.”',
+    quakeBody:
+      'O overlay bloqueia as abas vilãs, exibe CTA direto e pode tocar sirene opcional. É impossível ignorar — e esse é o ponto.',
+    quakeButton: 'Testar tremor agora',
+    quakeTip: 'Fique tranquilo: o demo dura só alguns segundos.',
+    quakeCallout: 'Earthquake incoming!',
+    quakeDisplayCopy: 'Volte ao foco ou Saul aumenta os honorários.',
     splitPopupTitle: 'Popup de plantão',
     splitPopupBody:
       'O painel mostra o índice, top domínios, indicadores extras e permite exportar CSV/PDF. Quando o foco despenca, o modo terremoto invade para salvar a barra da justiça.',
@@ -192,6 +229,8 @@ const translations = {
     devTitle: 'Quer contribuir ou integrar?',
     devLead:
       'Mantivemos os detalhes técnicos fora do fluxo principal. Leia os guias sem sair do contexto.',
+    devBody:
+      'Integra com o daemon local e com a extensão VS Code para contar tempo de editor como foco produtivo sem sair do localhost.',
     devCtaReadme: 'Abrir README',
     devCtaDocs: 'Ver docs',
     footerTitle: 'Saul Goodman Extension',
@@ -218,6 +257,8 @@ const translations = {
       'It tracks your tabs, flags distractions, and nudges you back to focus before the day derails — all inside Chrome, no sign-ups.',
     heroPrimaryCta: 'Install on Chrome',
     heroSecondaryCta: 'See how it works',
+    heroGaugeLabel: 'Live index',
+    heroGaugeHint: 'When it hits 70%, quake mode storms in.',
     heroConfidence1: 'Custom earthquake mode',
     heroConfidence2: 'Blacklist & VIP domain lists',
     heroConfidence3: 'Report with AI storytelling',
@@ -233,6 +274,30 @@ const translations = {
     reason3Body: 'Charts and summaries drop perfectly into a daily, stand-up, or client update.',
     reason4Title: 'Total privacy',
     reason4Body: 'Every metric lives inside Chrome; nothing leaves your machine.',
+    featureSectionEyebrow: 'Core features',
+    featureSectionTitle: 'Everything you need to keep tabs in check.',
+    featureSectionLead:
+      'Each card mixes humor and clarity so newcomers instantly understand what Saul does inside Chrome.',
+    featureRealtimeTitle: 'Real-time tracking',
+    featureRealtimeBody:
+      'The badge watches every tab and turns your day into a clear score of focus versus procrastination.',
+    featureRealtimeHint: '“Saul is watching those 37 tabs.”',
+    featureCustomTitle: 'Custom lists & weights',
+    featureCustomBody:
+      'Define productive and villain domains, hourly weights, and quake thresholds tuned to your routine.',
+    featureCustomHint: '“Spreadsheet? VIP. Endless feed? Defendant.”',
+    featureQuakeTitle: 'Cinematic quake mode',
+    featureQuakeBody:
+      'Screen shake, siren, and Saul on top of villain tabs screaming for you to get back on track.',
+    featureQuakeHint: '“Caught you! Back to the productive tab now.”',
+    featureReportTitle: 'Dramatic report',
+    featureReportBody:
+      'Charts, AI storytelling, CSV/PDF exports, and minute-by-minute timeline for your next stand-up.',
+    featureReportHint: '“Here’s the evidence for you and your boss.”',
+    featurePrivacyTitle: 'Privacy-first',
+    featurePrivacyBody:
+      'Everything runs inside <code>chrome.storage.local</code>; no external servers or leaked verdicts.',
+    featurePrivacyHint: '“Not even the judge sees your data.”',
     processEyebrow: 'How it works',
     processTitle: 'Saul locks procrastination in three steps.',
     processLead:
@@ -302,6 +367,17 @@ const translations = {
     demoReportTitle: 'Report for planning',
     demoReportBody: 'Charts, light storytelling, and suggested next moves.',
     demoCta: 'View full demo',
+    quakeEyebrow: 'Earthquake mode',
+    quakeTitle: 'When Saul spots villains, the page shakes with him.',
+    quakeLead:
+      'The same dramatic alert from the extension shows up here so visitors feel how serious the warning is past the threshold.',
+    quakeMicro: '“Caught you doom-scrolling! Brace for impact.”',
+    quakeBody:
+      'The overlay blocks villain tabs, shows a bold CTA, and can blast the optional siren. Impossible to ignore — exactly as planned.',
+    quakeButton: 'Trigger the shake',
+    quakeTip: 'Relax: the preview lasts just a few seconds.',
+    quakeCallout: 'Earthquake incoming!',
+    quakeDisplayCopy: 'Jump back to focus or Saul raises his fees.',
     splitPopupTitle: 'On-call popup',
     splitPopupBody:
       'The panel shows the index, top domains, extra indicators, and lets you export CSV/PDF. When focus drops, earthquake mode storms in to save the bar of justice.',
@@ -391,6 +467,8 @@ const translations = {
     devEyebrow: 'For developers',
     devTitle: 'Want to contribute or integrate?',
     devLead: 'All technical details moved out of the main flow. Start with the guides below.',
+    devBody:
+      'Hook up the local daemon and VS Code extension to count editor time as productive minutes without leaving localhost.',
     devCtaReadme: 'Open README',
     devCtaDocs: 'View docs',
     footerTitle: 'Saul Goodman Extension',
@@ -417,6 +495,8 @@ const translations = {
       'Supervisa tus pestañas, detecta distracciones y te empuja de vuelta al foco antes de que el día se vaya. Todo en Chrome, sin registros.',
     heroPrimaryCta: 'Install on Chrome',
     heroSecondaryCta: 'Ver cómo funciona',
+    heroGaugeLabel: 'Índice en vivo',
+    heroGaugeHint: 'Si pasa del 70%, llega el terremoto.',
     heroConfidence1: 'Modo terremoto personalizado',
     heroConfidence2: 'Lista negra y lista VIP de dominios',
     heroConfidence3: 'Informe con narrativa IA',
@@ -432,6 +512,30 @@ const translations = {
     reason3Body: 'Gráficos y resúmenes caben en la daily, en un 1:1 o con el cliente.',
     reason4Title: 'Privacidad total',
     reason4Body: 'Los datos viven en tu Chrome; nada sale del computador.',
+    featureSectionEyebrow: 'Funciones clave',
+    featureSectionTitle: 'El paquete completo anti-procrastinación.',
+    featureSectionLead:
+      'Cada tarjeta explica con humor y claridad lo que Saul hace dentro del navegador.',
+    featureRealtimeTitle: 'Rastreo en tiempo real',
+    featureRealtimeBody:
+      'El badge observa cada pestaña y convierte tu jornada en un índice claro de foco vs. distracción.',
+    featureRealtimeHint: '“Saul vigila esas 37 pestañas.”',
+    featureCustomTitle: 'Listas y pesos a tu medida',
+    featureCustomBody:
+      'Define dominios productivos, villanos, pesos por horario y límites de terremoto según tu rutina.',
+    featureCustomHint: '“Planilla es VIP, feed infinito es sospechoso.”',
+    featureQuakeTitle: 'Modo terremoto cinematográfico',
+    featureQuakeBody:
+      'Sacudida de pantalla, sirena y Saul sobre las pestañas villanas gritando que vuelvas al foco.',
+    featureQuakeHint: '“Te vi: regresa a la pestaña productiva.”',
+    featureReportTitle: 'Informe dramatizado',
+    featureReportBody:
+      'Gráficos, narrativa IA, CSV/PDF y timeline por minuto para defender tu sprint.',
+    featureReportHint: '“Pruebas listas para el jefe (y para ti).”',
+    featurePrivacyTitle: 'Privacidad total',
+    featurePrivacyBody:
+      'Todo corre en <code>chrome.storage.local</code>; nada sale a servidores externos.',
+    featurePrivacyHint: '“Ni el juez ve tus datos.”',
     processEyebrow: 'Cómo funciona',
     processTitle: 'Saul encierra la procrastinación en tres pasos.',
     processLead:
@@ -503,6 +607,17 @@ const translations = {
     demoReportTitle: 'Informe para planear',
     demoReportBody: 'Gráficos, narrativa ligera y próximos pasos sugeridos.',
     demoCta: 'View full demo',
+    quakeEyebrow: 'Modo terremoto',
+    quakeTitle: 'Cuando Saul detecta villanos, la página tiembla con él.',
+    quakeLead:
+      'El mismo alertón dramático de la extensión aparece aquí para mostrar lo serio que es cruzar el umbral.',
+    quakeMicro: '“Te pillé en el feed. Prepárate para el temblor.”',
+    quakeBody:
+      'El overlay bloquea pestañas villanas, muestra un CTA firme y puede sonar la sirena. Es imposible ignorarlo.',
+    quakeButton: 'Probar el temblor',
+    quakeTip: 'Tranquilo: la demo dura solo unos segundos.',
+    quakeCallout: '¡Terremoto en camino!',
+    quakeDisplayCopy: 'Vuelve al foco o Saul sube los honorarios.',
     splitPopupTitle: 'Popup de guardia',
     splitPopupBody:
       'El panel muestra el índice, top dominios, indicadores extra y permite exportar CSV/PDF. Cuando el foco cae, el modo terremoto invade para salvar la barra de la justicia.',
@@ -593,6 +708,8 @@ const translations = {
     devEyebrow: 'For developers',
     devTitle: '¿Quieres contribuir o integrar?',
     devLead: 'Movimos los detalles técnicos fuera del flujo principal. Empieza por aquí.',
+    devBody:
+      'Integra el daemon local y la extensión de VS Code para contar tiempo de editor como minutos productivos sin salir de localhost.',
     devCtaReadme: 'Abrir README',
     devCtaDocs: 'Ver docs',
     footerTitle: 'Extensión Saul Goodman',
@@ -604,7 +721,7 @@ const translations = {
   }
 };
 
-const richTextKeys = new Set(['feature4Item1', 'faq2Answer', 'trustCard1Body']);
+const richTextKeys = new Set(['feature4Item1', 'faq2Answer', 'trustCard1Body', 'featurePrivacyBody']);
 const supportedLanguages = ['pt', 'en', 'es'];
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
@@ -663,6 +780,9 @@ const registerServiceWorker = () => {
 };
 let blogPreviewPosts = null;
 let blogPreviewPromise = null;
+let scrollRevealObserver;
+let quakeHighlightObserver;
+let gaugeIntervalId;
 
 const getDictionary = () => translations[currentLanguage] || translations[defaultLanguage];
 const t = (key) => {
@@ -1166,10 +1286,91 @@ const setupParallax = () => {
   );
 };
 
+const setupScrollReveal = () => {
+  const elements = document.querySelectorAll('[data-reveal]');
+  if (!elements.length) return;
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach((element) => element.classList.add('is-visible'));
+    return;
+  }
+  if (scrollRevealObserver) {
+    scrollRevealObserver.disconnect();
+  }
+  scrollRevealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        scrollRevealObserver.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+  );
+  elements.forEach((element) => scrollRevealObserver.observe(element));
+};
+
+const setupGauge = () => {
+  const gauge = document.querySelector('[data-gauge]');
+  if (!gauge || gauge.dataset.gaugeReady === 'true') return;
+  const fill = gauge.querySelector('[data-gauge-fill]');
+  const value = gauge.querySelector('[data-gauge-value]');
+  const bar = gauge.querySelector('[role=\"progressbar\"]');
+  if (!fill || !value || !bar) return;
+  gauge.dataset.gaugeReady = 'true';
+  let current = 32;
+  let direction = 1;
+  const render = () => {
+    const clamped = Math.max(0, Math.min(100, Math.round(current)));
+    fill.style.width = `${clamped}%`;
+    value.textContent = `${clamped}%`;
+    bar.setAttribute('aria-valuenow', String(clamped));
+    gauge.setAttribute('data-gauge-state', clamped >= 70 ? 'alert' : 'focus');
+  };
+  const tick = () => {
+    const delta = Math.random() * 6 + 3;
+    current += delta * direction;
+    if (current >= 87) {
+      direction = -1;
+    } else if (current <= 24) {
+      direction = 1;
+    }
+    render();
+  };
+  render();
+  gaugeIntervalId = window.setInterval(tick, 2600);
+  gauge.addEventListener('mouseenter', tick);
+};
+
+const setupQuakeHighlight = () => {
+  const section = document.querySelector('[data-quake-section]');
+  if (!section) return;
+  if (!('IntersectionObserver' in window)) {
+    section.classList.add('is-quaking');
+    return;
+  }
+  if (quakeHighlightObserver) {
+    quakeHighlightObserver.disconnect();
+  }
+  quakeHighlightObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-quaking');
+        window.setTimeout(() => entry.target.classList.remove('is-quaking'), 1400);
+      });
+    },
+    { threshold: 0.5 }
+  );
+  quakeHighlightObserver.observe(section);
+};
+
 window.addEventListener('DOMContentLoaded', () => {
   setupLightbox();
   applyTranslations(detectLanguage());
   bindLanguageSelector();
+  setupScrollReveal();
+  setupGauge();
+  setupQuakeHighlight();
   runWhenIdle(() => {
     renderBlogPreview();
     setupCarousels();
