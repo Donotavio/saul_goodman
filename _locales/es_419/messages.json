@@ -201,7 +201,7 @@
     "message": "Estudio"
   },
   "popup_fairness_note": {
-    "message": "El override manual siempre gana. Saul solo puntúa cuando tiene sentido."
+    "message": "Saul solo puntúa cuando tiene sentido. Ignorar hoy pone el índice en cero y silencia alertas. Contextos: Trabajo mantiene 100%, Personal neutraliza todo, Ocio cuenta solo 30 % del foco y omite villanos, Estudio reduce las penalidades a la mitad."
   },
   "popup_fairness_holiday_detected": {
     "message": "Feriado detectado — sin penalidades."

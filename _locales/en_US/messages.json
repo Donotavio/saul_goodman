@@ -201,7 +201,7 @@
     "message": "Study"
   },
   "popup_fairness_note": {
-    "message": "Manual override always wins. Saul only scores when it makes sense."
+    "message": "Saul only scores when it makes sense. Skip Today sets the score to zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties."
   },
   "popup_fairness_holiday_detected": {
     "message": "Holiday detected — no penalties."

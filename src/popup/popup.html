@@ -29,12 +29,21 @@
         <div class="fairness-header">
           <div>
             <h2 data-i18n="popup_fairness_title">Justiça do dia</h2>
-            <p id="fairnessStatus" data-i18n="popup_fairness_status_default">Dia útil normal.</p>
+            <p
+              id="fairnessStatus"
+              role="status"
+              aria-live="polite"
+              data-i18n="popup_fairness_status_default"
+            >
+              Dia útil normal.
+            </p>
           </div>
           <p
             id="holidayStatus"
             class="fairness-hint"
             hidden
+            role="status"
+            aria-live="polite"
             data-i18n="popup_fairness_holiday_detected"
           >
             Feriado detectado — sem penalidades.
@@ -43,11 +52,15 @@
         <div class="fairness-controls">
           <label class="toggle" for="manualOverrideToggle">
             <span data-i18n="popup_fairness_manual_label">Ignorar hoje</span>
-            <input type="checkbox" id="manualOverrideToggle" />
+            <input
+              type="checkbox"
+              id="manualOverrideToggle"
+              aria-describedby="fairnessImpactHint"
+            />
           </label>
           <label class="fairness-context" for="contextSelect">
             <span data-i18n="popup_fairness_context_label">Contexto atual</span>
-            <select id="contextSelect">
+            <select id="contextSelect" aria-describedby="fairnessImpactHint">
               <option value="work" data-i18n="popup_context_option_work">Trabalho</option>
               <option value="personal" data-i18n="popup_context_option_personal">Pessoal</option>
               <option value="leisure" data-i18n="popup_context_option_leisure">Lazer</option>
@@ -55,8 +68,10 @@
             </select>
           </label>
         </div>
-        <p class="fairness-note" data-i18n="popup_fairness_note">
-          Saul só calcula quando faz sentido. Override manual vence contexto e feriados.
+        <p id="fairnessImpactHint" class="fairness-note" data-i18n="popup_fairness_note">
+          Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contexto:
+          Trabalho mantém 100%, Pessoal neutraliza, Lazer conta 30% do foco e ignora vilões, Estudos
+          reduz o peso das penalidades pela metade.
         </p>
       </section>
 
