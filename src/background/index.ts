@@ -33,7 +33,7 @@ import {
   HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
-import { getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
 import { getManualOverrideState, isManualOverrideActive } from '../shared/utils/manual-override.js';
@@ -1238,11 +1238,12 @@ function updateFairnessSummary(result?: ScoreComputation): void {
     source?.manualOverrideActive ?? isManualOverrideActive(manualOverrideState, getTodayKey());
   const appliedRule =
     manualActive && (!source || source.rule !== 'manual-override') ? 'manual-override' : source?.rule ?? 'normal';
+  const resolvedHolidayNeutral = source?.holidayNeutral ?? holidayNeutralToday;
   fairnessSnapshot = {
     rule: appliedRule,
     manualOverrideActive: manualActive,
     contextMode: context,
-    holidayNeutral: appliedRule === 'holiday',
+    holidayNeutral: resolvedHolidayNeutral,
     isHolidayToday: holidayNeutralToday
   };
 }
@@ -1364,7 +1365,7 @@ async function updateRestoredItems(): Promise<void> {
         return acc;
       }
       const d = new Date(ts);
-      const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+      const key = formatDateKey(d);
       if (key !== today) {
         return acc;
       }
