@@ -1,4 +1,4 @@
-import '../main.js';
+import './main.js';
 
 const PRIVACY_URL =
   'https://raw.githubusercontent.com/Donotavio/saul_goodman/main/docs/privacy-policy.md';
