@@ -68,10 +68,17 @@
             </select>
           </label>
         </div>
-        <p id="fairnessImpactHint" class="fairness-note" data-i18n="popup_fairness_note">
-          Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contexto:
-          Trabalho mantém 100%, Pessoal neutraliza, Lazer conta 30% do foco e ignora vilões, Estudos
-          reduz o peso das penalidades pela metade.
+        <p id="fairnessImpactHint" class="fairness-note">
+          <span data-i18n="popup_fairness_note_label">Como funciona?</span>
+          <span
+            class="info-icon"
+            aria-label="Explicação"
+            data-i18n-aria-label="popup_tooltip_aria"
+            data-i18n-tooltip="popup_fairness_note"
+            data-tooltip="Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade."
+          >
+            i
+          </span>
         </p>
       </section>
 

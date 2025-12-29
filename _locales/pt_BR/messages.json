@@ -200,6 +200,9 @@
   "popup_context_option_study": {
     "message": "Estudos"
   },
+  "popup_fairness_note_label": {
+    "message": "Saul explica"
+  },
   "popup_fairness_note": {
     "message": "Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade."
   },

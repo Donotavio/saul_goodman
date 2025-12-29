@@ -200,6 +200,9 @@
   "popup_context_option_study": {
     "message": "Study"
   },
+  "popup_fairness_note_label": {
+    "message": "Saul explains"
+  },
   "popup_fairness_note": {
     "message": "Saul only scores when it makes sense. Skip Today sets the score to zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties."
   },
