@@ -38,7 +38,10 @@
     "notifications"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://date.nager.at/*",
+    "https://api.openai.com/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
   ],
   "content_scripts": [
     {
