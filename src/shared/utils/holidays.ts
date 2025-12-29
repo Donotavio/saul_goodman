@@ -31,10 +31,22 @@ export interface HolidayResolutionResult {
   cacheKey?: string;
 }
 
+/**
+ * Builds a storage key for cached holiday responses.
+ * @param year ISO year for the query.
+ * @param countryCode ISO-3166 alpha-2 country code.
+ * @returns Cache key composed as "{COUNTRY}-{YEAR}".
+ */
 export function buildHolidayCacheKey(year: number, countryCode: string): string {
   return `${countryCode.toUpperCase()}-${year}`;
 }
 
+/**
+ * Checks whether a cached entry is older than the configured TTL.
+ * @param entry Cache metadata retrieved from storage.
+ * @param now Reference timestamp, defaults to `Date.now()`.
+ * @returns True when the cache is missing or expired.
+ */
 export function isCacheExpired(entry: HolidayCacheEntry | undefined, now = Date.now()): boolean {
   if (!entry) {
     return true;
@@ -42,10 +54,21 @@ export function isCacheExpired(entry: HolidayCacheEntry | undefined, now = Date.
   return now - entry.fetchedAt > CACHE_TTL_MS;
 }
 
+/**
+ * Helper to read the list of ISO dates for a cache key.
+ * @param cache In-memory cache map stored alongside settings.
+ * @param key Key produced by {@link buildHolidayCacheKey}.
+ * @returns Array of ISO strings (`YYYY-MM-DD`) or an empty array.
+ */
 export function listCachedDates(cache: HolidaysCache, key: string): string[] {
   return cache[key]?.dates ?? [];
 }
 
+/**
+ * Fetches the Nager.Date public holidays list for a `(year, country)` pair.
+ * Errors are swallowed to keep the fairness feature best-effort.
+ * @returns Array of ISO date strings.
+ */
 export async function fetchPublicHolidays(
   year: number,
   countryCode: string,
@@ -66,6 +89,11 @@ export async function fetchPublicHolidays(
   }
 }
 
+/**
+ * Determines whether today counts as a national holiday and updates the cache.
+ * Fetches from the remote API only when required and allowed by the user settings.
+ * @returns Neutralization result plus the new cache snapshot.
+ */
 export async function resolveHolidayNeutralState(
   params: HolidayResolutionParams
 ): Promise<HolidayResolutionResult> {

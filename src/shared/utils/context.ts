@@ -47,6 +47,10 @@ export const CONTEXT_MODE_OPTIONS: Array<{ value: ContextModeValue; labelKey: st
   { value: 'study', labelKey: 'popup_context_option_study' }
 ];
 
+/**
+ * Reads the persisted context mode or falls back to "work".
+ * @returns The stored {@link ContextModeState} including the last updated timestamp.
+ */
 export async function getContextMode(): Promise<ContextModeState> {
   const stored =
     (await readLocalStorage<ContextModeState>(LocalStorageKey.CONTEXT_MODE)) ??
@@ -57,12 +61,22 @@ export async function getContextMode(): Promise<ContextModeState> {
   return stored;
 }
 
+/**
+ * Persists the selected context mode value and timestamp.
+ * @param value Context choice provided by the user.
+ * @returns The saved context state, useful for optimistic UI updates.
+ */
 export async function setContextMode(value: ContextModeValue): Promise<ContextModeState> {
   const next: ContextModeState = { value, updatedAt: Date.now() };
   await writeLocalStorage(LocalStorageKey.CONTEXT_MODE, next);
   return next;
 }
 
+/**
+ * Maps a context value to its scoring multipliers and fairness rule.
+ * @param value Context value coming from the popup selector.
+ * @returns Multiplier config that calculateProcrastinationIndex can apply.
+ */
 export function resolveContextImpact(value: ContextModeValue): ContextImpact {
   return CONTEXT_IMPACTS[value] ?? CONTEXT_IMPACTS.work;
 }

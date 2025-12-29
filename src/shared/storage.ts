@@ -102,6 +102,9 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   vscodePairingKey: ''
 };
 
+/**
+ * Creates a blank hourly array with 24 entries ready to accumulate metrics.
+ */
 export function createEmptyHourly(): HourlyBucket[] {
   return Array.from({ length: 24 }).map((_, hour) => ({
     hour,
@@ -112,10 +115,16 @@ export function createEmptyHourly(): HourlyBucket[] {
   }));
 }
 
+/**
+ * Generates an empty timeline payload.
+ */
 export function createEmptyTimeline(): TimelineEntry[] {
   return [];
 }
 
+/**
+ * Builds a fresh `DailyMetrics` object using today's date.
+ */
 export function createDefaultMetrics(): DailyMetrics {
   return {
     dateKey: getTodayKey(),
@@ -144,6 +153,9 @@ export function createDefaultMetrics(): DailyMetrics {
   };
 }
 
+/**
+ * Provides a zeroed tab-switch breakdown used across metrics and tests.
+ */
 export function createDefaultTabSwitchBreakdown(): TabSwitchBreakdown {
   return {
     productiveToProductive: 0,
@@ -158,6 +170,9 @@ export function createDefaultTabSwitchBreakdown(): TabSwitchBreakdown {
   };
 }
 
+/**
+ * Creates a breakdown array for each hour of the day.
+ */
 export function createEmptyTabSwitchHourly(): TabSwitchHourlyBucket[] {
   return Array.from({ length: 24 }, (_, hour) => ({
     hour,
@@ -169,14 +184,23 @@ function createEmptyNumberHourly(): number[] {
   return Array.from({ length: 24 }, () => 0);
 }
 
+/**
+ * Deep clones the `DEFAULT_SETTINGS` object to avoid accidental mutations.
+ */
 export function getDefaultSettings(): ExtensionSettings {
   return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
 }
 
+/**
+ * Returns a copy of the built-in work schedule.
+ */
 export function getDefaultWorkSchedule(): WorkInterval[] {
   return JSON.parse(JSON.stringify(DEFAULT_WORK_SCHEDULE));
 }
 
+/**
+ * Reads persisted settings, merges them with defaults and normalizes locale fields.
+ */
 export async function getSettings(): Promise<ExtensionSettings> {
   const stored = (await chrome.storage.local.get(StorageKeys.SETTINGS))[StorageKeys.SETTINGS];
   if (stored) {
@@ -208,6 +232,9 @@ export async function getSettings(): Promise<ExtensionSettings> {
   return normalizedDefaults;
 }
 
+/**
+ * Persists extension settings in `chrome.storage.local`.
+ */
 export async function saveSettings(settings: ExtensionSettings): Promise<void> {
   await chrome.storage.local.set({ [StorageKeys.SETTINGS]: settings });
 }
@@ -225,6 +252,9 @@ function normalizePreference(
   return 'auto';
 }
 
+/**
+ * Loads today's metrics or reinitializes them if the stored date has expired.
+ */
 export async function getDailyMetrics(): Promise<DailyMetrics> {
   const stored = (await chrome.storage.local.get(StorageKeys.METRICS))[StorageKeys.METRICS];
   if (stored) {
@@ -239,10 +269,16 @@ export async function getDailyMetrics(): Promise<DailyMetrics> {
   return defaults;
 }
 
+/**
+ * Stores the current metrics snapshot.
+ */
 export async function saveDailyMetrics(metrics: DailyMetrics): Promise<void> {
   await chrome.storage.local.set({ [StorageKeys.METRICS]: metrics });
 }
 
+/**
+ * Replaces the existing metrics with a default instance and returns it.
+ */
 export async function clearDailyMetrics(): Promise<DailyMetrics> {
   const freshMetrics = createDefaultMetrics();
   await saveDailyMetrics(freshMetrics);
