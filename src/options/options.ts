@@ -699,7 +699,18 @@ function handleHolidayCountryChange(): void {
 }
 
 function returnToPopup(): void {
-  closeCurrentTab();
+  const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
+  if (!chrome?.tabs?.create) {
+    window.location.href = popupUrl;
+    return;
+  }
+  chrome.tabs.create({ url: popupUrl }, () => {
+    if (chrome.runtime.lastError) {
+      window.location.href = popupUrl;
+      return;
+    }
+    closeCurrentTab();
+  });
 }
 
 function generatePairingKey(): string {

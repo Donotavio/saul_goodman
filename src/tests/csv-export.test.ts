@@ -70,6 +70,28 @@ test('buildDetailedCsvSection appends header with granular columns and data rows
   assert.equal(rowParts[6], 'manual');
 });
 
+test('buildDetailedCsvSection keeps inactive category without collapsing', () => {
+  const metrics = createDefaultMetrics();
+  const baseTime = Date.UTC(2024, 4, 10, 9, 0, 0);
+  metrics.timeline = [
+    {
+      startTime: baseTime,
+      endTime: baseTime + 30000,
+      durationMs: 30000,
+      domain: 'Idle',
+      category: 'inactive'
+    }
+  ];
+
+  const lines = buildDetailedCsvSection({
+    metrics,
+    labels: LABELS
+  });
+
+  const rowParts = lines[2].split(',');
+  assert.equal(rowParts[4], 'inactive');
+});
+
 test('mapFairnessRule normalizes fairness summary into manual/context/holiday/normal buckets', () => {
   const manual: FairnessSummary = {
     rule: 'manual-override',

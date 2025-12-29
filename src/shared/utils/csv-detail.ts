@@ -105,8 +105,10 @@ function collectTimelineEntries(metrics: DailyMetrics): TimelineEntry[] {
   return [...base, ...vscodeEntries].sort((a, b) => a.startTime - b.startTime);
 }
 
-function normalizeCategory(category: TimelineEntry['category']): 'productive' | 'procrastination' | 'neutral' {
-  if (category === 'productive' || category === 'procrastination') {
+type CsvCategory = 'productive' | 'procrastination' | 'neutral' | 'inactive';
+
+function normalizeCategory(category: TimelineEntry['category']): CsvCategory {
+  if (category === 'productive' || category === 'procrastination' || category === 'inactive') {
     return category;
   }
   return 'neutral';
