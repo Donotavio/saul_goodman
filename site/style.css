@@ -1650,16 +1650,3 @@ blockquote p {
   padding: 4px 6px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
 }
-
-.social-metrics {
-  margin-top: 10px;
-  font-weight: 800;
-  color: var(--brown);
-}
-
-.metric-value {
-  display: inline-block;
-  font-size: 1.8rem;
-  color: var(--red);
-  margin-left: 8px;
-}
