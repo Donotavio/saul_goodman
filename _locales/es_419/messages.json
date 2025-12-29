@@ -239,6 +239,21 @@
   "report_fairness_tooltip": {
     "message": "El override manual, los modos de contexto o los feriados detectados pueden neutralizar el índice. Este banner avisa cuando sucede."
   },
+  "report_context_breakdown_title": {
+    "message": "Desglose por contexto"
+  },
+  "report_context_breakdown_context": {
+    "message": "Contexto"
+  },
+  "report_context_breakdown_time": {
+    "message": "Tiempo"
+  },
+  "report_context_breakdown_index": {
+    "message": "Índice"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Mientras más cerca de 100% estás debiendo foco, mientras más cerca de 0% puedo decir que trabajaste — y Saul lo usará a tu favor."
+  },
   "popup_export_title": {
     "message": "Defiende tu enfoque"
   },

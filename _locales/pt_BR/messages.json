@@ -239,6 +239,21 @@
   "report_fairness_tooltip": {
     "message": "Override manual, contexto ou feriados podem neutralizar o índice. Registramos aqui sempre que isso acontecer."
   },
+  "report_context_breakdown_title": {
+    "message": "Tempo por contexto"
+  },
+  "report_context_breakdown_context": {
+    "message": "Contexto"
+  },
+  "report_context_breakdown_time": {
+    "message": "Tempo"
+  },
+  "report_context_breakdown_index": {
+    "message": "Índice"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Quanto mais perto de 100% você tá cheirando procrastinação, quanto mais perto de 0% dá pra dizer que trabalhou — e eu posso te defender."
+  },
   "popup_export_title": {
     "message": "Defenda seu foco"
   },

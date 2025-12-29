@@ -28,6 +28,7 @@ import {
   RuntimeMessageType,
   TimelineEntry,
   ContextModeState,
+  ContextHistory,
   ManualOverrideState,
   HolidaysCache
 } from '../shared/types.js';
@@ -42,6 +43,12 @@ import {
   readLocalStorage,
   writeLocalStorage
 } from '../shared/utils/storage.js';
+import {
+  buildContextBreakdown,
+  closeOpenContextSegment,
+  ensureContextHistoryInitialized,
+  startContextSegment
+} from '../shared/utils/context-history.js';
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
@@ -108,6 +115,7 @@ let lastCriticalScore = -Infinity;
 let releaseNotesClickRegistered = false;
 let manualOverrideState: ManualOverrideState | null = null;
 let contextModeState: ContextModeState | null = null;
+let contextHistory: ContextHistory = [];
 let holidaysCache: HolidaysCache = {};
 let holidayNeutralToday = false;
 let fairnessSnapshot: FairnessSummary | null = null;
@@ -269,13 +277,19 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   }
 
   if (changes[LocalStorageKey.CONTEXT_MODE]) {
-    contextModeState = changes[LocalStorageKey.CONTEXT_MODE].newValue as ContextModeState;
+    const change = changes[LocalStorageKey.CONTEXT_MODE];
+    contextModeState = change.newValue as ContextModeState;
+    void handleContextModeHistoryChange(change.oldValue as ContextModeState | undefined, contextModeState);
     updateFairnessSummary();
     void refreshScore();
   }
 
   if (changes[LocalStorageKey.HOLIDAYS_CACHE]) {
     holidaysCache = (changes[LocalStorageKey.HOLIDAYS_CACHE].newValue as HolidaysCache) ?? {};
+  }
+
+  if (changes[LocalStorageKey.CONTEXT_HISTORY]) {
+    contextHistory = (changes[LocalStorageKey.CONTEXT_HISTORY].newValue as ContextHistory) ?? [];
   }
 });
 
@@ -323,7 +337,9 @@ async function handleTrackingTick(): Promise<void> {
 }
 
 async function handleMidnightReset(): Promise<void> {
+  await finalizeContextHistoryForDay();
   metricsCache = await clearDailyMetrics();
+  await resetContextHistoryForNewDay();
   await updateBadgeText(metricsCache.currentIndex);
   await scheduleMidnightAlarm();
   trackingState.lastTimestamp = Date.now();
@@ -595,6 +611,7 @@ async function persistMetrics(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
+  applyContextBreakdown(metricsCache, settings);
   const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
   metricsCache.currentIndex = scoreResult.score;
   metricsCache.lastUpdated = Date.now();
@@ -612,6 +629,7 @@ async function refreshScore(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
+  applyContextBreakdown(metricsCache, settings);
   const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
   metricsCache.currentIndex = scoreResult.score;
   updateFairnessSummary(scoreResult);
@@ -1041,6 +1059,7 @@ async function updateBadgeText(score: number): Promise<void> {
 
 async function clearTodayData(): Promise<void> {
   metricsCache = await clearDailyMetrics();
+  await resetContextHistoryForNewDay();
   trackingState.currentDomain = null;
   trackingState.currentTabId = null;
   trackingState.isIdle = false;
@@ -1103,6 +1122,86 @@ function applyIdleDetectionInterval(settings: ExtensionSettings): void {
   chrome.idle.setDetectionInterval(intervalSeconds);
 }
 
+/**
+ * Atualiza as métricas em memória com o detalhamento por contexto.
+ * @param metrics Métricas do dia corrente.
+ * @param settings Configurações atuais que influenciam nos índices hipotéticos.
+ */
+function applyContextBreakdown(metrics: DailyMetrics, settings: ExtensionSettings): void {
+  const breakdown = buildContextBreakdown({ history: contextHistory, metrics, settings });
+  metrics.contextDurations = breakdown.durations;
+  metrics.contextIndices = breakdown.indices;
+}
+
+/**
+ * Restaura o histórico de contexto armazenado localmente ou cria um segmento inicial.
+ */
+async function hydrateContextHistoryState(): Promise<void> {
+  const now = Date.now();
+  const activeContext =
+    contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  const stored = await readLocalStorage<ContextHistory>(LocalStorageKey.CONTEXT_HISTORY);
+  if (!stored?.length) {
+    contextHistory = ensureContextHistoryInitialized(undefined, activeContext, now);
+    await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+    return;
+  }
+  const last = stored[stored.length - 1];
+  if (typeof last?.end === 'number') {
+    contextHistory = ensureContextHistoryInitialized(stored, activeContext, now);
+    await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+    return;
+  }
+  contextHistory = stored;
+}
+
+/**
+ * Registra a transição de contexto criando novos segmentos temporais.
+ * @param previous Estado anterior do contexto, usado como referência.
+ * @param next Novo estado escolhido pelo usuário.
+ */
+async function handleContextModeHistoryChange(
+  previous: ContextModeState | undefined,
+  next: ContextModeState | null
+): Promise<void> {
+  if (!next) {
+    return;
+  }
+  const timestamp = next.updatedAt ?? Date.now();
+  const reference = previous ?? next;
+  contextHistory = ensureContextHistoryInitialized(contextHistory, reference, timestamp);
+  const last = contextHistory[contextHistory.length - 1];
+  if (last && last.value === next.value && typeof last.end !== 'number') {
+    return;
+  }
+  closeOpenContextSegment(contextHistory, timestamp);
+  startContextSegment(contextHistory, next.value, timestamp);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+  await persistMetrics();
+}
+
+/**
+ * Finaliza o segmento ativo antes de zerar as métricas diárias.
+ */
+async function finalizeContextHistoryForDay(): Promise<void> {
+  const now = Date.now();
+  const contextState = contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  contextHistory = ensureContextHistoryInitialized(contextHistory, contextState, now);
+  closeOpenContextSegment(contextHistory, now);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+  await persistMetrics();
+}
+
+/**
+ * Reinicia o histórico de contexto ao começar um novo dia.
+ */
+async function resetContextHistoryForNewDay(): Promise<void> {
+  const now = Date.now();
+  const contextState = contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
+  contextHistory = ensureContextHistoryInitialized([], contextState, now);
+  await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
+}
+
 void initialize();
 
 function getScoreGuards(): ScoreGuards {
@@ -1151,6 +1250,7 @@ function updateFairnessSummary(result?: ScoreComputation): void {
 async function hydrateFairnessState(): Promise<void> {
   manualOverrideState = await getManualOverrideState();
   contextModeState = await getContextMode();
+  await hydrateContextHistoryState();
   holidaysCache = (await readLocalStorage<HolidaysCache>(LocalStorageKey.HOLIDAYS_CACHE)) ?? {};
   await refreshHolidayNeutralState();
   updateFairnessSummary();

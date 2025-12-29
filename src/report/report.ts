@@ -6,7 +6,8 @@ import {
   HourlyBucket,
   LocalePreference,
   TimelineEntry,
-  WorkInterval
+  WorkInterval,
+  ContextModeValue
 } from '../shared/types.js';
 import {
   formatDuration,
@@ -76,6 +77,12 @@ const unfocusedEl = document.getElementById('unfocusedValue') as HTMLElement | n
 const spaNavigationsEl = document.getElementById('spaNavigationsValue') as HTMLElement | null;
 const groupedTimeEl = document.getElementById('groupedTimeValue') as HTMLElement | null;
 const restoredItemsEl = document.getElementById('restoredItemsValue') as HTMLElement | null;
+const contextBreakdownSection = document.getElementById(
+  'contextBreakdownSection'
+) as HTMLElement | null;
+const contextBreakdownBody = document
+  .getElementById('contextBreakdownTable')
+  ?.querySelector('tbody') as HTMLTableSectionElement | null;
 
 const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
   { max: 25, key: 'report_hero_message_excellent' },
@@ -113,6 +120,8 @@ const REPORT_FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
   report_fairness_holiday_active: 'Hoje é feriado, índice pausado automaticamente.',
   report_fairness_holiday_detected: 'Feriado detectado — sem penalidades.'
 };
+
+const CONTEXT_ORDER: ContextModeValue[] = ['work', 'personal', 'leisure', 'study'];
 
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
@@ -265,6 +274,7 @@ function renderReport(metrics: DailyMetrics): void {
   }
 
   renderFairnessSummary(latestFairness);
+  renderContextBreakdown(enriched.contextDurations, enriched.contextIndices);
 
   renderHourlyChart(enriched);
   renderTabSwitchChart(enriched);
@@ -310,6 +320,44 @@ export function renderFairnessSummary(summary?: FairnessSummary | null): void {
 }
 
 /**
+ * Popula a tabela de contextos com as durações e índices hipotéticos.
+ * @param durations Mapa com milissegundos gastos por contexto.
+ * @param indices Mapa com os índices simulados por contexto.
+ */
+export function renderContextBreakdown(
+  durations?: Record<ContextModeValue, number>,
+  indices?: Record<ContextModeValue, number>
+): void {
+  if (!contextBreakdownSection || !contextBreakdownBody) {
+    return;
+  }
+  if (!durations && !indices) {
+    contextBreakdownSection.hidden = true;
+    contextBreakdownSection.classList.add('hidden');
+    contextBreakdownBody.innerHTML = '';
+    return;
+  }
+  contextBreakdownSection.hidden = false;
+  contextBreakdownSection.classList.remove('hidden');
+  contextBreakdownBody.innerHTML = '';
+
+  CONTEXT_ORDER.forEach((context) => {
+    const row = document.createElement('tr');
+    const labelCell = document.createElement('td');
+    labelCell.textContent = i18n?.t(`popup_context_option_${context}`) ?? context;
+    const durationCell = document.createElement('td');
+    durationCell.textContent = formatDuration(durations?.[context] ?? 0);
+    const indexCell = document.createElement('td');
+    const indexValue = indices?.[context];
+    indexCell.textContent = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    row.appendChild(labelCell);
+    row.appendChild(durationCell);
+    row.appendChild(indexCell);
+    contextBreakdownBody.appendChild(row);
+  });
+}
+
+/** 
  * Resolves the fairness summary, guaranteeing a neutral structure when undefined.
  * @param summary Snapshot provided by the background script (optional).
  * @returns A summary object with safe defaults.

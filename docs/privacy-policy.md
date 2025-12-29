@@ -5,6 +5,7 @@
 ## O que coletamos e onde fica
 
 - A extensão roda 100% local no seu navegador. Métricas (tempo em domínios, inatividade, trocas de abas), configurações e preferências ficam apenas em `chrome.storage.local`.
+- O histórico de contexto (`sg:context-history`) guarda somente o modo selecionado e os timestamps de início/fim para compor o relatório. Esse array é resetado diariamente e nunca sai do seu navegador.
 - Não gravamos conteúdo das páginas, apenas o domínio/hostname para classificação.
 - Não armazenamos ou enviamos teclas pressionadas; eventos de teclado/mouse/scroll são usados apenas como “sinal de atividade” (ping de presença), sem conteúdo.
 

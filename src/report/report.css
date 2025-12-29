@@ -208,6 +208,45 @@ body.earthquake {
   color: #6a4d09;
 }
 
+.context-breakdown {
+  border: 2px solid #111;
+  border-radius: 16px;
+  padding: 18px 20px;
+  background: #fffef6;
+  box-shadow: 4px 4px 0 #f1d884;
+}
+
+.context-breakdown h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5c2c00;
+}
+
+#contextBreakdownTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#contextBreakdownTable th,
+#contextBreakdownTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f5e6b7;
+  text-align: left;
+}
+
+#contextBreakdownTable th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #6a553f;
+}
+
+#contextBreakdownTable tr:last-child td {
+  border-bottom: none;
+}
+
 .floating-share {
   position: sticky;
   align-self: flex-end;

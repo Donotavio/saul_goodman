@@ -239,6 +239,21 @@
   "report_fairness_tooltip": {
     "message": "Manual override, context modes, or detected holidays can neutralize the score. This banner tells you when that happens."
   },
+  "report_context_breakdown_title": {
+    "message": "Context breakdown"
+  },
+  "report_context_breakdown_context": {
+    "message": "Context"
+  },
+  "report_context_breakdown_time": {
+    "message": "Time"
+  },
+  "report_context_breakdown_index": {
+    "message": "Index"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Closer to 100% means you owe the productivity court, closer to 0% means you actually worked — and Saul can use that."
+  },
   "popup_export_title": {
     "message": "Defend your focus"
   },

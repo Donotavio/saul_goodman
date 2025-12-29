@@ -62,10 +62,20 @@ export interface DailyMetrics {
    */
   vscodeSwitches?: number;
 
-  /**
+  /** 
    * Trocas de contexto do VS Code por hora.
    */
   vscodeSwitchHourly?: number[];
+
+  /**
+   * Duração acumulada por contexto (ms) para o dia corrente.
+   */
+  contextDurations?: Record<ContextModeValue, number>;
+
+  /**
+   * Índice recalculado para cada contexto considerando o dia inteiro nesse modo.
+   */
+  contextIndices?: Record<ContextModeValue, number>;
 }
 
 export interface ApiStats {
@@ -176,6 +186,20 @@ export interface ContextModeState {
   value: ContextModeValue;
   updatedAt: number;
 }
+
+/**
+ * Intervalo contínuo em que um contexto permaneceu ativo.
+ */
+export interface ContextSegment {
+  value: ContextModeValue;
+  start: number;
+  end?: number;
+}
+
+/**
+ * Histórico diário de segmentos de contexto.
+ */
+export type ContextHistory = ContextSegment[];
 
 export interface HolidaySettingsSnapshot {
   enabled: boolean;

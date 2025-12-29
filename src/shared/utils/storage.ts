@@ -1,7 +1,8 @@
 export enum LocalStorageKey {
   MANUAL_OVERRIDE = 'sg:manual-override',
   CONTEXT_MODE = 'sg:context-mode',
-  HOLIDAYS_CACHE = 'sg:holidays-cache'
+  HOLIDAYS_CACHE = 'sg:holidays-cache',
+  CONTEXT_HISTORY = 'sg:context-history'
 }
 
 export async function readLocalStorage<T>(key: LocalStorageKey): Promise<T | undefined> {
