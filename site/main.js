@@ -1173,6 +1173,7 @@ const heroMotionQuery = window.matchMedia
   : { matches: true, addEventListener: () => {}, removeEventListener: () => {} };
 let heroBulbs = [];
 let heroBulbFailureInterval = 0;
+let heroCopyImpactTimeout = 0;
 
 const prefersReducedMotion = () => {
   return window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
@@ -1324,6 +1325,20 @@ const killAllBulbs = () => {
   setHeroGlowLevel(0.2);
 };
 
+const triggerHeroCopyImpact = () => {
+  const copy = document.querySelector('[data-impact-shake]');
+  if (!copy) {
+    return;
+  }
+  copy.classList.remove('hero-copy-impact');
+  void copy.offsetWidth;
+  copy.classList.add('hero-copy-impact');
+  window.clearTimeout(heroCopyImpactTimeout);
+  heroCopyImpactTimeout = window.setTimeout(() => {
+    copy.classList.remove('hero-copy-impact');
+  }, 800);
+};
+
 const updateHeroIntroDuration = (seconds) => {
   if (!Number.isFinite(seconds) || seconds <= 0.5) {
     return;
@@ -1410,6 +1425,7 @@ const dropHeroSign = (reason = 'manual') => {
     heroSign.removeEventListener('animationend', onDropEnd);
     heroVisual.classList.remove('is-dropping');
     heroVisual.classList.add('is-crashed', 'is-swinging');
+    triggerHeroCopyImpact();
     killAllBulbs();
   };
   heroSign.addEventListener('animationend', onDropEnd);
@@ -1422,6 +1438,8 @@ const initHeroSign = () => {
     return;
   }
   heroVisual.classList.remove('is-crashed', 'is-dropping', 'is-lit', 'is-failing', 'is-static', 'is-swinging');
+  const copy = document.querySelector('[data-impact-shake]');
+  copy?.classList.remove('hero-copy-impact');
   heroDropTriggered = false;
   heroLightsStarted = false;
   window.clearTimeout(heroFailTimer);

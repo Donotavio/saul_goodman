@@ -1,4 +1,4 @@
-const CACHE_NAME = 'saul-site-v3';
+const CACHE_NAME = 'saul-site-v4.2';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
