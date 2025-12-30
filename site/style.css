@@ -27,6 +27,7 @@ body {
   top: 0;
   display: flex;
   align-items: center;
+  padding: 16px;
   justify-content: space-between;
   background: rgba(255, 253, 245, 0.95);
   border-bottom: 2px solid var(--black);
