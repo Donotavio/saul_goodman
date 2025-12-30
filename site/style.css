@@ -654,6 +654,9 @@ body {
     background: none;
     border: none;
     box-shadow: none;
+    left: auto;
+    top: auto;
+    transform-origin: center;
   }
 
   .hero-sign::before,
@@ -2529,6 +2532,9 @@ blockquote p {
     position: fixed;
     width: 100%;
     background: rgba(255, 253, 245, 0.98);
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
   }
 
   .brand {
@@ -2545,7 +2551,7 @@ blockquote p {
     border-radius: 10px;
     background: #fff;
     padding: 4px 10px;
-    margin-left: 12px;
+    margin-left: auto;
   }
 
   /* Menu mobile abre em coluna e ocupa largura total */
