@@ -1158,8 +1158,10 @@ body {
   font-weight: 600;
 }
 
-.feature-hint-mobile {
-  display: none;
+@media (min-width: 769px) {
+  .feature-hint-mobile {
+    display: none;
+  }
 }
 
 .index-explainer {
