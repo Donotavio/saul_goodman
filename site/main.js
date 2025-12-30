@@ -1409,7 +1409,7 @@ const dropHeroSign = (reason = 'manual') => {
     }
     heroSign.removeEventListener('animationend', onDropEnd);
     heroVisual.classList.remove('is-dropping');
-    heroVisual.classList.add('is-crashed');
+    heroVisual.classList.add('is-crashed', 'is-swinging');
     killAllBulbs();
   };
   heroSign.addEventListener('animationend', onDropEnd);
@@ -1421,7 +1421,7 @@ const initHeroSign = () => {
   if (!heroVisual) {
     return;
   }
-  heroVisual.classList.remove('is-crashed', 'is-dropping', 'is-lit', 'is-failing', 'is-static');
+  heroVisual.classList.remove('is-crashed', 'is-dropping', 'is-lit', 'is-failing', 'is-static', 'is-swinging');
   heroDropTriggered = false;
   heroLightsStarted = false;
   window.clearTimeout(heroFailTimer);
