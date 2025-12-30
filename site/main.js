@@ -1193,8 +1193,8 @@ let introAudioPlayed = false;
 let introAudioEventsBound = false;
 const introAudioSrc = 'assets/audio/voicy-better-call-saul.aac';
 const quakeAudioSrc = 'assets/audio/terremoto-siren.aac';
-const heroCrashGlassSrc = 'store-assets/audio/glass-breaking-sound-effect-240679.aac';
-const heroCrashShockSrc = 'store-assets/audio/49-electroshockwav-46620.aac';
+const heroCrashGlassSrc = 'assets/audio/glass-breaking-sound-effect-240679.aac';
+const heroCrashShockSrc = 'assets/audio/49-electroshockwav-46620.aac';
 let quakeAudio;
 let quakeTimeout;
 let quakeOverlay;
@@ -1213,6 +1213,7 @@ let heroCopyImpactTimeout = 0;
 let heroCrashAudio;
 let heroShockAudio;
 let heroCrashShockTimer = 0;
+let heroCrashShockOnGlassEnd = null;
 let heroCrashPrimed = false;
 
 const prefersReducedMotion = () => {
@@ -1841,6 +1842,10 @@ const stopHeroCrashSounds = () => {
     heroShockAudio.pause();
     heroShockAudio.currentTime = 0;
   }
+  if (heroCrashAudio && heroCrashShockOnGlassEnd) {
+    heroCrashAudio.removeEventListener('ended', heroCrashShockOnGlassEnd);
+    heroCrashShockOnGlassEnd = null;
+  }
   if (heroCrashShockTimer) {
     window.clearTimeout(heroCrashShockTimer);
     heroCrashShockTimer = 0;
@@ -1852,44 +1857,48 @@ const playHeroCrashSequence = () => {
     return;
   }
   const glass = ensureHeroCrashAudio();
-  if (!glass) {
+  const shock = ensureHeroShockAudio();
+  if (!glass || !shock) {
     return;
   }
 
-  const scheduleShock = (durationSeconds) => {
-    if (!Number.isFinite(durationSeconds) || durationSeconds <= 0) {
-      durationSeconds = 1.4;
-    }
-    const LEAD_MS = 320;
-    const delay = Math.max(durationSeconds * 1000 - LEAD_MS, 220);
-    if (heroCrashShockTimer) {
-      window.clearTimeout(heroCrashShockTimer);
-    }
-    heroCrashShockTimer = window.setTimeout(() => {
-      const shock = ensureHeroShockAudio();
-      if (!shock) {
-        return;
-      }
-      shock.currentTime = 0;
-      shock.play().catch(() => {});
-    }, delay);
-  };
-
   stopHeroCrashSounds();
 
-  glass.currentTime = 0;
-  glass.play().catch(() => {});
+  const triggerShock = () => {
+    if (heroCrashAudio && heroCrashShockOnGlassEnd) {
+      heroCrashAudio.removeEventListener('ended', heroCrashShockOnGlassEnd);
+      heroCrashShockOnGlassEnd = null;
+    }
+    if (heroCrashShockTimer) {
+      window.clearTimeout(heroCrashShockTimer);
+      heroCrashShockTimer = 0;
+    }
+    shock.currentTime = 0;
+    shock.play().catch(() => {});
+  };
 
-  if (glass.readyState >= HTMLMediaElement.HAVE_METADATA && Number.isFinite(glass.duration) && glass.duration > 0) {
-    scheduleShock(glass.duration);
-  } else {
-    const metadataHandler = () => {
-      glass.removeEventListener('loadedmetadata', metadataHandler);
-      scheduleShock(glass.duration);
-    };
-    glass.addEventListener('loadedmetadata', metadataHandler, { once: true });
-    scheduleShock(1.4);
+  heroCrashShockOnGlassEnd = () => {
+    triggerShock();
+  };
+  glass.addEventListener('ended', heroCrashShockOnGlassEnd);
+
+  if (heroCrashShockTimer) {
+    window.clearTimeout(heroCrashShockTimer);
   }
+  const fallbackDelay =
+    glass.readyState >= HTMLMediaElement.HAVE_METADATA && Number.isFinite(glass.duration) && glass.duration > 0
+      ? Math.max(glass.duration * 1000 + 100, 400)
+      : 2500;
+  heroCrashShockTimer = window.setTimeout(() => {
+    triggerShock();
+  }, fallbackDelay);
+
+  glass.currentTime = 0;
+  glass
+    .play()
+    .catch(() => {
+      triggerShock();
+    });
 };
 
 const createQuakeOverlay = () => {
