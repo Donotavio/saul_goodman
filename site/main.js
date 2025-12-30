@@ -1206,7 +1206,7 @@ let heroLightsStarted = false;
 let heroScrollHandlerAttached = false;
 const heroMotionQuery = window.matchMedia
   ? window.matchMedia('(max-width: 960px)')
-  : { matches: true, addEventListener: () => {}, removeEventListener: () => {} };
+  : { matches: true, addEventListener: () => { }, removeEventListener: () => { } };
 let heroBulbs = [];
 let heroBulbFailureInterval = 0;
 let heroCopyImpactTimeout = 0;
@@ -1874,7 +1874,7 @@ const playHeroCrashSequence = () => {
       heroCrashShockTimer = 0;
     }
     shock.currentTime = 0;
-    shock.play().catch(() => {});
+    shock.play().catch(() => { });
   };
 
   heroCrashShockOnGlassEnd = () => {
@@ -1949,7 +1949,7 @@ const startQuakeDemo = () => {
   const audio = ensureQuakeAudio();
   if (audio) {
     audio.currentTime = 0;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   }
   if (quakeTimeout) clearTimeout(quakeTimeout);
   quakeTimeout = setTimeout(stopQuakeDemo, 5000);
