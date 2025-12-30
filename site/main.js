@@ -1,6 +1,7 @@
 const translations = {
   pt: {
     navProcess: 'Como funciona',
+    navIndex: 'Índice',
     navBenefits: 'Benefícios',
     navDemo: 'Demo',
     navClients: 'Depoimentos',
@@ -24,6 +25,48 @@ const translations = {
     heroConfidence3: 'Relatório com storytelling IA',
     heroBadge: '“Em caso de preguiça... CALL SAUL!”',
     multilingualLabel: 'Disponível em PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
+    indexEyebrow: 'Na mesa do Saul',
+    indexTitle: 'Como Saul interpreta o Índice de Procrastinação',
+    indexLead:
+      'Tradução simultânea do advogado: nota 0 não é troféu e 100 não é all inclusive. Saul lê cada faixa para saber se sacode sua cadeira ou manda você tirar férias forçadas.',
+    indexCalloutLabel: 'Recado do Saul',
+    indexCalloutQuote:
+      '“Passou de 60% eu ligo pra sua chefe. Ficou abaixo de 10% eu marco consulta com o terapeuta. Equilíbrio, meu cliente!”',
+    indexPitch1:
+      'O índice vai de 0 a 100. Quanto mais perto de 100, mais claro que você largou o caso no meio e virou cliente VIP da procrastinação.',
+    indexPitch2:
+      'Só que zerar também levanta suspeita: quem fica em aba produtiva 24/7 normalmente está a um passo de virar peça do ministério do burnout.',
+    indexGaugeLabel: 'Faixa recomendada',
+    indexGaugeHint: '18% é o ponto doce — foco firme sem virar robô.',
+    indexCluesLabel: 'Checklist do caso',
+    indexClueFocus: 'Anote seus vilões',
+    indexClueFocusBody:
+      'Tenha uma lista viva de sites que puxam o índice pra cima antes que Saul demande.',
+    indexClueBreak: 'Agende micro-pausas',
+    indexClueBreakBody:
+      'A faixa 15–22 pede respirações estratégicas. Bloqueie no calendário, cliente.',
+    indexClueAlert: 'Revise o terremoto',
+    indexClueAlertBody:
+      'Confirme limite, sirene e mensagem para que a intimação chegue na hora certa.',
+    indexMemoHeading: 'Nota do escritório',
+    indexMemoBody:
+      'Se o índice subir por culpa de uma aba vilã, acione o bloqueio em tela cheia. Saul trava os vilões, libera só a aba produtiva e sua nota volta a respirar.',
+    indexMemoSign: '— Saul, advogado da produtividade',
+    indexFootnote:
+      'Entre 15 e 22 Saul escreve “cliente estável”. Acima disso ele prepara o terremoto; abaixo disso ele prescreve descanso, não mais tarefas.',
+    indexRange0to14Title: '0 – 14: Over-work duvidoso',
+    indexRange0to14Body:
+      'Você está tão colado no trabalho que Saul chama isso de “excesso de zelo”. Respire, levante e tome água antes que vire depoimento.',
+    indexRange15to22Title: '15 – 22: Equilíbrio de ouro',
+    indexRange15to22Body:
+      'Aqui está o veredito ideal: foco consistente, pausas saudáveis e nenhuma sirene. Saul até cogita dar desconto nos honorários.',
+    indexStamp: 'Cliente que dorme tranquilo',
+    indexRange23to60Title: '23 – 60: Foco cambaleando',
+    indexRange23to60Body:
+      'Você ainda defende o caso, mas tropeça em feeds vilões. Saul dispara notificações espirituosas para botar o processo de volta no trilho.',
+    indexRange61to100Title: '61 – 100: Procrastinação flagrante',
+    indexRange61to100Body:
+      'Chegou o momento terremoto. A tela treme, o áudio toca e Saul entra com a intimação para fechar as abas vilãs.',
     socialProofCaption: 'Saul já ajuda milhares de pessoas a vigiar o foco diariamente.',
     socialProofMetricLabel: 'Usuários satisfeitos',
     ratingBadgeAlt: 'Nota média na Chrome Web Store',
@@ -43,6 +86,9 @@ const translations = {
     featureSectionTitle: 'O pacote completo anti-procrastinação.',
     featureSectionLead:
       'Cada cartão mistura humor e clareza para mostrar como Saul cuida do foco dentro do navegador.',
+    featureContextLabel: 'Novidade',
+    featureContextBody:
+      'Agora você escolhe o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal) direto no popup; Saul recalibra o índice, neutraliza penalidades e evita injustiças.',
     featureRealtimeTitle: 'Rastreamento em tempo real',
     featureRealtimeBody:
       'O badge monitora cada aba e atualiza o índice para você saber se é hora de virar o jogo.',
@@ -55,6 +101,10 @@ const translations = {
     featureQuakeBody:
       'Tela treme, sirene toca e Saul aparece na frente das abas vilãs com um CTA impossível de ignorar.',
     featureQuakeHint: '“Peguei você: volte para a aba produtiva já!”',
+    featureBlockTitle: 'Bloqueio de telas vilãs',
+    featureBlockBody:
+      'Se você ativar o modo, Saul fecha as abas problemáticas em tela cheia até você voltar ao foco e recuperar pontos.',
+    featureBlockHint: '“Ative quando quiser: só a aba produtiva fica liberada.”',
     featureReportTitle: 'Relatório dramatizado',
     featureReportBody:
       'Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para prestar contas com estilo.',
@@ -301,6 +351,7 @@ const translations = {
   },
   en: {
     navProcess: 'How it works',
+    navIndex: 'Index',
     navBenefits: 'Benefits',
     navDemo: 'Demo',
     navClients: 'Testimonials',
@@ -324,6 +375,48 @@ const translations = {
     heroConfidence3: 'Report with AI storytelling',
     heroBadge: '“When laziness strikes... CALL SAUL!”',
     multilingualLabel: 'Available in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
+    indexEyebrow: 'On Saul’s desk',
+    indexTitle: 'How Saul reads the Procrastination Index',
+    indexLead:
+      'Legal translation service: a score of 0 isn’t a trophy and 100 isn’t an all-inclusive. Saul reads each band to decide whether to shake your chair or force a vacation day.',
+    indexCalloutLabel: 'Saul’s memo',
+    indexCalloutQuote:
+      '“Cross 60% and I’m calling your boss. Drop below 10% and I’m booking your therapist. Balance the docket, client!”',
+    indexPitch1:
+      'The index ranges from 0 to 100. The closer to 100, the clearer you dropped the case mid-trial and became a VIP client of procrastination.',
+    indexPitch2:
+      'But hitting zero looks suspicious too: anyone glued to productive tabs 24/7 is one step from a burnout deposition.',
+    indexGaugeLabel: 'Sweet spot',
+    indexGaugeHint: '18% hits the sweet spot — steady focus without going full robot.',
+    indexCluesLabel: 'Case checklist',
+    indexClueFocus: 'List your villains',
+    indexClueFocusBody:
+      'Keep a living list of tabs that spike the index before Saul files a motion.',
+    indexClueBreak: 'Schedule micro-breaks',
+    indexClueBreakBody:
+      'The 15–22 range demands strategic breaths. Block them on your calendar, client.',
+    indexClueAlert: 'Audit the quake',
+    indexClueAlertBody:
+      'Double-check threshold, siren, and copy so the summons hits at the right time.',
+    indexMemoHeading: 'Office memo',
+    indexMemoBody:
+      'If a villain tab spikes the index, trigger full-screen block mode. Saul locks villains out, frees only the productive tab, and your score breathes again.',
+    indexMemoSign: '— Saul, your productivity attorney',
+    indexFootnote:
+      'Between 15 and 22 Saul files “steady client.” Above that he arms the quake; below that he prescribes rest, not extra tasks.',
+    indexRange0to14Title: '0 – 14: Questionable over-work',
+    indexRange0to14Body:
+      'You’re so glued to work that Saul calls it “excessive zeal.” Breathe, stand up, and grab water before this becomes testimony.',
+    indexRange15to22Title: '15 – 22: Golden balance',
+    indexRange15to22Body:
+      'Ideal verdict: consistent focus, healthy breaks, zero sirens. Saul might even consider a fee discount.',
+    indexStamp: 'Client sleeps easy',
+    indexRange23to60Title: '23 – 60: Wobbly focus',
+    indexRange23to60Body:
+      'You’re still pleading the case but stumble into villain feeds. Saul fires witty notices to haul the trial back on track.',
+    indexRange61to100Title: '61 – 100: Procrastination in flagrante',
+    indexRange61to100Body:
+      'It’s quake o’clock. The screen shakes, the siren blares, and Saul walks in with a cease-and-desist for every villain tab.',
     socialProofCaption: 'Saul already helps thousands keep their focus.',
     socialProofMetricLabel: 'Happy users',
     ratingBadgeAlt: 'Average rating on Chrome Web Store',
@@ -343,6 +436,9 @@ const translations = {
     featureSectionTitle: 'Everything you need to keep tabs in check.',
     featureSectionLead:
       'Each card mixes humor and clarity so newcomers instantly understand what Saul does inside Chrome.',
+    featureContextLabel: 'New',
+    featureContextBody:
+      'You can now set the day’s CONTEXT (work, leisure, study, personal) in the popup; Saul recalibrates the score, softens penalties, and keeps things fair.',
     featureRealtimeTitle: 'Real-time tracking',
     featureRealtimeBody:
       'The badge watches every tab and turns your day into a clear score of focus versus procrastination.',
@@ -355,6 +451,10 @@ const translations = {
     featureQuakeBody:
       'Screen shake, siren, and Saul on top of villain tabs screaming for you to get back on track.',
     featureQuakeHint: '“Caught you! Back to the productive tab now.”',
+    featureBlockTitle: 'Villain tab lock',
+    featureBlockBody:
+      'If you enable the mode, Saul slams villain tabs in full-screen until you return to focus and win back points.',
+    featureBlockHint: '“Flip the switch when you want: only the productive tab stays open.”',
     featureReportTitle: 'Dramatic report',
     featureReportBody:
       'Charts, AI storytelling, CSV/PDF exports, and minute-by-minute timeline for your next stand-up.',
@@ -589,6 +689,7 @@ const translations = {
   },
   es: {
     navProcess: 'Cómo funciona',
+    navIndex: 'Índice',
     navBenefits: 'Beneficios',
     navDemo: 'Demo',
     navClients: 'Testimonios',
@@ -612,6 +713,48 @@ const translations = {
     heroConfidence3: 'Informe con narrativa IA',
     heroBadge: '“En caso de pereza... CALL SAUL!”',
     multilingualLabel: 'Disponible en PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
+    indexEyebrow: 'En el escritorio de Saul',
+    indexTitle: 'Cómo Saul interpreta el Índice de Procrastinación',
+    indexLead:
+      'Traducción jurídica instantánea: 0 no es trofeo y 100 no son vacaciones. Saul revisa cada franja para decidir si te sacude o te manda a un descanso forzado.',
+    indexCalloutLabel: 'Memorándum de Saul',
+    indexCalloutQuote:
+      '“Pasaste de 60% y llamo a tu jefe. Bajaste de 10% y pido cita con tu terapeuta. ¡Balance, cliente!”',
+    indexPitch1:
+      'El índice va de 0 a 100. Mientras más te acercas a 100, más claro que dejaste el caso tirado y viraste cliente VIP de la procrastinación.',
+    indexPitch2:
+      'Pero marcar 0 también levanta cejas: quien vive pegado a pestañas productivas 24/7 está a un paso de declarar burnout.',
+    indexGaugeLabel: 'Zona ideal',
+    indexGaugeHint: '18% es el punto dulce: foco firme sin volverte robot.',
+    indexCluesLabel: 'Checklist del caso',
+    indexClueFocus: 'Anota tus villanos',
+    indexClueFocusBody:
+      'Mantén una lista viva de sitios que suben el índice antes de que Saul presente demanda.',
+    indexClueBreak: 'Agenda micro-pausas',
+    indexClueBreakBody:
+      'La franja 15–22 pide respiraciones estratégicas. Bloquéalas en el calendario, cliente.',
+    indexClueAlert: 'Revisa el terremoto',
+    indexClueAlertBody:
+      'Confirma límite, sirena y mensaje para que la citación llegue a tiempo.',
+    indexMemoHeading: 'Nota del bufete',
+    indexMemoBody:
+      'Si el índice sube por culpa de una pestaña villana, activa el bloqueo a pantalla completa. Saul cierra los villanos, deja libre solo la pestaña productiva y tu nota respira de novo.',
+    indexMemoSign: '— Saul, abogado de la productividad',
+    indexFootnote:
+      'Entre 15 y 22 Saul escribe “cliente estable”. Arriba de eso prepara el terremoto; abajo receta descanso, no más tareas.',
+    indexRange0to14Title: '0 – 14: Over-work dudoso',
+    indexRange0to14Body:
+      'Estás tan pegado al trabajo que Saul lo llama “celo excesivo”. Respira, estírate y bebe agua antes de testificar.',
+    indexRange15to22Title: '15 – 22: Equilibrio dorado',
+    indexRange15to22Body:
+      'Veredicto ideal: foco constante, pausas sanas y cero sirenas. Saul hasta considera descontar honorarios.',
+    indexStamp: 'Cliente que duerme en paz',
+    indexRange23to60Title: '23 – 60: Foco tambaleando',
+    indexRange23to60Body:
+      'Aún llevas el caso, pero tropiezas en feeds villanos. Saul lanza notificaciones sarcásticas para enderezar el expediente.',
+    indexRange61to100Title: '61 – 100: Procrastinación flagrante',
+    indexRange61to100Body:
+      'Hora del terremoto. La pantalla tiembla, la sirena suena y Saul llega con la intimación para cerrar las pestañas villanas.',
     socialProofCaption: 'Saul ya ayuda a miles de personas a cuidar el foco.',
     socialProofMetricLabel: 'Usuarios satisfechos',
     ratingBadgeAlt: 'Calificación en Chrome Web Store',
@@ -631,6 +774,9 @@ const translations = {
     featureSectionTitle: 'El paquete completo anti-procrastinación.',
     featureSectionLead:
       'Cada tarjeta explica con humor y claridad lo que Saul hace dentro del navegador.',
+    featureContextLabel: 'Novedad',
+    featureContextBody:
+      'Ahora eliges el CONTEXTO del día (trabajo, ocio, estudios o personal) desde el popup; Saul recalibra el índice, suaviza penalizaciones y evita injusticias.',
     featureRealtimeTitle: 'Rastreo en tiempo real',
     featureRealtimeBody:
       'El badge observa cada pestaña y convierte tu jornada en un índice claro de foco vs. distracción.',
@@ -643,6 +789,10 @@ const translations = {
     featureQuakeBody:
       'Sacudida de pantalla, sirena y Saul sobre las pestañas villanas gritando que vuelvas al foco.',
     featureQuakeHint: '“Te vi: regresa a la pestaña productiva.”',
+    featureBlockTitle: 'Bloqueo de pestañas villanas',
+    featureBlockBody:
+      'Si activas el modo, Saul cierra las pestañas problemáticas a pantalla completa hasta que vuelvas al foco y recuperes puntos.',
+    featureBlockHint: '“Activa cuando quieras: solo la pestaña productiva queda libre.”',
     featureReportTitle: 'Informe dramatizado',
     featureReportBody:
       'Gráficos, narrativa IA, CSV/PDF y timeline por minuto para defender tu sprint.',

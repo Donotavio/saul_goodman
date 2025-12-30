@@ -956,6 +956,511 @@ body {
   background: #fffef0;
 }
 
+.feature-context {
+  border: 2px solid var(--black);
+  border-radius: 20px;
+  padding: 16px 22px;
+  background: linear-gradient(135deg, #fff7d6, #ffe9a9);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.12);
+  max-width: 720px;
+  margin: 0 auto 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.feature-context-label {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--yellow);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.feature-context p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.index-explainer {
+  background: linear-gradient(160deg, #fff7d6 0%, #fffdf5 40%, #fff7d6 100%);
+}
+
+.index-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  align-items: stretch;
+  position: relative;
+}
+
+.index-callout {
+  border: 2px solid var(--black);
+  border-radius: 22px;
+  padding: 22px 26px;
+  background: #fff4d1;
+  box-shadow:
+    0 0 0 4px #111,
+    10px 10px 0 rgba(0, 0, 0, 0.18);
+  margin: 0 auto 38px;
+  max-width: 760px;
+  position: relative;
+  transform: rotate(-1.6deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.index-callout::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.index-callout:hover {
+  transform: rotate(-0.4deg) translateY(-4px);
+  box-shadow:
+    0 0 0 4px #111,
+    12px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.index-callout p {
+  margin: 10px 0 2px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--brown);
+}
+
+.callout-label {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--yellow);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.index-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border: 2px solid var(--black);
+  border-radius: 24px;
+  padding: 28px;
+  background: #fffef7;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.index-copy::after {
+  content: 'Saul aprovou';
+  position: absolute;
+  top: -18px;
+  right: 26px;
+  background: var(--black);
+  color: var(--yellow);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+  transform: rotate(-2deg);
+}
+
+.index-copy p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.index-copy .index-footnote {
+  margin-top: auto;
+}
+
+.index-gauge {
+  margin-top: 6px;
+  border: 2px dashed rgba(0, 0, 0, 0.4);
+  border-radius: 18px;
+  padding: 16px 18px;
+  background: rgba(255, 237, 184, 0.6);
+}
+
+.index-gauge .gauge-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.index-gauge .gauge-caption {
+  font-weight: 600;
+  margin: 10px 0 0;
+}
+
+.index-clues {
+  border: 2px solid var(--black);
+  border-radius: 20px;
+  background: #fffdf0;
+  padding: 18px 20px;
+  box-shadow: inset 0 0 0 3px rgba(255, 222, 125, 0.5);
+  display: grid;
+  gap: 14px;
+  position: relative;
+}
+
+.index-clues::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  background: url('assets/logotipo_saul_goodman.ico') center/contain no-repeat;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3));
+  opacity: 0.6;
+}
+
+.index-clues-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--yellow);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.index-clues-label::before {
+  content: '☑';
+  font-size: 0.85rem;
+}
+
+.index-clues-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.index-clues-list li {
+  display: grid;
+  gap: 4px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.index-clues-list li::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 2px solid var(--black);
+  background: linear-gradient(135deg, #ffeebb, #ffd06a);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.index-clues-list strong {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.index-clues-list span {
+  font-size: 0.9rem;
+  color: rgba(43, 26, 17, 0.85);
+}
+
+.index-memo {
+  border: 2px dashed rgba(0, 0, 0, 0.6);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: rgba(255, 240, 214, 0.65);
+  display: grid;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.index-memo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      -45deg,
+      rgba(0, 0, 0, 0.05) 0,
+      rgba(0, 0, 0, 0.05) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.index-memo-heading {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--black);
+}
+
+.index-memo p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.index-memo-sign {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(43, 26, 17, 0.8);
+}
+
+.index-copy .index-footnote {
+  margin-top: auto;
+}
+
+.index-footnote {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(43, 26, 17, 0.85);
+}
+
+.index-scale {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+  position: relative;
+  grid-auto-rows: minmax(140px, 1fr);
+}
+
+.index-scale::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: -28px;
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe79e 0%, #ff9f66 55%, #ff6262 100%);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
+}
+
+.index-card {
+  border: 2px solid var(--black);
+  border-radius: 22px;
+  padding: 22px;
+  background: #fff;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  min-height: 100%;
+}
+
+.index-card::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: -34px;
+  width: 26px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.index-card:hover {
+  transform: translateY(-6px) rotate(-1deg);
+  box-shadow: 12px 14px 0 rgba(0, 0, 0, 0.18);
+}
+
+.index-card .index-range {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.index-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  margin-bottom: 12px;
+  color: var(--black);
+  position: relative;
+}
+
+.index-stamp::before {
+  content: '★';
+  font-size: 0.85rem;
+}
+
+.index-card h3 {
+  margin: 8px 0 10px;
+  font-size: 1.2rem;
+}
+
+.index-card p {
+  margin: 0;
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.index-card--overwork {
+  background: linear-gradient(140deg, #fff 0%, #fcf4f2 45%, #ffe2db 100%);
+}
+
+.index-card--sweetspot {
+  background: linear-gradient(140deg, #fff 0%, #f6ffe6 50%, #e1ffc2 100%);
+  position: relative;
+}
+
+.index-card--wobble {
+  background: linear-gradient(140deg, #fff 0%, #fff9dc 45%, #ffedab 100%);
+}
+
+.index-card--danger {
+  background: linear-gradient(140deg, #fff 0%, #ffe6e0 45%, #ffb7a5 100%);
+}
+
+.index-card--sweetspot::before {
+  background: #1f7f57;
+  box-shadow: 0 4px 0 rgba(31, 127, 87, 0.35);
+}
+
+.index-card--wobble::before {
+  background: #e4a300;
+  box-shadow: 0 4px 0 rgba(228, 163, 0, 0.25);
+}
+
+.index-card--danger::before {
+  background: #c5271a;
+  box-shadow: 0 4px 0 rgba(197, 39, 26, 0.35);
+}
+
+@media (min-width: 960px) {
+  .index-layout {
+    grid-template-columns: minmax(320px, 420px) minmax(360px, 1fr);
+    gap: 56px;
+  }
+
+  .index-layout::after {
+    content: 'Linha de defesa do Saul';
+    position: absolute;
+    top: 60px;
+    left: calc(420px + 18px);
+    writing-mode: vertical-rl;
+    transform: translateX(min(4vw, 18px));
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, 0.34);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .feature-context {
+    margin-bottom: 18px;
+  }
+
+  .index-callout {
+    transform: rotate(0deg);
+    padding: 20px 22px;
+    margin-bottom: 28px;
+  }
+
+  .index-copy {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .index-copy::after {
+    right: 18px;
+    top: -16px;
+  }
+
+  .index-clues {
+    padding: 16px;
+  }
+
+  .index-memo {
+    padding: 16px;
+  }
+
+  .index-scale {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-card,
+  .index-card:hover {
+    transform: none;
+    transition: none;
+  }
+
+  .index-copy::after {
+    transition: none;
+  }
+
+  .index-callout,
+  .index-callout:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .index-scale::before,
+  .index-card::before,
+  .index-layout::after {
+    display: none;
+  }
+
+  .index-layout {
+    gap: 28px;
+  }
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1138,6 +1643,35 @@ body {
   background: #fff;
   top: 18px;
   left: 12px;
+}
+
+.feature-icon-lock {
+  background: linear-gradient(135deg, #ffe3b0, #ffc46a);
+  position: relative;
+}
+
+.feature-icon-lock::before {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 22px;
+  border: 3px solid var(--brown);
+  border-radius: 6px;
+  bottom: 12px;
+  left: 12px;
+  background: #fff8df;
+}
+
+.feature-icon-lock::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--brown);
+  border-radius: 999px 999px 4px 4px;
+  top: 8px;
+  left: 16px;
+  border-bottom: none;
 }
 
 .feature-icon-report {
