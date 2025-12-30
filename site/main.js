@@ -1182,6 +1182,24 @@ const prefersReducedMotion = () => {
 const getHeroVisual = () => document.querySelector('.hero-visual');
 const getHeroSign = () => document.querySelector('.hero-visual .hero-sign');
 
+const applyHeroCrashPosture = () => {
+  const hero = document.querySelector('.hero');
+  hero?.classList.add('hero-has-crashed');
+  const copy = document.querySelector('.hero-copy[data-impact-shake]');
+  if (copy) {
+    copy.classList.add('hero-copy-shaken');
+  }
+};
+
+const resetHeroCrashPosture = () => {
+  const hero = document.querySelector('.hero');
+  hero?.classList.remove('hero-has-crashed');
+  const copy = document.querySelector('.hero-copy[data-impact-shake]');
+  if (copy) {
+    copy.classList.remove('hero-copy-shaken', 'hero-copy-impact');
+  }
+};
+
 const isHeroAnimationAllowed = () => {
   return !prefersReducedMotion() && !heroMotionQuery.matches && Boolean(getHeroVisual());
 };
@@ -1335,6 +1353,10 @@ const triggerHeroCopyImpact = () => {
   copy.classList.add('hero-copy-impact');
   window.clearTimeout(heroCopyImpactTimeout);
   heroCopyImpactTimeout = window.setTimeout(() => {
+    const hero = copy.closest('.hero');
+    if (hero?.classList.contains('hero-has-crashed')) {
+      return;
+    }
     copy.classList.remove('hero-copy-impact');
   }, 800);
 };
@@ -1423,10 +1445,11 @@ const dropHeroSign = (reason = 'manual') => {
       return;
     }
     heroSign.removeEventListener('animationend', onDropEnd);
-    heroVisual.classList.remove('is-dropping');
-    heroVisual.classList.add('is-crashed', 'is-swinging');
+    heroVisual.classList.remove('is-dropping', 'is-swinging');
+    heroVisual.classList.add('is-crashed');
     triggerHeroCopyImpact();
     killAllBulbs();
+    applyHeroCrashPosture();
   };
   heroSign.addEventListener('animationend', onDropEnd);
 };
@@ -1437,6 +1460,7 @@ const initHeroSign = () => {
   if (!heroVisual) {
     return;
   }
+  resetHeroCrashPosture();
   heroVisual.classList.remove('is-crashed', 'is-dropping', 'is-lit', 'is-failing', 'is-static', 'is-swinging');
   const copy = document.querySelector('[data-impact-shake]');
   copy?.classList.remove('hero-copy-impact');
