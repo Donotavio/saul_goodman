@@ -1,4 +1,4 @@
-const CACHE_NAME = 'saul-site-v2';
+const CACHE_NAME = 'saul-site-v3';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -75,6 +75,14 @@ const cacheAndReturn = async (request, response) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  try {
+    const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) {
+      return;
+    }
+  } catch {
+    return;
+  }
   if (isDynamicResource(event.request)) {
     event.respondWith(
       fetch(event.request)
