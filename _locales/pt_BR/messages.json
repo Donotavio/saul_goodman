@@ -204,7 +204,7 @@
     "message": "Saul explica"
   },
   "popup_fairness_note": {
-    "message": "Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade."
+    "message": "Saul recalibra o índice conforme o contexto que você escolhe no popup. Ignorar hoje zera o score e silencia alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade."
   },
   "popup_fairness_holiday_detected": {
     "message": "Feriado detectado — sem penalidades."
@@ -688,6 +688,9 @@
   },
   "options_holiday_hint": {
     "message": "Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice."
+  },
+  "options_holiday_context_hint": {
+    "message": "Use o popup para escolher o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças."
   },
   "options_holiday_toggle_label": {
     "message": "Pausar pontuação em feriados nacionais"

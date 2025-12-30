@@ -204,7 +204,7 @@
     "message": "Saul explains"
   },
   "popup_fairness_note": {
-    "message": "Saul only scores when it makes sense. Skip Today sets the score to zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties."
+    "message": "Saul recalibrates the score according to the context you pick in the popup. Skip Today freezes the score at zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties."
   },
   "popup_fairness_holiday_detected": {
     "message": "Holiday detected — no penalties."
@@ -690,7 +690,10 @@
     "message": "Holidays & fairness"
   },
   "options_holiday_hint": {
-    "message": "When enabled, Saul calls the public Nager.Date API to see if today is a national holiday and neutralizes the index."
+    "message": "When enabled, Saul checks Nager.Date to see if today is a national holiday and neutralizes the index."
+  },
+  "options_holiday_context_hint": {
+    "message": "Use the popup to set the day’s CONTEXT (work, leisure, study, personal). Saul logs that history and adjusts the index to keep things fair."
   },
   "options_holiday_toggle_label": {
     "message": "Pause scoring on national holidays"
