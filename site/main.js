@@ -893,6 +893,40 @@ const translations = {
   }
 };
 
+const primeHeroCrashAudio = () => {
+  if (heroCrashPrimed || prefersReducedMotion()) {
+    return Promise.resolve();
+  }
+
+  const audios = [ensureHeroCrashAudio(), ensureHeroShockAudio()].filter(Boolean);
+  const primePromises = audios.map((audio) => {
+    const originalVolume = audio.volume;
+    audio.volume = Math.min(originalVolume, 1);
+    audio.currentTime = 0;
+    const playResult = audio.play();
+    const resume = () => {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = originalVolume;
+    };
+    if (playResult && typeof playResult.then === 'function') {
+      return playResult.then(resume).catch(() => {
+        resume();
+      });
+    }
+    resume();
+    return Promise.resolve();
+  });
+
+  return Promise.all(primePromises)
+    .then(() => {
+      heroCrashPrimed = true;
+    })
+    .catch(() => {
+      heroCrashPrimed = false;
+    });
+};
+
 const richTextKeys = new Set(['feature4Item1', 'faq2Answer', 'trustCard1Body', 'featurePrivacyBody']);
 const supportedLanguages = ['pt', 'en', 'es'];
 const defaultLanguage = 'pt';
@@ -1179,6 +1213,7 @@ let heroCopyImpactTimeout = 0;
 let heroCrashAudio;
 let heroShockAudio;
 let heroCrashShockTimer = 0;
+let heroCrashPrimed = false;
 
 const prefersReducedMotion = () => {
   return window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
@@ -1748,20 +1783,26 @@ const setupIntroAudio = () => {
 
   const armOnFirstInteraction = () => {
     const handler = () => {
-      tryPlay().finally(() => {
-        document.removeEventListener('pointerdown', handler);
-        document.removeEventListener('keydown', handler);
-        document.removeEventListener('touchstart', handler);
-      });
+      tryPlay()
+        .then(() => primeHeroCrashAudio())
+        .catch(() => primeHeroCrashAudio())
+        .finally(() => {
+          document.removeEventListener('pointerdown', handler);
+          document.removeEventListener('keydown', handler);
+          document.removeEventListener('touchstart', handler);
+        });
     };
     document.addEventListener('pointerdown', handler, { once: true });
     document.addEventListener('keydown', handler, { once: true });
     document.addEventListener('touchstart', handler, { once: true });
   };
 
-  tryPlay().catch(() => {
-    armOnFirstInteraction();
-  });
+  tryPlay()
+    .then(() => primeHeroCrashAudio())
+    .catch(() => {
+      primeHeroCrashAudio();
+      armOnFirstInteraction();
+    });
 };
 
 const ensureQuakeAudio = () => {

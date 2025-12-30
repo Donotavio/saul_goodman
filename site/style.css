@@ -670,33 +670,6 @@ body {
   mix-blend-mode: screen;
 }
 
-.spark-1 {
-  left: 64%;
-  --spark-angle: -32deg;
-  --spark-start-x: -3px;
-  --spark-start-y: -5px;
-  --spark-travel-x: -24px;
-  --spark-travel-y: -94px;
-}
-
-.spark-3 {
-  left: 72%;
-  --spark-angle: -16deg;
-  --spark-start-x: -2px;
-  --spark-start-y: -4px;
-  --spark-travel-x: -22px;
-  --spark-travel-y: -94px;
-}
-
-.spark-4 {
-  left: 76%;
-  --spark-angle: -8deg;
-  --spark-start-x: -1px;
-  --spark-start-y: -4px;
-  --spark-travel-x: -14px;
-  --spark-travel-y: -90px;
-}
-
 .spark-5 {
   left: 80%;
   --spark-angle: 0deg;
@@ -742,22 +715,43 @@ body {
   --spark-travel-y: -94px;
 }
 
-.spark-10 {
-  left: 86%;
-  --spark-angle: 18deg;
-  --spark-start-x: 2px;
-  --spark-start-y: -4px;
-  --spark-travel-x: 26px;
-  --spark-travel-y: -96px;
+.spark-1 {
+  left: 64%;
+  --spark-angle: -32deg;
+  --spark-start-x: -3px;
+  --spark-start-y: -5px;
+  --spark-travel-x: -24px;
+  --spark-travel-y: -94px;
 }
 
-.spark-6,
-.spark-7,
-.spark-8,
-.spark-9,
-.spark-10 {
-  top: 72%;
+.spark-2 {
+  left: 68%;
+  --spark-angle: -22deg;
+  --spark-start-x: -3px;
+  --spark-start-y: -4px;
+  --spark-travel-x: -26px;
+  --spark-travel-y: -100px;
 }
+
+.spark-3 {
+  left: 72%;
+  --spark-angle: -16deg;
+  --spark-start-x: -2px;
+  --spark-start-y: -4px;
+  --spark-travel-x: -22px;
+  --spark-travel-y: -94px;
+}
+
+.spark-4 {
+  left: 76%;
+  --spark-angle: -8deg;
+  --spark-start-x: -1px;
+  --spark-start-y: -4px;
+  --spark-travel-x: -14px;
+  --spark-travel-y: -90px;
+}
+
+
 
 .hero-visual.is-crashed .spark,
 .hero-visual.is-dropping .spark {
