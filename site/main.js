@@ -1156,11 +1156,293 @@ const createLightbox = () => {
 let lightbox;
 let introAudio;
 let introAudioPlayed = false;
+let introAudioEventsBound = false;
 const introAudioSrc = 'assets/audio/voicy-better-call-saul.aac';
 const quakeAudioSrc = 'assets/audio/terremoto-siren.aac';
 let quakeAudio;
 let quakeTimeout;
 let quakeOverlay;
+let heroIntroDurationMs = 3400;
+let heroFallbackDropTimer = 0;
+let heroFailTimer = 0;
+let heroDropTriggered = false;
+let heroLightsStarted = false;
+let heroScrollHandlerAttached = false;
+const heroMotionQuery = window.matchMedia
+  ? window.matchMedia('(max-width: 960px)')
+  : { matches: true, addEventListener: () => {}, removeEventListener: () => {} };
+let heroBulbs = [];
+let heroBulbFailureInterval = 0;
+
+const prefersReducedMotion = () => {
+  return window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+};
+
+const getHeroVisual = () => document.querySelector('.hero-visual');
+const getHeroSign = () => document.querySelector('.hero-visual .hero-sign');
+
+const isHeroAnimationAllowed = () => {
+  return !prefersReducedMotion() && !heroMotionQuery.matches && Boolean(getHeroVisual());
+};
+
+const setHeroGlowLevel = (value) => {
+  const heroVisual = getHeroVisual();
+  if (!heroVisual) {
+    return;
+  }
+  const clamped = Math.max(0.05, Math.min(1, value));
+  heroVisual.style.setProperty('--hero-glow-intensity', clamped.toFixed(2));
+};
+
+const buildHeroBulbs = () => {
+  const container = document.querySelector('.hero-sign-bulbs');
+  if (!container) {
+    heroBulbs = [];
+    return;
+  }
+  container.innerHTML = '';
+  heroBulbs = [];
+  const insetX = 4;
+  const insetY = 3.5;
+  const rightX = 100 - insetX;
+  const bottomY = 100 - insetY;
+  const cornerRadius = 10;
+  const addBulb = (x, y) => {
+    const bulb = document.createElement('span');
+    bulb.className = 'bulb';
+    bulb.style.setProperty('--x', x.toFixed(2));
+    bulb.style.setProperty('--y', y.toFixed(2));
+    bulb.style.setProperty('--bulb-delay', `${Math.random().toFixed(2)}s`);
+    container.appendChild(bulb);
+    heroBulbs.push(bulb);
+  };
+  const createLinear = (count, axis) => {
+    if (count <= 0) {
+      return;
+    }
+    for (let i = 0; i < count; i++) {
+      const ratio = (i + 1) / (count + 1);
+      if (axis === 'top') {
+        addBulb(insetX + ratio * (rightX - insetX), insetY);
+      } else if (axis === 'bottom') {
+        addBulb(insetX + ratio * (rightX - insetX), bottomY);
+      } else if (axis === 'left') {
+        addBulb(insetX, insetY + ratio * (bottomY - insetY));
+      } else if (axis === 'right') {
+        addBulb(rightX, insetY + ratio * (bottomY - insetY));
+      }
+    }
+  };
+  createLinear(10, 'top');
+  createLinear(10, 'bottom');
+  createLinear(10, 'left');
+  createLinear(10, 'right');
+  const addCornerBulbs = (cx, cy, startAngle) => {
+    const segments = 2;
+    for (let i = 1; i <= segments; i++) {
+      const angle = startAngle + (i / (segments + 1)) * 90;
+      const rad = (angle * Math.PI) / 180;
+      const x = cx + cornerRadius * Math.cos(rad);
+      const y = cy + cornerRadius * Math.sin(rad);
+      addBulb(x, y);
+    }
+  };
+  addCornerBulbs(insetX + cornerRadius, insetY + cornerRadius, 180);
+  addCornerBulbs(rightX - cornerRadius, insetY + cornerRadius, 270);
+  addCornerBulbs(rightX - cornerRadius, bottomY - cornerRadius, 0);
+  addCornerBulbs(insetX + cornerRadius, bottomY - cornerRadius, 90);
+};
+
+const resetHeroBulbState = () => {
+  heroBulbs.forEach((bulb) => {
+    bulb.className = 'bulb';
+    bulb.style.setProperty('--bulb-delay', `${Math.random().toFixed(2)}s`);
+  });
+  setHeroGlowLevel(1);
+};
+
+const stopHeroBulbLoop = () => {
+  window.clearTimeout(heroBulbFailureInterval);
+  heroBulbFailureInterval = 0;
+};
+
+const updateHeroGlowFromBulbs = () => {
+  if (!heroBulbs.length) {
+    setHeroGlowLevel(0.25);
+    return;
+  }
+  const alive = heroBulbs.filter((bulb) => !bulb.classList.contains('bulb-dead')).length;
+  const ratio = alive / heroBulbs.length;
+  setHeroGlowLevel(0.2 + 0.8 * ratio);
+};
+
+const degradeRandomBulb = () => {
+  const candidates = heroBulbs.filter((bulb) => !bulb.classList.contains('bulb-dead'));
+  if (!candidates.length) {
+    return;
+  }
+  const target = candidates[Math.floor(Math.random() * candidates.length)];
+  target.classList.add('bulb-glitch');
+  window.setTimeout(() => {
+    target.classList.remove('bulb-glitch');
+    target.classList.add('bulb-dim');
+    updateHeroGlowFromBulbs();
+    window.setTimeout(() => {
+      if (!target.classList.contains('bulb-dead')) {
+        target.classList.add('bulb-dead');
+        updateHeroGlowFromBulbs();
+      }
+    }, 220 + Math.random() * 420);
+  }, 140 + Math.random() * 220);
+};
+
+const startHeroBulbLoop = () => {
+  if (!heroBulbs.length) {
+    buildHeroBulbs();
+  }
+  stopHeroBulbLoop();
+  const base = Math.max(240, Math.round(heroIntroDurationMs / Math.max(heroBulbs.length, 1)));
+  const schedule = () => {
+    if (!heroBulbs.some((bulb) => !bulb.classList.contains('bulb-dead'))) {
+      return;
+    }
+    const jitter = base * (0.6 + Math.random() * 0.7);
+    heroBulbFailureInterval = window.setTimeout(() => {
+      degradeRandomBulb();
+      const alive = heroBulbs.filter((bulb) => !bulb.classList.contains('bulb-dead')).length;
+      const ratio = alive / heroBulbs.length || 0;
+      const accelerated = base * (0.4 + ratio);
+      heroBulbFailureInterval = window.setTimeout(schedule, accelerated * (0.7 + Math.random() * 0.6));
+    }, jitter);
+  };
+  schedule();
+};
+
+const killAllBulbs = () => {
+  heroBulbs.forEach((bulb) => bulb.classList.add('bulb-dead'));
+  updateHeroGlowFromBulbs();
+  setHeroGlowLevel(0.2);
+};
+
+const updateHeroIntroDuration = (seconds) => {
+  if (!Number.isFinite(seconds) || seconds <= 0.5) {
+    return;
+  }
+  heroIntroDurationMs = Math.round(seconds * 1000);
+  document.documentElement.style.setProperty('--hero-intro-duration', `${seconds}s`);
+  resetHeroDropFallback();
+};
+
+const resetHeroDropFallback = (delay = Math.max(heroIntroDurationMs + 1200, 6000)) => {
+  if (!isHeroAnimationAllowed()) {
+    return;
+  }
+  window.clearTimeout(heroFallbackDropTimer);
+  heroFallbackDropTimer = window.setTimeout(() => dropHeroSign('timeout'), delay);
+};
+
+const scheduleHeroLightFailure = () => {
+  window.clearTimeout(heroFailTimer);
+  if (!isHeroAnimationAllowed()) {
+    return;
+  }
+  heroFailTimer = window.setTimeout(() => {
+    const heroVisual = getHeroVisual();
+    heroVisual?.classList.add('is-failing');
+  }, Math.max(1200, heroIntroDurationMs * 0.65));
+};
+
+const startHeroLights = () => {
+  if (heroLightsStarted || !isHeroAnimationAllowed()) {
+    return;
+  }
+  const heroVisual = getHeroVisual();
+  if (!heroVisual) {
+    return;
+  }
+  heroLightsStarted = true;
+  resetHeroBulbState();
+  startHeroBulbLoop();
+  heroVisual.classList.remove('is-static', 'is-crashed');
+  heroVisual.classList.add('is-lit');
+  scheduleHeroLightFailure();
+  resetHeroDropFallback();
+};
+
+const handleHeroScrollDrop = () => {
+  dropHeroSign('scroll');
+};
+
+const armHeroScrollDrop = () => {
+  if (heroScrollHandlerAttached || !isHeroAnimationAllowed()) {
+    return;
+  }
+  heroScrollHandlerAttached = true;
+  window.addEventListener('scroll', handleHeroScrollDrop, { once: true, passive: true });
+};
+
+const dropHeroSign = (reason = 'manual') => {
+  const heroVisual = getHeroVisual();
+  const heroSign = getHeroSign();
+  if (!heroVisual || !heroSign) {
+    return;
+  }
+  stopHeroBulbLoop();
+  window.clearTimeout(heroFailTimer);
+  window.clearTimeout(heroFallbackDropTimer);
+  if (!isHeroAnimationAllowed()) {
+    heroScrollHandlerAttached = false;
+    heroVisual.classList.add('is-crashed', 'is-static');
+    killAllBulbs();
+    return;
+  }
+  if (heroDropTriggered) {
+    return;
+  }
+  heroDropTriggered = true;
+  heroScrollHandlerAttached = false;
+  heroVisual.classList.remove('is-lit');
+  heroVisual.classList.add('is-failing', 'is-dropping');
+  const onDropEnd = (event) => {
+    if (event.target !== heroSign || event.animationName !== 'heroSignDrop') {
+      return;
+    }
+    heroSign.removeEventListener('animationend', onDropEnd);
+    heroVisual.classList.remove('is-dropping');
+    heroVisual.classList.add('is-crashed');
+    killAllBulbs();
+  };
+  heroSign.addEventListener('animationend', onDropEnd);
+};
+
+const initHeroSign = () => {
+  const heroVisual = getHeroVisual();
+  stopHeroBulbLoop();
+  if (!heroVisual) {
+    return;
+  }
+  heroVisual.classList.remove('is-crashed', 'is-dropping', 'is-lit', 'is-failing', 'is-static');
+  heroDropTriggered = false;
+  heroLightsStarted = false;
+  window.clearTimeout(heroFailTimer);
+  window.clearTimeout(heroFallbackDropTimer);
+  if (!isHeroAnimationAllowed()) {
+    heroScrollHandlerAttached = false;
+    heroVisual.classList.add('is-crashed', 'is-static');
+    setHeroGlowLevel(0.35);
+    heroBulbs = [];
+    return;
+  }
+  buildHeroBulbs();
+  resetHeroBulbState();
+  armHeroScrollDrop();
+  resetHeroDropFallback();
+  window.setTimeout(() => {
+    if (!heroLightsStarted) {
+      startHeroLights();
+    }
+  }, 900);
+};
 
 const setupLightbox = () => {
   lightbox = createLightbox();
@@ -1375,6 +1657,29 @@ const setupIntroAudio = () => {
     introAudio = new Audio(introAudioSrc);
     introAudio.preload = 'auto';
     introAudio.volume = 0.85;
+  }
+
+  if (introAudio && !introAudioEventsBound) {
+    introAudioEventsBound = true;
+    introAudio.addEventListener('loadedmetadata', () => {
+      if (introAudio?.duration) {
+        updateHeroIntroDuration(introAudio.duration);
+      }
+    });
+    introAudio.addEventListener(
+      'play',
+      () => {
+        if (introAudio?.duration) {
+          updateHeroIntroDuration(introAudio.duration);
+        }
+        startHeroLights();
+        resetHeroDropFallback();
+      },
+      { once: true }
+    );
+    introAudio.addEventListener('ended', () => {
+      dropHeroSign('audio-ended');
+    });
   }
 
   const tryPlay = () => {
@@ -1730,6 +2035,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (isDocumentPage) {
     return;
   }
+  initHeroSign();
   setupLightbox();
   setupMobileMenu();
   setupGauges();
@@ -1755,6 +2061,14 @@ window.addEventListener('DOMContentLoaded', () => {
       startQuakeDemo();
     }
   });
+  const handleHeroMediaChange = () => {
+    initHeroSign();
+  };
+  if (typeof heroMotionQuery?.addEventListener === 'function') {
+    heroMotionQuery.addEventListener('change', handleHeroMediaChange);
+  } else if (typeof heroMotionQuery?.addListener === 'function') {
+    heroMotionQuery.addListener(handleHeroMediaChange);
+  }
 });
 const updateCarouselPreview = (carousel) => {
   const slides = Array.from(carousel.querySelectorAll('.demo-figure'));
