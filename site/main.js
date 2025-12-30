@@ -89,6 +89,7 @@ const translations = {
     featureContextLabel: 'Novidade',
     featureContextBody:
       'Agora você escolhe o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal) direto no popup; Saul recalibra o índice, neutraliza penalidades e evita injustiças.',
+    featureSwipeHint: 'Arraste para o lado e confira todos os recursos.',
     featureRealtimeTitle: 'Rastreamento em tempo real',
     featureRealtimeBody:
       'O badge monitora cada aba e atualiza o índice para você saber se é hora de virar o jogo.',
@@ -439,6 +440,7 @@ const translations = {
     featureContextLabel: 'New',
     featureContextBody:
       'You can now set the day’s CONTEXT (work, leisure, study, personal) in the popup; Saul recalibrates the score, softens penalties, and keeps things fair.',
+    featureSwipeHint: 'Swipe sideways to review every feature Saul handles.',
     featureRealtimeTitle: 'Real-time tracking',
     featureRealtimeBody:
       'The badge watches every tab and turns your day into a clear score of focus versus procrastination.',
@@ -777,6 +779,7 @@ const translations = {
     featureContextLabel: 'Novedad',
     featureContextBody:
       'Ahora eliges el CONTEXTO del día (trabajo, ocio, estudios o personal) desde el popup; Saul recalibra el índice, suaviza penalizaciones y evita injusticias.',
+    featureSwipeHint: 'Desliza hacia los lados para ver todas las funciones de Saul.',
     featureRealtimeTitle: 'Rastreo en tiempo real',
     featureRealtimeBody:
       'El badge observa cada pestaña y convierte tu jornada en un índice claro de foco vs. distracción.',
@@ -2105,9 +2108,29 @@ const startQuakeDemo = () => {
   quakeTimeout = setTimeout(stopQuakeDemo, 5000);
 };
 
+const setupHeroAnimation = () => {
+  const hero = document.querySelector('.hero-visual');
+  if (!hero || window.matchMedia('(max-width: 768px)').matches) return;
+  hero.style.backgroundPosition = 'center 0px';
+  let ticking = false;
+  const updatePosition = () => {
+    hero.style.backgroundPosition = `center ${window.scrollY * 0.25}px`;
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updatePosition);
+    },
+    { passive: true }
+  );
+};
+
 const setupParallax = () => {
   const hero = document.querySelector('.hero');
-  if (hero) {
+  if (hero && !window.matchMedia('(max-width: 768px)').matches) {
     hero.style.backgroundPosition = 'center 0px';
     let ticking = false;
     const updatePosition = () => {
@@ -2127,10 +2150,11 @@ const setupParallax = () => {
 };
 
 const setupSectionParallax = () => {
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+  if (motionQuery.matches || mobileQuery.matches) return;
   const sections = Array.from(document.querySelectorAll('[data-parallax]'));
   if (!sections.length) return;
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (motionQuery.matches) return;
   const update = () => {
     sections.forEach((section) => {
       const top = section.getBoundingClientRect().top;

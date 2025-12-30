@@ -598,6 +598,178 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    gap: 28px;
+    padding: 48px 6vw 36px;
+    background-size: cover;
+    text-align: center;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-languages {
+    text-align: center;
+  }
+
+  .hero-visual {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: auto;
+    padding-bottom: 32px;
+  }
+
+  .hero-sign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(70vw, 320px);
+    height: auto;
+    position: relative;
+    margin: 0 auto;
+    transform: none !important;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .hero-sign::before,
+  .hero-sign::after,
+  .hero-sign-board,
+  .hero-sign-frame,
+  .hero-sign-ring,
+  .hero-sign-bulbs,
+  .hero-sign-effects,
+  .hero-sign-glow,
+  .hero-sign-shadow,
+  .hero-sign-wires,
+  .hero-sign-effects-inner,
+  .hero-sign-effects .spark,
+  .hero-sign-effects .smoke,
+  .hero-sign-wires .spark,
+  .hero-easter-egg {
+    display: none !important;
+  }
+
+  .hero-logo {
+    position: relative;
+    display: block;
+    width: min(70vw, 320px);
+    height: auto;
+    margin: 0 auto;
+    transform: none !important;
+    filter: none;
+    left: auto;
+    top: auto;
+  }
+
+  .gauge-widget.hero-gauge {
+    display: none;
+  }
+
+  [data-parallax] {
+    background-image: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .section {
+    padding: 48px 6vw;
+  }
+
+  .section-head {
+    text-align: center;
+  }
+
+  .feature-carousel {
+    display: block;
+  }
+
+  .feature-nav {
+    display: none;
+  }
+
+  .feature-track {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    overflow: visible;
+    padding: 0;
+  }
+
+  [data-feature-card] {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .feature-context {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 340px;
+    width: 100%;
+  }
+
+  .feature-hint-mobile {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, 0.6);
+    margin: 18px auto 10px;
+    position: relative;
+    width: fit-content;
+  }
+
+  .feature-hint-mobile::after {
+    content: '⇆';
+    display: inline-block;
+    margin-left: 8px;
+    color: rgba(17, 17, 17, 0.45);
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .demo-card,
+  .feature-card,
+  .benefit-card,
+  .trust-card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 340px;
+  }
+}
+
 .hero-sign-effects {
   position: absolute;
   inset: 0;
@@ -986,6 +1158,10 @@ body {
   font-weight: 600;
 }
 
+.feature-hint-mobile {
+  display: none;
+}
+
 .index-explainer {
   background: linear-gradient(160deg, #fff7d6 0%, #fffdf5 40%, #fff7d6 100%);
 }
@@ -1123,7 +1299,7 @@ body {
   right: 18px;
   width: 32px;
   height: 32px;
-  background: url('assets/logotipo_saul_goodman.ico') center/contain no-repeat;
+  background: url('assets/logotipo_saul_goodman.png') center/contain no-repeat;
   filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3));
   opacity: 0.6;
 }
@@ -2481,7 +2657,8 @@ blockquote p {
     position: relative;
     width: min(75vw, 360px);
     height: min(90vw, 420px);
-    transform: translate(-50%, 0) rotate(0deg) !important;
+    margin: 0 auto;
+    transform: none !important;
   }
 
   .hero-sign-board {
@@ -2500,6 +2677,7 @@ blockquote p {
     width: min(70vw, 320px);
     height: auto;
     margin: 0 auto;
+    transform: none !important;
     filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.3));
   }
 
