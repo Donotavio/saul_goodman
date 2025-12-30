@@ -49,6 +49,7 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+  box-sizing: border-box;
 }
 
 /* Botão do menu mobile começa oculto no desktop */
@@ -714,6 +715,10 @@ body {
 
   .section-head {
     text-align: center;
+  }
+
+  .index-layout {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .feature-carousel {
@@ -2592,6 +2597,8 @@ blockquote p {
     top: 100%;
     left: 0;
     right: 0;
+    width: 100%;
+    box-sizing: border-box;
     max-height: 0;
     overflow: hidden;
     flex-direction: column;
