@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Rotina: O Melhor Amigo da Procrastinação!",
+      "url": "./posts/2025/2025-12-31-rotina-o-melhor-amigo-da-procrastinacao/",
+      "markdown": "2025/2025-12-31-rotina-o-melhor-amigo-da-procrastinacao.md",
+      "date": "2025-12-31",
+      "category": "trabalho-remoto",
+      "tags": [
+        "produtividade",
+        "procrastinação",
+        "rotina",
+        "trabalho-remoto",
+        "mudanças"
+      ],
+      "excerpt": "Todo ano, uma nova chance para a mesma rotina e as mesmas promessas vazias. Que emocionante!",
+      "title_en": "Routine: Procrastination's Best Friend!",
+      "title_es": "¡Rutina: El Mejor Amigo de la Procrastinación!",
+      "tone": "incredulo",
+      "source_title": "<![CDATA[[Newsletter] The Comfort of Routine, the Promise of Change]]>",
+      "source_url": "https://remotive.com/blog/newsletter-the-comfort-of-routine-the-promise-of-change/",
+      "source_published_at": "Mon, 29 Dec 2025 14:48:15 GMT",
+      "excerpt_en": "Every year, a new chance for the same routine and the same empty promises. How exciting!",
+      "excerpt_es": "Cada año, una nueva oportunidad para la misma rutina y las mismas promesas vacías. ¡Qué emocionante!"
+    },
+    {
       "title": "As Reuniões Semanais que Ninguém Pediu: O Guia da Insatisfação",
       "url": "./posts/2025/2025-12-29-as-reunioes-semanais-que-ninguem-pediu-o-guia-da-insatisfacao/",
       "markdown": "2025/2025-12-29-as-reunioes-semanais-que-ninguem-pediu-o-guia-da-insatisfacao.md",
