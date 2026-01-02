@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "A Estratégia de Busca AI: O Que Fazemos com Mais Uma Buzzword?",
+      "url": "./posts/2026/2026-01-02-a-estrategia-de-busca-ai-o-que-fazemos-com-mais-uma-buzzword/",
+      "markdown": "2026/2026-01-02-a-estrategia-de-busca-ai-o-que-fazemos-com-mais-uma-buzzword.md",
+      "date": "2026-01-02",
+      "category": "marketing",
+      "tags": [
+        "AI",
+        "marketing",
+        "buzzword",
+        "produtividade",
+        "estratégia"
+      ],
+      "excerpt": "A nova estratégia de busca AI: porque complicar o simples é o novo normal no marketing.",
+      "title_en": "The AI Search Strategy: What Do We Do with Another Buzzword?",
+      "title_es": "La Estrategia de Búsqueda AI: ¿Qué Hacemos con Otra Palabra de Moda?",
+      "tone": "incredulo",
+      "source_title": "AI search strategy: A guide for modern marketing teams",
+      "source_url": "https://blog.hubspot.com/marketing/ai-search-strategy",
+      "source_published_at": "Wed, 31 Dec 2025 12:00:02 GMT",
+      "excerpt_en": "The new AI search strategy: because complicating the simple is the new normal in marketing.",
+      "excerpt_es": "La nueva estrategia de búsqueda AI: porque complicar lo simple es el nuevo normal en el marketing."
+    },
+    {
       "title": "Rotina: O Melhor Amigo da Procrastinação!",
       "url": "./posts/2025/2025-12-31-rotina-o-melhor-amigo-da-procrastinacao/",
       "markdown": "2025/2025-12-31-rotina-o-melhor-amigo-da-procrastinacao.md",
