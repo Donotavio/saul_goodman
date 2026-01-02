@@ -106,9 +106,19 @@ test('context modes adjust scoring weights', () => {
   const personal = calculateProcrastinationIndex(metrics, baseSettings, {
     contextMode: { value: 'personal', updatedAt: Date.now() }
   });
+  const dayOff = calculateProcrastinationIndex(metrics, baseSettings, {
+    contextMode: { value: 'dayOff', updatedAt: Date.now() }
+  });
+  const vacation = calculateProcrastinationIndex(metrics, baseSettings, {
+    contextMode: { value: 'vacation', updatedAt: Date.now() }
+  });
   assert.ok(study.score < work.score, 'study mode should soften the index');
   assert.equal(personal.score, 0);
   assert.equal(personal.rule, 'context-personal');
+  assert.equal(dayOff.score, 0);
+  assert.equal(dayOff.rule, 'context-day-off');
+  assert.equal(vacation.score, 0);
+  assert.equal(vacation.rule, 'context-vacation');
 });
 
 test('holiday neutralization is cached and opt-in', async () => {
@@ -144,6 +154,36 @@ test('holiday neutralization is cached and opt-in', async () => {
   });
   assert.equal(second.source, 'cache');
   assert.equal(fetchCount, 1);
+});
+
+test('holiday guard neutralizes the score when API marks the date', async () => {
+  const metrics = createMetrics({ dateKey: '2025-01-01' });
+  const fakeFetch: typeof fetch = (async () => {
+    return {
+      ok: true,
+      json: async () => [
+        { date: '2025-01-01', global: true, types: ['Public'] },
+        { date: '2025-01-02', global: true, types: ['Public'] }
+      ]
+    } as unknown as Response;
+  }) as typeof fetch;
+
+  const resolution = await resolveHolidayNeutralState({
+    dateKey: metrics.dateKey,
+    countryCode: 'BR',
+    enabled: true,
+    cache: {},
+    fetcher: fakeFetch,
+    now: new Date('2025-01-01T00:00:00Z').getTime()
+  });
+
+  assert.equal(resolution.isHoliday, true);
+  const result = calculateProcrastinationIndex(metrics, baseSettings, {
+    contextMode: defaultContext,
+    holidayNeutral: resolution.isHoliday
+  });
+  assert.equal(result.rule, 'holiday');
+  assert.equal(result.score, 0);
 });
 
 test('manual override precedes context and holiday guards', () => {

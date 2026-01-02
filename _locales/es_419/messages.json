@@ -200,17 +200,29 @@
   "popup_context_option_study": {
     "message": "Estudio"
   },
+  "popup_context_option_dayOff": {
+    "message": "Día libre"
+  },
+  "popup_context_option_vacation": {
+    "message": "Vacaciones"
+  },
   "popup_fairness_note_label": {
     "message": "Saul te lo cuenta"
   },
   "popup_fairness_note": {
-    "message": "Saul recalibra el índice según el contexto que eliges en el popup. Ignorar hoy congela el puntaje en cero y silencia alertas. Contextos: Trabajo mantiene 100 %, Personal neutraliza todo, Ocio toma 30 % del foco e ignora villanos, Estudios reduce las penalizaciones a la mitad."
+    "message": "Saul recalibra el índice según el contexto que eliges en el popup. Ignorar hoy congela el puntaje en cero y silencia alertas. Contextos: Trabajo mantiene 100 %, Personal neutraliza todo, Ocio toma 30 % del foco e ignora villanos, Estudios reduce las penalizaciones a la mitad, Día libre y Vacaciones ponen el día en cero sin depender de feriados."
   },
   "popup_fairness_holiday_detected": {
     "message": "Feriado detectado — sin penalidades."
   },
   "popup_fairness_holiday_active": {
     "message": "Hoy es feriado, el puntaje está en pausa."
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Día libre registrado — puntaje en pausa."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Modo vacaciones neutraliza el día."
   },
   "report_fairness_title": {
     "message": "Justicia del día"
@@ -229,6 +241,12 @@
   },
   "report_fairness_status_study": {
     "message": "Modo estudio reduce las penalizaciones."
+  },
+  "report_fairness_status_day_off": {
+    "message": "El día libre neutralizó el índice."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Modo vacaciones dejó el índice en cero."
   },
   "report_fairness_status_holiday": {
     "message": "Feriado nacional neutralizó el índice."
@@ -690,7 +708,7 @@
     "message": "Cuando está activo, Saul consulta únicamente Nager.Date para saber si hoy es feriado nacional y neutraliza el índice."
   },
   "options_holiday_context_hint": {
-    "message": "Usa el popup para elegir el CONTEXTO del día (trabajo, ocio, estudios o personal). Saul registra ese historial y ajusta el índice sin injusticias."
+    "message": "Usa el popup para elegir el CONTEXTO del día (trabajo, ocio, estudios, día libre, vacaciones o personal). Saul registra ese historial y ajusta el índice sin injusticias."
   },
   "options_holiday_toggle_label": {
     "message": "Pausar el puntaje en feriados nacionales"

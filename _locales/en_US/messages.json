@@ -200,17 +200,29 @@
   "popup_context_option_study": {
     "message": "Study"
   },
+  "popup_context_option_dayOff": {
+    "message": "Day off"
+  },
+  "popup_context_option_vacation": {
+    "message": "Vacation"
+  },
   "popup_fairness_note_label": {
     "message": "Saul explains"
   },
   "popup_fairness_note": {
-    "message": "Saul recalibrates the score according to the context you pick in the popup. Skip Today freezes the score at zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties."
+    "message": "Saul recalibrates the score according to the context you pick in the popup. Skip Today freezes the score at zero and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves procrastination penalties, Day off and Vacation zero the day without depending on holidays."
   },
   "popup_fairness_holiday_detected": {
     "message": "Holiday detected — no penalties."
   },
   "popup_fairness_holiday_active": {
     "message": "Today is a holiday, scoring paused automatically."
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Day off logged — score paused."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Vacation mode neutralizes the day."
   },
   "report_fairness_title": {
     "message": "Fairness of the day"
@@ -229,6 +241,12 @@
   },
   "report_fairness_status_study": {
     "message": "Study mode reduced the penalties."
+  },
+  "report_fairness_status_day_off": {
+    "message": "Day off neutralized the index."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Vacation mode zeroed the day."
   },
   "report_fairness_status_holiday": {
     "message": "National holiday neutralized the index."
@@ -693,7 +711,7 @@
     "message": "When enabled, Saul checks Nager.Date to see if today is a national holiday and neutralizes the index."
   },
   "options_holiday_context_hint": {
-    "message": "Use the popup to set the day’s CONTEXT (work, leisure, study, personal). Saul logs that history and adjusts the index to keep things fair."
+    "message": "Use the popup to set the day’s CONTEXT (work, leisure, study, day off, vacation or personal). Saul logs that history and adjusts the index to keep things fair."
   },
   "options_holiday_toggle_label": {
     "message": "Pause scoring on national holidays"

@@ -36,7 +36,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Chart.js** vendorizado (UMD local em `src/vendor/chart.umd.js`).
 - **chrome.storage.local** para métricas diárias e configurações.
 - **Sem frameworks**: todo HTML/CSS escrito manualmente.
-- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `tabGroups` (tempo em grupos), `sessions` (itens fechados recentes), `declarativeNetRequest` (bloqueio opcional dos vilões) e `notifications` (avisar sobre novidades). Os hosts `https://date.nager.at/*`, `https://api.openai.com/*`, `http://127.0.0.1/*` e `http://localhost/*` aparecem apenas quando você ativa feriados automáticos, storytelling IA ou a integração com o SaulDaemon — todos opcionais.
+- **Permissões extras**: `idle` (ociosidade nativa), `windows` (detectar foco do navegador), `webNavigation` (rotas em SPA), `sessions` (itens fechados recentes), `declarativeNetRequest` (bloqueio opcional dos vilões) e `notifications` (avisar sobre novidades). Os hosts `https://date.nager.at/*`, `https://api.openai.com/*`, `http://127.0.0.1/*` e `http://localhost/*` aparecem apenas quando você ativa feriados automáticos, storytelling IA ou a integração com o SaulDaemon — todos opcionais.
 
 ```text
 saul_goodman/

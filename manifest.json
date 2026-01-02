@@ -32,7 +32,6 @@
     "idle",
     "windows",
     "webNavigation",
-    "tabGroups",
     "sessions",
     "declarativeNetRequest",
     "notifications"

@@ -30,7 +30,6 @@
 - `idle`: usar a API nativa de inatividade do Chrome para não contar tempo ocioso como produtivo.
 - `windows`: detectar quando o navegador perde foco para medir tempo em segundo plano.
 - `webNavigation`: detectar trocas de rota em SPA (YouTube, LinkedIn, Slack web) e contar navegações internas.
-- `tabGroups`: identificar quando a aba está agrupada para métricas de tempo em grupos.
 - `sessions`: contar itens fechados/reabertos recentemente (aba ou janela) como KPI no relatório.
 - `https://date.nager.at/*`: consultar a lista pública de feriados somente quando você ativar a opção.
 - `https://api.openai.com/*`: gerar narrativa apenas se você informar a sua chave.
@@ -83,7 +82,6 @@ Last update: 2025-12-02
 - `idle`: rely on Chrome’s native idle API to avoid counting inactive time as productive.
 - `windows`: detect when the browser loses focus to measure background time.
 - `webNavigation`: observe SPA route changes (YouTube, LinkedIn, Slack web) and count internal navigations.
-- `tabGroups`: detect grouped tabs for group-time metrics.
 - `sessions`: track recently closed/reopened tabs or windows as a KPI in the report.
 - `https://date.nager.at/*`: request the public holiday list only when you enable the option.
 - `https://api.openai.com/*`: generate the narrative only if you provide your API key.
@@ -136,7 +134,6 @@ Last update: 2025-12-02
 - `idle`: usar la API nativa de inactividad de Chrome para no contar tiempo ocioso como productivo.
 - `windows`: detectar cuando el navegador pierde foco para medir tiempo en segundo plano.
 - `webNavigation`: detectar cambios de ruta en SPA (YouTube, LinkedIn, Slack web) y contar navegaciones internas.
-- `tabGroups`: identificar pestañas agrupadas para las métricas de tiempo en grupos.
 - `sessions`: contar pestañas o ventanas cerradas/reabiertas recientemente como KPI en el informe.
 - `https://date.nager.at/*`: consultar la lista pública de feriados solo cuando habilites la opción.
 - `https://api.openai.com/*`: generar la narrativa únicamente si proporcionas tu clave.

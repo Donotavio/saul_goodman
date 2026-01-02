@@ -200,17 +200,29 @@
   "popup_context_option_study": {
     "message": "Estudos"
   },
+  "popup_context_option_dayOff": {
+    "message": "Folga"
+  },
+  "popup_context_option_vacation": {
+    "message": "Férias"
+  },
   "popup_fairness_note_label": {
     "message": "Saul explica"
   },
   "popup_fairness_note": {
-    "message": "Saul recalibra o índice conforme o contexto que você escolhe no popup. Ignorar hoje zera o score e silencia alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade."
+    "message": "Saul recalibra o índice conforme o contexto que você escolhe no popup. Ignorar hoje zera o score e silencia alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade, Folga e Férias zeram o dia sem depender de feriados."
   },
   "popup_fairness_holiday_detected": {
     "message": "Feriado detectado — sem penalidades."
   },
   "popup_fairness_holiday_active": {
     "message": "Hoje é feriado, índice pausado automaticamente."
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Folga cadastrada — índice pausado."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Modo férias neutraliza o dia."
   },
   "report_fairness_title": {
     "message": "Justiça do dia"
@@ -229,6 +241,12 @@
   },
   "report_fairness_status_study": {
     "message": "Modo estudo suavizou as penalidades."
+  },
+  "report_fairness_status_day_off": {
+    "message": "Folga cadastrada neutralizou o índice."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Modo férias zerou o dia."
   },
   "report_fairness_status_holiday": {
     "message": "Feriado nacional neutralizou o índice."
@@ -690,7 +708,7 @@
     "message": "Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice."
   },
   "options_holiday_context_hint": {
-    "message": "Use o popup para escolher o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças."
+    "message": "Use o popup para escolher o CONTEXTO do dia (trabalho, lazer, estudos, folga, férias ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças."
   },
   "options_holiday_toggle_label": {
     "message": "Pausar pontuação em feriados nacionais"
