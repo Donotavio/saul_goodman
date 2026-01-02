@@ -227,8 +227,22 @@ test('exportPdf writes fairness status line', async () => {
 test('exportPdf renders context and composition pages with fairness reason', async () => {
   const report = await reportModulePromise;
   const metrics = createDefaultMetrics();
-  metrics.contextDurations = { work: 40000, personal: 30000, leisure: 20000, study: 10000 };
-  metrics.contextIndices = { work: 80, personal: 0, leisure: 65, study: 72 };
+  metrics.contextDurations = {
+    work: 40000,
+    personal: 30000,
+    leisure: 20000,
+    study: 10000,
+    dayOff: 0,
+    vacation: 0
+  };
+  metrics.contextIndices = {
+    work: 80,
+    personal: 0,
+    leisure: 65,
+    study: 72,
+    dayOff: 0,
+    vacation: 0
+  };
   metrics.productiveMs = 2 * 3600000;
   metrics.procrastinationMs = 1800000;
   metrics.inactiveMs = 900000;

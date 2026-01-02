@@ -103,6 +103,8 @@ const REPORT_FAIRNESS_STATUS_KEY_BY_RULE: Record<FairnessSummary['rule'], string
   'context-personal': 'report_fairness_status_personal',
   'context-leisure': 'report_fairness_status_leisure',
   'context-study': 'report_fairness_status_study',
+  'context-day-off': 'report_fairness_status_day_off',
+  'context-vacation': 'report_fairness_status_vacation',
   holiday: 'report_fairness_status_holiday',
   normal: 'report_fairness_status_default'
 };
@@ -112,6 +114,8 @@ const REPORT_FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   report_fairness_status_personal: 'Modo pessoal — sem pontuação.',
   report_fairness_status_leisure: 'Modo lazer reduziu as cobranças.',
   report_fairness_status_study: 'Modo estudo suavizou as penalidades.',
+  report_fairness_status_day_off: 'Folga cadastrada neutralizou o índice.',
+  report_fairness_status_vacation: 'Modo férias zerou o dia.',
   report_fairness_status_holiday: 'Feriado nacional neutralizou o índice.',
   report_fairness_status_default: 'Dia útil normal.'
 };
@@ -126,6 +130,8 @@ const REPORT_FAIRNESS_REASON_KEY_BY_RULE: Partial<Record<FairnessRule, string>> 
   'context-personal': 'report_pdf_fairness_reason_context',
   'context-leisure': 'report_pdf_fairness_reason_context',
   'context-study': 'report_pdf_fairness_reason_context',
+  'context-day-off': 'report_pdf_fairness_reason_context',
+  'context-vacation': 'report_pdf_fairness_reason_context',
   holiday: 'report_pdf_fairness_reason_holiday'
 };
 
@@ -135,7 +141,14 @@ const REPORT_FAIRNESS_REASON_FALLBACKS: Record<string, string> = {
   report_pdf_fairness_reason_holiday: 'Holiday neutralization'
 };
 
-const CONTEXT_ORDER: ContextModeValue[] = ['work', 'personal', 'leisure', 'study'];
+const CONTEXT_ORDER: ContextModeValue[] = [
+  'work',
+  'personal',
+  'leisure',
+  'study',
+  'dayOff',
+  'vacation'
+];
 
 let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
@@ -1010,20 +1023,14 @@ export async function exportPdf(): Promise<void> {
     doc.text(i18n?.t('report_pdf_context_header_index') ?? 'Context index', margin + 140, 30);
     doc.setFont(undefined, 'normal');
 
-    const durations: Record<ContextModeValue, number> = {
-      work: 0,
-      personal: 0,
-      leisure: 0,
-      study: 0,
-      ...(metrics.contextDurations ?? {})
-    };
-    const indices: Record<ContextModeValue, number | undefined> = {
-      work: undefined,
-      personal: undefined,
-      leisure: undefined,
-      study: undefined,
-      ...(metrics.contextIndices ?? {})
-    };
+    const durations = CONTEXT_ORDER.reduce((acc, value) => {
+      acc[value] = metrics.contextDurations?.[value] ?? 0;
+      return acc;
+    }, {} as Record<ContextModeValue, number>);
+    const indices = CONTEXT_ORDER.reduce((acc, value) => {
+      acc[value] = metrics.contextIndices?.[value];
+      return acc;
+    }, {} as Record<ContextModeValue, number | undefined>);
     let rowY = 38;
     CONTEXT_ORDER.forEach((context) => {
       const label = i18n?.t(`popup_context_option_${context}`) ?? context;

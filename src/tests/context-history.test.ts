@@ -45,6 +45,8 @@ test('aggregateContextDurations sums open segments up to now', () => {
   assert.equal(totals.personal, 5 * 60 * 1000);
   assert.ok(totals.leisure >= 10 * 60 * 1000);
   assert.equal(totals.study, 0);
+  assert.equal(totals.dayOff, 0);
+  assert.equal(totals.vacation, 0);
 });
 
 test('buildContextBreakdown matches score calculation per context', () => {
@@ -70,5 +72,7 @@ test('buildContextBreakdown matches score calculation per context', () => {
 
   assert.equal(breakdown.indices.work, expectedWork);
   assert.equal(breakdown.indices.personal, 0);
+  assert.equal(breakdown.indices.dayOff, 0);
+  assert.equal(breakdown.indices.vacation, 0);
   assert.equal(Object.values(breakdown.durations).reduce((acc, value) => acc + value, 0) > 0, true);
 });

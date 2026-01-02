@@ -170,6 +170,8 @@ const FAIRNESS_STATUS_KEY_BY_RULE: Record<FairnessSummary['rule'], string> = {
   'context-personal': 'popup_fairness_status_personal',
   'context-leisure': 'popup_fairness_status_leisure',
   'context-study': 'popup_fairness_status_study',
+  'context-day-off': 'popup_fairness_status_day_off',
+  'context-vacation': 'popup_fairness_status_vacation',
   holiday: 'popup_fairness_status_holiday',
   normal: 'popup_fairness_status_default'
 };
@@ -179,6 +181,8 @@ const FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   popup_fairness_status_personal: 'Modo pessoal ativo, sem pontuação.',
   popup_fairness_status_leisure: 'Modo lazer reduz a pressão.',
   popup_fairness_status_study: 'Modo estudo suaviza o índice.',
+  popup_fairness_status_day_off: 'Folga cadastrada — índice pausado.',
+  popup_fairness_status_vacation: 'Modo férias neutraliza o dia.',
   popup_fairness_status_holiday: 'Feriado nacional neutralizando o dia.',
   popup_fairness_status_default: 'Dia útil normal.'
 };

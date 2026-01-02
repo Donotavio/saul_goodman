@@ -180,7 +180,7 @@ export interface ManualOverrideState {
   date: string;
 }
 
-export type ContextModeValue = 'work' | 'personal' | 'leisure' | 'study';
+export type ContextModeValue = 'work' | 'personal' | 'leisure' | 'study' | 'dayOff' | 'vacation';
 
 export interface ContextModeState {
   value: ContextModeValue;
@@ -218,6 +218,8 @@ export type FairnessRule =
   | 'context-personal'
   | 'context-leisure'
   | 'context-study'
+  | 'context-day-off'
+  | 'context-vacation'
   | 'holiday'
   | 'normal';
 

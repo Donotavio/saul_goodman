@@ -37,6 +37,18 @@ const CONTEXT_IMPACTS: Record<ContextModeValue, ContextImpact> = {
     procrastinationMultiplier: 0.5,
     neutralize: false,
     rule: 'context-study'
+  },
+  dayOff: {
+    productiveMultiplier: 0,
+    procrastinationMultiplier: 0,
+    neutralize: true,
+    rule: 'context-day-off'
+  },
+  vacation: {
+    productiveMultiplier: 0,
+    procrastinationMultiplier: 0,
+    neutralize: true,
+    rule: 'context-vacation'
   }
 };
 
@@ -44,7 +56,9 @@ export const CONTEXT_MODE_OPTIONS: Array<{ value: ContextModeValue; labelKey: st
   { value: 'work', labelKey: 'popup_context_option_work' },
   { value: 'personal', labelKey: 'popup_context_option_personal' },
   { value: 'leisure', labelKey: 'popup_context_option_leisure' },
-  { value: 'study', labelKey: 'popup_context_option_study' }
+  { value: 'study', labelKey: 'popup_context_option_study' },
+  { value: 'dayOff', labelKey: 'popup_context_option_dayOff' },
+  { value: 'vacation', labelKey: 'popup_context_option_vacation' }
 ];
 
 /**

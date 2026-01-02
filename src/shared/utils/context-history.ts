@@ -6,8 +6,16 @@ import {
   type DailyMetrics,
   type ExtensionSettings
 } from '../types.js';
+import { resolveContextImpact } from './context.js';
 
-export const CONTEXT_VALUES: ContextModeValue[] = ['work', 'personal', 'leisure', 'study'];
+export const CONTEXT_VALUES: ContextModeValue[] = [
+  'work',
+  'personal',
+  'leisure',
+  'study',
+  'dayOff',
+  'vacation'
+];
 
 /**
  * Resultado consolidado do histórico de contexto.
@@ -90,7 +98,10 @@ export function aggregateContextDurations(
   history: ContextHistory | undefined,
   now: number
 ): Record<ContextModeValue, number> {
-  const totals: Record<ContextModeValue, number> = { work: 0, personal: 0, leisure: 0, study: 0 };
+  const totals = CONTEXT_VALUES.reduce((acc, value) => {
+    acc[value] = 0;
+    return acc;
+  }, {} as Record<ContextModeValue, number>);
   if (!history?.length) {
     return totals;
   }
@@ -112,10 +123,14 @@ export function aggregateContextDurations(
 export function buildContextBreakdown(params: ContextBreakdownParams): ContextBreakdownResult {
   const now = params.now ?? Date.now();
   const durations = aggregateContextDurations(params.history, now);
-  const indices: Record<ContextModeValue, number> = { work: 0, personal: 0, leisure: 0, study: 0 };
+  const indices = CONTEXT_VALUES.reduce((acc, value) => {
+    acc[value] = 0;
+    return acc;
+  }, {} as Record<ContextModeValue, number>);
 
   for (const value of CONTEXT_VALUES) {
-    if (value === 'personal') {
+    const impact = resolveContextImpact(value);
+    if (impact.neutralize) {
       indices[value] = 0;
       continue;
     }

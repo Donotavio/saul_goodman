@@ -131,23 +131,33 @@ test('renderContextBreakdown fills table with formatted values', async () => {
     work: 10 * 60 * 1000,
     personal: 0,
     leisure: 2 * 60 * 1000,
-    study: 3 * 60 * 1000
+    study: 3 * 60 * 1000,
+    dayOff: 0,
+    vacation: 0
   };
-  const indices = { work: 55, personal: 0, leisure: 40, study: 35 };
+  const indices = { work: 55, personal: 0, leisure: 40, study: 35, dayOff: 0, vacation: 0 };
   report.renderContextBreakdown(durations, indices);
 
   assert.equal(contextSectionStub.hidden, false);
   assert.equal(contextSectionStub.classList.contains('hidden'), false);
-  assert.equal(contextBodyStub.children.length, 4);
+  assert.equal(contextBodyStub.children.length, 6);
 
   const workRow = contextBodyStub.children[0];
   const personalRow = contextBodyStub.children[1];
+  const leisureRow = contextBodyStub.children[2];
+  const studyRow = contextBodyStub.children[3];
+  const dayOffRow = contextBodyStub.children[4];
+  const vacationRow = contextBodyStub.children[5];
 
   assert.equal(workRow.children[0].textContent, 'work');
   assert.equal(workRow.children[1].textContent, '10m');
   assert.equal(workRow.children[2].textContent, '55%');
   assert.equal(personalRow.children[1].textContent, '0s');
   assert.equal(personalRow.children[2].textContent, '0%');
+  assert.equal(leisureRow.children[2].textContent, '40%');
+  assert.equal(studyRow.children[2].textContent, '35%');
+  assert.equal(dayOffRow.children[2].textContent, '0%');
+  assert.equal(vacationRow.children[2].textContent, '0%');
 });
 
 test('renderContextBreakdown hides section when no data is provided', async () => {
