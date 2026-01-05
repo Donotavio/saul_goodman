@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "O Futuro Chegou: Você Está Preparado ou Apenas Usando a Mesma Caneta BIC?",
+      "url": "./posts/2026/2026-01-05-o-futuro-chegou-voce-esta-preparado-ou-apenas-usando-a-mesma-caneta-bic/",
+      "markdown": "2026/2026-01-05-o-futuro-chegou-voce-esta-preparado-ou-apenas-usando-a-mesma-caneta-bic.md",
+      "date": "2026-01-05",
+      "category": "ux-design",
+      "tags": [
+        "produtividade",
+        "AI",
+        "negócios",
+        "design",
+        "futuro"
+      ],
+      "excerpt": "2026 está batendo à porta e as empresas ainda usam a mesma caneta BIC de 2003. Vamos lá, pessoal!",
+      "title_en": "The Future Has Arrived: Are You Prepared or Just Using the Same BIC Pen?",
+      "title_es": "El Futuro Ha Llegado: ¿Estás Preparado o Solo Usando el Mismo Bolígrafo BIC?",
+      "tone": "incredulo",
+      "source_title": "7 things every leader must do to prepare their organization for 2026",
+      "source_url": "https://www.fastcompany.com/91462416/leaders-prepare-organization-2026-ai",
+      "source_published_at": "2026-01-05T09:00:00",
+      "excerpt_en": "2026 is knocking at the door, and companies are still using the same BIC pen from 2003. Come on, people!",
+      "excerpt_es": "¡2026 está a la vuelta de la esquina y las empresas todavía usan el mismo bolígrafo BIC de 2003! ¡Vamos, gente!"
+    },
+    {
       "title": "A Estratégia de Busca AI: O Que Fazemos com Mais Uma Buzzword?",
       "url": "./posts/2026/2026-01-02-a-estrategia-de-busca-ai-o-que-fazemos-com-mais-uma-buzzword/",
       "markdown": "2026/2026-01-02-a-estrategia-de-busca-ai-o-que-fazemos-com-mais-uma-buzzword.md",
