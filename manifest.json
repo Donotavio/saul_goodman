@@ -60,7 +60,6 @@
         "src/img/*",
         "src/block/block.html",
         "src/block/block.js",
-        "site/assets/*",
         "store-assets/audio/*",
         "CHANGELOG.md"
       ],
