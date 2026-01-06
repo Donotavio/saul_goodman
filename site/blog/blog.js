@@ -69,7 +69,8 @@ const BLOG_TRANSLATIONS = {
     metaTags: 'Tags',
     metaSource: 'Fonte',
     metaSourceUrl: 'URL da fonte',
-    metaPublishedAt: 'Publicado em',
+    metaPublishedAt: 'Publicado no blog em',
+    metaSourcePublishedAt: 'Data da fonte',
     mediaTaglineProcrastinacao: 'Osciloscópios emocionais e sarcasmo terapêutico.',
     mediaTaglineFoco: 'Foco e atenção sob interrogatório diário.',
     mediaTaglineDev: 'Performance dev julgada por métricas reais.',
@@ -146,7 +147,8 @@ const BLOG_TRANSLATIONS = {
     metaTags: 'Tags',
     metaSource: 'Source',
     metaSourceUrl: 'Source URL',
-    metaPublishedAt: 'Published at',
+    metaPublishedAt: 'Published on the blog',
+    metaSourcePublishedAt: 'Source published at',
     mediaTaglineProcrastinacao: 'Mental oscilloscopes meet Saul’s therapeutic sarcasm.',
     mediaTaglineFoco: 'Focus and attention under daily questioning.',
     mediaTaglineDev: 'Dev performance judged by hard metrics.',
@@ -223,7 +225,8 @@ const BLOG_TRANSLATIONS = {
     metaTags: 'Etiquetas',
     metaSource: 'Fuente',
     metaSourceUrl: 'URL de la fuente',
-    metaPublishedAt: 'Publicado el',
+    metaPublishedAt: 'Publicado en el blog',
+    metaSourcePublishedAt: 'Fecha de la fuente',
     mediaTaglineProcrastinacao: 'Osciloscopios mentales y sarcasmo terapéutico.',
     mediaTaglineFoco: 'Foco digital bajo interrogatorio permanente.',
     mediaTaglineDev: 'Performance dev con jurado técnico.',
@@ -1012,7 +1015,7 @@ function formatDateTime(dateStr) {
 }
 
 function getPostSortTime(post) {
-  const raw = post?.source_published_at || post?.date;
+  const raw = post?.date || post?.source_published_at;
   const parsed = parseDateValue(raw);
   return parsed ? parsed.getTime() : 0;
 }
@@ -1440,7 +1443,10 @@ function renderMetadata(meta, container) {
   }
   add(t('metaSource'), meta.source_title);
   add(t('metaSourceUrl'), meta.source_url);
-  add(t('metaPublishedAt'), formatDateTime(meta.source_published_at));
+  add(t('metaPublishedAt'), formatDate(meta.date));
+  if (meta.source_published_at) {
+    add(t('metaSourcePublishedAt'), formatDateTime(meta.source_published_at));
+  }
 
   target.innerHTML = '';
   target.appendChild(dl);
@@ -1575,7 +1581,7 @@ async function renderPost() {
     if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
     const localizedExcerpt = getLocalizedValue(data, 'excerpt') || data.excerpt;
     const artwork = getToneArtwork(data);
-    const publishedValue = data.source_published_at || data.date;
+    const publishedValue = data.date || data.source_published_at;
     const publishedDate = parseDateValue(publishedValue);
     const publishedTime = publishedDate ? publishedDate.toISOString() : '';
     const canonicalUrl = buildCanonicalPostUrl(postParam);
