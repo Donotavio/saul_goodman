@@ -19,7 +19,11 @@ test('sanitizeLinkHref blocks javascript: and allows safe protocols', async () =
 test('inlineMarkdown strips unsafe links', async () => {
   const { inlineMarkdown } = await loadBlogModule();
   const safe = inlineMarkdown('[ok](https://safe.example.com)');
-  assert.ok(safe.includes('safe.example.com'));
+  const safeHrefMatch = safe.match(/href="([^"]+)"/);
+  assert.ok(safeHrefMatch, 'Expected an anchor tag with an href attribute in safe output');
+  const safeUrl = new URL(safeHrefMatch[1], 'https://example.test');
+  assert.equal(safeUrl.protocol, 'https:');
+  assert.equal(safeUrl.host, 'safe.example.com');
   const blocked = inlineMarkdown('[bad](javascript:alert(1))');
   assert.equal(blocked.includes('<a'), false);
   assert.ok(/bad/.test(blocked));
