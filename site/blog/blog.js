@@ -1,4 +1,6 @@
-const scriptUrl = document.currentScript?.src || import.meta.url;
+const scriptUrl = typeof document !== 'undefined' && document.currentScript?.src
+  ? document.currentScript.src
+  : import.meta.url;
 const blogBase = new URL('./', scriptUrl);
 const indexUrl = new URL('index.json', blogBase);
 const postsBase = new URL('posts/', blogBase);
@@ -504,10 +506,32 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;');
 }
 
+function sanitizeLinkHref(rawHref) {
+  if (!rawHref) return null;
+  const trimmed = rawHref.trim();
+  if (!trimmed) return null;
+  if (/^(javascript|data|vbscript):/i.test(trimmed)) return null;
+  if (/^\/\//.test(trimmed)) return null;
+  if (trimmed.startsWith('#')) return trimmed;
+  try {
+    const url = new URL(trimmed, blogBase);
+    if (url.protocol === 'http:' || url.protocol === 'https:' || url.protocol === 'mailto:') {
+      return url.toString();
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 function inlineMarkdown(text) {
   const safe = escapeHtml(text);
   return safe
-    .replace(/\[([^\]]+)]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+    .replace(/\[([^\]]+)]\(([^)]+)\)/g, (match, label, href) => {
+      const sanitizedHref = sanitizeLinkHref(href);
+      if (!sanitizedHref) return label;
+      return `<a href="${sanitizedHref}" target="_blank" rel="noreferrer">${label}</a>`;
+    })
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code>$1</code>');
@@ -576,20 +600,67 @@ function parseFrontmatter(content) {
   const body = content.slice(closingIndex + 4).trim();
   const data = {};
 
-  for (const line of frontmatter.split(/\r?\n/)) {
-    const [rawKey, ...rawValue] = line.split(':');
-    if (!rawKey || rawValue.length === 0) continue;
-    const key = rawKey.trim();
-    const value = rawValue.join(':').trim();
+  const flush = (key, rawValue) => {
+    if (!key) return;
+    const value = (rawValue || '').trim();
+    if (!value) {
+      data[key] = '';
+      return;
+    }
     if (value.startsWith('[') && value.endsWith(']')) {
       data[key] = value
         .slice(1, -1)
         .split(',')
         .map((v) => v.trim().replace(/^"|"$/g, '').replace(/^'|'$/g, ''))
         .filter(Boolean);
-    } else {
-      data[key] = value.replace(/^"|"$/g, '').replace(/^'|'$/g, '');
+      return;
     }
+    data[key] = value.replace(/^"|"$/g, '').replace(/^'|'$/g, '');
+  };
+
+  let currentKey = null;
+  let buffer = [];
+  let multiline = false;
+  let expectedIndent = 0;
+
+  const lines = frontmatter.split(/\r?\n/);
+  for (const line of lines) {
+    const match = line.match(/^(\s*)([^:]+):(.*)$/);
+    if (match) {
+      if (currentKey !== null) {
+        flush(currentKey, buffer.join('\n'));
+      }
+      const indent = match[1].length;
+      currentKey = match[2].trim();
+      const remainder = match[3].trim();
+      buffer = [];
+      multiline = remainder === '|' || remainder === '>';
+      expectedIndent = Math.max(indent + 1, 2);
+      if (multiline) {
+        continue;
+      }
+      buffer.push(remainder);
+    } else if (currentKey !== null) {
+      if (!line.trim()) {
+        buffer.push('');
+        continue;
+      }
+      const indent = line.match(/^(\s*)/)?.[1]?.length || 0;
+      if (multiline && indent >= expectedIndent) {
+        buffer.push(line.slice(expectedIndent));
+      } else if (indent > 0 && indent >= expectedIndent) {
+        buffer.push(line.trim());
+      } else {
+        flush(currentKey, buffer.join(multiline ? '\n' : ' '));
+        currentKey = null;
+        buffer = [];
+        multiline = false;
+        expectedIndent = 0;
+      }
+    }
+  }
+  if (currentKey !== null) {
+    flush(currentKey, buffer.join(multiline ? '\n' : ' '));
   }
 
   return { data, body };
@@ -763,7 +834,8 @@ function buildPostLink(post) {
     return new URL(buildStaticPostPath(path), blogBase).toString();
   }
   if (post.url) {
-    return new URL(post.url, blogBase).toString();
+    const sanitized = sanitizeLinkHref(post.url);
+    if (sanitized) return sanitized;
   }
   return '#';
 }
@@ -1061,4 +1133,14 @@ function init() {
   renderCurrentView();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', init);
+}
+
+export {
+  sanitizeLinkHref,
+  inlineMarkdown,
+  buildPostLink,
+  parseFrontmatter,
+  normalizeCanonicalUrl,
+};

@@ -74,6 +74,29 @@
         }
       })();
     </script>
+    <script>
+      (function () {
+        const sanitizePostParam = (value) => {
+          if (!value) return null;
+          const trimmed = value.trim();
+          if (!trimmed) return null;
+          if (trimmed.startsWith('/') || trimmed.startsWith('\\') || trimmed.startsWith('//')) return null;
+          if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return null;
+          const normalized = trimmed.replace(/^\.\/+/, '');
+          if (!normalized || normalized.includes('..')) return null;
+          return normalized;
+        };
+        const param = sanitizePostParam(new URLSearchParams(window.location.search).get('post'));
+        if (!param) return;
+        const canonical = document.querySelector('link[rel="canonical"]');
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        const base = new URL('../', window.location.href);
+        const postsBase = new URL('posts/', base);
+        const url = new URL(param, postsBase).toString();
+        if (canonical) canonical.setAttribute('href', url);
+        if (ogUrl) ogUrl.setAttribute('content', url);
+      })();
+    </script>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="./blog.css" />
     <script type="application/ld+json" id="post-jsonld">
