@@ -18,6 +18,31 @@ const BLOG_TRANSLATIONS = {
     blogHeroLead:
       'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul, direto ao ponto, sem coach barato.',
     heroBadge: '“Em caso de preguiça... CALL SAUL!”',
+    heroPill: 'Publicações semanais, sarcasmo diário',
+    featuredEyebrow: 'Destaque',
+    featuredTitle: 'Caso quente da semana',
+    latestEyebrow: 'Novidades',
+    latestTitle: 'Artigos recém-saídos do tribunal do foco',
+    searchLabel: 'Buscar',
+    searchPlaceholder: 'Buscar por título, trecho ou tag...',
+    searchReset: 'Limpar filtros',
+    statsTitle: 'Radar do blog',
+    statsPosts: 'posts publicados',
+    statsCategories: 'categorias em julgamento',
+    statsFresh: 'atualizado por último',
+    categoriesTitle: 'Categorias em pauta',
+    tagsTitle: 'Assuntos em alta',
+    newsletterTitle: 'Receba o relatório do Saul',
+    newsletterCopy: 'Doses curtas de sarcasmo e disciplina para não deixar o VS Code virar Netflix.',
+    newsletterCta: 'Inscreva-se na newsletter',
+    rssCta: 'Assinar RSS',
+    shareIndexTitle: 'Compartilhar o blog',
+    shareIndexTwitter: 'Twitter',
+    shareIndexLinkedin: 'LinkedIn',
+    shareIndexCopy: 'Copiar link',
+    shareIndexCopied: 'Link copiado!',
+    categoryActiveLabel: 'Categoria ativa',
+    categoryClear: 'Limpar categoria',
     blogCategoryAll: 'Todos',
     categoryEyebrow: 'Categoria',
     categoryProcrastinacaoTitle: 'Procrastinação sob investigação',
@@ -72,6 +97,31 @@ const BLOG_TRANSLATIONS = {
     blogHeroLead:
       "Sarcastic takes on focus, attention, and dev performance. Weekly articles written in Saul's tone—no coach vibe.",
     heroBadge: '"In case of laziness... CALL SAUL!"',
+    heroPill: 'Weekly drops, daily sarcasm',
+    featuredEyebrow: 'Featured',
+    featuredTitle: 'Case of the week',
+    latestEyebrow: 'Fresh',
+    latestTitle: 'Hot off the productivity court',
+    searchLabel: 'Search',
+    searchPlaceholder: 'Search title, excerpt, or tag...',
+    searchReset: 'Clear filters',
+    statsTitle: 'Blog radar',
+    statsPosts: 'published posts',
+    statsCategories: 'categories on trial',
+    statsFresh: 'last updated',
+    categoriesTitle: 'Categories in session',
+    tagsTitle: 'Topics on fire',
+    newsletterTitle: "Get Saul's memo",
+    newsletterCopy: 'Short bursts of sarcasm and discipline so your VS Code stops acting like Netflix.',
+    newsletterCta: 'Subscribe to the newsletter',
+    rssCta: 'Subscribe via RSS',
+    shareIndexTitle: 'Share the blog',
+    shareIndexTwitter: 'Twitter',
+    shareIndexLinkedin: 'LinkedIn',
+    shareIndexCopy: 'Copy link',
+    shareIndexCopied: 'Link copied!',
+    categoryActiveLabel: 'Active category',
+    categoryClear: 'Clear category',
     blogCategoryAll: 'All',
     categoryEyebrow: 'Category',
     categoryProcrastinacaoTitle: 'Procrastination under investigation',
@@ -124,6 +174,31 @@ const BLOG_TRANSLATIONS = {
     blogHeroLead:
       'Relatos sarcásticos sobre foco, atención y performance dev. Artículos semanales en tono Saul, sin coach barato.',
     heroBadge: '“En caso de pereza... ¡LLAMA A SAUL!”',
+    heroPill: 'Publicaciones semanales, sarcasmo diario',
+    featuredEyebrow: 'Destacado',
+    featuredTitle: 'Caso caliente de la semana',
+    latestEyebrow: 'Novedades',
+    latestTitle: 'Recién salido del tribunal del foco',
+    searchLabel: 'Buscar',
+    searchPlaceholder: 'Buscar por título, fragmento o etiqueta...',
+    searchReset: 'Limpiar filtros',
+    statsTitle: 'Radar del blog',
+    statsPosts: 'posts publicados',
+    statsCategories: 'categorías en juicio',
+    statsFresh: 'última actualización',
+    categoriesTitle: 'Categorías en sesión',
+    tagsTitle: 'Temas en alta',
+    newsletterTitle: 'Recibe el memo de Saul',
+    newsletterCopy: 'Ráfagas cortas de sarcasmo y disciplina para que tu VS Code deje de ser Netflix.',
+    newsletterCta: 'Suscríbete al newsletter',
+    rssCta: 'Suscribirse via RSS',
+    shareIndexTitle: 'Compartir el blog',
+    shareIndexTwitter: 'Twitter',
+    shareIndexLinkedin: 'LinkedIn',
+    shareIndexCopy: 'Copiar enlace',
+    shareIndexCopied: '¡Enlace copiado!',
+    categoryActiveLabel: 'Categoría activa',
+    categoryClear: 'Limpiar categoría',
     blogCategoryAll: 'Todos',
     categoryEyebrow: 'Categoría',
     categoryProcrastinacaoTitle: 'Procrastinación bajo investigación',
@@ -173,6 +248,7 @@ const CATEGORY_LABELS = {
     'dev-performance': 'Performance Dev',
     'trabalho-remoto': 'Trabalho Remoto',
     'ux-design': 'UX & Design',
+    'marketing': 'Marketing',
   },
   en: {
     'procrastinacao': 'Procrastination',
@@ -180,6 +256,7 @@ const CATEGORY_LABELS = {
     'dev-performance': 'Dev Performance',
     'trabalho-remoto': 'Remote Work',
     'ux-design': 'UX & Design',
+    'marketing': 'Marketing',
   },
   es: {
     'procrastinacao': 'Procrastinación',
@@ -187,6 +264,7 @@ const CATEGORY_LABELS = {
     'dev-performance': 'Rendimiento Dev',
     'trabalho-remoto': 'Trabajo Remoto',
     'ux-design': 'UX y Diseño',
+    'marketing': 'Marketing',
   },
 };
 
@@ -195,6 +273,8 @@ const CATEGORY_TITLE_KEYS = {
   'foco-atencao': 'categoryFocoTitle',
   'dev-performance': 'categoryDevTitle',
   'trabalho-remoto': 'categoryRemotoTitle',
+  'ux-design': 'categoryDevTitle',
+  'marketing': 'categoryDevTitle',
 };
 
 const CATEGORY_LEAD_KEYS = {
@@ -202,7 +282,10 @@ const CATEGORY_LEAD_KEYS = {
   'foco-atencao': 'categoryFocoLead',
   'dev-performance': 'categoryDevLead',
   'trabalho-remoto': 'categoryRemotoLead',
+  'ux-design': 'categoryDevLead',
+  'marketing': 'categoryDevLead',
 };
+const VALID_CATEGORIES = Object.keys(CATEGORY_TITLE_KEYS);
 
 const CATEGORY_TAGLINES = {
   pt: {
@@ -317,6 +400,9 @@ const TONE_TEXT_HINTS = {
 const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
+let allPostsCache = [];
+let activeTagFilter = '';
+let searchQuery = '';
 
 function getDictionary(lang = currentLanguage) {
   return BLOG_TRANSLATIONS[lang] || BLOG_TRANSLATIONS[defaultLanguage];
@@ -539,6 +625,13 @@ function normalizeLanguage(value) {
   return lower;
 }
 
+function getCategoryFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('category') || '';
+  const normalized = raw.trim().toLowerCase();
+  return VALID_CATEGORIES.includes(normalized) ? normalized : null;
+}
+
 function detectLanguage() {
   try {
     const stored = localStorage.getItem('saul-language');
@@ -577,6 +670,13 @@ function applyTranslations(lang) {
     }
     selector.setAttribute('aria-label', dictionary.languageLabel);
   }
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const text = dictionary[key];
+    if (typeof text === 'string') {
+      element.setAttribute('placeholder', text);
+    }
+  });
   const srLabel = document.querySelector('label[for="blog-language-select"]');
   if (srLabel) {
     srLabel.textContent = dictionary.languageLabel;
@@ -617,8 +717,82 @@ function renderCurrentView() {
   if (view === 'post') {
     renderPost();
   } else {
+    const categoryParam = typeof window !== 'undefined' ? getCategoryFromUrl() : null;
+    if (categoryParam) {
+      document.body.dataset.blogCategory = categoryParam;
+      highlightActiveCategory(categoryParam);
+      updateActiveCategoryLabel(categoryParam);
+    }
     renderIndex();
   }
+}
+
+function highlightActiveCategory(category) {
+  document.querySelectorAll('.category-chip').forEach((chip) => {
+    const key = chip.getAttribute('data-category-chip');
+    chip.classList.toggle('active', !!category && key === category);
+  });
+}
+
+function updateActiveCategoryLabel(category) {
+  const label = document.getElementById('active-category-label');
+  const clearBtn = document.getElementById('category-clear');
+  if (!label || !clearBtn) return;
+  if (category) {
+    label.textContent = `${t('categoryActiveLabel')}: ${getCategoryLabel(category)}`;
+    label.hidden = false;
+    clearBtn.hidden = false;
+  } else {
+    label.hidden = true;
+    clearBtn.hidden = true;
+  }
+}
+
+function bindSearch() {
+  const input = document.getElementById('blog-search-input');
+  const reset = document.getElementById('blog-search-reset');
+  if (input) {
+    input.addEventListener('input', (event) => {
+      searchQuery = (event.target.value || '').toString();
+      applyFilters();
+    });
+  }
+  if (reset) {
+    reset.addEventListener('click', () => {
+      searchQuery = '';
+      activeTagFilter = '';
+      if (input) input.value = '';
+      updateCategoryFromQuery(null);
+      applyFilters();
+    });
+  }
+}
+
+function updateCategoryFromQuery(category) {
+  const newCategory = VALID_CATEGORIES.includes(category || '') ? category : '';
+  document.body.dataset.blogCategory = newCategory || '';
+  highlightActiveCategory(newCategory);
+  updateActiveCategoryLabel(newCategory);
+  const url = new URL(window.location.href);
+  if (newCategory) {
+    url.searchParams.set('category', newCategory);
+  } else {
+    url.searchParams.delete('category');
+  }
+  window.history.replaceState({}, '', url.toString());
+}
+
+function bindCategoryChips() {
+  const chips = document.querySelectorAll('.category-chip');
+  if (!chips.length) return;
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const key = chip.getAttribute('data-category-chip') || '';
+      const nextCategory = chip.classList.contains('active') ? '' : key;
+      updateCategoryFromQuery(nextCategory);
+      applyFilters();
+    });
+  });
 }
 
 function escapeHtml(text) {
@@ -1019,22 +1193,216 @@ function renderCards(posts, container) {
       card.appendChild(link);
 
       container.appendChild(card);
+  });
+}
+
+function renderFeatured(post) {
+  const container = document.getElementById('featured-card');
+  if (!container) return;
+  if (!post) {
+    container.innerHTML = `<div class="empty-state">${t('blogEmptyState')}</div>`;
+    return;
+  }
+  const artwork = getToneArtwork(post);
+  const tags = getLocalizedTags(post);
+  const link = buildPostLink(post);
+  container.classList.remove('placeholder');
+  container.innerHTML = `
+    <div class="featured-copy">
+      <div class="featured-meta">
+        <span>${getCategoryLabel(post.category)}</span>
+        <span>· ${formatDate(post.date)}</span>
+      </div>
+      <h3>${getLocalizedValue(post, 'title') || post.title || ''}</h3>
+      <p>${getLocalizedValue(post, 'excerpt') || post.excerpt || ''}</p>
+      <div class="featured-tags">
+        ${tags.map((tag) => `<span>${tag}</span>`).join('')}
+      </div>
+      <a class="featured-link" href="${link}">${t('readArticle')}</a>
+    </div>
+    <div class="featured-media">
+      <img src="${artwork.src}" alt="${artwork.alt}" />
+    </div>
+  `;
+}
+
+function buildListingJsonLd(posts) {
+  const scriptId = 'listing-jsonld';
+  let script = document.getElementById(scriptId);
+  if (!script) {
+    script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = scriptId;
+    document.head.appendChild(script);
+  }
+  const items = posts.slice(0, 10).map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: buildPostLink(post),
+    name: getLocalizedValue(post, 'title') || post.title,
+  }));
+  const payload = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items,
+  };
+  script.textContent = JSON.stringify(payload);
+}
+
+function renderShareButtons() {
+  const container = document.getElementById('index-share');
+  if (!container) return;
+  const feedback = container.querySelector('.share-feedback');
+  if (feedback) {
+    feedback.hidden = true;
+    feedback.textContent = t('shareIndexCopied');
+  }
+  const url = window.location.href.split('#')[0];
+  const shareLinks = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(document.title)}&url=${encodeURIComponent(url)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+  };
+  container.querySelectorAll('[data-share-index]').forEach((btn) => {
+    const type = btn.getAttribute('data-share-index');
+    btn.onclick = null;
+    if (type === 'copy') {
+      btn.onclick = async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(url);
+            if (feedback) {
+              feedback.hidden = false;
+              setTimeout(() => {
+                feedback.hidden = true;
+              }, 1800);
+            }
+          } else {
+            window.prompt(t('shareCopyPrompt'), url);
+          }
+        } catch {
+          window.prompt(t('shareCopyPrompt'), url);
+        }
+      };
+    } else if (shareLinks[type]) {
+      btn.onclick = () => window.open(shareLinks[type], '_blank', 'noopener');
+    }
+  });
+}
+
+function renderCategoryGrid(posts) {
+  const container = document.getElementById('category-grid');
+  if (!container) return;
+  const counts = posts.reduce((acc, post) => {
+    const key = post.category || 'unknown';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+  const categories = Object.keys(CATEGORY_TITLE_KEYS);
+  container.innerHTML = '';
+  categories.forEach((category) => {
+    const titleKey = CATEGORY_TITLE_KEYS[category];
+    const leadKey = CATEGORY_LEAD_KEYS[category];
+    const count = counts[category] || 0;
+    const card = document.createElement('div');
+    card.className = 'category-card';
+    card.innerHTML = `
+      <p class="eyebrow">${getCategoryLabel(category)}</p>
+      <strong>${t(titleKey)}</strong>
+      <p>${t(leadKey)}</p>
+      <p class="count">${count} ${t('statsPosts')}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderTagShelf(posts) {
+  const container = document.getElementById('tag-shelf');
+  if (!container) return;
+  const counts = {};
+  posts.forEach((post) => {
+    getLocalizedTags(post).forEach((tag) => {
+      counts[tag] = (counts[tag] || 0) + 1;
     });
+  });
+  const topTags = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 12);
+  container.innerHTML = '';
+  if (!topTags.length) {
+    container.innerHTML = `<div class="empty-state">${t('blogEmptyState')}</div>`;
+    return;
+  }
+  topTags.forEach(([tag, count]) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = `${tag} (${count})`;
+    button.className = activeTagFilter === tag ? 'active' : '';
+    button.onclick = () => {
+      activeTagFilter = activeTagFilter === tag ? '' : tag;
+      applyFilters();
+    };
+    container.appendChild(button);
+  });
+}
+
+function renderStats(posts) {
+  const container = document.getElementById('blog-stats');
+  if (!container) return;
+  const cards = container.querySelectorAll('.stat-card');
+  const totalPosts = posts.length;
+  const categories = new Set(posts.map((p) => p.category).filter(Boolean));
+  const latest = posts.reduce((acc, post) => {
+    const time = getPostSortTime(post);
+    if (time > acc) return time;
+    return acc;
+  }, 0);
+  const values = [
+    { value: totalPosts, hint: t('statsPosts') },
+    { value: categories.size, hint: t('statsCategories') },
+    { value: latest ? formatDate(new Date(latest).toISOString()) : '—', hint: t('statsFresh') },
+  ];
+  cards.forEach((card, index) => {
+    const valueEl = card.querySelector('.stat-value');
+    const hintEl = card.querySelector('.stat-hint');
+    if (valueEl) valueEl.textContent = values[index]?.value ?? '—';
+    if (hintEl) hintEl.textContent = values[index]?.hint ?? '';
+  });
 }
 
 async function renderIndex() {
   const category = document.body.dataset.blogCategory;
   try {
     const { posts = [] } = await fetchJson(indexUrl);
-    const filtered = category ? posts.filter((p) => p.category === category) : posts;
-    const listContainer = document.getElementById('blog-list');
-    if (!listContainer) return;
-    renderCards(filtered, listContainer);
+    allPostsCache = category ? posts.filter((p) => p.category === category) : posts;
+    applyFilters();
+    renderShareButtons();
+    buildListingJsonLd(allPostsCache);
   } catch (error) {
     const listContainer = document.getElementById('blog-list');
     if (listContainer)
       listContainer.innerHTML = `<div class="empty-state">${t('blogError')}: ${error.message}</div>`;
   }
+}
+
+function applyFilters() {
+  const listContainer = document.getElementById('blog-list');
+  if (!Array.isArray(allPostsCache) || !listContainer) return;
+  const term = searchQuery.toLowerCase().trim();
+  const filtered = allPostsCache.filter((post) => {
+    const matchesTag = activeTagFilter
+      ? getLocalizedTags(post).some((tag) => tag.toLowerCase() === activeTagFilter.toLowerCase())
+      : true;
+    if (!matchesTag) return false;
+    if (!term) return true;
+    const haystack = `${post.title || ''} ${post.excerpt || ''} ${(getLocalizedTags(post) || []).join(' ')}`.toLowerCase();
+    return haystack.includes(term);
+  });
+  const sorted = filtered.sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
+  renderStats(sorted);
+  renderCategoryGrid(sorted);
+  renderTagShelf(sorted);
+  renderFeatured(sorted[0]);
+  renderCards(sorted.slice(1), listContainer);
 }
 
 function renderMetadata(meta, container) {
@@ -1249,6 +1617,8 @@ function init() {
   const detected = detectLanguage();
   applyTranslations(detected);
   bindLanguageSelector();
+  bindSearch();
+  bindCategoryChips();
   renderCurrentView();
 }
 

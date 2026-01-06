@@ -134,25 +134,137 @@
 
     <main class="blog-page">
       <header class="blog-hero">
-        <p class="eyebrow" data-i18n="blogHeroEyebrow">Blog do Saul Goodman</p>
-        <h1 data-i18n="blogHeroTitle">Opiniões jurídicas sobre procrastinação digital</h1>
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="blogHeroEyebrow">Blog do Saul Goodman</p>
+          <h1 data-i18n="blogHeroTitle">Opiniões jurídicas sobre procrastinação digital</h1>
         <p class="lead" data-i18n="blogHeroLead">
           Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul,
           direto ao ponto, sem coach barato.
         </p>
-        <div class="blog-hero-visual">
-          <img src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" />
-          <span data-i18n="heroBadge">“Em caso de preguiça... CALL SAUL!”</span>
+          <div class="category-row">
+            <p class="eyebrow subtle">Categorias</p>
+            <div class="blog-categories" id="category-chips">
+              <button class="chip category-chip" type="button" data-category-chip="procrastinacao">Procrastinação</button>
+              <button class="chip category-chip" type="button" data-category-chip="foco-atencao">Foco &amp; Atenção</button>
+              <button class="chip category-chip" type="button" data-category-chip="dev-performance">Performance Dev</button>
+              <button class="chip category-chip" type="button" data-category-chip="trabalho-remoto">Trabalho Remoto</button>
+              <button class="chip category-chip" type="button" data-category-chip="ux-design">UX &amp; Design</button>
+              <button class="chip category-chip" type="button" data-category-chip="marketing">Marketing</button>
+            </div>
+            <div class="category-actions">
+              <span class="active-category" id="active-category-label" hidden></span>
+              <button class="btn ghost sm" type="button" id="category-clear" hidden data-i18n="categoryClear">Limpar categoria</button>
+            </div>
+          </div>
         </div>
-        <div class="blog-categories">
-          <a class="chip" href="./procrastinacao/" data-category-chip="procrastinacao">Procrastinação</a>
-          <a class="chip" href="./foco-atencao/" data-category-chip="foco-atencao">Foco &amp; Atenção</a>
-          <a class="chip" href="./dev-performance/" data-category-chip="dev-performance">Performance Dev</a>
-          <a class="chip" href="./trabalho-remoto/" data-category-chip="trabalho-remoto">Trabalho Remoto</a>
-        </div>
+        <aside class="hero-side-card">
+          <div class="hero-ring small">
+            <img src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" />
+          </div>
+          <div class="hero-side-meta">
+            <p class="eyebrow" data-i18n="featuredEyebrow">Destaque</p>
+            <strong data-i18n="latestEyebrow">Novidades</strong>
+            <span class="hint" data-i18n="heroPill">Publicações semanais, sarcasmo diário</span>
+          </div>
+        </aside>
       </header>
 
-      <section class="blog-list" id="blog-list" aria-live="polite"></section>
+      <section class="blog-overview" id="blog-stats">
+        <div class="stat-card">
+          <p class="stat-label" data-i18n="statsTitle">Radar do blog</p>
+          <div class="stat-value">—</div>
+          <span class="stat-hint" data-i18n="statsPosts">posts publicados</span>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label" data-i18n="statsTitle">Radar do blog</p>
+          <div class="stat-value">—</div>
+          <span class="stat-hint" data-i18n="statsCategories">categorias em julgamento</span>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label" data-i18n="statsTitle">Radar do blog</p>
+          <div class="stat-value">—</div>
+          <span class="stat-hint" data-i18n="statsFresh">atualizado por último</span>
+        </div>
+      </section>
+
+      <section class="blog-search">
+        <label class="search-label" for="blog-search-input" data-i18n="searchLabel">Buscar</label>
+        <div class="search-bar">
+          <input
+            id="blog-search-input"
+            type="search"
+            placeholder="Buscar por título, trecho ou tag..."
+            data-i18n-placeholder="searchPlaceholder"
+          />
+          <button id="blog-search-reset" type="button" class="btn ghost" data-i18n="searchReset">Limpar filtros</button>
+        </div>
+        <div id="filter-tags" class="filter-tags"></div>
+      </section>
+
+      <section class="blog-grid">
+        <div class="blog-main">
+          <section class="featured-section">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="featuredEyebrow">Destaque</p>
+              <h2 data-i18n="featuredTitle">Caso quente da semana</h2>
+            </div>
+            <div id="featured-card" class="featured-card placeholder">
+              <p data-i18n="postLoadingBody">Carregando...</p>
+            </div>
+          </section>
+
+          <section class="blog-list-section">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="latestEyebrow">Novidades</p>
+              <h2 data-i18n="latestTitle">Artigos recém-saídos do tribunal do foco</h2>
+            </div>
+            <section class="blog-list" id="blog-list" aria-live="polite"></section>
+          </section>
+        </div>
+
+        <aside class="blog-sidebar">
+          <section class="share-panel">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="shareIndexTitle">Compartilhar o blog</p>
+            </div>
+            <div class="share-actions" id="index-share">
+              <button class="btn" data-share-index="twitter" type="button" data-i18n="shareIndexTwitter">Twitter</button>
+              <button class="btn ghost" data-share-index="linkedin" type="button" data-i18n="shareIndexLinkedin">LinkedIn</button>
+              <button class="btn ghost" data-share-index="copy" type="button" data-i18n="shareIndexCopy">Copiar link</button>
+              <span class="share-feedback" hidden data-i18n="shareIndexCopied">Link copiado!</span>
+            </div>
+          </section>
+
+          <section class="categories-panel">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="categoriesTitle">Categorias em pauta</p>
+            </div>
+            <div id="category-grid" class="category-grid"></div>
+          </section>
+
+          <section class="tags-panel">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="tagsTitle">Assuntos em alta</p>
+            </div>
+            <div id="tag-shelf" class="tag-shelf"></div>
+          </section>
+
+          <section class="newsletter-card">
+            <p class="eyebrow" data-i18n="newsletterTitle">Receba o relatório do Saul</p>
+            <p class="lead" data-i18n="newsletterCopy">
+              Doses curtas de sarcasmo e disciplina para não deixar o VS Code virar Netflix.
+            </p>
+            <div class="newsletter-actions">
+              <a class="btn" href="https://donotavio.github.io/saul_goodman/blog/rss.xml" target="_blank" rel="noreferrer" data-i18n="rssCta">
+                Assinar RSS
+              </a>
+              <a class="btn ghost" href="https://donotavio.github.io/saul_goodman/" target="_blank" rel="noreferrer" data-i18n="newsletterCta">
+                Inscreva-se na newsletter
+              </a>
+            </div>
+          </section>
+        </aside>
+      </section>
     </main>
 
     <script type="module" src="./blog.js"></script>
