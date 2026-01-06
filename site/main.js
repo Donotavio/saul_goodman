@@ -2,6 +2,7 @@ const translations = {
   pt: {
     navProcess: 'Como funciona',
     navIndex: 'Índice',
+    navCodeCon: 'CodeCon',
     navBenefits: 'Benefícios',
     navDemo: 'Demo',
     navClients: 'Depoimentos',
@@ -244,6 +245,24 @@ const translations = {
     reactionsTitle: 'O veredito instantâneo do Saul.',
     reactionsBody:
       'Quando o índice sobe, Saul fica incrédulo. Quando você volta ao foco, ele celebra. Pequenos lembretes visuais para manter a barra da justiça no lugar.',
+    codeconEyebrow: 'Hack Lab CodeCon',
+    codeconTitle: 'Onde Saul Goodman virou extensão do Chrome',
+    codeconLead:
+      'A ideia nasceu em um laboratório da CodeCon: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imaginou Saul como advogado pessoal contra procrastinação — com tremor, sirene e relatórios dignos de tribunal.',
+    codeconTag: 'Nasceu em comunidade',
+    codeconPlanChip: '30 min de plano',
+    codeconBuildChip: '4h de teclado',
+    codeconStoryLead:
+      'Em 30 minutos de quadro branco, o Otávio desenhou o MVP e, nas 4 horas seguintes, colocou no ar o embrião do Saul: uma extensão que prova que home office funciona monitorando abas, calculando um índice e escrevendo a defesa do dev para o “júri” (o chefe), sem recorrer a IA.',
+    codeconBulletChallenge: 'Desafio: provar o home office em 4h de código, de forma artesanal e sem IA.',
+    codeconBulletTracking: 'Extensão vigia trocas de abas, inatividade e sites vilões para formar um índice.',
+    codeconBulletNarrative: 'Narrativa “advogado” traduz métricas em defesa para o gestor/júri.',
+    codeconBulletRepoPrefix: 'Código aberto do Hack Lab:',
+    codeconBulletRepoLink: 'repositório original',
+    codeconVideoCaption: 'Trecho do Hack Lab da CodeCon em que Saul ganhou vida como extensão que derruba distrações.',
+    codeconCtaSite: 'Conheça a CodeCon',
+    codeconCtaVideo: 'Ver vídeo completo',
+    codeconCtaRepo: 'Ver código do Hack Lab',
     reactionDisbeliefLabel: 'Modo incrédulo',
     reactionDisbeliefText: '“Você chamou isso de foco?”',
     reactionDisbeliefHint: 'Aciona quando o índice passa do limiar de terremoto.',
@@ -353,6 +372,7 @@ const translations = {
   en: {
     navProcess: 'How it works',
     navIndex: 'Index',
+    navCodeCon: 'CodeCon',
     navBenefits: 'Benefits',
     navDemo: 'Demo',
     navClients: 'Testimonials',
@@ -572,6 +592,24 @@ const translations = {
     reactionsTitle: 'Saul’s instant verdict.',
     reactionsBody:
       'When the index spikes, Saul is incredulous. When you return to focus, he celebrates. Quick visuals to keep the bar of justice in place.',
+    codeconEyebrow: 'Hack Lab CodeCon',
+    codeconTitle: 'Where Saul Goodman became a Chrome extension',
+    codeconLead:
+      'The idea was born at a CodeCon hack lab: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imagined Saul as a personal attorney against procrastination — with tremor, siren, and courtroom-grade reports.',
+    codeconTag: 'Born in community',
+    codeconPlanChip: '30 min of planning',
+    codeconBuildChip: '4h of coding',
+    codeconStoryLead:
+      'In 30 minutes of whiteboard, Otávio sketched the MVP and, over the next 4 hours, shipped the seed of Saul: an extension that proves remote work works by watching tabs, calculating an index, and drafting the dev’s defense for the “jury” (the boss) — all without AI.',
+    codeconBulletChallenge: 'Challenge: prove remote work in 4 hours of hand-crafted code, no AI allowed.',
+    codeconBulletTracking: 'Extension watches tab switches, idle time, and villain sites to build an index.',
+    codeconBulletNarrative: '“Attorney” narrative turns metrics into a defense for the manager/jury.',
+    codeconBulletRepoPrefix: 'Hack Lab open source:',
+    codeconBulletRepoLink: 'original repo',
+    codeconVideoCaption: 'Clip from the CodeCon Hack Lab where Saul came to life as a distraction-busting extension.',
+    codeconCtaSite: 'Meet CodeCon',
+    codeconCtaVideo: 'Watch full video',
+    codeconCtaRepo: 'See Hack Lab code',
     reactionDisbeliefLabel: 'Incredulous mode',
     reactionDisbeliefText: '“You call that focus?”',
     reactionDisbeliefHint: 'Triggers when the quake threshold is crossed.',
@@ -692,6 +730,7 @@ const translations = {
   es: {
     navProcess: 'Cómo funciona',
     navIndex: 'Índice',
+    navCodeCon: 'CodeCon',
     navBenefits: 'Beneficios',
     navDemo: 'Demo',
     navClients: 'Testimonios',
@@ -926,6 +965,24 @@ const translations = {
     reactionsTitle: 'El veredicto instantáneo de Saul.',
     reactionsBody:
       'Cuando el índice sube, Saul queda incrédulo. Cuando vuelves al foco, él celebra. Recordatorios visuales para mantener la barra de la justicia en su sitio.',
+    codeconEyebrow: 'Hack Lab CodeCon',
+    codeconTitle: 'Donde Saul Goodman se volvió extensión de Chrome',
+    codeconLead:
+      'La idea nació en un laboratorio de CodeCon: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imaginó a Saul como abogado personal contra la procrastinación — con temblor, sirena y reportes dignos de tribunal.',
+    codeconTag: 'Nacido en comunidad',
+    codeconPlanChip: '30 min de plan',
+    codeconBuildChip: '4 h de código',
+    codeconStoryLead:
+      'En 30 minutos de pizarra, Otávio dibujó el MVP y, en las 4 horas siguientes, puso en el aire la semilla de Saul: una extensión que demuestra que el home office funciona vigilando pestañas, calculando un índice y escribiendo la defensa del dev para el “jurado” (el jefe), sin usar IA.',
+    codeconBulletChallenge: 'Reto: probar el home office con 4 horas de código artesanal, sin IA.',
+    codeconBulletTracking: 'La extensión vigila cambios de pestaña, inactividad y sitios villanos para formar un índice.',
+    codeconBulletNarrative: 'Narrativa de “abogado” traduce métricas en defensa para el manager/jurado.',
+    codeconBulletRepoPrefix: 'Código abierto del Hack Lab:',
+    codeconBulletRepoLink: 'repositorio original',
+    codeconVideoCaption: 'Fragmento del Hack Lab de CodeCon donde Saul cobró vida como extensión anti-distracciones.',
+    codeconCtaSite: 'Conoce CodeCon',
+    codeconCtaVideo: 'Ver video completo',
+    codeconCtaRepo: 'Ver código del Hack Lab',
     reactionDisbeliefLabel: 'Modo incrédulo',
     reactionDisbeliefText: '“¿Eso llamas foco?”',
     reactionDisbeliefHint: 'Se activa al pasar el umbral de terremoto.',
@@ -1080,7 +1137,13 @@ const primeHeroCrashAudio = () => {
     });
 };
 
-const richTextKeys = new Set(['feature4Item1', 'faq2Answer', 'trustCard1Body', 'featurePrivacyBody']);
+const richTextKeys = new Set([
+  'feature4Item1',
+  'faq2Answer',
+  'trustCard1Body',
+  'featurePrivacyBody',
+  'codeconLead',
+]);
 const supportedLanguages = ['pt', 'en', 'es'];
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
