@@ -12,7 +12,11 @@ test('sanitizeLinkHref blocks javascript: and allows safe protocols', async () =
   assert.equal(sanitizeLinkHref('javascript:alert(1)'), null);
   assert.equal(sanitizeLinkHref('data:text/html,hi'), null);
   assert.equal(sanitizeLinkHref('//evil.com'), null);
-  assert.ok((sanitizeLinkHref('https://example.com') || '').startsWith('https://example.com'));
+  const httpsUrl = sanitizeLinkHref('https://example.com');
+  assert.ok(httpsUrl, 'Expected a sanitized https URL');
+  const httpsParsed = new URL(httpsUrl);
+  assert.equal(httpsParsed.protocol, 'https:');
+  assert.equal(httpsParsed.host, 'example.com');
   assert.ok((sanitizeLinkHref('mailto:test@example.com') || '').startsWith('mailto:test@example.com'));
 });
 
