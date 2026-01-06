@@ -3,6 +3,82 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.21.7] - 2026-01-06
+
+- Corrigimos outra brecha de sanitização de URLs no módulo do blog/lightbox, eliminando o alerta de code scanning nº 10.1.
+
+## [1.21.6] - 2026-01-06
+
+- Fechamos o alerta de segurança nº 11 ao reforçar a sanitização de substrings de URLs usadas pelo blog/lightbox.
+
+## [1.21.5] - 2026-01-06
+
+- Atualizamos a dependência `jspdf` para a versão mais recente via Dependabot.
+
+## [1.21.4] - 2026-01-06
+
+- Blog ganhou redesign completo com hero em grid, painéis laterais, formulário de newsletter, widget de posts relacionados, tempo de leitura estimado e navegação entre artigos.
+- Sistema de tags agora suporta traduções por idioma com fallback automático, melhorias na inferência de tom/categoria e badges de hero traduzidos.
+- Sanitizamos URLs/frontmatter para SSR, rebatizamos Twitter para X em todas as localidades e adicionamos CTA de extensão na sidebar com links para Chrome e VS Code.
+- Clarificamos a exibição/ordenação de datas de publicação (fonte vs. blog) e habilitamos sanitização extra no módulo de blog.
+
+## [1.21.3] - 2026-01-06
+
+- Validamos URLs das prévias do lightbox para bloquear protocolos arbitrários e impedir reinterpretação de texto como HTML.
+
+## [1.21.2] - 2026-01-06
+
+- Adicionamos a seção “CodeCon origin story” com vídeo incorporado e navegação dedicada.
+- Workflow de version bump passou a interpretar commits convencionais com mais robustez.
+
+## [1.21.1] - 2026-01-05
+
+- A imagem da página de bloqueio foi movida para o diretório da extensão, garantindo carregamento consistente.
+- Mantivemos a publicação semanal automatizada do blog.
+
+## [1.21.0] - 2026-01-02
+
+- Novos modos de contexto “folga” e “férias” neutralizam a pontuação manualmente durante períodos de descanso.
+- Mantivemos a cadência de artigos semanais do blog.
+
+## [1.20.0] - 2025-12-30
+
+- Corrigimos overflows horizontais no site ao limitar a largura do viewport, dimensionar cards de features e forçar layout de coluna única no índice.
+- Elementos do hero e navegação mobile agora respeitam a largura da tela, evitando cortes e scroll lateral.
+
+## [1.19.1] - 2025-12-30
+
+- Melhoramos o layout mobile com padding no header, footer sem overflow, dica de swipe reativada e parallax desativado em telas pequenas.
+- Ajustamos cópia do modo fairness para explicar pontuação por contexto e adicionamos dica de contexto nas configurações de feriados.
+- Seguimos com a publicação semanal automatizada do blog.
+
+## [1.19.0] - 2025-12-30
+
+- Seção explicativa do Índice de Procrastinação com gauge interativo, cards por faixa e destaque das features de contexto.
+
+## [1.18.1] - 2025-12-30
+
+- Padronizamos espaçamento/indentação em arquivos JS e CSS para manter formatação consistente.
+
+## [1.18.0] - 2025-12-30
+
+- Hero recebeu letreiro de néon com degradação dinâmica das lâmpadas, física de fios em camadas, faíscas reposicionadas e easter egg de queda.
+- Crash do letreiro agora tem áudio em duas etapas, ring de vidro, estado persistente e assets realocados para carregamento responsivo.
+- Service worker atualizado para cache v3 com validação de origem no handler de fetch.
+
+## [1.17.0] - 2025-12-29
+
+- Documentação de privacidade esclareceu chamadas de rede opcionais e permissões utilizadas.
+
+## [1.16.1] - 2025-12-29
+
+- Corrigimos imports de `main.js` nas páginas de changelog e privacidade.
+
+## [1.16.0] - 2025-12-29
+
+- Adicionamos página de changelog com renderização dinâmica de Markdown e seção de transparência na homepage.
+- Changelog e política de privacidade passaram a ter suporte multilíngue com renderização por idioma e chaves de i18n completas.
+
 ## [1.15.0] - 2025-12-29
 
 - Content engine ganhou cinco novas categorias (marketing, produto, UX design, carreira e negócios) com rotação automática, palavras-chave específicas e fallbacks para classificar posts com mais precisão.
@@ -161,6 +237,82 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.21.7] - 2026-01-06
+
+- Patched another URL-sanitization gap in the blog/lightbox module, resolving code scanning alert #10.1.
+
+## [1.21.6] - 2026-01-06
+
+- Hardened URL substring sanitization for the blog/lightbox to close security alert #11.
+
+## [1.21.5] - 2026-01-06
+
+- Updated the `jspdf` dependency to the latest patch via Dependabot.
+
+## [1.21.4] - 2026-01-06
+
+- Blog redesigned with a grid hero, sidebar panels, newsletter form, related-posts widget, reading time estimates, and next/previous navigation.
+- Tag system now supports language-specific translations with automatic fallback, better tone/category inference, and translated hero badges.
+- Added URL/frontmatter sanitization for SSR, rebranded Twitter references to X across locales, and placed an extension CTA widget in the sidebar with Chrome + VS Code links.
+- Clarified how blog vs. source publication dates are displayed/sorted and enabled extra sanitization in the blog module.
+
+## [1.21.3] - 2026-01-06
+
+- Validated lightbox preview URLs to block arbitrary protocols and prevent text from being reinterpreted as HTML.
+
+## [1.21.2] - 2026-01-06
+
+- Added the “CodeCon origin story” section with an embedded video and dedicated navigation.
+- Version-bump workflow now parses conventional commits more reliably.
+
+## [1.21.1] - 2026-01-05
+
+- Moved the block-page image into the extension source to ensure it loads consistently.
+- Kept the automated weekly blog publication running.
+
+## [1.21.0] - 2026-01-02
+
+- New “day off” and “vacation” context modes neutralize scoring during breaks.
+- Continued the weekly automated blog posts.
+
+## [1.20.0] - 2025-12-30
+
+- Fixed horizontal overflows by constraining viewport width, sizing feature cards, and forcing a single-column layout in the index.
+- Hero elements and mobile navigation now respect screen width, preventing clipping and sideways scrolling.
+
+## [1.19.1] - 2025-12-30
+
+- Improved mobile layout with header padding, overflow-free footer, restored swipe hint, and disabled parallax on small screens.
+- Clarified fairness copy about context-aware scoring and added a context hint in holiday settings.
+- Continued the automated weekly blog publication.
+
+## [1.19.0] - 2025-12-30
+
+- Added a comprehensive Procrastination Index explainer with a gauge widget, range cards, and a context callout.
+
+## [1.18.1] - 2025-12-30
+
+- Standardized JS/CSS spacing and indentation for consistent formatting.
+
+## [1.18.0] - 2025-12-30
+
+- Hero now features a neon sign with dynamic bulb degradation, layered wire physics, repositioned sparks, and a falling easter egg.
+- The crash sequence gained two-stage audio, a glass ring, persistent crash state, and relocated assets for responsive loading.
+- Service worker updated to cache v3 with origin validation in the fetch handler.
+
+## [1.17.0] - 2025-12-29
+
+- Privacy documentation now clarifies optional network calls and permissions.
+
+## [1.16.1] - 2025-12-29
+
+- Fixed `main.js` imports in the changelog and privacy pages.
+
+## [1.16.0] - 2025-12-29
+
+- Added a changelog page with dynamic Markdown rendering and a transparency section on the homepage.
+- Changelog and privacy policy now support multiple languages with per-locale rendering and complete i18n keys.
+
 ## [1.15.0] - 2025-12-29
 
 - The content engine gained five new categories (marketing, product, UX design, career, and business) with automatic rotation, dedicated keywords, and fallback rules that improve post classification accuracy.
@@ -318,6 +470,82 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.21.7] - 2026-01-06
+
+- Cerramos otro hueco de sanitización de URLs en el módulo de blog/lightbox, resolviendo la alerta de code scanning nº 10.1.
+
+## [1.21.6] - 2026-01-06
+
+- Reforzamos la sanitización de substrings de URL del blog/lightbox para cerrar la alerta de seguridad nº 11.
+
+## [1.21.5] - 2026-01-06
+
+- Actualizamos la dependencia `jspdf` a la última versión vía Dependabot.
+
+## [1.21.4] - 2026-01-06
+
+- Rediseñamos el blog con hero en grid, paneles laterales, formulario de newsletter, widget de posts relacionados, estimación de tiempo de lectura y navegación entre artículos.
+- El sistema de tags ahora soporta traducciones por idioma con fallback automático, mejor inferencia de tono/categoría y badges de hero traducidos.
+- Agregamos sanitización de URLs/frontmatter para SSR, rebautizamos Twitter como X en todos los idiomas y sumamos un CTA de la extensión en la sidebar con enlaces a Chrome y VS Code.
+- Clarificamos la visualización/orden de fechas de publicación (fuente vs. blog) y habilitamos sanitización extra en el módulo de blog.
+
+## [1.21.3] - 2026-01-06
+
+- Validamos las URLs de las previsualizaciones del lightbox para bloquear protocolos arbitrarios y evitar que el texto se reinterprete como HTML.
+
+## [1.21.2] - 2026-01-06
+
+- Agregamos la sección “CodeCon origin story” con video embebido y navegación dedicada.
+- El workflow de version bump ahora interpreta commits convencionales con mayor robustez.
+
+## [1.21.1] - 2026-01-05
+
+- Movimos la imagen de la página de bloqueo al directorio de la extensión para asegurar su carga.
+- Mantuvimos la publicación semanal automatizada del blog.
+
+## [1.21.0] - 2026-01-02
+
+- Nuevos modos de contexto “día libre” y “vacaciones” neutralizan la puntuación durante los descansos.
+- Seguimos con los posts semanales automatizados del blog.
+
+## [1.20.0] - 2025-12-30
+
+- Corregimos overflows horizontales al limitar la anchura del viewport, dimensionar tarjetas de features y forzar layout de columna única en el índice.
+- Elementos del hero y navegación móvil ahora respetan el ancho de pantalla, evitando cortes y scroll lateral.
+
+## [1.19.1] - 2025-12-30
+
+- Mejoramos el layout móvil con padding en el header, footer sin overflow, pista de swipe reactivada y parallax deshabilitado en pantallas pequeñas.
+- Ajustamos el copy del modo fairness para explicar la puntuación por contexto y añadimos pista de contexto en la configuración de feriados.
+- Seguimos con la publicación semanal automatizada del blog.
+
+## [1.19.0] - 2025-12-30
+
+- Sección explicativa del Índice de Procrastinación con gauge interactivo, tarjetas por rango y llamado a la funcionalidad de contexto.
+
+## [1.18.1] - 2025-12-30
+
+- Estandarizamos espaciado/indentación en JS y CSS para mantener formateo consistente.
+
+## [1.18.0] - 2025-12-30
+
+- El hero ahora muestra un cartel de neón con degradación dinámica de lámparas, física de cables en capas, chispas reposicionadas y un easter egg de caída.
+- La secuencia de choque ganó audio en dos etapas, anillo de vidrio, estado persistente y assets reubicados para carga responsiva.
+- Service worker actualizado al cache v3 con validación de origen en el handler de fetch.
+
+## [1.17.0] - 2025-12-29
+
+- La documentación de privacidad aclaró llamadas de red opcionales y permisos usados.
+
+## [1.16.1] - 2025-12-29
+
+- Corregimos imports de `main.js` en las páginas de changelog y privacidad.
+
+## [1.16.0] - 2025-12-29
+
+- Agregamos página de changelog con renderizado dinámico de Markdown y sección de transparencia en la página principal.
+- Changelog y política de privacidad ahora soportan múltiples idiomas con renderizado por locale y claves de i18n completas.
 
 ## [1.15.0] - 2025-12-29
 
