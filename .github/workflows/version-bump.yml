@@ -45,9 +45,13 @@ jobs:
             TYPE="${{ github.event.inputs.release_type }}"
           else
             LAST_MSG="$(git log -1 --pretty=%B)"
-            if echo "$LAST_MSG" | grep -qi "breaking change"; then
+            HEADER="$(printf '%s\n' "$LAST_MSG" | head -n1)"
+
+            if printf '%s\n' "$LAST_MSG" | grep -qi "BREAKING CHANGE:"; then
               TYPE="major"
-            elif echo "$LAST_MSG" | grep -qi "feat"; then
+            elif printf '%s\n' "$HEADER" | grep -Eq '^([a-z0-9]+)(\([^)]+\))?!:'; then
+              TYPE="major"
+            elif printf '%s\n' "$HEADER" | grep -Eq '^feat(\([^)]+\))?:'; then
               TYPE="minor"
             else
               TYPE="patch"
