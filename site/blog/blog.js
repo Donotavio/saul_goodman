@@ -278,6 +278,7 @@ function inferTone(meta = {}) {
   if (meta.category === 'trabalho-remoto') return 'nao-corte';
   if (meta.category === 'foco-atencao') return 'like';
   if (meta.category === 'dev-performance') return 'like';
+  if (meta.category === 'ux-design') return 'like';
   return 'incredulo';
 }
 
@@ -289,13 +290,25 @@ function getToneArtwork(meta = {}) {
 
 const TONE_TAG_HINTS = {
   'nao-corte': ['trabalho-remoto', 'remote', 'remoto', 'burnout', 'alerta', 'culpa', 'pressao', 'pressão'],
-  'like': ['produtividade', 'foco', 'performance', 'qualidade', 'devops', 'inspiração', 'dica', 'sucesso'],
+  'like': [
+    'produtividade',
+    'foco',
+    'performance',
+    'qualidade',
+    'devops',
+    'inspiração',
+    'dica',
+    'sucesso',
+    'ux',
+    'design',
+    'ui',
+  ],
   'incredulo': ['sarcasmo', 'humor', 'vilao', 'vilão', 'procrastinacao', 'procrastinação', 'caos'],
 };
 
 const TONE_TEXT_HINTS = {
   'nao-corte': ['trabalho remoto', 'home office', 'remoto', 'culpa', 'julgamento', 'pressão'],
-  'like': ['foco', 'produtivo', 'ganhar', 'melhorar', 'dica', 'workflow'],
+  'like': ['foco', 'produtivo', 'ganhar', 'melhorar', 'dica', 'workflow', 'ux', 'design', 'ui'],
   'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
 };
 

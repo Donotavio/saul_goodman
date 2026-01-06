@@ -19,12 +19,35 @@ const CATEGORY_TONE = {
   'foco-atencao': 'like',
   'dev-performance': 'like',
   'trabalho-remoto': 'nao-corte',
+  'ux-design': 'like',
 };
 const TONE_IMAGE = {
   'incredulo': 'saul_incredulo.png',
   'like': 'saul_like.png',
   'nao-corte': 'saul_nao_corte.png',
   'default': 'logotipo_saul_goodman.png',
+};
+const TONE_TAG_HINTS = {
+  'nao-corte': ['trabalho-remoto', 'remote', 'remoto', 'burnout', 'alerta', 'culpa', 'pressao', 'pressão'],
+  'like': [
+    'produtividade',
+    'foco',
+    'performance',
+    'qualidade',
+    'devops',
+    'inspiração',
+    'dica',
+    'sucesso',
+    'ux',
+    'design',
+    'ui',
+  ],
+  'incredulo': ['sarcasmo', 'humor', 'vilao', 'vilão', 'procrastinacao', 'procrastinação', 'caos'],
+};
+const TONE_TEXT_HINTS = {
+  'nao-corte': ['trabalho remoto', 'home office', 'remoto', 'culpa', 'julgamento', 'pressão'],
+  'like': ['foco', 'produtivo', 'ganhar', 'melhorar', 'dica', 'workflow', 'ux', 'design', 'ui'],
+  'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
 };
 
 export function buildPostUrl(relativePath) {
@@ -58,8 +81,41 @@ function toIsoDate(value) {
   return Number.isNaN(date.getTime()) ? '' : date.toISOString();
 }
 
-function resolveTone(metadata) {
-  return metadata.tone || CATEGORY_TONE[metadata.category] || 'default';
+function normalizeTone(value) {
+  if (!value || typeof value !== 'string') return '';
+  return value.toLowerCase().trim();
+}
+
+function resolveTone(metadata = {}) {
+  const explicit = normalizeTone(metadata.tone || metadata.mood);
+  if (explicit && TONE_IMAGE[explicit]) {
+    return explicit;
+  }
+
+  const tags = Array.isArray(metadata.tags) ? metadata.tags.map((tag) => normalizeTone(tag)) : [];
+  if (tags.length) {
+    const foldedTags = tags.map((tag) =>
+      tag.normalize ? tag.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : tag
+    );
+    for (const tone of Object.keys(TONE_TAG_HINTS)) {
+      const hints = TONE_TAG_HINTS[tone];
+      if (hints.some((hint) => foldedTags.includes(hint))) {
+        return tone;
+      }
+    }
+  }
+
+  const haystack = `${metadata.title || ''} ${metadata.excerpt || ''}`.toLowerCase();
+  for (const tone of Object.keys(TONE_TEXT_HINTS)) {
+    const hints = TONE_TEXT_HINTS[tone];
+    if (hints.some((hint) => haystack.includes(hint))) {
+      return tone;
+    }
+  }
+
+  if (CATEGORY_TONE[metadata.category]) return CATEGORY_TONE[metadata.category];
+
+  return 'incredulo';
 }
 
 function resolveImageUrl(tone) {
