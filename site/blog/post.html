@@ -169,17 +169,33 @@
             <p class="post-media-tagline" data-media-tagline>Abas vilãs sob defesa de Saul.</p>
           </div>
           <div class="post-media-art">
-            <img class="post-category-image" src="../assets/saul_incredulo.png" alt="Ilustração Saul" />
+            <img class="post-category-image" src="../assets/saul_incredulo.png" alt="Ilustração Saul" loading="eager" fetchpriority="high" />
             <div class="post-logo-wrap">
-              <img class="post-logo" src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" />
+              <img class="post-logo" src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" loading="eager" fetchpriority="high" />
             </div>
           </div>
         </div>
         <h1 data-i18n="postLoadingTitle">Carregando artigo...</h1>
-        <div class="blog-meta">...</div>
+        <div class="blog-meta" id="post-meta">...</div>
       </header>
       <section class="post-layout">
-        <article class="post-body" data-i18n="postLoadingBody">Carregando...</article>
+        <div class="post-main">
+          <article class="post-body" data-i18n="postLoadingBody">Carregando...</article>
+          <section class="post-related" id="related-posts">
+            <h3 data-i18n="relatedTitle">Posts relacionados</h3>
+            <div class="related-grid" id="related-grid"></div>
+            <div class="post-nav">
+              <a class="post-nav-link prev" id="post-nav-prev" href="#" hidden>
+                <span class="nav-label" data-i18n="previousPost">Anterior</span>
+                <span class="nav-title"></span>
+              </a>
+              <a class="post-nav-link next" id="post-nav-next" href="#" hidden>
+                <span class="nav-label" data-i18n="nextPost">Próximo</span>
+                <span class="nav-title"></span>
+              </a>
+            </div>
+          </section>
+        </div>
         <aside class="post-sidebar">
           <div class="post-share">
             <p class="share-title" data-i18n="shareTitle">Compartilhar</p>

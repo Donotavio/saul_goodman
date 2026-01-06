@@ -65,6 +65,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
+    <link rel="preload" href="./index.json" as="fetch" crossorigin="anonymous" />
     <script>
       (function () {
         const p = location.pathname;
@@ -159,7 +160,7 @@
         </div>
         <aside class="hero-side-card">
           <div class="hero-ring small">
-            <img src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" />
+            <img src="../assets/logotipo_saul_goodman.png" alt="Logo Saul Goodman" loading="eager" fetchpriority="high" />
           </div>
           <div class="hero-side-meta">
             <p class="eyebrow" data-i18n="featuredEyebrow">Destaque</p>
@@ -254,12 +255,30 @@
             <p class="lead" data-i18n="newsletterCopy">
               Doses curtas de sarcasmo e disciplina para não deixar o VS Code virar Netflix.
             </p>
+            <form id="newsletter-form" class="newsletter-form" novalidate>
+              <label class="sr-only" for="newsletter-email" data-i18n="newsletterLabel">Seu e-mail</label>
+              <div class="newsletter-fields">
+                <input
+                  id="newsletter-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="seuemail@foco.dev"
+                  data-i18n-placeholder="newsletterPlaceholder"
+                />
+                <button class="btn" type="submit" data-i18n="newsletterSubmit">Receber relatórios</button>
+              </div>
+              <p class="newsletter-disclaimer" data-i18n="newsletterDisclaimer">Sem spam. Só o sarcasmo necessário.</p>
+              <p class="newsletter-feedback" id="newsletter-feedback" hidden data-i18n="newsletterSuccess">Quase lá! Te avisaremos das próximas publicações.</p>
+              <p class="newsletter-feedback error" id="newsletter-error" hidden data-i18n="newsletterError">Ops, precisamos de um e-mail válido.</p>
+            </form>
             <div class="newsletter-actions">
-              <a class="btn" href="https://donotavio.github.io/saul_goodman/blog/rss.xml" target="_blank" rel="noreferrer" data-i18n="rssCta">
+              <a class="btn ghost" href="https://donotavio.github.io/saul_goodman/blog/rss.xml" target="_blank" rel="noreferrer" data-i18n="rssCta">
                 Assinar RSS
               </a>
               <a class="btn ghost" href="https://donotavio.github.io/saul_goodman/" target="_blank" rel="noreferrer" data-i18n="newsletterCta">
-                Inscreva-se na newsletter
+                Conhecer o Saul
               </a>
             </div>
           </section>

@@ -34,7 +34,7 @@ const BLOG_TRANSLATIONS = {
     tagsTitle: 'Assuntos em alta',
     newsletterTitle: 'Receba o relatório do Saul',
     newsletterCopy: 'Doses curtas de sarcasmo e disciplina para não deixar o VS Code virar Netflix.',
-    newsletterCta: 'Inscreva-se na newsletter',
+    newsletterCta: 'Conhecer o Saul',
     rssCta: 'Assinar RSS',
     shareIndexTitle: 'Compartilhar o blog',
     shareIndexTwitter: 'X',
@@ -59,6 +59,8 @@ const BLOG_TRANSLATIONS = {
     breadcrumbArticle: 'Artigo',
     postLoadingTitle: 'Carregando artigo...',
     postLoadingBody: 'Carregando...',
+    readTimeUnit: 'min de leitura',
+    readingTimeLabel: 'Tempo de leitura',
     readArticle: 'Ler artigo',
     blogEmptyState: 'Nenhum artigo publicado por aqui ainda.',
     blogError: 'Erro ao carregar blog',
@@ -84,7 +86,16 @@ const BLOG_TRANSLATIONS = {
     extensionsTitle: 'Instale as extensões do Saul',
     extensionsCopy: 'Leve o Saul para o Chrome e para o VS Code e mantenha o foco.',
     extensionsChromeCta: 'Extensão Chrome',
-    extensionsVscodeCta: 'Extensão VS Code'
+    extensionsVscodeCta: 'Extensão VS Code',
+    relatedTitle: 'Posts relacionados',
+    previousPost: 'Anterior',
+    nextPost: 'Próximo',
+    newsletterLabel: 'Seu e-mail',
+    newsletterPlaceholder: 'seuemail@foco.dev',
+    newsletterSubmit: 'Receber relatórios',
+    newsletterDisclaimer: 'Sem spam. Só o sarcasmo necessário.',
+    newsletterSuccess: 'Quase lá! Te avisaremos das próximas publicações.',
+    newsletterError: 'Ops, precisamos de um e-mail válido.'
   },
   en: {
     languageLabel: 'Select language',
@@ -114,7 +125,7 @@ const BLOG_TRANSLATIONS = {
     tagsTitle: 'Topics on fire',
     newsletterTitle: "Get Saul's memo",
     newsletterCopy: 'Short bursts of sarcasm and discipline so your VS Code stops acting like Netflix.',
-    newsletterCta: 'Subscribe to the newsletter',
+    newsletterCta: 'Meet Saul',
     rssCta: 'Subscribe via RSS',
     shareIndexTitle: 'Share the blog',
     shareIndexTwitter: 'X',
@@ -137,6 +148,8 @@ const BLOG_TRANSLATIONS = {
     breadcrumbArticle: 'Article',
     postLoadingTitle: 'Loading article...',
     postLoadingBody: 'Loading...',
+    readTimeUnit: 'min read',
+    readingTimeLabel: 'Reading time',
     readArticle: 'Read article',
     blogEmptyState: 'No articles published here yet.',
     blogError: 'Failed to load blog',
@@ -162,7 +175,16 @@ const BLOG_TRANSLATIONS = {
     extensionsTitle: "Install Saul's extensions",
     extensionsCopy: 'Bring Saul to Chrome and VS Code to keep your focus honest.',
     extensionsChromeCta: 'Chrome extension',
-    extensionsVscodeCta: 'VS Code extension'
+    extensionsVscodeCta: 'VS Code extension',
+    relatedTitle: 'Related posts',
+    previousPost: 'Previous',
+    nextPost: 'Next',
+    newsletterLabel: 'Your email',
+    newsletterPlaceholder: 'you@email.dev',
+    newsletterSubmit: 'Get the memo',
+    newsletterDisclaimer: 'No spam. Only the sarcasm you can handle.',
+    newsletterSuccess: "You're on the radar. New drops coming soon.",
+    newsletterError: 'Please drop a valid email.'
   },
   es: {
     languageLabel: 'Seleccionar idioma',
@@ -192,7 +214,7 @@ const BLOG_TRANSLATIONS = {
     tagsTitle: 'Temas en alta',
     newsletterTitle: 'Recibe el memo de Saul',
     newsletterCopy: 'Ráfagas cortas de sarcasmo y disciplina para que tu VS Code deje de ser Netflix.',
-    newsletterCta: 'Suscríbete al newsletter',
+    newsletterCta: 'Conocer a Saul',
     rssCta: 'Suscribirse via RSS',
     shareIndexTitle: 'Compartir el blog',
     shareIndexTwitter: 'X',
@@ -215,6 +237,8 @@ const BLOG_TRANSLATIONS = {
     breadcrumbArticle: 'Artículo',
     postLoadingTitle: 'Cargando artículo...',
     postLoadingBody: 'Cargando...',
+    readTimeUnit: 'min de lectura',
+    readingTimeLabel: 'Tiempo de lectura',
     readArticle: 'Leer artículo',
     blogEmptyState: 'Aún no hay artículos publicados aquí.',
     blogError: 'Error al cargar el blog',
@@ -240,7 +264,16 @@ const BLOG_TRANSLATIONS = {
     extensionsTitle: 'Instala las extensiones de Saul',
     extensionsCopy: 'Lleva a Saul al Chrome y al VS Code para mantener el foco.',
     extensionsChromeCta: 'Extensión de Chrome',
-    extensionsVscodeCta: 'Extensión de VS Code'
+    extensionsVscodeCta: 'Extensión de VS Code',
+    relatedTitle: 'Posts relacionados',
+    previousPost: 'Anterior',
+    nextPost: 'Siguiente',
+    newsletterLabel: 'Tu correo',
+    newsletterPlaceholder: 'tuemail@foco.dev',
+    newsletterSubmit: 'Recibir reportes',
+    newsletterDisclaimer: 'Sin spam. Solo el sarcasmo necesario.',
+    newsletterSuccess: '¡Listo! Te avisaremos de las próximas publicaciones.',
+    newsletterError: 'Necesitamos un correo válido.'
   },
 };
 
@@ -376,6 +409,22 @@ function getToneArtwork(meta = {}) {
   return { ...artwork, tone };
 }
 
+function resolveImageUrl(value) {
+  if (!value) return '';
+  try {
+    return new URL(value, blogBase).toString();
+  } catch {
+    return '';
+  }
+}
+
+function getSocialImage(meta = {}) {
+  const explicit = meta.image || meta.social_image || meta.hero_image;
+  const resolved = resolveImageUrl(explicit);
+  if (resolved) return resolved;
+  return getToneArtwork(meta).src;
+}
+
 const TONE_TAG_HINTS = {
   'nao-corte': ['trabalho-remoto', 'remote', 'remoto', 'burnout', 'alerta', 'culpa', 'pressao', 'pressão'],
   'like': [
@@ -404,8 +453,30 @@ const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
 let allPostsCache = [];
+let fullIndexCache = null;
 let activeTagFilter = '';
 let searchQuery = '';
+const WORDS_PER_MINUTE = 225;
+const readingTimeCache = {};
+let storedReadingTimes = null;
+
+function persistReadingTimeToCaches(key, minutes, words) {
+  const apply = (post) => {
+    if (!post) return;
+    if (minutes) post.reading_time = minutes;
+    if (words) post.body_word_count = words;
+  };
+  if (Array.isArray(fullIndexCache)) {
+    fullIndexCache.forEach((post) => {
+      if (normalizePostKey(post.markdown || post.path || post.url) === key) apply(post);
+    });
+  }
+  if (Array.isArray(allPostsCache)) {
+    allPostsCache.forEach((post) => {
+      if (normalizePostKey(post.markdown || post.path || post.url) === key) apply(post);
+    });
+  }
+}
 
 function getDictionary(lang = currentLanguage) {
   return BLOG_TRANSLATIONS[lang] || BLOG_TRANSLATIONS[defaultLanguage];
@@ -771,6 +842,31 @@ function bindSearch() {
   }
 }
 
+function bindNewsletterForm() {
+  const form = document.getElementById('newsletter-form');
+  if (!form) return;
+  const emailInput = form.querySelector('input[type="email"]');
+  const success = document.getElementById('newsletter-feedback');
+  const error = document.getElementById('newsletter-error');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = (emailInput?.value || '').trim();
+    const isValid = /\S+@\S+\.\S+/.test(value);
+    if (!isValid) {
+      if (error) error.hidden = false;
+      if (success) success.hidden = true;
+      return;
+    }
+    if (error) error.hidden = true;
+    if (success) success.hidden = false;
+    try {
+      localStorage.setItem('saul-newsletter-email', value);
+    } catch (_) {
+      // ignore storage errors
+    }
+  });
+}
+
 function updateCategoryFromQuery(category) {
   const newCategory = VALID_CATEGORIES.includes(category || '') ? category : '';
   document.body.dataset.blogCategory = newCategory || '';
@@ -971,10 +1067,56 @@ async function fetchJson(url) {
   return response.json();
 }
 
+function loadStoredReadingTimes() {
+  if (storedReadingTimes) return storedReadingTimes;
+  try {
+    const raw = localStorage.getItem('saul-reading-times');
+    storedReadingTimes = raw ? JSON.parse(raw) : {};
+  } catch {
+    storedReadingTimes = {};
+  }
+  return storedReadingTimes;
+}
+
+function storeReadingTime(key, minutes, words) {
+  if (!key) return;
+  const map = loadStoredReadingTimes();
+  map[key] = { minutes: minutes || null, words: words || null };
+  try {
+    localStorage.setItem('saul-reading-times', JSON.stringify(map));
+  } catch {
+    // ignore quota errors
+  }
+}
+
+function applyStoredReadingTimes(posts) {
+  const map = loadStoredReadingTimes();
+  if (!map || !posts) return;
+  posts.forEach((post) => {
+    const key = normalizePostKey(post.markdown || post.path || post.url);
+    if (key && map[key]) {
+      const { minutes, words } = map[key];
+      if (minutes) post.reading_time = minutes;
+      if (words) post.body_word_count = words;
+    }
+  });
+}
+
 async function fetchText(url) {
   const response = await fetch(url, { headers: { Accept: 'text/plain' } });
   if (!response.ok) throw new Error(`Não foi possível carregar o post (${response.status})`);
   return response.text();
+}
+
+async function loadIndexData() {
+  if (Array.isArray(fullIndexCache) && fullIndexCache.length) {
+    applyStoredReadingTimes(fullIndexCache);
+    return fullIndexCache;
+  }
+  const { posts = [] } = await fetchJson(indexUrl);
+  applyStoredReadingTimes(posts);
+  fullIndexCache = posts;
+  return posts;
 }
 
 function parseDateValue(value) {
@@ -1020,6 +1162,37 @@ function getPostSortTime(post) {
   return parsed ? parsed.getTime() : 0;
 }
 
+function countWords(text = '') {
+  if (!text) return 0;
+  return text
+    .replace(/<[^>]+>/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+}
+
+function estimateReadingMinutesFromText(text = '') {
+  const words = countWords(text);
+  if (!words) return null;
+  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE));
+}
+
+function resolveReadingMinutes(meta = {}) {
+  if (typeof meta.reading_time === 'number') return Math.max(1, Math.round(meta.reading_time));
+  if (typeof meta.word_count === 'number') {
+    return Math.max(1, Math.ceil(meta.word_count / WORDS_PER_MINUTE));
+  }
+  if (typeof meta.body_word_count === 'number') {
+    return Math.max(1, Math.ceil(meta.body_word_count / WORDS_PER_MINUTE));
+  }
+  return null;
+}
+
+function formatReadingMinutes(minutes, lang = currentLanguage) {
+  if (!minutes) return '';
+  const rounded = Math.max(1, Math.round(minutes));
+  return `${rounded} ${t('readTimeUnit', lang)}`;
+}
+
 function normalizeCanonicalUrl(value) {
   if (!value) return '';
   const url = new URL(value, window.location.href);
@@ -1034,6 +1207,16 @@ function buildStaticPostPath(postPath) {
   if (!postPath) return '';
   const normalized = postPath.replace(/^\//, '').replace(/\.md$/, '');
   return `posts/${normalized}/`;
+}
+
+function buildMarkdownUrl(post) {
+  const candidate = sanitizePostPath(post?.markdown || post?.path);
+  if (!candidate) return null;
+  try {
+    return new URL(candidate, postsBase);
+  } catch {
+    return null;
+  }
 }
 
 function buildCanonicalPostUrl(postPath) {
@@ -1115,7 +1298,7 @@ function updateListingSeo() {
   const description = category && CATEGORY_LEAD_KEYS[category]
     ? t(CATEGORY_LEAD_KEYS[category])
     : t('blogHeroLead');
-  const image = category ? getToneArtwork({ category }).src : BLOG_LOGO;
+  const image = category ? getSocialImage({ category }) : BLOG_LOGO;
   const url = normalizeCanonicalUrl(window.location.href);
   updateSeoTags({
     title,
@@ -1139,6 +1322,152 @@ function buildPostLink(post) {
   return '#';
 }
 
+function normalizePostKey(raw) {
+  if (!raw) return '';
+  return raw
+    .replace(blogBase.href, '')
+    .replace(/^\.?\/?posts\//, '')
+    .replace(/\/index\.html$/, '')
+    .replace(/\.md$/, '')
+    .replace(/\/$/, '')
+    .toLowerCase();
+}
+
+function findPostByParam(posts, postParam) {
+  const targetKey = normalizePostKey(postParam);
+  return posts.find((post) => normalizePostKey(post.markdown || post.path || post.url) === targetKey);
+}
+
+async function hydrateReadingTime(post) {
+  const key = normalizePostKey(post?.markdown || post?.path || post?.url);
+  if (!key) return null;
+  if (readingTimeCache[key]) return readingTimeCache[key];
+  const markdownUrl = buildMarkdownUrl(post);
+  if (!markdownUrl) return null;
+  try {
+    const raw = await fetchText(markdownUrl);
+    const { data, body } = parseFrontmatter(raw);
+    const localizedBodies = extractLocalizedBodies(body);
+    const selectedBody = localizedBodies.pt || localizedBodies.en || localizedBodies.es || body;
+    const cleanedBody = stripMetadataSection(selectedBody);
+    const words = countWords(cleanedBody);
+    const minutes = estimateReadingMinutesFromText(cleanedBody);
+    const payload = { minutes: minutes || null, words: words || 0 };
+    if (minutes) post.reading_time = minutes;
+    if (words) post.body_word_count = words;
+    if (!post.category && data.category) post.category = data.category;
+    persistReadingTimeToCaches(key, minutes, words);
+    storeReadingTime(key, minutes, words);
+    readingTimeCache[key] = payload;
+    return payload;
+  } catch (error) {
+    console.warn('Failed to hydrate reading time for', markdownUrl?.toString?.(), error);
+    return null;
+  }
+}
+
+async function hydrateReadingTimes(posts, onUpdate) {
+  const needs = (posts || []).filter((post) => !post.reading_time && !post.body_word_count && post.markdown);
+  if (!needs.length) return;
+  for (const post of needs) {
+    await hydrateReadingTime(post);
+  }
+  if (typeof onUpdate === 'function') onUpdate();
+}
+
+function renderRelatedSection(posts, currentMeta, postParam) {
+  const container = document.getElementById('related-grid');
+  if (!container) return;
+  if (!Array.isArray(posts) || !posts.length) {
+    container.innerHTML = `<div class="empty-state">${t('blogEmptyState')}</div>`;
+    return;
+  }
+  const targetKey = normalizePostKey(postParam);
+  const currentTags = new Set(getLocalizedTags(currentMeta).map((tag) => normalizeTagKey(tag)));
+
+  const scored = posts
+    .filter((post) => normalizePostKey(post.markdown || post.path || post.url) !== targetKey)
+    .map((post) => {
+      let score = 0;
+      if (post.category && currentMeta.category && post.category === currentMeta.category) score += 4;
+      const tags = getLocalizedTags(post).map((tag) => normalizeTagKey(tag));
+      const sharedTags = tags.filter((tag) => currentTags.has(tag)).length;
+      score += sharedTags * 2;
+      return { post, score };
+    })
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return getPostSortTime(b.post) - getPostSortTime(a.post);
+    });
+
+  const distinct = [];
+  const pickedCategories = new Set();
+  for (const item of scored) {
+    if (!pickedCategories.has(item.post.category)) {
+      distinct.push(item);
+      pickedCategories.add(item.post.category);
+    }
+    if (distinct.length >= 4) break;
+  }
+  const related = distinct.length ? distinct : scored.filter((item) => item.score > 0);
+  const fallback = related.slice(0, 4).length ? related.slice(0, 4) : scored.slice(0, 4);
+  container.innerHTML = '';
+  if (!fallback.length) {
+    container.innerHTML = `<div class="empty-state">${t('blogEmptyState')}</div>`;
+    return;
+  }
+  fallback.forEach(({ post }) => {
+    const card = document.createElement('article');
+    card.className = 'related-card';
+    const artwork = getToneArtwork(post);
+    const tags = getLocalizedTags(post);
+    const readingMinutes = resolveReadingMinutes(post);
+    card.innerHTML = `
+      <div class="related-thumb">
+        <img src="${artwork.src}" alt="${artwork.alt}" loading="lazy" decoding="async" />
+      </div>
+      <div class="related-copy">
+        <p class="blog-meta">${getCategoryLabel(post.category)} · ${formatDate(post.date)}${readingMinutes ? ` · ${formatReadingMinutes(readingMinutes)}` : ''}</p>
+        <h4>${getLocalizedValue(post, 'title') || post.title || ''}</h4>
+        <p>${getLocalizedValue(post, 'excerpt') || post.excerpt || ''}</p>
+        <div class="related-tags">${tags.slice(0, 3).map((tag) => `<span>${tag}</span>`).join('')}</div>
+        <a class="related-link" href="${buildPostLink(post)}">${t('readArticle')}</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  const postsNeedingTime = fallback.map(({ post }) => post);
+  hydrateReadingTimes(postsNeedingTime, () => renderRelatedSection(posts, currentMeta, postParam));
+}
+
+function renderPostNav(posts, postParam) {
+  const prevLink = document.getElementById('post-nav-prev');
+  const nextLink = document.getElementById('post-nav-next');
+  if (!prevLink && !nextLink) return;
+  const sorted = [...posts].sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
+  const targetKey = normalizePostKey(postParam);
+  const index = sorted.findIndex((post) => normalizePostKey(post.markdown || post.path || post.url) === targetKey);
+  const previous = sorted[index + 1];
+  const next = index > 0 ? sorted[index - 1] : null;
+
+  const bindLink = (element, post, labelKey) => {
+    if (!element) return;
+    if (!post) {
+      element.hidden = true;
+      return;
+    }
+    element.hidden = false;
+    element.href = buildPostLink(post);
+    const label = element.querySelector('.nav-label');
+    const title = element.querySelector('.nav-title');
+    if (label) label.textContent = t(labelKey);
+    if (title) title.textContent = getLocalizedValue(post, 'title') || post.title || '';
+  };
+
+  bindLink(prevLink, previous, 'previousPost');
+  bindLink(nextLink, next, 'nextPost');
+}
+
 function renderCards(posts, container) {
   container.innerHTML = '';
   if (!posts.length) {
@@ -1146,9 +1475,20 @@ function renderCards(posts, container) {
     return;
   }
 
-  posts
-    .sort((a, b) => getPostSortTime(b) - getPostSortTime(a))
-    .forEach((post) => {
+  const sortedPosts = posts.sort((a, b) => getPostSortTime(b) - getPostSortTime(a));
+  const updateMetaIfHydrated = (post, metaEl) => {
+    const readingMinutes = resolveReadingMinutes(post);
+    if (readingMinutes && metaEl && !metaEl.textContent.includes(t('readTimeUnit'))) {
+      const parts = metaEl.textContent.split('·').map((part) => part.trim()).filter(Boolean);
+      const alreadyHasTime = parts.some((part) => part.includes(t('readTimeUnit')));
+      if (!alreadyHasTime) {
+        parts.push(formatReadingMinutes(readingMinutes));
+        metaEl.textContent = parts.join(' · ');
+      }
+    }
+  };
+
+  sortedPosts.forEach((post) => {
       const card = document.createElement('article');
       card.className = 'blog-card';
 
@@ -1158,6 +1498,8 @@ function renderCards(posts, container) {
       const thumbImg = document.createElement('img');
       thumbImg.src = artwork.src;
       thumbImg.alt = artwork.alt;
+      thumbImg.loading = 'lazy';
+      thumbImg.decoding = 'async';
       thumb.appendChild(thumbImg);
       card.appendChild(thumb);
 
@@ -1167,7 +1509,12 @@ function renderCards(posts, container) {
 
       const meta = document.createElement('div');
       meta.className = 'blog-meta';
-      meta.textContent = `${formatDate(post.date)} · ${getCategoryLabel(post.category)}`;
+      const readingMinutes = resolveReadingMinutes(post);
+      const metaParts = [`${formatDate(post.date)}`, getCategoryLabel(post.category)];
+      if (readingMinutes) {
+        metaParts.push(formatReadingMinutes(readingMinutes));
+      }
+      meta.textContent = metaParts.filter(Boolean).join(' · ');
       card.appendChild(meta);
 
       const excerptText = getLocalizedValue(post, 'excerpt') || post.excerpt;
@@ -1196,6 +1543,7 @@ function renderCards(posts, container) {
       card.appendChild(link);
 
       container.appendChild(card);
+      updateMetaIfHydrated(post, meta);
   });
 }
 
@@ -1209,12 +1557,14 @@ function renderFeatured(post) {
   const artwork = getToneArtwork(post);
   const tags = getLocalizedTags(post);
   const link = buildPostLink(post);
+  const readingMinutes = resolveReadingMinutes(post);
+  const metaParts = [getCategoryLabel(post.category), formatDate(post.date)];
+  if (readingMinutes) metaParts.push(formatReadingMinutes(readingMinutes));
   container.classList.remove('placeholder');
   container.innerHTML = `
     <div class="featured-copy">
       <div class="featured-meta">
-        <span>${getCategoryLabel(post.category)}</span>
-        <span>· ${formatDate(post.date)}</span>
+        ${metaParts.map((part, index) => `<span>${index === 0 ? '' : '· '}${part}</span>`).join('')}
       </div>
       <h3>${getLocalizedValue(post, 'title') || post.title || ''}</h3>
       <p>${getLocalizedValue(post, 'excerpt') || post.excerpt || ''}</p>
@@ -1224,7 +1574,7 @@ function renderFeatured(post) {
       <a class="featured-link" href="${link}">${t('readArticle')}</a>
     </div>
     <div class="featured-media">
-      <img src="${artwork.src}" alt="${artwork.alt}" />
+      <img src="${artwork.src}" alt="${artwork.alt}" loading="lazy" decoding="async" />
     </div>
   `;
 }
@@ -1375,11 +1725,13 @@ function renderStats(posts) {
 async function renderIndex() {
   const category = document.body.dataset.blogCategory;
   try {
-    const { posts = [] } = await fetchJson(indexUrl);
+    const posts = await loadIndexData();
+    fullIndexCache = posts;
     allPostsCache = category ? posts.filter((p) => p.category === category) : posts;
     applyFilters();
     renderShareButtons();
     buildListingJsonLd(allPostsCache);
+    hydrateReadingTimes(allPostsCache, applyFilters);
   } catch (error) {
     const listContainer = document.getElementById('blog-list');
     if (listContainer)
@@ -1429,6 +1781,8 @@ function renderMetadata(meta, container) {
   };
 
   add(t('metaCategory'), getCategoryLabel(meta.category));
+  const readingMinutes = resolveReadingMinutes(meta);
+  if (readingMinutes) add(t('readingTimeLabel'), formatReadingMinutes(readingMinutes));
   const tagValue = getLocalizedTags(meta);
   if (tagValue.length) {
     const list = document.createElement('ul');
@@ -1538,6 +1892,7 @@ function updatePostMedia(meta) {
 }
 
 async function renderPost() {
+  ensurePostLayout();
   const params = new URLSearchParams(window.location.search);
   const postParam =
     sanitizePostPath(params.get('post')) || sanitizePostPath(document.body.dataset.blogPost);
@@ -1569,18 +1924,24 @@ async function renderPost() {
     const meta = document.querySelector('.post-header .blog-meta');
     const breadcrumbCurrent = document.querySelector('.breadcrumb .current');
     const localizedTitle = getLocalizedValue(data, 'title') || data.title;
+    const localizedExcerpt = getLocalizedValue(data, 'excerpt') || data.excerpt;
     if (header) {
       header.textContent = localizedTitle;
       header.removeAttribute('data-i18n');
     }
-    if (meta) meta.textContent = `${formatDate(data.date)} · ${getCategoryLabel(data.category)}`;
+    if (meta) {
+      const metaParts = [`${formatDate(data.date)}`, getCategoryLabel(data.category)];
+      const readingMinutes = resolveReadingMinutes(data);
+      if (readingMinutes) metaParts.push(formatReadingMinutes(readingMinutes));
+      meta.textContent = metaParts.filter(Boolean).join(' · ');
+    }
     if (breadcrumbCurrent) {
       breadcrumbCurrent.textContent = localizedTitle;
       breadcrumbCurrent.removeAttribute('data-i18n');
     }
     if (localizedTitle) document.title = `${localizedTitle} — ${t('blogHeroEyebrow')}`;
-    const localizedExcerpt = getLocalizedValue(data, 'excerpt') || data.excerpt;
     const artwork = getToneArtwork(data);
+    const socialImage = getSocialImage(data);
     const publishedValue = data.date || data.source_published_at;
     const publishedDate = parseDateValue(publishedValue);
     const publishedTime = publishedDate ? publishedDate.toISOString() : '';
@@ -1588,7 +1949,7 @@ async function renderPost() {
     updateSeoTags({
       title: document.title,
       description: localizedExcerpt,
-      image: artwork.src,
+      image: socialImage,
       type: 'article',
       url: canonicalUrl,
       publishedTime,
@@ -1596,7 +1957,7 @@ async function renderPost() {
     updatePostJsonLd({
       title: localizedTitle,
       description: localizedExcerpt,
-      image: artwork.src,
+      image: socialImage,
       url: canonicalUrl,
       publishedTime,
     });
@@ -1605,10 +1966,32 @@ async function renderPost() {
     const localizedBodies = extractLocalizedBodies(body);
     const selectedBody = localizedBodies[currentLanguage] || localizedBodies.pt || body;
     const cleanedBody = stripMetadataSection(selectedBody);
+    const computedMinutes = estimateReadingMinutesFromText(cleanedBody);
+    const bodyWordCount = countWords(cleanedBody);
+    if (computedMinutes && !data.reading_time) data.reading_time = computedMinutes;
+    if (bodyWordCount && !data.body_word_count) data.body_word_count = bodyWordCount;
+    const postMeta = document.getElementById('post-meta');
+    if (postMeta) {
+      const metaParts = [`${formatDate(data.date)}`, getCategoryLabel(data.category)];
+      if (data.reading_time) metaParts.push(formatReadingMinutes(data.reading_time));
+      postMeta.textContent = metaParts.filter(Boolean).join(' · ');
+    }
     postContainer.innerHTML = markdownToHtml(cleanedBody);
     postContainer.removeAttribute('data-i18n');
 
     if (metadataPanel || footer) renderMetadata(data, metadataPanel || footer);
+    const key = normalizePostKey(postParam);
+    if (key) {
+      persistReadingTimeToCaches(key, data.reading_time, data.body_word_count);
+      storeReadingTime(key, data.reading_time, data.body_word_count);
+    }
+    try {
+      const indexPosts = await loadIndexData();
+      renderRelatedSection(indexPosts, data, postParam);
+      renderPostNav(indexPosts, postParam);
+    } catch (loadError) {
+      console.warn('Failed to load related posts index', loadError);
+    }
     setupShareButtons(data, localizedTitle, canonicalUrl);
   } catch (error) {
     console.error('Failed to load blog post', error);
@@ -1619,11 +2002,63 @@ async function renderPost() {
   }
 }
 
+function ensurePostLayout() {
+  const postLayout = document.querySelector('.post-layout');
+  if (!postLayout) return;
+  let postMain = postLayout.querySelector('.post-main');
+  let postBody = postLayout.querySelector('.post-body');
+  const meta = document.querySelector('.post-header .blog-meta');
+  if (meta && !meta.id) meta.id = 'post-meta';
+
+  if (!postBody) {
+    postBody = document.createElement('article');
+    postBody.className = 'post-body';
+    postBody.dataset.i18n = 'postLoadingBody';
+    postBody.textContent = t('postLoadingBody');
+  }
+
+  if (!postMain) {
+    postMain = document.createElement('div');
+    postMain.className = 'post-main';
+    postLayout.insertBefore(postMain, postLayout.firstElementChild);
+  }
+
+  if (!postMain.contains(postBody)) {
+    postMain.insertBefore(postBody, postMain.firstChild);
+  }
+
+  let related = document.getElementById('related-posts');
+  if (!related) {
+    related = document.createElement('section');
+    related.className = 'post-related';
+    related.id = 'related-posts';
+    related.innerHTML = `
+      <h3 data-i18n="relatedTitle">${t('relatedTitle')}</h3>
+      <div class="related-grid" id="related-grid"></div>
+      <div class="post-nav">
+        <a class="post-nav-link prev" id="post-nav-prev" href="#" hidden>
+          <span class="nav-label" data-i18n="previousPost">${t('previousPost')}</span>
+          <span class="nav-title"></span>
+        </a>
+        <a class="post-nav-link next" id="post-nav-next" href="#" hidden>
+          <span class="nav-label" data-i18n="nextPost">${t('nextPost')}</span>
+          <span class="nav-title"></span>
+        </a>
+      </div>
+    `;
+  }
+
+  if (!postMain.contains(related)) {
+    postMain.appendChild(related);
+  }
+}
+
 function init() {
   const detected = detectLanguage();
   applyTranslations(detected);
   bindLanguageSelector();
   bindSearch();
+  bindNewsletterForm();
   bindCategoryChips();
   renderCurrentView();
 }
