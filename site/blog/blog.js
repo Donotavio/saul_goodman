@@ -15,6 +15,7 @@ const BLOG_TRANSLATIONS = {
     blogHeroTitle: 'Opiniões jurídicas sobre procrastinação digital',
     blogHeroLead:
       'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul, direto ao ponto, sem coach barato.',
+    heroBadge: '“Em caso de preguiça... CALL SAUL!”',
     blogCategoryAll: 'Todos',
     categoryEyebrow: 'Categoria',
     categoryProcrastinacaoTitle: 'Procrastinação sob investigação',
@@ -68,6 +69,7 @@ const BLOG_TRANSLATIONS = {
     blogHeroTitle: 'Legal takes on digital procrastination',
     blogHeroLead:
       "Sarcastic takes on focus, attention, and dev performance. Weekly articles written in Saul's tone—no coach vibe.",
+    heroBadge: '"In case of laziness... CALL SAUL!"',
     blogCategoryAll: 'All',
     categoryEyebrow: 'Category',
     categoryProcrastinacaoTitle: 'Procrastination under investigation',
@@ -119,6 +121,7 @@ const BLOG_TRANSLATIONS = {
     blogHeroTitle: 'Opiniones legales sobre la procrastinación digital',
     blogHeroLead:
       'Relatos sarcásticos sobre foco, atención y performance dev. Artículos semanales en tono Saul, sin coach barato.',
+    heroBadge: '“En caso de pereza... ¡LLAMA A SAUL!”',
     blogCategoryAll: 'Todos',
     categoryEyebrow: 'Categoría',
     categoryProcrastinacaoTitle: 'Procrastinación bajo investigación',
@@ -167,18 +170,21 @@ const CATEGORY_LABELS = {
     'foco-atencao': 'Foco & Atenção',
     'dev-performance': 'Performance Dev',
     'trabalho-remoto': 'Trabalho Remoto',
+    'ux-design': 'UX & Design',
   },
   en: {
     'procrastinacao': 'Procrastination',
     'foco-atencao': 'Focus & Attention',
     'dev-performance': 'Dev Performance',
     'trabalho-remoto': 'Remote Work',
+    'ux-design': 'UX & Design',
   },
   es: {
     'procrastinacao': 'Procrastinación',
     'foco-atencao': 'Enfoque y Atención',
     'dev-performance': 'Rendimiento Dev',
     'trabalho-remoto': 'Trabajo Remoto',
+    'ux-design': 'UX y Diseño',
   },
 };
 
@@ -442,7 +448,7 @@ function applyTranslations(lang) {
 
   const view = document.body.dataset.blogView;
   if (view === 'post') {
-    document.title = `${t('breadcrumbArticle')} — ${t('blogHeroEyebrow')}`;
+    // Preserve existing title on post pages; renderPost will set a localized title after loading content.
   } else {
     const category = document.body.dataset.blogCategory;
     if (category && CATEGORY_TITLE_KEYS[category]) {
@@ -597,7 +603,7 @@ function parseDateValue(value) {
     const year = Number(dateOnlyMatch[1]);
     const month = Number(dateOnlyMatch[2]) - 1;
     const day = Number(dateOnlyMatch[3]);
-    const date = new Date(year, month, day);
+    const date = new Date(Date.UTC(year, month, day));
     return Number.isNaN(date.getTime()) ? null : date;
   }
   const date = new Date(trimmed);
