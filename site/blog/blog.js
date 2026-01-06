@@ -339,6 +339,128 @@ function getLocalizedValue(source, key, lang = currentLanguage) {
   return source[localizedKey] || source[key];
 }
 
+const TAG_TRANSLATIONS = {
+  en: {
+    produtividade: 'Productivity',
+    procrastinacao: 'Procrastination',
+    procrastinação: 'Procrastination',
+    design: 'Design',
+    dev: 'Dev',
+    desenvolvimento: 'Development',
+    devops: 'DevOps',
+    estrategia: 'Strategy',
+    estratégia: 'Strategy',
+    futuro: 'Future',
+    carreira: 'Career',
+    humor: 'Humor',
+    internet: 'Internet',
+    ios: 'iOS',
+    infraestrutura: 'Infrastructure',
+    hardware: 'Hardware',
+    moda: 'Fashion',
+    mudancas: 'Change',
+    mudanças: 'Change',
+    performance: 'Performance',
+    desempenho: 'Performance',
+    programacao: 'Programming',
+    programação: 'Programming',
+    qualidade: 'Quality',
+    rotina: 'Routine',
+    sarcasmo: 'Sarcasm',
+    software: 'Software',
+    sprint: 'Sprint',
+    tecnologia: 'Tech',
+    terraform: 'Terraform',
+    'trabalho-remoto': 'Remote work',
+    valores: 'Values',
+  },
+  es: {
+    produtividade: 'Productividad',
+    procrastinacao: 'Procrastinación',
+    procrastinação: 'Procrastinación',
+    design: 'Diseño',
+    dev: 'Dev',
+    desenvolvimento: 'Desarrollo',
+    devops: 'DevOps',
+    estrategia: 'Estrategia',
+    estratégia: 'Estrategia',
+    futuro: 'Futuro',
+    carreira: 'Carrera',
+    humor: 'Humor',
+    internet: 'Internet',
+    ios: 'iOS',
+    infraestrutura: 'Infraestructura',
+    hardware: 'Hardware',
+    moda: 'Moda',
+    mudancas: 'Cambios',
+    mudanças: 'Cambios',
+    performance: 'Performance',
+    desempenho: 'Rendimiento',
+    programacao: 'Programación',
+    programação: 'Programación',
+    qualidade: 'Calidad',
+    rotina: 'Rutina',
+    sarcasmo: 'Sarcasmo',
+    software: 'Software',
+    sprint: 'Sprint',
+    tecnologia: 'Tecnología',
+    terraform: 'Terraform',
+    'trabalho-remoto': 'Trabajo remoto',
+    valores: 'Valores',
+  },
+};
+
+const TAG_TRANSLATION_LOOKUP = {};
+
+function normalizeTagKey(tag) {
+  return tag
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function translateTag(tag, lang = currentLanguage) {
+  if (!tag) return '';
+  if (lang === defaultLanguage) return tag;
+  const translations = TAG_TRANSLATIONS[lang];
+  if (!translations) return tag;
+  if (!TAG_TRANSLATION_LOOKUP[lang]) {
+    const lookup = {};
+    Object.keys(translations).forEach((key) => {
+      lookup[normalizeTagKey(key)] = translations[key];
+    });
+    TAG_TRANSLATION_LOOKUP[lang] = lookup;
+  }
+  const normalizedKey = normalizeTagKey(tag);
+  const normalizedTranslations = TAG_TRANSLATION_LOOKUP[lang];
+  return normalizedTranslations[normalizedKey] || translations[tag] || tag;
+}
+
+function normalizeTagList(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.map((tag) => (typeof tag === 'string' ? tag.trim() : String(tag))).filter(Boolean);
+  }
+  if (typeof value === 'string') {
+    return value
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function getLocalizedTags(source, lang = currentLanguage) {
+  if (!source) return [];
+  const localizedKey = `tags_${lang}`;
+  const localizedRaw = Object.prototype.hasOwnProperty.call(source || {}, localizedKey)
+    ? source[localizedKey]
+    : undefined;
+  const localizedList = normalizeTagList(localizedRaw);
+  if (localizedList.length) return localizedList;
+  return normalizeTagList(source.tags).map((tag) => translateTag(tag, lang));
+}
+
 function stripMetadataSection(markdown = '') {
   const markers = ['**Metadados**', '**Metadatos**', '**Metadata**'];
   let result = markdown;
@@ -878,10 +1000,11 @@ function renderCards(posts, container) {
         card.appendChild(excerpt);
       }
 
-      if (Array.isArray(post.tags) && post.tags.length) {
+      const tags = getLocalizedTags(post);
+      if (tags.length) {
         const tagList = document.createElement('ul');
         tagList.className = 'tag-list';
-        post.tags.forEach((tag) => {
+        tags.forEach((tag) => {
           const li = document.createElement('li');
           li.textContent = tag;
           tagList.appendChild(li);
@@ -935,11 +1058,7 @@ function renderMetadata(meta, container) {
   };
 
   add(t('metaCategory'), getCategoryLabel(meta.category));
-  const tagValue = Array.isArray(meta.tags)
-    ? meta.tags
-    : typeof meta.tags === 'string'
-    ? meta.tags.split(',').map((tag) => tag.trim()).filter(Boolean)
-    : [];
+  const tagValue = getLocalizedTags(meta);
   if (tagValue.length) {
     const list = document.createElement('ul');
     tagValue.forEach((tag) => {
@@ -1143,4 +1262,5 @@ export {
   buildPostLink,
   parseFrontmatter,
   normalizeCanonicalUrl,
+  getLocalizedTags,
 };

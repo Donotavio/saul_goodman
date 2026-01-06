@@ -51,3 +51,18 @@ Corpo`;
   assert.equal(data.excerpt, 'Primeira linha\nSegunda linha');
   assert.equal(body, 'Corpo');
 });
+
+test('getLocalizedTags prefers language-specific tags', async () => {
+  const { getLocalizedTags } = await loadBlogModule();
+  const meta = { tags: ['padrão'], tags_en: ['english'], tags_es: 'espanol, outro' };
+  assert.deepEqual(getLocalizedTags(meta, 'en'), ['english']);
+  assert.deepEqual(getLocalizedTags(meta, 'es'), ['espanol', 'outro']);
+  assert.deepEqual(getLocalizedTags(meta, 'pt'), ['padrão']);
+});
+
+test('getLocalizedTags translates base tags when no localized list exists', async () => {
+  const { getLocalizedTags } = await loadBlogModule();
+  const meta = { tags: ['produtividade', 'procrastinação', 'AI'] };
+  assert.deepEqual(getLocalizedTags(meta, 'en'), ['Productivity', 'Procrastination', 'AI']);
+  assert.deepEqual(getLocalizedTags(meta, 'es'), ['Productividad', 'Procrastinación', 'AI']);
+});
