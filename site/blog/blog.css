@@ -336,6 +336,69 @@ body {
   font-weight: 700;
 }
 
+.extension-cta {
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  padding: 16px;
+  background: linear-gradient(180deg, #fffef7 0%, #fff3c4 100%);
+  box-shadow: 4px 4px 0 var(--black);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extension-title {
+  margin: 0;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.extension-copy {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--brown);
+}
+
+.extension-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.extension-btn {
+  border: 2px solid var(--black);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+  color: var(--black);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff;
+  box-shadow: 2px 2px 0 var(--black);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.extension-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 var(--black);
+}
+
+.extension-btn:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
+}
+
+.extension-btn.chrome {
+  background: linear-gradient(120deg, #fffbe0 0%, #ffe07d 100%);
+}
+
+.extension-btn.vscode {
+  background: linear-gradient(120deg, #e8f1ff 0%, #c9e0ff 100%);
+}
+
 .metadata-panel {
   border: 2px solid var(--black);
   border-radius: 18px;

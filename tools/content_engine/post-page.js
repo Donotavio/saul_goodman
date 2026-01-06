@@ -275,6 +275,30 @@ ${jsonLdContent}
             <button class="share-btn" data-share="copy" type="button" data-i18n="shareCopy">Copiar link</button>
             <span class="share-feedback" hidden data-i18n="shareCopied">Link copiado!</span>
           </div>
+          <div class="extension-cta">
+            <p class="extension-title" data-i18n="extensionsTitle">Instale as extensões do Saul</p>
+            <p class="extension-copy" data-i18n="extensionsCopy">Leve o Saul para o Chrome e para o VS Code e mantenha o foco.</p>
+            <div class="extension-actions">
+              <a
+                class="extension-btn chrome"
+                href="https://chromewebstore.google.com/detail/fllkkpfaajgppbnlfoebeendceckcffe/"
+                target="_blank"
+                rel="noreferrer"
+                data-i18n="extensionsChromeCta"
+              >
+                Extensão Chrome
+              </a>
+              <a
+                class="extension-btn vscode"
+                href="https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode"
+                target="_blank"
+                rel="noreferrer"
+                data-i18n="extensionsVscodeCta"
+              >
+                Extensão VS Code
+              </a>
+            </div>
+          </div>
           <div class="metadata-panel"></div>
         </aside>
       </section>

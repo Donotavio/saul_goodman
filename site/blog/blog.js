@@ -51,7 +51,11 @@ const BLOG_TRANSLATIONS = {
     shareLinkedin: 'LinkedIn',
     shareCopy: 'Copiar link',
     shareCopied: 'Link copiado!',
-    shareCopyPrompt: 'Copie o link para compartilhar:'
+    shareCopyPrompt: 'Copie o link para compartilhar:',
+    extensionsTitle: 'Instale as extensões do Saul',
+    extensionsCopy: 'Leve o Saul para o Chrome e para o VS Code e mantenha o foco.',
+    extensionsChromeCta: 'Extensão Chrome',
+    extensionsVscodeCta: 'Extensão VS Code'
   },
   en: {
     languageLabel: 'Select language',
@@ -98,7 +102,11 @@ const BLOG_TRANSLATIONS = {
     shareLinkedin: 'LinkedIn',
     shareCopy: 'Copy link',
     shareCopied: 'Link copied!',
-    shareCopyPrompt: 'Copy this link to share:'
+    shareCopyPrompt: 'Copy this link to share:',
+    extensionsTitle: "Install Saul's extensions",
+    extensionsCopy: 'Bring Saul to Chrome and VS Code to keep your focus honest.',
+    extensionsChromeCta: 'Chrome extension',
+    extensionsVscodeCta: 'VS Code extension'
   },
   es: {
     languageLabel: 'Seleccionar idioma',
@@ -145,7 +153,11 @@ const BLOG_TRANSLATIONS = {
     shareLinkedin: 'LinkedIn',
     shareCopy: 'Copiar enlace',
     shareCopied: '¡Enlace copiado!',
-    shareCopyPrompt: 'Copia este enlace para compartir:'
+    shareCopyPrompt: 'Copia este enlace para compartir:',
+    extensionsTitle: 'Instala las extensiones de Saul',
+    extensionsCopy: 'Lleva a Saul al Chrome y al VS Code para mantener el foco.',
+    extensionsChromeCta: 'Extensión de Chrome',
+    extensionsVscodeCta: 'Extensión de VS Code'
   },
 };
 
