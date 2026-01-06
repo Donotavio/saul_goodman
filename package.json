@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "chart.js": "^4.5.1",
-    "jspdf": "^3.0.4"
+    "jspdf": "^4.0.0"
   }
 }
