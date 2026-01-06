@@ -1747,6 +1747,20 @@ const initHeroSign = () => {
 };
 
 const setupLightbox = () => {
+  const resolvePreviewSrc = (rawSrc) => {
+    if (!rawSrc) return null;
+    try {
+      const url = new URL(rawSrc, window.location.href);
+      const allowedProtocols = ['http:', 'https:'];
+      const allowedPaths = ['/assets/', 'assets/'];
+      if (!allowedProtocols.includes(url.protocol)) return null;
+      if (!allowedPaths.some((prefix) => url.pathname.startsWith(prefix))) return null;
+      return url.href;
+    } catch {
+      return null;
+    }
+  };
+
   lightbox = createLightbox();
   const imgEl = lightbox.querySelector('img');
   const captionEl = lightbox.querySelector('.lightbox-caption');
@@ -1770,8 +1784,9 @@ const setupLightbox = () => {
       event.preventDefault();
       const src = link.getAttribute('data-preview');
       const caption = link.closest('.demo-figure')?.querySelector('figcaption')?.textContent || '';
-      if (src) {
-        imgEl.src = src;
+      const safeSrc = resolvePreviewSrc(src);
+      if (safeSrc) {
+        imgEl.src = safeSrc;
         captionEl.textContent = caption;
         lightbox.classList.add('active');
       }
