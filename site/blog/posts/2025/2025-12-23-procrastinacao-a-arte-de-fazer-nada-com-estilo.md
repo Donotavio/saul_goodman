@@ -26,7 +26,7 @@ Vamos traduzir essa ideia de "solucionar" problemas para o nosso mundo digital. 
 
 Agora, vamos ao que interessa. A grande questão aqui é: o que o Terraform realmente faz por você? Ele promete automatizar e facilitar a gestão da sua infraestrutura, mas, no fundo, ele é apenas mais uma ferramenta que você pode usar para adiar suas responsabilidades. É como ter um carro esportivo na garagem e usá-lo apenas para ir ao mercado. Sim, você pode acelerar, mas ainda vai voltar com as mesmas compras de sempre.
 
-A verdade é que a procrastinação é uma forma de arte que muitos dominam, e a maioria dos desenvolvedores parece ser virtuoso nesse campo. A ideia de que uma ferramenta pode resolver sua falta de foco é tão real quanto acreditar que um milagre vai acontecer na sua vida enquanto você rola a página do Twitter. E se você acha que uma simples linha de comando vai resolver seus problemas de produtividade, bem, tenho um castelo na lua que posso vender para você.
+A verdade é que a procrastinação é uma forma de arte que muitos dominam, e a maioria dos desenvolvedores parece ser virtuoso nesse campo. A ideia de que uma ferramenta pode resolver sua falta de foco é tão real quanto acreditar que um milagre vai acontecer na sua vida enquanto você rola a página do X. E se você acha que uma simples linha de comando vai resolver seus problemas de produtividade, bem, tenho um castelo na lua que posso vender para você.
 
 ## Conclusão em tom de julgamento
 

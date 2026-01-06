@@ -1309,7 +1309,7 @@ async function onShareMenuClick(event: Event): Promise<void> {
       await copyToClipboardWithToast(
         text,
         i18n?.t('report_share_copy_success') ??
-          'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.',
+          'Post copiado. Cole no LinkedIn, X ou onde quiser.',
         i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.'
       );
       break;
@@ -1398,7 +1398,7 @@ async function copySharePost(): Promise<void> {
   const text = buildSocialPostText(latestMetrics);
   const success =
     i18n?.t('report_share_copy_success') ??
-    'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.';
+    'Post copiado. Cole no LinkedIn, X ou onde quiser.';
   const error =
     i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.';
   await copyToClipboardWithToast(text, success, error);
@@ -1419,7 +1419,7 @@ async function copyNarrativePost(): Promise<void> {
   const text = buildNarrativeSocialText(latestMetrics);
   const success =
     i18n?.t('report_share_copy_success') ??
-    'Post copiado. Cole no LinkedIn, Twitter ou onde quiser.';
+    'Post copiado. Cole no LinkedIn, X ou onde quiser.';
   const error =
     i18n?.t('report_share_copy_error') ?? 'Não foi possível copiar o post agora.';
   await copyToClipboardWithToast(text, success, error);
