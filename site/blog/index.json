@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "O Mercado de Ações: A Grande Montanha-Russa do Vale do Silício",
+      "url": "./posts/2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio/",
+      "markdown": "2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio.md",
+      "date": "2026-01-07",
+      "category": "negocios",
+      "tags": [
+        "mercado",
+        "tecnologia",
+        "ações",
+        "sarcasmo",
+        "análise"
+      ],
+      "excerpt": "O mercado de ações está em alta, e ninguém se surpreende. É quase como esperar que um gato caia de pé.",
+      "title_en": "The Stock Market: The Great Roller Coaster of Silicon Valley",
+      "title_es": "El Mercado de Acciones: La Gran Montaña Rusa del Silicon Valley",
+      "tone": "incredulo",
+      "source_title": "Stock market surges on Big Tech gains, nearing records",
+      "source_url": "https://www.fastcompany.com/91470120/stock-market-big-tech-amazon-sandisk",
+      "source_published_at": "2026-01-06T21:04:24",
+      "excerpt_en": "The stock market is on the rise, and no one is surprised. It's almost like expecting a cat to land on its feet.",
+      "excerpt_es": "El mercado de acciones está en alza, y a nadie le sorprende. Es casi como esperar que un gato caiga de pie."
+    },
+    {
       "title": "O Futuro Chegou: Você Está Preparado ou Apenas Usando a Mesma Caneta BIC?",
       "url": "./posts/2026/2026-01-05-o-futuro-chegou-voce-esta-preparado-ou-apenas-usando-a-mesma-caneta-bic/",
       "markdown": "2026/2026-01-05-o-futuro-chegou-voce-esta-preparado-ou-apenas-usando-a-mesma-caneta-bic.md",
