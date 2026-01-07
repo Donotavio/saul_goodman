@@ -1,0 +1,10 @@
+site/
+docs/
+release/
+tools/
+node_modules/
+saul-daemon/
+vscode-extension/
+.github/
+.windsurf/
+.DS_Store

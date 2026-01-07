@@ -119,6 +119,13 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 - **Popup/Options HTML & CSS:** vivem em `src/popup` e `src/options`. Não precisam de build além do TypeScript.
 - **Vendor:** se atualizar o Chart.js local, substitua `src/vendor/chart.umd.js` (e mantenha o manifesto sem CSP extra).
 
+## Empacotar para a Chrome Web Store
+
+1. Gere os artefatos: `npm install && npm run build`.
+2. Monte o pacote limpo: `npm run package:webstore` (cria `release/saul-goodman-<versao>-webstore/` sem `site/`, `docs/` ou ferramentas).
+3. Compacte: `cd release && zip -r saul-goodman-<versao>-webstore.zip saul-goodman-<versao>-webstore`.
+4. Envie esse zip para a loja. Não compacte o diretório raiz: ele contém o site estático com scripts CDN (Google Fonts/GTM) e outros assets de marketing que acionam a regra de **código hospedado remotamente** do Manifest V3.
+
 ## Blog e content engine
 
 - Blog público em `site/blog/` (home, categorias e posts estáticos em `posts/YYYY/<slug>/`), posts Markdown em `site/blog/posts/YYYY/*.md` com frontmatter (title, date, category, tags, excerpt, source_*); índice JSON para consumo em `site/blog/index.json`.

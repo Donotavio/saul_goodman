@@ -9,6 +9,7 @@
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json",
     "test": "npm run build && TEST_FILES=$(find dist/tests -name '*.test.js' -o -name '*.spec.js') && if [ -z \"$TEST_FILES\" ]; then echo 'No compiled tests found'; exit 0; fi && node --test $TEST_FILES",
+    "package:webstore": "node tools/package-webstore.js",
     "blog:index": "node tools/content_engine/build-index.js",
     "content:engine": "node tools/content_engine/main.js",
     "content:engine:dry-run": "node tools/content_engine/main.js --dry-run"
