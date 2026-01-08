@@ -1,6 +1,6 @@
 {
   "name": "saul-daemon",
-  "version": "1.21.9",
+  "version": "1.21.10",
   "private": true,
   "type": "commonjs",
   "license": "MIT",
