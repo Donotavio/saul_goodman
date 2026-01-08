@@ -1,7 +1,7 @@
-import { ExtensionSettings, LocalePreference, WorkInterval } from '../shared/types.js';
+import { ExtensionSettings, LocalePreference, SupportedLocale, WorkInterval } from '../shared/types.js';
 import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings } from '../shared/storage.js';
 import { normalizeDomain } from '../shared/utils/domain.js';
-import { createI18n, I18nService, resolveLocale } from '../shared/i18n.js';
+import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../shared/i18n.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -45,6 +45,21 @@ const installVscodeExtensionButton = document.getElementById(
 const DEFAULT_VSCODE_URL = 'http://127.0.0.1:3123';
 const VSCODE_MARKETPLACE_URL =
   'https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode';
+const LOCALE_LABELS: Record<SupportedLocale, string> = {
+  'pt-BR': 'Português (Brasil)',
+  'en-US': 'English (US)',
+  'es-419': 'Español',
+  fr: 'Français',
+  de: 'Deutsch',
+  it: 'Italiano',
+  tr: 'Türkçe',
+  'zh-CN': '中文',
+  hi: 'हिन्दी',
+  ar: 'العربية',
+  bn: 'বাংলা',
+  ru: 'Русский',
+  ur: 'اردو'
+};
 
 let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
@@ -55,6 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
   void hydrate();
 });
+
+function populateLocaleSelect(): void {
+  if (!localeSelectEl) return;
+  const desired = ['auto', ...SUPPORTED_LOCALES];
+  const current = Array.from(localeSelectEl.options).map((opt) => opt.value);
+  const shouldRefresh =
+    desired.length !== current.length || desired.some((value, index) => current[index] !== value);
+  if (!shouldRefresh) return;
+  localeSelectEl.innerHTML = desired
+    .map((value) => {
+      if (value === 'auto') {
+        return `<option value="auto" data-i18n="options_language_auto">${translateOrFallback(
+          'options_language_auto',
+          'Automático (navegador)'
+        )}</option>`;
+      }
+      const label = LOCALE_LABELS[value as SupportedLocale] ?? value;
+      return `<option value="${value}">${label}</option>`;
+    })
+    .join('');
+}
 
 function attachListeners(): void {
   weightsForm.addEventListener('submit', (event) => {
@@ -381,6 +417,7 @@ async function testVscodeConnection(): Promise<void> {
 async function hydrate(): Promise<void> {
   currentSettings = await getSettings();
   await refreshTranslations();
+  populateLocaleSelect();
   renderForms();
   if (window.location.hash === '#vilains' && !procrastinationHighlightDone) {
     focusProcrastinationSection();

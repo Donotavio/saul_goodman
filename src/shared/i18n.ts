@@ -1,12 +1,36 @@
 import type { LocalePreference, SupportedLocale } from './types.js';
 
-export const SUPPORTED_LOCALES: SupportedLocale[] = ['pt-BR', 'en-US', 'es-419'];
+export const SUPPORTED_LOCALES: SupportedLocale[] = [
+  'pt-BR',
+  'en-US',
+  'es-419',
+  'fr',
+  'de',
+  'it',
+  'tr',
+  'zh-CN',
+  'hi',
+  'ar',
+  'bn',
+  'ru',
+  'ur'
+];
 const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 
 const LOCALE_DIR_MAP: Record<SupportedLocale, string> = {
   'pt-BR': 'pt_BR',
   'en-US': 'en_US',
-  'es-419': 'es_419'
+  'es-419': 'es_419',
+  fr: 'fr',
+  de: 'de',
+  it: 'it',
+  tr: 'tr',
+  'zh-CN': 'zh_CN',
+  hi: 'hi',
+  ar: 'ar',
+  bn: 'bn',
+  ru: 'ru',
+  ur: 'ur'
 };
 
 const localeCache = new Map<SupportedLocale, Record<string, string>>();
@@ -29,12 +53,26 @@ export function resolveLocale(preference?: LocalePreference): SupportedLocale {
   const browserLocale = (chrome?.i18n?.getUILanguage?.() ?? navigator.language ?? '').toLowerCase();
   const normalized = browserLocale.split('-')[0];
 
-  if (browserLocale.startsWith('pt') || normalized === 'pt') {
-    return 'pt-BR';
+  const mapping: Record<string, SupportedLocale> = {
+    pt: 'pt-BR',
+    es: 'es-419',
+    en: 'en-US',
+    fr: 'fr',
+    de: 'de',
+    it: 'it',
+    tr: 'tr',
+    zh: 'zh-CN',
+    hi: 'hi',
+    ar: 'ar',
+    bn: 'bn',
+    ru: 'ru',
+    ur: 'ur'
+  };
+
+  if (mapping[normalized]) {
+    return mapping[normalized];
   }
-  if (browserLocale.startsWith('es') || normalized === 'es') {
-    return 'es-419';
-  }
+
   return 'en-US';
 }
 

@@ -135,7 +135,17 @@ const BLOG_REASON_KEYS: Record<BlogCategory, string> = {
 const BLOG_LOCALE_SUFFIX: Record<SupportedLocale, 'pt' | 'en' | 'es'> = {
   'pt-BR': 'pt',
   'en-US': 'en',
-  'es-419': 'es'
+  'es-419': 'es',
+  fr: 'en',
+  de: 'en',
+  it: 'en',
+  tr: 'en',
+  'zh-CN': 'en',
+  hi: 'en',
+  ar: 'en',
+  bn: 'en',
+  ru: 'en',
+  ur: 'en'
 };
 
 let productivityChart: ChartInstance = null;
