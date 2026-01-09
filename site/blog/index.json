@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "A Revolução da Produtividade: Gerenciando Energia, Não Tempo (Porque Tempo é para os Fracos)",
+      "url": "./posts/2026/2026-01-09-a-revolucao-da-produtividade-gerenciando-energia-nao-tempo-porque-tempo-e-para-os-fracos/",
+      "markdown": "2026/2026-01-09-a-revolucao-da-produtividade-gerenciando-energia-nao-tempo-porque-tempo-e-para-os-fracos.md",
+      "date": "2026-01-09",
+      "category": "foco-atencao",
+      "tags": [
+        "produtividade",
+        "burnout",
+        "energia",
+        "desempenho",
+        "sarcasmo"
+      ],
+      "excerpt": "Aprenda a gerenciar sua energia em vez do seu tempo e evite o burnout. É isso mesmo, quem precisa de horas na agenda?",
+      "title_en": "The Productivity Revolution: Managing Energy, Not Time (Because Time is for the Weak)",
+      "title_es": "La Revolución de la Productividad: Gestionando Energía, No Tiempo (Porque el Tiempo es para los Débiles)",
+      "tone": "incredulo",
+      "source_title": "Managing Energy Not Time: The Science-Backed System High-Achievers Use to Escape Burnout",
+      "source_url": "https://www.lifehack.org/991281/managing-energy-not-time",
+      "source_published_at": "Thu, 08 Jan 2026 19:17:36 +0000",
+      "excerpt_en": "Learn to manage your energy instead of your time and avoid burnout. That's right, who needs hours on the calendar?",
+      "excerpt_es": "Aprende a gestionar tu energía en lugar de tu tiempo y evita el burnout. Así es, ¿quién necesita horas en la agenda?"
+    },
+    {
       "title": "O Mercado de Ações: A Grande Montanha-Russa do Vale do Silício",
       "url": "./posts/2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio/",
       "markdown": "2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio.md",
