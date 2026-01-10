@@ -1,0 +1,2504 @@
+{
+  "actionTitle": {
+    "message": "साउल गुडमैन"
+  },
+  "backToHome": {
+    "message": "साइट पर वापस जाएं"
+  },
+  "benefit1Body": {
+    "message": "चार्ट और CSV अपने बॉस, टीम, या अपने विवेक को दिखाने के लिए।"
+  },
+  "benefit1Title": {
+    "message": "Undeniable सबूत"
+  },
+  "benefit2Body": {
+    "message": "भूकंप मोड और सारकथा संदेश जिसे आप अनदेखा नहीं कर सकते।"
+  },
+  "benefit2Title": {
+    "message": "सिनेमाई अलर्ट"
+  },
+  "benefit3Body": {
+    "message": "सभी निर्णय स्थानीय रूप से होता है; कोई डेटा आपके ब्राउज़र को छोड़ देता है।"
+  },
+  "benefit3Title": {
+    "message": "गारंटीकृत गोपनीयता"
+  },
+  "benefitsEyebrow": {
+    "message": "लाभ"
+  },
+  "benefitsTitle": {
+    "message": "Saul मामला संभालती है, आप इसे बंद कर देते हैं।"
+  },
+  "block_page_back": {
+    "message": "वापस जाओ"
+  },
+  "block_page_body": {
+    "message": "आप इस साइट को खरीद के रूप में चिह्नित करते हैं। यदि आप अपने मन को बदलने के लिए टैब को बंद करें या सूची को समायोजित करें।"
+  },
+  "block_page_heading": {
+    "message": "Saul अवरुद्ध इस डोमेन"
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman निराश"
+  },
+  "block_page_local_note": {
+    "message": "स्थानीय ब्लॉक - कुछ भी अपने ब्राउज़र को छोड़ देता है।"
+  },
+  "block_page_options": {
+    "message": "ओपन सेटिंग्स"
+  },
+  "block_page_title": {
+    "message": "Saul अवरुद्ध इस डोमेन"
+  },
+  "blogCategoryAll": {
+    "message": "सब"
+  },
+  "blogCategoryLabelCarreira": {
+    "message": "करियर"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "डेवलपर परफॉर्मेंस"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "फोकस और ध्यान"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "मार्केटिंग"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "बिज़नेस"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "टालमटोल"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "प्रोडक्ट"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "रिमोट वर्क"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX और डिज़ाइन"
+  },
+  "blogEmptyState": {
+    "message": "अभी तक कोई लेख प्रकाशित नहीं हुआ।"
+  },
+  "blogError": {
+    "message": "ब्लॉग लोड करने में विफल"
+  },
+  "blogHeroEyebrow": {
+    "message": "Saul Goodman Blog"
+  },
+  "blogHeroLead": {
+    "message": "Sarcastic ध्यान, ध्यान और देव प्रदर्शन पर ध्यान केंद्रित करता है। साप्ताहिक लेख Saul की टोन में लिखा - कोई कोच वाइब नहीं।"
+  },
+  "blogHeroTitle": {
+    "message": "कानूनी रूप से डिजिटल खरीद पर ले जाता है"
+  },
+  "blogLogoAlt": {
+    "message": "Saul Goodman लोगो"
+  },
+  "blogPreviewCta": {
+    "message": "सभी लेख देखें"
+  },
+  "blogPreviewEmpty": {
+    "message": "अभी कोई लेख उपलब्ध नहीं है।"
+  },
+  "blogPreviewError": {
+    "message": "लेख लोड करने में असमर्थ।"
+  },
+  "blogPreviewEyebrow": {
+    "message": "साउल ब्लॉग"
+  },
+  "blogPreviewImageAlt": {
+    "message": "Saul Goodman illustration"
+  },
+  "blogPreviewLead": {
+    "message": "3 नवीनतम लेख पढ़ें और देखें कि कैसे Saul कानूनी sarcasm के साथ अपने ध्यान का बचाव करता है।"
+  },
+  "blogPreviewLoading": {
+    "message": "लेख लोड हो रहा है..."
+  },
+  "blogPreviewRead": {
+    "message": "लेख पढ़ें"
+  },
+  "blogPreviewTitle": {
+    "message": "डिजिटल कोर्टरूम के नवीनतम मामले।"
+  },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman (संदेह)"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman (मंज़ूरी)"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman (जजमेंट)"
+  },
+  "breadcrumbArticle": {
+    "message": "लेख"
+  },
+  "breadcrumbBlog": {
+    "message": "ब्लॉग"
+  },
+  "categoriesTitle": {
+    "message": "सत्र में श्रेणियाँ"
+  },
+  "categoryActiveLabel": {
+    "message": "सक्रिय श्रेणी"
+  },
+  "categoryCarreiraLead": {
+    "message": "हैबिट्स, लीडरशिप और कॉरपोरेट सर्वाइवल — बिना LinkedIn क्लिशे।"
+  },
+  "categoryCarreiraTitle": {
+    "message": "कोच स्क्रिप्ट के बिना करियर"
+  },
+  "categoryClear": {
+    "message": "स्पष्ट श्रेणी"
+  },
+  "categoryDevLead": {
+    "message": "किसी के लिए व्यावहारिक उत्पादकता बनाम कोड, पीआर, और दूरस्थ बैठकों के लिए।"
+  },
+  "categoryDevTitle": {
+    "message": "एक दोषी plea साथ देव प्रदर्शन"
+  },
+  "categoryEyebrow": {
+    "message": "श्रेणी"
+  },
+  "categoryFocoLead": {
+    "message": "दैनिक अध्ययन और नाटक फ़ीड के लिए समर्पण किए बिना कोड में अपने सिर को रखने के बारे में।"
+  },
+  "categoryFocoTitle": {
+    "message": "पर ध्यान दें"
+  },
+  "categoryMarketingLead": {
+    "message": "SEO, कंटेंट और कन्वर्ज़न: कम गुरु-गिरी, ज़्यादा तरीका।"
+  },
+  "categoryMarketingTitle": {
+    "message": "बिना चमत्कारी वादों वाला मार्केटिंग"
+  },
+  "categoryNegociosLead": {
+    "message": "मैनेजमेंट, कल्चर और असली असर — बिना जार्गन और बिना बकवास।"
+  },
+  "categoryNegociosTitle": {
+    "message": "बिज़नेस और लीडरशिप अदालत में"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "देरी के वास्तविक मामलों, डिजिटल laziness, और टैब शिकार Saul prosecute के लिए प्यार करता है।"
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "जांच के तहत Procrastination"
+  },
+  "categoryProdutoLead": {
+    "message": "फैसले, मेट्रिक्स और PM/PO के trade-offs ताकि आप backlog के बंधक न बनें।"
+  },
+  "categoryProdutoTitle": {
+    "message": "प्रोडक्ट और रणनीति अदालत में"
+  },
+  "categoryRemotoLead": {
+    "message": "घर कार्यालय, स्लैक उपस्थिति और ज़ूम गायब होने से बचने के बारे में कहानियां।"
+  },
+  "categoryRemotoTitle": {
+    "message": "कोई alibi के साथ दूरस्थ काम"
+  },
+  "categoryUxLead": {
+    "message": "डिज़ाइन, यूज़ेबिलिटी और प्रोडक्ट फैसले जो आपके रोज़ के फोकस को प्रभावित करते हैं।"
+  },
+  "categoryUxTitle": {
+    "message": "UX और डिज़ाइन पर नज़र"
+  },
+  "changelogError": {
+    "message": "हम अभी बदलाव नहीं कर सकते। बाद में फिर से प्रयास करें।"
+  },
+  "changelogEyebrow": {
+    "message": "सब कुछ दस्तावेज"
+  },
+  "changelogHeading": {
+    "message": "सरकारी बदलाव"
+  },
+  "changelogLoading": {
+    "message": "The repository to changelog."
+  },
+  "changelogSubheading": {
+    "message": "प्रत्येक बदलाव को सीधे रिपॉज़िटरी से ट्रैक करें।"
+  },
+  "changelogTitle": {
+    "message": "चेंज लॉग"
+  },
+  "codeconBuildChip": {
+    "message": "4h कोडिंग"
+  },
+  "codeconBulletChallenge": {
+    "message": "चैलेंज: हाथ से तैयार कोड के 4 घंटे में दूरस्थ काम साबित, कोई एआई अनुमति नहीं है।"
+  },
+  "codeconBulletNarrative": {
+    "message": "\"Attorney\" कथा प्रबंधक / न्याय के लिए एक रक्षा में मीट्रिक बदल जाता है।"
+  },
+  "codeconBulletRepoLink": {
+    "message": "मूल रेपो"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "हैक लैब खुला स्रोत:"
+  },
+  "codeconBulletTracking": {
+    "message": "एक्सटेंशन घड़ियों टैब स्विच, निष्क्रिय समय और खलनायक साइटों एक सूचकांक बनाने के लिए।"
+  },
+  "codeconCtaRepo": {
+    "message": "हैक लैब कोड देखें"
+  },
+  "codeconCtaSite": {
+    "message": "कोडेक"
+  },
+  "codeconCtaVideo": {
+    "message": "पूर्ण वीडियो देखें"
+  },
+  "codeconEyebrow": {
+    "message": "हैक लैब कोडकॉन"
+  },
+  "codeconLead": {
+    "message": "इस विचार का जन्म कोडकॉन हैक लैब में हुआ था: Otávio Ribeiro ( TAG0 LinkedIn TAG1  ,   TAG2 GitHub TAG3   ) ने शाऊल को प्रोक्रस्टेशन के खिलाफ एक व्यक्तिगत वकील के रूप में कल्पना की - tremor, siren और courtroom-grade रिपोर्ट के साथ।"
+  },
+  "codeconPlanChip": {
+    "message": "30 मिनट की योजना"
+  },
+  "codeconStoryLead": {
+    "message": "व्हाइटबोर्ड के 30 मिनट में, Otávio ने MVP को स्केच किया और अगले 4 घंटों में, Saul के बीज को भेज दिया: एक विस्तार जो टैब को देखकर दूरस्थ कार्य कार्य को साबित करता है, एक सूचकांक की गणना करता है, और \"ज्यूरी\" ( बॉस) के लिए देव की रक्षा का ड्राफ्ट करता है।"
+  },
+  "codeconTag": {
+    "message": "समुदाय में पैदा हुआ"
+  },
+  "codeconTitle": {
+    "message": "जहां साउल गुडमैन एक क्रोम एक्सटेंशन बन गया"
+  },
+  "codeconVideoCaption": {
+    "message": "CodeCon हैक लैब से क्लिप जहां Saul एक विचलन-busting विस्तार के रूप में जीवन के लिए आया था।"
+  },
+  "demoCta": {
+    "message": "पूर्ण डेमो देखें"
+  },
+  "demoEyebrow": {
+    "message": "त्वरित डेमो"
+  },
+  "demoLead": {
+    "message": "एक नज़र पर्याप्त है: तत्काल प्रतिक्रियाओं के लिए पॉपअप, अंतिम दिनों के निर्णयों के लिए रिपोर्ट।"
+  },
+  "demoPopupBody": {
+    "message": "दैनिक सूचकांक, शीर्ष डोमेन और हाथ में शॉर्टकट निर्यात करें।"
+  },
+  "demoPopupTitle": {
+    "message": "तत्काल निर्णय के लिए पॉपअप"
+  },
+  "demoReportBody": {
+    "message": "चार्ट, लाइट स्टोरीटेलिंग और अगले कदम का सुझाव दिया।"
+  },
+  "demoReportTitle": {
+    "message": "योजना के लिए रिपोर्ट"
+  },
+  "demoTitle": {
+    "message": "जहाँ आप तय करते हैं और जहां शाऊल हस्तक्षेप करते हैं।"
+  },
+  "demoViewFull": {
+    "message": "पूर्ण आकार देखें"
+  },
+  "devBody": {
+    "message": "स्थानीय डेमॉन और वीएस कोड एक्सटेंशन को स्थानीय होस्ट छोड़ने के बिना संपादक समय की गिनती करने के लिए।"
+  },
+  "devCtaDocs": {
+    "message": "डॉक देखें"
+  },
+  "devCtaReadme": {
+    "message": "खुला README"
+  },
+  "devCtaVsCode": {
+    "message": "VS कोड एक्सटेंशन स्थापित करें"
+  },
+  "devEyebrow": {
+    "message": "डेवलपर्स के लिए"
+  },
+  "devLead": {
+    "message": "सभी तकनीकी विवरण मुख्य प्रवाह से बाहर चले गए। नीचे दिए गए निर्देशों के साथ शुरू करें।"
+  },
+  "devTitle": {
+    "message": "योगदान करना चाहते हैं या एकीकृत करना चाहते हैं?"
+  },
+  "earthquake_open_popup": {
+    "message": "पॉपअप खोलें"
+  },
+  "earthquake_review_villains": {
+    "message": "खलनायकों की समीक्षा करें"
+  },
+  "earthquake_title": {
+    "message": "सौल उच्चतम सतर्कता में!"
+  },
+  "extDescription": {
+    "message": "Sarcastic फोकस ट्रैकर जो डोमेन को मापता है और चेक में आपकी प्रक्रिया अनुक्रमित रखता है।"
+  },
+  "extensionsChromeCta": {
+    "message": "क्रोम एक्सटेंशन"
+  },
+  "extensionsCopy": {
+    "message": "अपने ध्यान को ईमानदार रखने के लिए सेल को क्रोम और वीएस कोड में लाएं।"
+  },
+  "extensionsTitle": {
+    "message": "साउल के विस्तार को स्थापित करें"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS कोड एक्सटेंशन"
+  },
+  "extName": {
+    "message": "साउल गुडमैन"
+  },
+  "faq1Answer": {
+    "message": "कुल मिलाकर। Saul केवल ध्यान और हास्य आरोप लगाता है।"
+  },
+  "faq1Question": {
+    "message": "क्या यह मुफ्त है?"
+  },
+  "faq2Answer": {
+    "message": "कभी नहीं। सब कुछ   TAG0 chrome.storage.local TAG1    में रहता है।"
+  },
+  "faq2Question": {
+    "message": "क्या मेरा डेटा ब्राउज़र को छोड़ देता है?"
+  },
+  "faq3Answer": {
+    "message": "केवल यदि आप रिपोर्ट में कथा चाहते हैं। बाकी ऑफ़लाइन काम करता है।"
+  },
+  "faq3Question": {
+    "message": "क्या मुझे एआई की आवश्यकता है?"
+  },
+  "faq4Answer": {
+    "message": "नहीं सब कुछ स्थानीय रूप से कोई लॉगिन के साथ चलता है।"
+  },
+  "faq4Question": {
+    "message": "क्या मुझे खाता होना चाहिए?"
+  },
+  "faq5Answer": {
+    "message": "जब सूचकांक आपकी सीमा को पार करता है तो स्क्रीन हिलाता है और कुछ सेकंड के लिए एक सिरेन खेला जाता है।"
+  },
+  "faq5Question": {
+    "message": "भूकंप मोड कैसे काम करता है?"
+  },
+  "faq6Answer": {
+    "message": "हाँ। विकल्प स्क्रीन में आप उत्पादक / विलाइन सूची, वजन और शेड्यूल सेट करते हैं।"
+  },
+  "faq6Question": {
+    "message": "क्या मैं डोमेन और शेड्यूल को अनुकूलित कर सकता हूं?"
+  },
+  "faq7Answer": {
+    "message": "हाँ। CSV और PDF बटन आपको तुरंत डेटा डाउनलोड करने देते हैं।"
+  },
+  "faq7Question": {
+    "message": "क्या मैं अपना डेटा निर्यात कर सकता हूँ?"
+  },
+  "faq8Answer": {
+    "message": "क्रोम के लिए बनाया गया है लेकिन ब्राव या एज जैसे क्रोमियम आधारित ब्राउज़रों के साथ संगत है।"
+  },
+  "faq8Question": {
+    "message": "क्या यह अन्य ब्राउज़रों में काम करता है?"
+  },
+  "faq9Answer": {
+    "message": "एआई कहानी वैकल्पिक है; यदि आप ओपनएआई कुंजी छोड़ते हैं तो सब कुछ ऑफ़लाइन रहता है।"
+  },
+  "faq9Question": {
+    "message": "क्या एआई रिपोर्ट सुरक्षित है?"
+  },
+  "faqEyebrow": {
+    "message": "त्वरित प्रश्न"
+  },
+  "faqTitle": {
+    "message": "स्ट्रेट फॉरवर्ड एफएक्यू"
+  },
+  "feature1Item1": {
+    "message": "वर्तमान सूचकांक और सारकीय संदेशों के साथ बैज।"
+  },
+  "feature1Item2": {
+    "message": "प्रारूपित समय के साथ शीर्ष उत्पादक और खलनायक डोमेन।"
+  },
+  "feature1Item3": {
+    "message": "एक क्लिक के साथ CSV/PDF निर्यात।"
+  },
+  "feature1Title": {
+    "message": "रियल टाइम डैशबोर्ड"
+  },
+  "feature2Item1": {
+    "message": "कन्फिगरेबल थ्रेसहोल्ड और वैकल्पिक सिरेन।"
+  },
+  "feature2Item2": {
+    "message": "उलटी गिनती और सीटीए के साथ गंभीर ओवरले।"
+  },
+  "feature2Item3": {
+    "message": "केवल खलनायक टैब को अवरुद्ध करता है ताकि आप उत्पादकों में ठीक हो सकें।"
+  },
+  "feature2Title": {
+    "message": "भूकंप मोड"
+  },
+  "feature3Item1": {
+    "message": "प्रति घंटे चार्ट और टैब-स्विच ब्रेकडाउन।"
+  },
+  "feature3Item2": {
+    "message": "बेहतर कॉल सौल टोन में एआई कथा।"
+  },
+  "feature3Item3": {
+    "message": "तत्काल कार्रवाई योजना के साथ गंभीर बैनर।"
+  },
+  "feature3Title": {
+    "message": "नाटकीय रिपोर्ट"
+  },
+  "feature4Item1": {
+    "message": "Data in   TAG0 chrome.storage.local TAG1   — क्लाउड पर कुछ भी नहीं जाता।"
+  },
+  "feature4Item2": {
+    "message": "प्रोडक्टिव/विलाइन सूचियों को केवल आपके ब्राउज़र में बचाया गया।"
+  },
+  "feature4Item3": {
+    "message": "वैकल्पिक OpenAI कुंजी स्थानीय रूप से संग्रहीत।"
+  },
+  "feature4Title": {
+    "message": "कुल गोपनीयता"
+  },
+  "featureBlockBody": {
+    "message": "यदि आप मोड को सक्षम करते हैं, तो पूर्ण स्क्रीन में सेल स्लैम विलाइन टैब जब तक आप ध्यान केंद्रित करते हैं और वापस अंक जीतते हैं।"
+  },
+  "featureBlockHint": {
+    "message": "\"जब आप चाहते हैं तो स्विच को फ्लिप करें: केवल उत्पादक टैब खुला रहता है।"
+  },
+  "featureBlockTitle": {
+    "message": "विलाइन टैब लॉक"
+  },
+  "featureContextBody": {
+    "message": "अब आप पॉपअप में दिन के CONTEXT (काम, अवकाश, अध्ययन, व्यक्तिगत) सेट कर सकते हैं; Saul स्कोर को फिर से जीवंत करता है, पेनल्टी को नरम करता है और चीजों को उचित रखता है।"
+  },
+  "featureContextLabel": {
+    "message": "नया"
+  },
+  "featureCustomBody": {
+    "message": "उत्पादक और खलनायक डोमेन को परिभाषित करें, घंटे के वजन, और अपनी दिनचर्या को देखते हुए क्वोक थ्रेसहोल्ड।"
+  },
+  "featureCustomHint": {
+    "message": "\"Spreadsheet\"? वीआईपी अंतहीन फ़ीड? रक्षात्मक"
+  },
+  "featureCustomTitle": {
+    "message": "कस्टम सूची और वजन"
+  },
+  "featuredEyebrow": {
+    "message": "फ़ीचर"
+  },
+  "featuredTitle": {
+    "message": "सप्ताह का मामला"
+  },
+  "featureGaugeHint": {
+    "message": "जब यह 70% पार हो जाता है, तो शाऊल भूकंप को तैयार करता है।"
+  },
+  "featureGaugeLabel": {
+    "message": "लाइव स्टेटस"
+  },
+  "featureGaugeTitle": {
+    "message": "Procrastination सूचकांक"
+  },
+  "featureNextLabel": {
+    "message": "कार्ड"
+  },
+  "featurePrevLabel": {
+    "message": "पिछला कार्ड"
+  },
+  "featurePrivacyBody": {
+    "message": "सब कुछ   TAG0 chrome.storage.local TAG1  ; कोई बाहरी सर्वर या लीक फैसले नहीं।"
+  },
+  "featurePrivacyHint": {
+    "message": "\"यहां तक कि न्याय आपके डेटा को देखता है\"।"
+  },
+  "featurePrivacyTitle": {
+    "message": "गोपनीयता"
+  },
+  "featureQuakeBody": {
+    "message": "स्क्रीन शेक, सिरेन, और शाऊल के शीर्ष पर खलनायक टैब आपको ट्रैक पर वापस आने के लिए चिल्लाते हैं।"
+  },
+  "featureQuakeHint": {
+    "message": "\"क्या तुम? अब उत्पादक टैब पर वापस जाएं।"
+  },
+  "featureQuakeTest": {
+    "message": "टेस्ट चेतावनी"
+  },
+  "featureQuakeTitle": {
+    "message": "सिनेमाई भूकंप मोड"
+  },
+  "featureRealtimeBody": {
+    "message": "बिल्ला हर टैब को देखता है और अपने दिन को फोकस बनाम प्रोरस्टेशन के स्पष्ट स्कोर में बदल देता है।"
+  },
+  "featureRealtimeHint": {
+    "message": "\"सौल उन 37 टैब्स को देख रहा है।"
+  },
+  "featureRealtimeTitle": {
+    "message": "रियल टाइम ट्रैकिंग"
+  },
+  "featureReportBody": {
+    "message": "चार्ट, एआई कहानी कहने, CSV/PDF निर्यात, और अपने अगले स्टैंड-अप के लिए मिनट-दर-मिनट की समयरेखा।"
+  },
+  "featureReportHint": {
+    "message": "\"वह आपके और आपके बॉस के लिए सबूत है\"।"
+  },
+  "featureReportTitle": {
+    "message": "नाटकीय रिपोर्ट"
+  },
+  "featureSectionEyebrow": {
+    "message": "कोर सुविधाएँ"
+  },
+  "featureSectionLead": {
+    "message": "प्रत्येक कार्ड में हास्य और स्पष्टता होती है, इसलिए नवागंतुकों ने तुरंत समझ लिया कि कौन सा सेल क्रोम के अंदर क्या करता है।"
+  },
+  "featureSectionTitle": {
+    "message": "सब कुछ जो आपको चेक में टैब रखने की आवश्यकता है।"
+  },
+  "featuresEyebrow": {
+    "message": "विस्तृत सुविधाएँ"
+  },
+  "featuresTitle": {
+    "message": "साउल गुडमैन एक्सटेंशन का शस्त्रागार।"
+  },
+  "featureSwipeHint": {
+    "message": "प्रत्येक सुविधा Saul संभाल की समीक्षा करने के लिए Swipe sideways।"
+  },
+  "feedbackLink": {
+    "message": "प्रतिक्रिया दें"
+  },
+  "finalCtaBody": {
+    "message": "स्थापित करें, अपने डोमेन सेट करें, और दिन जीतने से पहले खलनायक टैब जीतने से पहले ध्यान केंद्रित करने के लिए वापस नग्न हो जाओ।"
+  },
+  "finalCtaTitle": {
+    "message": "Ready to give Saul?"
+  },
+  "finalPrimary": {
+    "message": "क्रोम पर स्थापित करें"
+  },
+  "footerBody": {
+    "message": "स्थापित करें, अपने खलनायक को सूचीबद्ध करें और सेल को फोकस फीस एकत्र करने दें।"
+  },
+  "footerChangelogLink": {
+    "message": "चेंज लॉग"
+  },
+  "footerLinkArchitecture": {
+    "message": "आर्किटेक्चर"
+  },
+  "footerLinkGithub": {
+    "message": "गिटहब"
+  },
+  "footerLinkIndicators": {
+    "message": "सूचक"
+  },
+  "footerPrivacy": {
+    "message": "100% स्थानीय डेटा। यह भी नहीं है कि न्यायाधीश इसे देखता है।"
+  },
+  "footerPrivacyLink": {
+    "message": "गोपनीयता नीति"
+  },
+  "footerTitle": {
+    "message": "Saul Goodman एक्सटेंशन"
+  },
+  "heroBadge": {
+    "message": "\"आलसी के मामले में ... कॉल SAUL!"
+  },
+  "heroConfidence1": {
+    "message": "कस्टम भूकंप मोड"
+  },
+  "heroConfidence2": {
+    "message": "ब्लैकलिस्ट और वीआईपी डोमेन सूची"
+  },
+  "heroConfidence3": {
+    "message": "एआई कहानी कहने के साथ रिपोर्ट"
+  },
+  "heroGaugeHint": {
+    "message": "जब यह 70% हिट होता है, तो भूकंप मोड में तूफान होता है।"
+  },
+  "heroGaugeLabel": {
+    "message": "लाइव इंडेक्स"
+  },
+  "heroPill": {
+    "message": "साप्ताहिक बूंद, दैनिक सारकस्म"
+  },
+  "heroPrimaryCta": {
+    "message": "क्रोम पर स्थापित करें"
+  },
+  "heroSecondaryCta": {
+    "message": "यह कैसे काम करता है"
+  },
+  "heroSubtitle": {
+    "message": "यह आपके टैब, झंडे विचलन को ट्रैक करता है, और आपको दिन के डेरेल्स से पहले ध्यान केंद्रित करने की अनुमति देता है - सभी क्रोम के अंदर, कोई साइन-अप नहीं।"
+  },
+  "heroTag": {
+    "message": "वास्तविक जीवन के लिए एंटी-प्रसार विस्तार"
+  },
+  "heroTitle": {
+    "message": "खरीद बंद करो। साउल गुडमैन का मामला लेता है।"
+  },
+  "indexCalloutLabel": {
+    "message": "साउल का मेमो"
+  },
+  "indexCalloutQuote": {
+    "message": "\"Cross 60% और मैं अपने बॉस को बुला रहा हूँ। 10% से नीचे गिरा और मैं अपने चिकित्सक की बुकिंग कर रहा हूँ। The docket."
+  },
+  "indexClueAlert": {
+    "message": "अंकगणित"
+  },
+  "indexClueAlertBody": {
+    "message": "डबल-चेक थ्रेसहोल्ड, सिरेन और कॉपी करें ताकि सममॉन सही समय पर हिट हो।"
+  },
+  "indexClueBreak": {
+    "message": "सूक्ष्म तोड़ने अनुसूची"
+  },
+  "indexClueBreakBody": {
+    "message": "15-22 रेंज सामरिक सांस की मांग करता है। उन्हें अपने कैलेंडर, क्लाइंट पर ब्लॉक करें।"
+  },
+  "indexClueFocus": {
+    "message": "अपने खलनायकों की सूची"
+  },
+  "indexClueFocusBody": {
+    "message": "टैब्स की एक जीवित सूची रखें जो साऊल फ़ाइलों को गति से पहले इंडेक्स को स्पाइक करें।"
+  },
+  "indexCluesLabel": {
+    "message": "केस चेकलिस्ट"
+  },
+  "indexEyebrow": {
+    "message": "साउल के डेस्क पर"
+  },
+  "indexFootnote": {
+    "message": "15 और 22 Saul फ़ाइलों के बीच \"स्थिर ग्राहक\"। इसके ऊपर वह भूकंप को बाँधता है; नीचे वह आराम करता है, अतिरिक्त कार्य नहीं करता है।"
+  },
+  "indexGaugeHint": {
+    "message": "18% ने मीठे स्थान को हिट किया - पूर्ण रोबोट जाने के बिना स्थिर फोकस।"
+  },
+  "indexGaugeLabel": {
+    "message": "स्वीट स्पॉट"
+  },
+  "indexLead": {
+    "message": "कानूनी अनुवाद सेवा: 0 का स्कोर एक ट्रॉफी नहीं है और 100 एक सब समावेशी नहीं है। साउल ने प्रत्येक बैंड को यह तय करने के लिए पढ़ा कि क्या आपकी कुर्सी को हिलाना है या छुट्टी के दिन को मजबूर करना है।"
+  },
+  "indexMemoBody": {
+    "message": "यदि एक खलनायक टैब सूचकांक को बढ़ाता है, तो पूर्ण स्क्रीन ब्लॉक मोड को ट्रिगर करता है। Saul locks villains out, केवल उत्पादक टैब को मुक्त करता है, और आपका स्कोर फिर से साँस लेता है।"
+  },
+  "indexMemoHeading": {
+    "message": "कार्यालय ज्ञापन"
+  },
+  "indexMemoSign": {
+    "message": "- Saul, आपका उत्पादकता वकील"
+  },
+  "indexPitch1": {
+    "message": "इंडेक्स 0 से 100 तक होता है। 100 के करीब, स्पष्ट रूप से आपने मामले को मध्य-त्रिal छोड़ दिया और अधिग्रहण का एक वीआईपी ग्राहक बन गया।"
+  },
+  "indexPitch2": {
+    "message": "लेकिन शून्य को मारना भी संदिग्ध दिखता है: किसी को भी उत्पादक टैब 24 / 7 से चिपकाया जाता है, एक बर्नआउट जमावट से एक कदम है।"
+  },
+  "indexRange0to14Body": {
+    "message": "आप काम करने के लिए इतना गोंद कर रहे हैं कि शाऊल इसे \"एक्सेसिव ज़ाइल\" कहते हैं। इस गवाही देने से पहले श्वास लें, खड़े हो जाओ और पानी को पकड़ो।"
+  },
+  "indexRange0to14Title": {
+    "message": "0 - 14: संदिग्ध ओवर-वर्क"
+  },
+  "indexRange15to22Body": {
+    "message": "आदर्श फैसले: सुसंगत फोकस, स्वस्थ ब्रेक, शून्य sirens। Saul भी एक शुल्क छूट पर विचार कर सकते हैं।"
+  },
+  "indexRange15to22Title": {
+    "message": "15 - 22: गोल्डन बैलेंस"
+  },
+  "indexRange23to60Body": {
+    "message": "आप अभी भी इस मामले को स्वीकार कर रहे हैं लेकिन खलनायक फ़ीड में ठोकर खाते हैं। Saul fire witty Notices to haul the test."
+  },
+  "indexRange23to60Title": {
+    "message": "23 - 60: Wobbly फोकस"
+  },
+  "indexRange61to100Body": {
+    "message": "यह ओक क्लॉक है। स्क्रीन हिलाता है, siren blares, और Saul हर खलनायक टैब के लिए एक स्टॉप-एंड-डेसिस्ट के साथ चलता है।"
+  },
+  "indexRange61to100Title": {
+    "message": "61 - 100: ध्वजारोहण में Procrastination"
+  },
+  "indexStamp": {
+    "message": "ग्राहक आसानी से सोता है"
+  },
+  "indexTitle": {
+    "message": "कैसे Saul procrastination सूचकांक पढ़ा"
+  },
+  "integrationCard1Body": {
+    "message": "जोड़ी कुंजी उत्पन्न करें, एकीकरण को टॉगल करें और स्थानीय यूआरएल सेट करें। कुछ भी आपके ब्राउज़र को छोड़ देता है।"
+  },
+  "integrationCard1Title": {
+    "message": "विकल्पों में सक्षम"
+  },
+  "integrationCard2Body": {
+    "message": "इसे शुरू करने के लिए VS कोड एक्सटेंशन कमांड का उपयोग करें: यह प्री-फिल करता है PAIRING KEY/PORT और डेमॉन फ़ोल्डर में खुलता है।"
+  },
+  "integrationCard2Title": {
+    "message": "स्थानीय डेमॉन"
+  },
+  "integrationCard3Body": {
+    "message": "कमांड \"सेल गुडमैन: प्रीपरर कॉमैंडो डो SaulDaemon\" जहाजों को स्थापित करने के बाद तैयार किया गया और संपादक दिल की धड़कन को क्रोम में भेज दिया गया।"
+  },
+  "integrationCard3Title": {
+    "message": "VS कोड एक्सटेंशन"
+  },
+  "integrationCta": {
+    "message": "एकीकरण गाइड देखें"
+  },
+  "integrationEyebrow": {
+    "message": "देव के लिए"
+  },
+  "integrationLead": {
+    "message": "वैकल्पिक एकीकरण को चालू करें: सेल स्थानीय होस्ट छोड़ने के बिना संपादक समय को उत्पादक के रूप में जोड़ता है।"
+  },
+  "integrationTitle": {
+    "message": "वीएस कोड + स्थानीय डेमॉन, सभी को उत्पादक के रूप में गिना जाता है।"
+  },
+  "integrationVsixCta": {
+    "message": "VS कोड एक्सटेंशन स्थापित करें"
+  },
+  "label_vscode": {
+    "message": "VS कोड (IDE)"
+  },
+  "languageLabel": {
+    "message": "भाषा चुनें"
+  },
+  "latestEyebrow": {
+    "message": "ताजा"
+  },
+  "latestTitle": {
+    "message": "उत्पादकता कोर्ट से गर्म"
+  },
+  "lightboxClose": {
+    "message": "बंद"
+  },
+  "manifesto1Body": {
+    "message": "आपका दिन ब्राउज़र के अंदर है। कोई डेटा कंप्यूटर को छोड़ देता है, न कि अदालत के आदेश से।"
+  },
+  "manifesto1Title": {
+    "message": "100% स्थानीय"
+  },
+  "manifesto2Body": {
+    "message": "जब साउल अतिरिक्त शुल्क लेते हैं तो दृश्य और ध्वनि अलर्ट इसे स्पष्ट करते हैं।"
+  },
+  "manifesto2Title": {
+    "message": "पारदर्शी बिलिंग"
+  },
+  "manifesto3Body": {
+    "message": "Sarcastic संदेश और नाटकीय बैनर आपको याद दिलाते हैं कि प्रोरस्टेशन भी महंगा है।"
+  },
+  "manifesto3Title": {
+    "message": "हास्य हथियार के रूप में"
+  },
+  "manifestoEyebrow": {
+    "message": "मैनिफेस्टो"
+  },
+  "manifestoTitle": {
+    "message": "एथिक्स के एक चुटकी के साथ आक्रामक विपणन।"
+  },
+  "mediaTaglineCarreira": {
+    "message": "करियर की जिरह: व्यंग्य और व्यवहारिकता के साथ।"
+  },
+  "mediaTaglineDev": {
+    "message": "देव प्रदर्शन हार्ड मैट्रिक्स द्वारा निर्णय लिया।"
+  },
+  "mediaTaglineFoco": {
+    "message": "दैनिक पूछताछ के तहत ध्यान केंद्रित करें।"
+  },
+  "mediaTaglineMarketing": {
+    "message": "SEO, कंटेंट और फ़नल — बिना जादू के।"
+  },
+  "mediaTaglineNegocios": {
+    "message": "बिज़नेस एजेंडा पर: फोकस execution पर।"
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "मानसिक oscilloscope Saul के चिकित्सीय sarcasm से मिलते हैं।"
+  },
+  "mediaTaglineProduto": {
+    "message": "प्रोडक्ट का फ़ैसला डेटा से, फीलिंग से नहीं।"
+  },
+  "mediaTaglineRemoto": {
+    "message": "दूरस्थ कार्य शून्य भूत मोड बहाने के साथ।"
+  },
+  "mediaTaglineUx": {
+    "message": "UX, डिज़ाइन और फैसले जो यूज़र को “विलेन मोड” से बाहर लाते हैं।"
+  },
+  "metaCategory": {
+    "message": "श्रेणी"
+  },
+  "metaPublishedAt": {
+    "message": "ब्लॉग पर प्रकाशित"
+  },
+  "metaSource": {
+    "message": "स्रोत"
+  },
+  "metaSourcePublishedAt": {
+    "message": "स्रोत पर प्रकाशित"
+  },
+  "metaSourceUrl": {
+    "message": "स्रोत यूआरएल"
+  },
+  "metaTags": {
+    "message": "टैग"
+  },
+  "mobileMenuToggle": {
+    "message": "ओपन मेनू"
+  },
+  "multilingualLabel": {
+    "message": "13 भाषाओं में उपलब्ध: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
+  },
+  "navBenefits": {
+    "message": "लाभ"
+  },
+  "navBlog": {
+    "message": "ब्लॉग"
+  },
+  "navClients": {
+    "message": "ग्राहक"
+  },
+  "navCodeCon": {
+    "message": "कोड"
+  },
+  "navCta": {
+    "message": "स्थापित करना"
+  },
+  "navDemo": {
+    "message": "डेमो"
+  },
+  "navIndex": {
+    "message": "सूचकांक"
+  },
+  "navProcess": {
+    "message": "प्रक्रिया"
+  },
+  "newsletterCopy": {
+    "message": "sarcasm और अनुशासन के लघु विस्फोट इसलिए आपका वीएस कोड नेटफ्लिक्स की तरह काम करना बंद कर देता है।"
+  },
+  "newsletterCta": {
+    "message": "मिलिए Saul"
+  },
+  "newsletterDisclaimer": {
+    "message": "कोई स्पैम नहीं। केवल sarcasm आप संभाल सकते हैं।"
+  },
+  "newsletterError": {
+    "message": "कृपया एक वैध ईमेल छोड़ दें।"
+  },
+  "newsletterLabel": {
+    "message": "आपका ईमेल"
+  },
+  "newsletterPlaceholder": {
+    "message": "Email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "Memo जाओ"
+  },
+  "newsletterSuccess": {
+    "message": "आप रडार पर हैं। जल्द ही आने वाली नई बूंदें।"
+  },
+  "newsletterTitle": {
+    "message": "Saul's memo"
+  },
+  "nextPost": {
+    "message": "अगला"
+  },
+  "notification_update_message": {
+    "message": "एक्सटेंशन अपडेट किया गया है। चेंजलॉग देखने के लिए क्लिक करें।"
+  },
+  "notification_update_title": {
+    "message": "नवीनताएँ — v{version}"
+  },
+  "options_back_to_popup": {
+    "message": "पॉपअप पर वापस जाएं"
+  },
+  "options_confirm_reset": {
+    "message": "यह डिफ़ॉल्ट मान को पुनर्स्थापित करेगा। जारी रखें?"
+  },
+  "options_critical_sound_hint": {
+    "message": "जब सक्षम हो जाता है तो सिरेन जब भी महत्वपूर्ण चेतावनी आग लगती है।"
+  },
+  "options_critical_sound_label": {
+    "message": "स्वत: quake siren"
+  },
+  "options_critical_threshold_hint": {
+    "message": "जब सूचकांक इस मूल्य को हिट करता है, तो Saul महत्वपूर्ण चेतावनी को ट्रिगर करता है।"
+  },
+  "options_critical_threshold_label": {
+    "message": "क्वेक मोड थ्रेसहोल्ड (0-100)"
+  },
+  "options_digital_branch": {
+    "message": "डिजिटल शाखा"
+  },
+  "options_domain_add": {
+    "message": "जोड़ें"
+  },
+  "options_domain_duplicate": {
+    "message": "पहले से ही सूचीबद्ध डोमेन।"
+  },
+  "options_domain_empty": {
+    "message": "अभी तक कोई डोमेन नहीं है।"
+  },
+  "options_domain_invalid": {
+    "message": "एक वैध डोमेन दर्ज करें।"
+  },
+  "options_footer_note": {
+    "message": "Saul किसी के साथ अपने डेटा साझा नहीं करता है। न्याय भी नहीं।"
+  },
+  "options_head_title": {
+    "message": "साउल गुडमैन - सेटिंग्स"
+  },
+  "options_heading": {
+    "message": "कार्यालय सेटिंग"
+  },
+  "options_holiday_context_hint": {
+    "message": "दिन के CONTEXT (काम, अवकाश, अध्ययन, दिन बंद, छुट्टी, या व्यक्तिगत) चुनने के लिए पॉपअप का उपयोग करें। Saul इतिहास रिकॉर्ड करता है और स्कोर को काफी हद तक समायोजित करता है।"
+  },
+  "options_holiday_country_error": {
+    "message": "केवल दो अक्षरों का उपयोग करें, उदाहरण के लिए, BR या US।"
+  },
+  "options_holiday_country_hint": {
+    "message": "बीआर, यूएस, पीटी। कभी कभी अपने देश को स्वचालित रूप से पता लगाने की कोशिश नहीं करता है।"
+  },
+  "options_holiday_country_label": {
+    "message": "कंट्री कोड (ISO-3166)"
+  },
+  "options_holiday_heading": {
+    "message": "छुट्टियां और निष्पक्ष संदर्भ"
+  },
+  "options_holiday_hint": {
+    "message": "जब सक्षम हो जाता है, तो सेल केवल नागर को कॉल करता है। यह देखने की तारीख कि आज एक राष्ट्रीय अवकाश है और स्कोर को बेअसर करता है।"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "यदि आप देश को सक्षम और सेट करते हैं तो कॉल केवल तभी होता है। कोई स्वचालित स्थान नहीं।"
+  },
+  "options_holiday_toggle_label": {
+    "message": "राष्ट्रीय छुट्टियों पर दस्तक"
+  },
+  "options_inactivity_threshold": {
+    "message": "निष्क्रिय (सेकेंड) की गिनती से पहले अधिकतम निष्क्रिय समय"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "10 सेकंड से 10 मिनट के बीच; निष्क्रियता की गणना पर प्रभाव डालता है।"
+  },
+  "options_language_auto": {
+    "message": "स्वचालित (browser)"
+  },
+  "options_language_en": {
+    "message": "अंग्रेज़ी (US)"
+  },
+  "options_language_es": {
+    "message": "स्पेनिश"
+  },
+  "options_language_hint": {
+    "message": "मैन्युअल रूप से चुनें या भाषा को क्रोम का पालन करने दें।"
+  },
+  "options_language_label": {
+    "message": "इंटरफ़ेस भाषा"
+  },
+  "options_language_pt": {
+    "message": "पुर्तगाली (ब्राज़ील)"
+  },
+  "options_openai_hint": {
+    "message": "रिपोर्ट में कथाओं को उत्पन्न करने के लिए स्थानीय रूप से संग्रहीत किया गया।"
+  },
+  "options_openai_label": {
+    "message": "OpenAI key (वैकल्पिक)"
+  },
+  "options_openai_placeholder": {
+    "message": "sk-..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "जब सक्षम हो गया तो सेल स्थानीय क्रोम नियमों का उपयोग करके इन साइटों को नेविगेशन ब्लॉक करता है।"
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "इस सूची में ब्लॉक एक्सेस"
+  },
+  "options_procrastination_heading": {
+    "message": "Procrastination डोमेन"
+  },
+  "options_procrastination_hint": {
+    "message": "यहाँ प्रलोभन रहते हैं। यदि आप किसी साइट से प्यार करते हैं, तो शायद यहीं है।"
+  },
+  "options_procrastination_placeholder": {
+    "message": "E-Mail   साइटमैप"
+  },
+  "options_productive_heading": {
+    "message": "उत्पादक डोमेन"
+  },
+  "options_productive_hint": {
+    "message": "साउल जानता है कि काम कहाँ होता है। अपनी दिनचर्या के आधार पर जोड़ें या निकालें।"
+  },
+  "options_productive_placeholder": {
+    "message": "E.g. docs.google.com"
+  },
+  "options_promise": {
+    "message": "Saul अपने ध्यान के साथ बातचीत करते समय अपने डेटा को सील के नीचे रखता है।"
+  },
+  "options_restore_defaults": {
+    "message": "डिफ़ॉल्ट पुनर्स्थापित करें"
+  },
+  "options_save_weights": {
+    "message": "वजन बचाओ"
+  },
+  "options_schedule_add": {
+    "message": "अंतराल जोड़ें"
+  },
+  "options_schedule_heading": {
+    "message": "काम का समय"
+  },
+  "options_schedule_hint": {
+    "message": "जब आपका आधिकारिक बदलाव होता है तो सेल को बताएं। इन ब्लॉकों के बाहर, उत्पादक मिनट डबल गिनती करते हैं।"
+  },
+  "options_schedule_to": {
+    "message": "to"
+  },
+  "options_status_blocklist_saved": {
+    "message": "ब्लॉकिंग वरीयता अद्यतन किया गया।"
+  },
+  "options_status_critical_saved": {
+    "message": "भूकंप मोड अद्यतन।"
+  },
+  "options_status_defaults_restored": {
+    "message": "डिफ़ॉल्ट रूप से बहाल किया गया।"
+  },
+  "options_status_domain_removed": {
+    "message": "डोमेन हटा दिया गया।"
+  },
+  "options_status_holiday_saved": {
+    "message": "छुट्टी वरीयताओं अद्यतन।"
+  },
+  "options_status_language_saved": {
+    "message": "भाषा अद्यतन"
+  },
+  "options_status_list_updated": {
+    "message": "सूची अद्यतन"
+  },
+  "options_status_ready": {
+    "message": "अच्छा"
+  },
+  "options_status_schedule_updated": {
+    "message": "अद्यतन अनुसूची"
+  },
+  "options_status_vscode_saved": {
+    "message": "VS कोड एकीकरण अद्यतन किया गया।"
+  },
+  "options_status_weights_saved": {
+    "message": "वजन अद्यतन किया गया।"
+  },
+  "options_subtitle": {
+    "message": "अपनी खरीद शैली से मिलान करने के लिए रडार को अनुकूलित करें। सब कुछ स्थानीय रहता है।"
+  },
+  "options_tagline": {
+    "message": "खरीद के खिलाफ आपका व्यक्तिगत वकील"
+  },
+  "options_thresholds_heading": {
+    "message": "थ्रेसहोल्ड और वजन"
+  },
+  "options_vscode_heading": {
+    "message": "VS कोड एकीकरण"
+  },
+  "options_vscode_install_hint": {
+    "message": "फोकस सत्र भेजने के लिए आधिकारिक VS कोड एक्सटेंशन स्थापित करें।"
+  },
+  "options_vscode_install_link": {
+    "message": "VS कोड एक्सटेंशन स्थापित करें"
+  },
+  "options_vscode_key_copied": {
+    "message": "कुंजी नकल की।"
+  },
+  "options_vscode_key_copy": {
+    "message": "कॉपी कुंजी"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "कॉपी करने के लिए कोई कुंजी नहीं।"
+  },
+  "options_vscode_key_generate": {
+    "message": "नई कुंजी उत्पन्न करें"
+  },
+  "options_vscode_key_generated": {
+    "message": "नई कुंजी बनाई गई।"
+  },
+  "options_vscode_key_hint": {
+    "message": "SaulDaemon / VS कोड में कॉन्फ़िगर की गई कुंजी से मेल खाता है।"
+  },
+  "options_vscode_key_label": {
+    "message": "जोड़ी कुंजी"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "SaulDaemon कुंजी पेस्ट"
+  },
+  "options_vscode_test_button": {
+    "message": "टेस्ट कनेक्शन"
+  },
+  "options_vscode_test_disabled": {
+    "message": "परीक्षण से पहले वीएस कोड एकीकरण को सक्षम करें।"
+  },
+  "options_vscode_test_error": {
+    "message": "SaulDaemon से जुड़ने में विफल{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "पहुंचने में विफल{origin}स्वास्थ्य{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "Invalid URL. http://127.0.0.1:3123."
+  },
+  "options_vscode_test_running": {
+    "message": "Testando conexão ..."
+  },
+  "options_vscode_test_success": {
+    "message": "SaulDaemon ने जवाब दिया{origin}आज सत्र:{sessions}मिनट:{minutes}।"
+  },
+  "options_vscode_test_timeout": {
+    "message": "SaulDaemon não answereu a tempo."
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "Chave diferente. एक mesma कुंजी का उपयोग करें कोई क्रोम ई नहीं वीएस कोड।"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "अपने स्कोर को ताज़ा करने से पहले स्थानीय SaulDaemon (localhost) को बुलाता है।"
+  },
+  "options_vscode_toggle_label": {
+    "message": "VS कोड से फोकस समय डालें"
+  },
+  "options_vscode_url_hint": {
+    "message": "केवल स्थानीय लोगों से बातचीत; कुछ भी नहीं आपकी मशीन छोड़ देता है।"
+  },
+  "options_vscode_url_label": {
+    "message": "स्थानीय बैकएंड यूआरएल"
+  },
+  "options_weight_hint": {
+    "message": "सूचकांक पर प्रभाव को संतुलित करने के लिए 0 और 1 के बीच के नंबर का उपयोग करें।"
+  },
+  "options_weight_inactivity": {
+    "message": "निष्क्रियता (वजन)"
+  },
+  "options_weight_procrastination": {
+    "message": "Unproductive समय (वजन)"
+  },
+  "options_weight_switches": {
+    "message": "टैब स्विच (वजन)"
+  },
+  "options_weights_sum_error": {
+    "message": "वजन का योग 1 होना चाहिए।"
+  },
+  "popup_alert_no_data": {
+    "message": "अभी तक कोई डेटा नहीं। कुछ टैब खोलें और फिर से कोशिश करें।"
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF मॉड्यूल उपलब्ध नहीं है।"
+  },
+  "popup_badge_label": {
+    "message": "सूचकांक"
+  },
+  "popup_blog_badge": {
+    "message": "साउल पढ़ने की सिफारिश करता है"
+  },
+  "popup_blog_button_all": {
+    "message": "ब्लॉग"
+  },
+  "popup_blog_category_prefix": {
+    "message": "श्रेणी:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "अभी पढ़ें"
+  },
+  "popup_blog_empty": {
+    "message": "अभी तक उपलब्ध नहीं है।"
+  },
+  "popup_blog_error": {
+    "message": "अभी तक ब्लॉग तक नहीं पहुंच सका।"
+  },
+  "popup_blog_loading": {
+    "message": "सही मामले के लिए शिकार ..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "समय शून्य सस्ते कोचिंग के साथ देव प्रदर्शन को बढ़ावा देने के लिए।"
+  },
+  "popup_blog_reason_foco": {
+    "message": "आज के बिखरे हुए फोकस के आधार पर।"
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "क्योंकि आपकी प्रक्रिया आज कानूनी सीमा को पार करती है।"
+  },
+  "popup_blog_reason_remoto": {
+    "message": "पूर्ण भूत मोड के बिना जीवित दूरस्थ काम।"
+  },
+  "popup_blog_section_subtitle": {
+    "message": "हमने आपकी संख्याओं को पढ़ा और एक साऊल-शैली के लेख को इंगित किया।"
+  },
+  "popup_blog_section_title": {
+    "message": "Handpicked ब्लॉग टिप"
+  },
+  "popup_chart_aria": {
+    "message": "उत्पादक बनाम खरीद घंटे"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "मिनट"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_chart_label_productive": {
+    "message": "उत्पादक"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS कोड"
+  },
+  "popup_chart_title": {
+    "message": "दैनिक रडार"
+  },
+  "popup_context_option_dayOff": {
+    "message": "फोल्गा"
+  },
+  "popup_context_option_leisure": {
+    "message": "लेज़र"
+  },
+  "popup_context_option_personal": {
+    "message": "व्यक्तिगत"
+  },
+  "popup_context_option_study": {
+    "message": "अध्ययन"
+  },
+  "popup_context_option_vacation": {
+    "message": "छुट्टी"
+  },
+  "popup_context_option_work": {
+    "message": "कार्य"
+  },
+  "popup_critical_close_aria": {
+    "message": "दोष चेतावनी"
+  },
+  "popup_critical_countdown_final": {
+    "message": "कोई बहाना नहीं: अब तीन प्रोस्टेशन टैब बंद करें!"
+  },
+  "popup_critical_default_message": {
+    "message": "इस सूचकांक में मैं भी आप की रक्षा नहीं कर सकता। यह जोखिम शुल्क खर्च होगा!"
+  },
+  "popup_critical_message_1": {
+    "message": "क्लाइंट, इंडेक्स के साथ{threshold}मैं भी आप की रक्षा नहीं कर सकता। जोखिम शुल्क लागू!"
+  },
+  "popup_critical_message_2": {
+    "message": "क्या? न्यायाधीश ने अपनी उत्पादकता को बढ़ा दिया।"
+  },
+  "popup_critical_message_3": {
+    "message": "मैं अपनी कहानी बताते हुए प्राइमटाइम विज्ञापन खरीद सकता हूं।"
+  },
+  "popup_critical_message_4": {
+    "message": "मुझे बचाने में मदद करें: उन टैब को बंद करने से पहले मैं डॉलर में बिलिंग शुरू कर देता हूं।"
+  },
+  "popup_critical_plan_action": {
+    "message": "में करीब 3 खलनायक टैब"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "कार्य योजना:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "से."
+  },
+  "popup_critical_review": {
+    "message": "खलनायक"
+  },
+  "popup_critical_sound_now": {
+    "message": "Trigger siren अब"
+  },
+  "popup_critical_title": {
+    "message": "क्वोक मोड में साउल"
+  },
+  "popup_csv_category": {
+    "message": "श्रेणी"
+  },
+  "popup_csv_column_date": {
+    "message": "तारीख"
+  },
+  "popup_csv_column_inactive": {
+    "message": "निष्क्रिय (मिनट)"
+  },
+  "popup_csv_column_index": {
+    "message": "सूचकांक"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "Procrastination (min)"
+  },
+  "popup_csv_column_productive": {
+    "message": "उत्पादक (मिनट)"
+  },
+  "popup_csv_column_switches": {
+    "message": "टैब स्विच"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS कोड (min)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "श्रेणी"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "कोंडो"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "डोमिनियो"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "अवधि (ms)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "समाप्ति (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "निष्पक्षता नियम"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "प्रारंभ (ISO)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "विस्तृत समयरेखा"
+  },
+  "popup_csv_domain": {
+    "message": "डोमेन"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "शीर्ष फोकस डोमेन"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "सक्रिय फोकस (%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "आइडल समय (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod बनाम Proc"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "प्रति घंटे स्विच"
+  },
+  "popup_csv_kpi_time": {
+    "message": "समय"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "दिन का विलाइन"
+  },
+  "popup_csv_kpis_title": {
+    "message": "अतिरिक्त संकेतक"
+  },
+  "popup_csv_minutes": {
+    "message": "मिनट"
+  },
+  "popup_csv_summary_title": {
+    "message": "सामान्य सारांश"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "शीर्ष डोमेन"
+  },
+  "popup_error_no_data": {
+    "message": "उपलब्ध डेटा"
+  },
+  "popup_error_runtime": {
+    "message": "ओप! कार्यालय तक पहुंचने में असमर्थ।"
+  },
+  "popup_error_unknown": {
+    "message": "अज्ञात त्रुटि"
+  },
+  "popup_export_csv": {
+    "message": "CSV डाउनलोड"
+  },
+  "popup_export_description": {
+    "message": "अपनी संख्या को साऊल गुडमैन-शैली के तर्कों में बदल दें।"
+  },
+  "popup_export_pdf": {
+    "message": "PDF उत्पन्न करना"
+  },
+  "popup_export_report": {
+    "message": "ओपन रिपोर्ट"
+  },
+  "popup_export_title": {
+    "message": "अपना ध्यान रखें"
+  },
+  "popup_fairness_context_label": {
+    "message": "वर्तमान संदर्भ"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "आज एक छुट्टी है, स्कोर स्वचालित रूप से गिर गया है।"
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "छुट्टी का पता लगाना - कोई दंड नहीं।"
+  },
+  "popup_fairness_manual_label": {
+    "message": "आज"
+  },
+  "popup_fairness_note": {
+    "message": "साउल पॉपअप में आपके द्वारा चुने गए संदर्भ के आधार पर स्कोर को पुन: व्यवस्थित करता है। आज स्किप करना स्कोर को शून्य करता है और अलर्ट करता है। संदर्भ: कार्य 100% रखता है, व्यक्तिगत हर चीज को बेअसर करता है, अवकाश 30% ध्यान की गणना करता है और खलनायकों को अनदेखा करता है, स्टडी हल्व्स पेनल्टी, डे-ऑफ और अवकाश शून्य छुट्टियों के बावजूद।"
+  },
+  "popup_fairness_note_label": {
+    "message": "सौल समझाता है"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "दिन बंद दर्ज - स्कोर pause."
+  },
+  "popup_fairness_status_default": {
+    "message": "दीया सामान्य।"
+  },
+  "popup_fairness_status_holiday": {
+    "message": "राष्ट्रीय अवकाश स्कोर को बेअसर करता है।"
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo lazer reduz एक pressão."
+  },
+  "popup_fairness_status_manual": {
+    "message": "डाया इग्नोराडो मैनुअलमेंट"
+  },
+  "popup_fairness_status_personal": {
+    "message": "व्यक्तिगत मोड सक्रिय - कोई स्कोरिंग नहीं।"
+  },
+  "popup_fairness_status_study": {
+    "message": "अध्ययन मोड स्कोर को नरम करता है।"
+  },
+  "popup_fairness_status_vacation": {
+    "message": "छुट्टी मोड दिन तटस्थ।"
+  },
+  "popup_fairness_title": {
+    "message": "दिन निष्पक्षता"
+  },
+  "popup_head_title": {
+    "message": "साउल गुडमैन - फोकस रडार"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "फोकस चैंपियन"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "जहां आप आज लगातार समय में निवेश करते हैं, उत्पादक डोमेन।"
+  },
+  "popup_kpi_focus_hint": {
+    "message": "उत्पादक / कार्य दिवस"
+  },
+  "popup_kpi_focus_label": {
+    "message": "सक्रिय फोकस"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "आज हर चीज़ पर उत्पादक समय की प्रतिशतता।"
+  },
+  "popup_kpi_idle_hint": {
+    "message": "दिन का प्रतिशत"
+  },
+  "popup_kpi_idle_label": {
+    "message": "समय"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "दिन की प्रतिशतता ब्राउज़र बिना बातचीत के खुला रहता है।"
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "प्रति खलनायक"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod बनाम Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "उत्पादक घंटे प्रत्येक खरीद घंटे ऑफसेट।"
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "सीधे बिंदु पर: अपने दिन से कच्चे संख्या।"
+  },
+  "popup_kpi_section_title": {
+    "message": "अतिरिक्त संकेतक"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "प्रति ट्रैक घंटे टैब"
+  },
+  "popup_kpi_switch_label": {
+    "message": "प्रति घंटे स्विच"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "औसत टैब प्रति निगरानी घंटे स्विच करता है।"
+  },
+  "popup_kpi_villain_label": {
+    "message": "दिन का विलाइन"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "Procrastination डोमेन जो आपके अधिकांश समय को चुरा लेता है।"
+  },
+  "popup_last_sync": {
+    "message": "अद्यतन किया गया{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "अद्यतन..."
+  },
+  "popup_loading": {
+    "message": "लोड ..."
+  },
+  "popup_options_button": {
+    "message": "कॉन्फ़िगर करना"
+  },
+  "popup_pdf_date": {
+    "message": "तारीख"
+  },
+  "popup_pdf_inactive": {
+    "message": "निष्क्रिय"
+  },
+  "popup_pdf_index": {
+    "message": "सूचकांक"
+  },
+  "popup_pdf_kpis": {
+    "message": "अतिरिक्त संकेतक"
+  },
+  "popup_pdf_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_pdf_productive": {
+    "message": "उत्पादक"
+  },
+  "popup_pdf_summary": {
+    "message": "दैनिक सारांश"
+  },
+  "popup_pdf_switches": {
+    "message": "टैब स्विच"
+  },
+  "popup_pdf_title": {
+    "message": "साउल गुडमैन रिपोर्ट"
+  },
+  "popup_pdf_top_domains": {
+    "message": "शीर्ष डोमेन"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS कोड"
+  },
+  "popup_privacy_note": {
+    "message": "सभी डेटा आपके ब्राउज़र में रहते हैं। Saul सम्मान वकील-client विशेषाधिकार।"
+  },
+  "popup_refresh_button": {
+    "message": "ताज़ा"
+  },
+  "popup_release_notes_button": {
+    "message": "नया क्या है?"
+  },
+  "popup_release_notes_error": {
+    "message": "रिलीज नोट्स नहीं खोल सकता। एक्सटेंशन को फिर से लोड करें और फिर से प्रयास करें।"
+  },
+  "popup_score_message_alert": {
+    "message": "आप आग के साथ खेल रहे हैं। मैं आग लगाने के लिए घंटे तक बिल भेजता हूं।"
+  },
+  "popup_score_message_excellent": {
+    "message": "गोल्डन क्लाइंट! इसे बनाए रखें और मैं पूर्ण रिटेनर चार्ज कर सकता हूं।"
+  },
+  "popup_score_message_ok": {
+    "message": "फिर भी कार्यालय के घंटे के रूप में गिना जाता है। मुझे अपना ध्यान नहीं देना चाहिए।"
+  },
+  "popup_score_message_warning": {
+    "message": "मैं यहाँ से बचाव देखता हूँ। खेल में वापस आने का समय।"
+  },
+  "popup_score_placeholder": {
+    "message": "लोड हो रहा है ..."
+  },
+  "popup_status_no_data": {
+    "message": "कोई डेटा"
+  },
+  "popup_status_no_domains": {
+    "message": "आज के लिए कोई डेटा नहीं।"
+  },
+  "popup_summary_inactive_label": {
+    "message": "आइडल"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "जब ब्राउज़र बिना बातचीत के खुला रहता है।"
+  },
+  "popup_summary_procrastination_label": {
+    "message": "Procrast"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "अधिग्रहण डोमेन पर समय बिताया।"
+  },
+  "popup_summary_productive_label": {
+    "message": "उत्पादक"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "समय उत्पादक के रूप में चिह्नित डोमेन पर खर्च किया।"
+  },
+  "popup_tooltip_aria": {
+    "message": "स्पष्टीकरण"
+  },
+  "popup_top_domains_title": {
+    "message": "शीर्ष 5 डोमेन"
+  },
+  "postInvalid": {
+    "message": "Invalid post or लापता मेटाडाटा."
+  },
+  "postLoadError": {
+    "message": "इस लेख को लोड करते समय त्रुटि।"
+  },
+  "postLoadingBody": {
+    "message": "लोड ..."
+  },
+  "postLoadingTitle": {
+    "message": "लेख लोड हो रहा है..."
+  },
+  "postNotFound": {
+    "message": "पोस्ट नहीं मिला।"
+  },
+  "previousPost": {
+    "message": "पिछला"
+  },
+  "privacyError": {
+    "message": "हम अभी पॉलिसी को लोड नहीं कर सकते हैं। एक पल में फिर से प्रयास करें।"
+  },
+  "privacyEyebrow": {
+    "message": "पूर्ण पारदर्शिता"
+  },
+  "privacyHeading": {
+    "message": "गोपनीयता नीति"
+  },
+  "privacyLoading": {
+    "message": "पॉलिसी को सीधे रिपॉज़िटरी से लोड करना ..."
+  },
+  "privacySubheading": {
+    "message": "यहां नीति का नवीनतम संस्करण है जो भंडार में प्रकाशित हुआ है।"
+  },
+  "privacyTitle": {
+    "message": "गोपनीयता नीति"
+  },
+  "process1Body": {
+    "message": "बैज चुपचाप देखता है कि क्या खुला है और तुरंत जानता है अगर आप अध्ययन कर रहे हैं, काम कर रहे हैं, या doom-scrolling."
+  },
+  "process1Title": {
+    "message": "अपने सक्रिय टैब ट्रैक"
+  },
+  "process2Body": {
+    "message": "आप उत्पादक बनाम खलनायक डोमेन को परिभाषित करते हैं। यदि आप भटकते हैं, तो Saul सर्पिल शुरू होने से पहले स्क्रीन और चिल्लाहट को हिलाता है।"
+  },
+  "process2Title": {
+    "message": "झंडा विचलन"
+  },
+  "process3Body": {
+    "message": "हर दिन एक साफ रिपोर्ट के साथ समाप्त होता है: चार्ट, हाइलाइट्स और कल के लिए एक एक्शन प्लान।"
+  },
+  "process3Title": {
+    "message": "उपयोग करने योग्य सबूत प्रदान करता है"
+  },
+  "processEyebrow": {
+    "message": "यह कैसे काम करता है"
+  },
+  "processLead": {
+    "message": "कोई कानूनी शब्द: इसे स्थापित करें, इसे अपने टैब को देखने दें, अलर्ट महसूस करें, और अपने दिन को तैयार करने वाले सबूतों के साथ समाप्त करें।"
+  },
+  "processTitle": {
+    "message": "साउल तीन चरणों में प्रक्रिया को लॉक करता है।"
+  },
+  "quakeBody": {
+    "message": "ओवरले ब्लॉक खलनायक टैब, एक बोल्ड सीटीए दिखाता है, और वैकल्पिक श्रेन को नष्ट कर सकता है। वास्तव में योजनाबद्ध के रूप में - को अनदेखा करने के लिए असंभव है।"
+  },
+  "quakeButton": {
+    "message": "ट्रिगर शेक"
+  },
+  "quakeCallout": {
+    "message": "भूकंप आने!"
+  },
+  "quakeDemoBody": {
+    "message": "भूकंप मोड को अनुकरण करने के लिए क्लिक करें: स्क्रीन शेक, सिरेन और नाटकीय संदेश। विस्तार के रूप में भी, लेकिन यहां केवल कुछ सेकंड के लिए।"
+  },
+  "quakeDemoButton": {
+    "message": "भूकंप मोड"
+  },
+  "quakeDemoEyebrow": {
+    "message": "भूकंप मोड (डेमो)"
+  },
+  "quakeDemoTitle": {
+    "message": "टेस्ट सेल का सबसे नाटकीय चेतावनी।"
+  },
+  "quakeDisplayCopy": {
+    "message": "वापस ध्यान देने के लिए कूदो या साउल ने अपनी फीस बढ़ा दी।"
+  },
+  "quakeEyebrow": {
+    "message": "भूकंप मोड"
+  },
+  "quakeLead": {
+    "message": "विस्तार से एक ही नाटकीय चेतावनी यहां दिखाती है ताकि आगंतुक महसूस करते हैं कि चेतावनी सीमा के पास कितनी गंभीर है।"
+  },
+  "quakeMicro": {
+    "message": "\"क्या तुम doom-scrolling! प्रभाव के लिए ब्रेस।"
+  },
+  "quakeOverlayBody": {
+    "message": "साउल खलनायक टैब है। इससे पहले कि वह अतिरिक्त शुल्क लेता है, ध्यान केंद्रित करने के लिए वापस जाओ।"
+  },
+  "quakeOverlayClose": {
+    "message": "ध्यान दें"
+  },
+  "quakeOverlayTitle": {
+    "message": "भूकंप मोड ट्रिगर!"
+  },
+  "quakeTip": {
+    "message": "आराम करो: पूर्वावलोकन सिर्फ कुछ ही सेकंड तक रहता है।"
+  },
+  "quakeTitle": {
+    "message": "जब साउल ने खलनायक को देखा तो पेज उसके साथ हिलाता है।"
+  },
+  "ratingBadgeAlt": {
+    "message": "क्रोम वेब स्टोर पर औसत रेटिंग"
+  },
+  "ratingBadgeLabel": {
+    "message": "रेटिंग"
+  },
+  "reactionBlockAlt": {
+    "message": "सेल अवरुद्ध पहुँच"
+  },
+  "reactionBlockHint": {
+    "message": "Saul बंद करने के साथ ब्लॉक पृष्ठ पर रीडायरेक्ट करता है।"
+  },
+  "reactionBlockLabel": {
+    "message": "ब्लॉक मोड"
+  },
+  "reactionBlockText": {
+    "message": "\"यह भी कोशिश नहीं करते: खलनायक तुरंत अवरुद्ध हो जाते हैं।"
+  },
+  "reactionDisbeliefHint": {
+    "message": "जब भूकंप की सीमा पार हो जाती है तो ट्रिगर।"
+  },
+  "reactionDisbeliefLabel": {
+    "message": "अविश्वसनीय मोड"
+  },
+  "reactionDisbeliefText": {
+    "message": "\"तुम उस पर ध्यान देते हैं?\""
+  },
+  "reactionHypeHint": {
+    "message": "जब आप उत्पादक टैब पर वापस कूदते हैं तो दिखाता है।"
+  },
+  "reactionHypeLabel": {
+    "message": "स्वीकृत मोड"
+  },
+  "reactionHypeText": {
+    "message": "\"अब मैं अपनी फीस छूट सकता हूं\"।"
+  },
+  "reactionsBody": {
+    "message": "जब इंडेक्स स्पाइक्स, साउल अविश्वसनीय है। जब आप ध्यान देते हैं तो वह मनाता है। त्वरित दृश्य जगह में न्याय के बार रखने के लिए।"
+  },
+  "reactionsEyebrow": {
+    "message": "साउल प्रतिक्रिया"
+  },
+  "reactionsTitle": {
+    "message": "साउल का तत्काल फैसले।"
+  },
+  "readArticle": {
+    "message": "लेख पढ़ें"
+  },
+  "readingTimeLabel": {
+    "message": "समय पढ़ना"
+  },
+  "readTimeUnit": {
+    "message": "पढ़ना"
+  },
+  "reason1Body": {
+    "message": "पॉपअप इंडेक्स आपकी वर्तमान स्थिति को दर्शाता है, इसलिए आपको पता है कि आगे क्या तय करना है।"
+  },
+  "reason1Title": {
+    "message": "निर्देशित फोकस"
+  },
+  "reason2Body": {
+    "message": "एक खलनायक टैब अपने गति को बर्बाद करने से पहले भूकंप स्क्रीन पर ले जाता है।"
+  },
+  "reason2Title": {
+    "message": "असंभव-से-ignore अलर्ट"
+  },
+  "reason3Body": {
+    "message": "चार्ट और सारांश पूरी तरह से दैनिक, स्टैंड-अप, या क्लाइंट अपडेट में छोड़ देते हैं।"
+  },
+  "reason3Title": {
+    "message": "शेयरेबल रिपोर्ट"
+  },
+  "reason4Body": {
+    "message": "प्रत्येक मीट्रिक क्रोम के अंदर रहता है; कुछ भी आपकी मशीन छोड़ देता है।"
+  },
+  "reason4Title": {
+    "message": "कुल गोपनीयता"
+  },
+  "reasonsEyebrow": {
+    "message": "मुख्य लाभ"
+  },
+  "reasonsLead": {
+    "message": "चार त्वरित कार्ड शून्य fluff के साथ मूल्य की व्याख्या करते हैं।"
+  },
+  "reasonsTitle": {
+    "message": "क्यों Saul Goodman?"
+  },
+  "relatedTitle": {
+    "message": "संबंधित पोस्ट"
+  },
+  "report_ai_error_generic": {
+    "message": "साउल डिजिटल जज को मना नहीं सकता। बाद में फिर से प्रयास करें।"
+  },
+  "report_ai_generate": {
+    "message": "कथा उत्पन्न करना"
+  },
+  "report_ai_heading": {
+    "message": "साउल का तर्क"
+  },
+  "report_ai_hint": {
+    "message": "\"जेनरेट कथा\" पर क्लिक करें ताकि शाऊल अपने दिन का विश्लेषण अपने सरकास्म के साथ कर सके।"
+  },
+  "report_ai_loading": {
+    "message": "फिर भी समापन तर्क तैयार करना ..."
+  },
+  "report_ai_missing_key": {
+    "message": "कथा उत्पन्न करने से पहले विकल्पों में अपनी OpenAI कुंजी को कॉन्फ़िगर करें।"
+  },
+  "report_ai_no_metrics": {
+    "message": "आज एक कहानी बताने के लिए कोई मेट्रिक्स नहीं।"
+  },
+  "report_ai_retry": {
+    "message": "फिर से कोशिश करो"
+  },
+  "report_ai_subtitle": {
+    "message": "आपके डेटा पर आधारित एक नाटकीय रक्षा।"
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF लाइब्रेरी उपलब्ध नहीं है।"
+  },
+  "report_banner_countdown_final": {
+    "message": "कार्य करने का समय: खलनायक टैब बंद करें और नियंत्रण में वापस आ जाएं।"
+  },
+  "report_banner_message_1": {
+    "message": "यहां तक कि मैं अनुक्रमणिका के साथ जूरी को रोक सकता हूं{threshold}To cut the विचलन!"
+  },
+  "report_banner_message_2": {
+    "message": "इसे जारी रखें और मैं अपने बॉस को चेतावनी देते हुए बिलबोर्ड किराए पर ले जाऊंगा।"
+  },
+  "report_banner_message_3": {
+    "message": "यह क्वोक आपके खलनायक टैब का प्रतीक है। अब उन्हें बंद करें।"
+  },
+  "report_banner_message_4": {
+    "message": "टैब बिल बढ़ रहा है: अब ध्यान दें या हम अतिरिक्त शुल्क लेते हैं।"
+  },
+  "report_banner_message_default": {
+    "message": "यह सूचकांक बढ़ रहा है। मुझे जोखिम बोनस की आवश्यकता होगी!"
+  },
+  "report_banner_title": {
+    "message": "उच्च चेतावनी पर आत्मा!"
+  },
+  "report_category_activity": {
+    "message": "गतिविधि"
+  },
+  "report_category_neutral": {
+    "message": "तटस्थ"
+  },
+  "report_composition_heading": {
+    "message": "दिन रचना"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "उत्पादक, प्रक्रिया, निष्क्रिय और तटस्थ में टूटने।"
+  },
+  "report_context_breakdown_context": {
+    "message": "कोंडो"
+  },
+  "report_context_breakdown_index": {
+    "message": "सूचकांक"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "खरीद की तरह 100% गंध के करीब; 0% के करीब मतलब है कि आप काम करते हैं - और मैं आपको बचा सकता हूं।"
+  },
+  "report_context_breakdown_time": {
+    "message": "समय"
+  },
+  "report_context_breakdown_title": {
+    "message": "संदर्भ द्वारा समय"
+  },
+  "report_domain_heading": {
+    "message": "डोमेन प्रति मिनट"
+  },
+  "report_domain_subtitle": {
+    "message": "मुख्य चैंपियन और खलनायक दिन के लिए एकत्रित।"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1मिनट"
+  },
+  "report_error_no_data": {
+    "message": "उपलब्ध नहीं है।"
+  },
+  "report_error_runtime": {
+    "message": "रिकॉर्ड कार्यालय तक नहीं पहुंच सका।"
+  },
+  "report_error_unknown": {
+    "message": "अज्ञात त्रुटि"
+  },
+  "report_export_pdf": {
+    "message": "PDF निर्यात करें"
+  },
+  "report_fairness_holiday_active": {
+    "message": "आज एक छुट्टी है, स्कोर स्वचालित रूप से गिर गया है।"
+  },
+  "report_fairness_holiday_detected": {
+    "message": "छुट्टी का पता लगाना - कोई दंड नहीं।"
+  },
+  "report_fairness_status_day_off": {
+    "message": "डे ऑफ ने स्कोर को बेअसर कर दिया।"
+  },
+  "report_fairness_status_default": {
+    "message": "दीया सामान्य।"
+  },
+  "report_fairness_status_holiday": {
+    "message": "राष्ट्रीय अवकाश ने स्कोर को बेअसर कर दिया।"
+  },
+  "report_fairness_status_leisure": {
+    "message": "अवकाश मोड कम शुल्क।"
+  },
+  "report_fairness_status_manual": {
+    "message": "डाया इग्नोराडो मैनुअलमेंट"
+  },
+  "report_fairness_status_personal": {
+    "message": "व्यक्तिगत मोड - कोई स्कोरिंग नहीं।"
+  },
+  "report_fairness_status_study": {
+    "message": "अध्ययन मोड नरम पेनल्टी।"
+  },
+  "report_fairness_status_vacation": {
+    "message": "मोडो फेरिया शून्य ओ डाया।"
+  },
+  "report_fairness_title": {
+    "message": "दिन निष्पक्षता"
+  },
+  "report_fairness_tooltip": {
+    "message": "मैनुअल ओवरराइड, संदर्भ, या छुट्टियां स्कोर को बेअसर कर सकती हैं। जब भी ऐसा होता है तो हम इसे लॉग इन करते हैं।"
+  },
+  "report_filter_apply": {
+    "message": "फ़िल्टर"
+  },
+  "report_filter_from": {
+    "message": "से"
+  },
+  "report_filter_reset": {
+    "message": "रीसेट करें"
+  },
+  "report_filter_to": {
+    "message": "to"
+  },
+  "report_head_title": {
+    "message": "Saul Goodman - दैनिक रिपोर्ट"
+  },
+  "report_heading": {
+    "message": "विस्तृत रिपोर्ट"
+  },
+  "report_hero_message_alert": {
+    "message": "फैसले स्पष्ट है: परीक्षण पर प्रक्रिया। हमें तत्काल योजना की आवश्यकता है।"
+  },
+  "report_hero_message_excellent": {
+    "message": "त्रुटिहीन अनुसूची। साउल आपको टीवी विज्ञापन में इस्तेमाल कर सकता है।"
+  },
+  "report_hero_message_ok": {
+    "message": "स्वीकार्य स्विंग। हम अभी भी उन जूरी को बता सकते हैं जो आपने काम किया था।"
+  },
+  "report_hero_message_warning": {
+    "message": "आज दर्शनीय वापसी। सम्पर्क करने का समय"
+  },
+  "report_hero_placeholder": {
+    "message": "Saul अभी भी अपने दिन के बारे में सबूत एकत्र कर रहा है।"
+  },
+  "report_hourly_empty": {
+    "message": "अभी तक इस प्रवाह का निर्माण करने के लिए पर्याप्त मिनट नहीं।"
+  },
+  "report_hourly_heading": {
+    "message": "हर घंटे"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "उत्पादक, प्रक्रिया और निष्क्रिय मिनट प्रति घंटे।"
+  },
+  "report_hourly_subtitle": {
+    "message": "उत्पादकता बनाम परीक्षा दिन के माध्यम से।"
+  },
+  "report_kpi_audio_hint": {
+    "message": "खलनायक साइटों पर ऑडियो के साथ मिनट"
+  },
+  "report_kpi_audio_label": {
+    "message": "विलाइन मीडिया"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "Prorastination डोमेन पर ऑडियो खेलने के साथ समय।"
+  },
+  "report_kpi_grouped_hint": {
+    "message": "समूहबद्ध टैब में मिनट"
+  },
+  "report_kpi_grouped_label": {
+    "message": "समूह में समय"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "समूहीकृत टैब में खर्च किए गए मिनट।"
+  },
+  "report_kpi_heading": {
+    "message": "अतिरिक्त संकेतक"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "अतिरिक्त KPI: खलनायक मीडिया, वास्तविक निष्क्रिय समय, एसपीए मार्गों, समूहित टैब।"
+  },
+  "report_kpi_restored_hint": {
+    "message": "हाल के टैब या विंडोज़"
+  },
+  "report_kpi_restored_label": {
+    "message": "आज बंद"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "आज बंद टैब या खिड़कियों की संख्या।"
+  },
+  "report_kpi_spa_hint": {
+    "message": "रिकॉर्ड किए गए मार्ग परिवर्तन"
+  },
+  "report_kpi_spa_label": {
+    "message": "एसपीए मार्ग"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "एकल पृष्ठ एप्लिकेशन में आंतरिक मार्ग परिवर्तन।"
+  },
+  "report_kpi_subtitle": {
+    "message": "रियल निष्क्रिय, एसपीए मार्ग और मीडिया समय।"
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "पृष्ठभूमि में मिनट"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "ब्राउज़र unfocused"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "दूसरे विंडो के साथ मिनट केंद्रित है।"
+  },
+  "report_logo_alt_critical": {
+    "message": "Saul Goodman अपने ध्यान से सदमे में"
+  },
+  "report_logo_alt_default": {
+    "message": "Saul Goodman लोगो"
+  },
+  "report_metric_index_label": {
+    "message": "सूचकांक"
+  },
+  "report_metric_switches_label": {
+    "message": "टैब स्विच"
+  },
+  "report_no_records": {
+    "message": "कोई रिकॉर्ड नहीं।"
+  },
+  "report_overtime_tag": {
+    "message": "ओवरटाइम"
+  },
+  "report_pdf_ai_title": {
+    "message": "साउल का तर्क"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "श्रेणी"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "भागीदारी"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "समय"
+  },
+  "report_pdf_composition_title": {
+    "message": "दिन रचना"
+  },
+  "report_pdf_context_header_context": {
+    "message": "कोंडो"
+  },
+  "report_pdf_context_header_index": {
+    "message": "संदर्भ सूची"
+  },
+  "report_pdf_context_header_time": {
+    "message": "समय बिताना"
+  },
+  "report_pdf_context_title": {
+    "message": "संदर्भ द्वारा ब्रेकडाउन"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "संदर्भ गार्ड-रेल सक्रिय"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "छुट्टी स्कोर तटस्थ"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "कारण"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "दिन मैन्युअल रूप से छोड़ दिया"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "न्युडिस न्यूट्रलाइज़ाडो"
+  },
+  "report_pdf_narrative_title": {
+    "message": "कुंजी कथा"
+  },
+  "report_pdf_overview_heading": {
+    "message": "पैनोरमा"
+  },
+  "report_pdf_status_label": {
+    "message": "स्थिति"
+  },
+  "report_pdf_title": {
+    "message": "विस्तृत रिपोर्ट - साऊल गुडमैन"
+  },
+  "report_pdf_top_domains": {
+    "message": "शीर्ष डोमेन"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "शीर्ष खरीद"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "समय-समय पर प्रगति डोमेन की रैंकिंग।"
+  },
+  "report_ranking_productive_heading": {
+    "message": "शीर्ष उत्पादक"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "समय पर उत्पादक डोमेन की रैंकिंग।"
+  },
+  "report_share_argument_label": {
+    "message": "शेयर साउल का तर्क"
+  },
+  "report_share_argument_title": {
+    "message": "Saul's Argument"
+  },
+  "report_share_copy_error": {
+    "message": "अब पोस्ट कॉपी नहीं कर सका।"
+  },
+  "report_share_copy_instagram": {
+    "message": "टेक्स्ट कॉपी किया गया। पोस्ट करने से पहले इंस्टाग्राम और पेस्ट खोलें।"
+  },
+  "report_share_copy_linkedin": {
+    "message": "टेक्स्ट कॉपी किया गया। पोस्ट करने से पहले इसे लिंक्डइन में पेस्ट करें।"
+  },
+  "report_share_copy_success": {
+    "message": "पोस्ट कॉपी LinkedIn, Twitter पर कहीं भी पेस्ट करें।"
+  },
+  "report_share_cta": {
+    "message": "आप को सोल गुडमैन द्वारा लाया गया।"
+  },
+  "report_share_error": {
+    "message": "अभी शेयर नहीं कर सका।"
+  },
+  "report_share_error_no_metrics": {
+    "message": "साझा करने के लिए कोई डेटा नहीं।"
+  },
+  "report_share_error_no_narrative": {
+    "message": "साझा करने से पहले साउल का तर्क उत्पन्न करना।"
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #Antiprocrastination"
+  },
+  "report_share_headline": {
+    "message": "वस्तु! केस हाइलाइट्स"
+  },
+  "report_share_hint_instagram": {
+    "message": "इंस्टाग्राम वेब टेक्स्ट को प्रीफिल नहीं कर सकता: पेस्ट करें जिसे हम पोस्टिंग बॉक्स में कॉपी करते हैं।"
+  },
+  "report_share_hint_linkedin": {
+    "message": "लिंक में टेक्स्ट को प्रीफिल नहीं करेगा; साइट पर कॉपी की गई सामग्री पेस्ट करें।"
+  },
+  "report_share_index_label": {
+    "message": "सूचकांक"
+  },
+  "report_share_menu_argument": {
+    "message": "साउल का तर्क"
+  },
+  "report_share_menu_copy": {
+    "message": "पाठ कॉपी करें"
+  },
+  "report_share_menu_highlights": {
+    "message": "हाइलाइट्स"
+  },
+  "report_share_menu_label": {
+    "message": "शेयर"
+  },
+  "report_share_menu_native": {
+    "message": "मूल शेयर"
+  },
+  "report_share_menu_native_action": {
+    "message": "सिस्टम शेयर शीट"
+  },
+  "report_share_opening": {
+    "message": "मेरे ग्राहक ने कड़ी मेहनत की और मेरे पास सबूत हैं।"
+  },
+  "report_share_post_argument_label": {
+    "message": "तर्क पोस्ट कॉपी करें"
+  },
+  "report_share_post_label": {
+    "message": "कॉपी पोस्ट (सामाजिक)"
+  },
+  "report_share_report_label": {
+    "message": "शेयर हाइलाइट्स"
+  },
+  "report_share_social_tagline": {
+    "message": "वस्तु! मेरा क्लाइंट काम में डाल दिया।"
+  },
+  "report_share_success": {
+    "message": "शेयर शीट खोला! यदि यह प्रकट नहीं होता है, तो हम इसे अपने क्लिपबोर्ड पर कॉपी करते हैं।"
+  },
+  "report_share_title": {
+    "message": "सोल गुडमैन - हाइलाइट्स"
+  },
+  "report_story_empty": {
+    "message": "आज के लिए पर्याप्त कहानियां नहीं।"
+  },
+  "report_story_focus_body": {
+    "message": "{domain}आयोजन{duration}ध्यान देना"
+  },
+  "report_story_focus_title": {
+    "message": "फोकस चैंपियन"
+  },
+  "report_story_heading": {
+    "message": "चैंपियंस और खलनायक"
+  },
+  "report_story_idle_body": {
+    "message": "{range} के बीच, ब्राउज़र {duration} के लिए निष्क्रिय रहा। आज कुल निष्क्रिय समय: {total}।"
+  },
+  "report_story_idle_title": {
+    "message": "सबसे लंबे समय तक मौन"
+  },
+  "report_story_loading": {
+    "message": "डेटा अभी भी लोड हो रहा है ..."
+  },
+  "report_story_short_day": {
+    "message": "दिन एक कहानी बताने के लिए बहुत कम था।"
+  },
+  "report_story_villain_body": {
+    "message": "{domain}सूखा{duration}।"
+  },
+  "report_story_villain_title": {
+    "message": "दिन का विलाइन"
+  },
+  "report_subtitle_prefix": {
+    "message": "दैनिक सारांश"
+  },
+  "report_tab_switch_empty": {
+    "message": "इस चार्ट पर अभी तक पर्याप्त स्विच नहीं है।"
+  },
+  "report_tab_switch_heading": {
+    "message": "टैब प्रति घंटे स्विच करता है"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "Prod/Proc/Neutral में वितरण स्विच करें।"
+  },
+  "report_tab_switch_subtitle": {
+    "message": "आप उत्पादक, प्रक्रिया और तटस्थ के बीच कैसे कूदते हैं।"
+  },
+  "report_tagline": {
+    "message": "आधिकारिक फोकस लॉगबुक"
+  },
+  "report_time_column": {
+    "message": "समय"
+  },
+  "report_timeline_heading": {
+    "message": "मिनिट बाई-मिनट कथा"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "कुंजी स्लाइस घंटे और श्रेणी से मिलकर।"
+  },
+  "report_timeline_loading": {
+    "message": "प्रवेश के लिए प्रतीक्षा..."
+  },
+  "report_timeline_subtitle": {
+    "message": "हाइलाइट्स जो आपके बदलाव की कहानी बताते हैं।"
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}खंड"
+  },
+  "rssCta": {
+    "message": "आरएसएस"
+  },
+  "searchLabel": {
+    "message": "खोज"
+  },
+  "searchPlaceholder": {
+    "message": "खोज शीर्षक, अंश, या टैग ..."
+  },
+  "searchReset": {
+    "message": "साफ़ फिल्टर"
+  },
+  "seoDescription": {
+    "message": "साऊल गुडमैन ने अपने टैब को पुलिस में डाला और अपने ब्राउज़र में नाटकीय रिपोर्ट वितरित की। सब कुछ स्थानीय रहता है, कोई बाहरी सर्वर नहीं।"
+  },
+  "seoTitle": {
+    "message": "साउल गुडमैन - एंटी-प्रोक्रास्टिनेशन एक्सटेंशन"
+  },
+  "shareCopied": {
+    "message": "लिंक कॉपी!"
+  },
+  "shareCopy": {
+    "message": "लिंक कॉपी करें"
+  },
+  "shareCopyPrompt": {
+    "message": "इस लिंक को साझा करने के लिए कॉपी करें:"
+  },
+  "shareIndexCopied": {
+    "message": "लिंक कॉपी!"
+  },
+  "shareIndexCopy": {
+    "message": "लिंक कॉपी करें"
+  },
+  "shareIndexLinkedin": {
+    "message": "लिंक्डइन"
+  },
+  "shareIndexTitle": {
+    "message": "ब्लॉग साझा करें"
+  },
+  "shareIndexTwitter": {
+    "message": "एक्स"
+  },
+  "shareLinkedin": {
+    "message": "लिंक्डइन"
+  },
+  "shareTitle": {
+    "message": "शेयर"
+  },
+  "shareTwitter": {
+    "message": "एक्स"
+  },
+  "socialProofCaption": {
+    "message": "साउल पहले से ही हजारों लोगों को अपना ध्यान रखने में मदद करता है।"
+  },
+  "socialProofMetricLabel": {
+    "message": "खुश उपयोगकर्ताओं"
+  },
+  "splitPopupBody": {
+    "message": "पैनल सूचकांक, शीर्ष डोमेन, अतिरिक्त संकेतक दिखाता है, और आपको CSV/PDF निर्यात करने देता है। जब फ़ोकस में गिरावट आती है, तो भूकंप मोड में तूफानों को बचाने के लिए।"
+  },
+  "splitPopupCaption": {
+    "message": "सूचकांक, शीर्ष डोमेन और निर्यात के साथ पॉपअप।"
+  },
+  "splitPopupCaption2": {
+    "message": "KPI, शीर्ष डोमेन और त्वरित निर्यात।"
+  },
+  "splitPopupCaption3": {
+    "message": "विकल्प पैनल में उत्पादक / विलाइन सूची।"
+  },
+  "splitPopupCaption4": {
+    "message": "इंडेक्स के लिए कॉन्फ़िगर करने योग्य वजन और शेड्यूल।"
+  },
+  "splitPopupTitle": {
+    "message": "ऑन-कॉल पॉपअप"
+  },
+  "splitReportBody": {
+    "message": "प्रति घंटे चार्ट, खलनायक रैंकिंग, एआई कथा और कार्रवाई योजना के साथ महत्वपूर्ण बैनर। सभी शपथ दृश्यों के साथ।"
+  },
+  "splitReportCaption": {
+    "message": "चार्ट और रैंकिंग के साथ सारांश रिपोर्ट करें।"
+  },
+  "splitReportCaption2": {
+    "message": "एआई कथा और मिनट-दर-मिनट समयरेखा।"
+  },
+  "splitReportCaption3": {
+    "message": "विलाइन रैंकिंग, चैंपियन और वितरण।"
+  },
+  "splitReportTitle": {
+    "message": "नाटकीय रिपोर्ट"
+  },
+  "splitStats1": {
+    "message": "मिनट की वसूली/दिन"
+  },
+  "splitStats2": {
+    "message": "ग्राहक"
+  },
+  "statsCategories": {
+    "message": "परीक्षण पर श्रेणियां"
+  },
+  "statsFresh": {
+    "message": "अद्यतन"
+  },
+  "statsPosts": {
+    "message": "पोस्ट"
+  },
+  "statsTitle": {
+    "message": "ब्लॉगर"
+  },
+  "stickyCtaButton": {
+    "message": "क्रोम पर स्थापित करें"
+  },
+  "stickyCtaText": {
+    "message": "Saul अपने टैब को देखने के लिए तैयार है।"
+  },
+  "stickyToggleLabel": {
+    "message": "Toggle CTA"
+  },
+  "tagsTitle": {
+    "message": "आग पर विषय"
+  },
+  "testimonial1Cite": {
+    "message": "गुमनाम ग्राहक"
+  },
+  "testimonial1Quote": {
+    "message": "\"सुल ने मुझे याद दिलाया कि प्रति घंटे 40 टैब स्विच करना अपराध है।"
+  },
+  "testimonial2Cite": {
+    "message": "- Regretful इंजीनियर"
+  },
+  "testimonial2Quote": {
+    "message": "\"\" रिपोर्ट मेरे बॉस के साथ बैठक में एक रक्षा टुकड़ा बन गया।"
+  },
+  "testimonial3Cite": {
+    "message": "- उत्पाद प्रबंधक"
+  },
+  "testimonial3Quote": {
+    "message": "\"Earthquake मोड ने मेरी स्प्रिंट को बचाया। खुशी से भुगतान किया जाता है।"
+  },
+  "testimonialNext": {
+    "message": "आगामी गवाही"
+  },
+  "testimonialPrev": {
+    "message": "पिछला गवाही"
+  },
+  "testimonialsEyebrow": {
+    "message": "प्रशंसापत्र"
+  },
+  "testimonialsTitle": {
+    "message": "ग्राहक स्वीकार किए जाते हैं।"
+  },
+  "timeline1Body": {
+    "message": "सामग्री स्क्रिप्ट पहले टैब पर गतिविधि का पता लगाता है। साउल लॉग जो उत्पादक या एक खलनायक है।"
+  },
+  "timeline1Title": {
+    "message": "प्रारंभिक रडार"
+  },
+  "timeline2Body": {
+    "message": "यदि सूचकांक बहुत अधिक हो जाता है, तो भूकंप मोड में भूकंप, सिरेन और सीटीए के साथ क्रोम तूफानों को खेल को बदलने के लिए।"
+  },
+  "timeline2Title": {
+    "message": "अपवर्तन सूचना"
+  },
+  "timeline3Body": {
+    "message": "विस्तृत रिपोर्ट जहाजों चार्ट, समयरेखा और एआई साक्ष्य के साथ दिन बंद करने के लिए कथा।"
+  },
+  "timeline3Title": {
+    "message": "दैनिक वाक्य"
+  },
+  "timelineEyebrow": {
+    "message": "समयरेखा"
+  },
+  "timelineTitle": {
+    "message": "ट्रैकिंग से फैसले तक।"
+  },
+  "transparencyBody": {
+    "message": "कैसे हम आपके डेटा और हर रिलीज नोट को शून्य fluff के साथ संभालते हैं?"
+  },
+  "transparencyChangelogCta": {
+    "message": "पूर्ण बदलाव"
+  },
+  "transparencyEyebrow": {
+    "message": "पारदर्शिता"
+  },
+  "transparencyPrivacyCta": {
+    "message": "गोपनीयता नीति पढ़ें"
+  },
+  "transparencyTitle": {
+    "message": "ओपन में गोपनीयता और बदलाव।"
+  },
+  "trustCard1Body": {
+    "message": "मेट्रिक्स   TAG0 chrome.storage.local TAG1    में रहते हैं। कुछ भी बाहरी सर्वर को छूता है।"
+  },
+  "trustCard1Title": {
+    "message": "100% स्थानीय"
+  },
+  "trustCard2Body": {
+    "message": "प्रत्येक पंक्ति सार्वजनिक है इसलिए समुदाय परिवर्तन की लेखा परीक्षा कर सकता है।"
+  },
+  "trustCard2Title": {
+    "message": "ओपन सोर्स"
+  },
+  "trustCard3Body": {
+    "message": "जब भी आपको आवश्यकता होती है तो आप थ्रेसहोल्ड चुन सकते हैं।"
+  },
+  "trustCard3Title": {
+    "message": "पारदर्शी अलर्ट"
+  },
+  "trustEyebrow": {
+    "message": "गोपनीयता और विश्वास"
+  },
+  "trustLead": {
+    "message": "प्लेफुल टोन, गंभीर सुरक्षा: यहां बताया गया है कि डेटा और अलर्ट वास्तव में कैसे काम करते हैं।"
+  },
+  "trustTitle": {
+    "message": "सब कुछ आपके और आपके ब्राउज़र के बीच रहता है।"
+  },
+  "usersBadgeAlt": {
+    "message": "क्रोम वेब स्टोर पर उपयोगकर्ता"
+  },
+  "usersBadgeLabel": {
+    "message": "उपयोगकर्ता"
+  }
+}

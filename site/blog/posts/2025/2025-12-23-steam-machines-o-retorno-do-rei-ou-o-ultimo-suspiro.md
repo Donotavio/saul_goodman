@@ -4,7 +4,6 @@ title_en: "Steam Machines: The Return of the King or the Last Gasp?"
 title_es: "Steam Machines: ¿El Regreso del Rey o el Último Suspiro?"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["tecnologia", "Steam", "hardware", "software", "futuro"]
 source_title: "From Steam Machines to Home Robots: Where Consumer Tech Is Actually Heading"
 source_url: "https://dev.to/deeppressanalysis/from-steam-machines-to-home-robots-where-consumer-tech-is-actually-heading-7af"

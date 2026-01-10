@@ -1,0 +1,2504 @@
+{
+  "actionTitle": {
+    "message": "سول غودمان"
+  },
+  "backToHome": {
+    "message": "العودة إلى الموقع"
+  },
+  "benefit1Body": {
+    "message": "القشور و سي إس في لإظهار رئيسك أو فريقك أو ضميرك"
+  },
+  "benefit1Title": {
+    "message": "أدلة لا يمكن إنكارها"
+  },
+  "benefit2Body": {
+    "message": "نمط زلزال ورسائل ساخرة لا يمكنك تجاهلها"
+  },
+  "benefit2Title": {
+    "message": "إنذارات سينمائية"
+  },
+  "benefit3Body": {
+    "message": "كل الحكم يحدث محلياً لا توجد بيانات تترك منظفك"
+  },
+  "benefit3Title": {
+    "message": "الخصوصية المضمونة"
+  },
+  "benefitsEyebrow": {
+    "message": "الاستحقاقات"
+  },
+  "benefitsTitle": {
+    "message": "(سول) يتعامل مع القضية وأنت تغلقها"
+  },
+  "block_page_back": {
+    "message": "العودة"
+  },
+  "block_page_body": {
+    "message": "لقد وسمت هذا الموقع كإختراق اغلق الحساب او عدل القائمة اذا غيرت رأيك"
+  },
+  "block_page_heading": {
+    "message": "(سول) أغلق هذا المجال"
+  },
+  "block_page_image_alt": {
+    "message": "سول غودمان خاب أمله"
+  },
+  "block_page_local_note": {
+    "message": "كتلة محلية لا شيء يترك منظفك"
+  },
+  "block_page_options": {
+    "message": "الأطر المفتوحة"
+  },
+  "block_page_title": {
+    "message": "(سول) أغلق هذا المجال"
+  },
+  "blogCategoryAll": {
+    "message": "كل شيء"
+  },
+  "blogCategoryLabelCarreira": {
+    "message": "المسار المهني"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "أداء المطورين"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "التركيز والانتباه"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "التسويق"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "الأعمال"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "التسويف"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "المنتج"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "العمل عن بُعد"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "تجربة المستخدم والتصميم"
+  },
+  "blogEmptyState": {
+    "message": "لا مقالات منشورة هنا بعد"
+  },
+  "blogError": {
+    "message": "فشل في تحميل المدونة"
+  },
+  "blogHeroEyebrow": {
+    "message": "مدونة سول غودمان"
+  },
+  "blogHeroLead": {
+    "message": "السخرية تأخذ على التركيز والاهتمام والأداء المنحرف. مقالات أسبوعية مكتوبة في نبرة (سول) لا يوجد مدرب"
+  },
+  "blogHeroTitle": {
+    "message": "القضاء على الازدهار الرقمي"
+  },
+  "blogLogoAlt": {
+    "message": "شعار Saul Goodman"
+  },
+  "blogPreviewCta": {
+    "message": "انظر جميع المواد"
+  },
+  "blogPreviewEmpty": {
+    "message": "لا توجد مقالات متاحة الآن"
+  },
+  "blogPreviewError": {
+    "message": "غير قادر على تحميل المقالات"
+  },
+  "blogPreviewEyebrow": {
+    "message": "مدونة سول"
+  },
+  "blogPreviewImageAlt": {
+    "message": "رسم توضيحي لسول غودمان"
+  },
+  "blogPreviewLead": {
+    "message": "أقرأ أحدث 3 مقالات وأرى كيف يدافع (سول) عن تركيزك بالسخرية القانونية"
+  },
+  "blogPreviewLoading": {
+    "message": "مقالات التعبئة..."
+  },
+  "blogPreviewRead": {
+    "message": "قراءة المادة"
+  },
+  "blogPreviewTitle": {
+    "message": "آخر القضايا من قاعة المحكمة الرقمية"
+  },
+  "blogToneAltIncredulo": {
+    "message": "سول غودمان (متشكّك)"
+  },
+  "blogToneAltLike": {
+    "message": "سول غودمان (موافق)"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "سول غودمان (يحكم)"
+  },
+  "breadcrumbArticle": {
+    "message": "المادة"
+  },
+  "breadcrumbBlog": {
+    "message": "المدونة"
+  },
+  "categoriesTitle": {
+    "message": "الجلسات"
+  },
+  "categoryActiveLabel": {
+    "message": "الفئة النشطة"
+  },
+  "categoryCarreiraLead": {
+    "message": "عادات وقيادة وبقاء مؤسسي بلا عبارات لينكدإن."
+  },
+  "categoryCarreiraTitle": {
+    "message": "مسار مهني بلا نصائح مدربين"
+  },
+  "categoryClear": {
+    "message": "فئة واضحة"
+  },
+  "categoryDevLead": {
+    "message": "إنتاجية عملية لأي شخص يبت في مدونة قواعد السلوك VS، و PR، والاجتماعات النائية."
+  },
+  "categoryDevTitle": {
+    "message": "أداء ديف مع اعتراف بالذنب"
+  },
+  "categoryEyebrow": {
+    "message": "الفئة"
+  },
+  "categoryFocoLead": {
+    "message": "الدراسات والدراما اليومية حول إبقاء رأسك في الكود دون الاستسلام للتغذية."
+  },
+  "categoryFocoTitle": {
+    "message": "تركيز الاهتمام على المحاكمة"
+  },
+  "categoryMarketingLead": {
+    "message": "SEO والمحتوى والتحويل: أقل هراء، أكثر منهجية."
+  },
+  "categoryMarketingTitle": {
+    "message": "تسويق بلا وعود معجزة"
+  },
+  "categoryNegociosLead": {
+    "message": "إدارة وثقافة وأثر حقيقي — بلا مصطلحات وبلا لف ودوران."
+  },
+  "categoryNegociosTitle": {
+    "message": "الأعمال والقيادة في المحكمة"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "حالات التأخّر الحقيقيّة، الكسل الرقمي، وصيد (سول) يحبّ المقاضاة."
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "التسويف قيد التحقيق"
+  },
+  "categoryProdutoLead": {
+    "message": "قرارات ومؤشرات ومفاضلات PM/PO كي لا تصبح رهينة الـ backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "المنتج والاستراتيجية في المحكمة"
+  },
+  "categoryRemotoLead": {
+    "message": "قصص عن مكتب المنزل، وجود سلاك، وتجنب اختفاء زوم."
+  },
+  "categoryRemotoTitle": {
+    "message": "العمل عن بعد بدون حجة غياب"
+  },
+  "categoryUxLead": {
+    "message": "التصميم وسهولة الاستخدام وقرارات المنتج التي تؤثر على تركيزك اليومي."
+  },
+  "categoryUxTitle": {
+    "message": "تجربة المستخدم والتصميم تحت المجهر"
+  },
+  "changelogError": {
+    "message": "لا يمكننا تحميل المتغير الآن حاول مرة أخرى لاحقا."
+  },
+  "changelogEyebrow": {
+    "message": "كل شيء موثق"
+  },
+  "changelogHeading": {
+    "message": "التغيير الرسمي"
+  },
+  "changelogLoading": {
+    "message": "وضع المتغير مباشرة من المستودع"
+  },
+  "changelogSubheading": {
+    "message": "تتبع كل تغيير لكل إطلاقة مباشرة من المستودع"
+  },
+  "changelogTitle": {
+    "message": "التغيير"
+  },
+  "codeconBuildChip": {
+    "message": "٤ ساعات من البرمجة"
+  },
+  "codeconBulletChallenge": {
+    "message": "التحدي: إثبات العمل عن بعد في 4 ساعات من الشفرة اليدوية، لا يسمح أي آي."
+  },
+  "codeconBulletNarrative": {
+    "message": "سرد المحامي يحوّل المقاييس إلى دفاع أمام المدير أو هيئة المحلفين."
+  },
+  "codeconBulletRepoLink": {
+    "message": "الأصلية"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "Hack Lab مفتوح المصدر:"
+  },
+  "codeconBulletTracking": {
+    "message": "ساعات التمديد تُبدل، والوقت العاطل، والمواقع الشريرة لبناء الرقم القياسي."
+  },
+  "codeconCtaRepo": {
+    "message": "انظر الرمز Hack Lab"
+  },
+  "codeconCtaSite": {
+    "message": "تعرّف على CodeCon"
+  },
+  "codeconCtaVideo": {
+    "message": "مشاهدة الفيديو الكامل"
+  },
+  "codeconEyebrow": {
+    "message": "مختبر هاك – CodeCon"
+  },
+  "codeconLead": {
+    "message": "وُلدت الفكرة في مختبر قراصنة بـ CodeCon: تصوّر أوتافيو ريبيرو سول كمحامٍ شخصي ضد التسويف — مع اهتزازات وصفارات وتقارير بمستوى قاعة المحكمة."
+  },
+  "codeconPlanChip": {
+    "message": "30 دقيقة تخطيط"
+  },
+  "codeconStoryLead": {
+    "message": "وفي ثلاثين دقيقة من اللوحة البيضاء، رسمت أوتافيو صورة MVP وشحنت خلال الساعات الأربع القادمة بذرة سول: تمديد يثبت العمل عن بعد عن طريق مشاهدة المقالات، وحساب الرقم القياسي، وصياغة دفاع ديفي عن &quot; الجري &quot; )الرئيس( - كلها بدون مخبر."
+  },
+  "codeconTag": {
+    "message": "ولد في المجتمع المحلي"
+  },
+  "codeconTitle": {
+    "message": "حيث أصبح (سول غودمان) امتداداً للزمن"
+  },
+  "codeconVideoCaption": {
+    "message": "كُلّمْ مِنْ مختبرِ الكود كون هاك حيث سول جاءَ إلى الحياةِ كa تمديد مُشَرَّد للإلهاءِ."
+  },
+  "demoCta": {
+    "message": "صورة كاملة"
+  },
+  "demoEyebrow": {
+    "message": "سريعة"
+  },
+  "demoLead": {
+    "message": "نظرة واحدة تكفي: نافذة منبثقة لردود فعل فورية، وتقرير لقرارات نهاية اليوم."
+  },
+  "demoPopupBody": {
+    "message": "الرقم القياسي اليومي، والمجالات العليا، وقصر الصادرات في متناول اليد."
+  },
+  "demoPopupTitle": {
+    "message": "الباب لاتخاذ القرارات الفورية"
+  },
+  "demoReportBody": {
+    "message": "قشور، قصّة خفيفة، واقترح التحركات التالية."
+  },
+  "demoReportTitle": {
+    "message": "تقرير عن التخطيط"
+  },
+  "demoTitle": {
+    "message": "انظر أين تقرر وأين تدخل (سول)"
+  },
+  "demoViewFull": {
+    "message": "المساحة الكاملة"
+  },
+  "devBody": {
+    "message": "جهزوا مدّة \"دايمون\" المحلية و \"في إس\" لعدّ وقت المحرّر كدقائق مثمرة دون أن يتركوا محلّاً"
+  },
+  "devCtaDocs": {
+    "message": "عرض المستندات"
+  },
+  "devCtaReadme": {
+    "message": "ملف README"
+  },
+  "devCtaVsCode": {
+    "message": "إضافة VS Code"
+  },
+  "devEyebrow": {
+    "message": "للمطورين"
+  },
+  "devLead": {
+    "message": "كل التفاصيل التقنية انتقلت من التدفق الرئيسي ابدأ بالمرشدين أدناه"
+  },
+  "devTitle": {
+    "message": "هل تريد المساهمة أو الاندماج؟"
+  },
+  "earthquake_open_popup": {
+    "message": "فتح النافذة المنبثقة"
+  },
+  "earthquake_review_villains": {
+    "message": "مراجعة الأشرار"
+  },
+  "earthquake_title": {
+    "message": "ساول في حالة تأهب قصوى!"
+  },
+  "extDescription": {
+    "message": "متتبع التركيز الساحق الذي يقيس المجالات ويبقي الرقم القياسي الخاص بك في التحقق."
+  },
+  "extensionsChromeCta": {
+    "message": "تمديد الفترة"
+  },
+  "extensionsCopy": {
+    "message": "أحضر (سول) إلى (كروم) و(في إس) ليحافظوا على تركيزكم"
+  },
+  "extensionsTitle": {
+    "message": "تركيب تمديدات سول"
+  },
+  "extensionsVscodeCta": {
+    "message": "إضافة VS Code"
+  },
+  "extName": {
+    "message": "سول غودمان"
+  },
+  "faq1Answer": {
+    "message": "تماماً (سول) يتهم فقط الإنتباه و الدعابة"
+  },
+  "faq1Question": {
+    "message": "هل هو مجاني؟"
+  },
+  "faq2Answer": {
+    "message": "أبداً كل شيء يبقى في..."
+  },
+  "faq2Question": {
+    "message": "هل بياناتي تترك المنظف؟"
+  },
+  "faq3Answer": {
+    "message": "فقط إذا كنت تريد سرد في التقرير. الباقي يعمل خارج الخط"
+  },
+  "faq3Question": {
+    "message": "هل أحتاج إلى أي؟"
+  },
+  "faq4Answer": {
+    "message": "لا كل شيء يسير محلياً بدون لوج."
+  },
+  "faq4Question": {
+    "message": "هل أحتاج إلى حساب؟"
+  },
+  "faq5Answer": {
+    "message": "عندما يصل الرقم القياسي إلى عتبة الخاص بك تهتز الشاشة والصفير يلعب لبضع ثواني."
+  },
+  "faq5Question": {
+    "message": "كيف يعمل نمط الزلازل؟"
+  },
+  "faq6Answer": {
+    "message": "نعم في شاشات الخيارات وضعت قوائم منتجة/شرية، أوزان، وجداول."
+  },
+  "faq6Question": {
+    "message": "هل يمكنني تكييف المجالات والجداول؟"
+  },
+  "faq7Answer": {
+    "message": "نعم سي إس في وأزرار PDF تجعلك تحميل البيانات على الفور."
+  },
+  "faq7Question": {
+    "message": "هل يمكنني تصدير بياناتي؟"
+  },
+  "faq8Answer": {
+    "message": "بناء لـ(كروم) ولكن متوافق مع مصفوفات الكروم مثل (براف) أو (إدج)"
+  },
+  "faq8Question": {
+    "message": "هل يعمل في مروجين آخرين؟"
+  },
+  "faq9Answer": {
+    "message": "قصّة AI اختياري؛ إذا تَرْكبُ عن مفتاحِ مفتوحِ كُلّ شيء يَبْقى خارج الإنترنتِ."
+  },
+  "faq9Question": {
+    "message": "هل تقرير \"آي آي\" آمن؟"
+  },
+  "faqEyebrow": {
+    "message": "أسئلة سريعة"
+  },
+  "faqTitle": {
+    "message": "مباشرة إلى مقر القيادة."
+  },
+  "feature1Item1": {
+    "message": "مع الرقم القياسي الحالي والرسائل الساخرة"
+  },
+  "feature1Item2": {
+    "message": "المجال الإنتاجي والمشرّد مع وقت مهيّئ."
+  },
+  "feature1Item3": {
+    "message": "تصدير CSV/PDF بنقرة واحدة."
+  },
+  "feature1Title": {
+    "message": "لوح الصمامات في الوقت الحقيقي"
+  },
+  "feature2Item1": {
+    "message": "عتبة مؤمنة و صفارة إسعاف اختياري"
+  },
+  "feature2Item2": {
+    "message": "الإفراط الحرج مع العد التنازلي و اتفاق التجارة الدولية."
+  },
+  "feature2Item3": {
+    "message": "القفل فقط يلتصق الشرير حتى تتمكن من التعافي في المنتجات المنتجة."
+  },
+  "feature2Title": {
+    "message": "نظام الزلازل"
+  },
+  "feature3Item1": {
+    "message": "رسومات في الساعة وانهيار تاب"
+  },
+  "feature3Item2": {
+    "message": "\"سرد \"آي\" في \"أفضل دعوة لـ(سول"
+  },
+  "feature3Item3": {
+    "message": "لافتة حرجة مع خطة عمل فورية"
+  },
+  "feature3Title": {
+    "message": "تقرير درامي"
+  },
+  "feature4Item1": {
+    "message": "بيانات في   TAG0    chrome.storage.local  TAG1    - لا شيء يذهب إلى السحابة."
+  },
+  "feature4Item2": {
+    "message": "قوائم إنتاجية أو شريرة تم حفظها فقط في منظفك"
+  },
+  "feature4Item3": {
+    "message": "تم تخزين المفتاح الاختياري المفتوح العضوية محلياً."
+  },
+  "feature4Title": {
+    "message": "مجموع الخصوصية"
+  },
+  "featureBlockBody": {
+    "message": "إذا سمحت للطريقة، (سول) يضرب الأشرار في الشاشة الكاملة حتى تعود لتركز وتفوز بالنقاط الخلفية"
+  },
+  "featureBlockHint": {
+    "message": "&quot; اضغط التبديل عندما تريد: لا يبقى سوى التافه المنتج مفتوحا &quot; ."
+  },
+  "featureBlockTitle": {
+    "message": "قفل فيلاين"
+  },
+  "featureContextBody": {
+    "message": "ويمكنكم الآن أن تحددوا تاريخ اليوم )العمل والترفيه والدراسة والشخصية( في البابا؛ ويعيد سول تقدير النتيجة ويخفف العقوبات ويبقي الأمور عادلة."
+  },
+  "featureContextLabel": {
+    "message": "جديدة"
+  },
+  "featureCustomBody": {
+    "message": "تُعرّفُ مجالاتَ إنتاجيةَ ومُشرّدَةَ، الأوزانَ بالساعةِ، و عتباتَ حَفْضِ مُتَصَلَة إلى روتينِكَ."
+  },
+  "featureCustomHint": {
+    "message": "&quot; ورقة مقدمة؟ VIP. تغذية لا نهاية لها؟ المدعى عليه &quot; ."
+  },
+  "featureCustomTitle": {
+    "message": "قوائم العملاء"
+  },
+  "featuredEyebrow": {
+    "message": "المرشح"
+  },
+  "featuredTitle": {
+    "message": "حالة الأسبوع"
+  },
+  "featureGaugeHint": {
+    "message": "عندما يعبر 70٪، سول يستعدّ الشجار."
+  },
+  "featureGaugeLabel": {
+    "message": "الحياة"
+  },
+  "featureGaugeTitle": {
+    "message": "مؤشر البرمجيات"
+  },
+  "featureNextLabel": {
+    "message": "البطاقة التالية"
+  },
+  "featurePrevLabel": {
+    "message": "بطاقة سابقة"
+  },
+  "featurePrivacyBody": {
+    "message": "كل شيء يجري داخل   TAG0   chrome.storage.local TAG1 ؛ لا خوادم خارجية أو أحكام مسربة."
+  },
+  "featurePrivacyHint": {
+    "message": "&quot; ولا يرى القاضي حتى بياناتك &quot; ."
+  },
+  "featurePrivacyTitle": {
+    "message": "الخصوصية الحادية"
+  },
+  "featureQuakeBody": {
+    "message": "صافرة، صفارة إنذار، و(سول) على قمة الأشرار يصرخون عليك للعودة إلى المسار الصحيح"
+  },
+  "featureQuakeHint": {
+    "message": "&quot; اضحكك! &quot; العودة إلى الخانة المنتجة الآن &quot; ."
+  },
+  "featureQuakeTest": {
+    "message": "إنذار الاختبار"
+  },
+  "featureQuakeTitle": {
+    "message": "نمط الحجر المغنطيسي"
+  },
+  "featureRealtimeBody": {
+    "message": "الشارة تراقب كل شيء وتحوّل يومك إلى نقطة تركيز واضحة"
+  },
+  "featureRealtimeHint": {
+    "message": "&quot; ويشاهد سول هذه ال ٣٧ تابس &quot; ."
+  },
+  "featureRealtimeTitle": {
+    "message": "التتبع في الوقت الحقيقي"
+  },
+  "featureReportBody": {
+    "message": "رسومات، قصّة AI، صادرات CSV/PDF، وخط زمني دقيقة كل دقيقة لظهرك المقبل."
+  },
+  "featureReportHint": {
+    "message": "&quot; هذه هي الأدلة بالنسبة لك ولرئيسك &quot; ."
+  },
+  "featureReportTitle": {
+    "message": "تقرير درامي"
+  },
+  "featureSectionEyebrow": {
+    "message": "السمات الأساسية"
+  },
+  "featureSectionLead": {
+    "message": "كل البطاقات تخلط الفكاهة والوضوح بحيث يتفهم الوافدون الجدد على الفور ما يفعله (سول) داخل الكروم"
+  },
+  "featureSectionTitle": {
+    "message": "كل شيء تحتاجه لتقوم بفحصه"
+  },
+  "featuresEyebrow": {
+    "message": "الخصائص التفصيلية"
+  },
+  "featuresTitle": {
+    "message": "ترسانة تمديد سول غودمان"
+  },
+  "featureSwipeHint": {
+    "message": "(سلوب) يتجه نحو إعادة النظر في كل مقبض لـ(سول)"
+  },
+  "feedbackLink": {
+    "message": "التغذية"
+  },
+  "finalCtaBody": {
+    "message": "اثبتي، اضبطي مجالك وارجعي للتركيز قبل أن يفوز الشرير"
+  },
+  "finalCtaTitle": {
+    "message": "مستعد لترك (سول) يتولى أمره؟"
+  },
+  "finalPrimary": {
+    "message": "تركيب على الكروم"
+  },
+  "footerBody": {
+    "message": "(إنستل)، قم بتسجيل الأشرار ودع (سول) يجمع رسوم التركيز"
+  },
+  "footerChangelogLink": {
+    "message": "التغيير"
+  },
+  "footerLinkArchitecture": {
+    "message": "الهندسة"
+  },
+  "footerLinkGithub": {
+    "message": "غيت هاب"
+  },
+  "footerLinkIndicators": {
+    "message": "المؤشرات"
+  },
+  "footerPrivacy": {
+    "message": "100% بيانات محلية ولا حتى القاضي يرى ذلك"
+  },
+  "footerPrivacyLink": {
+    "message": "سياسة الخصوصية"
+  },
+  "footerTitle": {
+    "message": "إضافة سول غودمان"
+  },
+  "heroBadge": {
+    "message": "\"في حالة الكسل..."
+  },
+  "heroConfidence1": {
+    "message": "نمط الزلازل العرفي"
+  },
+  "heroConfidence2": {
+    "message": "قوائم النطاقات الخاصة بكبار الشخصيات"
+  },
+  "heroConfidence3": {
+    "message": "تقرير مع سرد بالذكاء الاصطناعي"
+  },
+  "heroGaugeHint": {
+    "message": "عندما تصل إلى 70 في المائة، عاصفة نمطية."
+  },
+  "heroGaugeLabel": {
+    "message": "مؤشر المعيشة"
+  },
+  "heroPill": {
+    "message": "قطرات أسبوعية، سخرية يومية"
+  },
+  "heroPrimaryCta": {
+    "message": "تركيب على الكروم"
+  },
+  "heroSecondaryCta": {
+    "message": "انظر كيف يعمل"
+  },
+  "heroSubtitle": {
+    "message": "إنه يتعقب تفاهاتك و الأعلام يشتت انتباهك و يعيدك إلى التركيز قبل حلول اليوم"
+  },
+  "heroTag": {
+    "message": "تمديد مكافحة البيروقراطية للحياة الحقيقية"
+  },
+  "heroTitle": {
+    "message": "توقف عن التشويش (سول غودمان) يأخذ القضية"
+  },
+  "indexCalloutLabel": {
+    "message": "مذكرة سول"
+  },
+  "indexCalloutQuote": {
+    "message": "&quot; بنسبة ٦٠ في المائة وأتصل برئيسك. أقل من 10% وأنا أحجز معالجتك توازن المرفأ أيها العميل"
+  },
+  "indexClueAlert": {
+    "message": "مراجعة الحسابات"
+  },
+  "indexClueAlertBody": {
+    "message": "عتبة فحص مزدوج، صفارة إنذار، ونسخ حتى يصل الاستدعاء في الوقت المناسب."
+  },
+  "indexClueBreak": {
+    "message": "الجداول الدقيقة"
+  },
+  "indexClueBreakBody": {
+    "message": "إن النطاق ١٥-٢٢ يتطلب تنفسا استراتيجيا. ضعهم على تقويمك أيها العميل"
+  },
+  "indexClueFocus": {
+    "message": "ضع الأشرار"
+  },
+  "indexClueFocusBody": {
+    "message": "احتفظ بقائمة حيّة من الشرائط التي ترتفع الرقم القياسي قبل أن يقدم (سول) طلباً"
+  },
+  "indexCluesLabel": {
+    "message": "قائمة القضايا"
+  },
+  "indexEyebrow": {
+    "message": "على مكتب سول"
+  },
+  "indexFootnote": {
+    "message": "بين 15 و22 يضع سول العميل ضمن «العميل الثابت». فوق ذلك يسلّح الحمار؛ وتحت ذلك يصفّي الراحة — ليست مهامًا إضافية."
+  },
+  "indexGaugeHint": {
+    "message": "18% يضرب البقعة الحلوة - التركيز الثابت بدون أن يصبح الروبوت الكامل."
+  },
+  "indexGaugeLabel": {
+    "message": "بقعة جميلة"
+  },
+  "indexLead": {
+    "message": "دائرة الترجمة التحريرية القانونية: لا يوجد مبلغ صفر في الكأس، ولا يوجد 100 منها على الإطلاق. سول) يقرأ كل فرقة) ليقرر ما إذا كان سيهتز كرسيك أو يضغط يوم عطلة"
+  },
+  "indexMemoBody": {
+    "message": "إذا قفزت تاب الشريرة على الرقم القياسي، فبدأت الشاشة الكاملة. (سول) يغلق الأشرار ويحرر فقط الحساب المنتج وسجلاتك تتنفس مجدداً"
+  },
+  "indexMemoHeading": {
+    "message": "مذكرات مكتبية"
+  },
+  "indexMemoSign": {
+    "message": "-سول)، محامي إنتاجيتك)"
+  },
+  "indexPitch1": {
+    "message": "يتراوح الرقم القياسي بين صفر و 100. كلما اقتربت من 100، كلما أوقعت القضية في منتصف المحاكمة وأصبحت عميلاً من كبار الشخصيات"
+  },
+  "indexPitch2": {
+    "message": "لكن ضرب صفر يبدو مشبوهاً أيضاً: أي شخص مَلْصقُ إلى تصاميم منتجةِ 24/7 هو خطوة واحدة مِنْ a تَحْرُّب."
+  },
+  "indexRange0to14Body": {
+    "message": "أنتِ متلهفة جداً للعمل الذي يدعوه (سول) بـ &quot; الحماس المفرط &quot; . تنفسي، قفي واجلبي الماء قبل أن تصبح هذه الشهادة"
+  },
+  "indexRange0to14Title": {
+    "message": "صفر - 14: العمل الإضافي المشكوك فيه"
+  },
+  "indexRange15to22Body": {
+    "message": "حكم مثالي: تركيز ثابت، انقطاع صحي، صفر صفارات. قد ينظر (سول) في خصم الرسوم"
+  },
+  "indexRange15to22Title": {
+    "message": "15 - 22: الرصيد الذهبي"
+  },
+  "indexRange23to60Body": {
+    "message": "ولا تزالون ترافعون في القضية ولكنكم تعثرون في أطعمة شريرة. (سول) يشعل إشعارات ذكية ليعيد المحاكمة إلى مسارها"
+  },
+  "indexRange23to60Title": {
+    "message": "23 - 60: التركيز على ووببلي"
+  },
+  "indexRange61to100Body": {
+    "message": "الساعة الشاشة ترتجف، نصلات الإنذار، و(سول) يدخل مع وقف ودستور لكل تابوت شرير"
+  },
+  "indexRange61to100Title": {
+    "message": "61 - 100: الازدهار في اللبس"
+  },
+  "indexStamp": {
+    "message": "العملاء ينامون بسهولة"
+  },
+  "indexTitle": {
+    "message": "كيف يقرأ (صول) الرقم القياسي"
+  },
+  "integrationCard1Body": {
+    "message": "يولد مفتاح الأزواج، ويكافح التكامل، ويضع الجبهة المحلية. لا شيء يترك منظفك"
+  },
+  "integrationCard1Title": {
+    "message": "التمكين في الخيارات"
+  },
+  "integrationCard2Body": {
+    "message": "استخدموا أوامر التمديد لمدونة VS لبدء تشغيلها: فهي تملأ قبل التعبئة KEY/PORT وتفتح في ملف دايمون."
+  },
+  "integrationCard2Title": {
+    "message": "المحلية دايمون"
+  },
+  "integrationCard3Body": {
+    "message": "القيادة &quot; سول غودمان: سفن ما قبل الرفيق دو سول ديمون &quot; جاهزة بعد تركيبها وترسل نبضات قلب محررة إلى كروم."
+  },
+  "integrationCard3Title": {
+    "message": "إضافة VS Code"
+  },
+  "integrationCta": {
+    "message": "انظر دليل التكامل"
+  },
+  "integrationEyebrow": {
+    "message": "للمتجرين"
+  },
+  "integrationLead": {
+    "message": "فعّل التكامل الاختياري: سول يحتسب وقت المحرر كوقت منتج دون مغادرة localhost."
+  },
+  "integrationTitle": {
+    "message": "VS Code + خادم محلي، وكل ذلك محسوب كوقت منتج."
+  },
+  "integrationVsixCta": {
+    "message": "تثبيت إضافة VS Code"
+  },
+  "label_vscode": {
+    "message": "VS Code (بيئة تطوير)"
+  },
+  "languageLabel": {
+    "message": "اللغة المختارة"
+  },
+  "latestEyebrow": {
+    "message": "طازجة"
+  },
+  "latestTitle": {
+    "message": "ساخنة من محكمة الإنتاجية"
+  },
+  "lightboxClose": {
+    "message": "اقترب"
+  },
+  "manifesto1Body": {
+    "message": "يومك يُحكم عليه داخل المستنقع لا توجد بيانات تترك الحاسوب ولا حتى بأمر من المحكمة"
+  },
+  "manifesto1Title": {
+    "message": "100٪ محلية"
+  },
+  "manifesto2Body": {
+    "message": "التنبيهات البصرية والصوتية توضح عندما يكون (سول) على وشك فرض رسوم إضافية"
+  },
+  "manifesto2Title": {
+    "message": "فواتير شفافة"
+  },
+  "manifesto3Body": {
+    "message": "الرسائل الغامضة واللافتات الدرامية تذكرك بأن التلاعب باهظ الثمن أيضاً"
+  },
+  "manifesto3Title": {
+    "message": "هومر كالسلاح"
+  },
+  "manifestoEyebrow": {
+    "message": "البيان"
+  },
+  "manifestoTitle": {
+    "message": "تسويق عدواني مع حفنة من الأخلاق"
+  },
+  "mediaTaglineCarreira": {
+    "message": "المسار المهني تحت الاستجواب: بسخرية وبراغماتية."
+  },
+  "mediaTaglineDev": {
+    "message": "الأداء الشيطاني تحكم عليه القياسات الصلبة"
+  },
+  "mediaTaglineFoco": {
+    "message": "التركيز والاهتمام تحت الاستجواب اليومي."
+  },
+  "mediaTaglineMarketing": {
+    "message": "SEO ومحتوى وقمع بلا سحر."
+  },
+  "mediaTaglineNegocios": {
+    "message": "الأعمال على الطاولة: التركيز على التنفيذ."
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "ويقابل مظاريف الفستق العقلية السخرية العلاجية في سول."
+  },
+  "mediaTaglineProduto": {
+    "message": "المنتج يُحكم عليه بالبيانات لا بالإحساس."
+  },
+  "mediaTaglineRemoto": {
+    "message": "العمل عن بعد مع عدم وجود أعذار ضد الأشباح"
+  },
+  "mediaTaglineUx": {
+    "message": "تجربة المستخدم والتصميم وقرارات تُخرج المستخدم من وضع الشرير."
+  },
+  "metaCategory": {
+    "message": "الفئة"
+  },
+  "metaPublishedAt": {
+    "message": "نُشرت على المدونة"
+  },
+  "metaSource": {
+    "message": "المصدر"
+  },
+  "metaSourcePublishedAt": {
+    "message": "المصدر:"
+  },
+  "metaSourceUrl": {
+    "message": "المصدر URL"
+  },
+  "metaTags": {
+    "message": "الوسوم"
+  },
+  "mobileMenuToggle": {
+    "message": "القائمة المفتوحة"
+  },
+  "multilingualLabel": {
+    "message": "متوفر بـ 13 لغة: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
+  },
+  "navBenefits": {
+    "message": "الاستحقاقات"
+  },
+  "navBlog": {
+    "message": "المدونة"
+  },
+  "navClients": {
+    "message": "العملاء"
+  },
+  "navCodeCon": {
+    "message": "المدونة"
+  },
+  "navCta": {
+    "message": "تثبيت"
+  },
+  "navDemo": {
+    "message": "عرض تجريبي"
+  },
+  "navIndex": {
+    "message": "الفهرس"
+  },
+  "navProcess": {
+    "message": "العملية"
+  },
+  "newsletterCopy": {
+    "message": "إنفجارات قصيرة من السخرية و الإنضباط لذا فإن قانونك في إس يتوقف عن التصرف مثل نتفليكس"
+  },
+  "newsletterCta": {
+    "message": "قابل (سول)"
+  },
+  "newsletterDisclaimer": {
+    "message": "لا مسام. فقط السخرية التي يمكنك التعامل معها"
+  },
+  "newsletterError": {
+    "message": "رجاءً ضع رسالة إلكترونية صحيحة"
+  },
+  "newsletterLabel": {
+    "message": "بريدك الإلكتروني"
+  },
+  "newsletterPlaceholder": {
+    "message": "you@email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "أحضر المذكرة"
+  },
+  "newsletterSuccess": {
+    "message": "أنت على الرادار. قطرات جديدة قادمة قريباً"
+  },
+  "newsletterTitle": {
+    "message": "أحضر مذكرة (صول)"
+  },
+  "nextPost": {
+    "message": "التالي"
+  },
+  "notification_update_message": {
+    "message": "تم تحديث الإضافة. انقر لرؤية سجل التغييرات."
+  },
+  "notification_update_title": {
+    "message": "أخبار جديدة — الإصدار {version}"
+  },
+  "options_back_to_popup": {
+    "message": "العودة إلى البابا"
+  },
+  "options_confirm_reset": {
+    "message": "هذا سيعيد القيم الافتراضية أكمل؟"
+  },
+  "options_critical_sound_hint": {
+    "message": "عندما يُمْكِنُ أَنْ، الإنذار يَلْعبُ متى نيران الإنذارِ الحرجةِ."
+  },
+  "options_critical_sound_label": {
+    "message": "صفارة المكياج الآلية"
+  },
+  "options_critical_threshold_hint": {
+    "message": "عندما يضرب الفهرس هذه القيمة، (سول) يشعل الإنذار الحرج."
+  },
+  "options_critical_threshold_label": {
+    "message": "عتبة نمطية )٠-١٠٠("
+  },
+  "options_digital_branch": {
+    "message": "الفرع الرقمي"
+  },
+  "options_domain_add": {
+    "message": "مضاف"
+  },
+  "options_domain_duplicate": {
+    "message": "(دومن) مدرج بالفعل"
+  },
+  "options_domain_empty": {
+    "message": "لا مجال بعد"
+  },
+  "options_domain_invalid": {
+    "message": "أدخل مجالاً صالحاً"
+  },
+  "options_footer_note": {
+    "message": "(سول) لا يتشارك بياناتك مع أي أحد ولا حتى القاضي"
+  },
+  "options_head_title": {
+    "message": "سول غودمان - ستينغز"
+  },
+  "options_heading": {
+    "message": "المكتب"
+  },
+  "options_holiday_context_hint": {
+    "message": "إستخدم البابا لاختيار الـ\"كونتيكست\" اليوم (العمل، الفراغ، الدراسة، إجازة يومية، إجازة، شخصية). (سول) يسجل التاريخ ويضبط النتيجة بشكل عادل"
+  },
+  "options_holiday_country_error": {
+    "message": "استخدمي رسالتين فقط، مثل، BR أو الولايات المتحدة."
+  },
+  "options_holiday_country_hint": {
+    "message": "BR, US, PT. (سول) لا يحاول أبداً كشف بلدك تلقائياً"
+  },
+  "options_holiday_country_label": {
+    "message": "القانون القطري (ISO-3166)"
+  },
+  "options_holiday_heading": {
+    "message": "أيام العطلة والسياق العادل"
+  },
+  "options_holiday_hint": {
+    "message": "عندما مُكّن (سول) ينادي (ناجر) فقط تاريخ لمعرفة ما إذا كان اليوم عطلة وطنية ويحيّل النتيجة."
+  },
+  "options_holiday_toggle_hint": {
+    "message": "المكالمات تحدث فقط إذا تمكنت من وضع البلاد لا موقع آلي"
+  },
+  "options_holiday_toggle_label": {
+    "message": "إطلاق النار في العطلات الوطنية"
+  },
+  "options_inactivity_threshold": {
+    "message": "الحد الأقصى من الوقت العاجز قبل العد كغير نشط (الثانيات)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "بين 10 ثوانٍ و 10 دقائق؛ يؤثر على حساب عدم النشاط."
+  },
+  "options_language_auto": {
+    "message": "أوتوماتيكي (مزارع)"
+  },
+  "options_language_en": {
+    "message": "الإنكليزية (الولايات المتحدة)"
+  },
+  "options_language_es": {
+    "message": "الإسبانية"
+  },
+  "options_language_hint": {
+    "message": "اختر يدوياً أو دع اللغة تتبع (كروم)"
+  },
+  "options_language_label": {
+    "message": "اللغة المشتركة"
+  },
+  "options_language_pt": {
+    "message": "البرتغال (البرازيل)"
+  },
+  "options_openai_hint": {
+    "message": "مخزن محليا لتوليد سرد في التقرير."
+  },
+  "options_openai_label": {
+    "message": "مفتاح مفتوح (اختياري)"
+  },
+  "options_openai_placeholder": {
+    "message": "Sk..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "وعندما أمكن ذلك، يحجب سول الملاحة إلى هذه المواقع باستخدام قواعد الكروم المحلية."
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "الوصول إلى هذه القائمة"
+  },
+  "options_procrastination_heading": {
+    "message": "مجالات الإحلال"
+  },
+  "options_procrastination_hint": {
+    "message": "هنا يعيش الإغراءات. إذا كنت تحب موقعا، فمن المحتمل أن يكون هنا."
+  },
+  "options_procrastination_placeholder": {
+    "message": "e.g. youtube.com"
+  },
+  "options_productive_heading": {
+    "message": "المجالات الإنتاجية"
+  },
+  "options_productive_hint": {
+    "message": "(سول) يعرف أين يحدث العمل أضف أو أزيل بناء على روتينك"
+  },
+  "options_productive_placeholder": {
+    "message": "e.g. docs.google.com"
+  },
+  "options_promise": {
+    "message": "(سول) يبقي بياناتك تحت الختم بينما يتفاوض مع تركيزك"
+  },
+  "options_restore_defaults": {
+    "message": "حالات التخلف عن السداد"
+  },
+  "options_save_weights": {
+    "message": "حفظ الأوزان"
+  },
+  "options_schedule_add": {
+    "message": "مضافا إليه"
+  },
+  "options_schedule_heading": {
+    "message": "ساعات العمل"
+  },
+  "options_schedule_hint": {
+    "message": "أخبر (سول) عندما تحدث مناوبتك الرسمية خارج هذه القطع، دقائق إنتاجية تعد مزدوجة."
+  },
+  "options_schedule_to": {
+    "message": "إلى"
+  },
+  "options_status_blocklist_saved": {
+    "message": "تحديث الأفضلية"
+  },
+  "options_status_critical_saved": {
+    "message": "تحديث نمط الزلزال."
+  },
+  "options_status_defaults_restored": {
+    "message": "تم إستعادة الإخفاقات"
+  },
+  "options_status_domain_removed": {
+    "message": "أزيل (دومين)"
+  },
+  "options_status_holiday_saved": {
+    "message": "تحديث أفضليات عيد الميلاد."
+  },
+  "options_status_language_saved": {
+    "message": "تحديث اللغة."
+  },
+  "options_status_list_updated": {
+    "message": "تم تحديث القائمة."
+  },
+  "options_status_ready": {
+    "message": "كل شيء بخير"
+  },
+  "options_status_schedule_updated": {
+    "message": "تحديث الجدول الزمني."
+  },
+  "options_status_vscode_saved": {
+    "message": "تم تحديث تكامل VS Code."
+  },
+  "options_status_weights_saved": {
+    "message": "تم تحديث الوزن"
+  },
+  "options_subtitle": {
+    "message": "إستخدم الرادار ليطابق أسلوبك البرمجي كل شيء يبقى محلياً"
+  },
+  "options_tagline": {
+    "message": "محاميك الشخصي ضد التشويش"
+  },
+  "options_thresholds_heading": {
+    "message": "الأوزان"
+  },
+  "options_vscode_heading": {
+    "message": "تكامل VS Code"
+  },
+  "options_vscode_install_hint": {
+    "message": "(ج) وضع تمديد رسمي لمدونة VS لإرسال جلسات التركيز."
+  },
+  "options_vscode_install_link": {
+    "message": "تثبيت إضافة VS Code"
+  },
+  "options_vscode_key_copied": {
+    "message": "تم نسخ المفتاح"
+  },
+  "options_vscode_key_copy": {
+    "message": "مفتاح النسخ"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "لا مفتاح للنسخ"
+  },
+  "options_vscode_key_generate": {
+    "message": "توفير مفتاح جديد"
+  },
+  "options_vscode_key_generated": {
+    "message": "مفتاح جديد خلق."
+  },
+  "options_vscode_key_hint": {
+    "message": "يجب أن يطابق المفتاح الذي تم تشكيله في شفرة (سول دايمون)"
+  },
+  "options_vscode_key_label": {
+    "message": "مفتاح الطلاء"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "معذرة مفتاح سول دايمون"
+  },
+  "options_vscode_test_button": {
+    "message": "وصلة الاختبار"
+  },
+  "options_vscode_test_disabled": {
+    "message": "فعّل تكامل VS Code قبل الاختبار."
+  },
+  "options_vscode_test_error": {
+    "message": "فشل في التواصل مع سول دايمون{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "فشل في الوصول{origin}الصحة{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "عنوان URL غير صالح. استخدم مثلًا: http://127.0.0.1:3123."
+  },
+  "options_vscode_test_running": {
+    "message": "ستاندو كونكساو..."
+  },
+  "options_vscode_test_success": {
+    "message": "سول ديمون أجاب{origin}الدورات اليوم:{sessions}دقيقة:{minutes}."
+  },
+  "options_vscode_test_timeout": {
+    "message": "سول ديمون ناو رد على مزاج"
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "(تشاف ديفيرنت) استخدم مفتاحاً مسموياً لا كرومي ولا رمزاً لـ\"في إس\""
+  },
+  "options_vscode_toggle_hint": {
+    "message": "يدعو (سول دايمون) المحلي (المحل) قبل أن يُعيدوا تقييمكم"
+  },
+  "options_vscode_toggle_label": {
+    "message": "إدراج وقت التركيز من VS Code"
+  },
+  "options_vscode_url_hint": {
+    "message": "فقط تحدث إلى (الثوار المحلي) لا شيء يترك آلتك"
+  },
+  "options_vscode_url_label": {
+    "message": "الدعم المحلي"
+  },
+  "options_weight_hint": {
+    "message": "استخدم أرقامًا بين 0 و 1 لضبط التأثير على المؤشر."
+  },
+  "options_weight_inactivity": {
+    "message": "العجز (الوزن)"
+  },
+  "options_weight_procrastination": {
+    "message": "وقت غير منتج (وزن)"
+  },
+  "options_weight_switches": {
+    "message": "مفاتيح التبديل (الوزن)"
+  },
+  "options_weights_sum_error": {
+    "message": "يجب أن يكون مجموع الأوزان 1"
+  },
+  "popup_alert_no_data": {
+    "message": "لا توجد بيانات بعد افتح بعض التفاهات وحاول مرة أخرى"
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDFوحدة غير متاحة."
+  },
+  "popup_badge_label": {
+    "message": "الفهرس"
+  },
+  "popup_blog_badge": {
+    "message": "(سول) يوصي بالقراءة"
+  },
+  "popup_blog_button_all": {
+    "message": "مدونة مفتوحة"
+  },
+  "popup_blog_category_prefix": {
+    "message": "الفئة:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "إقرأ الآن"
+  },
+  "popup_blog_empty": {
+    "message": "لا توجد مادة متاحة بعد."
+  },
+  "popup_blog_error": {
+    "message": "لم أستطع الوصول إلى المدونة الآن"
+  },
+  "popup_blog_loading": {
+    "message": "الصيد للقضية المثالية..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "حان الوقت لتقوية الأداء الدافئ بدون تدريب رخيص"
+  },
+  "popup_blog_reason_foco": {
+    "message": "بناء على تركيز اليوم المتناثر."
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "لأن ازدراءك عبر الحدود القانونية اليوم"
+  },
+  "popup_blog_reason_remoto": {
+    "message": "البقاء على العمل عن بعد دون الذهاب إلى وضع الشبح الكامل."
+  },
+  "popup_blog_section_subtitle": {
+    "message": "نقرأ أرقامك ونشير إلى مقالة من نوع (سول)"
+  },
+  "popup_blog_section_title": {
+    "message": "معلومة مدوّنة"
+  },
+  "popup_chart_aria": {
+    "message": "ساعات الإنتاج مقابل التطهير"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "دقائق"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "البيروقراطية"
+  },
+  "popup_chart_label_productive": {
+    "message": "الإنتاجية"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS كود"
+  },
+  "popup_chart_title": {
+    "message": "الرادار اليومي"
+  },
+  "popup_context_option_dayOff": {
+    "message": "فولغا"
+  },
+  "popup_context_option_leisure": {
+    "message": "لازر"
+  },
+  "popup_context_option_personal": {
+    "message": "الشخصية"
+  },
+  "popup_context_option_study": {
+    "message": "الدراسة"
+  },
+  "popup_context_option_vacation": {
+    "message": "الشواغر"
+  },
+  "popup_context_option_work": {
+    "message": "العمل"
+  },
+  "popup_critical_close_aria": {
+    "message": "إنذار"
+  },
+  "popup_critical_countdown_final": {
+    "message": "لا أعذار، أغلقوا ثلاثة تفاهات الآن"
+  },
+  "popup_critical_default_message": {
+    "message": "في هذا الرقم لا يمكنني حتى الدفاع عنك هذا سيكلف رسوم الخطر"
+  },
+  "popup_critical_message_1": {
+    "message": "العملاء، مع الرقم القياسي{threshold}ولا حتى يمكنني الدفاع عنك رسوم المخاطر تنطبق"
+  },
+  "popup_critical_message_2": {
+    "message": "هذا الخندق؟ القاضي يحطم إنتاجيتك"
+  },
+  "popup_critical_message_3": {
+    "message": "توقف عن التشويش وإلا سأشترى إعلانات في البداية لتروي قصتك"
+  },
+  "popup_critical_message_4": {
+    "message": "ساعديني في الدفاع عنكِ أغلقي تلك المقالات قبل أن أبدأ بالدفع بالدولار"
+  },
+  "popup_critical_plan_action": {
+    "message": "أغلق 3 أشرار"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "خطة العمل:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "S."
+  },
+  "popup_critical_review": {
+    "message": "Villains"
+  },
+  "popup_critical_sound_now": {
+    "message": "صافرة الزنجبيل الآن"
+  },
+  "popup_critical_title": {
+    "message": "(سول) في وضعية (كيك)"
+  },
+  "popup_csv_category": {
+    "message": "الفئة"
+  },
+  "popup_csv_column_date": {
+    "message": "التاريخ"
+  },
+  "popup_csv_column_inactive": {
+    "message": "الخاملة (م)"
+  },
+  "popup_csv_column_index": {
+    "message": "الفهرس"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "الازدهار (ذات)"
+  },
+  "popup_csv_column_productive": {
+    "message": "الإنتاجية (باللغة)"
+  },
+  "popup_csv_column_switches": {
+    "message": "مفاتيح التبديل"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (دقيقة)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "الفئة"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "السياق"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "دومينيو"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "المدة (م)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "النهاية"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "قاعدة الإنصاف"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "البداية"
+  },
+  "popup_csv_detailed_title": {
+    "message": "الجدول الزمني التفصيلي"
+  },
+  "popup_csv_domain": {
+    "message": "النطاق"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "مجال التركيز الرئيسي"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "التركيز النشط (%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "وقت الذروة (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "إنتاجي مقابل مُشتّت"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "تحويلات في الساعة"
+  },
+  "popup_csv_kpi_time": {
+    "message": "الوقت"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "فيلاين من اليوم"
+  },
+  "popup_csv_kpis_title": {
+    "message": "المؤشرات الإضافية"
+  },
+  "popup_csv_minutes": {
+    "message": "دقائق"
+  },
+  "popup_csv_summary_title": {
+    "message": "موجز عام"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "المجالات الرئيسية"
+  },
+  "popup_error_no_data": {
+    "message": "لا توجد بيانات متاحة"
+  },
+  "popup_error_runtime": {
+    "message": "! غير قادر على الوصول للمكتب"
+  },
+  "popup_error_unknown": {
+    "message": "خطأ غير معروف"
+  },
+  "popup_export_csv": {
+    "message": "تحميل CSV"
+  },
+  "popup_export_description": {
+    "message": "حوّل أرقامك إلى حجج (سول غودمان)"
+  },
+  "popup_export_pdf": {
+    "message": "إنشاء PDF"
+  },
+  "popup_export_report": {
+    "message": "تقرير مفتوح"
+  },
+  "popup_export_title": {
+    "message": "تدافع عن تركيزك"
+  },
+  "popup_fairness_context_label": {
+    "message": "السياق"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "اليوم هو عطلة، النتيجة متوقفة تلقائيا."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "اكتشف يوم العطلة - لا عقوبات."
+  },
+  "popup_fairness_manual_label": {
+    "message": "تزلج اليوم"
+  },
+  "popup_fairness_note": {
+    "message": "يعيد سول معايرة المؤشر وفقًا للسياق الذي تختاره في النافذة المنبثقة. «تجاهل اليوم» يصفّر النتيجة ويكتم التنبيهات. السياقات: العمل يحافظ على 100%، الشخصي يحيّد كل شيء، الترفيه يحتسب 30% من التركيز ويتجاهل الأشرار، الدراسة تُنصّف العقوبات، يوم إجازة والعطلة يصفّران اليوم بغض النظر عن العطلات."
+  },
+  "popup_fairness_note_label": {
+    "message": "سوليك(أ)"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "يوم اجازة مسجّلة - تم تأجيل النتيجة"
+  },
+  "popup_fairness_status_default": {
+    "message": "ديا حتى طبيعية."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "عطلة وطنية تحييد النتيجة"
+  },
+  "popup_fairness_status_leisure": {
+    "message": "(مودو لازر) يحمّل مصارعة."
+  },
+  "popup_fairness_status_manual": {
+    "message": "دليل ديا جانورادو"
+  },
+  "popup_fairness_status_personal": {
+    "message": "أسلوب شخصي نشط - لا يوجد رزق"
+  },
+  "popup_fairness_status_study": {
+    "message": "طريقة الدراسة تضعف النتيجة"
+  },
+  "popup_fairness_status_vacation": {
+    "message": "طريقة الإختفاء تحييد اليوم"
+  },
+  "popup_fairness_title": {
+    "message": "يوم النزاهة"
+  },
+  "popup_head_title": {
+    "message": "سول غودمان - رادار التركيز"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "بطل التركيز"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "مجال إنتاجي حيث استثمرت وقت أكثر استمرارا اليوم."
+  },
+  "popup_kpi_focus_hint": {
+    "message": "يوم العمل المنتج"
+  },
+  "popup_kpi_focus_label": {
+    "message": "التركيز النشط"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "النسبة المئوية للوقت الإنتاجي على كل شيء تم تعقبه اليوم"
+  },
+  "popup_kpi_idle_hint": {
+    "message": "النسبة المئوية لليوم"
+  },
+  "popup_kpi_idle_label": {
+    "message": "وقت النوم"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "النسبة المئوية من اليوم الذي ظل فيه المتجول مفتوحا بدون تفاعل."
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "ساعات إنتاجية لكل شرير"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "إنتاجي مقابل مُشتّت"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "ساعات إنتاجية مقابل كل ساعة من التشتيت."
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "مباشرة إلى النقطة: أرقام خام من يومك."
+  },
+  "popup_kpi_section_title": {
+    "message": "المؤشرات الإضافية"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "طول الساعة"
+  },
+  "popup_kpi_switch_label": {
+    "message": "تحويلات في الساعة"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "متوسط التبديلات في الساعة المراقبة."
+  },
+  "popup_kpi_villain_label": {
+    "message": "فيلاين من اليوم"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "مجال الازدهار الذي سرق معظم وقتك"
+  },
+  "popup_last_sync": {
+    "message": "تم التحديث في {time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "تحديث..."
+  },
+  "popup_loading": {
+    "message": "التعبئة..."
+  },
+  "popup_options_button": {
+    "message": "الثقة"
+  },
+  "popup_pdf_date": {
+    "message": "التاريخ"
+  },
+  "popup_pdf_inactive": {
+    "message": "الخاملة"
+  },
+  "popup_pdf_index": {
+    "message": "الفهرس"
+  },
+  "popup_pdf_kpis": {
+    "message": "المؤشرات الإضافية"
+  },
+  "popup_pdf_procrastination": {
+    "message": "البيروقراطية"
+  },
+  "popup_pdf_productive": {
+    "message": "الإنتاجية"
+  },
+  "popup_pdf_summary": {
+    "message": "الموجز اليومي"
+  },
+  "popup_pdf_switches": {
+    "message": "مفاتيح التبديل"
+  },
+  "popup_pdf_title": {
+    "message": "تقرير سول غودمان"
+  },
+  "popup_pdf_top_domains": {
+    "message": "المجالات الرئيسية"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS كود"
+  },
+  "popup_privacy_note": {
+    "message": "كل البيانات تبقى في جهازك (سول) يشرف المحامية و امتياز العملاء"
+  },
+  "popup_refresh_button": {
+    "message": "التجديد"
+  },
+  "popup_release_notes_button": {
+    "message": "انظر ما الجديد"
+  },
+  "popup_release_notes_error": {
+    "message": "لم أستطع فتح ملاحظات الإطلاق أعد تحميل التمديد وحاول مرة أخرى."
+  },
+  "popup_score_message_alert": {
+    "message": "أنت تلعب بالنار لقد فوت ساعة لأطفئ النيران"
+  },
+  "popup_score_message_excellent": {
+    "message": "العميل الذهبي! حافظوا عليه ويمكنني أن أشحنه بالكامل"
+  },
+  "popup_score_message_ok": {
+    "message": "ما زال يحسب كساعات مكتبية لا تجعليني أتصل بتركيزك"
+  },
+  "popup_score_message_warning": {
+    "message": "أرى تجنب هنا. حان وقت العودة إلى اللعبة"
+  },
+  "popup_score_placeholder": {
+    "message": "نوبة نقل"
+  },
+  "popup_status_no_data": {
+    "message": "لا توجد بيانات"
+  },
+  "popup_status_no_domains": {
+    "message": "لا توجد بيانات اليوم"
+  },
+  "popup_summary_inactive_label": {
+    "message": "خمول"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "الفترة التي بقي فيها المنظف مفتوحاً بدون تفاعل"
+  },
+  "popup_summary_procrastination_label": {
+    "message": "تسويف"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "الوقت يمضي على مجالات التبريد"
+  },
+  "popup_summary_productive_label": {
+    "message": "الإنتاجية"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "الوقت المنفق على المجالات التي تعتبر مثمرة."
+  },
+  "popup_tooltip_aria": {
+    "message": "التفسير"
+  },
+  "popup_top_domains_title": {
+    "message": "المجالات الخمسة الأولى"
+  },
+  "postInvalid": {
+    "message": "وظيفة غير صالحة أو متغيبة"
+  },
+  "postLoadError": {
+    "message": "خطأ أثناء تحميل هذه المادة."
+  },
+  "postLoadingBody": {
+    "message": "التعبئة..."
+  },
+  "postLoadingTitle": {
+    "message": "مقالة تحميل..."
+  },
+  "postNotFound": {
+    "message": "لم يتم العثور على الوظيفة"
+  },
+  "previousPost": {
+    "message": "سابقا"
+  },
+  "privacyError": {
+    "message": "لا يمكننا تحميل السياسة الآن حاول مرة أخرى في لحظة."
+  },
+  "privacyEyebrow": {
+    "message": "الشفافية الكاملة"
+  },
+  "privacyHeading": {
+    "message": "سياسة الخصوصية"
+  },
+  "privacyLoading": {
+    "message": "وضع السياسة مباشرة من المستودع"
+  },
+  "privacySubheading": {
+    "message": "وهنا آخر نسخة من السياسة المنشورة في المستودع."
+  },
+  "privacyTitle": {
+    "message": "سياسة الخصوصية"
+  },
+  "process1Body": {
+    "message": "وتنظر الشارة بهدوء إلى ما هو مفتوح وتعرف فورا إذا كنت تدرس، أو تعمل، أو تغرق."
+  },
+  "process1Title": {
+    "message": "تعقّبْ حكاياتَكَ النشطةَ"
+  },
+  "process2Body": {
+    "message": "تُعرّفُ المُنتج ضدّ حقولِ الشريرِ. إذا تَتجوّلُ، سول يَهْزُّ الشاشةَ ويَصْرخُ قَبْلَ أَنْ تَبْدأُ الروحَ."
+  },
+  "process2Title": {
+    "message": "تشتيت الذباب"
+  },
+  "process3Body": {
+    "message": "وينتهي كل يوم بتقرير نظيف: مخططات، أبرز، وخطة عمل للغد."
+  },
+  "process3Title": {
+    "message": "تقديم دليل قابل للاستخدام"
+  },
+  "processEyebrow": {
+    "message": "كيف يعمل"
+  },
+  "processLead": {
+    "message": "لا جرغون قانوني، ضعه، دعه ينتبه لكتاباتك ويشعر بالإنذارات، وينتهي يومك بالأدلة جاهزة."
+  },
+  "processTitle": {
+    "message": "(سول) يغلق التشويش في ثلاث خطوات"
+  },
+  "quakeBody": {
+    "message": "النفقة تحجب الشرائط الشريرة وتظهر حرف \"سي تي\" جريء ويمكنها أن تفجر صفارة الإنذار الاختيارية من المستحيل تجاهله بالضبط كما هو مخطط له"
+  },
+  "quakeButton": {
+    "message": "اضرب المصافحة"
+  },
+  "quakeCallout": {
+    "message": "زلزال قادم"
+  },
+  "quakeDemoBody": {
+    "message": "إلعقْ لتَحْطيم نمطِ الزلازلِ: مصافحة الشاشةِ، إنذار، ورسالة مثيرة. مثل التمديد، ولكن فقط لبضع ثواني هنا."
+  },
+  "quakeDemoButton": {
+    "message": "محاكاة نمط الزلازل"
+  },
+  "quakeDemoEyebrow": {
+    "message": "نمط الزلزال (ديمو)"
+  },
+  "quakeDemoTitle": {
+    "message": "اختبار إنذار سول الأكثر دراما."
+  },
+  "quakeDisplayCopy": {
+    "message": "اقفز للوراء للتركيز أو سول رفع رسومه."
+  },
+  "quakeEyebrow": {
+    "message": "وضع الزلزال"
+  },
+  "quakeLead": {
+    "message": "نفس التنبيه المثير من التمديد يظهر هنا حتى يشعر الزوار مدى خطورة الإنذار تجاوز العتبة"
+  },
+  "quakeMicro": {
+    "message": "&quot; اضحكوا على فرز الموت! استعدوا للتأثير &quot; ."
+  },
+  "quakeOverlayBody": {
+    "message": "(سول) يرتجف مخابرات شريرة عودي للتركيز قبل أن يتهمني"
+  },
+  "quakeOverlayClose": {
+    "message": "العودة إلى التركيز"
+  },
+  "quakeOverlayTitle": {
+    "message": "!"
+  },
+  "quakeTip": {
+    "message": "الاسترخاء: العرض لا يدوم سوى بضع ثواني."
+  },
+  "quakeTitle": {
+    "message": "عندما يشاهد (سول) الأشرار، تهتز الصفحة معه."
+  },
+  "ratingBadgeAlt": {
+    "message": "متوسط التقدير على مخزن الكروم"
+  },
+  "ratingBadgeLabel": {
+    "message": "التقييم"
+  },
+  "reactionBlockAlt": {
+    "message": "(سول) يحجب الدخول"
+  },
+  "reactionBlockHint": {
+    "message": "إعادة توجيه الصفحة الرئيسية مع سول إغلاق الباب."
+  },
+  "reactionBlockLabel": {
+    "message": "وضع الحظر"
+  },
+  "reactionBlockText": {
+    "message": "&quot; لا تحاول حتى ذلك: تُمنع الأشرار فورا &quot; ."
+  },
+  "reactionDisbeliefHint": {
+    "message": "مخادعين عندما تتخطى عتبة الـ(كراك)"
+  },
+  "reactionDisbeliefLabel": {
+    "message": "أسلوب هائل"
+  },
+  "reactionDisbeliefText": {
+    "message": "&quot; تسمي هذا التركيز؟ &quot;"
+  },
+  "reactionHypeHint": {
+    "message": "تظهر عندما تقفز مرة أخرى إلى المقالات المنتجة."
+  },
+  "reactionHypeLabel": {
+    "message": "الطريقة المعتمدة"
+  },
+  "reactionHypeText": {
+    "message": "&quot; الآن قد أخفض أتعابي &quot; ."
+  },
+  "reactionsBody": {
+    "message": "عندما يرتفع الرقم القياسي، سول هو لامع. عندما تعود للتركيز، يحتفل. صور سريعة للحفاظ على العدالة في مكانها."
+  },
+  "reactionsEyebrow": {
+    "message": "سول رد فعل"
+  },
+  "reactionsTitle": {
+    "message": "حكم سول الفوري."
+  },
+  "readArticle": {
+    "message": "قراءة المادة"
+  },
+  "readingTimeLabel": {
+    "message": "وقت القراءة"
+  },
+  "readTimeUnit": {
+    "message": "يقرأ"
+  },
+  "reason1Body": {
+    "message": "فهرس البوب يظهر وضعك الحالي حتى تعرف ما ستصلحه بعد ذلك"
+  },
+  "reason1Title": {
+    "message": "التركيز المرشد"
+  },
+  "reason2Body": {
+    "message": "الحمار يُسيطرُ على الشاشةِ قَبْلَ أَنْ يُخرّبَ a تاب الشرير زخمَكَ."
+  },
+  "reason2Title": {
+    "message": "تنبيهات لا يمكن تجاهلها"
+  },
+  "reason3Body": {
+    "message": "وتسقط الرسومات والملخصات بشكل مثالي إلى تحديث يومي أو احتياطي أو تحديث العملاء."
+  },
+  "reason3Title": {
+    "message": "التقارير الشائعة"
+  },
+  "reason4Body": {
+    "message": "كل متر يعيش داخل الكروم لا شيء يترك آلتك"
+  },
+  "reason4Title": {
+    "message": "مجموع الخصوصية"
+  },
+  "reasonsEyebrow": {
+    "message": "الفوائد الرئيسية"
+  },
+  "reasonsLead": {
+    "message": "أربع بطاقات سريعة تفسر القيمة مع الصفر."
+  },
+  "reasonsTitle": {
+    "message": "لماذا تستخدم (سول غودمان)؟"
+  },
+  "relatedTitle": {
+    "message": "الوظائف ذات الصلة"
+  },
+  "report_ai_error_generic": {
+    "message": "(سول) لم يستطع إقناع القاضي الرقمي حاول مرة أخرى لاحقا."
+  },
+  "report_ai_generate": {
+    "message": "سرد عام"
+  },
+  "report_ai_heading": {
+    "message": "حجة سول"
+  },
+  "report_ai_hint": {
+    "message": "قم بكتابة رواية (جينرات) حتى يتمكن (سول) من تحليل يومك بسخريته"
+  },
+  "report_ai_loading": {
+    "message": "ما زلت أجهز الحجة الختامية"
+  },
+  "report_ai_missing_key": {
+    "message": "ثقي بمفتاحكِ المفتوح في الخيارات قبل إعداد السرد"
+  },
+  "report_ai_no_metrics": {
+    "message": "لا مقاييس لتروي قصة اليوم"
+  },
+  "report_ai_retry": {
+    "message": "حاول مرة أخرى"
+  },
+  "report_ai_subtitle": {
+    "message": "دفاع درامي مستند على بياناتك"
+  },
+  "report_alert_pdf_missing": {
+    "message": "مكتبة PDF غير متاحة."
+  },
+  "report_banner_countdown_final": {
+    "message": "حان الوقت للتصرّف: اغلق الشرائط الشريرة وعود إلى السيطرة"
+  },
+  "report_banner_message_1": {
+    "message": "ولا حتى يمكنني إقناع هيئة المحلفين بالرقم القياسي{threshold}اقطعوا الإلهاءات"
+  },
+  "report_banner_message_2": {
+    "message": "حافظ على هذا وسأستأجر لوحة إعلانات تحذير رئيسك"
+  },
+  "report_banner_message_3": {
+    "message": "هذا الحمار هو صدى حكاياتك الشريرة أغلقهم الآن"
+  },
+  "report_banner_message_4": {
+    "message": "مشروع القانون ينمو: التركيز الآن أو نفرض رسوما إضافية."
+  },
+  "report_banner_message_default": {
+    "message": "هذا المؤشر يتفجر. سأحتاج إلى مكافآت المخاطر!"
+  },
+  "report_banner_title": {
+    "message": "سول في حالة تأهب قصوى!"
+  },
+  "report_category_activity": {
+    "message": "النشاط"
+  },
+  "report_category_neutral": {
+    "message": "المحايدة"
+  },
+  "report_composition_heading": {
+    "message": "التكوين اليومي"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "انفصال إلى إنتاجية، تطهير، محايد."
+  },
+  "report_context_breakdown_context": {
+    "message": "السياق"
+  },
+  "report_context_breakdown_index": {
+    "message": "الفهرس"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "تقريباً 100% رائحه مثل البروستاتين أقرب إلى 0% يعني أنك عملت وأنا أستطيع الدفاع عنك"
+  },
+  "report_context_breakdown_time": {
+    "message": "الوقت"
+  },
+  "report_context_breakdown_title": {
+    "message": "الوقت حسب السياق"
+  },
+  "report_domain_heading": {
+    "message": "دقيقة لكل مجال"
+  },
+  "report_domain_subtitle": {
+    "message": "الأبطال الرئيسيون و الأشرار تم تجميعهم اليوم"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1د"
+  },
+  "report_error_no_data": {
+    "message": "لا توجد مقاييس متاحة"
+  },
+  "report_error_runtime": {
+    "message": "لم أستطع الوصول إلى مكتب السجلات"
+  },
+  "report_error_unknown": {
+    "message": "خطأ غير معروف"
+  },
+  "report_export_pdf": {
+    "message": "تصدير PDF"
+  },
+  "report_fairness_holiday_active": {
+    "message": "اليوم هو عطلة، النتيجة متوقفة تلقائيا."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "اكتشف يوم العطلة - لا عقوبات."
+  },
+  "report_fairness_status_day_off": {
+    "message": "يوم قبالة تحييد النتيجة."
+  },
+  "report_fairness_status_default": {
+    "message": "ديا حتى طبيعية."
+  },
+  "report_fairness_status_holiday": {
+    "message": "العطلة الوطنية غيرت النتيجة"
+  },
+  "report_fairness_status_leisure": {
+    "message": "تم تخفيض الرسوم"
+  },
+  "report_fairness_status_manual": {
+    "message": "دليل ديا جانورادو"
+  },
+  "report_fairness_status_personal": {
+    "message": "أسلوب شخصي - لا يوجد شجار"
+  },
+  "report_fairness_status_study": {
+    "message": "أسلوب الدراسة يخفف العقوبات"
+  },
+  "report_fairness_status_vacation": {
+    "message": "(مودو فيرياس)"
+  },
+  "report_fairness_title": {
+    "message": "يوم النزاهة"
+  },
+  "report_fairness_tooltip": {
+    "message": "التجاوزات اليدوية أو السياق أو العطلات يمكن أن تحييد النتيجة نسجلها عندما يحدث"
+  },
+  "report_filter_apply": {
+    "message": "فيلم"
+  },
+  "report_filter_from": {
+    "message": "من"
+  },
+  "report_filter_reset": {
+    "message": "إعادة التوطين"
+  },
+  "report_filter_to": {
+    "message": "إلى"
+  },
+  "report_head_title": {
+    "message": "سول غودمان - التقرير اليومي"
+  },
+  "report_heading": {
+    "message": "تقرير مفصل"
+  },
+  "report_hero_message_alert": {
+    "message": "الكتابة واضحة: التشويش على المحاكمة. نحتاج خطة عاجلة"
+  },
+  "report_hero_message_excellent": {
+    "message": "جدول مناسب (سول) يمكنه استخدامك في إعلان تلفزيوني"
+  },
+  "report_hero_message_ok": {
+    "message": "تقلبات مقبولة ما زال بإمكاننا إخبار هيئة المحلفين أنك عملت"
+  },
+  "report_hero_message_warning": {
+    "message": "انتكاسات واضحة اليوم حان وقت استدعاء التعزيزات"
+  },
+  "report_hero_placeholder": {
+    "message": "(سول) مازال يجمع الأدلة عن يومك"
+  },
+  "report_hourly_empty": {
+    "message": "ليس بعد دقائق كافية لبناء هذا التدفق"
+  },
+  "report_hourly_heading": {
+    "message": "التدفق الشهري"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "إنتاجيّة، ازدراء، ودقائق عقيمة في الساعة."
+  },
+  "report_hourly_subtitle": {
+    "message": "الإنتاجية مقابل الإغراءات خلال اليوم"
+  },
+  "report_kpi_audio_hint": {
+    "message": "دقائق مع الصوت في مواقع الأشرار"
+  },
+  "report_kpi_audio_label": {
+    "message": "وسائط الأشرار"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "وقت اللعب الصوتي على نطاقات التبريد"
+  },
+  "report_kpi_grouped_hint": {
+    "message": "دقائق في المقذوفات المجمعة"
+  },
+  "report_kpi_grouped_label": {
+    "message": "الوقت في المجموعات"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "الدقائق التي أُنفقت في المقالات المجمّعة"
+  },
+  "report_kpi_heading": {
+    "message": "مؤشرات إضافية"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "المزيد من المعلومات الأساسية: وسائل الإعلام الشريرة، وقت العبث الحقيقي، طرق SPA، رسوم مجمّعة."
+  },
+  "report_kpi_restored_hint": {
+    "message": "المقالب أو النوافذ الأخيرة"
+  },
+  "report_kpi_restored_label": {
+    "message": "البنود المغلقة اليوم"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "عدد البطاطا أو النوافذ أغلقت اليوم"
+  },
+  "report_kpi_spa_hint": {
+    "message": "التغييرات المسجلة في المسار"
+  },
+  "report_kpi_spa_label": {
+    "message": "مسارات SPA"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "التغيرات الداخلية في تطبيقات صفحة واحدة."
+  },
+  "report_kpi_subtitle": {
+    "message": "خط حقيقي، طرق SPA، والوقت الإعلامي."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "دقيقة في الخلفية"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "المتصفح خارج التركيز"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "دقائق مع نافذة أخرى مركزة."
+  },
+  "report_logo_alt_critical": {
+    "message": "(سول غودمان) مصدوم من تركيزك"
+  },
+  "report_logo_alt_default": {
+    "message": "سول غودمان لوتشو"
+  },
+  "report_metric_index_label": {
+    "message": "الفهرس"
+  },
+  "report_metric_switches_label": {
+    "message": "مفاتيح التبديل"
+  },
+  "report_no_records": {
+    "message": "لا توجد سجلات."
+  },
+  "report_overtime_tag": {
+    "message": "ساعات إضافية"
+  },
+  "report_pdf_ai_title": {
+    "message": "حجة سول"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "الفئة"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "مشارك"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "الوقت"
+  },
+  "report_pdf_composition_title": {
+    "message": "التكوين اليومي"
+  },
+  "report_pdf_context_header_context": {
+    "message": "السياق"
+  },
+  "report_pdf_context_header_index": {
+    "message": "مؤشر السياق"
+  },
+  "report_pdf_context_header_time": {
+    "message": "الوقت المنفق"
+  },
+  "report_pdf_context_title": {
+    "message": "التوزيع حسب السياق"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "الحراسة الفعلية"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "قام (هوليداي) بإبطال النتيجة"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "السبب"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "تخطي اليوم يدوياً"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "مؤشر محايد"
+  },
+  "report_pdf_narrative_title": {
+    "message": "السرد الرئيسي"
+  },
+  "report_pdf_overview_heading": {
+    "message": "بانوراما دو ديا"
+  },
+  "report_pdf_status_label": {
+    "message": "الحالة"
+  },
+  "report_pdf_title": {
+    "message": "تقرير مفصل - سول غودمان"
+  },
+  "report_pdf_top_domains": {
+    "message": "المجالات الرئيسية"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "الازدهار"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "رَكضْ مِنْ مجالاتِ التبشيرِ بمرور الوقت."
+  },
+  "report_ranking_productive_heading": {
+    "message": "الإنتاج الأعلى"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "الهروب من المجالات الإنتاجية حسب الوقت."
+  },
+  "report_share_argument_label": {
+    "message": "(شاري سول)"
+  },
+  "report_share_argument_title": {
+    "message": "حكم سول"
+  },
+  "report_share_copy_error": {
+    "message": "لم أستطع نسخ البريد الآن"
+  },
+  "report_share_copy_instagram": {
+    "message": "نسخة مستنسخة افتحي الإنستغرام والعجين قبل نشره"
+  },
+  "report_share_copy_linkedin": {
+    "message": "نسخة مستنسخة اقطعها إلى (لينكدين) قبل نشرها"
+  },
+  "report_share_copy_success": {
+    "message": "تم نسخ البريد معذرة على لينكدين، تويتر، في أي مكان."
+  },
+  "report_share_cta": {
+    "message": "(وصل غودمان)"
+  },
+  "report_share_error": {
+    "message": "لم أستطع المشاركة الآن"
+  },
+  "report_share_error_no_metrics": {
+    "message": "لا توجد بيانات لتقاسمها"
+  },
+  "report_share_error_no_narrative": {
+    "message": "حجة جينرات سول قبل المشاركة"
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #مكافحة_التسويف"
+  },
+  "report_share_headline": {
+    "message": "اعتراض! القضايا البارزة"
+  },
+  "report_share_hint_instagram": {
+    "message": "(إنستغرام ويب) لا يستطيع أن يجهز رسالة نصية: راعي ما نسخناه إلى صندوق البريد."
+  },
+  "report_share_hint_linkedin": {
+    "message": "Linked لن يجهزوا النص و يعطون محتوى الموقع"
+  },
+  "report_share_index_label": {
+    "message": "الفهرس"
+  },
+  "report_share_menu_argument": {
+    "message": "حجة سول"
+  },
+  "report_share_menu_copy": {
+    "message": "نسخة"
+  },
+  "report_share_menu_highlights": {
+    "message": "المميزات"
+  },
+  "report_share_menu_label": {
+    "message": "مشاركة"
+  },
+  "report_share_menu_native": {
+    "message": "حصة السكان الأصليين"
+  },
+  "report_share_menu_native_action": {
+    "message": "صحيفة حصة النظام"
+  },
+  "report_share_opening": {
+    "message": "عمل موكلي بجد ولدي دليل"
+  },
+  "report_share_post_argument_label": {
+    "message": "مرافعة عن علم"
+  },
+  "report_share_post_label": {
+    "message": "موقع نسخ (اجتماعي)"
+  },
+  "report_share_report_label": {
+    "message": "الملامح الأساسية"
+  },
+  "report_share_social_tagline": {
+    "message": "اعتراض! موكلي وضع في العمل"
+  },
+  "report_share_success": {
+    "message": "فتحت ورقة المشاركة! إذا لم يظهر، نسخناه إلى لوحتك"
+  },
+  "report_share_title": {
+    "message": "سول غودمان - مرتفعات"
+  },
+  "report_story_empty": {
+    "message": "ليس هناك قصص كافية لهذا اليوم"
+  },
+  "report_story_focus_body": {
+    "message": "{domain}المعقودة{duration}التركيز."
+  },
+  "report_story_focus_title": {
+    "message": "بطل التركيز"
+  },
+  "report_story_heading": {
+    "message": "بطلون وشياطين"
+  },
+  "report_story_idle_body": {
+    "message": "بين {range}، بقي المتصفح متوقفًا عن العمل لمدة {duration}. إجمالي الوقت غير النشط اليوم: {total}."
+  },
+  "report_story_idle_title": {
+    "message": "أطول صمت"
+  },
+  "report_story_loading": {
+    "message": "البيانات لا تزال تحمل..."
+  },
+  "report_story_short_day": {
+    "message": "اليوم كان قصيراً جداً لتروي قصة"
+  },
+  "report_story_villain_body": {
+    "message": "{domain}الصرف الصحي{duration}."
+  },
+  "report_story_villain_title": {
+    "message": "فيلاين من اليوم"
+  },
+  "report_subtitle_prefix": {
+    "message": "الموجز اليومي"
+  },
+  "report_tab_switch_empty": {
+    "message": "ليست مفاتيح كافية حتى الآن لرسم هذا المخطط."
+  },
+  "report_tab_switch_heading": {
+    "message": "مفاتيح تبديل البطاطا في الساعة"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "توزيع التنقل بين إنتاجي/مُشتّت/محايد."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "كيف قفزت بين الإنتاج والتشويش والحياد"
+  },
+  "report_tagline": {
+    "message": "سجل التركيز الرسمي"
+  },
+  "report_time_column": {
+    "message": "الوقت"
+  },
+  "report_timeline_heading": {
+    "message": "سرد دقيق لكل دقيقة"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "شرائح رئيسية مصنفة حسب الساعة والفئة."
+  },
+  "report_timeline_loading": {
+    "message": "في انتظار الدخول"
+  },
+  "report_timeline_subtitle": {
+    "message": "الأضواء العالية التي تخبر قصة مناوبتك"
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}الأجزاء"
+  },
+  "rssCta": {
+    "message": "الاشتراك عبر RSS"
+  },
+  "searchLabel": {
+    "message": "البحث"
+  },
+  "searchPlaceholder": {
+    "message": "عنوان البحث، مقتطف، أو علامة..."
+  },
+  "searchReset": {
+    "message": "مرشحات واضحة"
+  },
+  "seoDescription": {
+    "message": "(سول غودمان) يُراقب خدعتك ويُقاتل من أجل التشويش، ويُقدّم تقارير مُثيرة في جهازك. كل شيء يبقى محلياً ولا خوادم خارجية"
+  },
+  "seoTitle": {
+    "message": "سول غودمان – إضافة مكافحة التسويف"
+  },
+  "shareCopied": {
+    "message": "لينك نسخ!"
+  },
+  "shareCopy": {
+    "message": "وصلة نسخ"
+  },
+  "shareCopyPrompt": {
+    "message": "نسخ هذه الرابط لتقاسم:"
+  },
+  "shareIndexCopied": {
+    "message": "لينك نسخ!"
+  },
+  "shareIndexCopy": {
+    "message": "وصلة نسخ"
+  },
+  "shareIndexLinkedin": {
+    "message": "لينكدإن"
+  },
+  "shareIndexTitle": {
+    "message": "شارك المدونة"
+  },
+  "shareIndexTwitter": {
+    "message": "X"
+  },
+  "shareLinkedin": {
+    "message": "لينكدإن"
+  },
+  "shareTitle": {
+    "message": "مشاركة"
+  },
+  "shareTwitter": {
+    "message": "X"
+  },
+  "socialProofCaption": {
+    "message": "(سول) بالفعل يساعد الآلاف على الحفاظ على تركيزهم"
+  },
+  "socialProofMetricLabel": {
+    "message": "مستخدمون سعداء"
+  },
+  "splitPopupBody": {
+    "message": "ويعرض الفريق الرقم القياسي، والمجالات العليا، والمؤشرات الإضافية، ويسمح لك بتصدير CSV/PDF. عندما ينخفض التركيز، عواصف نمط الزلازل في لإنقاذ حانة العدالة."
+  },
+  "splitPopupCaption": {
+    "message": "البوب مع الرقم القياسي، والمجالات العليا، والصادرات."
+  },
+  "splitPopupCaption2": {
+    "message": "مؤشرات KPI، أهم النطاقات، وتصدير سريع."
+  },
+  "splitPopupCaption3": {
+    "message": "قوائم إنتاجية/شرائح في فريق الخيارات."
+  },
+  "splitPopupCaption4": {
+    "message": "الأوزان والجداول القابلة للتداول للرقم القياسي."
+  },
+  "splitPopupTitle": {
+    "message": "البوب الموجود تحت الطلب"
+  },
+  "splitReportBody": {
+    "message": "رسومات في الساعة، مرتبة شريرة، وصفة AI، كل ذلك مع المشاهد المقسمة."
+  },
+  "splitReportCaption": {
+    "message": "موجز التقرير يتضمن مخططات وتصنيفات."
+  },
+  "splitReportCaption2": {
+    "message": "سرد وخط زمني دقيق كل دقيقة"
+  },
+  "splitReportCaption3": {
+    "message": "ترتيب الأشرار والأبطال والتوزيع"
+  },
+  "splitReportTitle": {
+    "message": "تقرير درامي"
+  },
+  "splitStats1": {
+    "message": "الدقائق المستردة/اليوم"
+  },
+  "splitStats2": {
+    "message": "العملاء الذين بُرئوا"
+  },
+  "statsCategories": {
+    "message": "فئات المحاكمات"
+  },
+  "statsFresh": {
+    "message": "آخر تحديث"
+  },
+  "statsPosts": {
+    "message": "الوظائف المنشورة"
+  },
+  "statsTitle": {
+    "message": "الرادار"
+  },
+  "stickyCtaButton": {
+    "message": "تركيب على الكروم"
+  },
+  "stickyCtaText": {
+    "message": "(سول) مستعد لمشاهدة أوراقك"
+  },
+  "stickyToggleLabel": {
+    "message": "تبديل زر الإجراء"
+  },
+  "tagsTitle": {
+    "message": "مواضيع النار"
+  },
+  "testimonial1Cite": {
+    "message": "- زبون مجهول"
+  },
+  "testimonial1Quote": {
+    "message": "&quot; ذك َّرني سول بأن تبديل ٤٠ خطا في الساعة جريمة &quot; ."
+  },
+  "testimonial2Cite": {
+    "message": "- مهندس مخلص"
+  },
+  "testimonial2Quote": {
+    "message": "&quot; وأصبح التقرير جزءا دفاعيا في الاجتماع مع رئيسي &quot; ."
+  },
+  "testimonial3Cite": {
+    "message": "- مدير المنتجات"
+  },
+  "testimonial3Quote": {
+    "message": "&quot; انقذت طريقة ايرثوك طبعتي. الرسوم المدفوعة بسعادة &quot; ."
+  },
+  "testimonialNext": {
+    "message": "الشهادة القادمة"
+  },
+  "testimonialPrev": {
+    "message": "شهادات سابقة"
+  },
+  "testimonialsEyebrow": {
+    "message": "شهادات"
+  },
+  "testimonialsTitle": {
+    "message": "العملاء تبرئوا"
+  },
+  "timeline1Body": {
+    "message": "السيناريو المكون يكشف عن النشاط على السلاسل الأولى سجلات (سول) المنتجة أو الشريرة"
+  },
+  "timeline1Title": {
+    "message": "الرادار الأولي"
+  },
+  "timeline2Body": {
+    "message": "إذا كان الرقم القياسي يرتفع عالياً جداً، عواصف نمط الزلازل عاصفة مع الحمار، صفارات الإنذار، و CTA لقلب اللعبة."
+  },
+  "timeline2Title": {
+    "message": "إشعار بالخرق"
+  },
+  "timeline3Body": {
+    "message": "بيان مفصل لسفن الإبلاغ، والجدول الزمني، وسرد آي لإغلاق اليوم مع الأدلة."
+  },
+  "timeline3Title": {
+    "message": "العقوبة اليومية"
+  },
+  "timelineEyebrow": {
+    "message": "الجدول الزمني"
+  },
+  "timelineTitle": {
+    "message": "من التتبع إلى الحكم"
+  },
+  "transparencyBody": {
+    "message": "إقرأْ كَمْ نَتعاملُ مع بياناتِكَ وكُلّ ملاحظة إطلاقِ مَع صفر النكهةِ."
+  },
+  "transparencyChangelogCta": {
+    "message": "التغيير الكامل المفتوح"
+  },
+  "transparencyEyebrow": {
+    "message": "الشفافية"
+  },
+  "transparencyPrivacyCta": {
+    "message": "اقرأ سياسة الخصوصية"
+  },
+  "transparencyTitle": {
+    "message": "الخصوصية وسجل التغييرات على العلن."
+  },
+  "trustCard1Body": {
+    "message": "تُحفظ المقاييس داخل chrome.storage.local. لا شيء يلمس الخوادم الخارجية."
+  },
+  "trustCard1Title": {
+    "message": "100٪ محلية"
+  },
+  "trustCard2Body": {
+    "message": "وكل خط عام حتى يتمكن المجتمع من مراجعة التغييرات."
+  },
+  "trustCard2Title": {
+    "message": "المصادر المفتوحة"
+  },
+  "trustCard3Body": {
+    "message": "يمكنك اختيار العتبة ويمكنك صمت (سول) عندما تحتاج"
+  },
+  "trustCard3Title": {
+    "message": "تنبيهات شفافة"
+  },
+  "trustEyebrow": {
+    "message": "ثقة الخصوصية"
+  },
+  "trustLead": {
+    "message": "النبرة المفعمة، الأمن الخطير: هنا كيف تعمل البيانات والتنبيهات حقا."
+  },
+  "trustTitle": {
+    "message": "كل شيء يبقى بينك وبينك"
+  },
+  "usersBadgeAlt": {
+    "message": "مستعملون في متجر الكروم على الشبكة العالمية"
+  },
+  "usersBadgeLabel": {
+    "message": "المستخدمون"
+  }
+}

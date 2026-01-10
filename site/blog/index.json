@@ -1,6 +1,174 @@
 {
   "posts": [
     {
+      "title": "Você ainda usa if statements? Que fofo!",
+      "url": "./posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/",
+      "markdown": "2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo.md",
+      "date": "2026-01-10",
+      "category": "ux-design",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "desenvolvimento",
+        "sarcasmo"
+      ],
+      "excerpt": "Se você acha que if statements são suficientes, parabéns! Você é um gênio da tecnologia... em 1999.",
+      "source_title": "SwiftUI Feature Flags & Remote Config Architecture (Production-Grade)",
+      "source_url": "https://dev.to/sebastienlato/swiftui-feature-flags-remote-config-architecture-production-grade-56d8",
+      "source_published_at": "Sat, 10 Jan 2026 16:12:30 +0000",
+      "title_en": "Are You Still Using If Statements? How Cute!",
+      "excerpt_en": "If you think if statements are enough, congratulations! You’re a tech genius... in 1999.",
+      "tags_en": [
+        "productivity",
+        "marketing",
+        "UX",
+        "development",
+        "sarcasm"
+      ],
+      "title_es": "¿Todavía usas declaraciones if? ¡Qué lindo!",
+      "excerpt_es": "Si crees que las declaraciones if son suficientes, ¡felicitaciones! Eres un genio de la tecnología... en 1999.",
+      "tags_es": [
+        "productividad",
+        "marketing",
+        "UX",
+        "desarrollo",
+        "sarcasmo"
+      ],
+      "title_fr": "Vous utilisez encore des instructions if ? Comme c'est mignon !",
+      "excerpt_fr": "Si vous pensez que les instructions if suffisent, félicitations ! Vous êtes un génie de la technologie... en 1999.",
+      "tags_fr": [
+        "productivité",
+        "marketing",
+        "UX",
+        "développement",
+        "sarcasme"
+      ],
+      "title_de": "Verwendest du immer noch if-Anweisungen? Wie niedlich!",
+      "excerpt_de": "Wenn du denkst, dass if-Anweisungen ausreichen, herzlichen Glückwunsch! Du bist ein Technikgenie... im Jahr 1999.",
+      "tags_de": [
+        "Produktivität",
+        "Marketing",
+        "UX",
+        "Entwicklung",
+        "Sarkasmus"
+      ],
+      "title_it": "Usi ancora le istruzioni if? Che carino!",
+      "excerpt_it": "Se pensi che le istruzioni if siano sufficienti, complimenti! Sei un genio della tecnologia... nel 1999.",
+      "tags_it": [
+        "produttività",
+        "marketing",
+        "UX",
+        "sviluppo",
+        "sarcasmo"
+      ],
+      "title_tr": "Hala if ifadeleri mi kullanıyorsun? Ne tatlı!",
+      "excerpt_tr": "Eğer if ifadelerinin yeterli olduğunu düşünüyorsan, tebrikler! 1999'daki teknoloji dehasısın.",
+      "tags_tr": [
+        "verimlilik",
+        "pazarlama",
+        "UX",
+        "geliştirme",
+        "alay"
+      ],
+      "title_zh": "你还在用if语句吗？真可爱！",
+      "excerpt_zh": "如果你认为if语句就足够了，恭喜你！你是个科技天才……在1999年。",
+      "tags_zh": [
+        "生产力",
+        "营销",
+        "用户体验",
+        "开发",
+        "讽刺"
+      ],
+      "title_hi": "क्या आप अभी भी if स्टेटमेंट का उपयोग करते हैं? कितना प्यारा!",
+      "excerpt_hi": "अगर आपको लगता है कि if स्टेटमेंट पर्याप्त हैं, तो बधाई हो! आप तकनीक के जीनियस हैं... 1999 में।",
+      "tags_hi": [
+        "उत्पादकता",
+        "मार्केटिंग",
+        "यूएक्स",
+        "विकास",
+        "व्यंग्य"
+      ],
+      "title_ar": "هل لا تزال تستخدم جمل if؟ يا لها من براءة!",
+      "excerpt_ar": "إذا كنت تعتقد أن جمل if كافية، تهانينا! أنت عبقري التكنولوجيا... في عام 1999.",
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويق",
+        "تجربة المستخدم",
+        "التطوير",
+        "سخرية"
+      ],
+      "title_bn": "আপনি কি এখনও if statements ব্যবহার করেন? কি মিষ্টি!",
+      "excerpt_bn": "যদি আপনি মনে করেন যে if statements যথেষ্ট, অভিনন্দন! আপনি একজন প্রযুক্তির জিনিয়াস... 1999 সালে।",
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "মার্কেটিং",
+        "UX",
+        "বিকাশ",
+        "সারকাসম"
+      ],
+      "title_ru": "Вы все еще используете if-операторы? Как мило!",
+      "excerpt_ru": "Если вы думаете, что if-операторы достаточны, поздравляю! Вы гений технологий... в 1999 году.",
+      "tags_ru": [
+        "продуктивность",
+        "маркетинг",
+        "UX",
+        "разработка",
+        "сарказм"
+      ],
+      "title_ur": "کیا آپ ابھی بھی if statements استعمال کرتے ہیں؟ کیا پیارا!",
+      "excerpt_ur": "اگر آپ کو لگتا ہے کہ if statements کافی ہیں، تو مبارک ہو! آپ ایک ٹیکنالوجی کے جینیئس ہیں... 1999 میں۔",
+      "tags_ur": [
+        "پیداواری",
+        "مارکیٹنگ",
+        "UX",
+        "ترقی",
+        "تہذیب"
+      ],
+      "tone": "incredulo"
+    },
+    {
+      "title": "Museus: O Segredo da Arquitetura das Nuvens Revelado!",
+      "url": "./posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/",
+      "markdown": "2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado.md",
+      "date": "2026-01-10",
+      "category": "dev-performance",
+      "tags": [
+        "museus",
+        "microserviços",
+        "arquitetura",
+        "desenvolvimento",
+        "sarcasmo"
+      ],
+      "excerpt": "Museus antigos e microserviços: a nova fórmula mágica da arquitetura digital. Prepare-se para a revelação do século!",
+      "source_title": "System Design in Real Life: Why Ancient Museums are actually Microservices?",
+      "source_url": "https://dev.to/tyrell_wellicq_767cb57340/system-design-in-real-life-why-ancient-museums-are-actually-microservices-3a43",
+      "source_published_at": "Sat, 10 Jan 2026 13:43:51 +0000",
+      "title_en": "Museums: The Secret of Cloud Architecture Revealed!",
+      "excerpt_en": "Ancient museums and microservices: the new magic formula of digital architecture. Get ready for the revelation of the century!",
+      "title_es": "Museos: ¡El Secreto de la Arquitectura de las Nubes Revelado!",
+      "excerpt_es": "Museos antiguos y microservicios: la nueva fórmula mágica de la arquitectura digital. ¡Prepárate para la revelación del siglo!",
+      "title_fr": "Musées : Le Secret de l'Architecture des Nuages Révélé !",
+      "excerpt_fr": "Musées anciens et microservices : la nouvelle formule magique de l'architecture digitale. Préparez-vous à la révélation du siècle !",
+      "title_de": "Museen: Das Geheimnis der Architektur der Wolken Enthüllt!",
+      "excerpt_de": "Antike Museen und Microservices: die neue Zauberformel der digitalen Architektur. Machen Sie sich bereit für die Enthüllung des Jahrhunderts!",
+      "title_it": "Musei: Il Segreto dell'Architettura delle Nuvole Rivelato!",
+      "excerpt_it": "Musei antichi e microservizi: la nuova formula magica dell'architettura digitale. Preparati per la rivelazione del secolo!",
+      "title_tr": "Müzeler: Bulut Mimarisi Sırları Açığa Çıkarıldı!",
+      "excerpt_tr": "Eski müzeler ve mikro hizmetler: dijital mimarinin yeni sihirli formülü. Yüzyılın açıklamasına hazırlanın!",
+      "title_zh": "博物馆：云架构的秘密被揭示！",
+      "excerpt_zh": "古老的博物馆和微服务：数字架构的新魔法公式。准备好迎接世纪的揭示吧！",
+      "title_hi": "संग्रहालय: बादलों की वास्तुकला का रहस्य प्रकट हुआ!",
+      "excerpt_hi": "प्राचीन संग्रहालय और माइक्रोसर्विसेस: डिजिटल आर्किटेक्चर का नया जादुई फॉर्मूला। सदी के रहस्योद्घाटन के लिए तैयार रहें!",
+      "title_ar": "المتاحف: سر عمارة السحب مكشوف!",
+      "excerpt_ar": "المتاحف القديمة والميكروسيرفيس: الصيغة السحرية الجديدة للعمارة الرقمية. استعد للإفصاح عن القرن!",
+      "title_bn": "মিউজিয়াম: মেঘের স্থাপত্যের গোপন রহস্য উন্মোচিত!",
+      "excerpt_bn": "প্রাচীন মিউজিয়াম এবং মাইক্রোসার্ভিস: ডিজিটাল স্থাপত্যের নতুন জাদুকরী সূত্র। শতাব্দীর উন্মোচনের জন্য প্রস্তুত হন!",
+      "title_ru": "Музеи: Тайна Архитектуры Облаков Раскрыта!",
+      "excerpt_ru": "Старые музеи и микросервисы: новая волшебная формула цифровой архитектуры. Приготовьтесь к откровению века!",
+      "tone": "incredulo"
+    },
+    {
       "title": "A Revolução da Produtividade: Gerenciando Energia, Não Tempo (Porque Tempo é para os Fracos)",
       "url": "./posts/2026/2026-01-09-a-revolucao-da-produtividade-gerenciando-energia-nao-tempo-porque-tempo-e-para-os-fracos/",
       "markdown": "2026/2026-01-09-a-revolucao-da-produtividade-gerenciando-energia-nao-tempo-porque-tempo-e-para-os-fracos.md",
@@ -22,6 +190,88 @@
       "source_published_at": "Thu, 08 Jan 2026 19:17:36 +0000",
       "excerpt_en": "Learn to manage your energy instead of your time and avoid burnout. That's right, who needs hours on the calendar?",
       "excerpt_es": "Aprende a gestionar tu energía en lugar de tu tiempo y evita el burnout. Así es, ¿quién necesita horas en la agenda?"
+    },
+    {
+      "title": "Você ainda acha que SEO é só para nerds?",
+      "url": "./posts/2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds/",
+      "markdown": "2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds.md",
+      "date": "2026-01-10",
+      "category": "marketing",
+      "tags": [
+        "SEO",
+        "marketing",
+        "procrastinação",
+        "tecnologia",
+        "UX"
+      ],
+      "excerpt": "A nova era do marketing chegou, e parece que você não foi convidado para a festa.",
+      "source_title": "AI search visibility: The playbook for marketers",
+      "source_url": "https://blog.hubspot.com/marketing/ai-search-visibility",
+      "source_published_at": "Thu, 08 Jan 2026 12:00:03 GMT",
+      "title_es": "¿Todavía crees que el SEO es solo para nerds?",
+      "excerpt_es": "La nueva era del marketing ha llegado, y parece que no fuiste invitado a la fiesta.",
+      "tags_es": [
+        "SEO",
+        "marketing",
+        "procrastinación",
+        "tecnología",
+        "UX"
+      ],
+      "title_fr": "Vous pensez encore que le SEO est réservé aux nerds ?",
+      "excerpt_fr": "La nouvelle ère du marketing est arrivée, et il semble que vous n'ayez pas été invité à la fête.",
+      "tags_fr": [
+        "SEO",
+        "marketing",
+        "procrastination",
+        "technologie",
+        "UX"
+      ],
+      "title_de": "Denkst du immer noch, dass SEO nur was für Nerds ist?",
+      "excerpt_de": "Die neue Ära des Marketings ist angebrochen, und es scheint, als wärst du nicht zur Party eingeladen worden.",
+      "tags_de": [
+        "SEO",
+        "Marketing",
+        "Prokrastination",
+        "Technologie",
+        "UX"
+      ],
+      "title_tr": "Hala SEO'nun sadece nerdler için olduğunu mu düşünüyorsun?",
+      "excerpt_tr": "Yeni pazarlama çağı geldi ve görünüşe göre sen partinin davetlisiydin.",
+      "tags_tr": [
+        "SEO",
+        "pazarlama",
+        "erteleme",
+        "teknoloji",
+        "Kullanıcı Deneyimi"
+      ],
+      "title_zh": "你还认为SEO只是给书呆子的吗？",
+      "excerpt_zh": "营销新时代来临了，看来你并没有收到派对邀请。",
+      "tags_zh": [
+        "SEO",
+        "营销",
+        "拖延",
+        "技术",
+        "用户体验"
+      ],
+      "title_bn": "আপনি কি এখনও মনে করেন SEO শুধুমাত্র নার্ডদের জন্য?",
+      "excerpt_bn": "নতুন মার্কেটিং যুগ এসেছে, এবং মনে হচ্ছে আপনি পার্টির জন্য আমন্ত্রিত হননি।",
+      "tags_bn": [
+        "SEO",
+        "মার্কেটিং",
+        "মুলতুবি",
+        "প্রযুক্তি",
+        "UX"
+      ],
+      "title_ru": "Вы все еще думаете, что SEO – это только для задротов?",
+      "excerpt_ru": "Новая эра маркетинга пришла, и, похоже, вас не пригласили на вечеринку.",
+      "tags_ru": [
+        "SEO",
+        "маркетинг",
+        "прокрастинация",
+        "технологии",
+        "UX"
+      ],
+      "tone": "incredulo"
     },
     {
       "title": "O Mercado de Ações: A Grande Montanha-Russa do Vale do Silício",

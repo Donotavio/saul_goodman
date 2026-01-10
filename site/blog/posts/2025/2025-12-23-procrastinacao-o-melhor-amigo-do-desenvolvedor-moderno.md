@@ -4,7 +4,6 @@ title_en: "Procrastination: The Best Friend of the Modern Developer"
 title_es: "Procrastinación: El Mejor Amigo del Desarrollador Moderno"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["foco", "procrastinação", "produtividade", "dev", "AI"]
 source_title: "AI Trainer"
 source_url: "https://remotive.com/remote-jobs/ai-ml/ai-trainer-2087694"

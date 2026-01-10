@@ -4,7 +4,6 @@ title_en: "The AI Search Strategy: What Do We Do with Another Buzzword?"
 title_es: "La Estrategia de Búsqueda AI: ¿Qué Hacemos con Otra Palabra de Moda?"
 date: 2026-01-02
 category: "marketing"
-tone: "incredulo"
 tags: ["AI", "marketing", "buzzword", "produtividade", "estratégia"]
 source_title: "AI search strategy: A guide for modern marketing teams"
 source_url: "https://blog.hubspot.com/marketing/ai-search-strategy"

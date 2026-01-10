@@ -4,7 +4,6 @@ title_en: "The Productivity Revolution: Managing Energy, Not Time (Because Time 
 title_es: "La Revolución de la Productividad: Gestionando Energía, No Tiempo (Porque el Tiempo es para los Débiles)"
 date: 2026-01-09
 category: "foco-atencao"
-tone: "incredulo"
 tags: ["produtividade", "burnout", "energia", "desempenho", "sarcasmo"]
 source_title: "Managing Energy Not Time: The Science-Backed System High-Achievers Use to Escape Burnout"
 source_url: "https://www.lifehack.org/991281/managing-energy-not-time"

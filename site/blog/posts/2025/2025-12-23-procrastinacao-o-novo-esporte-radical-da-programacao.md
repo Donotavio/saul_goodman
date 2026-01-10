@@ -4,7 +4,6 @@ title_en: "Procrastination: The New Extreme Sport of Programming"
 title_es: "Procrastinación: El Nuevo Deporte Extremo de la Programación"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["programação", "RISC-V", "Tauri", "procrastinação", "dev"]
 source_title: "The Old Dog Learns a New Trick: Cross-Compiling Tauri CLI for RISC-V"
 source_url: "https://dev.to/gounthar/the-old-dog-learns-a-new-trick-cross-compiling-tauri-cli-for-risc-v-ibn"

@@ -143,8 +143,19 @@ const DRY_RUN = process.argv.includes('--dry-run') || process.env.DRY_RUN === 't
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
 const TRANSLATION_TARGETS = [
   { code: 'en', label: 'inglês', display: 'English' },
-  { code: 'es', label: 'espanhol', display: 'Spanish' },
+  { code: 'es', label: 'espanhol', display: 'Español' },
+  { code: 'fr', label: 'francês', display: 'Français' },
+  { code: 'de', label: 'alemão', display: 'Deutsch' },
+  { code: 'it', label: 'italiano', display: 'Italiano' },
+  { code: 'tr', label: 'turco', display: 'Türkçe' },
+  { code: 'zh', label: 'chinês (simplificado)', display: '中文' },
+  { code: 'hi', label: 'hindi', display: 'हिन्दी' },
+  { code: 'ar', label: 'árabe', display: 'العربية' },
+  { code: 'bn', label: 'bengali', display: 'বাংলা' },
+  { code: 'ru', label: 'russo', display: 'Русский' },
+  { code: 'ur', label: 'urdu', display: 'اردو' },
 ];
+const TRANSLATION_CODES = TRANSLATION_TARGETS.map((target) => target.code);
 
 async function readJson(file, fallback) {
   try {
@@ -252,6 +263,12 @@ function detectTone(metadata, candidateCategory = '') {
   if (candidateCategory === 'trabalho-remoto') return 'nao-corte';
   if (candidateCategory === 'foco-atencao') return 'like';
   if (candidateCategory === 'dev-performance') return 'like';
+  if (candidateCategory === 'ux-design') return 'like';
+  if (candidateCategory === 'produto') return 'like';
+  if (candidateCategory === 'carreira') return 'like';
+  if (candidateCategory === 'procrastinacao') return 'incredulo';
+  if (candidateCategory === 'marketing') return 'incredulo';
+  if (candidateCategory === 'negocios') return 'incredulo';
   return 'incredulo';
 }
 
@@ -418,7 +435,6 @@ Estrutura obrigatória em Markdown com frontmatter YAML:
 title: <título provocativo>
 date: ${new Date().toISOString().slice(0, 10)}
 category: ${category}
-tone: escolha entre incredulo | like | nao-corte para refletir o tom visual
 tags: [3-5 tags curtas]
 source_title: "${candidate.title}"
 source_url: "${candidate.link}"
@@ -444,10 +460,32 @@ async function callLLM(prompt, options = {}) {
   if (!apiKey) throw new Error('LLM_API_KEY ausente');
 
   const model = process.env.LLM_MODEL || 'gpt-4o-mini';
-  const base = process.env.LLM_BASE_URL || (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
+  const base =
+    process.env.LLM_BASE_URL ||
+    (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
   const baseUrl = base.endsWith('/') ? base : `${base}/`;
   const endpoint = 'chat/completions';
   const url = `${baseUrl}${endpoint}`;
+
+  const payload = {
+    model,
+    messages: [
+      {
+        role: 'system',
+        content:
+          options.systemPrompt ||
+          'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: typeof options.temperature === 'number' ? options.temperature : 0.7,
+    max_tokens: options.maxTokens || 1200,
+  };
+
+  // Em modelos OpenAI compatíveis, isso força JSON válido no conteúdo.
+  if (options.responseFormat === 'json') {
+    payload.response_format = { type: 'json_object' };
+  }
 
   let lastError;
   for (let attempt = 0; attempt <= RETRIES; attempt += 1) {
@@ -460,18 +498,7 @@ async function callLLM(prompt, options = {}) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({
-          model,
-          messages: [
-            {
-              role: 'system',
-              content: options.systemPrompt || 'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.',
-            },
-            { role: 'user', content: prompt },
-          ],
-          temperature: 0.7,
-          max_tokens: options.maxTokens || 1200,
-        }),
+        body: JSON.stringify(payload),
         signal: controller.signal,
       });
       clearTimeout(timeout);
@@ -481,8 +508,8 @@ async function callLLM(prompt, options = {}) {
         continue;
       }
 
-      const payload = await response.json();
-      const content = payload.choices?.[0]?.message?.content;
+      const responsePayload = await response.json();
+      const content = responsePayload.choices?.[0]?.message?.content;
       if (content) return content.trim();
       lastError = new Error('Resposta do LLM vazia');
     } catch (error) {
@@ -506,26 +533,52 @@ function parseJsonBlock(text) {
 
 async function translateArticle(metadata, body, target) {
   const prompt = `Traduza o artigo abaixo para ${target.label} (${target.display}).
-Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais. Responda em JSON com as chaves "title", "excerpt" e "body" (body deve ser markdown completo com as mesmas seções).
+Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais.
+
+Retorne APENAS um JSON válido (sem crases, sem markdown) com as chaves:
+- "title" (string)
+- "excerpt" (string)
+- "tags" (array de strings; traduza quando fizer sentido)
+- "body" (string; markdown completo com as mesmas seções)
 
 TÍTULO: ${metadata.title}
 EXCERPT: ${metadata.excerpt}
+TAGS: ${JSON.stringify(metadata.tags || [])}
 ARTIGO:
 ${body}`;
-  const response = await callLLM(prompt, {
-    systemPrompt:
-      'Você é um tradutor profissional que converte textos em diferentes idiomas mantendo sarcasmo e clareza. Responda apenas no idioma solicitado.',
-    maxTokens: 3200,
-  });
-  const json = parseJsonBlock(response);
+
+  const call = async (extraInstruction) => {
+    const response = await callLLM(extraInstruction ? `${prompt}\n\n${extraInstruction}` : prompt, {
+      systemPrompt:
+        'Você é um tradutor profissional. Responda com JSON válido e nada além disso.',
+      maxTokens: 3200,
+      temperature: 0.2,
+      responseFormat: 'json',
+    });
+    return parseJsonBlock(response);
+  };
+
+  let json;
+  try {
+    json = await call();
+  } catch (error) {
+    json = await call(
+      'IMPORTANTE: Sua última resposta veio com JSON inválido. Responda novamente com JSON estritamente válido.'
+    );
+  }
+
   const title = (json.title || json.headline || json.name || json.titulo || '').trim();
   const excerpt = (json.excerpt || json.summary || json.description || '').trim();
   const articleBody = (json.body || json.content || json.article || json.text || json.story || '').trim();
+  const tags = Array.isArray(json.tags)
+    ? json.tags.map((tag) => (typeof tag === 'string' ? tag.trim() : String(tag))).filter(Boolean)
+    : [];
   if (!title || !articleBody) throw new Error('Tradução sem body ou title');
   return {
     lang: target.code,
     title,
     excerpt,
+    tags,
     body: articleBody,
   };
 }
@@ -548,18 +601,17 @@ async function generateTranslations(metadata, body) {
 function buildFrontmatter(metadata) {
   const preferredOrder = [
     'title',
-    'title_en',
-    'title_es',
+    ...TRANSLATION_CODES.map((code) => `title_${code}`),
     'date',
     'category',
     'tone',
     'tags',
+    ...TRANSLATION_CODES.map((code) => `tags_${code}`),
     'source_title',
     'source_url',
     'source_published_at',
     'excerpt',
-    'excerpt_en',
-    'excerpt_es',
+    ...TRANSLATION_CODES.map((code) => `excerpt_${code}`),
   ];
   const seen = new Set();
   const lines = [];
@@ -725,10 +777,14 @@ async function updateIndex(metadata, markdownPath, body = '') {
     source_url: metadata.source_url,
     source_published_at: metadata.source_published_at,
   };
-  if (metadata.title_en) entry.title_en = metadata.title_en;
-  if (metadata.title_es) entry.title_es = metadata.title_es;
-  if (metadata.excerpt_en) entry.excerpt_en = metadata.excerpt_en;
-  if (metadata.excerpt_es) entry.excerpt_es = metadata.excerpt_es;
+  for (const code of TRANSLATION_CODES) {
+    const titleKey = `title_${code}`;
+    const excerptKey = `excerpt_${code}`;
+    const tagsKey = `tags_${code}`;
+    if (metadata[titleKey]) entry[titleKey] = metadata[titleKey];
+    if (metadata[excerptKey]) entry[excerptKey] = metadata[excerptKey];
+    if (metadata[tagsKey]) entry[tagsKey] = metadata[tagsKey];
+  }
   if (metadata.tone) entry.tone = metadata.tone;
 
   index.posts = index.posts.filter((p) => p.markdown !== markdownPath);
@@ -812,6 +868,9 @@ async function run() {
   translations.forEach((entry) => {
     if (entry.title) metadata[`title_${entry.lang}`] = entry.title;
     if (entry.excerpt) metadata[`excerpt_${entry.lang}`] = entry.excerpt;
+    if (Array.isArray(entry.tags) && entry.tags.length) {
+      metadata[`tags_${entry.lang}`] = entry.tags;
+    }
   });
   const finalMarkdown = buildMarkdown(metadata, body, translations);
 

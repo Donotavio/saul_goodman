@@ -4,7 +4,6 @@ title_en: "Login Hint: The Mystery No One Asked For"
 title_es: "Login Hint: El Misterio Que Nadie Pidió"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["Azure", "SWA", "login_hint", "dev", "procrastinação"]
 source_title: "Azure Static Web Apps: login_hint now works"
 source_url: "https://dev.to/andrewelans/azure-static-web-apps-add-loginhint-with-functions-37jb"

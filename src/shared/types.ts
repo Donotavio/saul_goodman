@@ -112,7 +112,20 @@ export interface WorkInterval {
   end: string;
 }
 
-export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-419';
+export type SupportedLocale =
+  | 'pt-BR'
+  | 'en-US'
+  | 'es-419'
+  | 'fr'
+  | 'de'
+  | 'it'
+  | 'tr'
+  | 'zh-CN'
+  | 'hi'
+  | 'ar'
+  | 'bn'
+  | 'ru'
+  | 'ur';
 export type LocalePreference = 'auto' | SupportedLocale;
 
 export interface ExtensionSettings {

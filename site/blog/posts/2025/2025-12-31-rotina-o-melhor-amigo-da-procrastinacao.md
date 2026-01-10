@@ -4,7 +4,6 @@ title_en: "Routine: Procrastination's Best Friend!"
 title_es: "¡Rutina: El Mejor Amigo de la Procrastinación!"
 date: 2025-12-31
 category: "trabalho-remoto"
-tone: "incredulo"
 tags: ["produtividade", "procrastinação", "rotina", "trabalho-remoto", "mudanças"]
 source_title: "<![CDATA[[Newsletter] The Comfort of Routine, the Promise of Change]]>"
 source_url: "https://remotive.com/blog/newsletter-the-comfort-of-routine-the-promise-of-change/"

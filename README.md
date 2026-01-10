@@ -18,7 +18,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Service Worker** monitora domínio ativo, soma tempo produtivo x procrastinação, detecta inatividade e conta troca de abas.
 - **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
-- **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do “modo terremoto”, idioma da interface (auto/pt-BR/en-US/es-419) e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
+- **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do "modo terremoto", idioma da interface (auto + 13 idiomas suportados) e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
 - **Teste de conexão com SaulDaemon** direto nas opções: valida URL, pairing key e exibe sessões/minutos do dia.
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.
@@ -125,6 +125,61 @@ Quando habilitada em Options, a integração soma `vscodeActiveMs` ao tempo prod
 2. Monte o pacote limpo: `npm run package:webstore` (cria `release/saul-goodman-<versao>-webstore/` sem `site/`, `docs/` ou ferramentas).
 3. Compacte: `cd release && zip -r saul-goodman-<versao>-webstore.zip saul-goodman-<versao>-webstore`.
 4. Envie esse zip para a loja. Não compacte o diretório raiz: ele contém o site estático com scripts CDN (Google Fonts/GTM) e outros assets de marketing que acionam a regra de **código hospedado remotamente** do Manifest V3.
+
+## Internacionalização (i18n)
+
+A extensão e o site suportam **13 idiomas**:
+
+- **pt-BR** (Português Brasil) — idioma base
+- **en-US** (English) — idioma de fallback
+- **es-419** (Español)
+- **fr** (Français)
+- **de** (Deutsch)
+- **it** (Italiano)
+- **tr** (Türkçe)
+- **zh-CN** (中文)
+- **hi** (हिन्दी)
+- **ar** (العربية) — RTL
+- **bn** (বাংলা)
+- **ru** (Русский)
+- **ur** (اردو) — RTL
+
+### Estrutura de tradução
+
+- **Extensão:** Todas as strings estão em `_locales/<locale_dir>/messages.json` (formato Chrome i18n)
+- **Site/Blog:** Cópia sincronizada em `site/_locales/` e `site/blog/_locales/` via `npm run i18n:copy-site`
+- **RTL automático:** Idiomas árabe (`ar`) e urdu (`ur`) aplicam `dir="rtl"` automaticamente
+- **Fallback:** Todas as traduções usam `en-US` como fallback quando chave não existe
+
+### Blog i18n — Estratégia de fallback
+
+**Conteúdo disponível:**
+
+- ✅ **pt-BR, en-US, es-419:** Posts completos traduzidos
+- ⚠️ **Demais idiomas (fr, de, it, tr, zh-CN, hi, ar, bn, ru, ur):**
+  - Interface traduzida (categorias, navegação, labels)
+  - Posts em **inglês** (fallback para `en-US`)
+  - Mapeamento em `src/popup/popup.ts` linha 135-148
+
+**Roadmap:** Tradução automática de posts via content engine planejada para Q2 2026.
+
+### Scripts de i18n
+
+```bash
+npm run i18n:check          # Valida chaves ausentes, placeholders e tamanhos
+npm run i18n:copy-site      # Sincroniza _locales/ → site/_locales/
+npm run i18n:stubs          # Gera stubs para novos idiomas
+npm run i18n:repair-locale  # Repara locale com LLM (requer LLM_API_KEY)
+```
+
+### Resolução de locale
+
+A função `resolveLocale()` em `src/shared/i18n.ts`:
+
+1. Respeita preferência explícita do usuário
+2. Mapeia variantes regionais (ex: `pt` → `pt-BR`, `zh` → `zh-CN`)
+3. Fallback para `en-US` em idiomas não suportados
+4. Detecta idioma do navegador via `chrome.i18n.getUILanguage()`
 
 ## Blog e content engine
 

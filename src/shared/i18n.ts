@@ -1,13 +1,27 @@
 import type { LocalePreference, SupportedLocale } from './types.js';
 
-export const SUPPORTED_LOCALES: SupportedLocale[] = ['pt-BR', 'en-US', 'es-419'];
+export const SUPPORTED_LOCALES: SupportedLocale[] = [
+  'pt-BR',
+  'en-US',
+  'es-419',
+  'fr',
+  'de',
+  'it',
+  'tr',
+  'zh-CN',
+  'hi',
+  'ar',
+  'bn',
+  'ru',
+  'ur'
+];
 const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 
-const LOCALE_DIR_MAP: Record<SupportedLocale, string> = {
-  'pt-BR': 'pt_BR',
-  'en-US': 'en_US',
-  'es-419': 'es_419'
-};
+const RTL_LOCALES: Set<SupportedLocale> = new Set(['ar', 'ur']);
+
+export function localeToDir(locale: SupportedLocale): string {
+  return locale.replace(/-/g, '_');
+}
 
 const localeCache = new Map<SupportedLocale, Record<string, string>>();
 
@@ -29,12 +43,26 @@ export function resolveLocale(preference?: LocalePreference): SupportedLocale {
   const browserLocale = (chrome?.i18n?.getUILanguage?.() ?? navigator.language ?? '').toLowerCase();
   const normalized = browserLocale.split('-')[0];
 
-  if (browserLocale.startsWith('pt') || normalized === 'pt') {
-    return 'pt-BR';
+  const mapping: Record<string, SupportedLocale> = {
+    pt: 'pt-BR',
+    es: 'es-419',
+    en: 'en-US',
+    fr: 'fr',
+    de: 'de',
+    it: 'it',
+    tr: 'tr',
+    zh: 'zh-CN',
+    hi: 'hi',
+    ar: 'ar',
+    bn: 'bn',
+    ru: 'ru',
+    ur: 'ur'
+  };
+
+  if (mapping[normalized]) {
+    return mapping[normalized];
   }
-  if (browserLocale.startsWith('es') || normalized === 'es') {
-    return 'es-419';
-  }
+
   return 'en-US';
 }
 
@@ -79,6 +107,7 @@ class I18nImpl implements I18nService {
     const doc =
       target instanceof Document ? target : target.ownerDocument ?? document;
     doc.documentElement.lang = this.locale;
+    doc.documentElement.dir = RTL_LOCALES.has(this.locale) ? 'rtl' : 'ltr';
 
     const elements = target.querySelectorAll<HTMLElement>('[data-i18n]');
     elements.forEach((element) => {
@@ -89,6 +118,9 @@ class I18nImpl implements I18nService {
     });
 
     applyDataset(target, this, 'i18nHtml', (el, key, i18n) => {
+      // WARNING: Only use data-i18n-html with trusted locale strings from messages.json
+      // This uses innerHTML and can execute scripts if content is not sanitized.
+      // Never use this attribute with user-provided or external content.
       el.innerHTML = i18n.t(key);
     });
     applyDataset(target, this, 'i18nPlaceholder', (el, key, i18n) => {
@@ -151,11 +183,11 @@ async function loadMessages(locale: SupportedLocale): Promise<Record<string, str
     return localeCache.get(locale) as Record<string, string>;
   }
 
-  const url = chrome.runtime.getURL(`_locales/${LOCALE_DIR_MAP[locale]}/messages.json`);
+  const url = chrome.runtime.getURL(`_locales/${localeToDir(locale)}/messages.json`);
   const response = await fetch(url);
   if (!response.ok) {
     if (locale === DEFAULT_LOCALE) {
-      throw new Error(`Não foi possível carregar mensagens para ${locale}`);
+      throw new Error(`Failed to load messages for locale: ${locale}`);
     }
     return loadMessages(DEFAULT_LOCALE);
   }

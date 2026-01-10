@@ -68,9 +68,9 @@ test('getLocalizedTags prefers language-specific tags', async () => {
   assert.deepEqual(getLocalizedTags(meta, 'pt'), ['padrão']);
 });
 
-test('getLocalizedTags translates base tags when no localized list exists', async () => {
+test('getLocalizedTags falls back to base tags when no localized list exists', async () => {
   const { getLocalizedTags } = await loadBlogModule();
   const meta = { tags: ['produtividade', 'procrastinação', 'AI'] };
-  assert.deepEqual(getLocalizedTags(meta, 'en'), ['Productivity', 'Procrastination', 'AI']);
-  assert.deepEqual(getLocalizedTags(meta, 'es'), ['Productividad', 'Procrastinación', 'AI']);
+  assert.deepEqual(getLocalizedTags(meta, 'en'), ['produtividade', 'procrastinação', 'AI']);
+  assert.deepEqual(getLocalizedTags(meta, 'es'), ['produtividade', 'procrastinação', 'AI']);
 });

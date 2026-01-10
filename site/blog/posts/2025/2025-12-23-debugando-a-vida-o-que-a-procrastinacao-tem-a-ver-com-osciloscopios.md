@@ -1,6 +1,5 @@
 ---
 title: "Debugando a Vida: O Que a Procrastinação Tem a Ver com Osciloscópios?"
-tone: "incredulo"
 title_en: "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?"
 title_es: "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?"
 date: 2025-12-23
