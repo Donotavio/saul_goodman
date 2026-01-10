@@ -65,6 +65,88 @@
       "excerpt_es": "Aprende a gestionar tu energía en lugar de tu tiempo y evita el burnout. Así es, ¿quién necesita horas en la agenda?"
     },
     {
+      "title": "Você ainda acha que SEO é só para nerds?",
+      "url": "./posts/2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds/",
+      "markdown": "2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds.md",
+      "date": "2026-01-10",
+      "category": "marketing",
+      "tags": [
+        "SEO",
+        "marketing",
+        "procrastinação",
+        "tecnologia",
+        "UX"
+      ],
+      "excerpt": "A nova era do marketing chegou, e parece que você não foi convidado para a festa.",
+      "source_title": "AI search visibility: The playbook for marketers",
+      "source_url": "https://blog.hubspot.com/marketing/ai-search-visibility",
+      "source_published_at": "Thu, 08 Jan 2026 12:00:03 GMT",
+      "title_es": "¿Todavía crees que el SEO es solo para nerds?",
+      "excerpt_es": "La nueva era del marketing ha llegado, y parece que no fuiste invitado a la fiesta.",
+      "tags_es": [
+        "SEO",
+        "marketing",
+        "procrastinación",
+        "tecnología",
+        "UX"
+      ],
+      "title_fr": "Vous pensez encore que le SEO est réservé aux nerds ?",
+      "excerpt_fr": "La nouvelle ère du marketing est arrivée, et il semble que vous n'ayez pas été invité à la fête.",
+      "tags_fr": [
+        "SEO",
+        "marketing",
+        "procrastination",
+        "technologie",
+        "UX"
+      ],
+      "title_de": "Denkst du immer noch, dass SEO nur was für Nerds ist?",
+      "excerpt_de": "Die neue Ära des Marketings ist angebrochen, und es scheint, als wärst du nicht zur Party eingeladen worden.",
+      "tags_de": [
+        "SEO",
+        "Marketing",
+        "Prokrastination",
+        "Technologie",
+        "UX"
+      ],
+      "title_tr": "Hala SEO'nun sadece nerdler için olduğunu mu düşünüyorsun?",
+      "excerpt_tr": "Yeni pazarlama çağı geldi ve görünüşe göre sen partinin davetlisiydin.",
+      "tags_tr": [
+        "SEO",
+        "pazarlama",
+        "erteleme",
+        "teknoloji",
+        "Kullanıcı Deneyimi"
+      ],
+      "title_zh": "你还认为SEO只是给书呆子的吗？",
+      "excerpt_zh": "营销新时代来临了，看来你并没有收到派对邀请。",
+      "tags_zh": [
+        "SEO",
+        "营销",
+        "拖延",
+        "技术",
+        "用户体验"
+      ],
+      "title_bn": "আপনি কি এখনও মনে করেন SEO শুধুমাত্র নার্ডদের জন্য?",
+      "excerpt_bn": "নতুন মার্কেটিং যুগ এসেছে, এবং মনে হচ্ছে আপনি পার্টির জন্য আমন্ত্রিত হননি।",
+      "tags_bn": [
+        "SEO",
+        "মার্কেটিং",
+        "মুলতুবি",
+        "প্রযুক্তি",
+        "UX"
+      ],
+      "title_ru": "Вы все еще думаете, что SEO – это только для задротов?",
+      "excerpt_ru": "Новая эра маркетинга пришла, и, похоже, вас не пригласили на вечеринку.",
+      "tags_ru": [
+        "SEO",
+        "маркетинг",
+        "прокрастинация",
+        "технологии",
+        "UX"
+      ],
+      "tone": "incredulo"
+    },
+    {
       "title": "O Mercado de Ações: A Grande Montanha-Russa do Vale do Silício",
       "url": "./posts/2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio/",
       "markdown": "2026/2026-01-07-o-mercado-de-acoes-a-grande-montanha-russa-do-vale-do-silicio.md",
