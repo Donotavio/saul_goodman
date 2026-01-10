@@ -23,7 +23,13 @@
    ```
 
    Isso preserva chaves existentes por idioma e preenche chaves faltantes com `pt-BR`.
-3) Gere/atualize os stubs de rota `/<lang>/...` (gravam cookie e redirecionam):
+3) (Para servir o site/blog localmente) copie os locales para dentro de `site/`:
+
+   ```bash
+   npm run i18n:copy-site
+   ```
+
+4) Gere/atualize os stubs de rota `/<lang>/...` (gravam cookie e redirecionam):
 
    ```bash
    npm run i18n:stubs
