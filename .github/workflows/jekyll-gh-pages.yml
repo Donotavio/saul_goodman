@@ -31,8 +31,9 @@ jobs:
 
       - name: Copy locales into site
         run: |
-          rm -rf site/_locales
+          rm -rf site/_locales site/blog/_locales
           cp -R _locales site/_locales
+          cp -R _locales site/blog/_locales
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

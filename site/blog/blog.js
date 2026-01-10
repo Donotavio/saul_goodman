@@ -5,7 +5,7 @@ const blogBase = new URL('./', scriptUrl);
 const indexUrl = new URL('index.json', blogBase);
 const postsBase = new URL('posts/', blogBase);
 
-const LOCALES_BASE = new URL('../_locales/', blogBase);
+const LOCALES_BASE = new URL('./_locales/', blogBase);
 
 const DEFAULT_LANGUAGE = 'pt';
 const SUPPORTED_LANGUAGES = [
