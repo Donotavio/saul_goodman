@@ -96,7 +96,7 @@
     "message": "Yasal, dijital procrastinasyona sahiptir"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman logosu"
   },
   "blogPreviewCta": {
     "message": "Tüm makalelere bakın"
@@ -126,19 +126,19 @@
     "message": "Dijital mahkeme odasından son vakalar."
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman şüpheci"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman onaylıyor"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman yargılıyor"
   },
   "breadcrumbArticle": {
     "message": "Madde Madde"
   },
   "breadcrumbBlog": {
-    "message": "Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog"
+    "message": "Blog"
   },
   "categoriesTitle": {
     "message": "Oturumda Kategoriler"
@@ -162,7 +162,7 @@
     "message": "Suçlu bir savunma ile Dev performans"
   },
   "categoryEyebrow": {
-    "message": "Kategori Kategori"
+    "message": "Kategori"
   },
   "categoryFocoLead": {
     "message": "Günlük çalışmalar ve drama kafanızı beslemeye teslim olmadan kodda tutmak."
@@ -744,7 +744,7 @@
     "message": "VS Kodu (IDE)"
   },
   "languageLabel": {
-    "message": "dili seçin"
+    "message": "Dil seç"
   },
   "latestEyebrow": {
     "message": "Fresh Fresh Fresh"
@@ -822,7 +822,7 @@
     "message": "Kaynak URL"
   },
   "metaTags": {
-    "message": "Etiketler Etiketler"
+    "message": "Etiketler"
   },
   "mobileMenuToggle": {
     "message": "Açık menü"
@@ -834,19 +834,19 @@
     "message": "Faydaları"
   },
   "navBlog": {
-    "message": "Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog"
+    "message": "Blog"
   },
   "navClients": {
     "message": "Müşteriler"
   },
   "navCodeCon": {
-    "message": "KoduConConConCon"
+    "message": "CodeCon"
   },
   "navCta": {
-    "message": "Yükleme"
+    "message": "Yükle"
   },
   "navDemo": {
-    "message": "Demo Demo Demo Demo Demo Demo Demo Demo"
+    "message": "Demo"
   },
   "navIndex": {
     "message": "Index Index Index Index"
