@@ -916,6 +916,26 @@ const applyTranslations = () => {
   if (lightboxClose && lightboxLabel) {
     lightboxClose.textContent = lightboxLabel;
   }
+
+  const updateShieldBadgeLabel = (img, labelKey) => {
+    if (!img?.getAttribute) return;
+    const label = currentMessages[labelKey] || fallbackMessages[labelKey];
+    if (!label) return;
+    const src = img.getAttribute('src');
+    if (!src) return;
+    try {
+      const url = new URL(src);
+      url.searchParams.set('label', label);
+      img.setAttribute('src', url.toString());
+    } catch {
+      // ignore invalid URLs
+    }
+  };
+
+  const ratingBadge = document.querySelector('img[data-i18n-alt="ratingBadgeAlt"]');
+  updateShieldBadgeLabel(ratingBadge, 'ratingBadgeLabel');
+  const usersBadge = document.querySelector('img[data-i18n-alt="usersBadgeAlt"]');
+  updateShieldBadgeLabel(usersBadge, 'usersBadgeLabel');
 };
 
 const detectLanguage = () => {

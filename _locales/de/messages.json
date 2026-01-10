@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "Durchschnittliche Bewertung für Chrome Web Store"
   },
+  "ratingBadgeLabel": {
+    "message": "Bewertung"
+  },
   "reactionBlockAlt": {
     "message": "Saul blockiert den Zugang"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "Benutzer auf Chrome Web Store"
+  },
+  "usersBadgeLabel": {
+    "message": "Nutzer"
   }
 }

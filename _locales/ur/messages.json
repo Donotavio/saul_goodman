@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "کروم ویب اسٹور پر اوسط شرح خواندگی"
   },
+  "ratingBadgeLabel": {
+    "message": "ریٹنگ"
+  },
   "reactionBlockAlt": {
     "message": "ساؤل نے رسائی روک لی"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "کروم ویب اسٹور پر صارفین"
+  },
+  "usersBadgeLabel": {
+    "message": "صارفین"
   }
 }

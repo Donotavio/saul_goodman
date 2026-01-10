@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "Средний рейтинг в Chrome Web Store"
   },
+  "ratingBadgeLabel": {
+    "message": "Оценка"
+  },
   "reactionBlockAlt": {
     "message": "Саул блокирует доступ"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "Пользователи в Chrome Web Store"
+  },
+  "usersBadgeLabel": {
+    "message": "Пользователи"
   }
 }

@@ -1029,7 +1029,7 @@
     "message": "屏蔽偏好更新 。"
   },
   "options_status_critical_saved": {
-    "message": "(原始内容存档于2018-03-05). Modo terremoto atualizado."
+    "message": "地震模式已更新。"
   },
   "options_status_defaults_restored": {
     "message": "默认恢复 。"
@@ -1038,7 +1038,7 @@
     "message": "域已删除 。"
   },
   "options_status_holiday_saved": {
-    "message": "(原始内容存档于2018-09-21). Preferências de feriado atualizadas."
+    "message": "假期偏好已更新。"
   },
   "options_status_language_saved": {
     "message": "语言更新。"
@@ -1053,7 +1053,7 @@
     "message": "时间表已更新。"
   },
   "options_status_vscode_saved": {
-    "message": "(原始内容存档于2018-09-21). Integração com VS Code atualizada."
+    "message": "与 VS Code 的集成已更新。"
   },
   "options_status_weights_saved": {
     "message": "重量更新。"
@@ -1104,7 +1104,7 @@
     "message": "测试conexão"
   },
   "options_vscode_test_disabled": {
-    "message": "Attive a integração com VS 代码 antes de testar. 中国植物物种信息数据库."
+    "message": "请在测试之前启用与 VS Code 的集成。"
   },
   "options_vscode_test_error": {
     "message": "索尔达蒙基金会{reason}) (中文(简体) )."
@@ -1386,43 +1386,43 @@
     "message": "上下文"
   },
   "popup_fairness_holiday_active": {
-    "message": "(原始内容存档于2018-03-09). Hoje é feriado, índice pausado autramentament."
+    "message": "今天是节假日，指数自动暂停。"
   },
   "popup_fairness_holiday_detected": {
-    "message": "Feriado 侦测器 —— sem penalidades. 中国植物物种信息数据库."
+    "message": "检测到假期 — 无惩罚。"
   },
   "popup_fairness_manual_label": {
     "message": "无名小卒"
   },
   "popup_fairness_note": {
-    "message": "Saul realibra o índice 符合 o celforceo que você escolhe 没有弹出。 Ignorar hoje zera o 得分 e silencia alaras. 中国植物物种信息数据库. 背景:Trabalho mantém 100%,Pessoal sinciliza tudo,Lazer conta 30% do foco e ignora vilos, Estudos reduz as penidades pela metade, Folga e Férias zeram o dia sem 依赖者 de feriados。"
+    "message": "Saul 根据您在弹出窗口中选择的上下文重新校准指数。今天忽略将清零分数并静音警报。上下文：工作保持 100%，个人中和一切，休闲占 30% 的焦点并忽略恶棍，学习将惩罚减半，休假和假期将一天清零而不依赖于假期。"
   },
   "popup_fairness_note_label": {
     "message": "索尔展"
   },
   "popup_fairness_status_day_off": {
-    "message": "Folga cadastrada – ídice pausado. 中国植物物种信息数据库."
+    "message": "已登记的休假 — 指数暂停。"
   },
   "popup_fairness_status_default": {
     "message": "迪亚・乌蒂尔正常。"
   },
   "popup_fairness_status_holiday": {
-    "message": "(原始内容存档于2018-09-29). Feriado nacional licientizando o índice."
+    "message": "国家假期中和了指数。"
   },
   "popup_fairness_status_leisure": {
     "message": "Modo lazer reduz a pressão(英语:Modo lazer reduz a pressão). 摩多·拉泽(英语:Modo lazer reduz a pressão)是美国英语中的\"摩多·拉泽(英语:摩多·拉泽(英语:Modo lazer))\"的一个新闻人物."
   },
   "popup_fairness_status_manual": {
-    "message": "(原始内容存档于2018-10-09). Dia ignorado manualmente."
+    "message": "手动忽略的日子。"
   },
   "popup_fairness_status_personal": {
-    "message": "(原始内容存档于2018-09-21). Modo pessoal ativo—— sem pontuação."
+    "message": "个人模式已激活 — 无得分。"
   },
   "popup_fairness_status_study": {
-    "message": "(原始内容存档于2018-09-29). Modo estudo suaviza o índice."
+    "message": "学习模式减轻了指数。"
   },
   "popup_fairness_status_vacation": {
-    "message": "(原始内容存档于2018-07-21). Modo férias sincientiza o dia."
+    "message": "假期模式中和了这一天。"
   },
   "popup_fairness_title": {
     "message": "Justiça do dia (英语)."
@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "Chrome网络商店的平均评级"
   },
+  "ratingBadgeLabel": {
+    "message": "评分"
+  },
   "reactionBlockAlt": {
     "message": "索尔封锁了通道"
   },
@@ -1878,40 +1881,40 @@
     "message": "导出 PDF"
   },
   "report_fairness_holiday_active": {
-    "message": "(原始内容存档于2018-03-09). Hoje é feriado, índice pausado autramentament."
+    "message": "今天是节假日，指数自动暂停。"
   },
   "report_fairness_holiday_detected": {
-    "message": "Feriado 侦测器 —— sem penalidades. 中国植物物种信息数据库."
+    "message": "检测到假期 — 无惩罚。"
   },
   "report_fairness_status_day_off": {
-    "message": "folga cadastrada sinciliizou o índice. 中国植物物种信息数据库."
+    "message": "已登记的休假中和了指数。"
   },
   "report_fairness_status_default": {
     "message": "迪亚・乌蒂尔正常。"
   },
   "report_fairness_status_holiday": {
-    "message": "Feriado nacional sinciliizou o índice. 中国植物物种信息数据库."
+    "message": "国家假期中和了指数。"
   },
   "report_fairness_status_leisure": {
-    "message": "Modo lazer reduziu as cobranças. 中国植物物种信息数据库."
+    "message": "休闲模式减少了收费。"
   },
   "report_fairness_status_manual": {
-    "message": "(原始内容存档于2018-10-09). Dia ignorado manualmente."
+    "message": "手动忽略的日子。"
   },
   "report_fairness_status_personal": {
-    "message": "Modo pessoal—— sem pontuação. 中国植物物种信息数据库."
+    "message": "个人模式 — 无得分。"
   },
   "report_fairness_status_study": {
     "message": "Modo estudo suavizou作为刑罚。"
   },
   "report_fairness_status_vacation": {
-    "message": "(原始内容存档于2018-09-29). Modo férias zerou o dia."
+    "message": "假期模式清零了这一天。"
   },
   "report_fairness_title": {
     "message": "Justiça do dia (英语)."
   },
   "report_fairness_tooltip": {
-    "message": "(原始内容存档于2017-09-21). Overover handor, contexecto ou feriados potem sincientizar o índice. Registramos aqui sempre que is so a contecer. 英国的美国海军海军陆战队"
+    "message": "手动覆盖，上下文或假期可以中和指数。每当发生这种情况时，我们都会在这里记录。"
   },
   "report_filter_apply": {
     "message": "过滤器"
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "Chrome网络存储器上的用户"
+  },
+  "usersBadgeLabel": {
+    "message": "用户"
   }
 }

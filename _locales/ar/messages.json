@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "متوسط التقدير على مخزن الكروم"
   },
+  "ratingBadgeLabel": {
+    "message": "التقييم"
+  },
   "reactionBlockAlt": {
     "message": "(سول) يحجب الدخول"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "مستعملون في متجر الكروم على الشبكة العالمية"
+  },
+  "usersBadgeLabel": {
+    "message": "المستخدمون"
   }
 }

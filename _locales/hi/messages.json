@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "क्रोम वेब स्टोर पर औसत रेटिंग"
   },
+  "ratingBadgeLabel": {
+    "message": "रेटिंग"
+  },
   "reactionBlockAlt": {
     "message": "सेल अवरुद्ध पहुँच"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "क्रोम वेब स्टोर पर उपयोगकर्ता"
+  },
+  "usersBadgeLabel": {
+    "message": "उपयोगकर्ता"
   }
 }

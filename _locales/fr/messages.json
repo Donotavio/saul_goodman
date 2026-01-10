@@ -1703,6 +1703,9 @@
   "ratingBadgeAlt": {
     "message": "Note moyenne sur Chrome Web Store"
   },
+  "ratingBadgeLabel": {
+    "message": "Note"
+  },
   "reactionBlockAlt": {
     "message": "Saul bloque l'accès"
   },
@@ -2464,5 +2467,8 @@
   },
   "usersBadgeAlt": {
     "message": "Utilisateurs sur Chrome Web Store"
+  },
+  "usersBadgeLabel": {
+    "message": "Utilisateurs"
   }
 }

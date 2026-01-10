@@ -1700,6 +1700,9 @@
   "ratingBadgeAlt": {
     "message": "ক্রোম ওয়েব স্টোরের গড় হার"
   },
+  "ratingBadgeLabel": {
+    "message": "রেটিং"
+  },
   "reactionBlockAlt": {
     "message": "শৌল সংযোগ বন্ধ করে দিয়েছিলেন"
   },
@@ -2461,5 +2464,8 @@
   },
   "usersBadgeAlt": {
     "message": "ক্রোম ওয়েব স্টোরের উপর ব্যবহারকারী"
+  },
+  "usersBadgeLabel": {
+    "message": "ব্যবহারকারী"
   }
 }
