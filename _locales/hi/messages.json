@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "योगदान करना चाहते हैं या एकीकृत करना चाहते हैं?"
   },
+  "earthquake_open_popup": {
+    "message": "पॉपअप खोलें"
+  },
+  "earthquake_review_villains": {
+    "message": "खलनायकों की समीक्षा करें"
+  },
+  "earthquake_title": {
+    "message": "सौल उच्चतम सतर्कता में!"
+  },
   "extDescription": {
     "message": "Sarcastic फोकस ट्रैकर जो डोमेन को मापता है और चेक में आपकी प्रक्रिया अनुक्रमित रखता है।"
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "अगला"
   },
+  "notification_update_message": {
+    "message": "एक्सटेंशन अपडेट किया गया है। चेंजलॉग देखने के लिए क्लिक करें।"
+  },
+  "notification_update_title": {
+    "message": "नवीनताएँ — v{version}"
+  },
   "options_back_to_popup": {
     "message": "पॉपअप पर वापस जाएं"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "निष्क्रिय (सेकेंड) की गिनती से पहले अधिकतम निष्क्रिय समय"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "10 सेकंड से 10 मिनट के बीच; निष्क्रियता की गणना पर प्रभाव डालता है।"
   },
   "options_language_auto": {
     "message": "स्वचालित (browser)"
@@ -1139,6 +1157,9 @@
   "options_vscode_url_label": {
     "message": "स्थानीय बैकएंड यूआरएल"
   },
+  "options_weight_hint": {
+    "message": "सूचकांक पर प्रभाव को संतुलित करने के लिए 0 और 1 के बीच के नंबर का उपयोग करें।"
+  },
   "options_weight_inactivity": {
     "message": "निष्क्रियता (वजन)"
   },
@@ -1263,7 +1284,7 @@
     "message": "कार्य योजना:"
   },
   "popup_critical_plan_suffix": {
-    "message": "s."
+    "message": "से."
   },
   "popup_critical_review": {
     "message": "खलनायक"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "टैब बिल बढ़ रहा है: अब ध्यान दें या हम अतिरिक्त शुल्क लेते हैं।"
   },
+  "report_banner_message_default": {
+    "message": "यह सूचकांक बढ़ रहा है। मुझे जोखिम बोनस की आवश्यकता होगी!"
+  },
   "report_banner_title": {
     "message": "उच्च चेतावनी पर आत्मा!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "मुख्य चैंपियन और खलनायक दिन के लिए एकत्रित।"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1मिनट"
   },
   "report_error_no_data": {
     "message": "उपलब्ध नहीं है।"
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "टैब स्विच"
+  },
+  "report_no_records": {
+    "message": "कोई रिकॉर्ड नहीं।"
+  },
+  "report_overtime_tag": {
+    "message": "ओवरटाइम"
   },
   "report_pdf_ai_title": {
     "message": "साउल का तर्क"

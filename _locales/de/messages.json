@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "Möchten Sie beitragen oder integrieren?"
   },
+  "earthquake_open_popup": {
+    "message": "Popup öffnen"
+  },
+  "earthquake_review_villains": {
+    "message": "Schurken überprüfen"
+  },
+  "earthquake_title": {
+    "message": "Saul auf höchster Alarmbereitschaft!"
+  },
   "extDescription": {
     "message": "Sarcastic-Fokustracker, der Domains misst und Ihren Procrastination-Index in Schach hält."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Nächste"
   },
+  "notification_update_message": {
+    "message": "Die Erweiterung wurde aktualisiert. Klicken Sie hier, um das Änderungsprotokoll zu sehen."
+  },
+  "notification_update_title": {
+    "message": "Neuigkeiten — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Zurück zum Popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Maximale Leerzeit vor dem Zählen als inaktiv (zweite)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Zwischen 10s und 10min; beeinflusst die Berechnung der Inaktivität."
   },
   "options_language_auto": {
     "message": "Automatischer (Browser)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "Lokale Backend URL"
+  },
+  "options_weight_hint": {
+    "message": "Verwenden Sie Zahlen zwischen 0 und 1, um den Einfluss auf den Index zu kalibrieren."
   },
   "options_weight_inactivity": {
     "message": "Inaktivität (Gewicht)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "Die Registerkarte wächst: Fokus jetzt oder wir berechnen zusätzliche Gebühren."
   },
+  "report_banner_message_default": {
+    "message": "Dieser Index explodiert. Ich werde Risiko-Boni brauchen!"
+  },
   "report_banner_title": {
     "message": "Saul auf Hochalarm!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Hauptsieger und Bösewichte aggregiert für den Tag."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "Keine Metriken verfügbar."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Registerschalter"
+  },
+  "report_no_records": {
+    "message": "Keine Aufzeichnungen."
+  },
+  "report_overtime_tag": {
+    "message": "Überstunden"
   },
   "report_pdf_ai_title": {
     "message": "Sauls Argument"

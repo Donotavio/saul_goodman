@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "Vuoi contribuire o integrare?"
   },
+  "earthquake_open_popup": {
+    "message": "Apri popup"
+  },
+  "earthquake_review_villains": {
+    "message": "Rivedi i cattivi"
+  },
+  "earthquake_title": {
+    "message": "Saul in massima allerta!"
+  },
   "extDescription": {
     "message": "Monitor di messa a fuoco sarcastico che misura i domini e mantiene il vostro indice di procrastinazione in controllo."
   },
@@ -822,7 +831,7 @@
     "message": "URL sorgente"
   },
   "metaTags": {
-    "message": "Tags"
+    "message": "Tag"
   },
   "mobileMenuToggle": {
     "message": "Menu aperto"
@@ -883,6 +892,12 @@
   },
   "nextPost": {
     "message": "Il prossimo"
+  },
+  "notification_update_message": {
+    "message": "L'estensione è stata aggiornata. Clicca per vedere il changelog."
+  },
+  "notification_update_title": {
+    "message": "Novità — v{version}"
   },
   "options_back_to_popup": {
     "message": "Torna a popup"
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Tempo minimo massimo prima di contare come inattivo (secondi)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Tra 10s e 10min; influisce sul calcolo dell'inattività."
   },
   "options_language_auto": {
     "message": "Automatico (browser)"
@@ -1116,7 +1134,7 @@
     "message": "URL non valido. Utilizzare qualcosa come http://127.0.0.1:3123."
   },
   "options_vscode_test_running": {
-    "message": "Testando conexão..."
+    "message": "Test connessione in corso..."
   },
   "options_vscode_test_success": {
     "message": "SaulDaemon rispose{origin}Sessioni di oggi:{sessions}Discussioni del Parlamento europeo{minutes}."
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "URL del backend locale"
+  },
+  "options_weight_hint": {
+    "message": "Usa numeri tra 0 e 1 per calibrare l'influenza sull'indice."
   },
   "options_weight_inactivity": {
     "message": "Inattività (peso)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "Il conto della scheda è in crescita: concentrati ora o addebitiamo costi aggiuntivi."
   },
+  "report_banner_message_default": {
+    "message": "Questo indice sta esplodendo. Ho bisogno di bonus di rischio!"
+  },
   "report_banner_title": {
     "message": "Saul in allerta!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Campioni principali e cattivi aggregati per il giorno."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "Nessuna metrica disponibile."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Interruttori di schede"
+  },
+  "report_no_records": {
+    "message": "Nessun record."
+  },
+  "report_overtime_tag": {
+    "message": "Straordinario"
   },
   "report_pdf_ai_title": {
     "message": "L'argomento di Saul"

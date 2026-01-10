@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "Quer contribuir ou integrar?"
   },
+  "earthquake_open_popup": {
+    "message": "Abrir popup"
+  },
+  "earthquake_review_villains": {
+    "message": "Revisar vilões"
+  },
+  "earthquake_title": {
+    "message": "Saul em alerta máximo!"
+  },
   "extDescription": {
     "message": "Rastreador de foco sarcástico que mede os domínios e mantém seu índice de procrastinação sob controle."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Próximo"
   },
+  "notification_update_message": {
+    "message": "A extensão foi atualizada. Clique para ver o changelog."
+  },
+  "notification_update_title": {
+    "message": "Novidades — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Voltar ao popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Tempo máximo parado antes de contar como inativo (segundos)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Entre 10s e 10min; impacta o cálculo de inatividade."
   },
   "options_language_auto": {
     "message": "Automático (navegador)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "URL do backend local"
+  },
+  "options_weight_hint": {
+    "message": "Use números entre 0 e 1 para calibrar a influência no índice."
   },
   "options_weight_inactivity": {
     "message": "Inatividade (peso)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "A conta das abas está crescendo: foque agora ou cobraremos taxas extras."
   },
+  "report_banner_message_default": {
+    "message": "Esse índice está explodindo. Vou precisar de bônus de risco!"
+  },
   "report_banner_title": {
     "message": "Saul em alerta máximo!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Principais campeões e vilões agregados do dia."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "Nenhuma métrica disponível."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Trocas de abas"
+  },
+  "report_no_records": {
+    "message": "Sem registros."
+  },
+  "report_overtime_tag": {
+    "message": "Overtime"
   },
   "report_pdf_ai_title": {
     "message": "Argumento do Saul"

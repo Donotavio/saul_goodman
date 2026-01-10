@@ -754,7 +754,7 @@ function fillRankingTable(tbody: HTMLTableSectionElement, entries: DomainStats[]
     const row = document.createElement('tr');
     const cell = document.createElement('td');
     cell.colSpan = 2;
-    cell.textContent = 'Sem registros.';
+    cell.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
     row.appendChild(cell);
     tbody.appendChild(row);
     return;
@@ -1791,7 +1791,7 @@ function createTimelineSegmentElement(entry: TimelineEntry): HTMLLIElement {
   if (isSegmentOvertime(entry)) {
     const overtimeTag = document.createElement('span');
     overtimeTag.className = 'tag overtime';
-    overtimeTag.textContent = 'Overtime';
+    overtimeTag.textContent = i18n?.t('report_overtime_tag') ?? 'Overtime';
     header.appendChild(overtimeTag);
   }
 
@@ -1949,7 +1949,7 @@ function formatDomainLabel(domain: string): string {
 
 function formatDurationFriendly(ms: number): string {
   if (ms < 60000) {
-    return '<1m';
+    return i18n?.t('report_duration_less_than_minute') ?? '<1m';
   }
   return formatDuration(ms);
 }

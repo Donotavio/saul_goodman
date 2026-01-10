@@ -842,8 +842,8 @@ async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
       await chrome.notifications.create(RELEASE_NOTIFICATION_ID, {
         type: 'basic',
         iconUrl: chrome.runtime.getURL('src/img/logotipo_saul_goodman.png'),
-        title: `Novidades — v${version}`,
-        message: 'A extensão foi atualizada. Clique para ver o changelog.'
+        title: chrome.i18n.getMessage('notification_update_title')?.replace('{version}', version) ?? `Novidades — v${version}`,
+        message: chrome.i18n.getMessage('notification_update_message') ?? 'A extensão foi atualizada. Clique para ver o changelog.'
       });
       if (forceOpen) {
         await openTab();

@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "Vous voulez contribuer ou vous intégrer?"
   },
+  "earthquake_open_popup": {
+    "message": "Ouvrir le popup"
+  },
+  "earthquake_review_villains": {
+    "message": "Réviser les méchants"
+  },
+  "earthquake_title": {
+    "message": "Saul en alerte maximale !"
+  },
   "extDescription": {
     "message": "Sarcastic focus tracker qui mesure les domaines et garde votre index de procrastination en échec."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Suivant"
   },
+  "notification_update_message": {
+    "message": "L'extension a été mise à jour. Cliquez pour voir le changelog."
+  },
+  "notification_update_title": {
+    "message": "Nouveautés — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Retour au popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Temps maximal de repos avant le comptage comme inactif (secondes)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Entre 10s et 10min; cela impacte le calcul de l'inactivité."
   },
   "options_language_auto": {
     "message": "Automatique (navigateur)"
@@ -1141,6 +1159,9 @@
   },
   "options_vscode_url_label": {
     "message": "URL locale du moteur de recherche"
+  },
+  "options_weight_hint": {
+    "message": "Utilisez des chiffres entre 0 et 1 pour calibrer l'influence sur l'indice."
   },
   "options_weight_inactivity": {
     "message": "Inactivité (poids)"
@@ -1835,6 +1856,9 @@
   "report_banner_message_4": {
     "message": "Le projet de loi sur les onglets est en hausse : concentrez-vous maintenant ou nous facturons des frais supplémentaires."
   },
+  "report_banner_message_default": {
+    "message": "Cet indice est en train d'exploser. Je vais avoir besoin de bonus de risque !"
+  },
   "report_banner_title": {
     "message": "Saul en alerte !"
   },
@@ -1870,6 +1894,9 @@
   },
   "report_domain_subtitle": {
     "message": "Principaux champions et méchants regroupés pour la journée."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "Pas de mesures disponibles."
@@ -2029,6 +2056,12 @@
   },
   "report_metric_switches_label": {
     "message": "Interrupteurs d'onglets"
+  },
+  "report_no_records": {
+    "message": "Aucun enregistrement."
+  },
+  "report_overtime_tag": {
+    "message": "Heures supplémentaires"
   },
   "report_pdf_ai_title": {
     "message": "L'argument de Saul"

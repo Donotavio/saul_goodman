@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "دوسروں کو دینے یا اُن سے تعاون کرنے کے لئے کیا چاہتے ہیں ؟"
   },
+  "earthquake_open_popup": {
+    "message": "پاپ اپ کھولیں"
+  },
+  "earthquake_review_villains": {
+    "message": "ولن کا جائزہ لیں"
+  },
+  "earthquake_title": {
+    "message": "ساؤل زیادہ سے زیادہ الرٹ میں!"
+  },
   "extDescription": {
     "message": "سرکامک مرکزہ (Sarcastic pointer) جس میں ڈومینوں کی پیمائش کی جاتی ہے اور چیک میں اپنے انڈیکس کو برقرار رکھتا ہے۔"
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "اگلا"
   },
+  "notification_update_message": {
+    "message": "توسیع کو اپ ڈیٹ کیا گیا ہے۔ تبدیلیوں کی فہرست دیکھنے کے لیے کلک کریں۔"
+  },
+  "notification_update_title": {
+    "message": "نئی چیزیں — v{version}"
+  },
   "options_back_to_popup": {
     "message": "واپسی پوپ"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "غیر متصل حساب سے پہلے"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "10s سے 10min کے درمیان؛ غیر فعالیت کے حساب پر اثر انداز ہوتا ہے۔"
   },
   "options_language_auto": {
     "message": "خودکار (Browser)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "جگہ"
+  },
+  "options_weight_hint": {
+    "message": "اثر کو ایڈجسٹ کرنے کے لیے 0 اور 1 کے درمیان نمبر استعمال کریں۔"
   },
   "options_weight_inactivity": {
     "message": "انسٹھ (انگریزی:"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "ٹیبل بل بڑھتا جا رہا ہے: اب توجہ مرکوز کریں یا ہم مزید ٹیکس ادا کریں."
   },
+  "report_banner_message_default": {
+    "message": "یہ انڈیکس پھٹ رہا ہے۔ مجھے خطرے کے بونس کی ضرورت ہوگی!"
+  },
   "report_banner_title": {
     "message": "ساؤل بڑی ہوشیاری سے !"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "اس دن کے لئے قائد اعظم اور ناقدین نے حلف اٹھایا۔"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "کوئی میٹرک دستیاب نہیں۔"
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "بستر کو تبدیل کریں"
+  },
+  "report_no_records": {
+    "message": "کوئی ریکارڈ نہیں۔"
+  },
+  "report_overtime_tag": {
+    "message": "اوور ٹائم"
   },
   "report_pdf_ai_title": {
     "message": "ساؤل کی دلیل"
@@ -2286,7 +2319,7 @@
     "message": "بلاگ شیئر کریں"
   },
   "shareIndexTwitter": {
-    "message": "X"
+    "message": "ایکس"
   },
   "shareLinkedin": {
     "message": "لنک"
@@ -2295,7 +2328,7 @@
     "message": "شیئر کریں"
   },
   "shareTwitter": {
-    "message": "X"
+    "message": "ایکس"
   },
   "socialProofCaption": {
     "message": "ساؤل پہلے ہی سے ہزاروں کی مدد کرتا ہے ۔"

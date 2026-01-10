@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "katkıda bulunmak veya entegre etmek ister misiniz?"
   },
+  "earthquake_open_popup": {
+    "message": "Popup'ı aç"
+  },
+  "earthquake_review_villains": {
+    "message": "Kötü karakterleri gözden geçir"
+  },
+  "earthquake_title": {
+    "message": "Saul maksimum alarmda!"
+  },
   "extDescription": {
     "message": "Sarcastic bu önlemler alanlarını takip eder ve kontrolde procrastinasyon indeksini tutar."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Sonraki"
   },
+  "notification_update_message": {
+    "message": "Uzantı güncellendi. Değişiklik günlüğünü görmek için tıklayın."
+  },
+  "notification_update_title": {
+    "message": "Yeni özellikler — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Geri popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Aktif olarak saymadan önce en fazla boş zaman (saniyeler)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "{threshold} saniye ile {threshold} dakika arasında; etkinlik hesaplamasını etkiler."
   },
   "options_language_auto": {
     "message": "Otomatik (otomatik)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "Local backend URL"
+  },
+  "options_weight_hint": {
+    "message": "İndeks üzerindeki etkiyi ayarlamak için 0 ile 1 arasında sayılar kullanın."
   },
   "options_weight_inactivity": {
     "message": "Inactivity (weight)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "Tab faturası büyüyor: şimdi ya da ekstra ücretleri şarj ediyoruz."
   },
+  "report_banner_message_default": {
+    "message": "Bu indeks patlıyor. Risk bonusuna ihtiyacım var!"
+  },
   "report_banner_title": {
     "message": "Saul yüksek uyarıda!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Ana şampiyonlar ve villalar gün için toplandılar."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1d"
   },
   "report_error_no_data": {
     "message": "Mevcut değil."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Tab anahtarları"
+  },
+  "report_no_records": {
+    "message": "Kayıt yok."
+  },
+  "report_overtime_tag": {
+    "message": "Fazla mesai"
   },
   "report_pdf_ai_title": {
     "message": "Saul'un argümanı"

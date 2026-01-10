@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "অবদান রাখতে চান নাকি সহযোগিতা করতে চান?"
   },
+  "earthquake_open_popup": {
+    "message": "পপআপ খুলুন"
+  },
+  "earthquake_review_villains": {
+    "message": "ভিলেন পর্যালোচনা করুন"
+  },
+  "earthquake_title": {
+    "message": "সৌল সর্বোচ্চ সতর্কতায়!"
+  },
   "extDescription": {
     "message": "সারকাস্টিক ফোকাস ট্র্যাকার, যা ডোমেইনকে পরিচালনা করে... ...আর তাতে তোমার প্রবঞ্চনা সূচক রাখা যায়।"
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "পরবর্তী"
   },
+  "notification_update_message": {
+    "message": "এক্সটেনশনটি আপডেট করা হয়েছে। পরিবর্তন লগ দেখতে ক্লিক করুন।"
+  },
+  "notification_update_title": {
+    "message": "নতুনত্ব — v{version}"
+  },
   "options_back_to_popup": {
     "message": "পপ-আপ- এ প্রত্যাবর্তন করুন"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "নিষ্ক্রিয় করার পূর্বে অতিবাহিত সময় (সেকেন্ডে)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "10 সেকেন্ড থেকে 10 মিনিটের মধ্যে; নিষ্ক্রিয়তার গণনায় প্রভাব ফেলে।"
   },
   "options_language_auto": {
     "message": "স্বয়ংক্রিয় (বরের)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "স্থানীয় ব্যাক-এন্ড URL"
+  },
+  "options_weight_hint": {
+    "message": "সূচকের প্রভাব সমন্বয় করতে 0 এবং 1 এর মধ্যে সংখ্যা ব্যবহার করুন।"
   },
   "options_weight_inactivity": {
     "message": "সমমানতা (inversion)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "ট্যাব বিল এখন বাড়ছে: মনোযোগ দিন, অথবা আমরা অতিরিক্ত ফি চার্জ করছি।"
   },
+  "report_banner_message_default": {
+    "message": "এই সূচকটি বিস্ফোরিত হচ্ছে। আমাকে ঝুঁকির বোনাসের প্রয়োজন!"
+  },
   "report_banner_title": {
     "message": "সা."
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "প্রধান বিজয়ী এবং ভিলেনরা দিনের জন্য পৃথক হয়ে গেছে।"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1মিনিট"
   },
   "report_error_no_data": {
     "message": "কোনো মেট্রিক বিদ্যমান নেই।"
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "ট্যাব বদল"
+  },
+  "report_no_records": {
+    "message": "রেকর্ড নেই।"
+  },
+  "report_overtime_tag": {
+    "message": "অতিরিক্ত সময়"
   },
   "report_pdf_ai_title": {
     "message": "সাউলের যুক্তি"

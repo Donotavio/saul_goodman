@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "هل تريد المساهمة أو الاندماج؟"
   },
+  "earthquake_open_popup": {
+    "message": "فتح النافذة المنبثقة"
+  },
+  "earthquake_review_villains": {
+    "message": "مراجعة الأشرار"
+  },
+  "earthquake_title": {
+    "message": "ساول في حالة تأهب قصوى!"
+  },
   "extDescription": {
     "message": "متتبع التركيز الساحق الذي يقيس المجالات ويبقي الرقم القياسي الخاص بك في التحقق."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "التالي"
   },
+  "notification_update_message": {
+    "message": "تم تحديث الإضافة. انقر لرؤية سجل التغييرات."
+  },
+  "notification_update_title": {
+    "message": "أخبار جديدة — الإصدار {version}"
+  },
   "options_back_to_popup": {
     "message": "العودة إلى البابا"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "الحد الأقصى من الوقت العاجز قبل العد كغير نشط (الثانيات)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "بين 10 ثوانٍ و 10 دقائق؛ يؤثر على حساب عدم النشاط."
   },
   "options_language_auto": {
     "message": "أوتوماتيكي (مزارع)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "الدعم المحلي"
+  },
+  "options_weight_hint": {
+    "message": "استخدم أرقامًا بين 0 و 1 لضبط التأثير على المؤشر."
   },
   "options_weight_inactivity": {
     "message": "العجز (الوزن)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "مشروع القانون ينمو: التركيز الآن أو نفرض رسوما إضافية."
   },
+  "report_banner_message_default": {
+    "message": "هذا المؤشر يتفجر. سأحتاج إلى مكافآت المخاطر!"
+  },
   "report_banner_title": {
     "message": "سول في حالة تأهب قصوى!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "الأبطال الرئيسيون و الأشرار تم تجميعهم اليوم"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "لا توجد مقاييس متاحة"
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "مفاتيح التبديل"
+  },
+  "report_no_records": {
+    "message": "لا توجد سجلات."
+  },
+  "report_overtime_tag": {
+    "message": "ساعات إضافية"
   },
   "report_pdf_ai_title": {
     "message": "حجة سول"

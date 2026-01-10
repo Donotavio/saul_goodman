@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "¿Quieres contribuir o integrar?"
   },
+  "earthquake_open_popup": {
+    "message": "Abrir popup"
+  },
+  "earthquake_review_villains": {
+    "message": "Revisar villanos"
+  },
+  "earthquake_title": {
+    "message": "¡Saul en alerta máxima!"
+  },
   "extDescription": {
     "message": "Rastreador de enfoque sarcástico que mide los dominios y mantiene tu índice de procrastinación bajo control."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Siguiente"
   },
+  "notification_update_message": {
+    "message": "La extensión ha sido actualizada. Haz clic para ver el changelog."
+  },
+  "notification_update_title": {
+    "message": "Novedades — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Volver al popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Tiempo máximo inactivo antes de contar como tal (segundos)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Entre 10s y 10min; impacta el cálculo de inactividad."
   },
   "options_language_auto": {
     "message": "Automático (navegador)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "URL del backend local"
+  },
+  "options_weight_hint": {
+    "message": "Use números entre 0 y 1 para calibrar la influencia en el índice."
   },
   "options_weight_inactivity": {
     "message": "Inactividad (peso)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "La cuenta de pestañas crece: enfócate ahora o cobramos cargos extra."
   },
+  "report_banner_message_default": {
+    "message": "Este índice está explotando. ¡Voy a necesitar bonificaciones de riesgo!"
+  },
   "report_banner_title": {
     "message": "¡Saul en alerta máxima!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Principales campeones y villanos agregados del día."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "No hay métricas disponibles."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Cambios de pestaña"
+  },
+  "report_no_records": {
+    "message": "Sin registros."
+  },
+  "report_overtime_tag": {
+    "message": "Overtime"
   },
   "report_pdf_ai_title": {
     "message": "Argumento de Saul"

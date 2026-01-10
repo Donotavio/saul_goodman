@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "要贡献还是整合?"
   },
+  "earthquake_open_popup": {
+    "message": "打开弹出窗口"
+  },
+  "earthquake_review_villains": {
+    "message": "审查恶棍"
+  },
+  "earthquake_title": {
+    "message": "索尔处于最高警戒！"
+  },
   "extDescription": {
     "message": "用于测量域并保持您延迟索引的 Sarcastic 焦点跟踪器 。"
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "ưμ㼯A"
   },
+  "notification_update_message": {
+    "message": "扩展已更新。点击查看更新日志。"
+  },
+  "notification_update_title": {
+    "message": "新功能 — v{version}"
+  },
   "options_back_to_popup": {
     "message": "回弹出"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "计算为不活动前的最大闲置时间( 秒)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "介于10秒和10分钟之间；影响非活动计算。"
   },
   "options_language_auto": {
     "message": "自动( 浏览器)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "本地后端 URL"
+  },
+  "options_weight_hint": {
+    "message": "使用0到1之间的数字来调整对指数的影响。"
   },
   "options_weight_inactivity": {
     "message": "无活动( 重量)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "标签帐单越来越多:现在集中,否则我们收取额外的费用。"
   },
+  "report_banner_message_default": {
+    "message": "这个指数正在爆炸。我需要风险奖金！"
+  },
   "report_banner_title": {
     "message": "索尔处于高度警戒状态!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "主要冠军和恶棍 今天聚集。"
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1分钟"
   },
   "report_error_no_data": {
     "message": "无衡量标准。"
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "标签开关"
+  },
+  "report_no_records": {
+    "message": "没有记录。"
+  },
+  "report_overtime_tag": {
+    "message": "加班"
   },
   "report_pdf_ai_title": {
     "message": "索尔的辩证"

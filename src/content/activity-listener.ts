@@ -217,7 +217,7 @@ function ensureOverlay(): void {
   logo.alt = 'Logotipo Saul Goodman';
   logo.className = 'sg-logo';
   const title = document.createElement('strong');
-  title.textContent = 'Saul em alerta máximo!';
+  title.textContent = chrome.i18n.getMessage('earthquake_title') ?? 'Saul em alerta máximo!';
   const paragraph = document.createElement('p');
   paragraph.id = 'sg-earthquake-message';
   paragraph.textContent = CRITICAL_QUOTES[0];
@@ -225,13 +225,13 @@ function ensureOverlay(): void {
   actionContainer.className = 'sg-actions';
 
   const popupButton = document.createElement('button');
-  popupButton.textContent = 'Abrir popup';
+  popupButton.textContent = chrome.i18n.getMessage('earthquake_open_popup') ?? 'Abrir popup';
   popupButton.addEventListener('click', () => {
     window.open(chrome.runtime.getURL('src/popup/popup.html'), '_blank', 'noopener');
   });
 
   const optionsButton = document.createElement('button');
-  optionsButton.textContent = 'Revisar vilões';
+  optionsButton.textContent = chrome.i18n.getMessage('earthquake_review_villains') ?? 'Revisar vilões';
   optionsButton.addEventListener('click', () => {
     window.open(chrome.runtime.getURL('src/options/options.html#vilains'), '_blank', 'noopener');
   });

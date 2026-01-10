@@ -320,6 +320,15 @@
   "devTitle": {
     "message": "Want to contribute or integrate?"
   },
+  "earthquake_open_popup": {
+    "message": "Open popup"
+  },
+  "earthquake_review_villains": {
+    "message": "Review villains"
+  },
+  "earthquake_title": {
+    "message": "Saul on high alert!"
+  },
   "extDescription": {
     "message": "Sarcastic focus tracker that measures domains and keeps your procrastination index in check."
   },
@@ -884,6 +893,12 @@
   "nextPost": {
     "message": "Next"
   },
+  "notification_update_message": {
+    "message": "The extension has been updated. Click to view the changelog."
+  },
+  "notification_update_title": {
+    "message": "What's New — v{version}"
+  },
   "options_back_to_popup": {
     "message": "Back to popup"
   },
@@ -952,6 +967,9 @@
   },
   "options_inactivity_threshold": {
     "message": "Maximum idle time before counting as inactive (seconds)"
+  },
+  "options_inactivity_threshold_hint": {
+    "message": "Between 10s and 10min; impacts the inactivity calculation."
   },
   "options_language_auto": {
     "message": "Automatic (browser)"
@@ -1138,6 +1156,9 @@
   },
   "options_vscode_url_label": {
     "message": "Local backend URL"
+  },
+  "options_weight_hint": {
+    "message": "Use numbers between 0 and 1 to calibrate the influence on the index."
   },
   "options_weight_inactivity": {
     "message": "Inactivity (weight)"
@@ -1832,6 +1853,9 @@
   "report_banner_message_4": {
     "message": "The tab bill is growing: focus now or we charge extra fees."
   },
+  "report_banner_message_default": {
+    "message": "This index is skyrocketing. I will need risk bonuses!"
+  },
   "report_banner_title": {
     "message": "Saul on high alert!"
   },
@@ -1867,6 +1891,9 @@
   },
   "report_domain_subtitle": {
     "message": "Main champions and villains aggregated for the day."
+  },
+  "report_duration_less_than_minute": {
+    "message": "<1m"
   },
   "report_error_no_data": {
     "message": "No metrics available."
@@ -2026,6 +2053,12 @@
   },
   "report_metric_switches_label": {
     "message": "Tab switches"
+  },
+  "report_no_records": {
+    "message": "No records."
+  },
+  "report_overtime_tag": {
+    "message": "Overtime"
   },
   "report_pdf_ai_title": {
     "message": "Saul's argument"
