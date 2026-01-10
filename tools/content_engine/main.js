@@ -143,8 +143,19 @@ const DRY_RUN = process.argv.includes('--dry-run') || process.env.DRY_RUN === 't
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
 const TRANSLATION_TARGETS = [
   { code: 'en', label: 'inglês', display: 'English' },
-  { code: 'es', label: 'espanhol', display: 'Spanish' },
+  { code: 'es', label: 'espanhol', display: 'Español' },
+  { code: 'fr', label: 'francês', display: 'Français' },
+  { code: 'de', label: 'alemão', display: 'Deutsch' },
+  { code: 'it', label: 'italiano', display: 'Italiano' },
+  { code: 'tr', label: 'turco', display: 'Türkçe' },
+  { code: 'zh', label: 'chinês (simplificado)', display: '中文' },
+  { code: 'hi', label: 'hindi', display: 'हिन्दी' },
+  { code: 'ar', label: 'árabe', display: 'العربية' },
+  { code: 'bn', label: 'bengali', display: 'বাংলা' },
+  { code: 'ru', label: 'russo', display: 'Русский' },
+  { code: 'ur', label: 'urdu', display: 'اردو' },
 ];
+const TRANSLATION_CODES = TRANSLATION_TARGETS.map((target) => target.code);
 
 async function readJson(file, fallback) {
   try {
@@ -548,8 +559,7 @@ async function generateTranslations(metadata, body) {
 function buildFrontmatter(metadata) {
   const preferredOrder = [
     'title',
-    'title_en',
-    'title_es',
+    ...TRANSLATION_CODES.map((code) => `title_${code}`),
     'date',
     'category',
     'tone',
@@ -558,8 +568,7 @@ function buildFrontmatter(metadata) {
     'source_url',
     'source_published_at',
     'excerpt',
-    'excerpt_en',
-    'excerpt_es',
+    ...TRANSLATION_CODES.map((code) => `excerpt_${code}`),
   ];
   const seen = new Set();
   const lines = [];
@@ -725,10 +734,12 @@ async function updateIndex(metadata, markdownPath, body = '') {
     source_url: metadata.source_url,
     source_published_at: metadata.source_published_at,
   };
-  if (metadata.title_en) entry.title_en = metadata.title_en;
-  if (metadata.title_es) entry.title_es = metadata.title_es;
-  if (metadata.excerpt_en) entry.excerpt_en = metadata.excerpt_en;
-  if (metadata.excerpt_es) entry.excerpt_es = metadata.excerpt_es;
+  for (const code of TRANSLATION_CODES) {
+    const titleKey = `title_${code}`;
+    const excerptKey = `excerpt_${code}`;
+    if (metadata[titleKey]) entry[titleKey] = metadata[titleKey];
+    if (metadata[excerptKey]) entry[excerptKey] = metadata[excerptKey];
+  }
   if (metadata.tone) entry.tone = metadata.tone;
 
   index.posts = index.posts.filter((p) => p.markdown !== markdownPath);

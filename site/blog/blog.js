@@ -348,6 +348,16 @@ const DATE_LOCALE = {
   pt: 'pt-BR',
   en: 'en-US',
   es: 'es-ES',
+  fr: 'fr-FR',
+  de: 'de-DE',
+  it: 'it-IT',
+  tr: 'tr-TR',
+  zh: 'zh-CN',
+  hi: 'hi-IN',
+  ar: 'ar',
+  bn: 'bn',
+  ru: 'ru-RU',
+  ur: 'ur',
 };
 
 const assetsBase = new URL('../assets/', blogBase);
@@ -449,7 +459,21 @@ const TONE_TEXT_HINTS = {
   'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
 };
 
-const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
+const supportedLanguages = [
+  'pt',
+  'en',
+  'es',
+  'fr',
+  'de',
+  'it',
+  'tr',
+  'zh',
+  'hi',
+  'ar',
+  'bn',
+  'ru',
+  'ur',
+];
 const defaultLanguage = 'pt';
 let currentLanguage = defaultLanguage;
 let allPostsCache = [];
@@ -635,7 +659,7 @@ function stripMetadataSection(markdown = '') {
 
 function extractLocalizedBodies(body) {
   const sections = {};
-  const markerRegex = /<!--lang:(pt|en|es)-->/gi;
+  const markerRegex = new RegExp(`<!--lang:(${supportedLanguages.join('|')})-->`, 'gi');
   let match;
   let lastIndex = 0;
   let currentLang = 'pt';
@@ -696,7 +720,17 @@ function normalizeLanguage(value) {
   if (lower.startsWith('pt')) return 'pt';
   if (lower.startsWith('en')) return 'en';
   if (lower.startsWith('es')) return 'es';
-  return lower;
+  if (lower.startsWith('fr')) return 'fr';
+  if (lower.startsWith('de')) return 'de';
+  if (lower.startsWith('it')) return 'it';
+  if (lower.startsWith('tr')) return 'tr';
+  if (lower.startsWith('zh')) return 'zh';
+  if (lower.startsWith('hi')) return 'hi';
+  if (lower.startsWith('ar')) return 'ar';
+  if (lower.startsWith('bn')) return 'bn';
+  if (lower.startsWith('ru')) return 'ru';
+  if (lower.startsWith('ur')) return 'ur';
+  return defaultLanguage;
 }
 
 function getCategoryFromUrl() {
@@ -726,10 +760,61 @@ function detectLanguage() {
   return supportedLanguages.includes(navigatorLang) ? navigatorLang : defaultLanguage;
 }
 
+function getHtmlLang(value) {
+  if (value === 'pt') return 'pt-BR';
+  if (value === 'es') return 'es-419';
+  if (value === 'zh') return 'zh-CN';
+  return value;
+}
+
+function getLanguageLabel(value) {
+  const labels = {
+    pt: 'PT',
+    en: 'EN',
+    es: 'ES',
+    fr: 'FR',
+    de: 'DE',
+    it: 'IT',
+    tr: 'TR',
+    zh: '中文',
+    hi: 'हिंदी',
+    ar: 'العربية',
+    bn: 'বাংলা',
+    ru: 'RU',
+    ur: 'اردو',
+  };
+  return labels[value] || String(value || '').toUpperCase();
+}
+
+function ensureLanguageSelectorOptions() {
+  const selector = document.getElementById('blog-language-select');
+  if (!selector) return;
+
+  const existingValues = new Set(
+    Array.from(selector.querySelectorAll('option')).map((opt) => opt.value)
+  );
+
+  if (
+    supportedLanguages.every((lang) => existingValues.has(lang)) &&
+    selector.querySelectorAll('option').length === supportedLanguages.length
+  ) {
+    return;
+  }
+
+  selector.innerHTML = '';
+  supportedLanguages.forEach((lang) => {
+    const option = document.createElement('option');
+    option.value = lang;
+    option.textContent = getLanguageLabel(lang);
+    selector.appendChild(option);
+  });
+}
+
 function applyTranslations(lang) {
   currentLanguage = supportedLanguages.includes(lang) ? lang : defaultLanguage;
   const dictionary = getDictionary(currentLanguage);
-  document.documentElement.lang = currentLanguage === 'pt' ? 'pt-BR' : currentLanguage;
+  document.documentElement.lang = getHtmlLang(currentLanguage);
+  ensureLanguageSelectorOptions();
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
     const text = dictionary[key];
