@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "تمام"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "ابھی تک یہاں کوئی مضامین شائع نہیں ہوئے۔"
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "قانونی طور پر ڈیجیٹل مہم پر لی جاتی ہے۔"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "تمام مضامین دیکھیں"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "ڈیجیٹل عدالت کی طرف سے مختص مقدمات."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "مضمون"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "فعال فعال"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "صاف صفائی"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "آزمائش پر توجہ دیں"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "اِس سلسلے میں ایک مثال پر غور کریں ۔"
   },
   "categoryProcrastinacaoTitle": {
     "message": "زیرِغور تحقیق"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "گھر کے دفتر کے بارے میں کہانیاں، بلیک موجودگی اور ایک فرضی باطل ہونے سے گریز کریں."
   },
   "categoryRemotoTitle": {
     "message": "علیبی کے ساتھ فاصلہ کا کام"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "اب ہم تبدیلی لامحدود نہیں سکتے. بعد میں کوشش کریں."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "اِس کی وجہ کیا ہے ؟"
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "دیوی لکشمی نے سختی میٹرکس کی طرف سے فیصلے کیے۔"
   },
   "mediaTaglineFoco": {
     "message": "روزمرّہ سوالات کے تحت توجہ اور توجہ."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "( ۱ - سموئیل ۱۶ : ۷ - ۹ ) ذہنی طور پر ، ساؤل کے پُراسرار شور سے ملتا ہے ۔"
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "دور کام صفر متحرک معذرت کے ساتھ."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "کیٹیگری"

@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "Todos"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "Nenhum artigo publicado por aqui ainda."
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "Opiniões jurídicas sobre procrastinação digital"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "Ver todos os artigos"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "Últimos casos do tribunal digital."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "Artigo"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "Categoria ativa"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "Limpar categoria"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "Foco & Atenção em julgamento"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "Casos reais de atrasos, preguiça digital e tab hunting que o Saul adora processar."
   },
   "categoryProcrastinacaoTitle": {
     "message": "Procrastinação sob investigação"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "Histórias e achados sobre home office, Slack aberto e a arte de não sumir do Zoom."
   },
   "categoryRemotoTitle": {
     "message": "Trabalho remoto sem álibi"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "Não foi possível carregar o changelog agora. Tente novamente mais tarde."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "Marketing agressivo com uma pitada de ética."
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "Performance dev julgada por métricas reais."
   },
   "mediaTaglineFoco": {
     "message": "Foco e atenção sob interrogatório diário."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "Osciloscópios emocionais e sarcasmo terapêutico."
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "Home office sem álibi e sem modo fantasma."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "Categoria"

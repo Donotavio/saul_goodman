@@ -29,6 +29,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Copy locales into site
+        run: |
+          rm -rf site/_locales
+          cp -R _locales site/_locales
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "Все"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "Никаких статей здесь пока не опубликовано."
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "Законодательство берет на себя цифровую прокрастинацию"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "Смотреть все статьи"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "Последние дела из цифрового зала суда."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "Статья"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "Активная категория"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "Четкая категория"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "Внимание и внимание к суду"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "Реальные случаи задержки, цифровой лени и охоты за вкладками Саул любит преследовать."
   },
   "categoryProcrastinacaoTitle": {
     "message": "Промедление под следствием"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "Истории о домашнем офисе, присутствии Слэка и предотвращении исчезновения Зума."
   },
   "categoryRemotoTitle": {
     "message": "Удаленная работа без алиби"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "Мы не могли загрузить журнал изменений прямо сейчас. Попробуй позже."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "Агрессивный маркетинг с щепоткой этики."
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "Производительность Dev оценивается по жестким показателям."
   },
   "mediaTaglineFoco": {
     "message": "Сосредоточьтесь и внимание при ежедневном опросе."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "Психические осциллографы отвечают терапевтическому сарказму Саула."
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "Удаленная работа с нулевыми оправданиями в режиме призрака."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "Категория"

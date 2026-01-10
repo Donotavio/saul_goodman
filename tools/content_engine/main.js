@@ -517,10 +517,15 @@ function parseJsonBlock(text) {
 
 async function translateArticle(metadata, body, target) {
   const prompt = `Traduza o artigo abaixo para ${target.label} (${target.display}).
-Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais. Responda em JSON com as chaves "title", "excerpt" e "body" (body deve ser markdown completo com as mesmas seções).
+Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais.
+
+Responda em JSON com as chaves "title", "excerpt", "tags" e "body":
+- "tags" deve ser um array de strings (traduza as tags quando fizer sentido; termos técnicos podem permanecer).
+- "body" deve ser markdown completo com as mesmas seções.
 
 TÍTULO: ${metadata.title}
 EXCERPT: ${metadata.excerpt}
+TAGS: ${JSON.stringify(metadata.tags || [])}
 ARTIGO:
 ${body}`;
   const response = await callLLM(prompt, {
@@ -532,11 +537,15 @@ ${body}`;
   const title = (json.title || json.headline || json.name || json.titulo || '').trim();
   const excerpt = (json.excerpt || json.summary || json.description || '').trim();
   const articleBody = (json.body || json.content || json.article || json.text || json.story || '').trim();
+  const tags = Array.isArray(json.tags)
+    ? json.tags.map((tag) => (typeof tag === 'string' ? tag.trim() : String(tag))).filter(Boolean)
+    : [];
   if (!title || !articleBody) throw new Error('Tradução sem body ou title');
   return {
     lang: target.code,
     title,
     excerpt,
+    tags,
     body: articleBody,
   };
 }
@@ -564,6 +573,7 @@ function buildFrontmatter(metadata) {
     'category',
     'tone',
     'tags',
+    ...TRANSLATION_CODES.map((code) => `tags_${code}`),
     'source_title',
     'source_url',
     'source_published_at',
@@ -737,8 +747,10 @@ async function updateIndex(metadata, markdownPath, body = '') {
   for (const code of TRANSLATION_CODES) {
     const titleKey = `title_${code}`;
     const excerptKey = `excerpt_${code}`;
+    const tagsKey = `tags_${code}`;
     if (metadata[titleKey]) entry[titleKey] = metadata[titleKey];
     if (metadata[excerptKey]) entry[excerptKey] = metadata[excerptKey];
+    if (metadata[tagsKey]) entry[tagsKey] = metadata[tagsKey];
   }
   if (metadata.tone) entry.tone = metadata.tone;
 
@@ -823,6 +835,9 @@ async function run() {
   translations.forEach((entry) => {
     if (entry.title) metadata[`title_${entry.lang}`] = entry.title;
     if (entry.excerpt) metadata[`excerpt_${entry.lang}`] = entry.excerpt;
+    if (Array.isArray(entry.tags) && entry.tags.length) {
+      metadata[`tags_${entry.lang}`] = entry.tags;
+    }
   });
   const finalMarkdown = buildMarkdown(metadata, body, translations);
 

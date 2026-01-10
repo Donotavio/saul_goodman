@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "Bütün Bütün Hepsi"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "Henüz yayınlanan makaleler yok."
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "Yasal, dijital procrastinasyona sahiptir"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "Tüm makalelere bakın"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "Dijital mahkeme odasından son vakalar."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "Madde Madde"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "Aktif kategori"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "Clear kategori"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "Focus & Dikkat"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "Gerçek gecikme vakaları, dijital laziness ve sekme avcısı Saul yargılamayı seviyor."
   },
   "categoryProcrastinacaoTitle": {
     "message": "Procrastination under investigation"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "Ev ofisi hakkında hikayeler, Slack varlığı ve bir Zoom ortadan kaybolmasından kaçın."
   },
   "categoryRemotoTitle": {
     "message": "Uzaktan çalışma hiçbir alibi ile"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "Şu anda değişimlogunu yükleyemezdik. Daha sonra tekrar deneyin."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "Bir etik pinch ile agresif pazarlama."
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "Dev performans sert ölçümlerle yargılandı."
   },
   "mediaTaglineFoco": {
     "message": "Focus ve dikkat günlük sorgulama altında."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "Zihinsel oscilloskoplar Saul'un tedavi sarcasm ile tanışır."
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "Uzaktan çalışma sıfır hayalet-mode bahanelerle."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "Kategori Kategori"

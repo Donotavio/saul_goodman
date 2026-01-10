@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "सब"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "अभी तक कोई लेख प्रकाशित नहीं हुआ।"
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "कानूनी रूप से डिजिटल खरीद पर ले जाता है"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "सभी लेख देखें"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "डिजिटल कोर्टरूम के नवीनतम मामले।"
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "लेख"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "सक्रिय श्रेणी"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "स्पष्ट श्रेणी"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "पर ध्यान दें"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "देरी के वास्तविक मामलों, डिजिटल laziness, और टैब शिकार Saul prosecute के लिए प्यार करता है।"
   },
   "categoryProcrastinacaoTitle": {
     "message": "जांच के तहत Procrastination"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "घर कार्यालय, स्लैक उपस्थिति और ज़ूम गायब होने से बचने के बारे में कहानियां।"
   },
   "categoryRemotoTitle": {
     "message": "कोई alibi के साथ दूरस्थ काम"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "हम अभी बदलाव नहीं कर सकते। बाद में फिर से प्रयास करें।"
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "एथिक्स के एक चुटकी के साथ आक्रामक विपणन।"
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "देव प्रदर्शन हार्ड मैट्रिक्स द्वारा निर्णय लिया।"
   },
   "mediaTaglineFoco": {
     "message": "दैनिक पूछताछ के तहत ध्यान केंद्रित करें।"
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "मानसिक oscilloscope Saul के चिकित्सीय sarcasm से मिलते हैं।"
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "दूरस्थ कार्य शून्य भूत मोड बहाने के साथ।"
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "श्रेणी"

@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "সকল"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "এখানে এখনো কোন প্রবন্ধ প্রকাশিত হয়নি।"
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "ডিজিটাল পরিপক্কতার বিরুদ্ধে আইনগত ব্যবস্থা গ্রহণ"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "অধ্যয়ন প্রবন্ধগুলো"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "ডিজিটাল আদালত থেকে সর্বশেষ খবর এসেছে।"
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "পদাশ্রিত নির্দেশক"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "সক্রিয় বিভাগ"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "বিভাগ মুছে ফেলুন"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "পরীক্ষার প্রতি ফোকাস"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "( ১ শমূ."
   },
   "categoryProcrastinacaoTitle": {
     "message": "তদন্তের অধীনে প্রসিকিউশন"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "বাড়ির অফিস, নিউরেজ উপস্থিতির গল্প এবং একটি বড় নিখোঁজ হওয়া এড়িয়ে যাওয়া।"
   },
   "categoryRemotoTitle": {
     "message": "কোনবাইর সঙ্গে দূরবর্তী কাজ"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "আমরা এই মুহূর্তে পরিবর্তন করতে পারি না। পরে চেষ্টা করো।"
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "নৈতিকতার এক চিমটিক মার্কেটিং।"
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "হার্ড মেট্রিকদের বিচার করা হয়েছে।"
   },
   "mediaTaglineFoco": {
     "message": "প্রতিদিন জিজ্ঞাসাবাদের সময় মনোযোগ দিন।"
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "মন ও অসিলোস্কোপ শৌলের ধর্ষণকে উপহাসের সঙ্গে সাক্ষাৎ করে ।"
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "ভূত-mode এর সাথে দূরবর্তী কাজ."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "শ্রেণীবিভাগ"

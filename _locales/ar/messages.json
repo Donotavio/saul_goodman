@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "كل شيء"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "لا مقالات منشورة هنا بعد"
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "القضاء على الازدهار الرقمي"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "انظر جميع المواد"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "آخر القضايا من قاعة المحكمة الرقمية"
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "المادة"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "الفئة النشطة"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "فئة واضحة"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "تركيز الاهتمام على المحاكمة"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "حالات التأخّر الحقيقيّة، الكسل الرقمي، وصيد (سول) يحبّ المقاضاة."
   },
   "categoryProcrastinacaoTitle": {
     "message": "التسويف قيد التحقيق"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "قصص عن مكتب المنزل، وجود سلاك، وتجنب اختفاء زوم."
   },
   "categoryRemotoTitle": {
     "message": "العمل عن بعد بدون حجة غياب"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "لا يمكننا تحميل المتغير الآن حاول مرة أخرى لاحقا."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "تسويق عدواني مع حفنة من الأخلاق"
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "الأداء الشيطاني تحكم عليه القياسات الصلبة"
   },
   "mediaTaglineFoco": {
     "message": "التركيز والاهتمام تحت الاستجواب اليومي."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "ويقابل مظاريف الفستق العقلية السخرية العلاجية في سول."
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "العمل عن بعد مع عدم وجود أعذار ضد الأشباح"
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "الفئة"

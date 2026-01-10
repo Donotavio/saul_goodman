@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "Alle"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Carreira"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Performance Dev"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Foco & Atenção"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Negócios"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastinação"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Produto"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Trabalho remoto"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "Noch keine Artikel hier veröffentlicht."
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "Legal nimmt digitale Procrastination"
+  },
+  "blogLogoAlt": {
+    "message": "Logo Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "Alle Artikel anzeigen"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "Letzte Fälle aus dem digitalen Gerichtssaal."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman incrédulo"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman aprovando"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman julgando"
+  },
   "breadcrumbArticle": {
     "message": "Artikel 2"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "Aktive Kategorie"
+  },
+  "categoryCarreiraLead": {
+    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Carreira sem roteiro de coach"
   },
   "categoryClear": {
     "message": "Kategorie auswählen"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "Fokus und Achtung vor Gericht"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing sem promessa milagrosa"
+  },
+  "categoryNegociosLead": {
+    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+  },
+  "categoryNegociosTitle": {
+    "message": "Negócios e liderança no tribunal"
+  },
   "categoryProcrastinacaoLead": {
     "message": "Echte Fälle von Verspätung, digitaler Faulheit und Tabjagd Saul liebt es zu verfolgen."
   },
   "categoryProcrastinacaoTitle": {
     "message": "Prokratisierung im Rahmen der Untersuchung"
   },
+  "categoryProdutoLead": {
+    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Produto e estratégia em audiência"
+  },
   "categoryRemotoLead": {
     "message": "Geschichten über Heimbüro, Slack Präsenz und Vermeidung eines Zoom Verschwindens."
   },
   "categoryRemotoTitle": {
     "message": "Fernarbeit ohne Alibi"
+  },
+  "categoryUxLead": {
+    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design sob lupa"
   },
   "changelogError": {
     "message": "Wir konnten das Changelog jetzt nicht laden. Versuchen Sie es später noch mal."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "Aggressives Marketing mit einer Prise Ethik."
   },
+  "mediaTaglineCarreira": {
+    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+  },
   "mediaTaglineDev": {
     "message": "Dev-Performance von harten Metriken beurteilt."
   },
   "mediaTaglineFoco": {
     "message": "Fokus und Aufmerksamkeit unter täglichen Fragen."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, conteúdo e funil sem feitiçaria."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Negócios em pauta, com foco em execução."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "Mentale Oszilloskope treffen den therapeutischen Sarkasmus Sauls."
   },
+  "mediaTaglineProduto": {
+    "message": "Produto julgado por dados, não por feeling."
+  },
   "mediaTaglineRemoto": {
     "message": "Remote-Arbeit mit null Geister-Modus Ausreden."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
     "message": "Kategorie"

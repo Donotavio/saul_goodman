@@ -53,6 +53,33 @@
   "blogCategoryAll": {
     "message": "All"
   },
+  "blogCategoryLabelCarreira": {
+    "message": "Career"
+  },
+  "blogCategoryLabelDevPerformance": {
+    "message": "Dev Performance"
+  },
+  "blogCategoryLabelFocoAtencao": {
+    "message": "Focus & Attention"
+  },
+  "blogCategoryLabelMarketing": {
+    "message": "Marketing"
+  },
+  "blogCategoryLabelNegocios": {
+    "message": "Business"
+  },
+  "blogCategoryLabelProcrastinacao": {
+    "message": "Procrastination"
+  },
+  "blogCategoryLabelProduto": {
+    "message": "Product"
+  },
+  "blogCategoryLabelTrabalhoRemoto": {
+    "message": "Remote Work"
+  },
+  "blogCategoryLabelUxDesign": {
+    "message": "UX & Design"
+  },
   "blogEmptyState": {
     "message": "No articles published here yet."
   },
@@ -67,6 +94,9 @@
   },
   "blogHeroTitle": {
     "message": "Legal takes on digital procrastination"
+  },
+  "blogLogoAlt": {
+    "message": "Saul Goodman logo"
   },
   "blogPreviewCta": {
     "message": "See all articles"
@@ -95,6 +125,15 @@
   "blogPreviewTitle": {
     "message": "Latest cases from the digital courtroom."
   },
+  "blogToneAltIncredulo": {
+    "message": "Saul Goodman, skeptical"
+  },
+  "blogToneAltLike": {
+    "message": "Saul Goodman, approving"
+  },
+  "blogToneAltNaoCorte": {
+    "message": "Saul Goodman, judging"
+  },
   "breadcrumbArticle": {
     "message": "Article"
   },
@@ -106,6 +145,12 @@
   },
   "categoryActiveLabel": {
     "message": "Active category"
+  },
+  "categoryCarreiraLead": {
+    "message": "Habits, leadership, and corporate survival without LinkedIn clichés."
+  },
+  "categoryCarreiraTitle": {
+    "message": "Career without coach scripts"
   },
   "categoryClear": {
     "message": "Clear category"
@@ -125,17 +170,41 @@
   "categoryFocoTitle": {
     "message": "Focus & Attention on trial"
   },
+  "categoryMarketingLead": {
+    "message": "SEO, content, and conversion with less guru talk and more method."
+  },
+  "categoryMarketingTitle": {
+    "message": "Marketing with no miracle promises"
+  },
+  "categoryNegociosLead": {
+    "message": "Management, culture, and real impact—no jargon, no fluff."
+  },
+  "categoryNegociosTitle": {
+    "message": "Business & leadership in court"
+  },
   "categoryProcrastinacaoLead": {
     "message": "Real cases of delay, digital laziness, and tab hunting Saul loves to prosecute."
   },
   "categoryProcrastinacaoTitle": {
     "message": "Procrastination under investigation"
   },
+  "categoryProdutoLead": {
+    "message": "Decisions, metrics, and PM trade-offs so you don’t become hostage to the backlog."
+  },
+  "categoryProdutoTitle": {
+    "message": "Product & strategy on trial"
+  },
   "categoryRemotoLead": {
     "message": "Stories about home office, Slack presence, and avoiding a Zoom disappearance."
   },
   "categoryRemotoTitle": {
     "message": "Remote work with no alibi"
+  },
+  "categoryUxLead": {
+    "message": "Design, usability, and product decisions that impact your day-to-day focus."
+  },
+  "categoryUxTitle": {
+    "message": "UX & Design under the spotlight"
   },
   "changelogError": {
     "message": "We could not load the changelog right now. Try again later."
@@ -710,17 +779,32 @@
   "manifestoTitle": {
     "message": "Aggressive marketing with a pinch of ethics."
   },
+  "mediaTaglineCarreira": {
+    "message": "Career under questioning, with sarcasm and pragmatism."
+  },
   "mediaTaglineDev": {
     "message": "Dev performance judged by hard metrics."
   },
   "mediaTaglineFoco": {
     "message": "Focus and attention under daily questioning."
   },
+  "mediaTaglineMarketing": {
+    "message": "SEO, content, and funnels—no witchcraft."
+  },
+  "mediaTaglineNegocios": {
+    "message": "Business on the docket, focused on execution."
+  },
   "mediaTaglineProcrastinacao": {
     "message": "Mental oscilloscopes meet Saul’s therapeutic sarcasm."
   },
+  "mediaTaglineProduto": {
+    "message": "Product judged by data, not vibes."
+  },
   "mediaTaglineRemoto": {
     "message": "Remote work with zero ghost-mode excuses."
+  },
+  "mediaTaglineUx": {
+    "message": "UX, design, and choices that keep users out of villain mode."
   },
   "metaCategory": {
     "message": "Category"
