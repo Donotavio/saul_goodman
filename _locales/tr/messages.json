@@ -135,7 +135,7 @@
     "message": "Saul Goodman yargılıyor"
   },
   "breadcrumbArticle": {
-    "message": "Madde Madde"
+    "message": "Madde"
   },
   "breadcrumbBlog": {
     "message": "Blog"
@@ -459,7 +459,7 @@
     "message": "Artık günün CONTEXT'sini (iş, eğlence, çalışma, kişisel) popup'ta ayarlayabilirsiniz; Saul puanını tekrarlıyor, yumuşatıyor ve işleri adil tutuyor."
   },
   "featureContextLabel": {
-    "message": "Yeni Yeni Yeni Yeni Yeni Yeni Yeni Yeni"
+    "message": "Yeni"
   },
   "featureCustomBody": {
     "message": "Prodüksiyon ve villa domainleri, saat ağırlıkları ve yarık eşleri rutininize ayarladı."
@@ -471,7 +471,7 @@
     "message": "Özel listeler ve ağırlıklar"
   },
   "featuredEyebrow": {
-    "message": "Featured Featured"
+    "message": "Featured"
   },
   "featuredTitle": {
     "message": "Haftanın durumu"
@@ -567,7 +567,7 @@
     "message": "Changelog"
   },
   "footerLinkArchitecture": {
-    "message": "Mimari Mimari Mimari"
+    "message": "Mimari"
   },
   "footerLinkGithub": {
     "message": "GitHub"
@@ -747,13 +747,13 @@
     "message": "Dil seç"
   },
   "latestEyebrow": {
-    "message": "Fresh Fresh Fresh"
+    "message": "Fresh"
   },
   "latestTitle": {
     "message": "Verimlilik mahkemesinden sıcak"
   },
   "lightboxClose": {
-    "message": "Close Close Close Close Close"
+    "message": "Close"
   },
   "manifesto1Body": {
     "message": "Güniniz tarayıcının içinde değerlendirilir. Hiçbir veri bilgisayarı terk etmez, mahkeme emriyle bile değil."
@@ -807,7 +807,7 @@
     "message": "UX, design e escolhas que tiram o usuário do modo vilão."
   },
   "metaCategory": {
-    "message": "Kategori Kategori"
+    "message": "Kategori"
   },
   "metaPublishedAt": {
     "message": "Blogda yayınlandı"
@@ -849,7 +849,7 @@
     "message": "Demo"
   },
   "navIndex": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "navProcess": {
     "message": "Süreç Süreci"
@@ -882,7 +882,7 @@
     "message": "Saul'un memo"
   },
   "nextPost": {
-    "message": "Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki"
+    "message": "Sonraki"
   },
   "options_back_to_popup": {
     "message": "Geri popup"
@@ -906,7 +906,7 @@
     "message": "Dijital şube"
   },
   "options_domain_add": {
-    "message": "Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add"
+    "message": "Add"
   },
   "options_domain_duplicate": {
     "message": "Domain zaten listelendi."
@@ -960,7 +960,7 @@
     "message": "İngilizce (US)"
   },
   "options_language_es": {
-    "message": "İspanyolca İspanyolca İspanyolca"
+    "message": "İspanyolca"
   },
   "options_language_hint": {
     "message": "Elli seçin veya dili Chrome'u takip edin."
@@ -1158,7 +1158,7 @@
     "message": "PDF modülü mevcut değil."
   },
   "popup_badge_label": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "popup_blog_badge": {
     "message": "Saul okumaları tavsiye eder"
@@ -1203,7 +1203,7 @@
     "message": "Ürünif vs procrastinasyon saatler"
   },
   "popup_chart_axis_minutes": {
-    "message": "Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika"
+    "message": "Dakika"
   },
   "popup_chart_label_procrastination": {
     "message": "Procrastination"
@@ -1221,7 +1221,7 @@
     "message": "Folga"
   },
   "popup_context_option_leisure": {
-    "message": "Lazer Lazer"
+    "message": "Lazer"
   },
   "popup_context_option_personal": {
     "message": "Kişisel Şahsen"
@@ -1230,13 +1230,13 @@
     "message": "Çalışma Çalışması"
   },
   "popup_context_option_vacation": {
-    "message": "Tatil Tatil"
+    "message": "Tatil"
   },
   "popup_context_option_work": {
-    "message": "Work Work Work"
+    "message": "Work"
   },
   "popup_critical_close_aria": {
-    "message": "Uyarı Uyarı"
+    "message": "Uyarı"
   },
   "popup_critical_countdown_final": {
     "message": "Hiçbir mazeret yok: şu anda üç procrastinasyon sekmesini kapat!"
@@ -1275,7 +1275,7 @@
     "message": "Saul Quake modunda"
   },
   "popup_csv_category": {
-    "message": "Kategori Kategori"
+    "message": "Kategori"
   },
   "popup_csv_column_date": {
     "message": "Tarih Tarihi"
@@ -1284,7 +1284,7 @@
     "message": "Inaktif (min)"
   },
   "popup_csv_column_index": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "popup_csv_column_procrastination": {
     "message": "Procrastination (min)"
@@ -1299,7 +1299,7 @@
     "message": "VS Kodu (min)"
   },
   "popup_csv_detailed_column_category": {
-    "message": "Kategori Kategori"
+    "message": "Kategori"
   },
   "popup_csv_detailed_column_context": {
     "message": "Contexto"
@@ -1323,7 +1323,7 @@
     "message": "Detaylı zaman çizelgesi"
   },
   "popup_csv_domain": {
-    "message": "Domain Domain Domain Domain"
+    "message": "Domain"
   },
   "popup_csv_kpi_champion": {
     "message": "Top Focus domain domain domain"
@@ -1341,7 +1341,7 @@
     "message": "Saatte Anahtarlar"
   },
   "popup_csv_kpi_time": {
-    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+    "message": "Zaman"
   },
   "popup_csv_kpi_villain": {
     "message": "Villain of the day"
@@ -1350,7 +1350,7 @@
     "message": "Ekstra göstergeler"
   },
   "popup_csv_minutes": {
-    "message": "Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika"
+    "message": "Dakika"
   },
   "popup_csv_summary_title": {
     "message": "Genel Özet"
@@ -1503,7 +1503,7 @@
     "message": "Inaktif"
   },
   "popup_pdf_index": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "popup_pdf_kpis": {
     "message": "Ekstra göstergeler"
@@ -1602,7 +1602,7 @@
     "message": "Post bulunamadı."
   },
   "previousPost": {
-    "message": "Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki"
+    "message": "Önceki"
   },
   "privacyError": {
     "message": "Şu anda politikayı yükleyemezdik. Bir anda tekrar deneyin."
@@ -1848,13 +1848,13 @@
     "message": "Contexto"
   },
   "report_context_breakdown_index": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "report_context_breakdown_index_tooltip": {
     "message": "Procrastinasyon gibi% 100 kokuya yakın;% 0'a daha yakın çalıştığınız anlamına gelir - ve sizi savunabileceğim anlamına gelir."
   },
   "report_context_breakdown_time": {
-    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+    "message": "Zaman"
   },
   "report_context_breakdown_title": {
     "message": "Zaman Tarafından bağlam"
@@ -1917,7 +1917,7 @@
     "message": "Filtre"
   },
   "report_filter_from": {
-    "message": "From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From"
+    "message": "From"
   },
   "report_filter_reset": {
     "message": "reset"
@@ -2019,7 +2019,7 @@
     "message": "Saul Goodman logo"
   },
   "report_metric_index_label": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "report_metric_switches_label": {
     "message": "Tab anahtarları"
@@ -2028,13 +2028,13 @@
     "message": "Saul'un argümanı"
   },
   "report_pdf_composition_header_category": {
-    "message": "Kategori Kategori"
+    "message": "Kategori"
   },
   "report_pdf_composition_header_share": {
     "message": "Katılımcı"
   },
   "report_pdf_composition_header_time": {
-    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+    "message": "Zaman"
   },
   "report_pdf_composition_title": {
     "message": "Gün kompozisyonu"
@@ -2058,7 +2058,7 @@
     "message": "Tatil tarafsızlaştırma puanı"
   },
   "report_pdf_fairness_reason_label": {
-    "message": "Sebep Sebep Sebep"
+    "message": "Sebep"
   },
   "report_pdf_fairness_reason_manual": {
     "message": "Gün manuel olarak atladı"
@@ -2136,7 +2136,7 @@
     "message": "Linked Yükleme metninden geçmeyecek; sitede kopyalanan içeriği yapıştırın."
   },
   "report_share_index_label": {
-    "message": "Index Index Index Index"
+    "message": "Index"
   },
   "report_share_menu_argument": {
     "message": "Saul'un argümanı"
@@ -2148,7 +2148,7 @@
     "message": "Yüksek ışıklar"
   },
   "report_share_menu_label": {
-    "message": "Share Share Share"
+    "message": "Share"
   },
   "report_share_menu_native": {
     "message": "Yerli Paylaş"
@@ -2226,7 +2226,7 @@
     "message": "Resmi odak logbookbookbook"
   },
   "report_time_column": {
-    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+    "message": "Zaman"
   },
   "report_timeline_heading": {
     "message": "Minute-by-minute anlatı"
@@ -2247,7 +2247,7 @@
     "message": "RSS ile abone olun"
   },
   "searchLabel": {
-    "message": "Arama Arama"
+    "message": "Arama"
   },
   "searchPlaceholder": {
     "message": "Arama unvanı, alıntı veya etiket..."
@@ -2277,7 +2277,7 @@
     "message": "Kopyalama linki"
   },
   "shareIndexLinkedin": {
-    "message": "LinkedIn LinkedIn LinkedIn"
+    "message": "LinkedIn"
   },
   "shareIndexTitle": {
     "message": "Blogu Paylaş"
@@ -2286,10 +2286,10 @@
     "message": "X"
   },
   "shareLinkedin": {
-    "message": "LinkedIn LinkedIn LinkedIn"
+    "message": "LinkedIn"
   },
   "shareTitle": {
-    "message": "Share Share Share"
+    "message": "Share"
   },
   "shareTwitter": {
     "message": "X"
