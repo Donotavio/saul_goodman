@@ -1133,9 +1133,6 @@
   "options_vscode_test_invalid_url": {
     "message": "URL non valide. Essayez quelque chose comme http://127.0.0.1:3123."
   },
-  "options_vscode_test_restart_hint": {
-    "message": "Se a chave estiver correta, reinicie o SaulDaemon com a nova key e teste novamente."
-  },
   "options_vscode_test_running": {
     "message": "Essai de connexion..."
   },
