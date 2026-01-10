@@ -224,6 +224,11 @@ function inferTone(meta = {}) {
   if (meta.category === 'foco-atencao') return 'like';
   if (meta.category === 'dev-performance') return 'like';
   if (meta.category === 'ux-design') return 'like';
+  if (meta.category === 'produto') return 'like';
+  if (meta.category === 'carreira') return 'like';
+  if (meta.category === 'procrastinacao') return 'incredulo';
+  if (meta.category === 'marketing') return 'incredulo';
+  if (meta.category === 'negocios') return 'incredulo';
   return 'incredulo';
 }
 

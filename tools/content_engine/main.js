@@ -263,6 +263,12 @@ function detectTone(metadata, candidateCategory = '') {
   if (candidateCategory === 'trabalho-remoto') return 'nao-corte';
   if (candidateCategory === 'foco-atencao') return 'like';
   if (candidateCategory === 'dev-performance') return 'like';
+  if (candidateCategory === 'ux-design') return 'like';
+  if (candidateCategory === 'produto') return 'like';
+  if (candidateCategory === 'carreira') return 'like';
+  if (candidateCategory === 'procrastinacao') return 'incredulo';
+  if (candidateCategory === 'marketing') return 'incredulo';
+  if (candidateCategory === 'negocios') return 'incredulo';
   return 'incredulo';
 }
 
