@@ -222,7 +222,7 @@
     "message": "प्रत्येक बदलाव को सीधे रिपॉज़िटरी से ट्रैक करें।"
   },
   "changelogTitle": {
-    "message": "Changelog"
+    "message": "चेंज लॉग"
   },
   "codeconBuildChip": {
     "message": "4h कोडिंग"
@@ -564,13 +564,13 @@
     "message": "स्थापित करें, अपने खलनायक को सूचीबद्ध करें और सेल को फोकस फीस एकत्र करने दें।"
   },
   "footerChangelogLink": {
-    "message": "Changelog"
+    "message": "चेंज लॉग"
   },
   "footerLinkArchitecture": {
     "message": "आर्किटेक्चर"
   },
   "footerLinkGithub": {
-    "message": "GitHub"
+    "message": "गिटहब"
   },
   "footerLinkIndicators": {
     "message": "सूचक"
@@ -1383,7 +1383,7 @@
     "message": "अपना ध्यान रखें"
   },
   "popup_fairness_context_label": {
-    "message": "Contexto atual"
+    "message": "वर्तमान संदर्भ"
   },
   "popup_fairness_holiday_active": {
     "message": "आज एक छुट्टी है, स्कोर स्वचालित रूप से गिर गया है।"
@@ -1398,7 +1398,7 @@
     "message": "साउल पॉपअप में आपके द्वारा चुने गए संदर्भ के आधार पर स्कोर को पुन: व्यवस्थित करता है। आज स्किप करना स्कोर को शून्य करता है और अलर्ट करता है। संदर्भ: कार्य 100% रखता है, व्यक्तिगत हर चीज को बेअसर करता है, अवकाश 30% ध्यान की गणना करता है और खलनायकों को अनदेखा करता है, स्टडी हल्व्स पेनल्टी, डे-ऑफ और अवकाश शून्य छुट्टियों के बावजूद।"
   },
   "popup_fairness_note_label": {
-    "message": "Saul explica"
+    "message": "सौल समझाता है"
   },
   "popup_fairness_status_day_off": {
     "message": "दिन बंद दर्ज - स्कोर pause."
@@ -2034,7 +2034,7 @@
     "message": "श्रेणी"
   },
   "report_pdf_composition_header_share": {
-    "message": "Participação"
+    "message": "भागीदारी"
   },
   "report_pdf_composition_header_time": {
     "message": "समय"

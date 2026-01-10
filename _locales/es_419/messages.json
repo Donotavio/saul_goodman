@@ -213,7 +213,7 @@
     "message": "Todo documentado"
   },
   "changelogHeading": {
-    "message": "Changelog oficial"
+    "message": "Registro de cambios oficial"
   },
   "changelogLoading": {
     "message": "Cargando el changelog directo del repositorio..."
@@ -222,7 +222,7 @@
     "message": "Revisa cada cambio por versión directo desde el repositorio."
   },
   "changelogTitle": {
-    "message": "Changelog"
+    "message": "Registro de cambios"
   },
   "codeconBuildChip": {
     "message": "4 h de código"
@@ -273,7 +273,7 @@
     "message": "Fragmento del Hack Lab de CodeCon donde Saul cobró vida como extensión anti-distracciones."
   },
   "demoCta": {
-    "message": "View full demo"
+    "message": "Ver demo completa"
   },
   "demoEyebrow": {
     "message": "Demo rápida"
@@ -312,7 +312,7 @@
     "message": "Instalar extensión VS Code"
   },
   "devEyebrow": {
-    "message": "For developers"
+    "message": "Para desarrolladores"
   },
   "devLead": {
     "message": "Movimos los detalles técnicos fuera del flujo principal. Empieza por aquí."
@@ -558,13 +558,13 @@
     "message": "¿Listo para dejar que Saul tome el caso?"
   },
   "finalPrimary": {
-    "message": "Install on Chrome"
+    "message": "Instalar en Chrome"
   },
   "footerBody": {
     "message": "Instala, lista tus villanos y deja que Saul cobre los honorarios del foco."
   },
   "footerChangelogLink": {
-    "message": "Changelog"
+    "message": "Registro de cambios"
   },
   "footerLinkArchitecture": {
     "message": "Arquitectura"
@@ -2355,7 +2355,7 @@
     "message": "Radar del blog"
   },
   "stickyCtaButton": {
-    "message": "Install on Chrome"
+    "message": "Instalar en Chrome"
   },
   "stickyCtaText": {
     "message": "Saul está listo para vigilar tus pestañas."
@@ -2424,7 +2424,7 @@
     "message": "Lee cómo tratamos tus datos y cada nota de versión sin rodeos."
   },
   "transparencyChangelogCta": {
-    "message": "Abrir changelog completo"
+    "message": "Abrir registro de cambios completo"
   },
   "transparencyEyebrow": {
     "message": "Transparencia"

@@ -1116,7 +1116,7 @@
     "message": "Недействительный URL. Используйте что-то вроде http://127.0.0.1:3123."
   },
   "options_vscode_test_running": {
-    "message": "Testando conexão..."
+    "message": "Тестирование соединения..."
   },
   "options_vscode_test_success": {
     "message": "Саул Даймон ответил{origin}Сессии сегодня:{sessions}Минуты:{minutes}."
@@ -1296,7 +1296,7 @@
     "message": "Переключатели вкладок"
   },
   "popup_csv_column_vscode": {
-    "message": "VS Code (min)"
+    "message": "VS Code (мин)"
   },
   "popup_csv_detailed_column_category": {
     "message": "Категория"
@@ -1410,7 +1410,7 @@
     "message": "Национальный праздник нейтрализует счет."
   },
   "popup_fairness_status_leisure": {
-    "message": "Modo lazer reduz a pressão."
+    "message": "Режим отдыха снижает давление."
   },
   "popup_fairness_status_manual": {
     "message": "Диа Игнорадо Манументе."
@@ -1908,7 +1908,7 @@
     "message": "Учебный режим смягчил наказания."
   },
   "report_fairness_status_vacation": {
-    "message": "Modo férias zerou o dia."
+    "message": "Режим отпуска обнуляет день."
   },
   "report_fairness_title": {
     "message": "День справедливости"
@@ -2067,13 +2067,13 @@
     "message": "День пропущен вручную"
   },
   "report_pdf_index_neutralized": {
-    "message": "Índice neutralizado"
+    "message": "Нейтрализованный индекс"
   },
   "report_pdf_narrative_title": {
     "message": "Ключевое повествование"
   },
   "report_pdf_overview_heading": {
-    "message": "Panorama do dia"
+    "message": "Обзор дня"
   },
   "report_pdf_status_label": {
     "message": "статус"

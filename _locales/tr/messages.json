@@ -222,7 +222,7 @@
     "message": "Doğrudan repository'den salıverilen her değişikliği izleyin."
   },
   "changelogTitle": {
-    "message": "Changelog"
+    "message": "Değişiklik Günlüğü"
   },
   "codeconBuildChip": {
     "message": "4h of kodlama"
@@ -273,7 +273,7 @@
     "message": "KodCon Hack Lab'dan gelen video, Saul'un dikkat çeken bir uzatma olarak hayata geldiği yerdir."
   },
   "demoCta": {
-    "message": "View full demo"
+    "message": "Tam demoyu görüntüle"
   },
   "demoEyebrow": {
     "message": "Hızlı demo"
@@ -564,7 +564,7 @@
     "message": "Yükleme, villalarınızı listeleyin ve Saul'un odaklanmasına izin verin."
   },
   "footerChangelogLink": {
-    "message": "Changelog"
+    "message": "Değişiklik Günlüğü"
   },
   "footerLinkArchitecture": {
     "message": "Mimari"
@@ -582,7 +582,7 @@
     "message": "Gizlilik Politikası"
   },
   "footerTitle": {
-    "message": "Saul Goodman Extension"
+    "message": "Saul Goodman Uzantısı"
   },
   "heroBadge": {
     "message": "\"Enziness durumunda... CALL SAUL!\""
@@ -1116,7 +1116,7 @@
     "message": "Invalid URL. http://127.0.0.1:3123 gibi bir şey kullanın."
   },
   "options_vscode_test_running": {
-    "message": "Testando conexão..."
+    "message": "Bağlantı test ediliyor..."
   },
   "options_vscode_test_success": {
     "message": "SaulDaemon cevap verdi{origin}Bugün Oturumlar:{sessions}Dakikalar:{minutes}."
@@ -1218,10 +1218,10 @@
     "message": "Günlük radar"
   },
   "popup_context_option_dayOff": {
-    "message": "Folga"
+    "message": "İzin"
   },
   "popup_context_option_leisure": {
-    "message": "Lazer"
+    "message": "Boş zaman"
   },
   "popup_context_option_personal": {
     "message": "Kişisel Şahsen"
@@ -1302,10 +1302,10 @@
     "message": "Kategori"
   },
   "popup_csv_detailed_column_context": {
-    "message": "Contexto"
+    "message": "Bağlam"
   },
   "popup_csv_detailed_column_domain": {
-    "message": "Domínio"
+    "message": "Alan"
   },
   "popup_csv_detailed_column_duration": {
     "message": "Süre (ms)"
@@ -1383,7 +1383,7 @@
     "message": "odaklanmanızı savun"
   },
   "popup_fairness_context_label": {
-    "message": "Contexto atual"
+    "message": "Mevcut bağlam"
   },
   "popup_fairness_holiday_active": {
     "message": "Bugün bir tatil, puan otomatik olarak durakladı."
@@ -1398,13 +1398,13 @@
     "message": "Saul, popup'ta seçtiğiniz bağlama dayanarak puanları geri döndürür. Bugün sıfırları atlayın ve mutes uyarıları. Metinler: Çalışma% 100 tutar, Kişisel her şeyi nötralize eder, Spor odaklanmanın% 30'u sayır ve villaları görmezden gelir, Çalışma yarı cezaları, Günler ve Tatil Sıfırı Gün Tatile Geçer."
   },
   "popup_fairness_note_label": {
-    "message": "Saul explica"
+    "message": "Saul açıklar"
   },
   "popup_fairness_status_day_off": {
     "message": "Günler kaydedildi - durakladı."
   },
   "popup_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normal iş günü."
   },
   "popup_fairness_status_holiday": {
     "message": "Ulusal tatil puanı tarafsızlaştırıyor."
@@ -1848,7 +1848,7 @@
     "message": "Procrastination, idle ve tarafsız."
   },
   "report_context_breakdown_context": {
-    "message": "Contexto"
+    "message": "Bağlam"
   },
   "report_context_breakdown_index": {
     "message": "Index"
@@ -1890,7 +1890,7 @@
     "message": "Gün, puanı nötralize etti."
   },
   "report_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normal iş günü."
   },
   "report_fairness_status_holiday": {
     "message": "Ulusal tatil puanı nötralize etti."
@@ -2043,7 +2043,7 @@
     "message": "Gün kompozisyonu"
   },
   "report_pdf_context_header_context": {
-    "message": "Contexto"
+    "message": "Bağlam"
   },
   "report_pdf_context_header_index": {
     "message": "Context index"

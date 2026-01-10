@@ -1218,10 +1218,10 @@
     "message": "radar giornaliero"
   },
   "popup_context_option_dayOff": {
-    "message": "Folga"
+    "message": "Giorno libero"
   },
   "popup_context_option_leisure": {
-    "message": "Lazer"
+    "message": "Tempo libero"
   },
   "popup_context_option_personal": {
     "message": "Personale"
@@ -1302,7 +1302,7 @@
     "message": "Categoria"
   },
   "popup_csv_detailed_column_context": {
-    "message": "Contexto"
+    "message": "Contesto"
   },
   "popup_csv_detailed_column_domain": {
     "message": "Domínío"
@@ -1410,10 +1410,10 @@
     "message": "Festa nazionale neutralizzando il punteggio."
   },
   "popup_fairness_status_leisure": {
-    "message": "Modo lazer reduz a pressão."
+    "message": "La modalità tempo libero riduce la pressione."
   },
   "popup_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Giorno ignorato manualmente."
   },
   "popup_fairness_status_personal": {
     "message": "Modalità personale attiva — nessun punteggio."
@@ -1848,7 +1848,7 @@
     "message": "Ripartizione in produttivo, procrastinazione, idle e neutrale."
   },
   "report_context_breakdown_context": {
-    "message": "Contexto"
+    "message": "Contesto"
   },
   "report_context_breakdown_index": {
     "message": "Indice"
@@ -1899,7 +1899,7 @@
     "message": "Modalità di tempo libero tariffe ridotte."
   },
   "report_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Giorno ignorato manualmente."
   },
   "report_fairness_status_personal": {
     "message": "Modalità personale — nessun punteggio."
@@ -1908,7 +1908,7 @@
     "message": "Modalità di studio ammorbidito sanzioni."
   },
   "report_fairness_status_vacation": {
-    "message": "Modo férias zerou o dia."
+    "message": "La modalità vacanza ha azzerato il giorno."
   },
   "report_fairness_title": {
     "message": "Equità di giorno"
@@ -2043,7 +2043,7 @@
     "message": "Composizione del giorno"
   },
   "report_pdf_context_header_context": {
-    "message": "Contexto"
+    "message": "Contesto"
   },
   "report_pdf_context_header_index": {
     "message": "Indice del contesto"
@@ -2073,7 +2073,7 @@
     "message": "Chiave narrativa"
   },
   "report_pdf_overview_heading": {
-    "message": "Panorama do dia"
+    "message": "Panoramica del giorno"
   },
   "report_pdf_status_label": {
     "message": "Stato"

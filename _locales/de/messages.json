@@ -1116,7 +1116,7 @@
     "message": "Ungültige URL. Verwenden Sie etwas wie http://127.0.0.1:3123."
   },
   "options_vscode_test_running": {
-    "message": "Testando conexão..."
+    "message": "Verbindung wird getestet..."
   },
   "options_vscode_test_success": {
     "message": "SaulDaemon antwortete{origin}Sitzungen heute:{sessions}Protokoll:{minutes}."
@@ -1218,10 +1218,10 @@
     "message": "Tagesradar"
   },
   "popup_context_option_dayOff": {
-    "message": "Folga"
+    "message": "Freitag"
   },
   "popup_context_option_leisure": {
-    "message": "Lazer"
+    "message": "Freizeit"
   },
   "popup_context_option_personal": {
     "message": "Personal"
@@ -1305,7 +1305,7 @@
     "message": "Kontext"
   },
   "popup_csv_detailed_column_domain": {
-    "message": "Domínio"
+    "message": "Domäne"
   },
   "popup_csv_detailed_column_duration": {
     "message": "Dauer (ms)"
@@ -1404,16 +1404,16 @@
     "message": "Tag ab aufgezeichnet — Partitur paused."
   },
   "popup_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normaler Werktag."
   },
   "popup_fairness_status_holiday": {
     "message": "Nationalfeiertag neutralisiert die Partitur."
   },
   "popup_fairness_status_leisure": {
-    "message": "Modo lazer reduz a pressão."
+    "message": "Freizeitmodus reduziert den Druck."
   },
   "popup_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Tag manuell ignoriert."
   },
   "popup_fairness_status_personal": {
     "message": "Persönlicher Modus aktiv — kein Scoring."
@@ -1890,7 +1890,7 @@
     "message": "Tag ab neutralisierte die Partitur."
   },
   "report_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normaler Werktag."
   },
   "report_fairness_status_holiday": {
     "message": "Nationalfeiertag neutralisierte die Partitur."
@@ -1899,7 +1899,7 @@
     "message": "Freizeitmodus reduziert Gebühren."
   },
   "report_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Tag manuell ignoriert."
   },
   "report_fairness_status_personal": {
     "message": "Persönlicher Modus — kein Scoring."
@@ -1908,7 +1908,7 @@
     "message": "Studienmodus erweichte Strafen."
   },
   "report_fairness_status_vacation": {
-    "message": "Modo férias zerou o dia."
+    "message": "Urlaubsmodus hat den Tag zurückgesetzt."
   },
   "report_fairness_title": {
     "message": "Tag Fairness"
@@ -2067,13 +2067,13 @@
     "message": "Tag übersprungen manuell"
   },
   "report_pdf_index_neutralized": {
-    "message": "Índice neutralizado"
+    "message": "Neutralisierter Index"
   },
   "report_pdf_narrative_title": {
     "message": "Schlüsselanhänger"
   },
   "report_pdf_overview_heading": {
-    "message": "Panorama do dia"
+    "message": "Tagesübersicht"
   },
   "report_pdf_status_label": {
     "message": "Status"

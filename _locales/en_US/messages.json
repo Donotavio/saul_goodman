@@ -1116,16 +1116,16 @@
     "message": "Invalid URL. Use something like http://127.0.0.1:3123."
   },
   "options_vscode_test_running": {
-    "message": "Testando conexão..."
+    "message": "Testing connection..."
   },
   "options_vscode_test_success": {
     "message": "SaulDaemon replied {origin} Sessions today:{sessions} Minutes:{minutes}."
   },
   "options_vscode_test_timeout": {
-    "message": "SaulDaemon não respondeu a tempo."
+    "message": "SaulDaemon did not respond in time."
   },
   "options_vscode_test_unauthorized": {
-    "message": "Chave diferente. Use a mesma key no Chrome e no VS Code."
+    "message": "Different key. Use the same key in Chrome and VS Code."
   },
   "options_vscode_toggle_hint": {
     "message": "Calls the local SaulDaemon (localhost) before refreshing your score."
@@ -1218,10 +1218,10 @@
     "message": "Daily radar"
   },
   "popup_context_option_dayOff": {
-    "message": "Folga"
+    "message": "Day Off"
   },
   "popup_context_option_leisure": {
-    "message": "Lazer"
+    "message": "Leisure"
   },
   "popup_context_option_personal": {
     "message": "Personal"
@@ -1302,10 +1302,10 @@
     "message": "Category"
   },
   "popup_csv_detailed_column_context": {
-    "message": "Contexto"
+    "message": "Context"
   },
   "popup_csv_detailed_column_domain": {
-    "message": "Domínio"
+    "message": "Domain"
   },
   "popup_csv_detailed_column_duration": {
     "message": "Duration (ms)"
@@ -1383,7 +1383,7 @@
     "message": "Defend your focus"
   },
   "popup_fairness_context_label": {
-    "message": "Contexto atual"
+    "message": "Current context"
   },
   "popup_fairness_holiday_active": {
     "message": "Today is a holiday, score paused automatically."
@@ -1398,22 +1398,22 @@
     "message": "Saul recalibrates the score based on the context you choose in the popup. Skipping today zeros the score and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves penalties, Day off and Vacation zero the day regardless of holidays."
   },
   "popup_fairness_note_label": {
-    "message": "Saul explica"
+    "message": "Saul explains"
   },
   "popup_fairness_status_day_off": {
     "message": "Day off recorded — score paused."
   },
   "popup_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normal business day."
   },
   "popup_fairness_status_holiday": {
     "message": "National holiday neutralizing the score."
   },
   "popup_fairness_status_leisure": {
-    "message": "Modo lazer reduz a pressão."
+    "message": "Leisure mode reduces pressure."
   },
   "popup_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Day manually ignored."
   },
   "popup_fairness_status_personal": {
     "message": "Personal mode active — no scoring."
@@ -1848,7 +1848,7 @@
     "message": "Breakdown into productive, procrastination, idle, and neutral."
   },
   "report_context_breakdown_context": {
-    "message": "Contexto"
+    "message": "Context"
   },
   "report_context_breakdown_index": {
     "message": "Index"
@@ -1890,7 +1890,7 @@
     "message": "Day off neutralized the score."
   },
   "report_fairness_status_default": {
-    "message": "Dia útil normal."
+    "message": "Normal business day."
   },
   "report_fairness_status_holiday": {
     "message": "National holiday neutralized the score."
@@ -1899,7 +1899,7 @@
     "message": "Leisure mode reduced charges."
   },
   "report_fairness_status_manual": {
-    "message": "Dia ignorado manualmente."
+    "message": "Day manually ignored."
   },
   "report_fairness_status_personal": {
     "message": "Personal mode — no scoring."
@@ -1908,7 +1908,7 @@
     "message": "Study mode softened penalties."
   },
   "report_fairness_status_vacation": {
-    "message": "Modo férias zerou o dia."
+    "message": "Vacation mode reset the day."
   },
   "report_fairness_title": {
     "message": "Day fairness"
@@ -2034,7 +2034,7 @@
     "message": "Category"
   },
   "report_pdf_composition_header_share": {
-    "message": "Participação"
+    "message": "Share"
   },
   "report_pdf_composition_header_time": {
     "message": "Time"
@@ -2043,7 +2043,7 @@
     "message": "Day composition"
   },
   "report_pdf_context_header_context": {
-    "message": "Contexto"
+    "message": "Context"
   },
   "report_pdf_context_header_index": {
     "message": "Context index"
@@ -2067,13 +2067,13 @@
     "message": "Day skipped manually"
   },
   "report_pdf_index_neutralized": {
-    "message": "Índice neutralizado"
+    "message": "Neutralized index"
   },
   "report_pdf_narrative_title": {
     "message": "Key narrative"
   },
   "report_pdf_overview_heading": {
-    "message": "Panorama do dia"
+    "message": "Day overview"
   },
   "report_pdf_status_label": {
     "message": "Status"
