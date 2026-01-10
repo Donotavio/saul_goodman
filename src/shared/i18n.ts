@@ -17,21 +17,11 @@ export const SUPPORTED_LOCALES: SupportedLocale[] = [
 ];
 const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 
-const LOCALE_DIR_MAP: Record<SupportedLocale, string> = {
-  'pt-BR': 'pt_BR',
-  'en-US': 'en_US',
-  'es-419': 'es_419',
-  fr: 'fr',
-  de: 'de',
-  it: 'it',
-  tr: 'tr',
-  'zh-CN': 'zh_CN',
-  hi: 'hi',
-  ar: 'ar',
-  bn: 'bn',
-  ru: 'ru',
-  ur: 'ur'
-};
+const RTL_LOCALES: Set<SupportedLocale> = new Set(['ar', 'ur']);
+
+export function localeToDir(locale: SupportedLocale): string {
+  return locale.replace(/-/g, '_');
+}
 
 const localeCache = new Map<SupportedLocale, Record<string, string>>();
 
@@ -117,6 +107,7 @@ class I18nImpl implements I18nService {
     const doc =
       target instanceof Document ? target : target.ownerDocument ?? document;
     doc.documentElement.lang = this.locale;
+    doc.documentElement.dir = RTL_LOCALES.has(this.locale) ? 'rtl' : 'ltr';
 
     const elements = target.querySelectorAll<HTMLElement>('[data-i18n]');
     elements.forEach((element) => {
@@ -189,11 +180,11 @@ async function loadMessages(locale: SupportedLocale): Promise<Record<string, str
     return localeCache.get(locale) as Record<string, string>;
   }
 
-  const url = chrome.runtime.getURL(`_locales/${LOCALE_DIR_MAP[locale]}/messages.json`);
+  const url = chrome.runtime.getURL(`_locales/${localeToDir(locale)}/messages.json`);
   const response = await fetch(url);
   if (!response.ok) {
     if (locale === DEFAULT_LOCALE) {
-      throw new Error(`Não foi possível carregar mensagens para ${locale}`);
+      throw new Error(`Failed to load messages for locale: ${locale}`);
     }
     return loadMessages(DEFAULT_LOCALE);
   }

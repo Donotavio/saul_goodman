@@ -837,7 +837,7 @@
     "message": "Menü öffnen"
   },
   "multilingualLabel": {
-    "message": "Verfügbar in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸"
+    "message": "Verfügbar in 13 Sprachen: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
   },
   "navBenefits": {
     "message": "Vorteile"
@@ -2226,7 +2226,7 @@
     "message": "Champions und Schurken"
   },
   "report_story_idle_body": {
-    "message": "Zwischen{range}der Browser blieb leer für{duration}."
+    "message": "Zwischen {range} war der Browser inaktiv für {duration}. Gesamte Inaktivität heute: {total}."
   },
   "report_story_idle_title": {
     "message": "Langfristige Stille"

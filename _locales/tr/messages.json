@@ -837,7 +837,7 @@
     "message": "Açık menü"
   },
   "multilingualLabel": {
-    "message": "PT 🇧🇷 · EN 🇪🇸 · ES 🇪🇸"
+    "message": "13 dilde mevcut: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
   },
   "navBenefits": {
     "message": "Faydaları"
@@ -969,7 +969,7 @@
     "message": "Aktif olarak saymadan önce en fazla boş zaman (saniyeler)"
   },
   "options_inactivity_threshold_hint": {
-    "message": "{threshold} saniye ile {threshold} dakika arasında; etkinlik hesaplamasını etkiler."
+    "message": "10 saniye ile 10 dakika arasında; etkinlik hesaplamasını etkiler."
   },
   "options_language_auto": {
     "message": "Otomatik (otomatik)"
@@ -2217,7 +2217,7 @@
     "message": "Bugün için yeterli hikayeler değil."
   },
   "report_story_focus_body": {
-    "message": "{domain}held{duration}odaklanma."
+    "message": "{domain} tuttu {duration} odaklanma."
   },
   "report_story_focus_title": {
     "message": "Focus şampiyonu"
@@ -2226,7 +2226,7 @@
     "message": "Şampiyonlar ve villalar"
   },
   "report_story_idle_body": {
-    "message": "between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between{range}Tarayıcı boş kaldı{duration}."
+    "message": "{range} arasında tarayıcı, {duration} boyunca boşta kaldı. Bugün toplam boşta geçen süre: {total}."
   },
   "report_story_idle_title": {
     "message": "En uzun sessizlik"

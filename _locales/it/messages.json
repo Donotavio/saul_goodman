@@ -837,7 +837,7 @@
     "message": "Menu aperto"
   },
   "multilingualLabel": {
-    "message": "Disponibile in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸"
+    "message": "Disponibile in 13 lingue: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
   },
   "navBenefits": {
     "message": "Vantaggi"
@@ -2226,7 +2226,7 @@
     "message": "Campioni e cattivi"
   },
   "report_story_idle_body": {
-    "message": "Tra{range}il browser rimasto inattivo per{duration}."
+    "message": "Tra {range}, il browser è rimasto inattivo per {duration}. Tempo di inattività totale oggi: {total}."
   },
   "report_story_idle_title": {
     "message": "Silenzio più lungo"

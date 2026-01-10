@@ -837,7 +837,7 @@
     "message": "Ouvrir le menu"
   },
   "multilingualLabel": {
-    "message": "Disponible en PT"
+    "message": "Disponible en 13 langues: 🇧🇷 🇺🇸 🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇹🇷 🇨🇳 🇮🇳 🇸🇦 🇧🇩 🇷🇺 🇵🇰"
   },
   "navBenefits": {
     "message": "Avantages"
@@ -2226,7 +2226,7 @@
     "message": "Champions et méchants"
   },
   "report_story_idle_body": {
-    "message": "Entre{range}le navigateur est resté inactif pour{duration}."
+    "message": "Entre {range}, le navigateur est resté inactif pendant {duration}. Temps d'inactivité total aujourd'hui: {total}."
   },
   "report_story_idle_title": {
     "message": "Le silence le plus long"

@@ -47,18 +47,61 @@ function flattenMessages(raw) {
   }, {});
 }
 
+function extractPlaceholders(message) {
+  const curlyBraces = [...message.matchAll(/\{([a-zA-Z0-9_]+)\}/g)].map((m) => m[1]);
+  const dollarSigns = [...message.matchAll(/\$(\d+)/g)].map((m) => m[1]);
+  return { curlyBraces, dollarSigns };
+}
+
+function validatePlaceholders(key, defaultMsg, localeMsg, locale) {
+  const defaultPh = extractPlaceholders(defaultMsg);
+  const localePh = extractPlaceholders(localeMsg);
+  const issues = [];
+
+  if (defaultPh.curlyBraces.length !== localePh.curlyBraces.length) {
+    issues.push(`Placeholder mismatch in ${locale}:${key} - expected ${defaultPh.curlyBraces.length} {}, found ${localePh.curlyBraces.length}`);
+  }
+  if (defaultPh.dollarSigns.length !== localePh.dollarSigns.length) {
+    issues.push(`Placeholder mismatch in ${locale}:${key} - expected ${defaultPh.dollarSigns.length} $N, found ${localePh.dollarSigns.length}`);
+  }
+
+  return issues;
+}
+
+const MAX_UI_LENGTH = 150;
+
+function validateLength(key, message, locale) {
+  if (message.length > MAX_UI_LENGTH && (key.includes('_label') || key.includes('_title') || key.includes('_button'))) {
+    return `⚠️  Long UI string in ${locale}:${key} (${message.length} chars, max recommended: ${MAX_UI_LENGTH})`;
+  }
+  return null;
+}
+
 async function main() {
   const defaultMessages = flattenMessages(await loadMessages(DEFAULT_LOCALE.folder));
   const defaultKeys = new Set(Object.keys(defaultMessages));
   const report = [];
+  const allIssues = [];
 
   for (const locale of SUPPORTED) {
     const raw = flattenMessages(await loadMessages(locale.folder));
     const missing = [];
     const extra = [];
+    const placeholderIssues = [];
+    const lengthWarnings = [];
+
     defaultKeys.forEach((key) => {
-      if (!(key in raw)) missing.push(key);
+      if (!(key in raw)) {
+        missing.push(key);
+      } else {
+        const phIssues = validatePlaceholders(key, defaultMessages[key], raw[key], locale.code);
+        placeholderIssues.push(...phIssues);
+
+        const lengthIssue = validateLength(key, raw[key], locale.code);
+        if (lengthIssue) lengthWarnings.push(lengthIssue);
+      }
     });
+
     Object.keys(raw).forEach((key) => {
       if (!defaultKeys.has(key)) extra.push(key);
     });
@@ -67,14 +110,18 @@ async function main() {
       locale: locale.code,
       missingCount: missing.length,
       extraCount: extra.length,
+      placeholderIssues: placeholderIssues.length,
+      lengthWarnings: lengthWarnings.length,
       missing,
       extra,
     });
+
+    allIssues.push(...placeholderIssues, ...lengthWarnings);
   }
 
   const lines = report
     .map((entry) => {
-      const header = `${entry.locale}: ${entry.missingCount} missing, ${entry.extraCount} extra`;
+      const header = `${entry.locale}: ${entry.missingCount} missing, ${entry.extraCount} extra, ${entry.placeholderIssues} placeholder issues, ${entry.lengthWarnings} length warnings`;
       const detail =
         entry.missingCount === 0
           ? ''
@@ -86,6 +133,19 @@ async function main() {
     .join('\n');
 
   console.log(lines);
+
+  if (allIssues.length > 0) {
+    console.log('\n⚠️  Validation Issues:');
+    allIssues.slice(0, 20).forEach((issue) => console.log(`  ${issue}`));
+    if (allIssues.length > 20) {
+      console.log(`  ... and ${allIssues.length - 20} more issues`);
+    }
+  }
+
+  const hasErrors = report.some((r) => r.missingCount > 0 || r.placeholderIssues > 0);
+  if (hasErrors) {
+    process.exitCode = 1;
+  }
 }
 
 main().catch((error) => {

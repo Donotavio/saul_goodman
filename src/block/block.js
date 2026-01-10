@@ -133,16 +133,23 @@ function normalizeLocaleCode(localeCode) {
   const uiLanguage = (localeCode ?? '').toLowerCase();
   const normalized = uiLanguage.split('-')[0];
 
-  if (normalized === 'pt') return 'pt-BR';
-  if (normalized === 'es') return 'es-419';
-  if (normalized === 'zh') return 'zh-CN';
+  const mapping = {
+    pt: 'pt-BR',
+    es: 'es-419',
+    en: 'en-US',
+    fr: 'fr',
+    de: 'de',
+    it: 'it',
+    tr: 'tr',
+    zh: 'zh-CN',
+    hi: 'hi',
+    ar: 'ar',
+    bn: 'bn',
+    ru: 'ru',
+    ur: 'ur'
+  };
 
-  const directMatch = SUPPORTED_LOCALES.find(
-    (supported) => supported.toLowerCase() === normalized
-  );
-  if (directMatch) return directMatch;
-
-  return DEFAULT_LOCALE;
+  return mapping[normalized] || DEFAULT_LOCALE;
 }
 
 function resolveLocale(preference, storedLocale) {
