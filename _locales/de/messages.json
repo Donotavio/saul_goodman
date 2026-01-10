@@ -96,7 +96,7 @@
     "message": "Legal nimmt digitale Procrastination"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman Logo"
   },
   "blogPreviewCta": {
     "message": "Alle Artikel anzeigen"
@@ -126,13 +126,13 @@
     "message": "Letzte Fälle aus dem digitalen Gerichtssaal."
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman, skeptisch"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman, zustimmend"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman, urteilend"
   },
   "breadcrumbArticle": {
     "message": "Artikel 2"
@@ -201,10 +201,10 @@
     "message": "Fernarbeit ohne Alibi"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "Design, Usability und Produktentscheidungen, die deinen Fokus im Alltag beeinflussen."
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX & Design unter der Lupe"
   },
   "changelogError": {
     "message": "Wir konnten das Changelog jetzt nicht laden. Versuchen Sie es später noch mal."
@@ -804,7 +804,7 @@
     "message": "Remote-Arbeit mit null Geister-Modus Ausreden."
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX, Design und Entscheidungen, die Nutzer aus dem Schurkenmodus holen."
   },
   "metaCategory": {
     "message": "Kategorie"
