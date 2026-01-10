@@ -14,7 +14,6 @@ title_ru: "Вы все еще используете if-операторы? Ка
 title_ur: "کیا آپ ابھی بھی if statements استعمال کرتے ہیں؟ کیا پیارا!"
 date: 2026-01-10
 category: "ux-design"
-tone: "incredulo"
 tags: ["produtividade", "marketing", "UX", "desenvolvimento", "sarcasmo"]
 tags_en: ["productivity", "marketing", "UX", "development", "sarcasm"]
 tags_es: ["productividad", "marketing", "UX", "desarrollo", "sarcasmo"]

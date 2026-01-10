@@ -9,7 +9,6 @@ title_bn: "আপনি কি এখনও মনে করেন SEO শুধ
 title_ru: "Вы все еще думаете, что SEO – это только для задротов?"
 date: 2026-01-10
 category: "marketing"
-tone: "incredulo"
 tags: ["SEO", "marketing", "procrastinação", "tecnologia", "UX"]
 tags_es: ["SEO", "marketing", "procrastinación", "tecnología", "UX"]
 tags_fr: ["SEO", "marketing", "procrastination", "technologie", "UX"]

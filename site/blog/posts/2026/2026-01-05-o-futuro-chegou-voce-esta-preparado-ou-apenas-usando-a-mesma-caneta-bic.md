@@ -4,7 +4,6 @@ title_en: "The Future Has Arrived: Are You Prepared or Just Using the Same BIC P
 title_es: "El Futuro Ha Llegado: ¿Estás Preparado o Solo Usando el Mismo Bolígrafo BIC?"
 date: 2026-01-05
 category: "ux-design"
-tone: "incredulo"
 tags: ["produtividade", "AI", "negócios", "design", "futuro"]
 source_title: "7 things every leader must do to prepare their organization for 2026"
 source_url: "https://www.fastcompany.com/91462416/leaders-prepare-organization-2026-ai"

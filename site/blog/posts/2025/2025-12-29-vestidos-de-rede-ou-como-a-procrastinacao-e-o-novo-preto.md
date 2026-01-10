@@ -4,7 +4,6 @@ title_en: "Net Dresses: Or How Procrastination is the New Black"
 title_es: "Vestidos de Red: O Cómo la Procrastinación es el Nuevo Negro"
 date: 2025-12-29
 category: "dev-performance"
-tone: "incredulo"
 tags: ["foco", "procrastinação", "desempenho", "dev", "moda"]
 source_title: "Net Fabric Dresses: Effortless Grace in Layered Design"
 source_url: "https://dev.to/houseofsiyaab/net-fabric-dresses-effortless-grace-in-layered-design-1kpe"

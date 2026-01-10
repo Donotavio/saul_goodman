@@ -1,6 +1,5 @@
 ---
 title: "Procrastinação: A Arte de Fazer Nada com Estilo"
-tone: "incredulo"
 date: 2025-12-23
 category: procrastinacao
 tags: [foco, dev, performance, trabalho-remoto, Terraform]

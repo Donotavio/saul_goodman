@@ -4,7 +4,6 @@ title_en: "You Too Can Be an Architect of a Resilient Future! Or Not..."
 title_es: "¡También Puedes Ser un Arquitecto de un Futuro Resiliente! O No..."
 date: 2025-12-30
 category: "dev-performance"
-tone: "incredulo"
 tags: ["produtividade", "devops", "carreira", "sarcasmo"]
 source_title: "Senior DevOps Engineer"
 source_url: "https://remotive.com/remote-jobs/devops/senior-devops-engineer-2070150"

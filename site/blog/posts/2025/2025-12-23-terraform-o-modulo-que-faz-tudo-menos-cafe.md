@@ -1,6 +1,5 @@
 ---
 title: "Terraform: O Módulo que Faz Tudo, Menos Café"
-tone: "like"
 title_en: "Terraform: The Module That Does Everything Except Make Coffee"
 title_es: "Terraform: El Módulo que Hace Todo, Menos Café"
 date: 2025-12-23

@@ -429,7 +429,6 @@ Estrutura obrigatória em Markdown com frontmatter YAML:
 title: <título provocativo>
 date: ${new Date().toISOString().slice(0, 10)}
 category: ${category}
-tone: escolha entre incredulo | like | nao-corte para refletir o tom visual
 tags: [3-5 tags curtas]
 source_title: "${candidate.title}"
 source_url: "${candidate.link}"

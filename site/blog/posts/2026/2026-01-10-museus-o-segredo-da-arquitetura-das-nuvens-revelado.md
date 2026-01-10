@@ -13,7 +13,6 @@ title_bn: "মিউজিয়াম: মেঘের স্থাপত্য
 title_ru: "Музеи: Тайна Архитектуры Облаков Раскрыта!"
 date: 2026-01-10
 category: "dev-performance"
-tone: "incredulo"
 tags: ["museus", "microserviços", "arquitetura", "desenvolvimento", "sarcasmo"]
 source_title: "System Design in Real Life: Why Ancient Museums are actually Microservices?"
 source_url: "https://dev.to/tyrell_wellicq_767cb57340/system-design-in-real-life-why-ancient-museums-are-actually-microservices-3a43"
