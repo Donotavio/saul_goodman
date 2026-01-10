@@ -503,8 +503,8 @@ async function callLLM(prompt, options = {}) {
         continue;
       }
 
-      const payload = await response.json();
-      const content = payload.choices?.[0]?.message?.content;
+      const responsePayload = await response.json();
+      const content = responsePayload.choices?.[0]?.message?.content;
       if (content) return content.trim();
       lastError = new Error('Resposta do LLM vazia');
     } catch (error) {
