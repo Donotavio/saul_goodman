@@ -455,10 +455,32 @@ async function callLLM(prompt, options = {}) {
   if (!apiKey) throw new Error('LLM_API_KEY ausente');
 
   const model = process.env.LLM_MODEL || 'gpt-4o-mini';
-  const base = process.env.LLM_BASE_URL || (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
+  const base =
+    process.env.LLM_BASE_URL ||
+    (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
   const baseUrl = base.endsWith('/') ? base : `${base}/`;
   const endpoint = 'chat/completions';
   const url = `${baseUrl}${endpoint}`;
+
+  const payload = {
+    model,
+    messages: [
+      {
+        role: 'system',
+        content:
+          options.systemPrompt ||
+          'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: typeof options.temperature === 'number' ? options.temperature : 0.7,
+    max_tokens: options.maxTokens || 1200,
+  };
+
+  // Em modelos OpenAI compatíveis, isso força JSON válido no conteúdo.
+  if (options.responseFormat === 'json') {
+    payload.response_format = { type: 'json_object' };
+  }
 
   let lastError;
   for (let attempt = 0; attempt <= RETRIES; attempt += 1) {
@@ -471,18 +493,7 @@ async function callLLM(prompt, options = {}) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({
-          model,
-          messages: [
-            {
-              role: 'system',
-              content: options.systemPrompt || 'Você é Saul Goodman escrevendo artigos de blog sarcásticos em PT-BR.',
-            },
-            { role: 'user', content: prompt },
-          ],
-          temperature: 0.7,
-          max_tokens: options.maxTokens || 1200,
-        }),
+        body: JSON.stringify(payload),
         signal: controller.signal,
       });
       clearTimeout(timeout);
@@ -519,21 +530,38 @@ async function translateArticle(metadata, body, target) {
   const prompt = `Traduza o artigo abaixo para ${target.label} (${target.display}).
 Preserve o markdown, mantenha o tom irônico de Saul sem soar agressivo e adapte referências culturais.
 
-Responda em JSON com as chaves "title", "excerpt", "tags" e "body":
-- "tags" deve ser um array de strings (traduza as tags quando fizer sentido; termos técnicos podem permanecer).
-- "body" deve ser markdown completo com as mesmas seções.
+Retorne APENAS um JSON válido (sem crases, sem markdown) com as chaves:
+- "title" (string)
+- "excerpt" (string)
+- "tags" (array de strings; traduza quando fizer sentido)
+- "body" (string; markdown completo com as mesmas seções)
 
 TÍTULO: ${metadata.title}
 EXCERPT: ${metadata.excerpt}
 TAGS: ${JSON.stringify(metadata.tags || [])}
 ARTIGO:
 ${body}`;
-  const response = await callLLM(prompt, {
-    systemPrompt:
-      'Você é um tradutor profissional que converte textos em diferentes idiomas mantendo sarcasmo e clareza. Responda apenas no idioma solicitado.',
-    maxTokens: 3200,
-  });
-  const json = parseJsonBlock(response);
+
+  const call = async (extraInstruction) => {
+    const response = await callLLM(extraInstruction ? `${prompt}\n\n${extraInstruction}` : prompt, {
+      systemPrompt:
+        'Você é um tradutor profissional. Responda com JSON válido e nada além disso.',
+      maxTokens: 3200,
+      temperature: 0.2,
+      responseFormat: 'json',
+    });
+    return parseJsonBlock(response);
+  };
+
+  let json;
+  try {
+    json = await call();
+  } catch (error) {
+    json = await call(
+      'IMPORTANTE: Sua última resposta veio com JSON inválido. Responda novamente com JSON estritamente válido.'
+    );
+  }
+
   const title = (json.title || json.headline || json.name || json.titulo || '').trim();
   const excerpt = (json.excerpt || json.summary || json.description || '').trim();
   const articleBody = (json.body || json.content || json.article || json.text || json.story || '').trim();
