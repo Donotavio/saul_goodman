@@ -147,10 +147,10 @@
     "message": "Aktive Kategorie"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "Gewohnheiten, Führung und Corporate-Überleben ohne LinkedIn-Floskeln."
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "Karriere ohne Coach-Drehbuch"
   },
   "categoryClear": {
     "message": "Kategorie auswählen"
@@ -171,16 +171,16 @@
     "message": "Fokus und Achtung vor Gericht"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO, Content und Conversion – weniger Guru-Gerede, mehr Methode."
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "Marketing ohne Wunder-Versprechen"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "Management, Kultur und echter Impact – ohne Juristendeutsch und ohne BlaBla."
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "Business & Führung im Gerichtssaal"
   },
   "categoryProcrastinacaoLead": {
     "message": "Echte Fälle von Verspätung, digitaler Faulheit und Tabjagd Saul liebt es zu verfolgen."
@@ -189,10 +189,10 @@
     "message": "Prokratisierung im Rahmen der Untersuchung"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "Entscheidungen, Metriken und PM-Abwägungen, damit du nicht Geisel des Backlogs wirst."
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "Produkt & Strategie vor Gericht"
   },
   "categoryRemotoLead": {
     "message": "Geschichten über Heimbüro, Slack Präsenz und Vermeidung eines Zoom Verschwindens."
@@ -780,7 +780,7 @@
     "message": "Aggressives Marketing mit einer Prise Ethik."
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "Karriere im Kreuzverhör – mit Sarkasmus und Pragmatismus."
   },
   "mediaTaglineDev": {
     "message": "Dev-Performance von harten Metriken beurteilt."
@@ -789,16 +789,16 @@
     "message": "Fokus und Aufmerksamkeit unter täglichen Fragen."
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO, Content und Funnel – ohne Hexerei."
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "Business auf der Agenda – Fokus auf Umsetzung."
   },
   "mediaTaglineProcrastinacao": {
     "message": "Mentale Oszilloskope treffen den therapeutischen Sarkasmus Sauls."
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "Produkt nach Daten bewertet – nicht nach Bauchgefühl."
   },
   "mediaTaglineRemoto": {
     "message": "Remote-Arbeit mit null Geister-Modus Ausreden."

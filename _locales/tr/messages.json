@@ -126,13 +126,13 @@
     "message": "Dijital mahkeme odasından son vakalar."
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman şüpheci"
+    "message": "Saul Goodman, şüpheci"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman onaylıyor"
+    "message": "Saul Goodman, onaylıyor"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman yargılıyor"
+    "message": "Saul Goodman, yargılıyor"
   },
   "breadcrumbArticle": {
     "message": "Madde"
@@ -147,10 +147,10 @@
     "message": "Aktif kategori"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "Alışkanlıklar, liderlik ve kurumsal hayatta kalma — LinkedIn klişeleri yok."
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "Koç senaryosu olmadan kariyer"
   },
   "categoryClear": {
     "message": "Clear kategori"
@@ -171,16 +171,16 @@
     "message": "Focus & Dikkat"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO, içerik ve dönüşüm: daha az guru, daha çok yöntem."
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "Mucize vaat etmeyen pazarlama"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "Yönetim, kültür ve gerçek etki — jargon yok, oyalama yok."
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "İş dünyası ve liderlik mahkemede"
   },
   "categoryProcrastinacaoLead": {
     "message": "Gerçek gecikme vakaları, dijital laziness ve sekme avcısı Saul yargılamayı seviyor."
@@ -189,10 +189,10 @@
     "message": "Procrastination under investigation"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "Kararlar, metrikler ve PM/PO dengeleri: backlog rehinine dönüşmemek için."
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "Ürün ve strateji mahkemede"
   },
   "categoryRemotoLead": {
     "message": "Ev ofisi hakkında hikayeler, Slack varlığı ve bir Zoom ortadan kaybolmasından kaçın."
@@ -201,10 +201,10 @@
     "message": "Uzaktan çalışma hiçbir alibi ile"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "Tasarım, kullanılabilirlik ve ürün kararları; günlük odağını etkileyen şeyler."
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX ve Tasarım mercek altında"
   },
   "changelogError": {
     "message": "Şu anda değişimlogunu yükleyemezdik. Daha sonra tekrar deneyin."
@@ -780,7 +780,7 @@
     "message": "Bir etik pinch ile agresif pazarlama."
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "Kariyer sorguda: sarcasm ve pragmatizmle."
   },
   "mediaTaglineDev": {
     "message": "Dev performans sert ölçümlerle yargılandı."
@@ -789,22 +789,22 @@
     "message": "Focus ve dikkat günlük sorgulama altında."
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO, içerik ve huni — büyü yok."
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "İş gündemde: odak icraatta."
   },
   "mediaTaglineProcrastinacao": {
     "message": "Zihinsel oscilloskoplar Saul'un tedavi sarcasm ile tanışır."
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "Ürün içgüdüyle değil verilerle yargılanır."
   },
   "mediaTaglineRemoto": {
     "message": "Uzaktan çalışma sıfır hayalet-mode bahanelerle."
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "Kullanıcıyı kötü adam modundan çıkaran UX, tasarım ve kararlar."
   },
   "metaCategory": {
     "message": "Kategori"

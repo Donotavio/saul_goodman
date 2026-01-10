@@ -126,13 +126,13 @@
     "message": "Dernières affaires de la salle d'audience numérique."
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman, sceptique"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman, approbateur"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman, juge"
   },
   "breadcrumbArticle": {
     "message": "Le président"
@@ -147,10 +147,10 @@
     "message": "Catégorie active"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "Habitudes, leadership et survie corporate sans phrases LinkedIn."
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "Carrière sans script de coach"
   },
   "categoryClear": {
     "message": "Supprimer la catégorie"
@@ -171,16 +171,16 @@
     "message": "Focus & Attention sur les essais"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO, contenu et conversion: moins de gourou, plus de méthode."
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "Marketing sans promesse miracle"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "Gestion, culture et impact réel — sans jargon ni blabla."
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "Business et leadership au tribunal"
   },
   "categoryProcrastinacaoLead": {
     "message": "De vrais cas de retard, de paresse numérique et de chasse aux onglets Saul aime poursuivre."
@@ -189,10 +189,10 @@
     "message": "Procrastination sous enquête"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "Décisions, métriques et compromis PM/PO pour ne pas devenir otage du backlog."
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "Produit & stratégie à l’audience"
   },
   "categoryRemotoLead": {
     "message": "Des histoires sur le bureau à domicile, la présence de Slack, et éviter une disparition de Zoom."
@@ -201,10 +201,10 @@
     "message": "Travail à distance sans alibi"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "Design, ergonomie et décisions produit qui influencent votre concentration au quotidien."
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX & design sous la loupe"
   },
   "changelogError": {
     "message": "On n'a pas pu charger le changelog. Essaie encore plus tard."
@@ -780,7 +780,7 @@
     "message": "Marketing agressif avec une pincée d'éthique."
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "Carrière à l’interrogatoire, avec sarcasme et pragmatisme."
   },
   "mediaTaglineDev": {
     "message": "Performance Dev jugée par des mesures dures."
@@ -789,22 +789,22 @@
     "message": "Focus et attention sous interrogatoire quotidien."
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO, contenu et tunnel sans sorcellerie."
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "Business à l’ordre du jour, focus exécution."
   },
   "mediaTaglineProcrastinacao": {
     "message": "Les oscilloscopes mentaux rencontrent le saulisme thérapeutique."
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "Produit jugé sur les données, pas au feeling."
   },
   "mediaTaglineRemoto": {
     "message": "Travail à distance avec zéro excuse de mode fantôme."
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX, design et choix qui sortent l’utilisateur du mode vilain."
   },
   "metaCategory": {
     "message": "Catégorie"

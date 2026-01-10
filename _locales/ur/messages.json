@@ -96,7 +96,7 @@
     "message": "قانونی طور پر ڈیجیٹل مہم پر لی جاتی ہے۔"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman لوگو"
   },
   "blogPreviewCta": {
     "message": "تمام مضامین دیکھیں"
@@ -126,13 +126,13 @@
     "message": "ڈیجیٹل عدالت کی طرف سے مختص مقدمات."
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman (شک میں)"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman (منظوری)"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman (فیصلہ سناتے)"
   },
   "breadcrumbArticle": {
     "message": "مضمون"
@@ -147,10 +147,10 @@
     "message": "فعال فعال"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "عادات، قیادت اور کارپوریٹ سروائیول — LinkedIn کلیشے کے بغیر۔"
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "کوچ اسکرپٹ کے بغیر کیریئر"
   },
   "categoryClear": {
     "message": "صاف صفائی"
@@ -171,16 +171,16 @@
     "message": "آزمائش پر توجہ دیں"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO، مواد اور کنورژن: کم گرو باتیں، زیادہ طریقہ۔"
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "بغیر معجزانہ دعوؤں والا مارکیٹنگ"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "مینجمنٹ، کلچر اور حقیقی اثر — بغیر اصطلاحات اور بغیر گھماؤ کے۔"
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "کاروبار اور قیادت عدالت میں"
   },
   "categoryProcrastinacaoLead": {
     "message": "اِس سلسلے میں ایک مثال پر غور کریں ۔"
@@ -189,10 +189,10 @@
     "message": "زیرِغور تحقیق"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "فیصلے، میٹرکس اور PM/PO trade-offs تاکہ آپ backlog کے یرغمال نہ بنیں۔"
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "پروڈکٹ اور حکمتِ عملی عدالت میں"
   },
   "categoryRemotoLead": {
     "message": "گھر کے دفتر کے بارے میں کہانیاں، بلیک موجودگی اور ایک فرضی باطل ہونے سے گریز کریں."
@@ -201,10 +201,10 @@
     "message": "علیبی کے ساتھ فاصلہ کا کام"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "ڈیزائن، یوزیبلٹی اور پروڈکٹ فیصلے جو روزمرہ فوکس پر اثر ڈالتے ہیں۔"
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX اور ڈیزائن زیرِ نظر"
   },
   "changelogError": {
     "message": "اب ہم تبدیلی لامحدود نہیں سکتے. بعد میں کوشش کریں."
@@ -780,7 +780,7 @@
     "message": "اِس کی وجہ کیا ہے ؟"
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "کیریئر سے جرح: طنز اور عملیت کے ساتھ۔"
   },
   "mediaTaglineDev": {
     "message": "دیوی لکشمی نے سختی میٹرکس کی طرف سے فیصلے کیے۔"
@@ -789,22 +789,22 @@
     "message": "روزمرّہ سوالات کے تحت توجہ اور توجہ."
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO، مواد اور فنل — بغیر جادو کے۔"
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "کاروبار ایجنڈا پر: عملدرآمد پر فوکس۔"
   },
   "mediaTaglineProcrastinacao": {
     "message": "( ۱ - سموئیل ۱۶ : ۷ - ۹ ) ذہنی طور پر ، ساؤل کے پُراسرار شور سے ملتا ہے ۔"
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "پروڈکٹ کا فیصلہ ڈیٹا سے ہوتا ہے، فیلنگ سے نہیں۔"
   },
   "mediaTaglineRemoto": {
     "message": "دور کام صفر متحرک معذرت کے ساتھ."
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX، ڈیزائن اور فیصلے جو صارف کو “ویلن موڈ” سے باہر نکالتے ہیں۔"
   },
   "metaCategory": {
     "message": "کیٹیگری"

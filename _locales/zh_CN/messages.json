@@ -96,7 +96,7 @@
     "message": "法律对数字拖延的看法"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman 标志"
   },
   "blogPreviewCta": {
     "message": "见所有文章"
@@ -126,13 +126,13 @@
     "message": "数码审判室的最新案件。"
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman（怀疑）"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman（认可）"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman（审判）"
   },
   "breadcrumbArticle": {
     "message": "条款"
@@ -147,10 +147,10 @@
     "message": "活动类别"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "习惯、领导力与职场生存：没有 LinkedIn 口号。"
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "不靠鸡汤的职业发展"
   },
   "categoryClear": {
     "message": "清除类别"
@@ -171,16 +171,16 @@
     "message": "关注和关注审判"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO、内容与转化：少点大师话术，多点方法论。"
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "不卖奇迹的营销"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "管理、文化与真实影响：少点术语，多点执行。"
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "商业与领导力上庭"
   },
   "categoryProcrastinacaoLead": {
     "message": "真实的拖延,数字懒惰, 和塔克狩猎索尔喜欢起诉。"
@@ -189,10 +189,10 @@
     "message": "正在调查的拖延"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "决策、指标与 PM/PO 权衡：别让自己成为 backlog 的人质。"
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "产品与战略开庭"
   },
   "categoryRemotoLead": {
     "message": "有关家庭办公室,Slack的存在, 和避免Zoom失踪的故事。"
@@ -201,10 +201,10 @@
     "message": "无不在场证明的远程工作"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "设计、可用性与产品决策，如何影响你每天的专注。"
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX 与设计在聚光灯下"
   },
   "changelogError": {
     "message": "我们现在无法装入更改日志 。 以后再试"
@@ -780,7 +780,7 @@
     "message": "粗鲁的营销 带有一些道德。"
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "职业发展被审问：讽刺但务实。"
   },
   "mediaTaglineDev": {
     "message": "由硬度量判断的Dev性能."
@@ -789,22 +789,22 @@
     "message": "专注和关注在日常询问。"
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO、内容与漏斗——不靠玄学。"
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "商业议题在案：聚焦执行。"
   },
   "mediaTaglineProcrastinacao": {
     "message": "精神示波器与索尔的治疗讽刺相遇."
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "产品靠数据裁决，不靠感觉。"
   },
   "mediaTaglineRemoto": {
     "message": "远程工作 零鬼模式借口。"
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX、设计与决策，把用户从“反派模式”里拉出来。"
   },
   "metaCategory": {
     "message": "类别"

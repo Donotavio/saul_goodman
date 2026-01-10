@@ -96,7 +96,7 @@
     "message": "कानूनी रूप से डिजिटल खरीद पर ले जाता है"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman लोगो"
   },
   "blogPreviewCta": {
     "message": "सभी लेख देखें"
@@ -126,13 +126,13 @@
     "message": "डिजिटल कोर्टरूम के नवीनतम मामले।"
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman (संदेह)"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman (मंज़ूरी)"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman (जजमेंट)"
   },
   "breadcrumbArticle": {
     "message": "लेख"
@@ -147,10 +147,10 @@
     "message": "सक्रिय श्रेणी"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "हैबिट्स, लीडरशिप और कॉरपोरेट सर्वाइवल — बिना LinkedIn क्लिशे।"
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "कोच स्क्रिप्ट के बिना करियर"
   },
   "categoryClear": {
     "message": "स्पष्ट श्रेणी"
@@ -171,16 +171,16 @@
     "message": "पर ध्यान दें"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO, कंटेंट और कन्वर्ज़न: कम गुरु-गिरी, ज़्यादा तरीका।"
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "बिना चमत्कारी वादों वाला मार्केटिंग"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "मैनेजमेंट, कल्चर और असली असर — बिना जार्गन और बिना बकवास।"
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "बिज़नेस और लीडरशिप अदालत में"
   },
   "categoryProcrastinacaoLead": {
     "message": "देरी के वास्तविक मामलों, डिजिटल laziness, और टैब शिकार Saul prosecute के लिए प्यार करता है।"
@@ -189,10 +189,10 @@
     "message": "जांच के तहत Procrastination"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "फैसले, मेट्रिक्स और PM/PO के trade-offs ताकि आप backlog के बंधक न बनें।"
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "प्रोडक्ट और रणनीति अदालत में"
   },
   "categoryRemotoLead": {
     "message": "घर कार्यालय, स्लैक उपस्थिति और ज़ूम गायब होने से बचने के बारे में कहानियां।"
@@ -201,10 +201,10 @@
     "message": "कोई alibi के साथ दूरस्थ काम"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "डिज़ाइन, यूज़ेबिलिटी और प्रोडक्ट फैसले जो आपके रोज़ के फोकस को प्रभावित करते हैं।"
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX और डिज़ाइन पर नज़र"
   },
   "changelogError": {
     "message": "हम अभी बदलाव नहीं कर सकते। बाद में फिर से प्रयास करें।"
@@ -780,7 +780,7 @@
     "message": "एथिक्स के एक चुटकी के साथ आक्रामक विपणन।"
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "करियर की जिरह: व्यंग्य और व्यवहारिकता के साथ।"
   },
   "mediaTaglineDev": {
     "message": "देव प्रदर्शन हार्ड मैट्रिक्स द्वारा निर्णय लिया।"
@@ -789,22 +789,22 @@
     "message": "दैनिक पूछताछ के तहत ध्यान केंद्रित करें।"
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO, कंटेंट और फ़नल — बिना जादू के।"
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "बिज़नेस एजेंडा पर: फोकस execution पर।"
   },
   "mediaTaglineProcrastinacao": {
     "message": "मानसिक oscilloscope Saul के चिकित्सीय sarcasm से मिलते हैं।"
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "प्रोडक्ट का फ़ैसला डेटा से, फीलिंग से नहीं।"
   },
   "mediaTaglineRemoto": {
     "message": "दूरस्थ कार्य शून्य भूत मोड बहाने के साथ।"
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX, डिज़ाइन और फैसले जो यूज़र को “विलेन मोड” से बाहर लाते हैं।"
   },
   "metaCategory": {
     "message": "श्रेणी"

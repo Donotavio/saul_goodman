@@ -96,7 +96,7 @@
     "message": "القضاء على الازدهار الرقمي"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "شعار Saul Goodman"
   },
   "blogPreviewCta": {
     "message": "انظر جميع المواد"
@@ -126,13 +126,13 @@
     "message": "آخر القضايا من قاعة المحكمة الرقمية"
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "سول غودمان (متشكّك)"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "سول غودمان (موافق)"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "سول غودمان (يحكم)"
   },
   "breadcrumbArticle": {
     "message": "المادة"
@@ -147,10 +147,10 @@
     "message": "الفئة النشطة"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "عادات وقيادة وبقاء مؤسسي بلا عبارات لينكدإن."
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "مسار مهني بلا نصائح مدربين"
   },
   "categoryClear": {
     "message": "فئة واضحة"
@@ -171,16 +171,16 @@
     "message": "تركيز الاهتمام على المحاكمة"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO والمحتوى والتحويل: أقل هراء، أكثر منهجية."
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "تسويق بلا وعود معجزة"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "إدارة وثقافة وأثر حقيقي — بلا مصطلحات وبلا لف ودوران."
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "الأعمال والقيادة في المحكمة"
   },
   "categoryProcrastinacaoLead": {
     "message": "حالات التأخّر الحقيقيّة، الكسل الرقمي، وصيد (سول) يحبّ المقاضاة."
@@ -189,10 +189,10 @@
     "message": "التسويف قيد التحقيق"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "قرارات ومؤشرات ومفاضلات PM/PO كي لا تصبح رهينة الـ backlog."
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "المنتج والاستراتيجية في المحكمة"
   },
   "categoryRemotoLead": {
     "message": "قصص عن مكتب المنزل، وجود سلاك، وتجنب اختفاء زوم."
@@ -201,10 +201,10 @@
     "message": "العمل عن بعد بدون حجة غياب"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "التصميم وسهولة الاستخدام وقرارات المنتج التي تؤثر على تركيزك اليومي."
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "تجربة المستخدم والتصميم تحت المجهر"
   },
   "changelogError": {
     "message": "لا يمكننا تحميل المتغير الآن حاول مرة أخرى لاحقا."
@@ -780,7 +780,7 @@
     "message": "تسويق عدواني مع حفنة من الأخلاق"
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "المسار المهني تحت الاستجواب: بسخرية وبراغماتية."
   },
   "mediaTaglineDev": {
     "message": "الأداء الشيطاني تحكم عليه القياسات الصلبة"
@@ -789,22 +789,22 @@
     "message": "التركيز والاهتمام تحت الاستجواب اليومي."
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO ومحتوى وقمع بلا سحر."
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "الأعمال على الطاولة: التركيز على التنفيذ."
   },
   "mediaTaglineProcrastinacao": {
     "message": "ويقابل مظاريف الفستق العقلية السخرية العلاجية في سول."
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "المنتج يُحكم عليه بالبيانات لا بالإحساس."
   },
   "mediaTaglineRemoto": {
     "message": "العمل عن بعد مع عدم وجود أعذار ضد الأشباح"
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "تجربة المستخدم والتصميم وقرارات تُخرج المستخدم من وضع الشرير."
   },
   "metaCategory": {
     "message": "الفئة"

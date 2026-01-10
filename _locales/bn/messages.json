@@ -96,7 +96,7 @@
     "message": "ডিজিটাল পরিপক্কতার বিরুদ্ধে আইনগত ব্যবস্থা গ্রহণ"
   },
   "blogLogoAlt": {
-    "message": "Logo Saul Goodman"
+    "message": "Saul Goodman লোগো"
   },
   "blogPreviewCta": {
     "message": "অধ্যয়ন প্রবন্ধগুলো"
@@ -126,13 +126,13 @@
     "message": "ডিজিটাল আদালত থেকে সর্বশেষ খবর এসেছে।"
   },
   "blogToneAltIncredulo": {
-    "message": "Saul Goodman incrédulo"
+    "message": "Saul Goodman (সন্দেহপ্রবণ)"
   },
   "blogToneAltLike": {
-    "message": "Saul Goodman aprovando"
+    "message": "Saul Goodman (অনুমোদন)"
   },
   "blogToneAltNaoCorte": {
-    "message": "Saul Goodman julgando"
+    "message": "Saul Goodman (বিচার)"
   },
   "breadcrumbArticle": {
     "message": "পদাশ্রিত নির্দেশক"
@@ -147,10 +147,10 @@
     "message": "সক্রিয় বিভাগ"
   },
   "categoryCarreiraLead": {
-    "message": "Hábitos, liderança e sobrevivência corporativa sem frases de LinkedIn."
+    "message": "অভ্যাস, নেতৃত্ব ও কর্পোরেট সারভাইভাল—LinkedIn ক্লিশে ছাড়া।"
   },
   "categoryCarreiraTitle": {
-    "message": "Carreira sem roteiro de coach"
+    "message": "কোচ স্ক্রিপ্ট ছাড়া ক্যারিয়ার"
   },
   "categoryClear": {
     "message": "বিভাগ মুছে ফেলুন"
@@ -171,16 +171,16 @@
     "message": "পরীক্ষার প্রতি ফোকাস"
   },
   "categoryMarketingLead": {
-    "message": "SEO, conteúdo e conversão com menos papo de guru e mais método."
+    "message": "SEO, কনটেন্ট ও কনভার্সন: কম গুরু, বেশি পদ্ধতি।"
   },
   "categoryMarketingTitle": {
-    "message": "Marketing sem promessa milagrosa"
+    "message": "অলৌকিক প্রতিশ্রুতি ছাড়া মার্কেটিং"
   },
   "categoryNegociosLead": {
-    "message": "Gestão, cultura e impacto real — sem juridiquês e sem enrolação."
+    "message": "ম্যানেজমেন্ট, কালচার ও বাস্তব প্রভাব—জার্গন নয়, ঘুরপাক নয়।"
   },
   "categoryNegociosTitle": {
-    "message": "Negócios e liderança no tribunal"
+    "message": "ব্যবসা ও নেতৃত্ব আদালতে"
   },
   "categoryProcrastinacaoLead": {
     "message": "( ১ শমূ."
@@ -189,10 +189,10 @@
     "message": "তদন্তের অধীনে প্রসিকিউশন"
   },
   "categoryProdutoLead": {
-    "message": "Decisões, métricas e trade-offs de PM/PO para não virar refém do backlog."
+    "message": "সিদ্ধান্ত, মেট্রিকস ও PM/PO trade-offs—backlog-এর জিম্মি না হতে।"
   },
   "categoryProdutoTitle": {
-    "message": "Produto e estratégia em audiência"
+    "message": "প্রোডাক্ট ও স্ট্র্যাটেজি আদালতে"
   },
   "categoryRemotoLead": {
     "message": "বাড়ির অফিস, নিউরেজ উপস্থিতির গল্প এবং একটি বড় নিখোঁজ হওয়া এড়িয়ে যাওয়া।"
@@ -201,10 +201,10 @@
     "message": "কোনবাইর সঙ্গে দূরবর্তী কাজ"
   },
   "categoryUxLead": {
-    "message": "Design, usabilidade e decisões de produto que afetam seu foco no dia a dia."
+    "message": "ডিজাইন, ইউজেবিলিটি এবং প্রোডাক্ট সিদ্ধান্ত—যা প্রতিদিনের ফোকাসে প্রভাব ফেলে।"
   },
   "categoryUxTitle": {
-    "message": "UX & Design sob lupa"
+    "message": "UX ও ডিজাইন আলোচনায়"
   },
   "changelogError": {
     "message": "আমরা এই মুহূর্তে পরিবর্তন করতে পারি না। পরে চেষ্টা করো।"
@@ -780,7 +780,7 @@
     "message": "নৈতিকতার এক চিমটিক মার্কেটিং।"
   },
   "mediaTaglineCarreira": {
-    "message": "Carreira sob interrogatório, com sarcasmo e pragmatismo."
+    "message": "ক্যারিয়ার জিজ্ঞাসাবাদে: ব্যঙ্গ ও বাস্তবতার সাথে।"
   },
   "mediaTaglineDev": {
     "message": "হার্ড মেট্রিকদের বিচার করা হয়েছে।"
@@ -789,22 +789,22 @@
     "message": "প্রতিদিন জিজ্ঞাসাবাদের সময় মনোযোগ দিন।"
   },
   "mediaTaglineMarketing": {
-    "message": "SEO, conteúdo e funil sem feitiçaria."
+    "message": "SEO, কনটেন্ট ও ফানেল—কোনো জাদু নয়।"
   },
   "mediaTaglineNegocios": {
-    "message": "Negócios em pauta, com foco em execução."
+    "message": "ব্যবসা আলোচনায়: এক্সিকিউশনে ফোকাস।"
   },
   "mediaTaglineProcrastinacao": {
     "message": "মন ও অসিলোস্কোপ শৌলের ধর্ষণকে উপহাসের সঙ্গে সাক্ষাৎ করে ।"
   },
   "mediaTaglineProduto": {
-    "message": "Produto julgado por dados, não por feeling."
+    "message": "প্রোডাক্ট বিচার হয় ডেটায়, ফিলিংয়ে নয়।"
   },
   "mediaTaglineRemoto": {
     "message": "ভূত-mode এর সাথে দূরবর্তী কাজ."
   },
   "mediaTaglineUx": {
-    "message": "UX, design e escolhas que tiram o usuário do modo vilão."
+    "message": "UX, ডিজাইন ও সিদ্ধান্ত—যা ব্যবহারকারীকে “ভিলেন মোড” থেকে বের করে আনে।"
   },
   "metaCategory": {
     "message": "শ্রেণীবিভাগ"
