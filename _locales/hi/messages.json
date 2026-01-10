@@ -54,31 +54,31 @@
     "message": "सब"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "करियर"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "डेवलपर परफॉर्मेंस"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "फोकस और ध्यान"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "मार्केटिंग"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "बिज़नेस"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "टालमटोल"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "प्रोडक्ट"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "रिमोट वर्क"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX और डिज़ाइन"
   },
   "blogEmptyState": {
     "message": "अभी तक कोई लेख प्रकाशित नहीं हुआ।"

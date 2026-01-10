@@ -54,31 +54,31 @@
     "message": "Bütün Bütün Hepsi"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "Kariyer"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "Geliştirici performansı"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "Odak ve dikkat"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "Pazarlama"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "İş dünyası"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "Erteleme"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "Ürün"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "Uzaktan çalışma"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX ve tasarım"
   },
   "blogEmptyState": {
     "message": "Henüz yayınlanan makaleler yok."

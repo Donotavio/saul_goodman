@@ -54,31 +54,31 @@
     "message": "Все"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "Карьера"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "Производительность разработчика"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "Фокус и внимание"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "Маркетинг"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "Бизнес"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "Прокрастинация"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "Продукт"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "Удалённая работа"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX и дизайн"
   },
   "blogEmptyState": {
     "message": "Никаких статей здесь пока не опубликовано."

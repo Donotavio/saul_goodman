@@ -57,10 +57,10 @@
     "message": "Carrera"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Rendimiento Dev"
+    "message": "Rendimiento dev"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Enfoque y Atención"
+    "message": "Enfoque y atención"
   },
   "blogCategoryLabelMarketing": {
     "message": "Marketing"
@@ -75,10 +75,10 @@
     "message": "Producto"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabajo Remoto"
+    "message": "Trabajo remoto"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX y Diseño"
+    "message": "UX y diseño"
   },
   "blogEmptyState": {
     "message": "Aún no hay artículos publicados aquí."

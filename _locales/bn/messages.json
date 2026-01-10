@@ -54,31 +54,31 @@
     "message": "সকল"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "ক্যারিয়ার"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "ডেভ পারফরম্যান্স"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "ফোকাস ও মনোযোগ"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "মার্কেটিং"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "ব্যবসা"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "প্রোক্রাস্টিনেশন"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "প্রোডাক্ট"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "রিমোট কাজ"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX ও ডিজাইন"
   },
   "blogEmptyState": {
     "message": "এখানে এখনো কোন প্রবন্ধ প্রকাশিত হয়নি।"

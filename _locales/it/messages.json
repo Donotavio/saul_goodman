@@ -54,31 +54,31 @@
     "message": "Tutti"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "Carriera"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "Performance dev"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "Focus e attenzione"
   },
   "blogCategoryLabelMarketing": {
     "message": "Marketing"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "Business"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "Procrastinazione"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "Prodotto"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "Lavoro da remoto"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX & design"
   },
   "blogEmptyState": {
     "message": "Nessun articolo pubblicato qui."

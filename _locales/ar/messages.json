@@ -54,31 +54,31 @@
     "message": "كل شيء"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "المسار المهني"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "أداء المطورين"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "التركيز والانتباه"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "التسويق"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "الأعمال"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "التسويف"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "المنتج"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "العمل عن بُعد"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "تجربة المستخدم والتصميم"
   },
   "blogEmptyState": {
     "message": "لا مقالات منشورة هنا بعد"

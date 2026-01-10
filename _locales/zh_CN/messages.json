@@ -54,31 +54,31 @@
     "message": "全体"
   },
   "blogCategoryLabelCarreira": {
-    "message": "Carreira"
+    "message": "职业发展"
   },
   "blogCategoryLabelDevPerformance": {
-    "message": "Performance Dev"
+    "message": "开发者性能"
   },
   "blogCategoryLabelFocoAtencao": {
-    "message": "Foco & Atenção"
+    "message": "专注与注意力"
   },
   "blogCategoryLabelMarketing": {
-    "message": "Marketing"
+    "message": "营销"
   },
   "blogCategoryLabelNegocios": {
-    "message": "Negócios"
+    "message": "商业"
   },
   "blogCategoryLabelProcrastinacao": {
-    "message": "Procrastinação"
+    "message": "拖延"
   },
   "blogCategoryLabelProduto": {
-    "message": "Produto"
+    "message": "产品"
   },
   "blogCategoryLabelTrabalhoRemoto": {
-    "message": "Trabalho remoto"
+    "message": "远程工作"
   },
   "blogCategoryLabelUxDesign": {
-    "message": "UX & Design"
+    "message": "UX 与设计"
   },
   "blogEmptyState": {
     "message": "这里还没有发表任何文章。"
