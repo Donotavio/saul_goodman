@@ -5,3 +5,5 @@ node_modules/
 *.argosmodel
 .env
 release/*
+site/_locales/
+site/blog/_locales/

@@ -5,7 +5,10 @@ const blogBase = new URL('./', scriptUrl);
 const indexUrl = new URL('index.json', blogBase);
 const postsBase = new URL('posts/', blogBase);
 
-const LOCALES_BASE = new URL('./_locales/', blogBase);
+const LOCALES_BASES = [
+  new URL('./_locales/', blogBase),
+  new URL('../_locales/', blogBase),
+];
 
 const DEFAULT_LANGUAGE = 'pt';
 const SUPPORTED_LANGUAGES = [
@@ -59,12 +62,30 @@ function flattenChromeMessages(raw) {
 async function loadMessagesForLanguage(lang) {
   const normalized = SUPPORTED_LANGUAGES.includes(lang) ? lang : DEFAULT_LANGUAGE;
   if (localeMessagesCache[normalized]) return localeMessagesCache[normalized];
+
   const dir = LOCALE_DIR_BY_LANGUAGE[normalized] || LOCALE_DIR_BY_LANGUAGE[DEFAULT_LANGUAGE];
-  const url = new URL(dir + '/messages.json', LOCALES_BASE);
-  const raw = await fetchJson(url);
-  const flat = flattenChromeMessages(raw);
-  localeMessagesCache[normalized] = flat;
-  return flat;
+
+  let lastError;
+  for (const base of LOCALES_BASES) {
+    try {
+      const url = new URL(dir + '/messages.json', base);
+      const response = await fetch(url, { headers: { Accept: 'application/json' } });
+      if (!response.ok) {
+        lastError = new Error(`HTTP ${response.status} ao carregar ${url.toString()}`);
+        continue;
+      }
+      const raw = await response.json();
+      const flat = flattenChromeMessages(raw);
+      localeMessagesCache[normalized] = flat;
+      return flat;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  const hint =
+    "Locales do blog não encontrados. Rode `npm run i18n:copy-site` e sirva a pasta `site/` (ou garanta `_locales` publicado no deploy).";
+  throw new Error(`${hint} (${lastError?.message || 'erro desconhecido'})`);
 }
 
 function t(key) {
