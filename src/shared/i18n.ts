@@ -118,6 +118,9 @@ class I18nImpl implements I18nService {
     });
 
     applyDataset(target, this, 'i18nHtml', (el, key, i18n) => {
+      // WARNING: Only use data-i18n-html with trusted locale strings from messages.json
+      // This uses innerHTML and can execute scripts if content is not sanitized.
+      // Never use this attribute with user-provided or external content.
       el.innerHTML = i18n.t(key);
     });
     applyDataset(target, this, 'i18nPlaceholder', (el, key, i18n) => {

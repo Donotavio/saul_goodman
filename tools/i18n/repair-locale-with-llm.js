@@ -9,7 +9,8 @@ const ROOT = path.resolve(__dirname, '../..');
 const LOCALES_DIR = path.join(ROOT, '_locales');
 
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
-const TIMEOUT_MS = 45000;
+const TIMEOUT_MS = 15000;
+const MAX_RETRIES = 2;
 
 const LOCALE_META = {
   en_US: { lang: 'en', label: 'inglês (EUA)', display: 'English (US)' },
@@ -89,9 +90,14 @@ async function callLLM(prompt) {
   if (!apiKey) throw new Error('LLM_API_KEY ausente');
 
   const model = process.env.LLM_MODEL || 'gpt-4o-mini';
-  const base =
-    process.env.LLM_BASE_URL ||
-    (LLM_PROVIDER === 'openai' ? 'https://api.openai.com/v1' : 'https://api.openai.com/v1');
+  const DEFAULT_ENDPOINTS = {
+    openai: 'https://api.openai.com/v1',
+    anthropic: 'https://api.anthropic.com/v1',
+  };
+  const base = process.env.LLM_BASE_URL || DEFAULT_ENDPOINTS[LLM_PROVIDER];
+  if (!base) {
+    throw new Error(`LLM_PROVIDER '${LLM_PROVIDER}' requer LLM_BASE_URL explícito ou configuração em DEFAULT_ENDPOINTS`);
+  }
   const baseUrl = base.endsWith('/') ? base : `${base}/`;
   const url = `${baseUrl}chat/completions`;
 
@@ -133,17 +139,53 @@ async function callLLM(prompt) {
   }
 }
 
+async function callLLMWithRetry(prompt, retries = MAX_RETRIES) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await callLLM(prompt);
+    } catch (error) {
+      const isLastAttempt = attempt === retries;
+      if (isLastAttempt) {
+        throw error;
+      }
+      const backoffMs = 1000 * (attempt + 1);
+      console.warn(`[i18n] Tentativa ${attempt + 1} falhou, tentando novamente em ${backoffMs}ms...`);
+      await new Promise((resolve) => setTimeout(resolve, backoffMs));
+    }
+  }
+}
+
 function parseJson(text) {
   const cleaned = text.trim().replace(/```json/gi, '```').replace(/```/g, '').trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (error) {
+    const preview = cleaned.slice(0, 200);
+    throw new Error(
+      `Falha ao parsear resposta do LLM como JSON. Resposta: ${preview}${cleaned.length > 200 ? '...' : ''}`,
+      { cause: error }
+    );
+  }
 }
 
 async function repairLocale(localeFolder, mode, limit) {
   const meta = LOCALE_META[localeFolder];
-  if (!meta) throw new Error(`Locale não suportado para repair: ${localeFolder}`);
+  if (!meta) {
+    const available = Object.keys(LOCALE_META).join(', ');
+    throw new Error(`Locale '${localeFolder}' não suportado. Use: ${available}`);
+  }
+
+  // Verificar se arquivo existe
+  const targetPath = path.join(LOCALES_DIR, localeFolder, 'messages.json');
+  try {
+    await fs.access(targetPath);
+  } catch {
+    throw new Error(
+      `Arquivo não encontrado: ${targetPath}. Execute 'npm run i18n:stubs' primeiro.`
+    );
+  }
 
   const base = await readJson(path.join(LOCALES_DIR, 'pt_BR', 'messages.json'));
-  const targetPath = path.join(LOCALES_DIR, localeFolder, 'messages.json');
   const target = await readJson(targetPath);
 
   const keys = Object.keys(base);
@@ -182,7 +224,7 @@ async function repairLocale(localeFolder, mode, limit) {
     `- Retorne um JSON com as MESMAS chaves e valores como strings traduzidas.\n\n` +
     `INPUT_JSON: ${JSON.stringify(payload)}`;
 
-  const response = await callLLM(prompt);
+  const response = await callLLMWithRetry(prompt);
   const translated = parseJson(response);
 
   for (const [key, value] of Object.entries(translated || {})) {

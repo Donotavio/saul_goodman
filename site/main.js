@@ -1,3 +1,10 @@
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  RTL_LANGUAGES,
+  createI18nContext
+} from './shared/i18n.js';
+
 const scriptUrl = typeof document !== 'undefined' && document.currentScript?.src
   ? document.currentScript.src
   : '';
@@ -9,100 +16,9 @@ const LOCALES_BASES = [
   new URL('../_locales/', siteBase),
 ];
 
-const DEFAULT_LANGUAGE = 'pt';
-const SUPPORTED_LANGUAGES = [
-  'pt',
-  'en',
-  'es',
-  'fr',
-  'de',
-  'it',
-  'tr',
-  'zh',
-  'hi',
-  'ar',
-  'bn',
-  'ru',
-  'ur',
-];
-
-const LOCALE_DIR_BY_LANGUAGE = {
-  pt: 'pt_BR',
-  en: 'en_US',
-  es: 'es_419',
-  fr: 'fr',
-  de: 'de',
-  it: 'it',
-  tr: 'tr',
-  zh: 'zh_CN',
-  hi: 'hi',
-  ar: 'ar',
-  bn: 'bn',
-  ru: 'ru',
-  ur: 'ur',
-};
-
-const localeMessagesCache = {};
-let currentLanguage = DEFAULT_LANGUAGE;
-let currentMessages = {};
-let fallbackMessages = {};
-
-const RTL_LANGUAGES = new Set(['ar', 'ur']);
-
-const flattenChromeMessages = (raw) => {
-  const result = {};
-  if (!raw || typeof raw !== 'object') return result;
-  for (const [key, value] of Object.entries(raw)) {
-    if (value && typeof value.message === 'string') {
-      result[key] = value.message;
-    }
-  }
-  return result;
-};
-
-const loadMessagesForLanguage = async (lang) => {
-  const normalized = SUPPORTED_LANGUAGES.includes(lang) ? lang : DEFAULT_LANGUAGE;
-  if (localeMessagesCache[normalized]) return localeMessagesCache[normalized];
-  const dir = LOCALE_DIR_BY_LANGUAGE[normalized] || LOCALE_DIR_BY_LANGUAGE[DEFAULT_LANGUAGE];
-
-  let lastError;
-  for (const base of LOCALES_BASES) {
-    try {
-      const url = new URL(dir + '/messages.json', base);
-      const response = await fetch(url, { headers: { Accept: 'application/json' } });
-      if (!response.ok) {
-        lastError = new Error('HTTP ' + response.status + ' ao carregar ' + url.toString());
-        continue;
-      }
-      const raw = await response.json();
-      const flat = flattenChromeMessages(raw);
-      localeMessagesCache[normalized] = flat;
-      return flat;
-    } catch (error) {
-      lastError = error;
-    }
-  }
-
-  const hint = 'Locales do site não encontrados. Rode npm run i18n:copy-site e sirva a pasta site/.';
-  throw new Error(hint + ' (' + (lastError?.message || 'erro desconhecido') + ')');
-};
-
-const t = (key) => currentMessages[key] || fallbackMessages[key] || key;
-
-const setLanguage = async (lang) => {
-  const normalized = SUPPORTED_LANGUAGES.includes(lang) ? lang : DEFAULT_LANGUAGE;
-  currentLanguage = normalized;
-  try {
-    currentMessages = await loadMessagesForLanguage(currentLanguage);
-  } catch {
-    currentMessages = {};
-  }
-  try {
-    fallbackMessages = await loadMessagesForLanguage(DEFAULT_LANGUAGE);
-  } catch {
-    fallbackMessages = {};
-  }
-};
+// Create i18n context
+const i18nContext = createI18nContext(LOCALES_BASES);
+const { setLanguage, t } = i18nContext;
 const richTextKeys = new Set([
   'feature4Item1',
   'faq2Answer',
@@ -191,7 +107,7 @@ const parseDateValue = (value) => {
 const formatBlogDate = (value) => {
   const date = parseDateValue(value);
   if (!date) return value;
-  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[DEFAULT_LANGUAGE];
+  const locale = DATE_LOCALE[i18nContext.currentLanguage] || DATE_LOCALE[DEFAULT_LANGUAGE];
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
@@ -203,8 +119,8 @@ const getPostSortTime = (post) => {
 
 const getLocalizedValue = (data, key) => {
   if (!data) return '';
-  if (currentLanguage !== 'pt') {
-    const localizedKey = `${key}_${currentLanguage}`;
+  if (i18nContext.currentLanguage !== 'pt') {
+    const localizedKey = `${key}_${i18nContext.currentLanguage}`;
     if (data[localizedKey]) return data[localizedKey];
   }
   return data[key] || '';
@@ -213,8 +129,7 @@ const getLocalizedValue = (data, key) => {
 const getBlogCategoryLabel = (category) => {
   if (!category) return '';
   const key = BLOG_CATEGORY_LABEL_KEYS[category];
-  const label = key ? (currentMessages[key] || fallbackMessages[key]) : '';
-  return label || category;
+  return key ? t(key) : category;
 };
 
 const getBlogArtwork = (post) => {
@@ -862,8 +777,8 @@ const ensureLanguageSelectorOptions = () => {
 };
 
 const updateSiteSeo = () => {
-  const seoTitle = currentMessages.seoTitle || fallbackMessages.seoTitle;
-  const seoDescription = currentMessages.seoDescription || fallbackMessages.seoDescription;
+  const seoTitle = i18nContext.currentMessages.seoTitle || i18nContext.fallbackMessages.seoTitle;
+  const seoDescription = i18nContext.currentMessages.seoDescription || i18nContext.fallbackMessages.seoDescription;
   if (seoTitle) {
     document.title = seoTitle;
     setMetaContent('meta[property="og:title"]', seoTitle);
@@ -878,14 +793,14 @@ const updateSiteSeo = () => {
 
 const applyTranslations = () => {
   updateSiteSeo();
-  document.documentElement.lang = getHtmlLang(currentLanguage);
-  document.documentElement.dir = RTL_LANGUAGES.has(currentLanguage) ? 'rtl' : 'ltr';
+  document.documentElement.lang = getHtmlLang(i18nContext.currentLanguage);
+  document.documentElement.dir = RTL_LANGUAGES.has(i18nContext.currentLanguage) ? 'rtl' : 'ltr';
   ensureLanguageSelectorOptions();
 
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
     if (!key) return;
-    const text = currentMessages[key] || fallbackMessages[key];
+    const text = i18nContext.currentMessages[key] || i18nContext.fallbackMessages[key];
     if (!text) return;
     if (richTextKeys.has(key)) {
       element.innerHTML = text;
@@ -897,29 +812,29 @@ const applyTranslations = () => {
   document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
     const key = element.getAttribute('data-i18n-alt');
     if (!key) return;
-    const text = currentMessages[key] || fallbackMessages[key];
+    const text = i18nContext.currentMessages[key] || i18nContext.fallbackMessages[key];
     if (!text) return;
     element.setAttribute('alt', text);
   });
 
   const selector = document.getElementById('language-select');
-  if (selector && selector.value !== currentLanguage) {
-    selector.value = currentLanguage;
+  if (selector && selector.value !== i18nContext.currentLanguage) {
+    selector.value = i18nContext.currentLanguage;
   }
   if (selector) {
-    const aria = currentMessages.languageLabel || fallbackMessages.languageLabel;
+    const aria = i18nContext.currentMessages.languageLabel || i18nContext.fallbackMessages.languageLabel;
     if (aria) selector.setAttribute('aria-label', aria);
   }
 
   const lightboxClose = document.querySelector('.lightbox-close');
-  const lightboxLabel = currentMessages.lightboxClose || fallbackMessages.lightboxClose;
+  const lightboxLabel = i18nContext.currentMessages.lightboxClose || i18nContext.fallbackMessages.lightboxClose;
   if (lightboxClose && lightboxLabel) {
     lightboxClose.textContent = lightboxLabel;
   }
 
   const updateShieldBadgeLabel = (img, labelKey) => {
     if (!img?.getAttribute) return;
-    const label = currentMessages[labelKey] || fallbackMessages[labelKey];
+    const label = i18nContext.currentMessages[labelKey] || i18nContext.fallbackMessages[labelKey];
     if (!label) return;
     const src = img.getAttribute('src');
     if (!src) return;

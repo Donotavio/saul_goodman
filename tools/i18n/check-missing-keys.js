@@ -68,7 +68,10 @@ function validatePlaceholders(key, defaultMsg, localeMsg, locale) {
   return issues;
 }
 
-const MAX_UI_LENGTH = 150;
+// Tamanho máximo recomendado para strings de UI que aparecem em botões/labels
+// Baseado em guidelines do Chrome Web Store e práticas de i18n para garantir
+// que textos não sejam cortados em interfaces de diferentes idiomas
+const MAX_UI_LENGTH = 150; // caracteres
 
 function validateLength(key, message, locale) {
   if (message.length > MAX_UI_LENGTH && (key.includes('_label') || key.includes('_title') || key.includes('_button'))) {

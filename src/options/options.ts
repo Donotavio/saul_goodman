@@ -580,7 +580,9 @@ async function persistSettings(messageKey: string): Promise<void> {
 
   await saveSettings(currentSettings);
   showStatus(i18n?.t(messageKey) ?? messageKey);
-  chrome.runtime.sendMessage({ type: 'settings-updated' }).catch(() => {});
+  chrome.runtime.sendMessage({ type: 'settings-updated' }).catch((error) => {
+    console.warn('[options] Falha ao notificar background script:', error);
+  });
 }
 
 function showStatus(message: string, isError = false): void {

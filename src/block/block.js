@@ -1,19 +1,6 @@
+import { resolveLocale, localeToDir } from '../shared/i18n.js';
+
 const DEFAULT_LOCALE = 'en-US';
-const SUPPORTED_LOCALES = [
-  'pt-BR',
-  'en-US',
-  'es-419',
-  'fr',
-  'de',
-  'it',
-  'tr',
-  'zh-CN',
-  'hi',
-  'ar',
-  'bn',
-  'ru',
-  'ur',
-];
 const SETTINGS_KEY = 'sg:settings';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +14,8 @@ async function initialize() {
     t = i18n.t;
     document.documentElement.lang = i18n.locale;
     applyTranslations(t);
-  } catch {
+  } catch (error) {
+    console.warn('[block] Failed to load i18n, using fallback:', error);
     applyTranslations(t);
   }
 
@@ -103,8 +91,8 @@ function attachActions(t) {
 }
 
 async function createBlockI18n() {
-  const { preference, storedLocale } = await loadLocalePreference();
-  const locale = resolveLocale(preference, storedLocale);
+  const { preference } = await loadLocalePreference();
+  const locale = resolveLocale(preference);
   const messages = await loadMessages(locale);
   const fallback = locale === DEFAULT_LOCALE ? messages : await loadMessages(DEFAULT_LOCALE);
 
@@ -121,52 +109,11 @@ async function loadLocalePreference() {
   try {
     const stored = (await chrome.storage.local.get(SETTINGS_KEY))[SETTINGS_KEY];
     return {
-      preference: stored?.localePreference ?? 'auto',
-      storedLocale: stored?.locale
+      preference: stored?.localePreference ?? 'auto'
     };
   } catch {
-    return { preference: 'auto', storedLocale: undefined };
+    return { preference: 'auto' };
   }
-}
-
-function normalizeLocaleCode(localeCode) {
-  const uiLanguage = (localeCode ?? '').toLowerCase();
-  const normalized = uiLanguage.split('-')[0];
-
-  const mapping = {
-    pt: 'pt-BR',
-    es: 'es-419',
-    en: 'en-US',
-    fr: 'fr',
-    de: 'de',
-    it: 'it',
-    tr: 'tr',
-    zh: 'zh-CN',
-    hi: 'hi',
-    ar: 'ar',
-    bn: 'bn',
-    ru: 'ru',
-    ur: 'ur'
-  };
-
-  return mapping[normalized] || DEFAULT_LOCALE;
-}
-
-function resolveLocale(preference, storedLocale) {
-  if (preference && preference !== 'auto' && SUPPORTED_LOCALES.includes(preference)) {
-    return preference;
-  }
-
-  if (storedLocale && SUPPORTED_LOCALES.includes(storedLocale)) {
-    return storedLocale;
-  }
-
-  const uiLanguage = chrome?.i18n?.getUILanguage?.() ?? navigator.language;
-  return normalizeLocaleCode(uiLanguage);
-}
-
-function localeToDir(locale) {
-  return String(locale || DEFAULT_LOCALE).replace(/-/g, '_');
 }
 
 async function loadMessages(locale) {
