@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Sat, 10 Jan 2026 13:43:51 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 16:12:30 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Você ainda usa if statements? Que fofo!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/</guid>
+      <pubDate>Sat, 10 Jan 2026 16:12:30 GMT</pubDate>
+      <description><![CDATA[Se você acha que if statements são suficientes, parabéns! Você é um gênio da tecnologia... em 1999.]]></description>
+    </item>
+
     <item>
       <title>Museus: O Segredo da Arquitetura das Nuvens Revelado!</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/</link>

@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Você ainda usa if statements? Que fofo!",
+      "url": "./posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/",
+      "markdown": "2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo.md",
+      "date": "2026-01-10",
+      "category": "ux-design",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "desenvolvimento",
+        "sarcasmo"
+      ],
+      "excerpt": "Se você acha que if statements são suficientes, parabéns! Você é um gênio da tecnologia... em 1999.",
+      "source_title": "SwiftUI Feature Flags & Remote Config Architecture (Production-Grade)",
+      "source_url": "https://dev.to/sebastienlato/swiftui-feature-flags-remote-config-architecture-production-grade-56d8",
+      "source_published_at": "Sat, 10 Jan 2026 16:12:30 +0000",
+      "title_en": "Are You Still Using If Statements? How Cute!",
+      "excerpt_en": "If you think if statements are enough, congratulations! You’re a tech genius... in 1999.",
+      "tags_en": [
+        "productivity",
+        "marketing",
+        "UX",
+        "development",
+        "sarcasm"
+      ],
+      "title_es": "¿Todavía usas declaraciones if? ¡Qué lindo!",
+      "excerpt_es": "Si crees que las declaraciones if son suficientes, ¡felicitaciones! Eres un genio de la tecnología... en 1999.",
+      "tags_es": [
+        "productividad",
+        "marketing",
+        "UX",
+        "desarrollo",
+        "sarcasmo"
+      ],
+      "title_fr": "Vous utilisez encore des instructions if ? Comme c'est mignon !",
+      "excerpt_fr": "Si vous pensez que les instructions if suffisent, félicitations ! Vous êtes un génie de la technologie... en 1999.",
+      "tags_fr": [
+        "productivité",
+        "marketing",
+        "UX",
+        "développement",
+        "sarcasme"
+      ],
+      "title_de": "Verwendest du immer noch if-Anweisungen? Wie niedlich!",
+      "excerpt_de": "Wenn du denkst, dass if-Anweisungen ausreichen, herzlichen Glückwunsch! Du bist ein Technikgenie... im Jahr 1999.",
+      "tags_de": [
+        "Produktivität",
+        "Marketing",
+        "UX",
+        "Entwicklung",
+        "Sarkasmus"
+      ],
+      "title_it": "Usi ancora le istruzioni if? Che carino!",
+      "excerpt_it": "Se pensi che le istruzioni if siano sufficienti, complimenti! Sei un genio della tecnologia... nel 1999.",
+      "tags_it": [
+        "produttività",
+        "marketing",
+        "UX",
+        "sviluppo",
+        "sarcasmo"
+      ],
+      "title_tr": "Hala if ifadeleri mi kullanıyorsun? Ne tatlı!",
+      "excerpt_tr": "Eğer if ifadelerinin yeterli olduğunu düşünüyorsan, tebrikler! 1999'daki teknoloji dehasısın.",
+      "tags_tr": [
+        "verimlilik",
+        "pazarlama",
+        "UX",
+        "geliştirme",
+        "alay"
+      ],
+      "title_zh": "你还在用if语句吗？真可爱！",
+      "excerpt_zh": "如果你认为if语句就足够了，恭喜你！你是个科技天才……在1999年。",
+      "tags_zh": [
+        "生产力",
+        "营销",
+        "用户体验",
+        "开发",
+        "讽刺"
+      ],
+      "title_hi": "क्या आप अभी भी if स्टेटमेंट का उपयोग करते हैं? कितना प्यारा!",
+      "excerpt_hi": "अगर आपको लगता है कि if स्टेटमेंट पर्याप्त हैं, तो बधाई हो! आप तकनीक के जीनियस हैं... 1999 में।",
+      "tags_hi": [
+        "उत्पादकता",
+        "मार्केटिंग",
+        "यूएक्स",
+        "विकास",
+        "व्यंग्य"
+      ],
+      "title_ar": "هل لا تزال تستخدم جمل if؟ يا لها من براءة!",
+      "excerpt_ar": "إذا كنت تعتقد أن جمل if كافية، تهانينا! أنت عبقري التكنولوجيا... في عام 1999.",
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويق",
+        "تجربة المستخدم",
+        "التطوير",
+        "سخرية"
+      ],
+      "title_bn": "আপনি কি এখনও if statements ব্যবহার করেন? কি মিষ্টি!",
+      "excerpt_bn": "যদি আপনি মনে করেন যে if statements যথেষ্ট, অভিনন্দন! আপনি একজন প্রযুক্তির জিনিয়াস... 1999 সালে।",
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "মার্কেটিং",
+        "UX",
+        "বিকাশ",
+        "সারকাসম"
+      ],
+      "title_ru": "Вы все еще используете if-операторы? Как мило!",
+      "excerpt_ru": "Если вы думаете, что if-операторы достаточны, поздравляю! Вы гений технологий... в 1999 году.",
+      "tags_ru": [
+        "продуктивность",
+        "маркетинг",
+        "UX",
+        "разработка",
+        "сарказм"
+      ],
+      "title_ur": "کیا آپ ابھی بھی if statements استعمال کرتے ہیں؟ کیا پیارا!",
+      "excerpt_ur": "اگر آپ کو لگتا ہے کہ if statements کافی ہیں، تو مبارک ہو! آپ ایک ٹیکنالوجی کے جینیئس ہیں... 1999 میں۔",
+      "tags_ur": [
+        "پیداواری",
+        "مارکیٹنگ",
+        "UX",
+        "ترقی",
+        "تہذیب"
+      ],
+      "tone": "incredulo"
+    },
+    {
       "title": "Museus: O Segredo da Arquitetura das Nuvens Revelado!",
       "url": "./posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/",
       "markdown": "2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado.md",
