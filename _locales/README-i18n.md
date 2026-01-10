@@ -43,6 +43,17 @@ npm run i18n:check
 
 Relatório comparando todos os idiomas com o `pt-BR`.
 
+## Reparar traduções corrompidas (LLM)
+
+Alguns locales podem ficar com strings corrompidas/misturadas. Para reparar usando LLM (exige `LLM_API_KEY`):
+
+```bash
+LLM_API_KEY=... npm run i18n:repair-locale -- --locale zh_CN
+```
+
+- `--mode suspicious` (padrão) repara apenas chaves suspeitas.
+- `--mode all` re-traduz tudo (use com cuidado).
+
 ## Testes
 
 - Cobertura unitária para parser/fallback/interpolação/RTL em `src/tests/i18n.test.ts`.

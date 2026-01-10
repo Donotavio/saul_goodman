@@ -16,7 +16,8 @@
     "i18n:sync": "node tools/i18n/sync-site-locales.js",
     "i18n:check": "node tools/i18n/check-missing-keys.js",
     "i18n:stubs": "node tools/i18n/generate-locale-stubs.js",
-    "i18n:copy-site": "node tools/i18n/copy-locales-to-site.js"
+    "i18n:copy-site": "node tools/i18n/copy-locales-to-site.js",
+    "i18n:repair-locale": "node tools/i18n/repair-locale-with-llm.js"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.246",

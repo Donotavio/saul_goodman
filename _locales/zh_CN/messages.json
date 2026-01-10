@@ -927,28 +927,28 @@
     "message": "办公室设置"
   },
   "options_holiday_context_hint": {
-    "message": "使用opup para escolher o CorresXTO do dia (trabalho, lazer, estudos, folga, férias ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças. 中国植物物种信息数据库."
+    "message": "使用弹窗选择当天的“上下文”（工作、休闲、学习、休假、假期或个人）。Saul 会记录历史并避免不公平地调整指数。"
   },
   "options_holiday_country_error": {
-    "message": "向美国提供情报"
+    "message": "请输入两位字母，例如 BR 或 US。"
   },
   "options_holiday_country_hint": {
-    "message": "例:BR,美国,PT. (原始内容存档于2018-09-21). Saul nuica tenta descobrir seu país sozinho."
+    "message": "例如：BR、US、PT。Saul 不会尝试自动猜测你的国家。"
   },
   "options_holiday_country_label": {
-    "message": "Código do país (ISO-3166) (法语)."
+    "message": "国家代码（ISO-3166）"
   },
   "options_holiday_heading": {
-    "message": "Feriados e caseo justo (法语)"
+    "message": "节假日与公平上下文"
   },
   "options_holiday_hint": {
-    "message": "Quando ativado, Saul consulta apenas o Nager. (原始内容存档于2018-09-09). 日期: se saber se hoje é feriado nacional e sinciliza o índice。"
+    "message": "启用后，Saul 只会查询 Nager.Date 来判断今天是否为全国节假日，并中和指数。"
   },
   "options_holiday_toggle_hint": {
-    "message": "(原始内容存档于2018-09-26). Chamadas só ocorrem se você ativar e inforar o país. 地方自治协会。"
+    "message": "仅在你启用并填写国家代码时才会调用。不会自动定位。"
   },
   "options_holiday_toggle_label": {
-    "message": "国家妇女委员会"
+    "message": "在国家法定节假日暂停评分"
   },
   "options_inactivity_threshold": {
     "message": "计算为不活动前的最大闲置时间( 秒)"
