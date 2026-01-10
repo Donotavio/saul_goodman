@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "索尔·古德曼"
+  },
+  "backToHome": {
+    "message": "沃尔塔尔阿奥站点"
+  },
+  "benefit1Body": {
+    "message": "图表和CSV 显示你的老板,团队,或你自己的良心。"
+  },
+  "benefit1Title": {
+    "message": "不可否认的证据"
+  },
+  "benefit2Body": {
+    "message": "地震模式和不可忽略的讽刺信息."
+  },
+  "benefit2Title": {
+    "message": "电影提示"
+  },
+  "benefit3Body": {
+    "message": "所有判断都发生在本地; 没有数据离开您的浏览器 。"
+  },
+  "benefit3Title": {
+    "message": "保障隐私"
+  },
+  "benefitsEyebrow": {
+    "message": "福利"
+  },
+  "benefitsTitle": {
+    "message": "Saul处理这个案子,你关上它。"
+  },
+  "block_page_back": {
+    "message": "回来"
+  },
+  "block_page_body": {
+    "message": "你标记这个网站是拖延。 改变主意时关闭标签或调整列表。"
+  },
+  "block_page_heading": {
+    "message": "索尔封锁了这个域"
+  },
+  "block_page_image_alt": {
+    "message": "索尔·古德曼失望"
+  },
+  "block_page_local_note": {
+    "message": "本地块——没有任何东西离开你的浏览器."
+  },
+  "block_page_options": {
+    "message": "打开设置"
+  },
+  "block_page_title": {
+    "message": "索尔封锁了这个域"
+  },
+  "blogCategoryAll": {
+    "message": "全体"
+  },
+  "blogEmptyState": {
+    "message": "这里还没有发表任何文章。"
+  },
+  "blogError": {
+    "message": "装入博客失败"
+  },
+  "blogHeroEyebrow": {
+    "message": "索尔·古德曼博客"
+  },
+  "blogHeroLead": {
+    "message": "Sarcastic 具有专注,关注,和德夫表现. 每周用索尔的语气写文章,"
+  },
+  "blogHeroTitle": {
+    "message": "法律对数字拖延的看法"
+  },
+  "blogPreviewCta": {
+    "message": "见所有文章"
+  },
+  "blogPreviewEmpty": {
+    "message": "现在没有可用的文章。"
+  },
+  "blogPreviewError": {
+    "message": "无法装入文章 。"
+  },
+  "blogPreviewEyebrow": {
+    "message": "索尔博客"
+  },
+  "blogPreviewImageAlt": {
+    "message": "索尔·古德曼插图"
+  },
+  "blogPreviewLead": {
+    "message": "读完这三篇最新的文章 看看索尔如何用法律讽刺来维护你的注意力"
+  },
+  "blogPreviewLoading": {
+    "message": "正在装入文章..."
+  },
+  "blogPreviewRead": {
+    "message": "阅读文章"
+  },
+  "blogPreviewTitle": {
+    "message": "数码审判室的最新案件。"
+  },
+  "breadcrumbArticle": {
+    "message": "条款"
+  },
+  "breadcrumbBlog": {
+    "message": "博客"
+  },
+  "categoriesTitle": {
+    "message": "会议类别"
+  },
+  "categoryActiveLabel": {
+    "message": "活动类别"
+  },
+  "categoryClear": {
+    "message": "清除类别"
+  },
+  "categoryDevLead": {
+    "message": "任何拼凑 VS 代码、公关和远程会议的人的实用生产力。"
+  },
+  "categoryDevTitle": {
+    "message": "以认罪为由取消业绩"
+  },
+  "categoryEyebrow": {
+    "message": "类别"
+  },
+  "categoryFocoLead": {
+    "message": "日常研究与戏剧 关于保持你的头 在代码而不投降供养。"
+  },
+  "categoryFocoTitle": {
+    "message": "关注和关注审判"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "真实的拖延,数字懒惰, 和塔克狩猎索尔喜欢起诉。"
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "正在调查的拖延"
+  },
+  "categoryRemotoLead": {
+    "message": "有关家庭办公室,Slack的存在, 和避免Zoom失踪的故事。"
+  },
+  "categoryRemotoTitle": {
+    "message": "无不在场证明的远程工作"
+  },
+  "changelogError": {
+    "message": "我们现在无法装入更改日志 。 以后再试"
+  },
+  "changelogEyebrow": {
+    "message": "所有记录"
+  },
+  "changelogHeading": {
+    "message": "官方更改日志"
+  },
+  "changelogLoading": {
+    "message": "从仓库直接装入更改日志..."
+  },
+  "changelogSubheading": {
+    "message": "直接从寄存器中跟踪每个发行的更改 。"
+  },
+  "changelogTitle": {
+    "message": "更改日志"
+  },
+  "codeconBuildChip": {
+    "message": "4小时编码"
+  },
+  "codeconBulletChallenge": {
+    "message": "挑战:在4小时的手动密码中证明远程工作,不允许AI."
+  },
+  "codeconBulletNarrative": {
+    "message": "“律师”的叙述将衡量标准变成管理人员/陪审团的辩护。"
+  },
+  "codeconBulletRepoLink": {
+    "message": "原始还原"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "Hack Lab 开源 :"
+  },
+  "codeconBulletTracking": {
+    "message": "扩展监视制表开关,闲暇时间,以及反派网站来构建索引."
+  },
+  "codeconCtaRepo": {
+    "message": "见Hack实验室代码"
+  },
+  "codeconCtaSite": {
+    "message": "遇到代码con"
+  },
+  "codeconCtaVideo": {
+    "message": "观看完整视频"
+  },
+  "codeconEyebrow": {
+    "message": "哈克实验室代码Con"
+  },
+  "codeconLead": {
+    "message": "这个想法诞生在CodeCon黑客实验室:Otávio Ribeiro(<a href='https://www.linkin.com/in/donotavio/'target=' blank\"rel=\"noreferrer\",<a href='https://github.com/Donotavio'target=' blank'rel='noreferrer' > GitHub</a>) 认为索尔是反对拖延的个人律师——有颤抖、警报和审判室级报告。"
+  },
+  "codeconPlanChip": {
+    "message": "规划30分钟"
+  },
+  "codeconStoryLead": {
+    "message": "在30分钟的白板上,奥塔维奥绘制了MVP的素描,并在接下来的4小时内运送了索尔的种子:通过观看标签,计算指数,以及起草dev为\"陪审员\"(老板)的辩护——所有这一切都没有AI来证明远程工作的效果."
+  },
+  "codeconTag": {
+    "message": "出生于社区"
+  },
+  "codeconTitle": {
+    "message": "索尔·古德曼成为Chrome扩展"
+  },
+  "codeconVideoCaption": {
+    "message": "从代码Con Hack实验室的剪辑 索尔作为干扰的扩展而复活"
+  },
+  "demoCta": {
+    "message": "查看全部演示"
+  },
+  "demoEyebrow": {
+    "message": "快速演示"
+  },
+  "demoLead": {
+    "message": "一目了然:即时反应弹出,日终决定报告."
+  },
+  "demoPopupBody": {
+    "message": "每日索引、顶域和手头的导出快捷键。"
+  },
+  "demoPopupTitle": {
+    "message": "即时决定弹出"
+  },
+  "demoReportBody": {
+    "message": "图表,轻写故事, 并建议下一步。"
+  },
+  "demoReportTitle": {
+    "message": "规划报告"
+  },
+  "demoTitle": {
+    "message": "看看你的决定和索尔的干预"
+  },
+  "demoViewFull": {
+    "message": "查看全尺寸"
+  },
+  "devBody": {
+    "message": "锁定本地守护进程和 VS 代码扩展, 将编辑时间计为生产性分钟而不离开本地主机 。"
+  },
+  "devCtaDocs": {
+    "message": "查看文件"
+  },
+  "devCtaReadme": {
+    "message": "打开读取器"
+  },
+  "devCtaVsCode": {
+    "message": "安装 VS 代码扩展"
+  },
+  "devEyebrow": {
+    "message": "对于开发者"
+  },
+  "devLead": {
+    "message": "所有技术细节都移出主流. 从下面的向导开始。"
+  },
+  "devTitle": {
+    "message": "要贡献还是整合?"
+  },
+  "extDescription": {
+    "message": "用于测量域并保持您延迟索引的 Sarcastic 焦点跟踪器 。"
+  },
+  "extensionsChromeCta": {
+    "message": "色调扩展"
+  },
+  "extensionsCopy": {
+    "message": "带索尔去Chrome和VS代码 让你的注意力保持诚实"
+  },
+  "extensionsTitle": {
+    "message": "安装 Saul 的扩展"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS 代码扩展"
+  },
+  "extName": {
+    "message": "索尔·古德曼"
+  },
+  "faq1Answer": {
+    "message": "当然 索尔只收取注意和幽默."
+  },
+  "faq1Question": {
+    "message": "免费吗?"
+  },
+  "faq2Answer": {
+    "message": "从来没有。 所有东西都保留在<code>chrome.storage.local</code>中."
+  },
+  "faq2Question": {
+    "message": "我的数据离开浏览器了吗?"
+  },
+  "faq3Answer": {
+    "message": "除非你要在报告里写叙事 其余的都离线了"
+  },
+  "faq3Question": {
+    "message": "我需要人工智能吗?"
+  },
+  "faq4Answer": {
+    "message": "没有 一切在本地运行 没有登录。"
+  },
+  "faq4Question": {
+    "message": "我需要一个账户吗?"
+  },
+  "faq5Answer": {
+    "message": "当指数越过你的门槛时,屏幕会摇动,警笛会演奏几秒钟."
+  },
+  "faq5Question": {
+    "message": "地震模式如何运作?"
+  },
+  "faq6Answer": {
+    "message": "对 在选项屏幕中,您设定了生产性/恶意列表、权重和时间表。"
+  },
+  "faq6Question": {
+    "message": "我可以定制域和时间表吗?"
+  },
+  "faq7Answer": {
+    "message": "对 CSV和PDF按钮允许您立即下载数据."
+  },
+  "faq7Question": {
+    "message": "我能输出我的数据吗?"
+  },
+  "faq8Answer": {
+    "message": "建于Chrome,但与Chrome基于Chrome的浏览器,如勇者或Edge兼容."
+  },
+  "faq8Question": {
+    "message": "它在其他浏览器中有用吗?"
+  },
+  "faq9Answer": {
+    "message": "AI讲故事是可选的;如果你跳过 OpenAI 密钥,那么一切都会离线."
+  },
+  "faq9Question": {
+    "message": "AI报告安全吗?"
+  },
+  "faqEyebrow": {
+    "message": "快速提问"
+  },
+  "faqTitle": {
+    "message": "直冲FAQ."
+  },
+  "feature1Item1": {
+    "message": "带有当前索引和讽刺消息的徽章 。"
+  },
+  "feature1Item2": {
+    "message": "具有格式化时间的顶级生产和反面域 。"
+  },
+  "feature1Item3": {
+    "message": "CSV/PDF以一键输出."
+  },
+  "feature1Title": {
+    "message": "实时仪表板"
+  },
+  "feature2Item1": {
+    "message": "可配置的阈值和可选的警报器。"
+  },
+  "feature2Item2": {
+    "message": "关键是倒计时和CTA"
+  },
+  "feature2Item3": {
+    "message": "屏蔽只有恶棍的标签 这样你才能恢复生产"
+  },
+  "feature2Title": {
+    "message": "地震模式"
+  },
+  "feature3Item1": {
+    "message": "时速图表和制表符"
+  },
+  "feature3Item2": {
+    "message": "AI的叙述 在更好的呼叫索尔语调。"
+  },
+  "feature3Item3": {
+    "message": "关键旗帜 立即行动计划。"
+  },
+  "feature3Title": {
+    "message": "戏剧性报告"
+  },
+  "feature4Item1": {
+    "message": "数据在<code>chrome.storage.local</code>中——无为云."
+  },
+  "feature4Item2": {
+    "message": "生产/诽谤列表只保存在您的浏览器中 。"
+  },
+  "feature4Item3": {
+    "message": "本地存储的可选 OpenAI 密钥 。"
+  },
+  "feature4Title": {
+    "message": "隐私共计"
+  },
+  "featureBlockBody": {
+    "message": "如果你启用了模式,索尔会将反派标签全屏关闭,直到返回焦点并赢得后卫."
+  },
+  "featureBlockHint": {
+    "message": "“当您想要时, 打开开关:只有生产性标签才能打开。”"
+  },
+  "featureBlockTitle": {
+    "message": "鼠标标签锁"
+  },
+  "featureContextBody": {
+    "message": "现在您可以在弹出时设定当天的背景(工作、闲暇、学习、个人);索尔调整分数、软化惩罚并保持公平。"
+  },
+  "featureContextLabel": {
+    "message": "新设"
+  },
+  "featureCustomBody": {
+    "message": "定义生产领域和反面领域 小时重量 地震阈值 适应你的常规"
+  },
+  "featureCustomHint": {
+    "message": "“打印表? 贵宾 无尽的饲料? 被告。”"
+  },
+  "featureCustomTitle": {
+    "message": "自定义列表权重( E)"
+  },
+  "featuredEyebrow": {
+    "message": "特性"
+  },
+  "featuredTitle": {
+    "message": "本周的情况"
+  },
+  "featureGaugeHint": {
+    "message": "当它跨越70%,索尔准备地震."
+  },
+  "featureGaugeLabel": {
+    "message": "生活状态"
+  },
+  "featureGaugeTitle": {
+    "message": "拖延时间"
+  },
+  "featureNextLabel": {
+    "message": "下一个牌"
+  },
+  "featurePrevLabel": {
+    "message": "上一张牌"
+  },
+  "featurePrivacyBody": {
+    "message": "一切都运行在<code>chrome.storage.local</code>内;没有外部服务器或泄露判决."
+  },
+  "featurePrivacyHint": {
+    "message": "“连法官都看不到你的数据。”"
+  },
+  "featurePrivacyTitle": {
+    "message": "隐私第一"
+  },
+  "featureQuakeBody": {
+    "message": "银幕摇摆 警报器 索尔在恶棍的标签上尖叫着要你回到正轨"
+  },
+  "featureQuakeHint": {
+    "message": "“捉住你们了! 现在回到生产性的标签上。”"
+  },
+  "featureQuakeTest": {
+    "message": "测试提示"
+  },
+  "featureQuakeTitle": {
+    "message": "电影地震模式"
+  },
+  "featureRealtimeBody": {
+    "message": "警徽看每个标签, 把你的一天变成一个清晰的分 焦点与拖延。"
+  },
+  "featureRealtimeHint": {
+    "message": "“索尔正在看这37个标签。”"
+  },
+  "featureRealtimeTitle": {
+    "message": "实时跟踪"
+  },
+  "featureReportBody": {
+    "message": "图表,AI讲故事, CSV/PDF 输出, 以及下个站台的逐分钟时间表."
+  },
+  "featureReportHint": {
+    "message": "“这是你和你老板的证据。"
+  },
+  "featureReportTitle": {
+    "message": "戏剧性报告"
+  },
+  "featureSectionEyebrow": {
+    "message": "核心特征"
+  },
+  "featureSectionLead": {
+    "message": "每张卡都把幽默和清晰混为一谈 所以新来的人立刻明白索尔在Chrome里面做了什么"
+  },
+  "featureSectionTitle": {
+    "message": "所有你需要检查的"
+  },
+  "featuresEyebrow": {
+    "message": "详细特征"
+  },
+  "featuresTitle": {
+    "message": "索尔·古德曼扩展的军火库."
+  },
+  "featureSwipeHint": {
+    "message": "擦肩而过 检查每一个功能索尔手柄。"
+  },
+  "feedbackLink": {
+    "message": "反馈"
+  },
+  "finalCtaBody": {
+    "message": "安装、 设置您的域名, 并在反派标签赢得当日之前重新调整焦点 。"
+  },
+  "finalCtaTitle": {
+    "message": "准备好让索尔接手了吗?"
+  },
+  "finalPrimary": {
+    "message": "在 Chrome 上安装"
+  },
+  "footerBody": {
+    "message": "安装,列出你的恶棍, 让索尔收集焦点费。"
+  },
+  "footerChangelogLink": {
+    "message": "更改日志"
+  },
+  "footerLinkArchitecture": {
+    "message": "建筑"
+  },
+  "footerLinkGithub": {
+    "message": "GitHub 图像"
+  },
+  "footerLinkIndicators": {
+    "message": "指标"
+  },
+  "footerPrivacy": {
+    "message": "100%本地数据. 连法官都看不出来"
+  },
+  "footerPrivacyLink": {
+    "message": "隐私政策"
+  },
+  "footerTitle": {
+    "message": "索尔·古德曼扩展"
+  },
+  "heroBadge": {
+    "message": "\"在懒惰的情况下..."
+  },
+  "heroConfidence1": {
+    "message": "自定义地震模式"
+  },
+  "heroConfidence2": {
+    "message": "黑名单和VIP域列表"
+  },
+  "heroConfidence3": {
+    "message": "以 AI 故事描述报告"
+  },
+  "heroGaugeHint": {
+    "message": "当它击中70%, 地震模式风暴进来。"
+  },
+  "heroGaugeLabel": {
+    "message": "活性指数"
+  },
+  "heroPill": {
+    "message": "每周下降,每日讽刺"
+  },
+  "heroPrimaryCta": {
+    "message": "在 Chrome 上安装"
+  },
+  "heroSecondaryCta": {
+    "message": "看怎么样"
+  },
+  "heroSubtitle": {
+    "message": "它跟踪你的标签,旗子分散注意力,在白天之前 让你重新集中注意力—— 都在Chrome内部,没有注册。"
+  },
+  "heroTag": {
+    "message": "反拖延延长现实生活"
+  },
+  "heroTitle": {
+    "message": "停止拖延时间。 索尔·古德曼接了案子"
+  },
+  "indexCalloutLabel": {
+    "message": "Saul的备忘录"
+  },
+  "indexCalloutQuote": {
+    "message": "我打电话给你的老板, 低于10%, 平衡备审案件,客户端!”"
+  },
+  "indexClueAlert": {
+    "message": "审计地震"
+  },
+  "indexClueAlertBody": {
+    "message": "重复检查门槛,警报器,复制 传票在正确的时间。"
+  },
+  "indexClueBreak": {
+    "message": "计划微分"
+  },
+  "indexClueBreakBody": {
+    "message": "15–22射程需要战略呼吸. 把它们挡在日历上 客户端"
+  },
+  "indexClueFocus": {
+    "message": "列出你的恶棍"
+  },
+  "indexClueFocusBody": {
+    "message": "在索尔提出动议前 留一份活的标签列表 上面会标注指数"
+  },
+  "indexCluesLabel": {
+    "message": "案例核对表"
+  },
+  "indexEyebrow": {
+    "message": "在索尔的桌子上"
+  },
+  "indexFootnote": {
+    "message": "15至22个索尔档案“稳定客户”。 在那上面,他携带地震;在下面,他规定休息,而不增加任务。"
+  },
+  "indexGaugeHint": {
+    "message": "18%的命中甜点——稳步聚焦而不走全机器人."
+  },
+  "indexGaugeLabel": {
+    "message": "甜点"
+  },
+  "indexLead": {
+    "message": "法律翻译服务:0分不是奖杯, 索尔看每个乐队 决定是摇椅 还是强迫休假日"
+  },
+  "indexMemoBody": {
+    "message": "如果恶棍标签给索引钉上钉子,则触发全屏块模式. 索尔把坏人锁了出来,只释放出生产标签, 你的分数又呼吸了."
+  },
+  "indexMemoHeading": {
+    "message": "办公室备忘录"
+  },
+  "indexMemoSign": {
+    "message": "索尔,你的生产力律师"
+  },
+  "indexPitch1": {
+    "message": "指数从0到100不等. 越接近100,越清楚 你放弃了案件 中审判 并成为一个贵宾客户 拖延。"
+  },
+  "indexPitch2": {
+    "message": "但打零看起来也很可疑:任何24/7被粘在生产标签上的人,都离燃烧沉积有一步之遥。"
+  },
+  "indexRange0to14Body": {
+    "message": "索尔称之为“过度狂热 ” 。 呼吸,站起来,拿水来做见证"
+  },
+  "indexRange0to14Title": {
+    "message": "0 - 14:令人质疑的过度工作"
+  },
+  "indexRange15to22Body": {
+    "message": "理想的判断: 持续集中,健康休息,零警报. Saul甚至会考虑打折"
+  },
+  "indexRange15to22Title": {
+    "message": "15–22:黄金平衡."
+  },
+  "indexRange23to60Body": {
+    "message": "你仍然在为此案辩护, Saul开机通知 将审判推回正轨"
+  },
+  "indexRange23to60Title": {
+    "message": "23–60:沃布利焦点."
+  },
+  "indexRange61to100Body": {
+    "message": "地震时间到了。 屏幕震动,警笛声响起 索尔每张恶棍的标签 都会用止步器进来"
+  },
+  "indexRange61to100Title": {
+    "message": "61 - 100:当场拖延"
+  },
+  "indexStamp": {
+    "message": "客户容易入睡"
+  },
+  "indexTitle": {
+    "message": "索尔如何读取拖延指数"
+  },
+  "integrationCard1Body": {
+    "message": "生成配对密钥,切换集成,设置本地URL. 没有东西离开你的浏览器。"
+  },
+  "integrationCard1Title": {
+    "message": "在选项中启用"
+  },
+  "integrationCard2Body": {
+    "message": "使用 VS 代码扩展命令开始: 它预装 PAIRING KEY/PORT 并在守护进程文件夹中打开."
+  },
+  "integrationCard2Title": {
+    "message": "本地守护进程"
+  },
+  "integrationCard3Body": {
+    "message": "“Saul Goodman:SaulDaemon”号舰在安装后准备就绪,并向Chrome发送编辑心跳。"
+  },
+  "integrationCard3Title": {
+    "message": "VS 代码扩展"
+  },
+  "integrationCta": {
+    "message": "见融合指南"
+  },
+  "integrationEyebrow": {
+    "message": "对 devs 来说"
+  },
+  "integrationLead": {
+    "message": "开启可选集成:索尔在不离开本地主机的情况下增加编辑时间为生产性."
+  },
+  "integrationTitle": {
+    "message": "VS Code + 本地守护进程,都算作生产."
+  },
+  "integrationVsixCta": {
+    "message": "安装 VS 代码扩展"
+  },
+  "label_vscode": {
+    "message": "VS代码(IDE)"
+  },
+  "languageLabel": {
+    "message": "选择语言"
+  },
+  "latestEyebrow": {
+    "message": "新鲜"
+  },
+  "latestTitle": {
+    "message": "升温场"
+  },
+  "lightboxClose": {
+    "message": "关闭"
+  },
+  "manifesto1Body": {
+    "message": "浏览器里会判断你的一天 没有数据离开计算机,甚至没有法院的命令。"
+  },
+  "manifesto1Title": {
+    "message": "当地100%"
+  },
+  "manifesto2Body": {
+    "message": "视觉和音响的警示使索尔在即将收取额外费用时变得清晰."
+  },
+  "manifesto2Title": {
+    "message": "透明计费"
+  },
+  "manifesto3Body": {
+    "message": "讽刺的信息和戏剧性的旗帜提醒你,拖延也是昂贵的."
+  },
+  "manifesto3Title": {
+    "message": "幽默作为武器"
+  },
+  "manifestoEyebrow": {
+    "message": "宣言"
+  },
+  "manifestoTitle": {
+    "message": "粗鲁的营销 带有一些道德。"
+  },
+  "mediaTaglineDev": {
+    "message": "由硬度量判断的Dev性能."
+  },
+  "mediaTaglineFoco": {
+    "message": "专注和关注在日常询问。"
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "精神示波器与索尔的治疗讽刺相遇."
+  },
+  "mediaTaglineRemoto": {
+    "message": "远程工作 零鬼模式借口。"
+  },
+  "metaCategory": {
+    "message": "类别"
+  },
+  "metaPublishedAt": {
+    "message": "在博客上发表"
+  },
+  "metaSource": {
+    "message": "来源"
+  },
+  "metaSourcePublishedAt": {
+    "message": "来源公布于"
+  },
+  "metaSourceUrl": {
+    "message": "来源 URL"
+  },
+  "metaTags": {
+    "message": "标记"
+  },
+  "mobileMenuToggle": {
+    "message": "打开菜单"
+  },
+  "multilingualLabel": {
+    "message": "可在PT EN ES 中查阅"
+  },
+  "navBenefits": {
+    "message": "福利"
+  },
+  "navBlog": {
+    "message": "博客"
+  },
+  "navClients": {
+    "message": "客户"
+  },
+  "navCodeCon": {
+    "message": "代码"
+  },
+  "navCta": {
+    "message": "安装"
+  },
+  "navDemo": {
+    "message": "演示"
+  },
+  "navIndex": {
+    "message": "指数"
+  },
+  "navProcess": {
+    "message": "进程"
+  },
+  "newsletterCopy": {
+    "message": "短短的讽刺和纪律 让你的VS代码停止行动 像Netflix。"
+  },
+  "newsletterCta": {
+    "message": "这是索尔"
+  },
+  "newsletterDisclaimer": {
+    "message": "没有垃圾邮件。 只有讽刺你才能处理"
+  },
+  "newsletterError": {
+    "message": "请放弃有效的邮件 。"
+  },
+  "newsletterLabel": {
+    "message": "您的电子邮件"
+  },
+  "newsletterPlaceholder": {
+    "message": "您@ email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "拿到备忘录"
+  },
+  "newsletterSuccess": {
+    "message": "你在雷达上。 很快会有新的下降。"
+  },
+  "newsletterTitle": {
+    "message": "拿到索尔的备忘录"
+  },
+  "nextPost": {
+    "message": "ưμ㼯A"
+  },
+  "options_back_to_popup": {
+    "message": "回弹出"
+  },
+  "options_confirm_reset": {
+    "message": "这将恢复默认值 。 继续?"
+  },
+  "options_critical_sound_hint": {
+    "message": "一旦启用,警报器随时会发出紧急警报"
+  },
+  "options_critical_sound_label": {
+    "message": "自动地震警报"
+  },
+  "options_critical_threshold_hint": {
+    "message": "当指数击中这个值时,索尔触发了临界警报."
+  },
+  "options_critical_threshold_label": {
+    "message": "夸克模式阈值( 0 - 100)"
+  },
+  "options_digital_branch": {
+    "message": "数字分支"
+  },
+  "options_domain_add": {
+    "message": "添加"
+  },
+  "options_domain_duplicate": {
+    "message": "域已列出 。"
+  },
+  "options_domain_empty": {
+    "message": "还没有域 。"
+  },
+  "options_domain_invalid": {
+    "message": "输入有效的域 。"
+  },
+  "options_footer_note": {
+    "message": "Saul不和任何人分享你的数据 连法官都不行"
+  },
+  "options_head_title": {
+    "message": "索尔·古德曼 - 设置"
+  },
+  "options_heading": {
+    "message": "办公室设置"
+  },
+  "options_holiday_context_hint": {
+    "message": "使用opup para escolher o CorresXTO do dia (trabalho, lazer, estudos, folga, férias ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças. 中国植物物种信息数据库."
+  },
+  "options_holiday_country_error": {
+    "message": "向美国提供情报"
+  },
+  "options_holiday_country_hint": {
+    "message": "例:BR,美国,PT. (原始内容存档于2018-09-21). Saul nuica tenta descobrir seu país sozinho."
+  },
+  "options_holiday_country_label": {
+    "message": "Código do país (ISO-3166) (法语)."
+  },
+  "options_holiday_heading": {
+    "message": "Feriados e caseo justo (法语)"
+  },
+  "options_holiday_hint": {
+    "message": "Quando ativado, Saul consulta apenas o Nager. (原始内容存档于2018-09-09). 日期: se saber se hoje é feriado nacional e sinciliza o índice。"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "(原始内容存档于2018-09-26). Chamadas só ocorrem se você ativar e inforar o país. 地方自治协会。"
+  },
+  "options_holiday_toggle_label": {
+    "message": "国家妇女委员会"
+  },
+  "options_inactivity_threshold": {
+    "message": "计算为不活动前的最大闲置时间( 秒)"
+  },
+  "options_language_auto": {
+    "message": "自动( 浏览器)"
+  },
+  "options_language_en": {
+    "message": "英语( 美国)"
+  },
+  "options_language_es": {
+    "message": "西班牙语"
+  },
+  "options_language_hint": {
+    "message": "手动选择或让语言跟随Chrome."
+  },
+  "options_language_label": {
+    "message": "界面语言"
+  },
+  "options_language_pt": {
+    "message": "葡萄牙语( 巴西 )"
+  },
+  "options_openai_hint": {
+    "message": "在当地储存,以便在报告中产生叙述。"
+  },
+  "options_openai_label": {
+    "message": "OpenAI 密钥( 可选)"
+  },
+  "options_openai_placeholder": {
+    "message": "嘘..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "一旦启用,索尔会使用当地Chrome规则阻断通往这些网站的导航."
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "封锁访问此列表"
+  },
+  "options_procrastination_heading": {
+    "message": "拖延域"
+  },
+  "options_procrastination_hint": {
+    "message": "这里有诱惑 如果你喜欢一个网站, 它可能属于这里。"
+  },
+  "options_procrastination_placeholder": {
+    "message": "例如:YouTube.com (中文(简体) )."
+  },
+  "options_productive_heading": {
+    "message": "生产领域"
+  },
+  "options_productive_hint": {
+    "message": "索尔知道在哪里工作。 根据常规添加或删除 。"
+  },
+  "options_productive_placeholder": {
+    "message": "例如docs.google.com (英语)."
+  },
+  "options_promise": {
+    "message": "索尔在与你的焦点谈判时 保留你的数据"
+  },
+  "options_restore_defaults": {
+    "message": "恢复默认值"
+  },
+  "options_save_weights": {
+    "message": "保存重量"
+  },
+  "options_schedule_add": {
+    "message": "添加间隔"
+  },
+  "options_schedule_heading": {
+    "message": "工作时间"
+  },
+  "options_schedule_hint": {
+    "message": "你正式值班的时候告诉索尔 在这些街区外,生产性的分钟数是双倍的。"
+  },
+  "options_schedule_to": {
+    "message": "改为:"
+  },
+  "options_status_blocklist_saved": {
+    "message": "屏蔽偏好更新 。"
+  },
+  "options_status_critical_saved": {
+    "message": "(原始内容存档于2018-03-05). Modo terremoto atualizado."
+  },
+  "options_status_defaults_restored": {
+    "message": "默认恢复 。"
+  },
+  "options_status_domain_removed": {
+    "message": "域已删除 。"
+  },
+  "options_status_holiday_saved": {
+    "message": "(原始内容存档于2018-09-21). Preferências de feriado atualizadas."
+  },
+  "options_status_language_saved": {
+    "message": "语言更新。"
+  },
+  "options_status_list_updated": {
+    "message": "名单更新。"
+  },
+  "options_status_ready": {
+    "message": "没事"
+  },
+  "options_status_schedule_updated": {
+    "message": "时间表已更新。"
+  },
+  "options_status_vscode_saved": {
+    "message": "(原始内容存档于2018-09-21). Integração com VS Code atualizada."
+  },
+  "options_status_weights_saved": {
+    "message": "重量更新。"
+  },
+  "options_subtitle": {
+    "message": "定制雷达,以适应你的拖延风格。 一切都留在当地。"
+  },
+  "options_tagline": {
+    "message": "你的私人律师反对拖延"
+  },
+  "options_thresholds_heading": {
+    "message": "阈值( E)"
+  },
+  "options_vscode_heading": {
+    "message": "VS 代码整合"
+  },
+  "options_vscode_install_hint": {
+    "message": "将《VS法典》作为《刑法》的延伸。"
+  },
+  "options_vscode_install_link": {
+    "message": "插入扩展 VS 码"
+  },
+  "options_vscode_key_copied": {
+    "message": "密钥已复制 。"
+  },
+  "options_vscode_key_copy": {
+    "message": "复制密钥"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "无密钥可复制 。"
+  },
+  "options_vscode_key_generate": {
+    "message": "生成新密钥"
+  },
+  "options_vscode_key_generated": {
+    "message": "新建密钥 。"
+  },
+  "options_vscode_key_hint": {
+    "message": "必须匹配 SaulDeamon/ VS 代码中配置的密钥 。"
+  },
+  "options_vscode_key_label": {
+    "message": "对齐密钥"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "粘贴 SaulDeamon 密钥"
+  },
+  "options_vscode_test_button": {
+    "message": "测试conexão"
+  },
+  "options_vscode_test_disabled": {
+    "message": "Attive a integração com VS 代码 antes de testar. 中国植物物种信息数据库."
+  },
+  "options_vscode_test_error": {
+    "message": "索尔达蒙基金会{reason}) (中文(简体) )."
+  },
+  "options_vscode_test_health_error": {
+    "message": "Falha ao ao asessar (法语){origin}卫生({reason}) (中文(简体) )."
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "URL inválida (英语). 使用accessdate=需要含有url= (帮助) http://127.0.0.1:3123."
+  },
+  "options_vscode_test_running": {
+    "message": "Testando Conexão... 特奥桑多・康纳西奥..."
+  },
+  "options_vscode_test_success": {
+    "message": "索尔达蒙回应{origin}。 。 。{sessions}。米努托斯阿蒂沃斯语:{minutes}。 。 。"
+  },
+  "options_vscode_test_timeout": {
+    "message": "索尔·达蒙(Saul-Daemon não)以节奏回应."
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "分泌剂 使用没有 Chrome 或 VS 代码的 mesma 密钥 。"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "在刷新你的分数前给当地的SaulDaemon(当地主机)打电话。"
+  },
+  "options_vscode_toggle_label": {
+    "message": "包含 VS 代码焦点时间"
+  },
+  "options_vscode_url_hint": {
+    "message": "只跟本地主机说话,没有东西离开你的机器。"
+  },
+  "options_vscode_url_label": {
+    "message": "本地后端 URL"
+  },
+  "options_weight_inactivity": {
+    "message": "无活动( 重量)"
+  },
+  "options_weight_procrastination": {
+    "message": "非生产性时间(重量)"
+  },
+  "options_weight_switches": {
+    "message": "标签开关( 重量)"
+  },
+  "options_weights_sum_error": {
+    "message": "权重之和必须是1."
+  },
+  "popup_alert_no_data": {
+    "message": "还没有数据。 打开一些标签再试一次."
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF 模块无法使用 。"
+  },
+  "popup_badge_label": {
+    "message": "指数"
+  },
+  "popup_blog_badge": {
+    "message": "索尔建议阅读"
+  },
+  "popup_blog_button_all": {
+    "message": "打开博客"
+  },
+  "popup_blog_category_prefix": {
+    "message": "类别 :{category}"
+  },
+  "popup_blog_cta": {
+    "message": "读吧"
+  },
+  "popup_blog_empty": {
+    "message": "还没有文章可用。"
+  },
+  "popup_blog_error": {
+    "message": "现在连博客都找不到"
+  },
+  "popup_blog_loading": {
+    "message": "寻找完美的案子..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "是时候用零便宜的教练来提升德夫的表现."
+  },
+  "popup_blog_reason_foco": {
+    "message": "基于今天分散的焦点."
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "因为你的拖延 超越了今天的法定限度。"
+  },
+  "popup_blog_reason_remoto": {
+    "message": "幸存的远程工作 不走全鬼模式。"
+  },
+  "popup_blog_section_subtitle": {
+    "message": "我们读了你的数字 并指索尔式的文章。"
+  },
+  "popup_blog_section_title": {
+    "message": "手摘博客提示"
+  },
+  "popup_chart_aria": {
+    "message": "生产与拖延时间"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "分钟"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "拖延问题"
+  },
+  "popup_chart_label_productive": {
+    "message": "生产"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS 代码"
+  },
+  "popup_chart_title": {
+    "message": "每日雷达"
+  },
+  "popup_context_option_dayOff": {
+    "message": "福尔加"
+  },
+  "popup_context_option_leisure": {
+    "message": "拉泽"
+  },
+  "popup_context_option_personal": {
+    "message": "便索尔语Name"
+  },
+  "popup_context_option_study": {
+    "message": "埃斯图多斯"
+  },
+  "popup_context_option_vacation": {
+    "message": "费里亚斯"
+  },
+  "popup_context_option_work": {
+    "message": "特拉巴尔霍"
+  },
+  "popup_critical_close_aria": {
+    "message": "解除警报"
+  },
+  "popup_critical_countdown_final": {
+    "message": "没有借口:现在关闭三个拖延标签!"
+  },
+  "popup_critical_default_message": {
+    "message": "在这个指数 连我都不能为你辩护。 这需要风险费!"
+  },
+  "popup_critical_message_1": {
+    "message": "客户端, 有索引{threshold}连我都不能为你辩护 风险费适用!"
+  },
+  "popup_critical_message_2": {
+    "message": "颤抖? 法官打击你的生产力。"
+  },
+  "popup_critical_message_3": {
+    "message": "别再拖延了 否则我会买黄金时段的广告 说出你的故事"
+  },
+  "popup_critical_message_4": {
+    "message": "帮我为您辩护:在我开始以美元计费之前,先关闭这些标签."
+  },
+  "popup_critical_plan_action": {
+    "message": "关闭 3 个反面标签"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "行动计划:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "编号"
+  },
+  "popup_critical_review": {
+    "message": "检讨恶棍"
+  },
+  "popup_critical_sound_now": {
+    "message": "现在触发警报"
+  },
+  "popup_critical_title": {
+    "message": "震中索尔"
+  },
+  "popup_csv_category": {
+    "message": "类别"
+  },
+  "popup_csv_column_date": {
+    "message": "日期"
+  },
+  "popup_csv_column_inactive": {
+    "message": "非活动( min)"
+  },
+  "popup_csv_column_index": {
+    "message": "指数"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "拖延(分钟)"
+  },
+  "popup_csv_column_productive": {
+    "message": "生产(分)"
+  },
+  "popup_csv_column_switches": {
+    "message": "标签开关"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS 代码( min)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "分类"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "背景情况"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "多米尼奥"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "杜拉桑(ms)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "费姆(ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "司法权"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "伊尼西奥(ISO)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "莉娜 节奏跳动"
+  },
+  "popup_csv_domain": {
+    "message": "域名"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "顶级焦点域"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "积极重点(%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "闲暇时间(%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod 对 Proc"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "每小时开关"
+  },
+  "popup_csv_kpi_time": {
+    "message": "时间"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "今天的恶灵"
+  },
+  "popup_csv_kpis_title": {
+    "message": "额外指标"
+  },
+  "popup_csv_minutes": {
+    "message": "分钟"
+  },
+  "popup_csv_summary_title": {
+    "message": "概况"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "顶端域"
+  },
+  "popup_error_no_data": {
+    "message": "无可用数据"
+  },
+  "popup_error_runtime": {
+    "message": "哎哟! 无法到达办公室。"
+  },
+  "popup_error_unknown": {
+    "message": "未知错误"
+  },
+  "popup_export_csv": {
+    "message": "下载 CSV"
+  },
+  "popup_export_description": {
+    "message": "把你的数字变成索尔·古德曼式的争论"
+  },
+  "popup_export_pdf": {
+    "message": "生成 PDF"
+  },
+  "popup_export_report": {
+    "message": "打开报表"
+  },
+  "popup_export_title": {
+    "message": "保护你的注意力"
+  },
+  "popup_fairness_context_label": {
+    "message": "上下文"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "(原始内容存档于2018-03-09). Hoje é feriado, índice pausado autramentament."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Feriado 侦测器 —— sem penalidades. 中国植物物种信息数据库."
+  },
+  "popup_fairness_manual_label": {
+    "message": "无名小卒"
+  },
+  "popup_fairness_note": {
+    "message": "Saul realibra o índice 符合 o celforceo que você escolhe 没有弹出。 Ignorar hoje zera o 得分 e silencia alaras. 中国植物物种信息数据库. 背景:Trabalho mantém 100%,Pessoal sinciliza tudo,Lazer conta 30% do foco e ignora vilos, Estudos reduz as penidades pela metade, Folga e Férias zeram o dia sem 依赖者 de feriados。"
+  },
+  "popup_fairness_note_label": {
+    "message": "索尔展"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Folga cadastrada – ídice pausado. 中国植物物种信息数据库."
+  },
+  "popup_fairness_status_default": {
+    "message": "迪亚・乌蒂尔正常。"
+  },
+  "popup_fairness_status_holiday": {
+    "message": "(原始内容存档于2018-09-29). Feriado nacional licientizando o índice."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo lazer reduz a pressão(英语:Modo lazer reduz a pressão). 摩多·拉泽(英语:Modo lazer reduz a pressão)是美国英语中的\"摩多·拉泽(英语:摩多·拉泽(英语:Modo lazer))\"的一个新闻人物."
+  },
+  "popup_fairness_status_manual": {
+    "message": "(原始内容存档于2018-10-09). Dia ignorado manualmente."
+  },
+  "popup_fairness_status_personal": {
+    "message": "(原始内容存档于2018-09-21). Modo pessoal ativo—— sem pontuação."
+  },
+  "popup_fairness_status_study": {
+    "message": "(原始内容存档于2018-09-29). Modo estudo suaviza o índice."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "(原始内容存档于2018-07-21). Modo férias sincientiza o dia."
+  },
+  "popup_fairness_title": {
+    "message": "Justiça do dia (英语)."
+  },
+  "popup_head_title": {
+    "message": "索尔·古德曼 – 焦点雷达"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "焦点冠军"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "生产领域,你投入更多的持续时间今天。"
+  },
+  "popup_kpi_focus_hint": {
+    "message": "生产/工作日"
+  },
+  "popup_kpi_focus_label": {
+    "message": "积极聚焦"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "生产时间在今天所跟踪的一切中所占百分比。"
+  },
+  "popup_kpi_idle_hint": {
+    "message": "日数百分比"
+  },
+  "popup_kpi_idle_label": {
+    "message": "闲暇时间"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "浏览器保持开放而不互动的当天的百分比 。"
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "每名坏人的生产时间"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod 对 Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "生产时间抵消每个拖延时间。"
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "直指: 生于汝日的生数."
+  },
+  "popup_kpi_section_title": {
+    "message": "额外指标"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "每个跟踪小时的标签数"
+  },
+  "popup_kpi_switch_label": {
+    "message": "每小时开关"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "每个监测小时的平均制表开关。"
+  },
+  "popup_kpi_villain_label": {
+    "message": "今天的恶灵"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "你大部分时间都是被拖延的"
+  },
+  "popup_last_sync": {
+    "message": "更新时间{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "更新..."
+  },
+  "popup_loading": {
+    "message": "正在装入..."
+  },
+  "popup_options_button": {
+    "message": "配置"
+  },
+  "popup_pdf_date": {
+    "message": "日期"
+  },
+  "popup_pdf_inactive": {
+    "message": "非活动"
+  },
+  "popup_pdf_index": {
+    "message": "指数"
+  },
+  "popup_pdf_kpis": {
+    "message": "额外指标"
+  },
+  "popup_pdf_procrastination": {
+    "message": "拖延问题"
+  },
+  "popup_pdf_productive": {
+    "message": "生产"
+  },
+  "popup_pdf_summary": {
+    "message": "每天摘要"
+  },
+  "popup_pdf_switches": {
+    "message": "标签开关"
+  },
+  "popup_pdf_title": {
+    "message": "索尔·古德曼报告"
+  },
+  "popup_pdf_top_domains": {
+    "message": "顶端域"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS 代码"
+  },
+  "popup_privacy_note": {
+    "message": "所有数据都留在您的浏览器中 。 索尔荣誉律师 - 客户特权。"
+  },
+  "popup_refresh_button": {
+    "message": "刷新"
+  },
+  "popup_release_notes_button": {
+    "message": "看有什么新鲜的"
+  },
+  "popup_release_notes_error": {
+    "message": "无法打开释放记录。 重新装入扩展名并再次尝试 。"
+  },
+  "popup_score_message_alert": {
+    "message": "你玩着火。 我按小时计费去灭火"
+  },
+  "popup_score_message_excellent": {
+    "message": "黄金客户端! 坚持下去,我可以收取全部保费。"
+  },
+  "popup_score_message_ok": {
+    "message": "仍然算作办公时间。 别逼我叫你专注"
+  },
+  "popup_score_message_warning": {
+    "message": "我看见这里避避。 该回去玩了"
+  },
+  "popup_score_placeholder": {
+    "message": "正在装入值班..."
+  },
+  "popup_status_no_data": {
+    "message": "无数据"
+  },
+  "popup_status_no_domains": {
+    "message": "今日无数据."
+  },
+  "popup_summary_inactive_label": {
+    "message": "闲置"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "有时浏览器会保持开放而不互动。"
+  },
+  "popup_summary_procrastination_label": {
+    "message": "推进器"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "时间花在延迟域上."
+  },
+  "popup_summary_productive_label": {
+    "message": "生产"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "花在有成果的领域上的时间。"
+  },
+  "popup_tooltip_aria": {
+    "message": "解释"
+  },
+  "popup_top_domains_title": {
+    "message": "前5个域"
+  },
+  "postInvalid": {
+    "message": "无效的邮件或缺失的元数据 。"
+  },
+  "postLoadError": {
+    "message": "装入此文章时出错 。"
+  },
+  "postLoadingBody": {
+    "message": "正在装入..."
+  },
+  "postLoadingTitle": {
+    "message": "正在装入文章..."
+  },
+  "postNotFound": {
+    "message": "未找到邮箱 。"
+  },
+  "previousPost": {
+    "message": "上一个"
+  },
+  "privacyError": {
+    "message": "我们现在不能加载政策。 再试一下"
+  },
+  "privacyEyebrow": {
+    "message": "完全透明"
+  },
+  "privacyHeading": {
+    "message": "隐私政策"
+  },
+  "privacyLoading": {
+    "message": "从仓库直接装入策略..."
+  },
+  "privacySubheading": {
+    "message": "以下是存放处公布的最新政策版本."
+  },
+  "privacyTitle": {
+    "message": "隐私政策"
+  },
+  "process1Body": {
+    "message": "警徽静静地坐着观察开放的事物,"
+  },
+  "process1Title": {
+    "message": "跟踪您的活动标签"
+  },
+  "process2Body": {
+    "message": "你定义了生产领域和反面领域 如果你走开,索尔在螺旋开始前摇动屏幕并大喊大叫."
+  },
+  "process2Title": {
+    "message": "旗帜分散注意力"
+  },
+  "process3Body": {
+    "message": "每天都有一个干净的报告:图表、要点和明天的行动计划。"
+  },
+  "process3Title": {
+    "message": "提供可用证据"
+  },
+  "processEyebrow": {
+    "message": "如何运作"
+  },
+  "processLead": {
+    "message": "没有法律术语:安装它,让它注意你的标签,感受警示,并以随时可以分享的证据结束你的一天。"
+  },
+  "processTitle": {
+    "message": "索尔三步锁延."
+  },
+  "quakeBody": {
+    "message": "覆盖的块反面标签, 显示一个粗体的 CTA, 可以爆出可选的警笛。 不可能忽视——完全按计划。"
+  },
+  "quakeButton": {
+    "message": "触发摇动"
+  },
+  "quakeCallout": {
+    "message": "地震来了!"
+  },
+  "quakeDemoBody": {
+    "message": "点击模拟地震模式:屏幕摇动、警报和戏剧性信息。 和扩展相同,但只在这里几秒钟。"
+  },
+  "quakeDemoButton": {
+    "message": "模拟地震模式"
+  },
+  "quakeDemoEyebrow": {
+    "message": "地震模式( 演示)"
+  },
+  "quakeDemoTitle": {
+    "message": "测试索尔最戏剧性的警戒。"
+  },
+  "quakeDisplayCopy": {
+    "message": "跳回焦点 否则索尔会提高他的费用"
+  },
+  "quakeEyebrow": {
+    "message": "地震模式"
+  },
+  "quakeLead": {
+    "message": "同样的戏剧性的警示 从扩展出现在这里 所以游客觉得警告有多严重 超过门槛。"
+  },
+  "quakeMicro": {
+    "message": "你们确已遭遇刑罚, 准备撞击。”"
+  },
+  "quakeOverlayBody": {
+    "message": "索尔在摇摆恶棍的标签。 在他多收钱前先集中精神"
+  },
+  "quakeOverlayClose": {
+    "message": "回到焦点"
+  },
+  "quakeOverlayTitle": {
+    "message": "地震模式启动!"
+  },
+  "quakeTip": {
+    "message": "放松:预览仅持续几秒钟."
+  },
+  "quakeTitle": {
+    "message": "当索尔发现恶棍时,页面与他摇摆."
+  },
+  "ratingBadgeAlt": {
+    "message": "Chrome网络商店的平均评级"
+  },
+  "reactionBlockAlt": {
+    "message": "索尔封锁了通道"
+  },
+  "reactionBlockHint": {
+    "message": "索尔把门关上 重定向到屏蔽页面"
+  },
+  "reactionBlockLabel": {
+    "message": "块模式"
+  },
+  "reactionBlockText": {
+    "message": "“不要尝试:坏人立刻被封锁。"
+  },
+  "reactionDisbeliefHint": {
+    "message": "震度阈值过时触发."
+  },
+  "reactionDisbeliefLabel": {
+    "message": "模糊模式"
+  },
+  "reactionDisbeliefText": {
+    "message": "“你称这为焦点?”"
+  },
+  "reactionHypeHint": {
+    "message": "跳回生产性标签时出现."
+  },
+  "reactionHypeLabel": {
+    "message": "核定模式"
+  },
+  "reactionHypeText": {
+    "message": "“现在我可能会降低费用。”"
+  },
+  "reactionsBody": {
+    "message": "当指数激增时,索尔是无稽之谈. 当你回到焦点,他庆祝。 快速视觉保持司法吧台."
+  },
+  "reactionsEyebrow": {
+    "message": "索尔的反应"
+  },
+  "reactionsTitle": {
+    "message": "索尔即时判决."
+  },
+  "readArticle": {
+    "message": "阅读文章"
+  },
+  "readingTimeLabel": {
+    "message": "阅读时间"
+  },
+  "readTimeUnit": {
+    "message": "分钟读取"
+  },
+  "reason1Body": {
+    "message": "弹出指数显示您的当前状态, 以便您知道下一步要修正什么 。"
+  },
+  "reason1Title": {
+    "message": "指导重点"
+  },
+  "reason2Body": {
+    "message": "地震占据了屏幕 在恶棍破坏你的势头之前"
+  },
+  "reason2Title": {
+    "message": "不可能到不光彩的警报"
+  },
+  "reason3Body": {
+    "message": "图表和摘要完美地滴入了每日的,站立的,或客户端的更新."
+  },
+  "reason3Title": {
+    "message": "可分享的报告"
+  },
+  "reason4Body": {
+    "message": "每一个度量衡都生活在Chrome;没有什么会离开你的机器。"
+  },
+  "reason4Title": {
+    "message": "隐私共计"
+  },
+  "reasonsEyebrow": {
+    "message": "主要效益"
+  },
+  "reasonsLead": {
+    "message": "四张快卡以0 fluff解释值."
+  },
+  "reasonsTitle": {
+    "message": "为什么用索尔·古德曼?"
+  },
+  "relatedTitle": {
+    "message": "有关员额"
+  },
+  "report_ai_error_generic": {
+    "message": "Saul无法说服数字法官 以后再试"
+  },
+  "report_ai_generate": {
+    "message": "生成叙事"
+  },
+  "report_ai_heading": {
+    "message": "索尔的论点"
+  },
+  "report_ai_hint": {
+    "message": "点击\"Generate叙事\",索尔就可以用他的讽刺来分析你的一天."
+  },
+  "report_ai_loading": {
+    "message": "还在准备最后辩论..."
+  },
+  "report_ai_missing_key": {
+    "message": "在生成叙事前在选项中配置您的 OpenAI 密钥 。"
+  },
+  "report_ai_no_metrics": {
+    "message": "今天没有衡量标准可以讲故事"
+  },
+  "report_ai_retry": {
+    "message": "再试一次"
+  },
+  "report_ai_subtitle": {
+    "message": "以你的数据为基础的戏剧性辩护"
+  },
+  "report_alert_pdf_missing": {
+    "message": "无法使用 PDF 库 。"
+  },
+  "report_banner_countdown_final": {
+    "message": "行动时间:关闭恶棍的标签,回来控制."
+  },
+  "report_banner_message_1": {
+    "message": "连我都不能用索引说服陪审团{threshold}别再分心了!"
+  },
+  "report_banner_message_2": {
+    "message": "继续,我会租个告示牌警告你老板"
+  },
+  "report_banner_message_3": {
+    "message": "这次地震是你们恶棍的回声 马上关上"
+  },
+  "report_banner_message_4": {
+    "message": "标签帐单越来越多:现在集中,否则我们收取额外的费用。"
+  },
+  "report_banner_title": {
+    "message": "索尔处于高度警戒状态!"
+  },
+  "report_category_activity": {
+    "message": "活动"
+  },
+  "report_category_neutral": {
+    "message": "中立"
+  },
+  "report_composition_heading": {
+    "message": "日组成"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "分裂为生产,拖延,闲置,中立."
+  },
+  "report_context_breakdown_context": {
+    "message": "背景情况"
+  },
+  "report_context_breakdown_index": {
+    "message": "Í"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "e e e posso te 维护者。"
+  },
+  "report_context_breakdown_time": {
+    "message": "临时"
+  },
+  "report_context_breakdown_title": {
+    "message": "临时上下文"
+  },
+  "report_domain_heading": {
+    "message": "每个域的分钟"
+  },
+  "report_domain_subtitle": {
+    "message": "主要冠军和恶棍 今天聚集。"
+  },
+  "report_error_no_data": {
+    "message": "无衡量标准。"
+  },
+  "report_error_runtime": {
+    "message": "无法到达记录室。"
+  },
+  "report_error_unknown": {
+    "message": "未知错误"
+  },
+  "report_export_pdf": {
+    "message": "导出 PDF"
+  },
+  "report_fairness_holiday_active": {
+    "message": "(原始内容存档于2018-03-09). Hoje é feriado, índice pausado autramentament."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Feriado 侦测器 —— sem penalidades. 中国植物物种信息数据库."
+  },
+  "report_fairness_status_day_off": {
+    "message": "folga cadastrada sinciliizou o índice. 中国植物物种信息数据库."
+  },
+  "report_fairness_status_default": {
+    "message": "迪亚・乌蒂尔正常。"
+  },
+  "report_fairness_status_holiday": {
+    "message": "Feriado nacional sinciliizou o índice. 中国植物物种信息数据库."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Modo lazer reduziu as cobranças. 中国植物物种信息数据库."
+  },
+  "report_fairness_status_manual": {
+    "message": "(原始内容存档于2018-10-09). Dia ignorado manualmente."
+  },
+  "report_fairness_status_personal": {
+    "message": "Modo pessoal—— sem pontuação. 中国植物物种信息数据库."
+  },
+  "report_fairness_status_study": {
+    "message": "Modo estudo suavizou作为刑罚。"
+  },
+  "report_fairness_status_vacation": {
+    "message": "(原始内容存档于2018-09-29). Modo férias zerou o dia."
+  },
+  "report_fairness_title": {
+    "message": "Justiça do dia (英语)."
+  },
+  "report_fairness_tooltip": {
+    "message": "(原始内容存档于2017-09-21). Overover handor, contexecto ou feriados potem sincientizar o índice. Registramos aqui sempre que is so a contecer. 英国的美国海军海军陆战队"
+  },
+  "report_filter_apply": {
+    "message": "过滤器"
+  },
+  "report_filter_from": {
+    "message": "从"
+  },
+  "report_filter_reset": {
+    "message": "重设"
+  },
+  "report_filter_to": {
+    "message": "改为:"
+  },
+  "report_head_title": {
+    "message": "索尔·古德曼-每日报道"
+  },
+  "report_heading": {
+    "message": "详细报告"
+  },
+  "report_hero_message_alert": {
+    "message": "判决明确:拖延审判. 我们需要一个紧急计划。"
+  },
+  "report_hero_message_excellent": {
+    "message": "完美时刻表。 Saul在电视广告上会用上你的"
+  },
+  "report_hero_message_ok": {
+    "message": "可以接受的摇摆。 我们还可以告诉陪审团你工作过"
+  },
+  "report_hero_message_warning": {
+    "message": "今日可见复发. 是时候叫增援了"
+  },
+  "report_hero_placeholder": {
+    "message": "Saul还在搜集关于你今天的证据"
+  },
+  "report_hourly_empty": {
+    "message": "还没有足够时间来建立这种流动。"
+  },
+  "report_hourly_heading": {
+    "message": "时流"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "生产,拖延, 和闲置分钟每小时。"
+  },
+  "report_hourly_subtitle": {
+    "message": "生产力和诱惑是终日的"
+  },
+  "report_kpi_audio_hint": {
+    "message": "恶人网站有音频的分钟"
+  },
+  "report_kpi_audio_label": {
+    "message": "恶棍媒体"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "时间在延迟域播放音频 。"
+  },
+  "report_kpi_grouped_hint": {
+    "message": "分组标签中的分钟"
+  },
+  "report_kpi_grouped_label": {
+    "message": "分组时间"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "在分组标签中花费的分钟 。"
+  },
+  "report_kpi_heading": {
+    "message": "补充指标"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Extra KPI:反派媒体,实时闲暇时间,SPA路由,分组标签."
+  },
+  "report_kpi_restored_hint": {
+    "message": "最近的标签或窗口"
+  },
+  "report_kpi_restored_label": {
+    "message": "今天结束的项目"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "今天关闭的标签或窗口数量 。"
+  },
+  "report_kpi_spa_hint": {
+    "message": "已记录的路由更改"
+  },
+  "report_kpi_spa_label": {
+    "message": "SPA路线"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "单页应用程序的内部路由变化."
+  },
+  "report_kpi_subtitle": {
+    "message": "真正的闲置,SPA路线,和媒体时间。"
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "背景一分钟"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "浏览器未聚焦"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "以另一个窗口为焦点的分钟。"
+  },
+  "report_logo_alt_critical": {
+    "message": "索尔·古德曼被你的专注所震惊"
+  },
+  "report_logo_alt_default": {
+    "message": "索尔·古德曼标志"
+  },
+  "report_metric_index_label": {
+    "message": "指数"
+  },
+  "report_metric_switches_label": {
+    "message": "标签开关"
+  },
+  "report_pdf_ai_title": {
+    "message": "索尔的辩证"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "分类"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "政党"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "临时"
+  },
+  "report_pdf_composition_title": {
+    "message": "作曲家 dia"
+  },
+  "report_pdf_context_header_context": {
+    "message": "背景情况"
+  },
+  "report_pdf_context_header_index": {
+    "message": "•ndice做背景介绍"
+  },
+  "report_pdf_context_header_time": {
+    "message": "临时加气"
+  },
+  "report_pdf_context_title": {
+    "message": "Quebra por 语境"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Ativo 护卫铁路"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Feriado 中立者组织"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "莫蒂沃语Name"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "dia ignorado 手册e"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "左倾"
+  },
+  "report_pdf_narrative_title": {
+    "message": "纳拉蒂瓦车厢"
+  },
+  "report_pdf_overview_heading": {
+    "message": "全景显示 dia"
+  },
+  "report_pdf_status_label": {
+    "message": "状态"
+  },
+  "report_pdf_title": {
+    "message": "详细报告——索尔·古德曼"
+  },
+  "report_pdf_top_domains": {
+    "message": "顶端域"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "顶级拖延"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "按时间排列延迟域的排名."
+  },
+  "report_ranking_productive_heading": {
+    "message": "产量最高"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "生产领域按时间排序。"
+  },
+  "report_share_argument_label": {
+    "message": "分享索尔的论点"
+  },
+  "report_share_argument_title": {
+    "message": "索尔的争论"
+  },
+  "report_share_copy_error": {
+    "message": "现在无法复制帖子。"
+  },
+  "report_share_copy_instagram": {
+    "message": "文本复制完毕。 发布前打开Instagram并粘贴."
+  },
+  "report_share_copy_linkedin": {
+    "message": "文本复制完毕。 在发布前粘贴到 LinkedIn 中 。"
+  },
+  "report_share_copy_success": {
+    "message": "邮政复制。 贴在LinkedIn,Twitter上,任何地方。"
+  },
+  "report_share_cta": {
+    "message": "索尔·古德曼带给你的"
+  },
+  "report_share_error": {
+    "message": "现在不能分享"
+  },
+  "report_share_error_no_metrics": {
+    "message": "无数据可共享 。"
+  },
+  "report_share_error_no_narrative": {
+    "message": "在分享前产生索尔的论点."
+  },
+  "report_share_hashtags": {
+    "message": "索尔·古德曼 反迫害"
+  },
+  "report_share_headline": {
+    "message": "反对! 案例概要"
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web无法预填文本:粘贴我们复制到发布框中的内容."
+  },
+  "report_share_hint_linkedin": {
+    "message": "链接 在不会预填文本中:将复制的内容粘贴到帖子中."
+  },
+  "report_share_index_label": {
+    "message": "指数"
+  },
+  "report_share_menu_argument": {
+    "message": "索尔的论点"
+  },
+  "report_share_menu_copy": {
+    "message": "复制文本"
+  },
+  "report_share_menu_highlights": {
+    "message": "要点"
+  },
+  "report_share_menu_label": {
+    "message": "份额"
+  },
+  "report_share_menu_native": {
+    "message": "土著份额"
+  },
+  "report_share_menu_native_action": {
+    "message": "系统共享表"
+  },
+  "report_share_opening": {
+    "message": "我的当事人很努力工作 我有证据"
+  },
+  "report_share_post_argument_label": {
+    "message": "复制参数"
+  },
+  "report_share_post_label": {
+    "message": "复制邮件( 社交)"
+  },
+  "report_share_report_label": {
+    "message": "共享要闻"
+  },
+  "report_share_social_tagline": {
+    "message": "反对! 我的客户把工作。"
+  },
+  "report_share_success": {
+    "message": "股票表打开了! 如果不出现,我们把它复制到你的剪贴板上"
+  },
+  "report_share_title": {
+    "message": "索尔·古德曼——大事记."
+  },
+  "report_story_empty": {
+    "message": "今天的故事还不够"
+  },
+  "report_story_focus_body": {
+    "message": "{domain}举行{duration}重点。"
+  },
+  "report_story_focus_title": {
+    "message": "焦点冠军"
+  },
+  "report_story_heading": {
+    "message": "冠军和恶棍"
+  },
+  "report_story_idle_body": {
+    "message": "之间{range}浏览器闲置{duration}。 。 。"
+  },
+  "report_story_idle_title": {
+    "message": "最长的沉默"
+  },
+  "report_story_loading": {
+    "message": "数据仍在装入..."
+  },
+  "report_story_short_day": {
+    "message": "那天太短了,不能讲故事"
+  },
+  "report_story_villain_body": {
+    "message": "{domain}排水量{duration}。 。 。"
+  },
+  "report_story_villain_title": {
+    "message": "今天的恶灵"
+  },
+  "report_subtitle_prefix": {
+    "message": "每天摘要"
+  },
+  "report_tab_switch_empty": {
+    "message": "尚不足以绘制此图表 。"
+  },
+  "report_tab_switch_heading": {
+    "message": "时速标签开关"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "互换分布跨Prod/Proc/Neutral."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "你是如何在生产、拖延和中立之间跳跃的。"
+  },
+  "report_tagline": {
+    "message": "官方重点日志"
+  },
+  "report_time_column": {
+    "message": "时间"
+  },
+  "report_timeline_heading": {
+    "message": "逐分钟叙述"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "键片按小时和类别分类。"
+  },
+  "report_timeline_loading": {
+    "message": "正在等待条目..."
+  },
+  "report_timeline_subtitle": {
+    "message": "讲述你轮班故事的要点"
+  },
+  "report_timeline_summary": {
+    "message": "{duration}• 支助{count}段数"
+  },
+  "rssCta": {
+    "message": "通过 RSS 订阅"
+  },
+  "searchLabel": {
+    "message": "搜索"
+  },
+  "searchPlaceholder": {
+    "message": "搜索标题、摘录或标签..."
+  },
+  "searchReset": {
+    "message": "清除过滤器"
+  },
+  "seoDescription": {
+    "message": "索尔·古德曼控制你的帐单 对抗拖延 并在你的浏览器里发布戏剧性的报告 一切都留在本地,没有外部服务器。"
+  },
+  "seoTitle": {
+    "message": "索尔·古德曼 - 反拖延延期"
+  },
+  "shareCopied": {
+    "message": "链接复制!"
+  },
+  "shareCopy": {
+    "message": "复制链接"
+  },
+  "shareCopyPrompt": {
+    "message": "复制此链接为共享 :"
+  },
+  "shareIndexCopied": {
+    "message": "链接复制!"
+  },
+  "shareIndexCopy": {
+    "message": "复制链接"
+  },
+  "shareIndexLinkedin": {
+    "message": "链接"
+  },
+  "shareIndexTitle": {
+    "message": "分享博客"
+  },
+  "shareIndexTwitter": {
+    "message": "页:1"
+  },
+  "shareLinkedin": {
+    "message": "链接"
+  },
+  "shareTitle": {
+    "message": "份额"
+  },
+  "shareTwitter": {
+    "message": "页:1"
+  },
+  "socialProofCaption": {
+    "message": "索尔已经帮助上千人保持他们的注意力"
+  },
+  "socialProofMetricLabel": {
+    "message": "快乐的用户"
+  },
+  "splitPopupBody": {
+    "message": "面板显示索引、顶域、额外指标,并允许您导出 CSV/PDF 。 当焦点下降,地震模式暴风雨进来 以拯救正义。"
+  },
+  "splitPopupCaption": {
+    "message": "弹出指数,顶域,和导出."
+  },
+  "splitPopupCaption2": {
+    "message": "KPI,顶部域,以及快速导出."
+  },
+  "splitPopupCaption3": {
+    "message": "选项板中的生产性/负面清单。"
+  },
+  "splitPopupCaption4": {
+    "message": "指数的可配置加权数和时间表。"
+  },
+  "splitPopupTitle": {
+    "message": "待命弹出"
+  },
+  "splitReportBody": {
+    "message": "时速图表,恶棍排名,AI叙事,以及带有行动计划的批评旗帜. 全都是恶梦"
+  },
+  "splitReportCaption": {
+    "message": "附有图表和排名的报告摘要。"
+  },
+  "splitReportCaption2": {
+    "message": "AI叙事和逐分钟时间."
+  },
+  "splitReportCaption3": {
+    "message": "恶棍排名,冠军,和发行。"
+  },
+  "splitReportTitle": {
+    "message": "戏剧性报告"
+  },
+  "splitStats1": {
+    "message": "收回的分钟/天"
+  },
+  "splitStats2": {
+    "message": "被宣告无罪的客户"
+  },
+  "statsCategories": {
+    "message": "审判类别"
+  },
+  "statsFresh": {
+    "message": "上次更新"
+  },
+  "statsPosts": {
+    "message": "已公布员额"
+  },
+  "statsTitle": {
+    "message": "博客雷达"
+  },
+  "stickyCtaButton": {
+    "message": "在 Chrome 上安装"
+  },
+  "stickyCtaText": {
+    "message": "索尔准备看好你的帐单了"
+  },
+  "stickyToggleLabel": {
+    "message": "切换 CTA"
+  },
+  "tagsTitle": {
+    "message": "题材着火"
+  },
+  "testimonial1Cite": {
+    "message": "—匿名客户端."
+  },
+  "testimonial1Quote": {
+    "message": "“Saul提醒我,每小时换40个标签是一种犯罪。”"
+  },
+  "testimonial2Cite": {
+    "message": "- 遗憾的工程师"
+  },
+  "testimonial2Quote": {
+    "message": "“报告在与我老板的会谈中成为辩护文章。”"
+  },
+  "testimonial3Cite": {
+    "message": "- 产品经理"
+  },
+  "testimonial3Quote": {
+    "message": "“地震模式拯救了我的短跑。 乐于支付费用。”"
+  },
+  "testimonialNext": {
+    "message": "下次作证"
+  },
+  "testimonialPrev": {
+    "message": "上一个证明"
+  },
+  "testimonialsEyebrow": {
+    "message": "证词"
+  },
+  "testimonialsTitle": {
+    "message": "客户无罪释放。"
+  },
+  "timeline1Body": {
+    "message": "内容脚本在第一个标签上检测活动. 索尔的木头谁有生产力或一个坏蛋。"
+  },
+  "timeline1Title": {
+    "message": "初始雷达"
+  },
+  "timeline2Body": {
+    "message": "如果指数攀升过高,地震模式风暴Chrome与地震,警报,CTA一起转动游戏."
+  },
+  "timeline2Title": {
+    "message": "违约通知"
+  },
+  "timeline3Body": {
+    "message": "详细报告船图,时间表,以及AI的叙述,以证据结束这一天."
+  },
+  "timeline3Title": {
+    "message": "每日判决"
+  },
+  "timelineEyebrow": {
+    "message": "时间线"
+  },
+  "timelineTitle": {
+    "message": "从追踪到判决"
+  },
+  "transparencyBody": {
+    "message": "阅读我们如何处理你的数据 和每张发布单 零绒毛。"
+  },
+  "transparencyChangelogCta": {
+    "message": "打开完整的更改日志"
+  },
+  "transparencyEyebrow": {
+    "message": "透明度"
+  },
+  "transparencyPrivacyCta": {
+    "message": "读取隐私政策"
+  },
+  "transparencyTitle": {
+    "message": "打开隐私更改日志( Changelog) 。"
+  },
+  "trustCard1Body": {
+    "message": "量子生活在<code>chrome.storage.local</code>中. 没有任何东西触及外部服务器。"
+  },
+  "trustCard1Title": {
+    "message": "当地100%"
+  },
+  "trustCard2Body": {
+    "message": "每条线路都是公开的,因此社区可以审计变更."
+  },
+  "trustCard2Title": {
+    "message": "开源"
+  },
+  "trustCard3Body": {
+    "message": "你选择门槛,随时可以压制索尔。"
+  },
+  "trustCard3Title": {
+    "message": "透明提醒"
+  },
+  "trustEyebrow": {
+    "message": "隐私信任( T)"
+  },
+  "trustLead": {
+    "message": "(笑声) (掌声) (掌声) (掌声)"
+  },
+  "trustTitle": {
+    "message": "一切都在你和你的浏览器之间"
+  },
+  "usersBadgeAlt": {
+    "message": "Chrome网络存储器上的用户"
+  }
+}

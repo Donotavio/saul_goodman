@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "Saul Goodman"
+  },
+  "backToHome": {
+    "message": "Back to site"
+  },
+  "benefit1Body": {
+    "message": "Grafikler ve Atkins patronunuzu, takımınızı veya kendi vicdanını göstermek için."
+  },
+  "benefit1Title": {
+    "message": "Undeniable kanıtlar"
+  },
+  "benefit2Body": {
+    "message": "Deprem modu ve sarcastic mesajları görmezden gelemezsiniz."
+  },
+  "benefit2Title": {
+    "message": "Cinematic uyarılar"
+  },
+  "benefit3Body": {
+    "message": "Tüm yargı yerel olarak gerçekleşir; hiçbir veri tarayıcınızı terk etmez."
+  },
+  "benefit3Title": {
+    "message": "Garantili mahremiyet"
+  },
+  "benefitsEyebrow": {
+    "message": "Faydaları"
+  },
+  "benefitsTitle": {
+    "message": "Saul davayı ele geçiriyor, onu kapatıyorsunuz."
+  },
+  "block_page_back": {
+    "message": "Go back back back"
+  },
+  "block_page_body": {
+    "message": "Bu siteyi procrastinasyon olarak işaret ettin. sekmeyi kapat veya listeyi zihninizi değiştirirseniz ayarlar."
+  },
+  "block_page_heading": {
+    "message": "Saul bu domaini engelledi"
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman hayal kırıklığına uğradı"
+  },
+  "block_page_local_note": {
+    "message": "Yerel blok - hiçbir şey tarayıcınızı terk etmez."
+  },
+  "block_page_options": {
+    "message": "Açık ayarlar"
+  },
+  "block_page_title": {
+    "message": "Saul bu domaini engelledi"
+  },
+  "blogCategoryAll": {
+    "message": "Bütün Bütün Hepsi"
+  },
+  "blogEmptyState": {
+    "message": "Henüz yayınlanan makaleler yok."
+  },
+  "blogError": {
+    "message": "Blog yüklemek için başarısız oldu"
+  },
+  "blogHeroEyebrow": {
+    "message": "Saul Goodman Blog"
+  },
+  "blogHeroLead": {
+    "message": "Sarcastic odaklanma, dikkat ve büyük performansa sahiptir. Saul'un tonu'nda yazılan haftalık makaleler – antrenör vibe."
+  },
+  "blogHeroTitle": {
+    "message": "Yasal, dijital procrastinasyona sahiptir"
+  },
+  "blogPreviewCta": {
+    "message": "Tüm makalelere bakın"
+  },
+  "blogPreviewEmpty": {
+    "message": "Şu anda mevcut makaleler yok."
+  },
+  "blogPreviewError": {
+    "message": "makaleler yüklemek için kullanılamaz."
+  },
+  "blogPreviewEyebrow": {
+    "message": "Saul Blog"
+  },
+  "blogPreviewImageAlt": {
+    "message": "Saul Goodman illüstrasyon"
+  },
+  "blogPreviewLead": {
+    "message": "3 yeni makaleyi okuyun ve Saul'un yasal sarcasm ile nasıl odaklandığını görün."
+  },
+  "blogPreviewLoading": {
+    "message": "Yükleniyor..."
+  },
+  "blogPreviewRead": {
+    "message": "Makale oku"
+  },
+  "blogPreviewTitle": {
+    "message": "Dijital mahkeme odasından son vakalar."
+  },
+  "breadcrumbArticle": {
+    "message": "Madde Madde"
+  },
+  "breadcrumbBlog": {
+    "message": "Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog"
+  },
+  "categoriesTitle": {
+    "message": "Oturumda Kategoriler"
+  },
+  "categoryActiveLabel": {
+    "message": "Aktif kategori"
+  },
+  "categoryClear": {
+    "message": "Clear kategori"
+  },
+  "categoryDevLead": {
+    "message": "VS Code, PRs ve uzaktan toplantılar için pratik verimlilik."
+  },
+  "categoryDevTitle": {
+    "message": "Suçlu bir savunma ile Dev performans"
+  },
+  "categoryEyebrow": {
+    "message": "Kategori Kategori"
+  },
+  "categoryFocoLead": {
+    "message": "Günlük çalışmalar ve drama kafanızı beslemeye teslim olmadan kodda tutmak."
+  },
+  "categoryFocoTitle": {
+    "message": "Focus & Dikkat"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "Gerçek gecikme vakaları, dijital laziness ve sekme avcısı Saul yargılamayı seviyor."
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "Procrastination under investigation"
+  },
+  "categoryRemotoLead": {
+    "message": "Ev ofisi hakkında hikayeler, Slack varlığı ve bir Zoom ortadan kaybolmasından kaçın."
+  },
+  "categoryRemotoTitle": {
+    "message": "Uzaktan çalışma hiçbir alibi ile"
+  },
+  "changelogError": {
+    "message": "Şu anda değişimlogunu yükleyemezdik. Daha sonra tekrar deneyin."
+  },
+  "changelogEyebrow": {
+    "message": "Her şey belgelenmiş"
+  },
+  "changelogHeading": {
+    "message": "Resmi değişikliklog"
+  },
+  "changelogLoading": {
+    "message": "Değişimlogu doğrudan repository'den yükleyin..."
+  },
+  "changelogSubheading": {
+    "message": "Doğrudan repository'den salıverilen her değişikliği izleyin."
+  },
+  "changelogTitle": {
+    "message": "Changelog"
+  },
+  "codeconBuildChip": {
+    "message": "4h of kodlama"
+  },
+  "codeconBulletChallenge": {
+    "message": "Zorluk: 4 saat içinde uzaktan çalışmayı kanıtlayın, AI izin verilmez."
+  },
+  "codeconBulletNarrative": {
+    "message": "“Attorney” anlatı, yönetici / yaray için bir savunmaya dönüşür."
+  },
+  "codeconBulletRepoLink": {
+    "message": "Orijinal repopo"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "Hack Lab açık kaynak:"
+  },
+  "codeconBulletTracking": {
+    "message": "Dahili Saatler sekme anahtarları, boş zaman ve bir indeks inşa etmek için villa siteleri."
+  },
+  "codeconCtaRepo": {
+    "message": "See Hack Lab kodu"
+  },
+  "codeconCtaSite": {
+    "message": "Meet CodeCon"
+  },
+  "codeconCtaVideo": {
+    "message": "Tüm videoyu izleyin"
+  },
+  "codeconEyebrow": {
+    "message": "Hack Lab CodeCon"
+  },
+  "codeconLead": {
+    "message": "Fikir bir KodCon hack laboratuvarında doğdu: Otávio Ribeiro (  TAG0  LinkedIn  TAG1  ,   TAG2  GitHub  TAG3  ) Saul'u procrastinasyona karşı kişisel bir avukat olarak hayal etti - tremor, siren ve mahkemehane-grad raporları ile."
+  },
+  "codeconPlanChip": {
+    "message": "30 dakika planlama"
+  },
+  "codeconStoryLead": {
+    "message": "30 dakika içinde, Otávio, bir sonraki 4 saat boyunca, Saul'un tohumunu gönderdi: sekmeleri izleyerek uzaktan çalışmayı kanıtlayan bir uzatma, bir indeksi hesaplamak ve “köpücü” için Dev'ın savunmasını hazırladı."
+  },
+  "codeconTag": {
+    "message": "Toplumda doğdu"
+  },
+  "codeconTitle": {
+    "message": "Saul Goodman nerede bir Chrome uzatma oldu"
+  },
+  "codeconVideoCaption": {
+    "message": "KodCon Hack Lab'dan gelen video, Saul'un dikkat çeken bir uzatma olarak hayata geldiği yerdir."
+  },
+  "demoCta": {
+    "message": "View full demo"
+  },
+  "demoEyebrow": {
+    "message": "Hızlı demo"
+  },
+  "demoLead": {
+    "message": "Bir bakış yeterlidir: anlık tepkiler için popup, son günlük kararlar için rapor."
+  },
+  "demoPopupBody": {
+    "message": "Günlük indeks, üst alanlar ve el ele kısayolları ihracat."
+  },
+  "demoPopupTitle": {
+    "message": "Şimdi kararlar için Popup"
+  },
+  "demoReportBody": {
+    "message": "Grafikler, ışık öyküsü ve bir sonraki hareket önerdi."
+  },
+  "demoReportTitle": {
+    "message": "Planlama Raporu"
+  },
+  "demoTitle": {
+    "message": "Nerede karar verdiğinizi ve Saul nereye müdahale ettiğini görün."
+  },
+  "demoViewFull": {
+    "message": "Tüm boyutları görüntüle"
+  },
+  "devBody": {
+    "message": "Yerel daemon ve VS Kod uzatmasını yerelhost terk etmeden editörü zaman saymak için."
+  },
+  "devCtaDocs": {
+    "message": "View docs"
+  },
+  "devCtaReadme": {
+    "message": "Açık OKME"
+  },
+  "devCtaVsCode": {
+    "message": "VS Kod uzatma"
+  },
+  "devEyebrow": {
+    "message": "Geliştiriciler için"
+  },
+  "devLead": {
+    "message": "Tüm teknik ayrıntılar ana akıştan taşındı. Aşağıdaki kılavuzlarla başlayın."
+  },
+  "devTitle": {
+    "message": "katkıda bulunmak veya entegre etmek ister misiniz?"
+  },
+  "extDescription": {
+    "message": "Sarcastic bu önlemler alanlarını takip eder ve kontrolde procrastinasyon indeksini tutar."
+  },
+  "extensionsChromeCta": {
+    "message": "Chrome uzantısı"
+  },
+  "extensionsCopy": {
+    "message": "Saul'u Chrome ve VS Kodunuzu dürüst tutmak için getir."
+  },
+  "extensionsTitle": {
+    "message": "Saul'un uzantılarını yükleyin"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS Kodu uzatma"
+  },
+  "extName": {
+    "message": "Saul Goodman"
+  },
+  "faq1Answer": {
+    "message": "Tamamen. Saul sadece dikkat ve mizah iddia ediyor."
+  },
+  "faq1Question": {
+    "message": "Ücretsiz mi?"
+  },
+  "faq2Answer": {
+    "message": "Asla. Her şey   TAG0  krom.storage.local  TAG1  ."
+  },
+  "faq2Question": {
+    "message": "Verilerim tarayıcıyı terk ediyor mu?"
+  },
+  "faq3Answer": {
+    "message": "Sadece raporda anlatılar istiyorsanız. Gerisi çevrimdışı çalışır."
+  },
+  "faq3Question": {
+    "message": "AI'ya ihtiyacım var mı?"
+  },
+  "faq4Answer": {
+    "message": "Hayır. Her şey yerel olarak giriş olmadan çalışır."
+  },
+  "faq4Question": {
+    "message": "Bir hesaba ihtiyacım var mı?"
+  },
+  "faq5Answer": {
+    "message": "Dizinin eşiğine geçtiğinde ve bir siren birkaç saniye boyunca oynar."
+  },
+  "faq5Question": {
+    "message": "Deprem modu nasıl çalışır?"
+  },
+  "faq6Answer": {
+    "message": "Evet. Ekranda, üretken/villain listelerini, ağırlıkları ve programları ayarlarsınız."
+  },
+  "faq6Question": {
+    "message": "Alanları ve programlarını özelleştirebilir miyim?"
+  },
+  "faq7Answer": {
+    "message": "Evet. CSV ve PDF düğmeleri verileri anında indirmenize izin verir."
+  },
+  "faq7Question": {
+    "message": "Verilerimi ihraç edebilir miyim?"
+  },
+  "faq8Answer": {
+    "message": "Chrome için inşa edilmiş ancak Chromium tabanlı tarayıcılarla Cesur veya Edge gibi uyumlu."
+  },
+  "faq8Question": {
+    "message": "Diğer tarayıcılarda mı çalışıyor?"
+  },
+  "faq9Answer": {
+    "message": "AI hikaye anlatıcısı; OpenAI anahtarını atsanız her şey çevrimdışı kalır."
+  },
+  "faq9Question": {
+    "message": "AI raporu güvenli midir?"
+  },
+  "faqEyebrow": {
+    "message": "Hızlı sorular"
+  },
+  "faqTitle": {
+    "message": "Doğru ileri SSS."
+  },
+  "feature1Item1": {
+    "message": "Mevcut indeks ve sarcastic mesajlarla giriş."
+  },
+  "feature1Item2": {
+    "message": "Top üretken ve villa alanları formatlı zaman ile."
+  },
+  "feature1Item3": {
+    "message": "Bir tıklama ile CSV/PDF ihracatı."
+  },
+  "feature1Title": {
+    "message": "Gerçek zamanlı pano"
+  },
+  "feature2Item1": {
+    "message": "Configurable eşi ve Seçmeli siren."
+  },
+  "feature2Item2": {
+    "message": "Sayım ve CTA ile eleştirel."
+  },
+  "feature2Item3": {
+    "message": "Bloklar sadece villa sekmeler, böylece üretken olanları kurtarabilirsiniz."
+  },
+  "feature2Title": {
+    "message": "Deprem modu"
+  },
+  "feature3Item1": {
+    "message": "Saat ve sekme başındaki grafikler."
+  },
+  "feature3Item2": {
+    "message": "Daha İyi Bir Bakışta AI anlatısı Saul tone."
+  },
+  "feature3Item3": {
+    "message": "Acil eylem planıyla eleştirel pankart."
+  },
+  "feature3Title": {
+    "message": "Dramatik rapor"
+  },
+  "feature4Item1": {
+    "message": " TAG0  kro.storage.local  TAG1   - hiçbir şey buluta gitmiyor."
+  },
+  "feature4Item2": {
+    "message": "Productive/villain listeleri sadece tarayıcınızda kurtarıldı."
+  },
+  "feature4Item3": {
+    "message": "Seçmeli OpenAI anahtarı yerel olarak depolanır."
+  },
+  "feature4Title": {
+    "message": "Toplam mahremiyet"
+  },
+  "featureBlockBody": {
+    "message": "Eğer modu etkinleştirseniz, Saul slams villanın sekmelerini tam ekrandaki tam ekrandaki sekmeleri odak ve geri puan kazanmak için geri döndürürseniz."
+  },
+  "featureBlockHint": {
+    "message": "“Doğduğun zaman geçiş yapın: sadece verimli sekme açık kalır.”"
+  },
+  "featureBlockTitle": {
+    "message": "Villain sekme kilitleme"
+  },
+  "featureContextBody": {
+    "message": "Artık günün CONTEXT'sini (iş, eğlence, çalışma, kişisel) popup'ta ayarlayabilirsiniz; Saul puanını tekrarlıyor, yumuşatıyor ve işleri adil tutuyor."
+  },
+  "featureContextLabel": {
+    "message": "Yeni Yeni Yeni Yeni Yeni Yeni Yeni Yeni"
+  },
+  "featureCustomBody": {
+    "message": "Prodüksiyon ve villa domainleri, saat ağırlıkları ve yarık eşleri rutininize ayarladı."
+  },
+  "featureCustomHint": {
+    "message": "\"Spreadsheet? VIP. Endless feed? Savunan.”"
+  },
+  "featureCustomTitle": {
+    "message": "Özel listeler ve ağırlıklar"
+  },
+  "featuredEyebrow": {
+    "message": "Featured Featured"
+  },
+  "featuredTitle": {
+    "message": "Haftanın durumu"
+  },
+  "featureGaugeHint": {
+    "message": "%70'i geçtiğinde, Saul kuke'yi hazırlar."
+  },
+  "featureGaugeLabel": {
+    "message": "Canlı statü"
+  },
+  "featureGaugeTitle": {
+    "message": "Procrastination index"
+  },
+  "featureNextLabel": {
+    "message": "Sonraki kart"
+  },
+  "featurePrevLabel": {
+    "message": "Önceki kart"
+  },
+  "featurePrivacyBody": {
+    "message": "Her şey   TAG0  krom.storage.local  TAG1  ; dış sunucular veya sızıntı kararları yok."
+  },
+  "featurePrivacyHint": {
+    "message": "“Yönetici bile verilerinizi görmüyor.”"
+  },
+  "featurePrivacyTitle": {
+    "message": "Privacy-ilk"
+  },
+  "featureQuakeBody": {
+    "message": "Ekran salçası, siren ve Saul, takip etmek için senin için çığlık atıyor."
+  },
+  "featureQuakeHint": {
+    "message": "\"Sana yardım et! Şimdi üretken sekmeye geri dönün.”"
+  },
+  "featureQuakeTest": {
+    "message": "Test Uyarısı"
+  },
+  "featureQuakeTitle": {
+    "message": "Cinematic kuke modu"
+  },
+  "featureRealtimeBody": {
+    "message": "Kötüge her sekmeyi izliyor ve gününüzü procrastinasyona karşı net bir odak puan haline getiriyor."
+  },
+  "featureRealtimeHint": {
+    "message": "“Saul bu 37 sekmeyi izliyor.”"
+  },
+  "featureRealtimeTitle": {
+    "message": "Gerçek zamanlı izleme"
+  },
+  "featureReportBody": {
+    "message": "Grafikler, AI hikaye anlatımı, CSV/PDF ihracat ve bir sonraki standınız için dakika zaman çizelgesi."
+  },
+  "featureReportHint": {
+    "message": "“İşte sizin ve patronunuz için kanıtlar.”"
+  },
+  "featureReportTitle": {
+    "message": "Dramatik rapor"
+  },
+  "featureSectionEyebrow": {
+    "message": "Core özellikleri"
+  },
+  "featureSectionLead": {
+    "message": "Her kart mizahı karıştırır ve bu kadar yeni gelenler Saul'un içinde ne yaptığını anında anlarlar."
+  },
+  "featureSectionTitle": {
+    "message": "sekmeleri kontrol altında tutmanız gereken her şey."
+  },
+  "featuresEyebrow": {
+    "message": "Detaylı özellikler"
+  },
+  "featuresTitle": {
+    "message": "Saul Goodman'ın cephaneliği uzatıldı."
+  },
+  "featureSwipeHint": {
+    "message": "Saul'un çalıştığı her özelliği gözden geçirmek için Swipe yan yolları."
+  },
+  "feedbackLink": {
+    "message": "Geri bildirim"
+  },
+  "finalCtaBody": {
+    "message": "Yükleme, alanlarınızı ayarlayın ve villadaki sekmelerin gün kazanmadan önce odaklanmaya geri döndü."
+  },
+  "finalCtaTitle": {
+    "message": "Saul'un devralmasına izin vermeye hazır mısın?"
+  },
+  "finalPrimary": {
+    "message": "Chrome üzerinde yükleme"
+  },
+  "footerBody": {
+    "message": "Yükleme, villalarınızı listeleyin ve Saul'un odaklanmasına izin verin."
+  },
+  "footerChangelogLink": {
+    "message": "Changelog"
+  },
+  "footerLinkArchitecture": {
+    "message": "Mimari Mimari Mimari"
+  },
+  "footerLinkGithub": {
+    "message": "GitHub"
+  },
+  "footerLinkIndicators": {
+    "message": "Göstergeler"
+  },
+  "footerPrivacy": {
+    "message": "100% yerel veriler. Yargıç bile bunu görmüyor."
+  },
+  "footerPrivacyLink": {
+    "message": "Gizlilik Politikası"
+  },
+  "footerTitle": {
+    "message": "Saul Goodman Extension"
+  },
+  "heroBadge": {
+    "message": "\"Enziness durumunda... CALL SAUL!\""
+  },
+  "heroConfidence1": {
+    "message": "Özel deprem modu"
+  },
+  "heroConfidence2": {
+    "message": "Blacklist & VIP domain listeleri"
+  },
+  "heroConfidence3": {
+    "message": "AI hikaye ile rapor"
+  },
+  "heroGaugeHint": {
+    "message": "Yüzde 70'e ulaştığında, kuke modu fırtınaları."
+  },
+  "heroGaugeLabel": {
+    "message": "Canlı indeks"
+  },
+  "heroPill": {
+    "message": "Haftalık damlalar, günlük sarcasm"
+  },
+  "heroPrimaryCta": {
+    "message": "Chrome üzerinde yükleme"
+  },
+  "heroSecondaryCta": {
+    "message": "Nasıl çalıştığını görün"
+  },
+  "heroSubtitle": {
+    "message": "Bu, sekmelerinizi, bayrakları rahatsız ediyor ve gün deraillerden önce odaklanmanız için geri dönüyorsunuz – tüm Chrome'da, hiçbir işaret yok."
+  },
+  "heroTag": {
+    "message": "Gerçek yaşam için anti-procrastinasyon uzatması"
+  },
+  "heroTitle": {
+    "message": "Procrastinating'ı durdurun. Saul Goodman davayı alır."
+  },
+  "indexCalloutLabel": {
+    "message": "Saul'un memo"
+  },
+  "indexCalloutQuote": {
+    "message": "“Cross 60% ve ben patronunuzu çağırıyorum. %10'un altına çıkın ve terapistinizi rezervasyon yapıyorum. Koridoru dengelemek, müşteri!”"
+  },
+  "indexClueAlert": {
+    "message": "Denetim:"
+  },
+  "indexClueAlertBody": {
+    "message": "Çift kontrol eşi, siren ve kopya, böylece çağrılar doğru zamanda vurur."
+  },
+  "indexClueBreak": {
+    "message": "Schedule micro-breaks"
+  },
+  "indexClueBreakBody": {
+    "message": "15-22 aralığı stratejik nefeslere ihtiyaç duyar. Onları takviminizde bloklayın, müşteri."
+  },
+  "indexClueFocus": {
+    "message": "Villains Listesi"
+  },
+  "indexClueFocusBody": {
+    "message": "Saul dosyalarına bir hareket etmeden önce indeksi artıran sekmelerin canlı listesini tut."
+  },
+  "indexCluesLabel": {
+    "message": "Vaka checklist"
+  },
+  "indexEyebrow": {
+    "message": "Saul'un masasında"
+  },
+  "indexFootnote": {
+    "message": "15 ve 22 Saul dosyaları arasında “steady client” O, kuke'yi kollarına soktu; Aşağıda geri kalanını reçete ettiği, ekstra görevleri değil."
+  },
+  "indexGaugeHint": {
+    "message": "% 18 tatlı nokta vurdu - tam robot olmadan sürekli odaklan."
+  },
+  "indexGaugeLabel": {
+    "message": "Tatlı nokta"
+  },
+  "indexLead": {
+    "message": "Yasal çeviri servisi: 0 puan bir trophy değildir ve 100 her şey dahil değildir. Saul her grubu sandalyenizi ya da tatil günü zorlamaya karar vermek için okur."
+  },
+  "indexMemoBody": {
+    "message": "Bir villa sekme indeksi yükselirse, tam ekranlı blok modunu tetikler. Saul villaları dışarıda kilitler, sadece verimli sekmeyi serbest bırakır ve puanınız tekrar nefes alır."
+  },
+  "indexMemoHeading": {
+    "message": "Office memo"
+  },
+  "indexMemoSign": {
+    "message": "- Saul, verimlilik avukatınız"
+  },
+  "indexPitch1": {
+    "message": "indeks 0 ila 100 arasında değişir. 100'e daha yakın, dava orta-trial'i terk ettin ve prokrastinasyon VIP müşterisi oldun."
+  },
+  "indexPitch2": {
+    "message": "Ama sıfıra vurmak da şüpheli görünüyor: 7/24 üretken sekmelere yapıştırılan herkes bir yanıklıktan bir adım."
+  },
+  "indexRange0to14Body": {
+    "message": "Saul'un onu “ekizleyici bir zeal” olarak adlandırdığı işe çok yapıştırıldınız. Nefes alın, ayağa kalkın ve bu tanıklıktan önce su alın."
+  },
+  "indexRange0to14Title": {
+    "message": "0 - 14: İşi Üzerindeki Soru"
+  },
+  "indexRange15to22Body": {
+    "message": "İdeal karar: tutarlı odak, sağlıklı molalar, sıfır sirens. Saul bile bir ücret indirimi düşünebilir."
+  },
+  "indexRange15to22Title": {
+    "message": "15 - 22: Altın denge"
+  },
+  "indexRange23to60Body": {
+    "message": "Hala davayı savunuyorsunuz ama villanın beslemelerine işaret ediyorsunuz. Saul, duruşmayı takip etmek için witty fark eder."
+  },
+  "indexRange23to60Title": {
+    "message": "23 – 60: Wobbly odaklanmış"
+  },
+  "indexRange61to100Body": {
+    "message": "O'nun saati. Ekran sarsıyor, siren blares ve Saul her villanın sekmesi için bir son-ve-desistle yürüyor."
+  },
+  "indexRange61to100Title": {
+    "message": "61 – 100: Bayrakta Yasaklama"
+  },
+  "indexStamp": {
+    "message": "Müşteriler kolay uyur"
+  },
+  "indexTitle": {
+    "message": "Saul Procrastination Index'i nasıl okur?"
+  },
+  "integrationCard1Body": {
+    "message": "Çift anahtarını, entegrasyona ayak uydurmak ve yerel URL'yi ayarlamak. Hiçbir şey tarayıcınızı terk etmez."
+  },
+  "integrationCard1Title": {
+    "message": "Seçeneklerinde Enable"
+  },
+  "integrationCard2Body": {
+    "message": "VS Kod uzatma komutunu başlangıç için kullanın: önceden teslimatlar PAIRING KEY/PORT ve daemon klasöründe açılır."
+  },
+  "integrationCard2Title": {
+    "message": "Local daemon"
+  },
+  "integrationCard3Body": {
+    "message": "Komut “Saul Goodman: Preparar comando SaulDaemon” gemileri yüklemeden sonra hazır ve editör kalp atışlarını Chrome'a gönderir."
+  },
+  "integrationCard3Title": {
+    "message": "VS Kodu uzatma"
+  },
+  "integrationCta": {
+    "message": "Uygulama rehberi"
+  },
+  "integrationEyebrow": {
+    "message": "Çünkü"
+  },
+  "integrationLead": {
+    "message": "Seçmeli entegrasyona dön: Saul, yerelhost terk etmeden editör zamanı ekliyor."
+  },
+  "integrationTitle": {
+    "message": "VS Kodu + yerel daemon, hepsi üretken olarak sayılıyor."
+  },
+  "integrationVsixCta": {
+    "message": "VS Kod uzatma"
+  },
+  "label_vscode": {
+    "message": "VS Kodu (IDE)"
+  },
+  "languageLabel": {
+    "message": "dili seçin"
+  },
+  "latestEyebrow": {
+    "message": "Fresh Fresh Fresh"
+  },
+  "latestTitle": {
+    "message": "Verimlilik mahkemesinden sıcak"
+  },
+  "lightboxClose": {
+    "message": "Close Close Close Close Close"
+  },
+  "manifesto1Body": {
+    "message": "Güniniz tarayıcının içinde değerlendirilir. Hiçbir veri bilgisayarı terk etmez, mahkeme emriyle bile değil."
+  },
+  "manifesto1Title": {
+    "message": "% 100 yerel"
+  },
+  "manifesto2Body": {
+    "message": "Görsel ve ses uyarıları, Saul'un ekstra ücret talep ettiği zaman netleştirir."
+  },
+  "manifesto2Title": {
+    "message": "Saymak"
+  },
+  "manifesto3Body": {
+    "message": "Sarcastic mesajlar ve dramatik bayraklar size procrastinasyonun da pahalı olduğunu hatırlatıyor."
+  },
+  "manifesto3Title": {
+    "message": "Humor silah olarak"
+  },
+  "manifestoEyebrow": {
+    "message": "Manifesto"
+  },
+  "manifestoTitle": {
+    "message": "Bir etik pinch ile agresif pazarlama."
+  },
+  "mediaTaglineDev": {
+    "message": "Dev performans sert ölçümlerle yargılandı."
+  },
+  "mediaTaglineFoco": {
+    "message": "Focus ve dikkat günlük sorgulama altında."
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "Zihinsel oscilloskoplar Saul'un tedavi sarcasm ile tanışır."
+  },
+  "mediaTaglineRemoto": {
+    "message": "Uzaktan çalışma sıfır hayalet-mode bahanelerle."
+  },
+  "metaCategory": {
+    "message": "Kategori Kategori"
+  },
+  "metaPublishedAt": {
+    "message": "Blogda yayınlandı"
+  },
+  "metaSource": {
+    "message": "Kaynak Kaynağı"
+  },
+  "metaSourcePublishedAt": {
+    "message": "Kaynak yayınlandı"
+  },
+  "metaSourceUrl": {
+    "message": "Kaynak URL"
+  },
+  "metaTags": {
+    "message": "Etiketler Etiketler"
+  },
+  "mobileMenuToggle": {
+    "message": "Açık menü"
+  },
+  "multilingualLabel": {
+    "message": "PT 🇧🇷 · EN 🇪🇸 · ES 🇪🇸"
+  },
+  "navBenefits": {
+    "message": "Faydaları"
+  },
+  "navBlog": {
+    "message": "Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog Blog"
+  },
+  "navClients": {
+    "message": "Müşteriler"
+  },
+  "navCodeCon": {
+    "message": "KoduConConConCon"
+  },
+  "navCta": {
+    "message": "Yükleme"
+  },
+  "navDemo": {
+    "message": "Demo Demo Demo Demo Demo Demo Demo Demo"
+  },
+  "navIndex": {
+    "message": "Index Index Index Index"
+  },
+  "navProcess": {
+    "message": "Süreç Süreci"
+  },
+  "newsletterCopy": {
+    "message": "Kısa sarcasm ve disiplin patlamaları, böylece VS Kodu Netflix gibi hareket etmeyi durduruyor."
+  },
+  "newsletterCta": {
+    "message": "Saul ile tanışın Saul"
+  },
+  "newsletterDisclaimer": {
+    "message": "spam yok. Sadece başlayabileceğiniz sarcalarm."
+  },
+  "newsletterError": {
+    "message": "Lütfen geçerli bir e-postayı bırakın."
+  },
+  "newsletterLabel": {
+    "message": "E-postanız"
+  },
+  "newsletterPlaceholder": {
+    "message": "You@email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "Beni alın"
+  },
+  "newsletterSuccess": {
+    "message": "radardasınız. Yeni damlalar yakında geliyor."
+  },
+  "newsletterTitle": {
+    "message": "Saul'un memo"
+  },
+  "nextPost": {
+    "message": "Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki Sonraki"
+  },
+  "options_back_to_popup": {
+    "message": "Geri popup"
+  },
+  "options_confirm_reset": {
+    "message": "Bu varsayılan değerleri geri getirecek. Devam et?"
+  },
+  "options_critical_sound_hint": {
+    "message": "etkinleştirildiğinde, siren kritik uyarı yangınları ne zaman oynar."
+  },
+  "options_critical_sound_label": {
+    "message": "Otomatik kuke siren"
+  },
+  "options_critical_threshold_hint": {
+    "message": "indeks bu değeri çarptığında Saul kritik uyarıları tetikliyor."
+  },
+  "options_critical_threshold_label": {
+    "message": "Quake modu eşi (0-100)"
+  },
+  "options_digital_branch": {
+    "message": "Dijital şube"
+  },
+  "options_domain_add": {
+    "message": "Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add"
+  },
+  "options_domain_duplicate": {
+    "message": "Domain zaten listelendi."
+  },
+  "options_domain_empty": {
+    "message": "Henüz domain yok."
+  },
+  "options_domain_invalid": {
+    "message": "Geçerli bir alan girin."
+  },
+  "options_footer_note": {
+    "message": "Saul verilerinizi herkesle paylaşmaz. Yargıç bile değil."
+  },
+  "options_head_title": {
+    "message": "Saul Goodman – Ayarlar"
+  },
+  "options_heading": {
+    "message": "Office Ayarları"
+  },
+  "options_holiday_context_hint": {
+    "message": "Günün CONTEXT'sini seçmek için popup kullanın (iş, eğlence, çalışma, gün kapalı, tatil veya kişisel). Saul tarihi kaydeder ve puanı oldukça ayarlar."
+  },
+  "options_holiday_country_error": {
+    "message": "Sadece iki mektup kullanın, e.g., BR veya ABD."
+  },
+  "options_holiday_country_hint": {
+    "message": "BR, ABD, PT. Saul asla ülkenizi otomatik olarak algılamaya çalışmaz."
+  },
+  "options_holiday_country_label": {
+    "message": "Ülke kodu (ISO-3166)"
+  },
+  "options_holiday_heading": {
+    "message": "Tatiller ve adil bağlam"
+  },
+  "options_holiday_hint": {
+    "message": "etkinleştirildiği zaman Saul sadece Nager diyor. Bugün ulusal bir tatil olup puanı nötralize ederse görmek için tarih."
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Çağrılar sadece ülkeyi etkinleştirip ayarlarsanız gerçekleşir. Otomatik bir yer yok."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Ulusal tatillerde Pause puanlama"
+  },
+  "options_inactivity_threshold": {
+    "message": "Aktif olarak saymadan önce en fazla boş zaman (saniyeler)"
+  },
+  "options_language_auto": {
+    "message": "Otomatik (otomatik)"
+  },
+  "options_language_en": {
+    "message": "İngilizce (US)"
+  },
+  "options_language_es": {
+    "message": "İspanyolca İspanyolca İspanyolca"
+  },
+  "options_language_hint": {
+    "message": "Elli seçin veya dili Chrome'u takip edin."
+  },
+  "options_language_label": {
+    "message": "Interface dil dili"
+  },
+  "options_language_pt": {
+    "message": "Portekiz (Brazil)"
+  },
+  "options_openai_hint": {
+    "message": "Raporda anlatılar oluşturmak için yerel olarak mağaza açtı."
+  },
+  "options_openai_label": {
+    "message": "OpenAI key (optional)"
+  },
+  "options_openai_placeholder": {
+    "message": "sk-..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Ne zaman etkinleştirilirse, Saul bu siteye yerel Chrome kuralları kullanıyor."
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "Bu listeye blok erişim"
+  },
+  "options_procrastination_heading": {
+    "message": "Procrastination domains"
+  },
+  "options_procrastination_hint": {
+    "message": "İşte günahlar yaşıyor. Bir siteyi seviyorsanız, muhtemelen burada aittir."
+  },
+  "options_procrastination_placeholder": {
+    "message": "e.g. youtube.com"
+  },
+  "options_productive_heading": {
+    "message": "Productive domains"
+  },
+  "options_productive_hint": {
+    "message": "Saul işin nerede olduğunu bilir. Rutininize göre ekleyin veya çıkarın."
+  },
+  "options_productive_placeholder": {
+    "message": "e.g. docs.google.com"
+  },
+  "options_promise": {
+    "message": "Saul, dikkatinizi odaklarınızla müzakere ederken mühür tutar."
+  },
+  "options_restore_defaults": {
+    "message": "Geri yükleme varsayılanleri geri yükleme"
+  },
+  "options_save_weights": {
+    "message": "Kiloları Kurtarın"
+  },
+  "options_schedule_add": {
+    "message": "Add interval"
+  },
+  "options_schedule_heading": {
+    "message": "Çalışma saatleri"
+  },
+  "options_schedule_hint": {
+    "message": "Saul'a resmi değişim gerçekleştiğinde söyleyin. Bu bloklar dışında, verimli dakikalar çift sayılır."
+  },
+  "options_schedule_to": {
+    "message": "toklanmak için"
+  },
+  "options_status_blocklist_saved": {
+    "message": "Tercih etmek güncellendi."
+  },
+  "options_status_critical_saved": {
+    "message": "Deprem modu güncellendi."
+  },
+  "options_status_defaults_restored": {
+    "message": "Temsiller restore edildi."
+  },
+  "options_status_domain_removed": {
+    "message": "Domain kaldırıldı."
+  },
+  "options_status_holiday_saved": {
+    "message": "Tatil tercihleri güncellendi."
+  },
+  "options_status_language_saved": {
+    "message": "Dil güncellendi."
+  },
+  "options_status_list_updated": {
+    "message": "Liste güncellendi."
+  },
+  "options_status_ready": {
+    "message": "Tüm iyi."
+  },
+  "options_status_schedule_updated": {
+    "message": "Kayıtlar güncellendi."
+  },
+  "options_status_vscode_saved": {
+    "message": "VS Kod entegrasyonu güncellendi."
+  },
+  "options_status_weights_saved": {
+    "message": "Ağırlıklar güncellendi."
+  },
+  "options_subtitle": {
+    "message": "Procrastination tarzınızı eşleştirmek için radarı özelleştirin. Her şey yerel kalır."
+  },
+  "options_tagline": {
+    "message": "Kişisel avukatınız procrastinasyona karşı"
+  },
+  "options_thresholds_heading": {
+    "message": "Thresholds & ağırlıks"
+  },
+  "options_vscode_heading": {
+    "message": "VS Kod entegrasyonu"
+  },
+  "options_vscode_install_hint": {
+    "message": "Odak oturumları göndermek için resmi VS Kod uzatmasını yükleyin."
+  },
+  "options_vscode_install_link": {
+    "message": "VS Kod uzatma"
+  },
+  "options_vscode_key_copied": {
+    "message": "Anahtar kopyalandı."
+  },
+  "options_vscode_key_copy": {
+    "message": "Kopyalama anahtarı"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "kopyalamanın anahtarı yok."
+  },
+  "options_vscode_key_generate": {
+    "message": "Genrate yeni anahtar"
+  },
+  "options_vscode_key_generated": {
+    "message": "Yeni anahtar yarattı."
+  },
+  "options_vscode_key_hint": {
+    "message": "SaulDaemon/VS Kodunda yapılandırılan anahtarı eşleştirmeli."
+  },
+  "options_vscode_key_label": {
+    "message": "Pairing key"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "SaulDaemon anahtarını yapıştırın"
+  },
+  "options_vscode_test_button": {
+    "message": "Test bağlantısı"
+  },
+  "options_vscode_test_disabled": {
+    "message": "Testten önce enable VS Kod entegrasyonu."
+  },
+  "options_vscode_test_error": {
+    "message": "SaulDaemon'a bağlanmak için başarısız oldu{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "ulaşmak için başarısız oldu{origin}sağlık sağlığı sağlığı sağlığı sağlığı{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "Invalid URL. http://127.0.0.1:3123 gibi bir şey kullanın."
+  },
+  "options_vscode_test_running": {
+    "message": "Testando conexão..."
+  },
+  "options_vscode_test_success": {
+    "message": "SaulDaemon cevap verdi{origin}Bugün Oturumlar:{sessions}Dakikalar:{minutes}."
+  },
+  "options_vscode_test_timeout": {
+    "message": "SaulDaemon não bir tempoya cevap verdi."
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "Chave diferente. Bir mesma anahtarını kullanın, VS Kodu yok."
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Puanınızı ferahlatıcı etmeden önce yerel SaulDaemon (yerelhost) arayın."
+  },
+  "options_vscode_toggle_label": {
+    "message": "VS Kodundan zaman ayırın"
+  },
+  "options_vscode_url_hint": {
+    "message": "Sadece yerelhost ile konuşur; hiçbir şey makinenizi terk etmez."
+  },
+  "options_vscode_url_label": {
+    "message": "Local backend URL"
+  },
+  "options_weight_inactivity": {
+    "message": "Inactivity (weight)"
+  },
+  "options_weight_procrastination": {
+    "message": "Ürünsiz zaman (saç)"
+  },
+  "options_weight_switches": {
+    "message": "Tab anahtarları ( ağırlık)"
+  },
+  "options_weights_sum_error": {
+    "message": "Kiloların toplamı 1."
+  },
+  "popup_alert_no_data": {
+    "message": "Henüz veri yok. Bazı sekmeler açın ve tekrar deneyin."
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF modülü mevcut değil."
+  },
+  "popup_badge_label": {
+    "message": "Index Index Index Index"
+  },
+  "popup_blog_badge": {
+    "message": "Saul okumaları tavsiye eder"
+  },
+  "popup_blog_button_all": {
+    "message": "Open blog"
+  },
+  "popup_blog_category_prefix": {
+    "message": "Kategori:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "Şimdi oku"
+  },
+  "popup_blog_empty": {
+    "message": "Henüz mevcut değil."
+  },
+  "popup_blog_error": {
+    "message": "Şu anda bloga ulaşamadı."
+  },
+  "popup_blog_loading": {
+    "message": "Mükemmel dava için avlanmak..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "Dev performansı sıfır ucuz koçluk ile artırmak için zaman."
+  },
+  "popup_blog_reason_foco": {
+    "message": "Bugünün dağınık odağına dayanarak."
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "Çünkü procrastinasyon bugün yasal sınırı geçti."
+  },
+  "popup_blog_reason_remoto": {
+    "message": "Tüm hayalet modu olmadan uzak çalışmayı yaşayın."
+  },
+  "popup_blog_section_subtitle": {
+    "message": "Sayılarınızı ve bir Saul tarzı makaleye işaret ediyoruz."
+  },
+  "popup_blog_section_title": {
+    "message": "Handpicked blog ipucu"
+  },
+  "popup_chart_aria": {
+    "message": "Ürünif vs procrastinasyon saatler"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_chart_label_productive": {
+    "message": "Ürünif"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS Code"
+  },
+  "popup_chart_title": {
+    "message": "Günlük radar"
+  },
+  "popup_context_option_dayOff": {
+    "message": "Folga"
+  },
+  "popup_context_option_leisure": {
+    "message": "Lazer Lazer"
+  },
+  "popup_context_option_personal": {
+    "message": "Kişisel Şahsen"
+  },
+  "popup_context_option_study": {
+    "message": "Çalışma Çalışması"
+  },
+  "popup_context_option_vacation": {
+    "message": "Tatil Tatil"
+  },
+  "popup_context_option_work": {
+    "message": "Work Work Work"
+  },
+  "popup_critical_close_aria": {
+    "message": "Uyarı Uyarı"
+  },
+  "popup_critical_countdown_final": {
+    "message": "Hiçbir mazeret yok: şu anda üç procrastinasyon sekmesini kapat!"
+  },
+  "popup_critical_default_message": {
+    "message": "Bu indeksde bile sizi savunabiliyorum. Bu risk ücretlerine mal olacak!"
+  },
+  "popup_critical_message_1": {
+    "message": "Müşteri, indeksle{threshold}Seni bile savunamam. Risk ücretleri uygulanır!"
+  },
+  "popup_critical_message_2": {
+    "message": "Bu tremor? Yargıç üretkenliğinizi bastırır."
+  },
+  "popup_critical_message_3": {
+    "message": "Procrastinating durdurun veya hikayenizi söyleyen primetime reklamları satın alacağım."
+  },
+  "popup_critical_message_4": {
+    "message": "Seni savunmama yardımcı olun: dolar faturaya başlamadan önce bu sekmeleri kapatın."
+  },
+  "popup_critical_plan_action": {
+    "message": "Yakın 3 villanın sekmeleri"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "Eylem planı:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "s."
+  },
+  "popup_critical_review": {
+    "message": "Review villains"
+  },
+  "popup_critical_sound_now": {
+    "message": "Simen şimdi"
+  },
+  "popup_critical_title": {
+    "message": "Saul Quake modunda"
+  },
+  "popup_csv_category": {
+    "message": "Kategori Kategori"
+  },
+  "popup_csv_column_date": {
+    "message": "Tarih Tarihi"
+  },
+  "popup_csv_column_inactive": {
+    "message": "Inaktif (min)"
+  },
+  "popup_csv_column_index": {
+    "message": "Index Index Index Index"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "Procrastination (min)"
+  },
+  "popup_csv_column_productive": {
+    "message": "Ürünif (min)"
+  },
+  "popup_csv_column_switches": {
+    "message": "Tab anahtarları"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Kodu (min)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "Kategori Kategori"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "Contexto"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "Domínio"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "Süre (ms)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "End (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "Fairness kuralı"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "Başlangıç (ISO)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "Detaylı zaman çizelgesi"
+  },
+  "popup_csv_domain": {
+    "message": "Domain Domain Domain Domain"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "Top Focus domain domain domain"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "Aktif odak (%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "Idle zamanı (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Proc vs Proc"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "Saatte Anahtarlar"
+  },
+  "popup_csv_kpi_time": {
+    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "Villain of the day"
+  },
+  "popup_csv_kpis_title": {
+    "message": "Ekstra göstergeler"
+  },
+  "popup_csv_minutes": {
+    "message": "Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika Dakika"
+  },
+  "popup_csv_summary_title": {
+    "message": "Genel Özet"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "Top domains"
+  },
+  "popup_error_no_data": {
+    "message": "Mevcut veriler mevcut değil"
+  },
+  "popup_error_runtime": {
+    "message": "Oops! Ofise ulaşmak için güvenilmez."
+  },
+  "popup_error_unknown": {
+    "message": "Bilinmeyen hata"
+  },
+  "popup_export_csv": {
+    "message": "Download JPG"
+  },
+  "popup_export_description": {
+    "message": "Sayılarınızı Saul Goodman-style argümanlarına dönüştürün."
+  },
+  "popup_export_pdf": {
+    "message": "Genrate PDF"
+  },
+  "popup_export_report": {
+    "message": "Açık rapor"
+  },
+  "popup_export_title": {
+    "message": "odaklanmanızı savun"
+  },
+  "popup_fairness_context_label": {
+    "message": "Contexto atual"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Bugün bir tatil, puan otomatik olarak durakladı."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Tatil tespit edildi - ceza yok."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Bugün Skip today"
+  },
+  "popup_fairness_note": {
+    "message": "Saul, popup'ta seçtiğiniz bağlama dayanarak puanları geri döndürür. Bugün sıfırları atlayın ve mutes uyarıları. Metinler: Çalışma% 100 tutar, Kişisel her şeyi nötralize eder, Spor odaklanmanın% 30'u sayır ve villaları görmezden gelir, Çalışma yarı cezaları, Günler ve Tatil Sıfırı Gün Tatile Geçer."
+  },
+  "popup_fairness_note_label": {
+    "message": "Saul explica"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Günler kaydedildi - durakladı."
+  },
+  "popup_fairness_status_default": {
+    "message": "Dia útil normal."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "Ulusal tatil puanı tarafsızlaştırıyor."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo lazer kırmızıuz bir basınão."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Diaceptado manuelmente."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Kişisel mod aktif - puanlama yok."
+  },
+  "popup_fairness_status_study": {
+    "message": "Çalışma modu puanı yumuşatıyor."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Tatil modu gün tarafsızlaştırıyor."
+  },
+  "popup_fairness_title": {
+    "message": "Gün adaleti"
+  },
+  "popup_head_title": {
+    "message": "Saul Goodman – Focus Radar"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "Focus şampiyonu"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "Bugün daha sürekli zaman yatırım yaptığınız ürün domain."
+  },
+  "popup_kpi_focus_hint": {
+    "message": "Ürünif / iş günü"
+  },
+  "popup_kpi_focus_label": {
+    "message": "Aktif odaklanma"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "Bugün her şeyi takip eden her şeyin üzerinde verimli zaman aralığı."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "Günün ortasında"
+  },
+  "popup_kpi_idle_label": {
+    "message": "Idle time"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "Günün Yüzdesi, tarayıcı etkileşim olmadan açık kaldı."
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "Villain başına gelen saatler"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Proc vs Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "Her procrastinasyon saatini ayarlayın."
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "Doğru noktaya: gününüzün ham sayıları."
+  },
+  "popup_kpi_section_title": {
+    "message": "Ekstra göstergeler"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "Tablar per tracked hour"
+  },
+  "popup_kpi_switch_label": {
+    "message": "Saatte Anahtarlar"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "İzlenen saatte ortalama sekme anahtarları."
+  },
+  "popup_kpi_villain_label": {
+    "message": "Villain of the day"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "Zamanınızın çoğunu çalan Procrastination domain."
+  },
+  "popup_last_sync": {
+    "message": "Güncelleme: Güncelleme:{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "Updating..."
+  },
+  "popup_loading": {
+    "message": "Yükleniyor..."
+  },
+  "popup_options_button": {
+    "message": "Configure"
+  },
+  "popup_pdf_date": {
+    "message": "Tarih Tarihi"
+  },
+  "popup_pdf_inactive": {
+    "message": "Inaktif"
+  },
+  "popup_pdf_index": {
+    "message": "Index Index Index Index"
+  },
+  "popup_pdf_kpis": {
+    "message": "Ekstra göstergeler"
+  },
+  "popup_pdf_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_pdf_productive": {
+    "message": "Ürünif"
+  },
+  "popup_pdf_summary": {
+    "message": "Daily summary"
+  },
+  "popup_pdf_switches": {
+    "message": "Tab anahtarları"
+  },
+  "popup_pdf_title": {
+    "message": "Saul Goodman raporu"
+  },
+  "popup_pdf_top_domains": {
+    "message": "Top domains"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS Code"
+  },
+  "popup_privacy_note": {
+    "message": "Tüm veriler tarayıcınızda kalır. Saul avukat-client ayrıcalıklarını onurlandırır."
+  },
+  "popup_refresh_button": {
+    "message": "Yenileme"
+  },
+  "popup_release_notes_button": {
+    "message": "Yeni neler olduğunu görün"
+  },
+  "popup_release_notes_error": {
+    "message": "Yayın notlarını açabilir. uzatmayı yeniden yükleyin ve tekrar deneyin."
+  },
+  "popup_score_message_alert": {
+    "message": "Ateşle oynuyorsunuz. Ateş koymak için saat boyunca faturam."
+  },
+  "popup_score_message_excellent": {
+    "message": "Altın müşteri! Onu tut ve tam koruyucuyu şarj edebilirim."
+  },
+  "popup_score_message_ok": {
+    "message": "Yine de ofis saatleri olarak sayılır. Odanızı aramamı yapmayın."
+  },
+  "popup_score_message_warning": {
+    "message": "Burada kaçınma görüyorum. Oyunda geri dönme zamanı."
+  },
+  "popup_score_placeholder": {
+    "message": "Yükleniyor..."
+  },
+  "popup_status_no_data": {
+    "message": "Hiçbir veri yok"
+  },
+  "popup_status_no_domains": {
+    "message": "Bugün için hiçbir veri yok."
+  },
+  "popup_summary_inactive_label": {
+    "message": "Idle"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "Tarayıcı etkileşim olmadan açık kaldığı süreler."
+  },
+  "popup_summary_procrastination_label": {
+    "message": "Procrast"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "Zaman procrastinasyon domainleri üzerinde harcanan."
+  },
+  "popup_summary_productive_label": {
+    "message": "Ürünif"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "Sahalarda harcanan zaman üretken olarak işaretlenmiştir."
+  },
+  "popup_tooltip_aria": {
+    "message": "Açıklama"
+  },
+  "popup_top_domains_title": {
+    "message": "Top 5 domains"
+  },
+  "postInvalid": {
+    "message": "Invalid post veya eksik metadata."
+  },
+  "postLoadError": {
+    "message": "Bu makaleyi yüklerken hata."
+  },
+  "postLoadingBody": {
+    "message": "Yükleniyor..."
+  },
+  "postLoadingTitle": {
+    "message": "Yükleniyor..."
+  },
+  "postNotFound": {
+    "message": "Post bulunamadı."
+  },
+  "previousPost": {
+    "message": "Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki Önceki"
+  },
+  "privacyError": {
+    "message": "Şu anda politikayı yükleyemezdik. Bir anda tekrar deneyin."
+  },
+  "privacyEyebrow": {
+    "message": "Tam şeffaflık"
+  },
+  "privacyHeading": {
+    "message": "Gizlilik Politikası"
+  },
+  "privacyLoading": {
+    "message": "Politikayı doğrudan depodan yükleyin..."
+  },
+  "privacySubheading": {
+    "message": "İşte repository'de yayınlanan politikanın en son versiyonu."
+  },
+  "privacyTitle": {
+    "message": "Gizlilik Politikası"
+  },
+  "process1Body": {
+    "message": "Kötüge sessizce neyin açık olduğunu izliyor ve okuduğunuzda, çalışıyorsanız veya doom-skrolling."
+  },
+  "process1Title": {
+    "message": "Aktif sekmelerinizi takip edin"
+  },
+  "process2Body": {
+    "message": "Prodüksiyon vs. villanın domainlerini tanımlarsınız. Eğer dışarı çıkarsan Saul ekranını salladı ve spiral başlamadan önce bağırmaya başladı."
+  },
+  "process2Title": {
+    "message": "Bayraklar dikkat çekiyor"
+  },
+  "process3Body": {
+    "message": "Her gün temiz bir raporla biter: grafikler, vurgular ve yarın için bir eylem planı."
+  },
+  "process3Title": {
+    "message": "Teslimatlar usable kanıtlanabilir"
+  },
+  "processEyebrow": {
+    "message": "Nasıl çalışır"
+  },
+  "processLead": {
+    "message": "Hiçbir yasal jargon: sekmelerinizi izlemesine izin verin, uyarıları hissedin ve gününüzü hazır paylaşılan kanıtlarla bitirin."
+  },
+  "processTitle": {
+    "message": "Saul üç adımda procrastinasyon kilitler."
+  },
+  "quakeBody": {
+    "message": "Overlay blokları villanın sekmelerini gösterir, cesur bir CTA gösterir ve opsiyonel siren'i patlatabilir. görmezden gelmek imkansız - tam olarak planlandığı gibi."
+  },
+  "quakeButton": {
+    "message": "Tefsül etmeyelim"
+  },
+  "quakeCallout": {
+    "message": "Deprem gelen!"
+  },
+  "quakeDemoBody": {
+    "message": "Deprem modunu simüle etmek için tıklayın: ekran sallama, siren ve dramatik bir mesaj. uzatma olarak aynı, ancak sadece birkaç saniye burada."
+  },
+  "quakeDemoButton": {
+    "message": "Simulate deprem modu"
+  },
+  "quakeDemoEyebrow": {
+    "message": "Deprem modu (demo)"
+  },
+  "quakeDemoTitle": {
+    "message": "Saul'un en dramatik uyarısını test edin."
+  },
+  "quakeDisplayCopy": {
+    "message": "Odaklanmak için geri atlayın veya Saul ücretlerini yükseltir."
+  },
+  "quakeEyebrow": {
+    "message": "Deprem modu"
+  },
+  "quakeLead": {
+    "message": "uzatmadan gelen aynı dramatik uyarı burada ortaya çıkıyor, böylece ziyaretçiler uyarının eşiği nasıl ciddi olduğunu hissediyorlar."
+  },
+  "quakeMicro": {
+    "message": "\"Senin doom-scrolling! Etkisi için Brace.\""
+  },
+  "quakeOverlayBody": {
+    "message": "Saul villanın sekmelerini sallıyor. Ekstra suçlamalar yapmadan önce odaklanmak için geri dönün."
+  },
+  "quakeOverlayClose": {
+    "message": "Back to focus"
+  },
+  "quakeOverlayTitle": {
+    "message": "Deprem modu tetikledi!"
+  },
+  "quakeTip": {
+    "message": "Rahatlayın: önizleme sadece birkaç saniye sürer."
+  },
+  "quakeTitle": {
+    "message": "Saul villaya geldiğinde, sayfa onunla sarsır."
+  },
+  "ratingBadgeAlt": {
+    "message": "Chrome Web Store'da Ortalama Puan"
+  },
+  "reactionBlockAlt": {
+    "message": "Saul erişimi engelliyor"
+  },
+  "reactionBlockHint": {
+    "message": "Kapıyı kapatan Saul ile blok sayfasına yeniden yönlendiril."
+  },
+  "reactionBlockLabel": {
+    "message": "Blok modu"
+  },
+  "reactionBlockText": {
+    "message": "“Bunu bile denemeyin: villalar anında engelleniyor.”"
+  },
+  "reactionDisbeliefHint": {
+    "message": "Kuke eşinin geçtiğinde Tetikler."
+  },
+  "reactionDisbeliefLabel": {
+    "message": "Aredulous modu"
+  },
+  "reactionDisbeliefText": {
+    "message": "“Bu odaklanmayı mı arıyorsunuz?”"
+  },
+  "reactionHypeHint": {
+    "message": "Prodüksiyon sekmelerine geri döndüğünüzde."
+  },
+  "reactionHypeLabel": {
+    "message": "Onaylanmış modu"
+  },
+  "reactionHypeText": {
+    "message": "“Şimdi ücretlerimi indirim olabilirim.”"
+  },
+  "reactionsBody": {
+    "message": "indeksler yükselirken, Saul suçsuzdur. Odaya döndüğünde, kutluyor. Adalet barını yerinde tutmak için hızlı görseller."
+  },
+  "reactionsEyebrow": {
+    "message": "Saul tepki verir"
+  },
+  "reactionsTitle": {
+    "message": "Saul'un anlık kararı."
+  },
+  "readArticle": {
+    "message": "Makale oku"
+  },
+  "readingTimeLabel": {
+    "message": "Okuma zamanı"
+  },
+  "readTimeUnit": {
+    "message": "min oku"
+  },
+  "reason1Body": {
+    "message": "Popup indeksi mevcut durumunuzu gösteriyor, böylece bir sonraki düzeltmeyi biliyorsunuz."
+  },
+  "reason1Title": {
+    "message": "Rehberlik"
+  },
+  "reason2Body": {
+    "message": "Kuke, bir villanın sekmesi sizin ivmenizi mahvediyor."
+  },
+  "reason2Title": {
+    "message": "İmkansızca uyarılar"
+  },
+  "reason3Body": {
+    "message": "Grafikler ve özetler günlük, stand-up veya müşteri güncellemesine mükemmel bir şekilde düşer."
+  },
+  "reason3Title": {
+    "message": "Paylaşılabilir raporlar"
+  },
+  "reason4Body": {
+    "message": "Chrome'da her metrik yaşam; hiçbir şey makinenizi terk etmez."
+  },
+  "reason4Title": {
+    "message": "Toplam mahremiyet"
+  },
+  "reasonsEyebrow": {
+    "message": "Anahtar faydaları"
+  },
+  "reasonsLead": {
+    "message": "Dört hızlı kart değeri sıfır fluff ile açıklar."
+  },
+  "reasonsTitle": {
+    "message": "Saul Goodman neden kullanıyor?"
+  },
+  "relatedTitle": {
+    "message": "İlgili Yazılar"
+  },
+  "report_ai_error_generic": {
+    "message": "Saul dijital yargıçı ikna edemezdi. Daha sonra tekrar deneyin."
+  },
+  "report_ai_generate": {
+    "message": "Genrate anlatı"
+  },
+  "report_ai_heading": {
+    "message": "Saul'un argümanı"
+  },
+  "report_ai_hint": {
+    "message": "\"Generate anlatı\" tıklayın, böylece Saul gününüzü sarcasm ile analiz edebilir."
+  },
+  "report_ai_loading": {
+    "message": "Yine de kapanış tartışmasını hazırlayın..."
+  },
+  "report_ai_missing_key": {
+    "message": "OpenAI anahtarınızı anlatıyı yapmadan önce seçeneklerde yapılandırın."
+  },
+  "report_ai_no_metrics": {
+    "message": "Bugün bir hikaye anlatmak için ölçüm yok."
+  },
+  "report_ai_retry": {
+    "message": "Tekrar tekrar deneyin"
+  },
+  "report_ai_subtitle": {
+    "message": "Verilerinize dayanan dramatik bir savunma."
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF kütüphanesi mevcut değil."
+  },
+  "report_banner_countdown_final": {
+    "message": "Eylem zamanı: villanın sekmelerini kapatın ve kontrole geri dönün."
+  },
+  "report_banner_message_1": {
+    "message": "Jüriyi indeksle bile ikna edemem bile{threshold}. dikkatleri kes!"
+  },
+  "report_banner_message_2": {
+    "message": "Bunu devam edin ve bir billboard'u patronunuzu uyaracağım."
+  },
+  "report_banner_message_3": {
+    "message": "Bu kuke, villa sekmelerinizin yankısıdır. Şimdi onları kapat."
+  },
+  "report_banner_message_4": {
+    "message": "Tab faturası büyüyor: şimdi ya da ekstra ücretleri şarj ediyoruz."
+  },
+  "report_banner_title": {
+    "message": "Saul yüksek uyarıda!"
+  },
+  "report_category_activity": {
+    "message": "Aktivite Faaliyetleri"
+  },
+  "report_category_neutral": {
+    "message": "Neutral"
+  },
+  "report_composition_heading": {
+    "message": "Gün kompozisyonu"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "Procrastination, idle ve tarafsız."
+  },
+  "report_context_breakdown_context": {
+    "message": "Contexto"
+  },
+  "report_context_breakdown_index": {
+    "message": "Index Index Index Index"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Procrastinasyon gibi% 100 kokuya yakın;% 0'a daha yakın çalıştığınız anlamına gelir - ve sizi savunabileceğim anlamına gelir."
+  },
+  "report_context_breakdown_time": {
+    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+  },
+  "report_context_breakdown_title": {
+    "message": "Zaman Tarafından bağlam"
+  },
+  "report_domain_heading": {
+    "message": "Domain başına Dakikalar"
+  },
+  "report_domain_subtitle": {
+    "message": "Ana şampiyonlar ve villalar gün için toplandılar."
+  },
+  "report_error_no_data": {
+    "message": "Mevcut değil."
+  },
+  "report_error_runtime": {
+    "message": "Kayıt bürosuna ulaşamadı."
+  },
+  "report_error_unknown": {
+    "message": "Bilinmeyen hata"
+  },
+  "report_export_pdf": {
+    "message": "İhracat PDF"
+  },
+  "report_fairness_holiday_active": {
+    "message": "Bugün bir tatil, puan otomatik olarak durakladı."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Tatil tespit edildi - ceza yok."
+  },
+  "report_fairness_status_day_off": {
+    "message": "Gün, puanı nötralize etti."
+  },
+  "report_fairness_status_default": {
+    "message": "Dia útil normal."
+  },
+  "report_fairness_status_holiday": {
+    "message": "Ulusal tatil puanı nötralize etti."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Spor modu suçlamaları azalttı."
+  },
+  "report_fairness_status_manual": {
+    "message": "Diaceptado manuelmente."
+  },
+  "report_fairness_status_personal": {
+    "message": "Kişisel mod - hiçbir puanlama."
+  },
+  "report_fairness_status_study": {
+    "message": "Çalışma modu yumuşatılmış cezalar."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Modo férias zerou o di."
+  },
+  "report_fairness_title": {
+    "message": "Gün adaleti"
+  },
+  "report_fairness_tooltip": {
+    "message": "Kılavuz override, bağlam veya tatil puanı nötrleştirebilir. Ne zaman olursa olsun bunu loglıyoruz."
+  },
+  "report_filter_apply": {
+    "message": "Filtre"
+  },
+  "report_filter_from": {
+    "message": "From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From From"
+  },
+  "report_filter_reset": {
+    "message": "reset"
+  },
+  "report_filter_to": {
+    "message": "toklanmak için"
+  },
+  "report_head_title": {
+    "message": "Saul Goodman – Günlük Rapor"
+  },
+  "report_heading": {
+    "message": "Detaylı rapor"
+  },
+  "report_hero_message_alert": {
+    "message": "Verdict açık: deneme üzerine procrastinasyon. Acil bir plana ihtiyacımız var."
+  },
+  "report_hero_message_excellent": {
+    "message": "Impeccable program. Saul sizi bir TV reklamında kullanabilir."
+  },
+  "report_hero_message_ok": {
+    "message": "Kabul edilebilir hızlar. Hala çalıştığınız jüriyi anlatabiliriz."
+  },
+  "report_hero_message_warning": {
+    "message": "Bugün Visible relaps. Güçleri aramak için zaman."
+  },
+  "report_hero_placeholder": {
+    "message": "Saul bugün hakkında hala kanıt topluyor."
+  },
+  "report_hourly_empty": {
+    "message": "Bu akışı inşa etmek için henüz yeterince dakika değil."
+  },
+  "report_hourly_heading": {
+    "message": "Saat akışı"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "Productive, procrastinasyon ve saatte birkaç dakika."
+  },
+  "report_hourly_subtitle": {
+    "message": "Verimlilik gün boyunca günahlara karşı."
+  },
+  "report_kpi_audio_hint": {
+    "message": "Villain sitelerinde ses ile Dakikalar"
+  },
+  "report_kpi_audio_label": {
+    "message": "Villain medya"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "Procrastination domains üzerinde oynayan ses ile zaman."
+  },
+  "report_kpi_grouped_hint": {
+    "message": "Gruptaki Dakikalar"
+  },
+  "report_kpi_grouped_label": {
+    "message": "Gruplarda Zaman"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "Dakikalar gruplanmış sekmelerde geçirdi."
+  },
+  "report_kpi_heading": {
+    "message": "Ek göstergeler"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Ekstra KPIs: villa medyası, gerçek boş zaman, SPA rotaları, gruplanmış sekmeler."
+  },
+  "report_kpi_restored_hint": {
+    "message": "Son sekmeler veya pencereler"
+  },
+  "report_kpi_restored_label": {
+    "message": "Bugün Kapalı öğeler"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "Bugün sekme veya pencere sayısı kapalı."
+  },
+  "report_kpi_spa_hint": {
+    "message": "Kayıt edilen rota değişiklikleri"
+  },
+  "report_kpi_spa_label": {
+    "message": "SPA rotaları"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "İç rota tek sayfa uygulamalarında değişir."
+  },
+  "report_kpi_subtitle": {
+    "message": "Gerçek idle, SPA rotaları ve medya zamanı."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "Arka plandaki dakikalar"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "Tarayıcı odaklı olmayan"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "Başka bir pencere ile dakikalar odaklanmış."
+  },
+  "report_logo_alt_critical": {
+    "message": "Saul Goodman, odak noktanızdan şok etti"
+  },
+  "report_logo_alt_default": {
+    "message": "Saul Goodman logo"
+  },
+  "report_metric_index_label": {
+    "message": "Index Index Index Index"
+  },
+  "report_metric_switches_label": {
+    "message": "Tab anahtarları"
+  },
+  "report_pdf_ai_title": {
+    "message": "Saul'un argümanı"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "Kategori Kategori"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "Katılımcı"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+  },
+  "report_pdf_composition_title": {
+    "message": "Gün kompozisyonu"
+  },
+  "report_pdf_context_header_context": {
+    "message": "Contexto"
+  },
+  "report_pdf_context_header_index": {
+    "message": "Context index"
+  },
+  "report_pdf_context_header_time": {
+    "message": "Zaman harcanan Zaman Zaman Zaman"
+  },
+  "report_pdf_context_title": {
+    "message": "Breakdown Tarafından context"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Context guard-rail aktif"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Tatil tarafsızlaştırma puanı"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "Sebep Sebep Sebep"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "Gün manuel olarak atladı"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "ndice tarafsızizado"
+  },
+  "report_pdf_narrative_title": {
+    "message": "Anahtar anlatı"
+  },
+  "report_pdf_overview_heading": {
+    "message": "Panorama do"
+  },
+  "report_pdf_status_label": {
+    "message": "Durum durumu"
+  },
+  "report_pdf_title": {
+    "message": "Detaylı rapor - Saul Goodman"
+  },
+  "report_pdf_top_domains": {
+    "message": "Top domains"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "Top procrastination"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "Procrastination domains zamanında sıralama."
+  },
+  "report_ranking_productive_heading": {
+    "message": "En verimli"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "Zamana kadar verimli alanların sıralaması."
+  },
+  "report_share_argument_label": {
+    "message": "Saul'un argümanını paylaşın"
+  },
+  "report_share_argument_title": {
+    "message": "Saul'un Tartışması"
+  },
+  "report_share_copy_error": {
+    "message": "Şimdi yazıyı kopyalayamaz."
+  },
+  "report_share_copy_instagram": {
+    "message": "Metin kopyalandı. Açık Instagram ve yayın yapmadan önce sallayın."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Metin kopyalandı. Bunu yapmadan önce LinkedIn'e yapıştırın."
+  },
+  "report_share_copy_success": {
+    "message": "Post kopyalandı. LinkedIn, Twitter, her yerde."
+  },
+  "report_share_cta": {
+    "message": "Size Saul Goodman'a teslim oldu."
+  },
+  "report_share_error": {
+    "message": "Şu anda paylaşılamaz."
+  },
+  "report_share_error_no_metrics": {
+    "message": "Paylaşmak için veri yok."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Genrate Saul'un paylaşımından önce argümanı."
+  },
+  "report_share_hashtags": {
+    "message": "#Saul Goodman #AntiProcrastination"
+  },
+  "report_share_headline": {
+    "message": "Objection! Vaka vurguları"
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web istenmiyor metin: yayın kutusunu kopyaladığımız şeyleri yapıştırın."
+  },
+  "report_share_hint_linkedin": {
+    "message": "Linked Yükleme metninden geçmeyecek; sitede kopyalanan içeriği yapıştırın."
+  },
+  "report_share_index_label": {
+    "message": "Index Index Index Index"
+  },
+  "report_share_menu_argument": {
+    "message": "Saul'un argümanı"
+  },
+  "report_share_menu_copy": {
+    "message": "Copy text"
+  },
+  "report_share_menu_highlights": {
+    "message": "Yüksek ışıklar"
+  },
+  "report_share_menu_label": {
+    "message": "Share Share Share"
+  },
+  "report_share_menu_native": {
+    "message": "Yerli Paylaş"
+  },
+  "report_share_menu_native_action": {
+    "message": "Sistem paylaşım sayfası"
+  },
+  "report_share_opening": {
+    "message": "Müşterim sıkı çalıştı ve kanıtlarım var."
+  },
+  "report_share_post_argument_label": {
+    "message": "Kopyalama yazısı"
+  },
+  "report_share_post_label": {
+    "message": "Copy post (sosyal)"
+  },
+  "report_share_report_label": {
+    "message": "ShareNews"
+  },
+  "report_share_social_tagline": {
+    "message": "Objection! Müşterim işe girer."
+  },
+  "report_share_success": {
+    "message": "Share page açıldı! Eğer görünmüyorsa, bunu panoya kopyaladık."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman – Highlights"
+  },
+  "report_story_empty": {
+    "message": "Bugün için yeterli hikayeler değil."
+  },
+  "report_story_focus_body": {
+    "message": "{domain}held{duration}odaklanma."
+  },
+  "report_story_focus_title": {
+    "message": "Focus şampiyonu"
+  },
+  "report_story_heading": {
+    "message": "Şampiyonlar ve villalar"
+  },
+  "report_story_idle_body": {
+    "message": "between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between between{range}Tarayıcı boş kaldı{duration}."
+  },
+  "report_story_idle_title": {
+    "message": "En uzun sessizlik"
+  },
+  "report_story_loading": {
+    "message": "Veriler hala yükleniyor..."
+  },
+  "report_story_short_day": {
+    "message": "Gün bir hikaye anlatmak için çok kısaydı."
+  },
+  "report_story_villain_body": {
+    "message": "{domain}Yok Edildi{duration}."
+  },
+  "report_story_villain_title": {
+    "message": "Villain of the day"
+  },
+  "report_subtitle_prefix": {
+    "message": "Daily summary"
+  },
+  "report_tab_switch_empty": {
+    "message": "Bu grafiği henüz yeterince anahtarlamamak için değil."
+  },
+  "report_tab_switch_heading": {
+    "message": "Tab saatte anahtarlar"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "Prod/Proc/Neutral arasındaki geçiş."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "Prokrastinasyon ve tarafsız arasında nasıl atıyorsunuz."
+  },
+  "report_tagline": {
+    "message": "Resmi odak logbookbookbook"
+  },
+  "report_time_column": {
+    "message": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman"
+  },
+  "report_timeline_heading": {
+    "message": "Minute-by-minute anlatı"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "Anahtar dilimler saat ve kategori tarafından gruplanır."
+  },
+  "report_timeline_loading": {
+    "message": "Girişler için bekleyin..."
+  },
+  "report_timeline_subtitle": {
+    "message": "Değişiminizin hikayesini anlatan yüksek ışıklar."
+  },
+  "report_timeline_summary": {
+    "message": "{duration}• • •{count}Segmentler"
+  },
+  "rssCta": {
+    "message": "RSS ile abone olun"
+  },
+  "searchLabel": {
+    "message": "Arama Arama"
+  },
+  "searchPlaceholder": {
+    "message": "Arama unvanı, alıntı veya etiket..."
+  },
+  "searchReset": {
+    "message": "Clear filtreler"
+  },
+  "seoDescription": {
+    "message": "Saul Goodman, sekmelerinizi, procrastinasyonla mücadele eder ve tarayıcınızda dramatik raporlar sunar. Her şey yerel kalır, dış sunucular yok."
+  },
+  "seoTitle": {
+    "message": "Saul Goodman - Anti-Procrastination Extension"
+  },
+  "shareCopied": {
+    "message": "Link kopyaladı!"
+  },
+  "shareCopy": {
+    "message": "Kopyalama linki"
+  },
+  "shareCopyPrompt": {
+    "message": "Paylaşmak için bu bağlantıyı kopyalayın:"
+  },
+  "shareIndexCopied": {
+    "message": "Link kopyaladı!"
+  },
+  "shareIndexCopy": {
+    "message": "Kopyalama linki"
+  },
+  "shareIndexLinkedin": {
+    "message": "LinkedIn LinkedIn LinkedIn"
+  },
+  "shareIndexTitle": {
+    "message": "Blogu Paylaş"
+  },
+  "shareIndexTwitter": {
+    "message": "X"
+  },
+  "shareLinkedin": {
+    "message": "LinkedIn LinkedIn LinkedIn"
+  },
+  "shareTitle": {
+    "message": "Share Share Share"
+  },
+  "shareTwitter": {
+    "message": "X"
+  },
+  "socialProofCaption": {
+    "message": "Saul zaten binlerce odaklanmalarına yardımcı oluyor."
+  },
+  "socialProofMetricLabel": {
+    "message": "Mutlu kullanıcılar"
+  },
+  "splitPopupBody": {
+    "message": "Panel, indeksi, üst alanları, ekstra göstergeleri gösterir ve CSV/PDF ihraç etmenizi sağlar. Ne zaman dikkat ederse, deprem modu adalet barını kurtarmak için fırtınalar."
+  },
+  "splitPopupCaption": {
+    "message": "indeks, üst alan ve ihracat ile Popup."
+  },
+  "splitPopupCaption2": {
+    "message": "KPIs, üst alanlar ve hızlı ihracat."
+  },
+  "splitPopupCaption3": {
+    "message": "Seçenekler panelinde ürün/villain listeleri."
+  },
+  "splitPopupCaption4": {
+    "message": "Regigurable ağırlıklar ve indeks için programlar."
+  },
+  "splitPopupTitle": {
+    "message": "On-call popup"
+  },
+  "splitReportBody": {
+    "message": "Saat başına grafikler, villa sıralaması, AI anlatısı ve eylem planı ile kritik bayraklar. Tüm yeminli görsellerle."
+  },
+  "splitReportCaption": {
+    "message": "Grafikler ve sıralama ile rapor özeti."
+  },
+  "splitReportCaption2": {
+    "message": "AI anlatısı ve dakika süresi."
+  },
+  "splitReportCaption3": {
+    "message": "Villain sıralaması, şampiyonlar ve dağıtım."
+  },
+  "splitReportTitle": {
+    "message": "Dramatik rapor"
+  },
+  "splitStats1": {
+    "message": "Dakikalar kurtarıldı / gün"
+  },
+  "splitStats2": {
+    "message": "Müşteriler güvence altına alındı"
+  },
+  "statsCategories": {
+    "message": "Deneme kategoriler"
+  },
+  "statsFresh": {
+    "message": "Son Güncelleme"
+  },
+  "statsPosts": {
+    "message": "yayınlanmış makaleler"
+  },
+  "statsTitle": {
+    "message": "Blog radarı"
+  },
+  "stickyCtaButton": {
+    "message": "Chrome üzerinde yükleme"
+  },
+  "stickyCtaText": {
+    "message": "Saul sekmelerinizi izlemeye hazır."
+  },
+  "stickyToggleLabel": {
+    "message": "Toggle CTA"
+  },
+  "tagsTitle": {
+    "message": "Topics on fire"
+  },
+  "testimonial1Cite": {
+    "message": "- Anonim müşteri"
+  },
+  "testimonial1Quote": {
+    "message": "“Saul bana saatte 40 sekmenin bir suç olduğunu hatırlattı.”"
+  },
+  "testimonial2Cite": {
+    "message": "Regretful mühendisi"
+  },
+  "testimonial2Quote": {
+    "message": "“Rapor patronla buluşmada bir savunma parçası oldu.”"
+  },
+  "testimonial3Cite": {
+    "message": "Ürün Yöneticisi"
+  },
+  "testimonial3Quote": {
+    "message": "\"Dünyaquake modu sprint'imi kurtardı. Ücretler memnuniyetle ödedi.”"
+  },
+  "testimonialNext": {
+    "message": "Sonraki referans"
+  },
+  "testimonialPrev": {
+    "message": "Önceki referans"
+  },
+  "testimonialsEyebrow": {
+    "message": "Referanslar"
+  },
+  "testimonialsTitle": {
+    "message": "Müşteriler haklı çıkar."
+  },
+  "timeline1Body": {
+    "message": "Content script ilk sekmelerde aktivite tespit eder. Saul üretken ya da bir villa olan oturumlar."
+  },
+  "timeline1Title": {
+    "message": "İlk radar radar"
+  },
+  "timeline2Body": {
+    "message": "Eğer indeks çok yüksekse, deprem modu fırtınaları Chrome'u kuke ile alır, efendimen ve CTA oyunu çevirmek için."
+  },
+  "timeline2Title": {
+    "message": "Infraction"
+  },
+  "timeline3Body": {
+    "message": "Detaylı rapor gemileri, zaman çizelgesi ve AI anlatısı günü kanıtlarla kapatmak için."
+  },
+  "timeline3Title": {
+    "message": "Günlük cümle"
+  },
+  "timelineEyebrow": {
+    "message": "Timeline"
+  },
+  "timelineTitle": {
+    "message": "Karara uymaktan sonra."
+  },
+  "transparencyBody": {
+    "message": "Verilerinizi ve her salıverme notunuzu sıfır fluff ile nasıl idare ediyoruz."
+  },
+  "transparencyChangelogCta": {
+    "message": "Open full changelog"
+  },
+  "transparencyEyebrow": {
+    "message": "Transparency"
+  },
+  "transparencyPrivacyCta": {
+    "message": "Gizlilik Politikasını Oku"
+  },
+  "transparencyTitle": {
+    "message": "Privacy & changelog açık."
+  },
+  "trustCard1Body": {
+    "message": "Metrikler   TAG0  krom.storage.local  TAG1  . Hiçbir şey dış sunuculara dokunmuyor."
+  },
+  "trustCard1Title": {
+    "message": "% 100 yerel"
+  },
+  "trustCard2Body": {
+    "message": "Her çizgi halktır, böylece topluluk değişiklikleri kontrol edebilir."
+  },
+  "trustCard2Title": {
+    "message": "Open-source"
+  },
+  "trustCard3Body": {
+    "message": "Eşliği seçin ve ihtiyacınız olduğunda Saul'u susturabilirsiniz."
+  },
+  "trustCard3Title": {
+    "message": "Tefsaf uyarıları"
+  },
+  "trustEyebrow": {
+    "message": "Gizlilik ve güven"
+  },
+  "trustLead": {
+    "message": "Playful tone, ciddi güvenlik: İşte verilerin ve uyarıların gerçekten nasıl çalıştığını."
+  },
+  "trustTitle": {
+    "message": "Her şey sizin ve tarayıcınız arasında kalır."
+  },
+  "usersBadgeAlt": {
+    "message": "Chrome Web Store kullanıcıları"
+  }
+}

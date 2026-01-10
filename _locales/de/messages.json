@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "Saul Goodman"
+  },
+  "backToHome": {
+    "message": "Zurück zur Seite"
+  },
+  "benefit1Body": {
+    "message": "Diagramme und CSV, um Ihren Chef, Team oder Ihr eigenes Gewissen zu zeigen."
+  },
+  "benefit1Title": {
+    "message": "Unbestreitbare Beweise"
+  },
+  "benefit2Body": {
+    "message": "Erdbebenmodus und sarkastische Botschaften können Sie nicht ignorieren."
+  },
+  "benefit2Title": {
+    "message": "Filmalarm"
+  },
+  "benefit3Body": {
+    "message": "Alle Urteile passieren lokal; keine Daten verlassen Ihren Browser."
+  },
+  "benefit3Title": {
+    "message": "Garantierte Privatsphäre"
+  },
+  "benefitsEyebrow": {
+    "message": "Vorteile"
+  },
+  "benefitsTitle": {
+    "message": "Saul kümmert sich um den Fall."
+  },
+  "block_page_back": {
+    "message": "Zurück"
+  },
+  "block_page_body": {
+    "message": "Sie markierten diese Seite als Procrastination. Schließen Sie die Registerkarte oder passen Sie die Liste an, wenn Sie Ihre Meinung ändern."
+  },
+  "block_page_heading": {
+    "message": "Saul hat diese Domain blockiert"
+  },
+  "block_page_image_alt": {
+    "message": "Saul Goodman enttäuscht"
+  },
+  "block_page_local_note": {
+    "message": "Lokale Block — nichts verlässt Ihren Browser."
+  },
+  "block_page_options": {
+    "message": "Offene Einstellungen"
+  },
+  "block_page_title": {
+    "message": "Saul hat diese Domain blockiert"
+  },
+  "blogCategoryAll": {
+    "message": "Alle"
+  },
+  "blogEmptyState": {
+    "message": "Noch keine Artikel hier veröffentlicht."
+  },
+  "blogError": {
+    "message": "Fehler beim Laden von Blog"
+  },
+  "blogHeroEyebrow": {
+    "message": "Die Geschichte der Welt"
+  },
+  "blogHeroLead": {
+    "message": "Sarcastic übernimmt Fokus, Aufmerksamkeit und Leistung. Wöchentliche Artikel, die in Sauls Ton geschrieben wurden – kein Coach Vibe."
+  },
+  "blogHeroTitle": {
+    "message": "Legal nimmt digitale Procrastination"
+  },
+  "blogPreviewCta": {
+    "message": "Alle Artikel anzeigen"
+  },
+  "blogPreviewEmpty": {
+    "message": "Keine Artikel verfügbar."
+  },
+  "blogPreviewError": {
+    "message": "Unfähig, Artikel zu laden."
+  },
+  "blogPreviewEyebrow": {
+    "message": "Der Tag der Nacht"
+  },
+  "blogPreviewImageAlt": {
+    "message": "Saul Goodman Illustration"
+  },
+  "blogPreviewLead": {
+    "message": "Lesen Sie die drei neuesten Artikel und sehen Sie, wie Saul Ihren Fokus mit juristischem Sarkasmus verteidigt."
+  },
+  "blogPreviewLoading": {
+    "message": "Artikel laden..."
+  },
+  "blogPreviewRead": {
+    "message": "Artikel lesen"
+  },
+  "blogPreviewTitle": {
+    "message": "Letzte Fälle aus dem digitalen Gerichtssaal."
+  },
+  "breadcrumbArticle": {
+    "message": "Artikel 2"
+  },
+  "breadcrumbBlog": {
+    "message": "Blog"
+  },
+  "categoriesTitle": {
+    "message": "Kategorien in der Sitzung"
+  },
+  "categoryActiveLabel": {
+    "message": "Aktive Kategorie"
+  },
+  "categoryClear": {
+    "message": "Kategorie auswählen"
+  },
+  "categoryDevLead": {
+    "message": "Praktische Produktivität für jeden, der VS-Code, PRs und Remote-Meetings anspricht."
+  },
+  "categoryDevTitle": {
+    "message": "Dev-Performance mit einem schuldigen Appell"
+  },
+  "categoryEyebrow": {
+    "message": "Kategorie"
+  },
+  "categoryFocoLead": {
+    "message": "Tägliche Studien und Drama darüber, Ihren Kopf in den Code zu halten, ohne sich an Futtermittel zu übergeben."
+  },
+  "categoryFocoTitle": {
+    "message": "Fokus und Achtung vor Gericht"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "Echte Fälle von Verspätung, digitaler Faulheit und Tabjagd Saul liebt es zu verfolgen."
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "Prokratisierung im Rahmen der Untersuchung"
+  },
+  "categoryRemotoLead": {
+    "message": "Geschichten über Heimbüro, Slack Präsenz und Vermeidung eines Zoom Verschwindens."
+  },
+  "categoryRemotoTitle": {
+    "message": "Fernarbeit ohne Alibi"
+  },
+  "changelogError": {
+    "message": "Wir konnten das Changelog jetzt nicht laden. Versuchen Sie es später noch mal."
+  },
+  "changelogEyebrow": {
+    "message": "Alles dokumentiert"
+  },
+  "changelogHeading": {
+    "message": "Offizielles Changelog"
+  },
+  "changelogLoading": {
+    "message": "Laden Sie das Changelog direkt aus dem Repository..."
+  },
+  "changelogSubheading": {
+    "message": "Verfolgen Sie jede Änderung pro Release direkt aus dem Repository."
+  },
+  "changelogTitle": {
+    "message": "Veränderung"
+  },
+  "codeconBuildChip": {
+    "message": "4h der Kodierung"
+  },
+  "codeconBulletChallenge": {
+    "message": "Herausforderung: Bewähren Sie Remote-Arbeit in 4 Stunden handgefertigten Code, keine AI erlaubt."
+  },
+  "codeconBulletNarrative": {
+    "message": "“Attorney” Erzählung verwandelt Metriken in eine Verteidigung für den Manager/Jury."
+  },
+  "codeconBulletRepoLink": {
+    "message": "Original Repo"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "Hack Lab Open Source:"
+  },
+  "codeconBulletTracking": {
+    "message": "Erweiterung Uhren Tab Schalter, Leere Zeit, und Schurken-Seiten, um einen Index zu bauen."
+  },
+  "codeconCtaRepo": {
+    "message": "Siehe Hack Lab-Code"
+  },
+  "codeconCtaSite": {
+    "message": "Treffen Sie uns"
+  },
+  "codeconCtaVideo": {
+    "message": "Voll Video ansehen"
+  },
+  "codeconEyebrow": {
+    "message": "Hack Lab CodeConnect"
+  },
+  "codeconLead": {
+    "message": "Die Idee wurde in einem CodeCon Hack Lab geboren: Otávio Ribeiro (  TAG0  LinkedIn  TAG1 ,   TAG2  GitHub   TAG3   ) stellte sich vor, Saul als persönlicher Anwalt gegen Procrastination — mit Tremor, Siren und Gerichtsstandsberichte."
+  },
+  "codeconPlanChip": {
+    "message": "30 min Planung"
+  },
+  "codeconStoryLead": {
+    "message": "In 30 Minuten Whiteboard skizzierte Otávio die MVP und in den nächsten 4 Stunden den Samen Sauls: eine Erweiterung, die Remote-Arbeitsarbeiten durch Anschauen von Tabs, Berechnung eines Index, und die Ausarbeitung der Verteidigung der dev für die “Jury” (der Chef) — alles ohne KI."
+  },
+  "codeconTag": {
+    "message": "Geboren in Gemeinschaft"
+  },
+  "codeconTitle": {
+    "message": "Wo Saul Goodman wurde eine Chrome-Erweiterung"
+  },
+  "codeconVideoCaption": {
+    "message": "Clip aus dem CodeCon Hack Lab, wo Saul zum Leben kam als Ablenkungs-Blitz-Erweiterung."
+  },
+  "demoCta": {
+    "message": "Vollständige Demo ansehen"
+  },
+  "demoEyebrow": {
+    "message": "Schneller Demo"
+  },
+  "demoLead": {
+    "message": "Ein Blick reicht: Popup für sofortige Reaktionen, Bericht für Tagesentscheidungen."
+  },
+  "demoPopupBody": {
+    "message": "Tagesindex, Top-Domains und Export Shortcuts zur Hand."
+  },
+  "demoPopupTitle": {
+    "message": "Popup für sofortige Entscheidungen"
+  },
+  "demoReportBody": {
+    "message": "Diagramme, leichtes Geschichtenerzählen und vorgeschlagene nächste Schritte."
+  },
+  "demoReportTitle": {
+    "message": "Bericht zur Planung"
+  },
+  "demoTitle": {
+    "message": "Sehen Sie, wo Sie sich entscheiden und wo Saul eingreift."
+  },
+  "demoViewFull": {
+    "message": "Volle Größe anzeigen"
+  },
+  "devBody": {
+    "message": "Hook up die lokale Daemon und VS-Code-Erweiterung, um Editor Zeit als produktive Minuten zu zählen, ohne localhost verlassen."
+  },
+  "devCtaDocs": {
+    "message": "Docs ansehen"
+  },
+  "devCtaReadme": {
+    "message": "Open README"
+  },
+  "devCtaVsCode": {
+    "message": "VS Code Erweiterung installieren"
+  },
+  "devEyebrow": {
+    "message": "Für Entwickler"
+  },
+  "devLead": {
+    "message": "Alle technischen Details bewegten sich aus dem Hauptstrom. Beginnen Sie mit den untenstehenden Führungen."
+  },
+  "devTitle": {
+    "message": "Möchten Sie beitragen oder integrieren?"
+  },
+  "extDescription": {
+    "message": "Sarcastic-Fokustracker, der Domains misst und Ihren Procrastination-Index in Schach hält."
+  },
+  "extensionsChromeCta": {
+    "message": "Chrome Erweiterung"
+  },
+  "extensionsCopy": {
+    "message": "Bringen Sie Saul zu Chrome und VS-Code, um Ihren Fokus ehrlich zu halten."
+  },
+  "extensionsTitle": {
+    "message": "Installieren Sie Sauls Erweiterungen"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS Code Erweiterung"
+  },
+  "extName": {
+    "message": "Saul Goodman"
+  },
+  "faq1Answer": {
+    "message": "Total. Saul beschuldigt nur Aufmerksamkeit und Humor."
+  },
+  "faq1Question": {
+    "message": "Ist es frei?"
+  },
+  "faq2Answer": {
+    "message": "Niemals. Alles bleibt in   TAG0  chrome.storage.local  TAG1  ."
+  },
+  "faq2Question": {
+    "message": "Verlassen meine Daten den Browser?"
+  },
+  "faq3Answer": {
+    "message": "Nur wenn Sie Erzählungen im Bericht wünschen. Der Rest funktioniert offline."
+  },
+  "faq3Question": {
+    "message": "Brauche ich KI?"
+  },
+  "faq4Answer": {
+    "message": "Nein. Alles läuft lokal ohne Anmeldung."
+  },
+  "faq4Question": {
+    "message": "Brauche ich ein Konto?"
+  },
+  "faq5Answer": {
+    "message": "Wenn der Index Ihre Schwelle überschreitet, schüttelt der Bildschirm und ein Sirene spielt für ein paar Sekunden."
+  },
+  "faq5Question": {
+    "message": "Wie funktioniert Erdbebenmodus?"
+  },
+  "faq6Answer": {
+    "message": "Ja. Im Optionen-Bildschirm setzen Sie produktive/villain Listen, Gewichte und Zeitplan."
+  },
+  "faq6Question": {
+    "message": "Kann ich Domains und Termine anpassen?"
+  },
+  "faq7Answer": {
+    "message": "Ja. CSV und PDF-Tasten können Sie die Daten sofort herunterladen."
+  },
+  "faq7Question": {
+    "message": "Kann ich meine Daten exportieren?"
+  },
+  "faq8Answer": {
+    "message": "Erbaut für Chrome, aber kompatibel mit Chrom-basierten Browsern wie Brave oder Edge."
+  },
+  "faq8Question": {
+    "message": "Funktioniert es in anderen Browsern?"
+  },
+  "faq9Answer": {
+    "message": "AI Storytelling ist optional; wenn Sie den OpenAI-Schlüssel überspringen, bleibt alles offline."
+  },
+  "faq9Question": {
+    "message": "Ist der KI-Bericht sicher?"
+  },
+  "faqEyebrow": {
+    "message": "Schnelle Fragen"
+  },
+  "faqTitle": {
+    "message": "Einfache FAQ."
+  },
+  "feature1Item1": {
+    "message": "Abzeichen mit aktuellen Index und sarkastischen Nachrichten."
+  },
+  "feature1Item2": {
+    "message": "Top produktive und Bösewicht Domains mit formatierter Zeit."
+  },
+  "feature1Item3": {
+    "message": "CSV/PDF Exporte mit einem Klick."
+  },
+  "feature1Title": {
+    "message": "Echtzeit-Dashboard"
+  },
+  "feature2Item1": {
+    "message": "Konfigurierbare Schwelle und optionale Sirene."
+  },
+  "feature2Item2": {
+    "message": "Critical Overlay mit Countdown und CTA."
+  },
+  "feature2Item3": {
+    "message": "Blocks nur Schurken Tabs, so können Sie sich in produktiven."
+  },
+  "feature2Title": {
+    "message": "Erdbebenmodus"
+  },
+  "feature3Item1": {
+    "message": "Diagramme pro Stunde und Tab-Schalter-Aufschlüsselung."
+  },
+  "feature3Item2": {
+    "message": "KI-Erzählung in Better Call Saul Ton."
+  },
+  "feature3Item3": {
+    "message": "Kritisches Banner mit sofortigem Aktionsplan."
+  },
+  "feature3Title": {
+    "message": "Dramatischer Bericht"
+  },
+  "feature4Item1": {
+    "message": "Daten in   TAG0  chrome.storage.local  TAG1   – nichts geht in die Cloud."
+  },
+  "feature4Item2": {
+    "message": "Produktive/Dorf-Listen nur in Ihrem Browser gespeichert."
+  },
+  "feature4Item3": {
+    "message": "Optionaler OpenAI-Schlüssel lokal gespeichert."
+  },
+  "feature4Title": {
+    "message": "Datenschutz"
+  },
+  "featureBlockBody": {
+    "message": "Wenn Sie den Modus aktivieren, schmeichelt Saul in Full-Screen Tabs, bis Sie zurück zum Fokus und gewinnen Sie Back Points."
+  },
+  "featureBlockHint": {
+    "message": "„Flip the switch, wenn Sie wollen: nur die produktive Registerkarte bleibt offen.“"
+  },
+  "featureBlockTitle": {
+    "message": "Villa Schloss"
+  },
+  "featureContextBody": {
+    "message": "Sie können jetzt den Tag CONTEXT (Arbeit, Freizeit, Studium, persönlich) in den Popup setzen; Saul rekalibriert die Partitur, erweicht Strafen und hält die Dinge fair."
+  },
+  "featureContextLabel": {
+    "message": "Neu"
+  },
+  "featureCustomBody": {
+    "message": "Definieren Sie produktive und Schurken-Domains, Stundengewichte und Erdbebenschwellen auf Ihre Routine abgestimmt."
+  },
+  "featureCustomHint": {
+    "message": "„Spreadsheet? VIP. Endlosfutter? Defendant.“"
+  },
+  "featureCustomTitle": {
+    "message": "Individuelle Listen & Gewichte"
+  },
+  "featuredEyebrow": {
+    "message": "Vorgestellt"
+  },
+  "featuredTitle": {
+    "message": "Fall der Woche"
+  },
+  "featureGaugeHint": {
+    "message": "Wenn es 70 % überschreitet, bereitet Saul den Erdbeben vor."
+  },
+  "featureGaugeLabel": {
+    "message": "Live-Status"
+  },
+  "featureGaugeTitle": {
+    "message": "Procrastination Index"
+  },
+  "featureNextLabel": {
+    "message": "Nächste Karte"
+  },
+  "featurePrevLabel": {
+    "message": "Vorherige Karte"
+  },
+  "featurePrivacyBody": {
+    "message": "Alles läuft innerhalb   TAG0  chrome.storage.local   TAG1  ; keine externen Server oder ausgefallene Urteile."
+  },
+  "featurePrivacyHint": {
+    "message": "„Nicht einmal der Richter sieht Ihre Daten.“"
+  },
+  "featurePrivacyTitle": {
+    "message": "Datenschutz-erste"
+  },
+  "featureQuakeBody": {
+    "message": "Screen Shake, Sirene und Saul auf der Oberseite der Bösen Tabs schreien für Sie zurück auf der Strecke."
+  },
+  "featureQuakeHint": {
+    "message": "„Haben Sie! Zurück zum produktiven Tab jetzt.”"
+  },
+  "featureQuakeTest": {
+    "message": "Prüfwarnung"
+  },
+  "featureQuakeTitle": {
+    "message": "Cinematic quake mode"
+  },
+  "featureRealtimeBody": {
+    "message": "Das Badge beobachtet jeden Tab und verwandelt Ihren Tag in eine klare Punktzahl der Fokus gegen Procrastination."
+  },
+  "featureRealtimeHint": {
+    "message": "„Saul beobachtet diese 37 Tabs.“"
+  },
+  "featureRealtimeTitle": {
+    "message": "Echtzeit-Tracking"
+  },
+  "featureReportBody": {
+    "message": "Diagramme, KI-Geschichte, CSV/PDF-Exporte und Minute-by-Minute-Timeline für Ihren nächsten Stand-up."
+  },
+  "featureReportHint": {
+    "message": "„Hier sind die Beweise für Sie und Ihren Chef.“"
+  },
+  "featureReportTitle": {
+    "message": "Dramatischer Bericht"
+  },
+  "featureSectionEyebrow": {
+    "message": "Kernmerkmale"
+  },
+  "featureSectionLead": {
+    "message": "Jede Karte mischt Humor und Klarheit so Newcomer sofort verstehen, was Saul in Chrome tut."
+  },
+  "featureSectionTitle": {
+    "message": "Alles, was Sie brauchen, um Tabs zu überprüfen."
+  },
+  "featuresEyebrow": {
+    "message": "Detailansicht"
+  },
+  "featuresTitle": {
+    "message": "Der Arsenal der Saul Goodman Erweiterung."
+  },
+  "featureSwipeHint": {
+    "message": "Swipe seitwärts, um jedes Feature zu überprüfen Saul Griffe."
+  },
+  "feedbackLink": {
+    "message": "Feedback geben"
+  },
+  "finalCtaBody": {
+    "message": "Installieren, setzen Sie Ihre Domänen, und erhalten Sie zurück zum Fokus, bevor Bösewicht Tabs gewinnen den Tag."
+  },
+  "finalCtaTitle": {
+    "message": "Bereit, Saul übernehmen zu lassen?"
+  },
+  "finalPrimary": {
+    "message": "Installieren Sie auf Chrome"
+  },
+  "footerBody": {
+    "message": "Installieren Sie Ihre Schurken und lassen Sie Saul Fokusgebühren sammeln."
+  },
+  "footerChangelogLink": {
+    "message": "Veränderung"
+  },
+  "footerLinkArchitecture": {
+    "message": "Architektur"
+  },
+  "footerLinkGithub": {
+    "message": "GitHub"
+  },
+  "footerLinkIndicators": {
+    "message": "Indikatoren"
+  },
+  "footerPrivacy": {
+    "message": "100% lokale Daten. Nicht einmal der Richter sieht es."
+  },
+  "footerPrivacyLink": {
+    "message": "Datenschutz"
+  },
+  "footerTitle": {
+    "message": "Saul Goodman Erweiterung"
+  },
+  "heroBadge": {
+    "message": "\"Im Falle der Faulheit... CALL SAUL!\""
+  },
+  "heroConfidence1": {
+    "message": "Erdbebenmodus"
+  },
+  "heroConfidence2": {
+    "message": "Blacklist & VIP Domainlisten"
+  },
+  "heroConfidence3": {
+    "message": "Bericht mit KI-Geschichte"
+  },
+  "heroGaugeHint": {
+    "message": "Wenn es 70 % trifft, stürmt sich der Erdbebenmodus."
+  },
+  "heroGaugeLabel": {
+    "message": "Live Index"
+  },
+  "heroPill": {
+    "message": "Wöchentliche Tropfen, täglicher Sarkasmus"
+  },
+  "heroPrimaryCta": {
+    "message": "Installieren Sie auf Chrome"
+  },
+  "heroSecondaryCta": {
+    "message": "Wie funktioniert das?"
+  },
+  "heroSubtitle": {
+    "message": "Es verfolgt Ihre Tabs, Fahnen Ablenkungen, und nudges Sie zurück zum Fokus vor dem Tag der Segel — alles innerhalb Chrome, keine Sign-ups."
+  },
+  "heroTag": {
+    "message": "Anti-Procrastination Erweiterung für echtes Leben"
+  },
+  "heroTitle": {
+    "message": "Hör auf zu procrastinieren. Saul Goodman nimmt den Fall."
+  },
+  "indexCalloutLabel": {
+    "message": "Sauls Memo"
+  },
+  "indexCalloutQuote": {
+    "message": "„Cross 60% und ich rufe Ihren Chef an. Unter 10% fallen und ich buche Ihren Therapeuten. Balance the docket, client!“"
+  },
+  "indexClueAlert": {
+    "message": "Prüfung des Erdbebens"
+  },
+  "indexClueAlertBody": {
+    "message": "Doppel-Check-Schwelle, Sirene und Kopie, so dass die Predigten zum richtigen Zeitpunkt trifft."
+  },
+  "indexClueBreak": {
+    "message": "Mikroausbrüche"
+  },
+  "indexClueBreakBody": {
+    "message": "Das 15–22 Sortiment verlangt strategische Atemzüge. Blockieren Sie sie auf Ihrem Kalender, Client."
+  },
+  "indexClueFocus": {
+    "message": "Liste der Bösewichte"
+  },
+  "indexClueFocusBody": {
+    "message": "Halten Sie eine lebendige Liste von Tabs, die den Index vor Saul Akten eine Bewegung."
+  },
+  "indexCluesLabel": {
+    "message": "Fallkontrolle"
+  },
+  "indexEyebrow": {
+    "message": "Auf Sauls Schreibtisch"
+  },
+  "indexFootnote": {
+    "message": "Zwischen 15 und 22 Saul Akten “ standhafter Kunde.” Oberhalb dessen er den Erdbeben bewaffnet; darunter verschreibt er Ruhe, nicht zusätzliche Aufgaben."
+  },
+  "indexGaugeHint": {
+    "message": "18% schlägt den süßen Fleck — stetige Fokus ohne voll Roboter."
+  },
+  "indexGaugeLabel": {
+    "message": "Süßer Fleck"
+  },
+  "indexLead": {
+    "message": "Rechtlicher Übersetzungsdienst: Eine Punktzahl von 0 ist keine Trophäe und 100 ist kein All-Inclusive. Saul liest jede Band, um zu entscheiden, ob Sie Ihren Stuhl schütteln oder einen Urlaubstag zwingen."
+  },
+  "indexMemoBody": {
+    "message": "Wenn ein Schurken-Tab den Index spikes, Trigger Vollbild-Blockmodus. Saul schließt Bösewichte aus, befreit nur die produktive Tab, und Ihre Punktzahl atmet wieder."
+  },
+  "indexMemoHeading": {
+    "message": "Büro memo"
+  },
+  "indexMemoSign": {
+    "message": "— Saul, dein Produktivitätsanwalt"
+  },
+  "indexPitch1": {
+    "message": "Der Index liegt zwischen 0 und 100. Je näher zu 100, desto deutlicher haben Sie den Fall mittendrin fallen gelassen und wurde ein VIP-Client der Procrastination."
+  },
+  "indexPitch2": {
+    "message": "Aber Null zu schlagen sieht auch verdächtig aus: Jeder, der auf produktive Tabs rund um die Uhr verklebt ist, ist ein Schritt von einer Burnout-Deposition."
+  },
+  "indexRange0to14Body": {
+    "message": "Du bist so verklebt, dass Saul es nennt “übermäßige Eifer.” Atme, steh auf und nimm Wasser, bevor das Zeugnis wird."
+  },
+  "indexRange0to14Title": {
+    "message": "0 – 14: Fragende Überarbeit"
+  },
+  "indexRange15to22Body": {
+    "message": "Ideales Urteil: konsequenter Fokus, gesunde Pausen, Null Sirenen. Saul könnte sogar einen Preisnachlass berücksichtigen."
+  },
+  "indexRange15to22Title": {
+    "message": "15 – 22: Goldenes Gleichgewicht"
+  },
+  "indexRange23to60Body": {
+    "message": "Sie plädieren immer noch den Fall, aber stolpern in Schurkenfutter. Saul feuert witzige Hinweise, um den Prozess wieder auf Kurs zu bringen."
+  },
+  "indexRange23to60Title": {
+    "message": "23 – 60: Wobbly Fokus"
+  },
+  "indexRange61to100Body": {
+    "message": "Es ist Wache. Der Bildschirm schüttelt, die Sirene strahlt, und Saul geht mit einem Stop-and-Desist für jeden Bösewicht Tab."
+  },
+  "indexRange61to100Title": {
+    "message": "61 – 100: Procrastination in flagrante"
+  },
+  "indexStamp": {
+    "message": "Der Kunde schläft einfach"
+  },
+  "indexTitle": {
+    "message": "Wie Saul den Procrastination Index liest"
+  },
+  "integrationCard1Body": {
+    "message": "Generieren Sie den Paarungsschlüssel, schalten Sie die Integration, und setzen Sie die lokale URL. Nichts verlässt Ihren Browser."
+  },
+  "integrationCard1Title": {
+    "message": "Optionen aktivieren"
+  },
+  "integrationCard2Body": {
+    "message": "Verwenden Sie den Befehl VS Code Erweiterung, um es zu starten: es pre-fills PAIRING KEY/PORT und öffnet im Daemon Ordner."
+  },
+  "integrationCard2Title": {
+    "message": "Lokaler Daemon"
+  },
+  "integrationCard3Body": {
+    "message": "Befehl “Saul Goodman: preparar comando do SaulDaemon” Schiffe bereit nach der Installation und sendet Editor Herzschläge zu Chrome."
+  },
+  "integrationCard3Title": {
+    "message": "VS Code Erweiterung"
+  },
+  "integrationCta": {
+    "message": "Siehe Integration Anleitung"
+  },
+  "integrationEyebrow": {
+    "message": "Für devs"
+  },
+  "integrationLead": {
+    "message": "Schalten Sie die optionale Integration ein: Saul ergänzt die Editorzeit als produktiv, ohne Localhost zu verlassen."
+  },
+  "integrationTitle": {
+    "message": "VS Code + lokale Daemon, alle als produktiv gezählt."
+  },
+  "integrationVsixCta": {
+    "message": "VS Code Erweiterung installieren"
+  },
+  "label_vscode": {
+    "message": "VS-Code (IDE)"
+  },
+  "languageLabel": {
+    "message": "Sprache auswählen"
+  },
+  "latestEyebrow": {
+    "message": "frisch"
+  },
+  "latestTitle": {
+    "message": "Hot off der Produktivität Gericht"
+  },
+  "lightboxClose": {
+    "message": "Schließen"
+  },
+  "manifesto1Body": {
+    "message": "Ihr Tag wird innerhalb des Browsers beurteilt. Keine Daten verlassen den Computer, nicht einmal durch Gerichtsbeschluss."
+  },
+  "manifesto1Title": {
+    "message": "100% lokal"
+  },
+  "manifesto2Body": {
+    "message": "Visuelle und Soundwarnungen machen deutlich, wann Saul zusätzliche Gebühren berechnen wird."
+  },
+  "manifesto2Title": {
+    "message": "Transparente Abrechnung"
+  },
+  "manifesto3Body": {
+    "message": "Sarkastische Botschaften und dramatische Banner erinnern Sie an Procrastination ist auch teuer."
+  },
+  "manifesto3Title": {
+    "message": "Humor als Waffe"
+  },
+  "manifestoEyebrow": {
+    "message": "Manifest"
+  },
+  "manifestoTitle": {
+    "message": "Aggressives Marketing mit einer Prise Ethik."
+  },
+  "mediaTaglineDev": {
+    "message": "Dev-Performance von harten Metriken beurteilt."
+  },
+  "mediaTaglineFoco": {
+    "message": "Fokus und Aufmerksamkeit unter täglichen Fragen."
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "Mentale Oszilloskope treffen den therapeutischen Sarkasmus Sauls."
+  },
+  "mediaTaglineRemoto": {
+    "message": "Remote-Arbeit mit null Geister-Modus Ausreden."
+  },
+  "metaCategory": {
+    "message": "Kategorie"
+  },
+  "metaPublishedAt": {
+    "message": "Veröffentlicht auf den Blog"
+  },
+  "metaSource": {
+    "message": "Quelle"
+  },
+  "metaSourcePublishedAt": {
+    "message": "Quelle veröffentlicht"
+  },
+  "metaSourceUrl": {
+    "message": "Quelle URL"
+  },
+  "metaTags": {
+    "message": "Schlagwörter"
+  },
+  "mobileMenuToggle": {
+    "message": "Menü öffnen"
+  },
+  "multilingualLabel": {
+    "message": "Verfügbar in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸"
+  },
+  "navBenefits": {
+    "message": "Vorteile"
+  },
+  "navBlog": {
+    "message": "Blog"
+  },
+  "navClients": {
+    "message": "Kunden"
+  },
+  "navCodeCon": {
+    "message": "CodeCon"
+  },
+  "navCta": {
+    "message": "Installieren"
+  },
+  "navDemo": {
+    "message": "Demonstranten"
+  },
+  "navIndex": {
+    "message": "Index"
+  },
+  "navProcess": {
+    "message": "Verfahren"
+  },
+  "newsletterCopy": {
+    "message": "Kurze Bursts von Sarkasmus und Disziplin, so dass Ihr VS-Code hält wie Netflix."
+  },
+  "newsletterCta": {
+    "message": "Treffen Sie Saul"
+  },
+  "newsletterDisclaimer": {
+    "message": "Kein Spam. Nur der Sarkasmus, den Sie bewältigen können."
+  },
+  "newsletterError": {
+    "message": "Bitte hinterlassen Sie eine gültige E-Mail."
+  },
+  "newsletterLabel": {
+    "message": "Ihre E-Mail"
+  },
+  "newsletterPlaceholder": {
+    "message": "Sie@email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "Hol die Memo"
+  },
+  "newsletterSuccess": {
+    "message": "Sie sind auf dem Radar. Neue Tropfen kommen bald."
+  },
+  "newsletterTitle": {
+    "message": "Sauls Memo holen"
+  },
+  "nextPost": {
+    "message": "Nächste"
+  },
+  "options_back_to_popup": {
+    "message": "Zurück zum Popup"
+  },
+  "options_confirm_reset": {
+    "message": "Dadurch werden die Standardwerte wiederhergestellt. Weiter?"
+  },
+  "options_critical_sound_hint": {
+    "message": "Wenn aktiviert, spielt die Sirene, wann immer die kritische Warnung feuert."
+  },
+  "options_critical_sound_label": {
+    "message": "Automatisches Erdbeben Sirene"
+  },
+  "options_critical_threshold_hint": {
+    "message": "Wenn der Index diesen Wert erreicht, löst Saul die kritische Warnung aus."
+  },
+  "options_critical_threshold_label": {
+    "message": "Quake-Modus-Schwelle (0–100)"
+  },
+  "options_digital_branch": {
+    "message": "Digitaler Zweig"
+  },
+  "options_domain_add": {
+    "message": "Hinzufügen"
+  },
+  "options_domain_duplicate": {
+    "message": "Domain bereits aufgeführt."
+  },
+  "options_domain_empty": {
+    "message": "Noch keine Domains."
+  },
+  "options_domain_invalid": {
+    "message": "Geben Sie eine gültige Domain ein."
+  },
+  "options_footer_note": {
+    "message": "Saul teilt Ihre Daten nicht mit jemandem. Nicht einmal der Richter."
+  },
+  "options_head_title": {
+    "message": "Saul Goodman – Einstellungen"
+  },
+  "options_heading": {
+    "message": "Büroeinstellungen"
+  },
+  "options_holiday_context_hint": {
+    "message": "Benutzen Sie den Popup, um den Tag CONTEXT (Arbeit, Freizeit, Studium, Tagesausflug, Urlaub oder persönlich) zu wählen. Saul nimmt die Geschichte auf und passt die Partitur ziemlich an."
+  },
+  "options_holiday_country_error": {
+    "message": "Verwenden Sie nur zwei Buchstaben, z.B. BR oder US."
+  },
+  "options_holiday_country_hint": {
+    "message": "BR, USA, PT. Saul versucht nie, Ihr Land automatisch zu erkennen."
+  },
+  "options_holiday_country_label": {
+    "message": "Ländercode (ISO-3166)"
+  },
+  "options_holiday_heading": {
+    "message": "Urlaub und fairer Kontext"
+  },
+  "options_holiday_hint": {
+    "message": "Wenn er aktiviert ist, ruft Saul nur Nager an. Datum zu sehen, ob heute ein nationaler Feiertag ist und die Partitur neutralisiert."
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Anrufe passieren nur, wenn Sie das Land aktivieren und einstellen. Kein automatischer Standort."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Pause scoring an nationalen Feiertagen"
+  },
+  "options_inactivity_threshold": {
+    "message": "Maximale Leerzeit vor dem Zählen als inaktiv (zweite)"
+  },
+  "options_language_auto": {
+    "message": "Automatischer (Browser)"
+  },
+  "options_language_en": {
+    "message": "Englisch (US)"
+  },
+  "options_language_es": {
+    "message": "Spanisch"
+  },
+  "options_language_hint": {
+    "message": "Wählen Sie manuell oder lassen Sie die Sprache Chrome folgen."
+  },
+  "options_language_label": {
+    "message": "Schnittstellensprache"
+  },
+  "options_language_pt": {
+    "message": "Portugiesisch (Brasilien)"
+  },
+  "options_openai_hint": {
+    "message": "lokal gespeichert, um Erzählungen im Bericht zu erzeugen."
+  },
+  "options_openai_label": {
+    "message": "OpenAI Schlüssel (optional)"
+  },
+  "options_openai_placeholder": {
+    "message": "sk..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Wenn es aktiviert ist, blockiert Saul die Navigation auf diese Seiten mit lokalen Chrome Regeln."
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "Blockieren Sie den Zugriff auf diese Liste"
+  },
+  "options_procrastination_heading": {
+    "message": "Procrastination Domains"
+  },
+  "options_procrastination_hint": {
+    "message": "Hier leben die Versuchungen. Wenn Sie eine Website lieben, gehört es wahrscheinlich hier."
+  },
+  "options_procrastination_placeholder": {
+    "message": "z.B. youtube.com"
+  },
+  "options_productive_heading": {
+    "message": "Produktive Domains"
+  },
+  "options_productive_hint": {
+    "message": "Saul weiß, wo die Arbeit geschieht. Auf Basis Ihrer Routine hinzufügen oder entfernen."
+  },
+  "options_productive_placeholder": {
+    "message": "z.B. docs.google.com"
+  },
+  "options_promise": {
+    "message": "Saul hält Ihre Daten unter Druck, während Sie mit Ihrem Fokus verhandeln."
+  },
+  "options_restore_defaults": {
+    "message": "Wiederherstellen von Standardeinstellungen"
+  },
+  "options_save_weights": {
+    "message": "Gewichte speichern"
+  },
+  "options_schedule_add": {
+    "message": "Intervall hinzufügen"
+  },
+  "options_schedule_heading": {
+    "message": "Arbeitszeit"
+  },
+  "options_schedule_hint": {
+    "message": "Sag Saul, wenn deine offizielle Schicht passiert. Außerhalb dieser Blöcke, produktive Minuten zählen doppelt."
+  },
+  "options_schedule_to": {
+    "message": "bis"
+  },
+  "options_status_blocklist_saved": {
+    "message": "Blockierung Präferenz aktualisiert."
+  },
+  "options_status_critical_saved": {
+    "message": "Erdbebenmodus aktualisiert."
+  },
+  "options_status_defaults_restored": {
+    "message": "Defaults restauriert."
+  },
+  "options_status_domain_removed": {
+    "message": "Domain entfernt."
+  },
+  "options_status_holiday_saved": {
+    "message": "Urlaubspräferenzen aktualisiert."
+  },
+  "options_status_language_saved": {
+    "message": "Sprache aktualisiert."
+  },
+  "options_status_list_updated": {
+    "message": "Liste aktualisiert."
+  },
+  "options_status_ready": {
+    "message": "Alles gut."
+  },
+  "options_status_schedule_updated": {
+    "message": "Zeitplan aktualisiert."
+  },
+  "options_status_vscode_saved": {
+    "message": "VS Code Integration aktualisiert."
+  },
+  "options_status_weights_saved": {
+    "message": "Gewichte aktualisiert."
+  },
+  "options_subtitle": {
+    "message": "Passen Sie das Radar auf Ihren Procrastinationsstil. Alles bleibt lokal."
+  },
+  "options_tagline": {
+    "message": "Ihr persönlicher Anwalt gegen Procrastination"
+  },
+  "options_thresholds_heading": {
+    "message": "Schwellenwerte & Gewichte"
+  },
+  "options_vscode_heading": {
+    "message": "VS Code Integration"
+  },
+  "options_vscode_install_hint": {
+    "message": "Installieren Sie die offizielle VS-Code-Erweiterung, um Fokussitzungen zu senden."
+  },
+  "options_vscode_install_link": {
+    "message": "VS Code Erweiterung installieren"
+  },
+  "options_vscode_key_copied": {
+    "message": "Schlüssel kopiert."
+  },
+  "options_vscode_key_copy": {
+    "message": "Schlüssel kopieren"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "Kein Schlüssel zum Kopieren."
+  },
+  "options_vscode_key_generate": {
+    "message": "Neue Schlüssel generieren"
+  },
+  "options_vscode_key_generated": {
+    "message": "Neue Schlüssel erstellt."
+  },
+  "options_vscode_key_hint": {
+    "message": "Muss mit dem in SaulDaemon/VS Code konfigurierten Schlüssel übereinstimmen."
+  },
+  "options_vscode_key_label": {
+    "message": "Schlüssel zur Paarung"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Den SaulDaemon Schlüssel einfügen"
+  },
+  "options_vscode_test_button": {
+    "message": "Testanschluss"
+  },
+  "options_vscode_test_disabled": {
+    "message": "Aktivieren Sie VS Code Integration vor dem Testen."
+  },
+  "options_vscode_test_error": {
+    "message": "Nicht angeschlossen an SaulDaemon{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "Nicht erreichbar{origin}Gesundheit{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "Ungültige URL. Verwenden Sie etwas wie http://127.0.0.1:3123."
+  },
+  "options_vscode_test_running": {
+    "message": "Testando conexão..."
+  },
+  "options_vscode_test_success": {
+    "message": "SaulDaemon antwortete{origin}Sitzungen heute:{sessions}Protokoll:{minutes}."
+  },
+  "options_vscode_test_timeout": {
+    "message": "SaulDaemon não antwortet ein Tempo."
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "Chave diferente. Verwenden Sie eine Mesma-Taste keine Chrome e no VS Code."
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Ruft den lokalen SaulDaemon (localhost) an, bevor er die Partitur erfrischt."
+  },
+  "options_vscode_toggle_label": {
+    "message": "Fügen Sie die Fokuszeit von VS Code ein"
+  },
+  "options_vscode_url_hint": {
+    "message": "Nur Gespräche mit localhost; nichts verlässt Ihre Maschine."
+  },
+  "options_vscode_url_label": {
+    "message": "Lokale Backend URL"
+  },
+  "options_weight_inactivity": {
+    "message": "Inaktivität (Gewicht)"
+  },
+  "options_weight_procrastination": {
+    "message": "Unproduktive Zeit (Gewicht)"
+  },
+  "options_weight_switches": {
+    "message": "Tab-Schalter (Gewicht)"
+  },
+  "options_weights_sum_error": {
+    "message": "Die Gewichtssumme muss 1 betragen."
+  },
+  "popup_alert_no_data": {
+    "message": "Noch keine Daten. Öffnen Sie einige Tabs und versuchen Sie es erneut."
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF Modul nicht verfügbar."
+  },
+  "popup_badge_label": {
+    "message": "Index"
+  },
+  "popup_blog_badge": {
+    "message": "Saul empfiehlt lesen"
+  },
+  "popup_blog_button_all": {
+    "message": "Open Blog"
+  },
+  "popup_blog_category_prefix": {
+    "message": "Kategorie:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "Jetzt lesen"
+  },
+  "popup_blog_empty": {
+    "message": "Noch kein Artikel verfügbar."
+  },
+  "popup_blog_error": {
+    "message": "Ich konnte gerade nicht den Blog erreichen."
+  },
+  "popup_blog_loading": {
+    "message": "Jagd auf den perfekten Fall..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "Zeit, um dev Leistung mit Null billig Coaching zu steigern."
+  },
+  "popup_blog_reason_foco": {
+    "message": "Basierend auf dem heutigen gestreuten Fokus."
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "Weil Ihre Procrastination heute die gesetzliche Grenze überschritten hat."
+  },
+  "popup_blog_reason_remoto": {
+    "message": "Survive Remote-Arbeit ohne volle Geister-Modus."
+  },
+  "popup_blog_section_subtitle": {
+    "message": "Wir lesen Ihre Zahlen und zeigen auf einen Saul-Stil Artikel."
+  },
+  "popup_blog_section_title": {
+    "message": "Handpicked blog tip"
+  },
+  "popup_chart_aria": {
+    "message": "Produktive vs Procrastination Stunden"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "Minuten"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_chart_label_productive": {
+    "message": "Produktiv"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS-Code"
+  },
+  "popup_chart_title": {
+    "message": "Tagesradar"
+  },
+  "popup_context_option_dayOff": {
+    "message": "Folga"
+  },
+  "popup_context_option_leisure": {
+    "message": "Lazer"
+  },
+  "popup_context_option_personal": {
+    "message": "Personal"
+  },
+  "popup_context_option_study": {
+    "message": "Studie"
+  },
+  "popup_context_option_vacation": {
+    "message": "Urlaub"
+  },
+  "popup_context_option_work": {
+    "message": "Arbeit"
+  },
+  "popup_critical_close_aria": {
+    "message": "Kündigungsfrist"
+  },
+  "popup_critical_countdown_final": {
+    "message": "Keine Ausreden: Schließen Sie jetzt drei Procrastination Tabs!"
+  },
+  "popup_critical_default_message": {
+    "message": "Bei diesem Index kann ich Sie nicht einmal verteidigen. Dies kostet Risikogebühren!"
+  },
+  "popup_critical_message_1": {
+    "message": "Kunden, mit Index{threshold}nicht einmal ich kann dich verteidigen. Risikogebühren gelten!"
+  },
+  "popup_critical_message_2": {
+    "message": "Der Tremor? Der Richter verschärft Ihre Produktivität."
+  },
+  "popup_critical_message_3": {
+    "message": "Hör auf zu procrastinieren oder ich kaufe erstklassige Anzeigen, die deine Geschichte erzählen."
+  },
+  "popup_critical_message_4": {
+    "message": "Helfen Sie mir, Sie zu verteidigen: Schließen Sie diese Tabs, bevor ich in Dollar abrechnung."
+  },
+  "popup_critical_plan_action": {
+    "message": "schließen 3 villain tabs in"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "Aktionsplan:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "S."
+  },
+  "popup_critical_review": {
+    "message": "Review villains"
+  },
+  "popup_critical_sound_now": {
+    "message": "Trigger Sirene jetzt"
+  },
+  "popup_critical_title": {
+    "message": "Saul im Erdbebenmodus"
+  },
+  "popup_csv_category": {
+    "message": "Kategorie"
+  },
+  "popup_csv_column_date": {
+    "message": "Datum"
+  },
+  "popup_csv_column_inactive": {
+    "message": "Inaktiv (min)"
+  },
+  "popup_csv_column_index": {
+    "message": "Index"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "Procrastination (min)"
+  },
+  "popup_csv_column_productive": {
+    "message": "Produktiv (min)"
+  },
+  "popup_csv_column_switches": {
+    "message": "Registerschalter"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (min)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "Kategorie"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "Kontext"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "Domínio"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "Dauer (ms)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "Ende (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "Fairness-Regel"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "Start (ISO)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "Detaillierte Zeit"
+  },
+  "popup_csv_domain": {
+    "message": "Gebiet"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "Schwerpunktbereich"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "Aktiver Fokus (%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "Zeitpunkt (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod vs Proc"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "Schalter pro Stunde"
+  },
+  "popup_csv_kpi_time": {
+    "message": "Zeit"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "Villain des Tages"
+  },
+  "popup_csv_kpis_title": {
+    "message": "Extra Indikatoren"
+  },
+  "popup_csv_minutes": {
+    "message": "Minuten"
+  },
+  "popup_csv_summary_title": {
+    "message": "Zusammenfassung"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "Top-Domains"
+  },
+  "popup_error_no_data": {
+    "message": "Keine Daten verfügbar"
+  },
+  "popup_error_runtime": {
+    "message": "Ups! Unfähig, das Büro zu erreichen."
+  },
+  "popup_error_unknown": {
+    "message": "Unbekannter Fehler"
+  },
+  "popup_export_csv": {
+    "message": "CSV herunterladen"
+  },
+  "popup_export_description": {
+    "message": "Schalten Sie Ihre Zahlen in Saul Goodman-Stil Argumente."
+  },
+  "popup_export_pdf": {
+    "message": "PDF generieren"
+  },
+  "popup_export_report": {
+    "message": "Offener Bericht"
+  },
+  "popup_export_title": {
+    "message": "Definieren Sie Ihren Fokus"
+  },
+  "popup_fairness_context_label": {
+    "message": "Kontext zur Zeit"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Heute ist ein Urlaub, punktiert automatisch."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Urlaub entdeckt — keine Strafen."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Heute Abend"
+  },
+  "popup_fairness_note": {
+    "message": "Saul rekalibriert die Partitur basierend auf dem Kontext, den Sie im Popup wählen. Skipping heute Nullen die Punktzahl und stumm Warnungen. Kontexte: Arbeit hält 100%, Personal neutralisiert alles, Freizeit zählt 30% des Fokus und ignoriert Bösewichte, Studienhälften Strafen, Tag weg und Urlaub Null am Tag unabhängig von Feiertagen."
+  },
+  "popup_fairness_note_label": {
+    "message": "Saulus splica"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Tag ab aufgezeichnet — Partitur paused."
+  },
+  "popup_fairness_status_default": {
+    "message": "Dia útil normal."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "Nationalfeiertag neutralisiert die Partitur."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo lazer reduz a pressão."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Dia ignorado manualmente."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Persönlicher Modus aktiv — kein Scoring."
+  },
+  "popup_fairness_status_study": {
+    "message": "Der Studienmodus erweicht die Partitur."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Der Urlaubsmodus neutralisiert den Tag."
+  },
+  "popup_fairness_title": {
+    "message": "Tag Fairness"
+  },
+  "popup_head_title": {
+    "message": "Saul Goodman – Fokusradar"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "Fokus Champion"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "Produktive Domain, wo Sie heute mehr kontinuierliche Zeit investiert haben."
+  },
+  "popup_kpi_focus_hint": {
+    "message": "Produktiv / Arbeitstag"
+  },
+  "popup_kpi_focus_label": {
+    "message": "Aktiver Fokus"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "Prozentsatz der produktiven Zeit über alles, was heute verfolgt wird."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "Prozentsatz des Tages"
+  },
+  "popup_kpi_idle_label": {
+    "message": "Leere Zeit"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "Prozentsatz des Tages blieb der Browser offen ohne Interaktion."
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "Produktive Stunden pro Villain"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod vs Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "Produktive Stunden versetzt jede Procrastination Stunde."
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "Direkt zum Punkt: Rohzahlen von Ihrem Tag."
+  },
+  "popup_kpi_section_title": {
+    "message": "Extra Indikatoren"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "Tabs pro getrackte Stunde"
+  },
+  "popup_kpi_switch_label": {
+    "message": "Schalter pro Stunde"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "Durchschnittliche Registerschalter pro überwachter Stunde."
+  },
+  "popup_kpi_villain_label": {
+    "message": "Villain des Tages"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "Procrastination Domain, die die meiste Zeit gestohlen hat."
+  },
+  "popup_last_sync": {
+    "message": "Aktualisiert bei{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "Aufwachen..."
+  },
+  "popup_loading": {
+    "message": "Die..."
+  },
+  "popup_options_button": {
+    "message": "Konfigurieren"
+  },
+  "popup_pdf_date": {
+    "message": "Datum"
+  },
+  "popup_pdf_inactive": {
+    "message": "Inaktiv"
+  },
+  "popup_pdf_index": {
+    "message": "Index"
+  },
+  "popup_pdf_kpis": {
+    "message": "Extra Indikatoren"
+  },
+  "popup_pdf_procrastination": {
+    "message": "Procrastination"
+  },
+  "popup_pdf_productive": {
+    "message": "Produktiv"
+  },
+  "popup_pdf_summary": {
+    "message": "Tagesübersicht"
+  },
+  "popup_pdf_switches": {
+    "message": "Registerschalter"
+  },
+  "popup_pdf_title": {
+    "message": "Saul Goodman Bericht"
+  },
+  "popup_pdf_top_domains": {
+    "message": "Top-Domains"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS-Code"
+  },
+  "popup_privacy_note": {
+    "message": "Alle Daten bleiben in Ihrem Browser. Saul ehrt Anwalt-Klient Privileg."
+  },
+  "popup_refresh_button": {
+    "message": "Refreshing"
+  },
+  "popup_release_notes_button": {
+    "message": "Was ist neu?"
+  },
+  "popup_release_notes_error": {
+    "message": "Ich konnte die Release Notes nicht öffnen. Laden Sie die Erweiterung neu und versuchen Sie es erneut."
+  },
+  "popup_score_message_alert": {
+    "message": "Du spielst mit Feuer. Ich bezahle die Stunde, um Feuer auszuschalten."
+  },
+  "popup_score_message_excellent": {
+    "message": "Goldener Klient! Halten Sie es auf und ich kann den vollen Halter berechnen."
+  },
+  "popup_score_message_ok": {
+    "message": "zählt immer noch als Bürostunden. Lass mich nicht deinen Fokus nennen."
+  },
+  "popup_score_message_warning": {
+    "message": "Ich sehe Vermeidung hier. Zeit, wieder ins Spiel zu kommen."
+  },
+  "popup_score_placeholder": {
+    "message": "Lastverschiebung..."
+  },
+  "popup_status_no_data": {
+    "message": "Keine Daten"
+  },
+  "popup_status_no_domains": {
+    "message": "Keine Daten für heute."
+  },
+  "popup_summary_inactive_label": {
+    "message": "I"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "Perioden, in denen der Browser ohne Interaktion geöffnet blieb."
+  },
+  "popup_summary_procrastination_label": {
+    "message": "Procrat"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "Zeit für Procrastination Domains."
+  },
+  "popup_summary_productive_label": {
+    "message": "Produktiv"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "Zeit für Domains, die als produktiv gekennzeichnet sind."
+  },
+  "popup_tooltip_aria": {
+    "message": "Erläuterung"
+  },
+  "popup_top_domains_title": {
+    "message": "Top 5 Domains"
+  },
+  "postInvalid": {
+    "message": "Ungültige Post oder fehlende Metadaten."
+  },
+  "postLoadError": {
+    "message": "Fehler beim Laden dieses Artikels."
+  },
+  "postLoadingBody": {
+    "message": "Die..."
+  },
+  "postLoadingTitle": {
+    "message": "Artikel laden..."
+  },
+  "postNotFound": {
+    "message": "Post nicht gefunden."
+  },
+  "previousPost": {
+    "message": "Vorherige"
+  },
+  "privacyError": {
+    "message": "Wir konnten die Politik jetzt nicht belasten. Versuchen Sie es noch einmal."
+  },
+  "privacyEyebrow": {
+    "message": "Vollständige Transparenz"
+  },
+  "privacyHeading": {
+    "message": "Datenschutz"
+  },
+  "privacyLoading": {
+    "message": "Laden Sie die Richtlinie direkt aus dem Repository..."
+  },
+  "privacySubheading": {
+    "message": "Hier ist die neueste Version der im Projektarchiv veröffentlichten Politik."
+  },
+  "privacyTitle": {
+    "message": "Datenschutz"
+  },
+  "process1Body": {
+    "message": "Das Badge sitzt ruhig zu beobachten, was offen ist und weiß sofort, wenn Sie studieren, arbeiten, oder doom-scrolling."
+  },
+  "process1Title": {
+    "message": "Verfolgen Sie Ihre aktiven Tabs"
+  },
+  "process2Body": {
+    "message": "Sie definieren produktive vs. villain Domains. Wenn ihr abirrt, schüttelt Saul den Bildschirm und schreit, bevor die Spirale beginnt."
+  },
+  "process2Title": {
+    "message": "Flaggen Ablenkungen"
+  },
+  "process3Body": {
+    "message": "Jeden Tag endet mit einem sauberen Bericht: Charts, Highlights und ein Aktionsplan für morgen."
+  },
+  "process3Title": {
+    "message": "Lieferbar nutzbarer Beweis"
+  },
+  "processEyebrow": {
+    "message": "Wie es funktioniert"
+  },
+  "processLead": {
+    "message": "Kein rechtliches Jargon: installieren Sie es, lassen Sie es beobachten Sie Ihre Tabs, fühlen Sie die Warnungen, und beenden Sie Ihren Tag mit bereiten-zu-Aktion Beweise."
+  },
+  "processTitle": {
+    "message": "Saul sperrt die Procrastination in drei Schritten."
+  },
+  "quakeBody": {
+    "message": "Die Overlay Blöcke Bösewicht Tabs, zeigt eine mutige CTA und kann die optionale Sirene sprengen. Unmöglich zu ignorieren — genau wie geplant."
+  },
+  "quakeButton": {
+    "message": "Auslösen der Schüttel"
+  },
+  "quakeCallout": {
+    "message": "Erdbeben ankommen!"
+  },
+  "quakeDemoBody": {
+    "message": "Klicken Sie, um Erdbebenmodus zu simulieren: Bildschirmschüttel, Sirene und eine dramatische Nachricht. Gleich wie die Erweiterung, aber nur für ein paar Sekunden hier."
+  },
+  "quakeDemoButton": {
+    "message": "Erdbebenmodus simulieren"
+  },
+  "quakeDemoEyebrow": {
+    "message": "Erdbebenmodus (demo)"
+  },
+  "quakeDemoTitle": {
+    "message": "Testen Sie Sauls dramatischste Warnung."
+  },
+  "quakeDisplayCopy": {
+    "message": "Spring zurück zum Fokus, oder Saul erhöht seine Gebühren."
+  },
+  "quakeEyebrow": {
+    "message": "Erdbebenmodus"
+  },
+  "quakeLead": {
+    "message": "Die gleiche dramatische Warnung aus der Erweiterung zeigt sich hier, so dass die Besucher spüren, wie ernst die Warnung an der Schwelle ist."
+  },
+  "quakeMicro": {
+    "message": "„Haben Sie doom-scrolling! Aufschlagsicherung.“"
+  },
+  "quakeOverlayBody": {
+    "message": "Saul zittert Schurkenlappen. Zurück in den Fokus, bevor er extra berechnet."
+  },
+  "quakeOverlayClose": {
+    "message": "Zurück zum Fokus"
+  },
+  "quakeOverlayTitle": {
+    "message": "Erdbebenmodus ausgelöst!"
+  },
+  "quakeTip": {
+    "message": "Entspannen: Die Vorschau dauert nur ein paar Sekunden."
+  },
+  "quakeTitle": {
+    "message": "Als Saul Schurken entdeckt, schüttelt die Seite mit ihm."
+  },
+  "ratingBadgeAlt": {
+    "message": "Durchschnittliche Bewertung für Chrome Web Store"
+  },
+  "reactionBlockAlt": {
+    "message": "Saul blockiert den Zugang"
+  },
+  "reactionBlockHint": {
+    "message": "Redirects to the block page with Saul shutting the door."
+  },
+  "reactionBlockLabel": {
+    "message": "Blockmodus"
+  },
+  "reactionBlockText": {
+    "message": "„Probieren Sie es nicht einmal: Bösewichte werden sofort blockiert.“"
+  },
+  "reactionDisbeliefHint": {
+    "message": "Auslöser, wenn die Erdbebenschwelle überschritten wird."
+  },
+  "reactionDisbeliefLabel": {
+    "message": "Einzigartiger Modus"
+  },
+  "reactionDisbeliefText": {
+    "message": "„Du nennst diesen Fokus?“"
+  },
+  "reactionHypeHint": {
+    "message": "Zeigt auf, wenn Sie zurück zu produktiven Tabs springen."
+  },
+  "reactionHypeLabel": {
+    "message": "Genehmigter Modus"
+  },
+  "reactionHypeText": {
+    "message": "„Jetzt könnte ich meine Gebühren ermäßigen.“"
+  },
+  "reactionsBody": {
+    "message": "Wenn der Index spikes, Saul ist ungläubig. Wenn Sie zurück in den Fokus, feiert er. Schnelle Visualisierungen, um die Bar der Gerechtigkeit an Ort und Stelle zu halten."
+  },
+  "reactionsEyebrow": {
+    "message": "Saul reagiert"
+  },
+  "reactionsTitle": {
+    "message": "Sauls sofortiges Urteil."
+  },
+  "readArticle": {
+    "message": "Artikel lesen"
+  },
+  "readingTimeLabel": {
+    "message": "Lesezeit"
+  },
+  "readTimeUnit": {
+    "message": "min lesen"
+  },
+  "reason1Body": {
+    "message": "Der Popup-Index zeigt Ihren aktuellen Status, so dass Sie wissen, was Sie als nächstes beheben."
+  },
+  "reason1Title": {
+    "message": "Geführter Fokus"
+  },
+  "reason2Body": {
+    "message": "Der Erdbeben übernimmt den Bildschirm, bevor ein Schurken Tab Ihre Dynamik ruiniert."
+  },
+  "reason2Title": {
+    "message": "Unmöglich-zu-ignore Warnungen"
+  },
+  "reason3Body": {
+    "message": "Diagramme und Zusammenfassungen fallen perfekt in ein tägliches, Stand-up oder Client-Update."
+  },
+  "reason3Title": {
+    "message": "Berichte"
+  },
+  "reason4Body": {
+    "message": "Jede Metrik lebt in Chrome; nichts verlässt Ihre Maschine."
+  },
+  "reason4Title": {
+    "message": "Datenschutz"
+  },
+  "reasonsEyebrow": {
+    "message": "Schlüsselvorteile"
+  },
+  "reasonsLead": {
+    "message": "Vier schnelle Karten erklären den Wert mit Null fluff."
+  },
+  "reasonsTitle": {
+    "message": "Warum Saul Goodman benutzen?"
+  },
+  "relatedTitle": {
+    "message": "Weitere Beiträge"
+  },
+  "report_ai_error_generic": {
+    "message": "Saul konnte den digitalen Richter nicht überzeugen. Versuchen Sie es später noch mal."
+  },
+  "report_ai_generate": {
+    "message": "narrativ generieren"
+  },
+  "report_ai_heading": {
+    "message": "Sauls Argument"
+  },
+  "report_ai_hint": {
+    "message": "Klicken Sie auf \"Generieren Sie Erzählung\", damit Saul Ihren Tag mit seinem Sarkasmus analysieren kann."
+  },
+  "report_ai_loading": {
+    "message": "Noch immer das Schlussargument vorbereiten..."
+  },
+  "report_ai_missing_key": {
+    "message": "Konfigurieren Sie Ihren OpenAI Schlüssel in den Optionen, bevor Sie die Erzählung generieren."
+  },
+  "report_ai_no_metrics": {
+    "message": "Keine Metriken, um heute eine Geschichte zu erzählen."
+  },
+  "report_ai_retry": {
+    "message": "Versuchen Sie es wieder"
+  },
+  "report_ai_subtitle": {
+    "message": "Eine dramatische Verteidigung basierend auf Ihren Daten."
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF-Bibliothek nicht verfügbar."
+  },
+  "report_banner_countdown_final": {
+    "message": "Zeit zu handeln: Schließen Sie die Bösewicht Tabs und kommen wieder in Kontrolle."
+  },
+  "report_banner_message_1": {
+    "message": "Nicht einmal ich kann die Jury mit Index überzeugen{threshold}Schneiden Sie die Ablenkungen!"
+  },
+  "report_banner_message_2": {
+    "message": "Halten Sie das auf und ich miete ein Billboard, das Ihren Chef warnt."
+  },
+  "report_banner_message_3": {
+    "message": "Dieses Erdbeben ist das Echo Ihrer Schurken Tabs. Schließen Sie sie jetzt."
+  },
+  "report_banner_message_4": {
+    "message": "Die Registerkarte wächst: Fokus jetzt oder wir berechnen zusätzliche Gebühren."
+  },
+  "report_banner_title": {
+    "message": "Saul auf Hochalarm!"
+  },
+  "report_category_activity": {
+    "message": "Tätigkeit"
+  },
+  "report_category_neutral": {
+    "message": "Neutral"
+  },
+  "report_composition_heading": {
+    "message": "Tageszusammensetzung"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "Aufbrechen in produktive, procrastination, idle und neutral."
+  },
+  "report_context_breakdown_context": {
+    "message": "Kontext"
+  },
+  "report_context_breakdown_index": {
+    "message": "Index"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Näher zu 100% Gerüchen wie Procrastination; näher zu 0% bedeutet, dass Sie gearbeitet – und ich kann Sie verteidigen."
+  },
+  "report_context_breakdown_time": {
+    "message": "Zeit"
+  },
+  "report_context_breakdown_title": {
+    "message": "Zeit nach Kontext"
+  },
+  "report_domain_heading": {
+    "message": "Protokolle pro Domain"
+  },
+  "report_domain_subtitle": {
+    "message": "Hauptsieger und Bösewichte aggregiert für den Tag."
+  },
+  "report_error_no_data": {
+    "message": "Keine Metriken verfügbar."
+  },
+  "report_error_runtime": {
+    "message": "Ich konnte nicht ins Plattenbüro."
+  },
+  "report_error_unknown": {
+    "message": "Unbekannter Fehler"
+  },
+  "report_export_pdf": {
+    "message": "Export PDF"
+  },
+  "report_fairness_holiday_active": {
+    "message": "Heute ist ein Urlaub, punktiert automatisch."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Urlaub entdeckt — keine Strafen."
+  },
+  "report_fairness_status_day_off": {
+    "message": "Tag ab neutralisierte die Partitur."
+  },
+  "report_fairness_status_default": {
+    "message": "Dia útil normal."
+  },
+  "report_fairness_status_holiday": {
+    "message": "Nationalfeiertag neutralisierte die Partitur."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Freizeitmodus reduziert Gebühren."
+  },
+  "report_fairness_status_manual": {
+    "message": "Dia ignorado manualmente."
+  },
+  "report_fairness_status_personal": {
+    "message": "Persönlicher Modus — kein Scoring."
+  },
+  "report_fairness_status_study": {
+    "message": "Studienmodus erweichte Strafen."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Modo férias zerou o dia."
+  },
+  "report_fairness_title": {
+    "message": "Tag Fairness"
+  },
+  "report_fairness_tooltip": {
+    "message": "Manuelle Überschreitung, Kontext oder Feiertage können die Partitur neutralisieren. Wir protokollieren es, wenn es passiert."
+  },
+  "report_filter_apply": {
+    "message": "Filter"
+  },
+  "report_filter_from": {
+    "message": "Von"
+  },
+  "report_filter_reset": {
+    "message": "Zurück zur Übersicht"
+  },
+  "report_filter_to": {
+    "message": "bis"
+  },
+  "report_head_title": {
+    "message": "Saul Goodman – Tagesbericht"
+  },
+  "report_heading": {
+    "message": "Detailbericht"
+  },
+  "report_hero_message_alert": {
+    "message": "Das Urteil ist klar: Procrastination im Prozess. Wir brauchen einen dringenden Plan."
+  },
+  "report_hero_message_excellent": {
+    "message": "Ein einwandfreier Zeitplan. Saul könnte dich in einer TV-Anzeige benutzen."
+  },
+  "report_hero_message_ok": {
+    "message": "Akzeptable Schaukeln. Wir können der Jury immer noch sagen, dass Sie gearbeitet haben."
+  },
+  "report_hero_message_warning": {
+    "message": "Sichtbare Rückfälle heute. Zeit, Verstärkungen zu rufen."
+  },
+  "report_hero_placeholder": {
+    "message": "Saul sammelt immer noch Beweise über Ihren Tag."
+  },
+  "report_hourly_empty": {
+    "message": "Noch nicht genug Minuten, um diesen Fluss zu bauen."
+  },
+  "report_hourly_heading": {
+    "message": "Dauerstrom"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "Produktive, procrastination und idle Minuten pro Stunde."
+  },
+  "report_hourly_subtitle": {
+    "message": "Produktivität gegen Versuchungen durch den Tag."
+  },
+  "report_kpi_audio_hint": {
+    "message": "Minuten mit Audio auf Schurken-Seiten"
+  },
+  "report_kpi_audio_label": {
+    "message": "Villas Medien"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "Zeit mit Audio spielen auf Procrastination Domains."
+  },
+  "report_kpi_grouped_hint": {
+    "message": "Minuten in gruppierten Registerkarten"
+  },
+  "report_kpi_grouped_label": {
+    "message": "Zeit in Gruppen"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "Protokolle, die in gebündelten Tabs ausgegeben werden."
+  },
+  "report_kpi_heading": {
+    "message": "Zusätzliche Indikatoren"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Extra KPIs: Bösewicht Medien, Echtzeit, SPA Routen, Gruppenkarten."
+  },
+  "report_kpi_restored_hint": {
+    "message": "Neueste Tabs oder Fenster"
+  },
+  "report_kpi_restored_label": {
+    "message": "Geschlossene Artikel heute"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "Anzahl der Tabs oder Fenster geschlossen heute."
+  },
+  "report_kpi_spa_hint": {
+    "message": "Aufgenommene Routenänderungen"
+  },
+  "report_kpi_spa_label": {
+    "message": "SPA Routen"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "Interne Routenänderungen in Einzel-Seiten-Apps."
+  },
+  "report_kpi_subtitle": {
+    "message": "Real idle, SPA Routen und Medienzeit."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "Minuten im Hintergrund"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "Browser unfokussiert"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "Minuten mit einem anderen Fenster fokussiert."
+  },
+  "report_logo_alt_critical": {
+    "message": "Saul Goodman schockiert durch deinen Fokus"
+  },
+  "report_logo_alt_default": {
+    "message": "Saul Goodman Logo"
+  },
+  "report_metric_index_label": {
+    "message": "Index"
+  },
+  "report_metric_switches_label": {
+    "message": "Registerschalter"
+  },
+  "report_pdf_ai_title": {
+    "message": "Sauls Argument"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "Kategorie"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "In den Warenkorb"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "Zeit"
+  },
+  "report_pdf_composition_title": {
+    "message": "Tageszusammensetzung"
+  },
+  "report_pdf_context_header_context": {
+    "message": "Kontext"
+  },
+  "report_pdf_context_header_index": {
+    "message": "Kontextindex"
+  },
+  "report_pdf_context_header_time": {
+    "message": "Zeitaufwand"
+  },
+  "report_pdf_context_title": {
+    "message": "Aufschlüsselung nach Kontext"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Context Guard-rail aktiv"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Urlaub neutralisiert die Partitur"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "Begründung"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "Tag übersprungen manuell"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "Índice neutralizado"
+  },
+  "report_pdf_narrative_title": {
+    "message": "Schlüsselanhänger"
+  },
+  "report_pdf_overview_heading": {
+    "message": "Panorama do dia"
+  },
+  "report_pdf_status_label": {
+    "message": "Status"
+  },
+  "report_pdf_title": {
+    "message": "Detaillierter Bericht — Saul Goodman"
+  },
+  "report_pdf_top_domains": {
+    "message": "Top-Domains"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "Top Procrastination"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "Ranging von Procrastination Domains nach Zeit."
+  },
+  "report_ranking_productive_heading": {
+    "message": "Top produktiv"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "Ranking von produktiven Domains nach Zeit."
+  },
+  "report_share_argument_label": {
+    "message": "Teilen Sauls Argument"
+  },
+  "report_share_argument_title": {
+    "message": "Sauls Argument"
+  },
+  "report_share_copy_error": {
+    "message": "Ich konnte den Post jetzt nicht kopieren."
+  },
+  "report_share_copy_instagram": {
+    "message": "Text kopiert. Öffnen Sie Instagram und fügen Sie vor dem Posten ein."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Text kopiert. Fügen Sie es vor dem Posten in LinkedIn ein."
+  },
+  "report_share_copy_success": {
+    "message": "Post kopiert. Paste auf LinkedIn, Twitter, überall."
+  },
+  "report_share_cta": {
+    "message": "Von Saul Goodman."
+  },
+  "report_share_error": {
+    "message": "Ich konnte es jetzt nicht teilen."
+  },
+  "report_share_error_no_metrics": {
+    "message": "Keine Daten zu teilen."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Erzeuge Sauls Argument vor dem Teilen."
+  },
+  "report_share_hashtags": {
+    "message": "#SaulGoodman #AntiProcrastination"
+  },
+  "report_share_headline": {
+    "message": "Einspruch! Highlights der Fallstudie"
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web kann keinen Text vorfüllen: Fügen Sie das ein, was wir in die Buchungsbox kopiert haben."
+  },
+  "report_share_hint_linkedin": {
+    "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."
+  },
+  "report_share_index_label": {
+    "message": "Index"
+  },
+  "report_share_menu_argument": {
+    "message": "Sauls Argument"
+  },
+  "report_share_menu_copy": {
+    "message": "Text kopieren"
+  },
+  "report_share_menu_highlights": {
+    "message": "Highlights"
+  },
+  "report_share_menu_label": {
+    "message": "Anteil"
+  },
+  "report_share_menu_native": {
+    "message": "Nativer Anteil"
+  },
+  "report_share_menu_native_action": {
+    "message": "Systemaktienblatt"
+  },
+  "report_share_opening": {
+    "message": "Mein Mandant arbeitete hart und ich habe Beweise."
+  },
+  "report_share_post_argument_label": {
+    "message": "Kopie der Argumentation post"
+  },
+  "report_share_post_label": {
+    "message": "Post kopieren (sozial)"
+  },
+  "report_share_report_label": {
+    "message": "Weitere Highlights"
+  },
+  "report_share_social_tagline": {
+    "message": "Einspruch! Mein Mandant hat die Arbeit reingelegt."
+  },
+  "report_share_success": {
+    "message": "Teileblatt geöffnet! Wenn es nicht erscheint, haben wir es in Ihre Zwischenablage kopiert."
+  },
+  "report_share_title": {
+    "message": "Saul Goodman — Highlights"
+  },
+  "report_story_empty": {
+    "message": "Nicht genug Geschichten für heute."
+  },
+  "report_story_focus_body": {
+    "message": "{domain}gehalten{duration}im Fokus."
+  },
+  "report_story_focus_title": {
+    "message": "Fokus Champion"
+  },
+  "report_story_heading": {
+    "message": "Champions und Schurken"
+  },
+  "report_story_idle_body": {
+    "message": "Zwischen{range}der Browser blieb leer für{duration}."
+  },
+  "report_story_idle_title": {
+    "message": "Langfristige Stille"
+  },
+  "report_story_loading": {
+    "message": "Daten werden immer noch geladen..."
+  },
+  "report_story_short_day": {
+    "message": "Der Tag war zu kurz, um eine Geschichte zu erzählen."
+  },
+  "report_story_villain_body": {
+    "message": "{domain}entwässert{duration}."
+  },
+  "report_story_villain_title": {
+    "message": "Villain des Tages"
+  },
+  "report_subtitle_prefix": {
+    "message": "Tagesübersicht"
+  },
+  "report_tab_switch_empty": {
+    "message": "Noch nicht genug Schalter, um dieses Diagramm zu erstellen."
+  },
+  "report_tab_switch_heading": {
+    "message": "Schalter pro Stunde"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "Schalten Sie die Verteilung über Prod/Proc/Neutral."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "Wie Sie zwischen produktiver, procrastination und neutral gesprungen sind."
+  },
+  "report_tagline": {
+    "message": "Offizielles Rundschreiben"
+  },
+  "report_time_column": {
+    "message": "Zeit"
+  },
+  "report_timeline_heading": {
+    "message": "Minuten nach der Erzählung"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "Schlüsselscheiben gruppiert nach Stunde und Kategorie."
+  },
+  "report_timeline_loading": {
+    "message": "Warten auf Einträge..."
+  },
+  "report_timeline_subtitle": {
+    "message": "Highlights, die die Geschichte Ihrer Schicht erzählen."
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}Segmente"
+  },
+  "rssCta": {
+    "message": "Abonnieren über RSS"
+  },
+  "searchLabel": {
+    "message": "Suche"
+  },
+  "searchPlaceholder": {
+    "message": "Suche Titel, Auszug oder Tag..."
+  },
+  "searchReset": {
+    "message": "Filter löschen"
+  },
+  "seoDescription": {
+    "message": "Saul Goodman polizeit Ihre Tabs, kämpft gegen Procrastination und liefert dramatische Berichte in Ihrem Browser. Alles bleibt lokal, keine externen Server."
+  },
+  "seoTitle": {
+    "message": "Saul Goodman - Anti-Procrastination Extension"
+  },
+  "shareCopied": {
+    "message": "Link kopiert!"
+  },
+  "shareCopy": {
+    "message": "Link kopieren"
+  },
+  "shareCopyPrompt": {
+    "message": "Kopieren Sie diesen Link zu teilen:"
+  },
+  "shareIndexCopied": {
+    "message": "Link kopiert!"
+  },
+  "shareIndexCopy": {
+    "message": "Link kopieren"
+  },
+  "shareIndexLinkedin": {
+    "message": "LinkedIn"
+  },
+  "shareIndexTitle": {
+    "message": "Teilen Sie den Blog"
+  },
+  "shareIndexTwitter": {
+    "message": "X"
+  },
+  "shareLinkedin": {
+    "message": "LinkedIn"
+  },
+  "shareTitle": {
+    "message": "Anteil"
+  },
+  "shareTwitter": {
+    "message": "X"
+  },
+  "socialProofCaption": {
+    "message": "Saul hilft bereits Tausenden, ihren Fokus zu behalten."
+  },
+  "socialProofMetricLabel": {
+    "message": "Glückliche Nutzer"
+  },
+  "splitPopupBody": {
+    "message": "Das Panel zeigt den Index, die Top-Domains, zusätzliche Indikatoren und lässt Sie CSV/PDF exportieren. Wenn der Fokus sinkt, stürmt Erdbebenmodus ein, um die Bar der Gerechtigkeit zu retten."
+  },
+  "splitPopupCaption": {
+    "message": "Popup mit Index, Top-Domains und Exporten."
+  },
+  "splitPopupCaption2": {
+    "message": "Kennzahlen, Top-Domains und schnelle Exporte."
+  },
+  "splitPopupCaption3": {
+    "message": "Produktive/Dorf-Listen im Optionen-Panel."
+  },
+  "splitPopupCaption4": {
+    "message": "Konfigurierbare Gewichte und Termine für den Index."
+  },
+  "splitPopupTitle": {
+    "message": "On-Call Popup"
+  },
+  "splitReportBody": {
+    "message": "Diagramme pro Stunde, Villain-Ranking, AI-Erzählung und kritische Banner mit Aktionsplan. Alles mit geschworenen Visuals."
+  },
+  "splitReportCaption": {
+    "message": "Zusammenfassung mit Diagrammen und Ranking."
+  },
+  "splitReportCaption2": {
+    "message": "AI narrative und Minute-für-Minute-Zeitlinie."
+  },
+  "splitReportCaption3": {
+    "message": "Villain Ranking, Champions und Vertrieb."
+  },
+  "splitReportTitle": {
+    "message": "Dramatischer Bericht"
+  },
+  "splitStats1": {
+    "message": "Protokolle erholt/Tag"
+  },
+  "splitStats2": {
+    "message": "Kunden freigestellt"
+  },
+  "statsCategories": {
+    "message": "Kategorien auf Probe"
+  },
+  "statsFresh": {
+    "message": "Letzte Aktualisierung"
+  },
+  "statsPosts": {
+    "message": "veröffentlichte Beiträge"
+  },
+  "statsTitle": {
+    "message": "Blog-Radar"
+  },
+  "stickyCtaButton": {
+    "message": "Installieren Sie auf Chrome"
+  },
+  "stickyCtaText": {
+    "message": "Saul ist bereit, deine Tabs zu beobachten."
+  },
+  "stickyToggleLabel": {
+    "message": "Toggle CTA"
+  },
+  "tagsTitle": {
+    "message": "Themen im Feuer"
+  },
+  "testimonial1Cite": {
+    "message": "— Anonymer Client"
+  },
+  "testimonial1Quote": {
+    "message": "„Saul erinnerte mich daran, dass das Schalten von 40 Tabs pro Stunde ein Verbrechen ist.“"
+  },
+  "testimonial2Cite": {
+    "message": "— Bedauerlicher Ingenieur"
+  },
+  "testimonial2Quote": {
+    "message": "„Der Bericht wurde ein Verteidigungsstück im Treffen mit meinem Chef.“"
+  },
+  "testimonial3Cite": {
+    "message": "— Produktmanager"
+  },
+  "testimonial3Quote": {
+    "message": "„Earthquake-Modus hat meinen Sprint gerettet. Gebühren gerne bezahlt.“"
+  },
+  "testimonialNext": {
+    "message": "Nächster Testimonial"
+  },
+  "testimonialPrev": {
+    "message": "Vorheriger Testimonial"
+  },
+  "testimonialsEyebrow": {
+    "message": "Zeugnisse"
+  },
+  "testimonialsTitle": {
+    "message": "Clients freigesprochen."
+  },
+  "timeline1Body": {
+    "message": "Inhaltsskript erkennt Aktivität auf ersten Tabs. Saul logs, die produktiv oder ein Schurke ist."
+  },
+  "timeline1Title": {
+    "message": "Erstes Radar"
+  },
+  "timeline2Body": {
+    "message": "Wenn der Index zu hoch klettert, Erdbeben Modus stürmt Chrome mit Erdbeben, Siren und CTA, um das Spiel zu drehen."
+  },
+  "timeline2Title": {
+    "message": "Fraktikum"
+  },
+  "timeline3Body": {
+    "message": "Detaillierte Berichte Schiffe Diagramme, Zeitlinie und AI-Erzählung, um den Tag mit Beweisen zu schließen."
+  },
+  "timeline3Title": {
+    "message": "Tagessatz"
+  },
+  "timelineEyebrow": {
+    "message": "Timeline"
+  },
+  "timelineTitle": {
+    "message": "Vom Tracking bis zum Urteil."
+  },
+  "transparencyBody": {
+    "message": "Lesen Sie, wie wir Ihre Daten und jede Release Note mit Null-Fuff verarbeiten."
+  },
+  "transparencyChangelogCta": {
+    "message": "Vollständiges Changelog öffnen"
+  },
+  "transparencyEyebrow": {
+    "message": "Transparenz"
+  },
+  "transparencyPrivacyCta": {
+    "message": "Lesen Sie die Datenschutzerklärung"
+  },
+  "transparencyTitle": {
+    "message": "Datenschutz und Changelog im Open."
+  },
+  "trustCard1Body": {
+    "message": "Metriken leben in   TAG0  chrome.storage.local  TAG1  . Nichts berührt externe Server."
+  },
+  "trustCard1Title": {
+    "message": "100% lokal"
+  },
+  "trustCard2Body": {
+    "message": "Jede Linie ist öffentlich, damit die Gemeinschaft Änderungen prüfen kann."
+  },
+  "trustCard2Title": {
+    "message": "Open-Source"
+  },
+  "trustCard3Body": {
+    "message": "Du wählst die Schwelle und kannst Saul schweigen, wann immer du brauchst."
+  },
+  "trustCard3Title": {
+    "message": "Transparente Alarme"
+  },
+  "trustEyebrow": {
+    "message": "Datenschutz und Vertrauen"
+  },
+  "trustLead": {
+    "message": "Playful Ton, ernsthafte Sicherheit: Hier ist, wie Daten und Warnungen wirklich funktionieren."
+  },
+  "trustTitle": {
+    "message": "Alles bleibt zwischen Ihnen und Ihrem Browser."
+  },
+  "usersBadgeAlt": {
+    "message": "Benutzer auf Chrome Web Store"
+  }
+}

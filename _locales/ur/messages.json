@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "ساؤل نیک آدمی"
+  },
+  "backToHome": {
+    "message": "جگہ"
+  },
+  "benefit1Body": {
+    "message": "اپنے مالک، ٹیم یا اپنے ضمیر کو ظاہر کرنے کے لیے چارٹ اور سی ایس وی۔"
+  },
+  "benefit1Title": {
+    "message": "غیر متصل سند"
+  },
+  "benefit2Body": {
+    "message": "زلزلے کے موڈ اور انفنٹری پیغامات آپ نظر انداز نہیں کر سکتے۔"
+  },
+  "benefit2Title": {
+    "message": "حساسات"
+  },
+  "benefit3Body": {
+    "message": "تمام فیصلے مقامی طور پر ہوتے ہیں ؛ کوئی بھی ڈیٹا آپ کے براؤزر کو نہیں چھوڑتا۔"
+  },
+  "benefit3Title": {
+    "message": "تنہائی کا اظہار"
+  },
+  "benefitsEyebrow": {
+    "message": "فوائد"
+  },
+  "benefitsTitle": {
+    "message": "ساؤل اس معاملے کو حل کرتا ہے، آپ اس کے قریب ہے."
+  },
+  "block_page_back": {
+    "message": "واپس جاؤ"
+  },
+  "block_page_body": {
+    "message": "آپ نے اس جگہ کو بطور خاص نشان دیا۔ اگر آپ اپنے ذہن کو بدلنے کی کوشش کریں گے تو تب بھی اِس فہرست کو بند کریں گے ۔"
+  },
+  "block_page_heading": {
+    "message": "ساؤل نے اس ڈومین کو روک دیا"
+  },
+  "block_page_image_alt": {
+    "message": "ساؤل نیک آدمی مایوس ہو گیا"
+  },
+  "block_page_local_note": {
+    "message": "مقامی بلاک — آپ کے براؤزر کو کچھ نہیں چھوڑتا ۔"
+  },
+  "block_page_options": {
+    "message": "ترتیبات کھولیں"
+  },
+  "block_page_title": {
+    "message": "ساؤل نے اس ڈومین کو روک دیا"
+  },
+  "blogCategoryAll": {
+    "message": "تمام"
+  },
+  "blogEmptyState": {
+    "message": "ابھی تک یہاں کوئی مضامین شائع نہیں ہوئے۔"
+  },
+  "blogError": {
+    "message": "بلاگ لوڈ کرنے میں ناکامی"
+  },
+  "blogHeroEyebrow": {
+    "message": "ساؤل محسن بلاگ"
+  },
+  "blogHeroLead": {
+    "message": "سارک توجہ، توجہ اور ڈی وی پر مرکوز کرتا ہے۔ ساؤل کے لہجے میں لکھی گئی ہفتہ وار مضامین — کوئی ٹریننگ ویبے۔"
+  },
+  "blogHeroTitle": {
+    "message": "قانونی طور پر ڈیجیٹل مہم پر لی جاتی ہے۔"
+  },
+  "blogPreviewCta": {
+    "message": "تمام مضامین دیکھیں"
+  },
+  "blogPreviewEmpty": {
+    "message": "ابھی کوئی مضامین دستیاب نہیں تھے۔"
+  },
+  "blogPreviewError": {
+    "message": "مضامین کا بوجھ اٹھانے میں ناکام رہے۔"
+  },
+  "blogPreviewEyebrow": {
+    "message": "ساؤل بلاگ"
+  },
+  "blogPreviewImageAlt": {
+    "message": "ساؤل اچھے آدمی کی تمثیل"
+  },
+  "blogPreviewLead": {
+    "message": "اِس مضمون میں ہم دیکھیں گے کہ ساؤل کس طرح آپ کی توجہ قانون کے مطابق دِکھا رہا ہے ۔"
+  },
+  "blogPreviewLoading": {
+    "message": "مضامین لوڈ کریں..."
+  },
+  "blogPreviewRead": {
+    "message": "مضمون کو پڑھیں ۔"
+  },
+  "blogPreviewTitle": {
+    "message": "ڈیجیٹل عدالت کی طرف سے مختص مقدمات."
+  },
+  "breadcrumbArticle": {
+    "message": "مضمون"
+  },
+  "breadcrumbBlog": {
+    "message": "بلاگ"
+  },
+  "categoriesTitle": {
+    "message": "سیشن میں وقفہ"
+  },
+  "categoryActiveLabel": {
+    "message": "فعال فعال"
+  },
+  "categoryClear": {
+    "message": "صاف صفائی"
+  },
+  "categoryDevLead": {
+    "message": "کسی بھی جوگلنگ وی ایس کوڈ، پی آر اور دور دراز کے اجلاسوں کے لیے عملی کارروائی کی۔"
+  },
+  "categoryDevTitle": {
+    "message": "ایک مجرمانہ درخواست کے ساتھ دیوی پرفارم"
+  },
+  "categoryEyebrow": {
+    "message": "کیٹیگری"
+  },
+  "categoryFocoLead": {
+    "message": "روزانہ مطالعے اور ڈرامے اپنے سر کو کوڈ میں محفوظ رکھنے کے بارے میں بغیر کھانا کھلانے کے."
+  },
+  "categoryFocoTitle": {
+    "message": "آزمائش پر توجہ دیں"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "اِس سلسلے میں ایک مثال پر غور کریں ۔"
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "زیرِغور تحقیق"
+  },
+  "categoryRemotoLead": {
+    "message": "گھر کے دفتر کے بارے میں کہانیاں، بلیک موجودگی اور ایک فرضی باطل ہونے سے گریز کریں."
+  },
+  "categoryRemotoTitle": {
+    "message": "علیبی کے ساتھ فاصلہ کا کام"
+  },
+  "changelogError": {
+    "message": "اب ہم تبدیلی لامحدود نہیں سکتے. بعد میں کوشش کریں."
+  },
+  "changelogEyebrow": {
+    "message": "سب کچھ"
+  },
+  "changelogHeading": {
+    "message": "باضابطہ تبدیلی لاگ"
+  },
+  "changelogLoading": {
+    "message": "بند کر نے کے لاگس کو درست کر دیں"
+  },
+  "changelogSubheading": {
+    "message": "ہر تبدیلی ہر موڑ کو براہ راست منزل سے رخصت کیا جاتا ہے۔"
+  },
+  "changelogTitle": {
+    "message": "لاگ تبدیل کرو"
+  },
+  "codeconBuildChip": {
+    "message": "کوڈ کا ۴واں حصہ"
+  },
+  "codeconBulletChallenge": {
+    "message": "چیلنج: دست یاب کوڈ 4 گھنٹوں میں دور کام ثابت کریں، کوئی آئی اے کی اجازت نہیں دی۔"
+  },
+  "codeconBulletNarrative": {
+    "message": "\"اٹارنی\" بیانیہ میٹرکس کو مینیجر/جوری کے لیے دفاع میں تبدیل کر دیتا ہے۔"
+  },
+  "codeconBulletRepoLink": {
+    "message": "اصل دوبارہ"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "ہاک لاب کھلے ماخذ:"
+  },
+  "codeconBulletTracking": {
+    "message": "زیادہ‌تر لوگ ٹی‌وی دیکھتے ہیں ۔"
+  },
+  "codeconCtaRepo": {
+    "message": "ہاک لاب کوڈ دیکھیں"
+  },
+  "codeconCtaSite": {
+    "message": "رابطہ"
+  },
+  "codeconCtaVideo": {
+    "message": "مکمل ویڈیو دیکھیں"
+  },
+  "codeconEyebrow": {
+    "message": "ہاک لاب کوڈکون"
+  },
+  "codeconLead": {
+    "message": "یہ نظریہ کووڈکون ہیک لیبا میں پیدا ہوا تھا: Otávio species ( TAG0 Linkedin TAG1 , TAG2 GH2 TAG3   AGG3  ) نے ساؤل کو دہشت گردی کے خلاف ذاتی وکیل کے طور پر تصور کیا۔"
+  },
+  "codeconPlanChip": {
+    "message": "۳۰ منصوبہ‌سازی"
+  },
+  "codeconStoryLead": {
+    "message": "سفید بورڈ کے ۳۰ منٹ میں ، اوٹاوا نے ایم‌وی‌پی کا نقشہ تیار کِیا اور اگلے ۴ گھنٹوں کے دوران ساؤل کی نسل : دُوردراز کام کرنے والا ایک توسیعی کام جو تبارکوں کو دیکھنے ، انڈیکس بنانے اور ڈی‌وی‌وی کے دفاع کو ” جوری “ ( یعنی مالک ) کے لئے ترتیب دیا گیا ۔"
+  },
+  "codeconTag": {
+    "message": "کمیونٹی میں پیدا ہوئے۔"
+  },
+  "codeconTitle": {
+    "message": "جہاں ساؤل حسن ایک کرومی توسیع بن گیا"
+  },
+  "codeconVideoCaption": {
+    "message": "کوڈ کon ہاک لاب سے لیپ جہاں ساؤل ایک بے روزگاری کی فضاء کے طور پر زندگی میں آیا۔"
+  },
+  "demoCta": {
+    "message": "مکمل جمہوریہ دیکھیں"
+  },
+  "demoEyebrow": {
+    "message": "فوری ڈیم"
+  },
+  "demoLead": {
+    "message": "ایک نظر کافی ہے: فوری رد عمل کے لیے پاپ اپ، ختم دن کے فیصلے کی رپورٹ۔"
+  },
+  "demoPopupBody": {
+    "message": "روزانہ انڈیکس ، سب سے اوپر ڈومینن اور برآمدات بھی ہاتھ میں ہیں ۔"
+  },
+  "demoPopupTitle": {
+    "message": "فوری فیصلے کیلئے پوپ"
+  },
+  "demoReportBody": {
+    "message": "چارٹ، ہلکے افسانہ نگاری اور اس کے بعد حرکت کی تجویز پیش کی۔"
+  },
+  "demoReportTitle": {
+    "message": "منصوبہ بندی کے لیے رپورٹ"
+  },
+  "demoTitle": {
+    "message": "اِس سلسلے میں ساؤل کی مثال پر غور کریں ۔"
+  },
+  "demoViewFull": {
+    "message": "حجم دیکھیں"
+  },
+  "devBody": {
+    "message": "مقامی ڈیممون اور وی ایس کوڈ توسیع کرکے مقامیہوسٹ کو چھوڑ کر پیداواری منٹ کے طور پر ایڈیٹر وقت شمار کرنے کے لئے."
+  },
+  "devCtaDocs": {
+    "message": "طےشدہ"
+  },
+  "devCtaReadme": {
+    "message": "پڑھیں"
+  },
+  "devCtaVsCode": {
+    "message": "وی ایس کوڈ توسیع کریں"
+  },
+  "devEyebrow": {
+    "message": "ترقی کرنے والوں کے لئے"
+  },
+  "devLead": {
+    "message": "تمام تکنیکی تفصیلات مرکزی بہاؤ سے باہر منتقل ہو گئیں۔ مندرجہ ذیل سے شروع ہوتا ہے۔"
+  },
+  "devTitle": {
+    "message": "دوسروں کو دینے یا اُن سے تعاون کرنے کے لئے کیا چاہتے ہیں ؟"
+  },
+  "extDescription": {
+    "message": "سرکامک مرکزہ (Sarcastic pointer) جس میں ڈومینوں کی پیمائش کی جاتی ہے اور چیک میں اپنے انڈیکس کو برقرار رکھتا ہے۔"
+  },
+  "extensionsChromeCta": {
+    "message": "جِلد کی فضا"
+  },
+  "extensionsCopy": {
+    "message": "اپنے مرکزی کردار کو برقرار رکھنے کے لیے ساؤل کو کروم اور وی ایس کوڈ تک پہنچا دو۔"
+  },
+  "extensionsTitle": {
+    "message": "ساؤل کی توسیع انسٹال کریں"
+  },
+  "extensionsVscodeCta": {
+    "message": "وی ایس کوڈ توسیع"
+  },
+  "extName": {
+    "message": "ساؤل نیک آدمی"
+  },
+  "faq1Answer": {
+    "message": "بالکل. ساؤل صرف توجہ اور تمسخر کا ذمہ‌دار ہوتا ہے ۔"
+  },
+  "faq1Question": {
+    "message": "کیا یہ آزاد ہے؟"
+  },
+  "faq2Answer": {
+    "message": "کبھی نہیں. ہر چیز جو  TAG0 chrome.storage.local TAG1 TAG1 T. میں واقع ہے۔"
+  },
+  "faq2Question": {
+    "message": "کیا میرا ڈیٹا براؤزر چھوڑ جاتا ہے؟"
+  },
+  "faq3Answer": {
+    "message": "صرف اگر آپ رپورٹ میں بیانات چاہتے ہیں. باقی کام بالکل ٹھیک ہے."
+  },
+  "faq3Question": {
+    "message": "کیا مجھے A کی ضرورت ہے؟"
+  },
+  "faq4Answer": {
+    "message": "نہیں. ہر چیز مقامی طور پر بغیر کسی قسم کے چلاتی ہے۔"
+  },
+  "faq4Question": {
+    "message": "کیا مجھے اکاؤنٹ کی ضرورت ہے؟"
+  },
+  "faq5Answer": {
+    "message": "جب انڈیکس آپ کی کمر کو موڑ دیتا ہے اور چند سیکنڈ کے لئے ایک انڈیکس کھیلتا ہے."
+  },
+  "faq5Question": {
+    "message": "زلزلے کا موڈ کیسے کام کرتا ہے ؟"
+  },
+  "faq6Answer": {
+    "message": "جی ہاں. جن مواقع پر آپ پیداوار/villain فہرستیں، وزن اور شیڈول قائم کرتے ہیں۔"
+  },
+  "faq6Question": {
+    "message": "کیا مَیں ڈومین اور شیڈول بنا سکتا ہوں ؟"
+  },
+  "faq7Answer": {
+    "message": "جی ہاں. سی ایس وی اور پی ڈی ایف بٹن نے آپ کو ڈیٹا فوری طور پر ڈاؤن لوڈ کرنے کی اجازت دے دی۔"
+  },
+  "faq7Question": {
+    "message": "کیا میں اپنے اعداد و شمار کو برآمد کر سکتا ہوں؟"
+  },
+  "faq8Answer": {
+    "message": "چورم کے لیے مگر کرومیئم پر مبنی براؤزر جیسے براوے یا ایج سے مطابقت رکھتا ہے۔"
+  },
+  "faq8Question": {
+    "message": "کیا یہ دوسرے براؤزر میں کام کرتا ہے؟"
+  },
+  "faq9Answer": {
+    "message": "اگر آپ OpenAII سب کچھ چھوڑ دیں."
+  },
+  "faq9Question": {
+    "message": "اے آئی کی رپورٹ محفوظ ہے؟"
+  },
+  "faqEyebrow": {
+    "message": "فوری سوالات"
+  },
+  "faqTitle": {
+    "message": "براہ راست FAQ."
+  },
+  "feature1Item1": {
+    "message": "موجودہ انڈیکس کے ساتھ ساتھ اور غیر متصل پیغامات"
+  },
+  "feature1Item2": {
+    "message": "اُوپر پھلدار اور شریر ڈومینوں کو فارمنگ وقت کے ساتھ بنایا گیا ۔"
+  },
+  "feature1Item3": {
+    "message": "سی ایس وی/پی ڈی ایف برآمدات ایک کلک کے ساتھ۔"
+  },
+  "feature1Title": {
+    "message": "حقیقی وقت"
+  },
+  "feature2Item1": {
+    "message": "اِس لئے اُس نے کہا : ” اَے میرے بیٹے !"
+  },
+  "feature2Item2": {
+    "message": "زیادہ سے زیادہ کرایہ اور سی ٹی اے کے ساتھ."
+  },
+  "feature2Item3": {
+    "message": "آپ پھلدار لوگوں میں حل کر سکتے ہیں"
+  },
+  "feature2Title": {
+    "message": "دباؤ کا ریشو:"
+  },
+  "feature3Item1": {
+    "message": "چارٹ فی گھنٹہ اور تبتی کی منسوخی۔"
+  },
+  "feature3Item2": {
+    "message": "ساؤل کا لہجہ بہتر طور پر بیان کرتا ہوں ۔"
+  },
+  "feature3Item3": {
+    "message": "فوری ایکشن پلان کے ساتھ نامناسب بینر."
+  },
+  "feature3Title": {
+    "message": "ڈرامائی رپورٹ"
+  },
+  "feature4Item1": {
+    "message": "ڈاٹ کو TAG0 chrome.storage.local TAG1 P — اخذ شدہ بتاریخ: 9 اکتوبر 2012. تحقق من التاريخ في:"
+  },
+  "feature4Item2": {
+    "message": "پروڈیوس /villain فہرستیں صرف آپ کے براؤزر میں محفوظ تھیں۔"
+  },
+  "feature4Item3": {
+    "message": "مقامی طور پر محفوظ شدہ حفاظتی اعلامیہ."
+  },
+  "feature4Title": {
+    "message": "مکمل تنہائی"
+  },
+  "featureBlockBody": {
+    "message": "اگر آپ موڈ کو قابل بنا سکتے ہیں تو ساؤل شمسی تبتی کو مکمل پردے میں رکھ کر جب تک آپ توجہ مرکوز نہ کریں اور واپس لوٹے۔"
+  },
+  "featureBlockHint": {
+    "message": "\"اپنی خواہش کے مطابق تبدیلی پیدا کریں: صرف پیداواری تبت کھلی رہتی ہے\"۔"
+  },
+  "featureBlockTitle": {
+    "message": "Villain Table"
+  },
+  "featureContextBody": {
+    "message": "اب آپ دن کا تعیّن کرنا ( کام ، تفریح ، مطالعہ ، ذاتی طور پر ) ، پس‌منظر قائم کر سکتے ہیں ۔"
+  },
+  "featureContextLabel": {
+    "message": "نیا"
+  },
+  "featureCustomBody": {
+    "message": "اِس لئے اُس نے اِس بات پر زور دیا کہ اُس نے اِس کام کو جاری رکھا ہے ۔"
+  },
+  "featureCustomHint": {
+    "message": "” غصہ ؟VP. بغیر خوراک کے ؟ (اور) امانت دار"
+  },
+  "featureCustomTitle": {
+    "message": "فہرستیں اور وزن"
+  },
+  "featuredEyebrow": {
+    "message": "محفوظ کردہ"
+  },
+  "featuredTitle": {
+    "message": "ہفتے کی تصویر"
+  },
+  "featureGaugeHint": {
+    "message": "جب یہ 70% آگے بڑھا تو ساؤل زلزلے کو تیار کرتا ہے۔"
+  },
+  "featureGaugeLabel": {
+    "message": "حیاتیاتی حالت"
+  },
+  "featureGaugeTitle": {
+    "message": "غیر متصل"
+  },
+  "featureNextLabel": {
+    "message": "اگلا کارڈ"
+  },
+  "featurePrevLabel": {
+    "message": "پرنٹ"
+  },
+  "featurePrivacyBody": {
+    "message": "تمام چیزیں  TAG0 chrome.storage.local TAG1 TAG1 ; بیرونی سروروں یا دائرۃ المعارف کے اندر چلتی ہیں۔"
+  },
+  "featurePrivacyHint": {
+    "message": "آپ کے اعداد و شمار کو بھی نہیں دیکھتے\"۔"
+  },
+  "featurePrivacyTitle": {
+    "message": "Privacy- اول"
+  },
+  "featureQuakeBody": {
+    "message": "اُنہوں نے کہا : ” مَیں نے اِس بات پر زور دیا کہ مَیں اُن سے بات کروں گا ۔"
+  },
+  "featureQuakeHint": {
+    "message": "” تمہیں پکڑ لو! اب پیداواری ٹیبل میں واپس.\""
+  },
+  "featureQuakeTest": {
+    "message": "آزمائش گھڑی"
+  },
+  "featureQuakeTitle": {
+    "message": "حساس زلزلہ موڈ"
+  },
+  "featureRealtimeBody": {
+    "message": "بیگم ہر تبتی کی نگرانی کرتی ہیں اور اپنے دن کو مرکزی کارکردگی کے نمایاں سکور میں تبدیل کرتی ہیں۔"
+  },
+  "featureRealtimeHint": {
+    "message": "\" ساؤل ان 37 تبتیوں کو دیکھ رہا ہے\"۔"
+  },
+  "featureRealtimeTitle": {
+    "message": "حقیقی وقت"
+  },
+  "featureReportBody": {
+    "message": "چارٹ، اے آئی اے کہانی نگاری، سی ایس وی/پی ڈی ایف برآمدات، اور منٹ-بی-منٹ ٹائم لائن اپنے اگلے قیام کے لیے۔"
+  },
+  "featureReportHint": {
+    "message": "اس کا ثبوت تمہارے اور مالک کے لیے ہے۔"
+  },
+  "featureReportTitle": {
+    "message": "ڈرامائی رپورٹ"
+  },
+  "featureSectionEyebrow": {
+    "message": "خصوصیات"
+  },
+  "featureSectionLead": {
+    "message": "ہر کارڈ مزاح اور واضح طور پر سمجھ میں آتا ہے کہ ساؤل کس حد تک کس کام کو کرتا ہے ۔"
+  },
+  "featureSectionTitle": {
+    "message": "آپ کو ہر چیز میں تبتی رکھنے کی ضرورت ہے"
+  },
+  "featuresEyebrow": {
+    "message": "طےشدہ"
+  },
+  "featuresTitle": {
+    "message": "ساؤل نیک‌وبد میں امتیاز کرنے والا تھا ۔"
+  },
+  "featureSwipeHint": {
+    "message": "ساؤل کی ہر خصوصیت کا جائزہ لینے کی کوشش کریں ۔"
+  },
+  "feedbackLink": {
+    "message": "جواب دیں"
+  },
+  "finalCtaBody": {
+    "message": "نصب کریں، اپنے ڈومین نصب کریں، اور ایک بار پھر بلوین ٹیبل جیتنے سے پہلے مرکزی توجہ حاصل."
+  },
+  "finalCtaTitle": {
+    "message": "ساؤل کو اُس پر قبضہ کرنے کیلئے تیار ہے ؟"
+  },
+  "finalPrimary": {
+    "message": "چورم پر انسٹال کریں"
+  },
+  "footerBody": {
+    "message": "اپنے بُرے لوگوں کو فہرست میں رکھیں اور ساؤل کو پیسے جمع کرنے دیں ۔"
+  },
+  "footerChangelogLink": {
+    "message": "لاگ تبدیل کرو"
+  },
+  "footerLinkArchitecture": {
+    "message": "فن‌لینڈ"
+  },
+  "footerLinkGithub": {
+    "message": "جٹوب"
+  },
+  "footerLinkIndicators": {
+    "message": "آئین"
+  },
+  "footerPrivacy": {
+    "message": "100% مقامی اعداد جج بھی اسے نہیں دیکھتا۔"
+  },
+  "footerPrivacyLink": {
+    "message": "تعلیمی پالیسی"
+  },
+  "footerTitle": {
+    "message": "ساؤل نیک‌سیرت تھا"
+  },
+  "heroBadge": {
+    "message": "\"کک کے معاملے میں\""
+  },
+  "heroConfidence1": {
+    "message": "زلزلے کا طریقہ"
+  },
+  "heroConfidence2": {
+    "message": "Blacklist &VP ڈومین فہرستیں"
+  },
+  "heroConfidence3": {
+    "message": "کہانی کے ساتھ"
+  },
+  "heroGaugeHint": {
+    "message": "جب یہ 70% متاثر ہوتا ہے تو زلزلے موڈ طوفانوں میں۔"
+  },
+  "heroGaugeLabel": {
+    "message": "حیاتیاتی انڈیکس"
+  },
+  "heroPill": {
+    "message": "ہفتہ‌وار بارش"
+  },
+  "heroPrimaryCta": {
+    "message": "چورم پر انسٹال کریں"
+  },
+  "heroSecondaryCta": {
+    "message": "دیکھیں کیسے کام کرتا ہے"
+  },
+  "heroSubtitle": {
+    "message": "اس میں آپ کے تبتی، جھنڈے کی سرگرمیاں اور آپ کو دن کی ڈیریلز سے پہلے توجہ مرکوز کرنے کے لئے واپس آ جاتا ہے — سب کے اندر، کوئی نشان نہیں."
+  },
+  "heroTag": {
+    "message": "حقیقی زندگی کے لیے اینٹی پروکرشن کی توسیع"
+  },
+  "heroTitle": {
+    "message": "پراسٹنگ بند کرو. ساؤل محسن معاملہ لیتا ہے۔"
+  },
+  "indexCalloutLabel": {
+    "message": "ساؤل کا نام"
+  },
+  "indexCalloutQuote": {
+    "message": "” 60% اور مَیں آپ کے مالک کو فون کر رہا ہوں ۔ نیچے نیچے 10% اور مَیں آپ کے ناشر کی کتاب پڑھ رہا ہوں ۔ انصاف کے ساتھ وزن کو ٹھیک رکھو، کل"
+  },
+  "indexClueAlert": {
+    "message": "زلزلے کی شدت"
+  },
+  "indexClueAlertBody": {
+    "message": "ڈبل کرنسی کی تختیاں، کرنسی اور نقل کرتے ہیں تاکہ دعوت صحیح وقت پر متاثر ہو۔"
+  },
+  "indexClueBreak": {
+    "message": "اخذ کردہ نما برقی رو"
+  },
+  "indexClueBreakBody": {
+    "message": "15–22 کا قطر اسٹریٹجک سانسوں کا تقاضا کرتا ہے۔ اپنے کیلنڈر، کلائنٹ پر روک."
+  },
+  "indexClueFocus": {
+    "message": "آپ کے ضلعوں کی فہرست"
+  },
+  "indexClueFocusBody": {
+    "message": "فہرست فحش اداکارائیں جو ساؤل کی فائل کے سامنے انڈیکس کو تقسیم کرتی ہیں ۔"
+  },
+  "indexCluesLabel": {
+    "message": "مقدمہ"
+  },
+  "indexEyebrow": {
+    "message": "ساؤل کی میز پر"
+  },
+  "indexFootnote": {
+    "message": "15 سے 22 ساؤل کی فائلوں کے درمیان \"کم کلائنٹ\"۔ اُوپر اُس نے اِس زلزلے کا اِنتظام کِیا ۔"
+  },
+  "indexGaugeHint": {
+    "message": "۱۸ فیصد لوگ اِس جگہ کو اچھی طرح دیکھتے ہیں ۔"
+  },
+  "indexGaugeLabel": {
+    "message": "سوئی جگہ"
+  },
+  "indexLead": {
+    "message": "قانونی ترجمہ بندی: 0 کا ایک سکور نہ تو ٹرافی ہے اور نہ ہی 100 کا مجموعی نام ہے۔ ساؤل ہر بینڈ کو اس بات کا فیصلہ کرنے کے لئے پڑھتا ہے کہ آیا آپ کی کرسی کو ہلانے یا چھٹیوں کے دن پر زور دینے کیلئے ہے ۔"
+  },
+  "indexMemoBody": {
+    "message": "اگر ایک مفسرین تبوک کو انڈیکس کا نام دے تو مکمل سکرین بلاک موڈ نکال دیں۔ اِس کے علاوہ اُس نے اِس بات کا بھی ذکر کِیا کہ اُس نے اُس سے کہا : ” مَیں اِس بات کی توقع نہیں کرتا کہ مَیں اُس کی بات مانوں ۔ “"
+  },
+  "indexMemoHeading": {
+    "message": "آفس میمو"
+  },
+  "indexMemoSign": {
+    "message": "— آپکا وکیل ساؤل —"
+  },
+  "indexPitch1": {
+    "message": "انڈیکس کا قطر 0 سے 100 تک ہوتا ہے۔ 100 کے قریب قریب ترین، آپ نے مقدمے کو درمیان میں پھینک دیا اور ایک وی پی کلائنٹ بن گیا۔"
+  },
+  "indexPitch2": {
+    "message": "لیکن یہ بھی شک کی نظر میں ہے کہ: جو شخص ٹیٹوز کی پیداوار کے لیے 24/7 کا کام کرتا ہے، وہ یہ ہے کہ ایک کرنسی کی تقسیم کا ایک مرحلہ۔"
+  },
+  "indexRange0to14Body": {
+    "message": "آپ کو کام کرنے کیلئے اتنا محنت کرنی پڑتی ہے کہ ساؤل اسے ” جوش “ کہتا ہے ۔ سانس لینا، کھڑے ہونا اور اس شہادت سے پہلے پانی لینا."
+  },
+  "indexRange0to14Title": {
+    "message": "0 – 14 : کام پر زیادہ سے زیادہ سوال"
+  },
+  "indexRange15to22Body": {
+    "message": "Islamic effect: ضمنی توجہ، صحت مند توڑ، صفر ساؤل ایک جزیہ بھی سوچ سکتا ہے ۔"
+  },
+  "indexRange15to22Title": {
+    "message": "۱۵ – ۲۲ : گولڈن توازن"
+  },
+  "indexRange23to60Body": {
+    "message": "آپ ابھی بھی اس معاملے پر شکایت کر رہے ہیں لیکن بُری عادتوں میں پڑ گئے ہیں ۔ ساؤل نے فوراً ہی مقدمے کو حل کرنے کیلئے فائرنگ کی ۔"
+  },
+  "indexRange23to60Title": {
+    "message": "23 – 60 : توجہ کا مرکز"
+  },
+  "indexRange61to100Body": {
+    "message": "اِس زلزلے کا وقت صبح کے وقت ہے ۔ پردے کی پٹی، کیپر بالرز اور ساؤل ہر گندگیین تبت کے لیے ایک روک تھام کے ساتھ چلتے ہیں۔"
+  },
+  "indexRange61to100Title": {
+    "message": "61 – 100 : ظاہراً پرویز مشرف میں انتقال ہوا۔"
+  },
+  "indexStamp": {
+    "message": "نیند آسان ہوتی ہے۔"
+  },
+  "indexTitle": {
+    "message": "ساؤل کس طرح پرفارمنس انڈیکس پڑھتا ہے۔"
+  },
+  "integrationCard1Body": {
+    "message": "اِس جوڑے کی کُل‌وقتی طور پر خدمت کریں ۔ آپ کے براؤزر کو کچھ بھی نہیں چھوڑتا."
+  },
+  "integrationCard1Title": {
+    "message": "انتخاب میں فعال کریں"
+  },
+  "integrationCard2Body": {
+    "message": "اسے شروع کرنے کے لیے وی ایس کوڈ توسیعی کمانڈ استعمال کریں: اس سے قبل سے پہلے سے موجود پی آئی آر او کےY/پرٹ اور ڈیمون خانہ میں کھلتا ہے۔"
+  },
+  "integrationCard2Title": {
+    "message": "جگہ"
+  },
+  "integrationCard3Body": {
+    "message": "کمانڈ \"Sault Goodman: prepar commando do Sult Daemon\" جہاز نصب کرنے کے بعد تیار ہو جاتے ہیں اور کرومی زبان میں ایڈیٹرز بھیجے جاتے ہیں۔"
+  },
+  "integrationCard3Title": {
+    "message": "وی ایس کوڈ توسیع"
+  },
+  "integrationCta": {
+    "message": "کیا آپ نے غور کِیا ہے کہ . . ."
+  },
+  "integrationEyebrow": {
+    "message": "دُور"
+  },
+  "integrationLead": {
+    "message": "اگر آپ اِس بات پر غور کریں گے کہ آپ کا بچہ آپ کے ساتھ کیسے پیش آتا ہے تو آپ کیا کریں گے ؟"
+  },
+  "integrationTitle": {
+    "message": "وی ایس کوڈ + مقامی ڈیممون، سب کو پیداوار کے طور پر شمار کیا جاتا ہے۔"
+  },
+  "integrationVsixCta": {
+    "message": "وی ایس کوڈ توسیع کریں"
+  },
+  "label_vscode": {
+    "message": "وی ایس کوڈ ( ایڈز)"
+  },
+  "languageLabel": {
+    "message": "منتخب زبان منتخب کریں"
+  },
+  "latestEyebrow": {
+    "message": "بند"
+  },
+  "latestTitle": {
+    "message": "صحن سے باہر گرم"
+  },
+  "lightboxClose": {
+    "message": "بندکرو"
+  },
+  "manifesto1Body": {
+    "message": "آپ کا دن براؤزر کے اندر فیصلہ کیا جاتا ہے۔ کوئی ڈیٹا کمپیوٹر چھوڑ دیتا ہے، عدالت کے حکم سے نہیں۔"
+  },
+  "manifesto1Title": {
+    "message": "100% مقامی"
+  },
+  "manifesto2Body": {
+    "message": "جب ساؤل کو مزید ٹیکس ادا کرنے پڑتے ہیں تو اِس سے ظاہر ہوتا ہے کہ وہ اُن کی مدد کر رہا ہے ۔"
+  },
+  "manifesto2Title": {
+    "message": "انکار کرنا"
+  },
+  "manifesto3Body": {
+    "message": "اِس کے علاوہ اِس بات کا بھی خیال رکھا گیا ہے کہ اُن کے پاس بہت سی چیزیں ہیں ۔"
+  },
+  "manifesto3Title": {
+    "message": "ہتھیار کے طور پر Humor"
+  },
+  "manifestoEyebrow": {
+    "message": "صاف"
+  },
+  "manifestoTitle": {
+    "message": "اِس کی وجہ کیا ہے ؟"
+  },
+  "mediaTaglineDev": {
+    "message": "دیوی لکشمی نے سختی میٹرکس کی طرف سے فیصلے کیے۔"
+  },
+  "mediaTaglineFoco": {
+    "message": "روزمرّہ سوالات کے تحت توجہ اور توجہ."
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "( ۱ - سموئیل ۱۶ : ۷ - ۹ ) ذہنی طور پر ، ساؤل کے پُراسرار شور سے ملتا ہے ۔"
+  },
+  "mediaTaglineRemoto": {
+    "message": "دور کام صفر متحرک معذرت کے ساتھ."
+  },
+  "metaCategory": {
+    "message": "کیٹیگری"
+  },
+  "metaPublishedAt": {
+    "message": "بلاگ پر شائع ہوتا ہے۔"
+  },
+  "metaSource": {
+    "message": "ماخذ"
+  },
+  "metaSourcePublishedAt": {
+    "message": "ماخذ"
+  },
+  "metaSourceUrl": {
+    "message": "ماخوذ"
+  },
+  "metaTags": {
+    "message": "تاج"
+  },
+  "mobileMenuToggle": {
+    "message": "مینو کھولیں"
+  },
+  "multilingualLabel": {
+    "message": "پی ٹی‌ٹی‌این‌اے"
+  },
+  "navBenefits": {
+    "message": "فوائد"
+  },
+  "navBlog": {
+    "message": "بلاگ"
+  },
+  "navClients": {
+    "message": "جمع"
+  },
+  "navCodeCon": {
+    "message": "کوڈ کُن"
+  },
+  "navCta": {
+    "message": "نصب کریں"
+  },
+  "navDemo": {
+    "message": "دیو"
+  },
+  "navIndex": {
+    "message": "انڈیکس"
+  },
+  "navProcess": {
+    "message": "پرنٹ"
+  },
+  "newsletterCopy": {
+    "message": "سرکہ اور تنبیہ کا مختصر سلسلہ شروع ہوتا ہے تو آپ کا وی ایس کوڈ نیٹفلکس کی طرح کام کرنا بند کردیتا ہے۔"
+  },
+  "newsletterCta": {
+    "message": "ساؤل سے ملاقات"
+  },
+  "newsletterDisclaimer": {
+    "message": "کوئی سیم. صرف آپ کو برداشت کر سکتے ہیں صرف سارس."
+  },
+  "newsletterError": {
+    "message": "براہ مہربانی ایک موزوں ای میل بھیج دیں۔"
+  },
+  "newsletterLabel": {
+    "message": "آپ کا ای میل"
+  },
+  "newsletterPlaceholder": {
+    "message": "آپ @email.dev"
+  },
+  "newsletterSubmit": {
+    "message": "میمو"
+  },
+  "newsletterSuccess": {
+    "message": "آپ ریڈار پر ہیں۔ نئی بارشیں جلد ہی آتی ہیں۔"
+  },
+  "newsletterTitle": {
+    "message": "ساؤل کا میمو حاصل کریں"
+  },
+  "nextPost": {
+    "message": "اگلا"
+  },
+  "options_back_to_popup": {
+    "message": "واپسی پوپ"
+  },
+  "options_confirm_reset": {
+    "message": "اس سے لازمی اقدار بحال ہوں گی۔ جاری ؟"
+  },
+  "options_critical_sound_hint": {
+    "message": "جب اِس کی وجہ سے اِن میں سے ایک آگ بھی شامل ہے تو اِس میں آگ لگ جاتی ہے ۔"
+  },
+  "options_critical_sound_label": {
+    "message": "خودکار زلزلے"
+  },
+  "options_critical_threshold_hint": {
+    "message": "جب انڈیکس کو یہ اہمیت حاصل ہوتی ہے تو ساؤل نے اس اہم آگاہی کو نظرانداز کر دیا ۔"
+  },
+  "options_critical_threshold_label": {
+    "message": "[ تصویریں ]"
+  },
+  "options_digital_branch": {
+    "message": "ڈیجیٹل شاخ"
+  },
+  "options_domain_add": {
+    "message": "شامل کریں"
+  },
+  "options_domain_duplicate": {
+    "message": "جگہ"
+  },
+  "options_domain_empty": {
+    "message": "ابھی تک کوئی ڈومین."
+  },
+  "options_domain_invalid": {
+    "message": "محفوظ ڈومین."
+  },
+  "options_footer_note": {
+    "message": "سول آپ کے اعداد و شمار کسی کو بھی نہیں دیتا۔ جج بھی نہیں ۔"
+  },
+  "options_head_title": {
+    "message": "ساؤل نیک‌وبد میں امتیاز کرنے والا —"
+  },
+  "options_heading": {
+    "message": "آفس کی ترتیبات"
+  },
+  "options_holiday_context_hint": {
+    "message": "دن کی تقریب کا انتخاب کرنے کے لیے پاپ اپ استعمال کریں (کام، تفریح، مطالعہ، روزہ، چھٹی یا ذاتی)۔ ساؤل تاریخ کو ریکارڈ کرتا ہے اور اسکور درست کرتا ہے ۔"
+  },
+  "options_holiday_country_error": {
+    "message": "دو خطوط صرف، مثلا، بی آر یا امریکی استعمال کریں۔"
+  },
+  "options_holiday_country_hint": {
+    "message": "بی آر، امریکہ، پی ٹی. ساؤل کبھی بھی اپنے ملک کو ذاتی طور پر پہچاننے کی کوشش نہیں کرتا ۔"
+  },
+  "options_holiday_country_label": {
+    "message": "ملک کوڈ (ISO-3166) ہے۔"
+  },
+  "options_holiday_heading": {
+    "message": "یومِ‌کفارہ اور انصاف"
+  },
+  "options_holiday_hint": {
+    "message": "جب ساؤل کامیاب ہوا تو وہ صرف نائجر کہلاتا ہے ۔ آج تک یہ دیکھنے کے لئے کہ آیا آج کوئی قومی تہوار ہے اور اس میں سکور نمایاں ہوتا ہے۔"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "صرف اگر آپ ملک کو قابل اور قائم کر سکتے ہیں. کوئی خودکار جگہ نہیں."
+  },
+  "options_holiday_toggle_label": {
+    "message": "قومی تہواروں پر پابندی"
+  },
+  "options_inactivity_threshold": {
+    "message": "غیر متصل حساب سے پہلے"
+  },
+  "options_language_auto": {
+    "message": "خودکار (Browser)"
+  },
+  "options_language_en": {
+    "message": "انگریزی (US)"
+  },
+  "options_language_es": {
+    "message": "اندلس"
+  },
+  "options_language_hint": {
+    "message": "زبان کو دستی طور پر یا اجازت دے کر کرو."
+  },
+  "options_language_label": {
+    "message": "مواجہ:"
+  },
+  "options_language_pt": {
+    "message": "پرتگالی (Brazil)"
+  },
+  "options_openai_hint": {
+    "message": "اس رپورٹ میں معلومات پیدا کرنے کے لیے مقامی طور پر ذخیرہ کیا گیا۔"
+  },
+  "options_openai_label": {
+    "message": "OpenAI کلید (اختیاری)"
+  },
+  "options_openai_placeholder": {
+    "message": "سکا..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "جب ساؤل کو یہ سہولت ملی تو اُس نے وہاں کے مقامی نظام کو استعمال کِیا ۔"
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "اس فہرست میں بلاک تک رسائی"
+  },
+  "options_procrastination_heading": {
+    "message": "مشنری"
+  },
+  "options_procrastination_hint": {
+    "message": "یہاں آزمائشوں کا سامنا کرتے ہیں ۔ اگر آپ کسی جگہ سے محبت کرتے ہیں تو یہ غالباً یہاں موجود ہے۔"
+  },
+  "options_procrastination_placeholder": {
+    "message": "مثلاً آپٹوبہ.com"
+  },
+  "options_productive_heading": {
+    "message": "پیداواری ڈومین"
+  },
+  "options_productive_hint": {
+    "message": "ساؤل جانتا ہے کہ کام کہاں ہوتا ہے ۔ اپنے معمول کی بنیاد پر اِسے شامل کریں یا دُور کریں ۔"
+  },
+  "options_productive_placeholder": {
+    "message": "e.g. Docs.google.com"
+  },
+  "options_promise": {
+    "message": "ساؤل اپنی توجہ کے ساتھ آپ کے اعداد و شمار پر مرکوز رکھتا ہے ۔"
+  },
+  "options_restore_defaults": {
+    "message": "طےشدہ"
+  },
+  "options_save_weights": {
+    "message": "وزن محفوظ کریں"
+  },
+  "options_schedule_add": {
+    "message": "خاموشی شامل کریں"
+  },
+  "options_schedule_heading": {
+    "message": "کام کا وقت"
+  },
+  "options_schedule_hint": {
+    "message": "ساؤل کو بتائیں جب آپ کا سرکاری طریقہ بدل جاتا ہے ۔ ان بلاکوں کے باہر، پیداواری منٹوں کو ڈبل شمار کرتے ہیں۔"
+  },
+  "options_schedule_to": {
+    "message": "جگہ"
+  },
+  "options_status_blocklist_saved": {
+    "message": "ترجیحی تجدید بند کرنا."
+  },
+  "options_status_critical_saved": {
+    "message": "زلزلے کے موڈ نے تجدید کی۔"
+  },
+  "options_status_defaults_restored": {
+    "message": "جی ہاں."
+  },
+  "options_status_domain_removed": {
+    "message": "ڈومین ہٹا دیا."
+  },
+  "options_status_holiday_saved": {
+    "message": "ہالی وڈ ترجیحات کی تجدید."
+  },
+  "options_status_language_saved": {
+    "message": "زبان کی تجدید کی۔"
+  },
+  "options_status_list_updated": {
+    "message": "فہرست تجدید۔"
+  },
+  "options_status_ready": {
+    "message": "سب اچھا."
+  },
+  "options_status_schedule_updated": {
+    "message": "اسکی تجدید ۔"
+  },
+  "options_status_vscode_saved": {
+    "message": "VS Code دوبارہ تجدید."
+  },
+  "options_status_weights_saved": {
+    "message": "وزن کی تجدید."
+  },
+  "options_subtitle": {
+    "message": "آپ کے اسٹائل سٹائل کو میچ کرنے کے لئے ریڈار کو تقسیم کریں۔ ہر چیز مقامی رہتی ہے۔"
+  },
+  "options_tagline": {
+    "message": "آپ کے ذاتی وکیل کو قتل کرنے کے خلاف"
+  },
+  "options_thresholds_heading": {
+    "message": "Trestrict & وزن"
+  },
+  "options_vscode_heading": {
+    "message": "وی ایس کوڈ شامل ہے"
+  },
+  "options_vscode_install_hint": {
+    "message": "مرکزی سیریز بھیجنے کے لیے باضابطہ وی ایس کوڈ توسیع کریں۔"
+  },
+  "options_vscode_install_link": {
+    "message": "وی ایس کوڈ توسیع کریں"
+  },
+  "options_vscode_key_copied": {
+    "message": "کلیدی نقل کی۔"
+  },
+  "options_vscode_key_copy": {
+    "message": "کلید کاپی کریں"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "کاپی کرنے کی کوئی کلید نہیں ہے."
+  },
+  "options_vscode_key_generate": {
+    "message": "نئی کلید قائم کریں"
+  },
+  "options_vscode_key_generated": {
+    "message": "نئی کلید تخلیق کی۔"
+  },
+  "options_vscode_key_hint": {
+    "message": "ساؤل ڈیممون/VS کوڈ میں کلیدی سیریز کا مقابلہ کریں۔"
+  },
+  "options_vscode_key_label": {
+    "message": "کُنجی"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "ساؤلڈامون کلید پیسٹ کریں"
+  },
+  "options_vscode_test_button": {
+    "message": "ٹیسٹ شدہ اتصال"
+  },
+  "options_vscode_test_disabled": {
+    "message": "ٹیسٹ سے پہلے وی ایس کوڈ فعال کریں"
+  },
+  "options_vscode_test_error": {
+    "message": "ساؤلڈامون سے متصل ہونے میں ناکامی{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "رسائی حاصل کرنے میں ناکامی{origin}صحت{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "انفلیشن میں. کچھ استعمال کریں جیسے http://127.0.1:3123۔"
+  },
+  "options_vscode_test_running": {
+    "message": "ٹیسٹ‌ڈو کنونشن"
+  },
+  "options_vscode_test_success": {
+    "message": "ساؤل نے جواب دیا{origin}آجکل کے واقعات :{sessions}جگہ{minutes}. ."
+  },
+  "options_vscode_test_timeout": {
+    "message": "ساؤل دَم‌مون نَوَوَوَّوُوُوُوُوُو ۔"
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "زبردست. میمم کلید استعمال کریں بغیر وی ایس کوڈ."
+  },
+  "options_vscode_toggle_hint": {
+    "message": "اپنے سکور کو تازگی بخشنے سے پہلے مقامی سولڈامون (لوکلہوسٹ) کو پکارتا ہے۔"
+  },
+  "options_vscode_toggle_label": {
+    "message": "وی ایس کوڈ سے وقت نکال لیں"
+  },
+  "options_vscode_url_hint": {
+    "message": "صرف مقامیہوسٹ سے بات چیت کرنا؛ آپ کی مشین سے کوئی بھی چیز نہیں نکل سکتی۔"
+  },
+  "options_vscode_url_label": {
+    "message": "جگہ"
+  },
+  "options_weight_inactivity": {
+    "message": "انسٹھ (انگریزی:"
+  },
+  "options_weight_procrastination": {
+    "message": "غیر درج شدہ وقت"
+  },
+  "options_weight_switches": {
+    "message": "( تصویر کے لئے چھپے )"
+  },
+  "options_weights_sum_error": {
+    "message": "اوزان کی جمع 1 ہونی چاہیے۔"
+  },
+  "popup_alert_no_data": {
+    "message": "ابھی تک کوئی اعداد و شمار نہیں۔ کچھ ٹیبل کھول کر دوبارہ کوشش کریں۔"
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF پلگ انس."
+  },
+  "popup_badge_label": {
+    "message": "انڈیکس"
+  },
+  "popup_blog_badge": {
+    "message": "ساؤل پڑھنے کی سفارش کرتا ہے"
+  },
+  "popup_blog_button_all": {
+    "message": "کھولیں"
+  },
+  "popup_blog_category_prefix": {
+    "message": "کیٹیگری (انگریزی:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "اب پڑھیے"
+  },
+  "popup_blog_empty": {
+    "message": "ابھی تک کوئی مضمون دستیاب نہیں۔"
+  },
+  "popup_blog_error": {
+    "message": "اب بلاگ تک نہیں پہنچ سکتا."
+  },
+  "popup_blog_loading": {
+    "message": "کمال معاملہ کے لئے شکار..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "صفر سست رفتار ٹریننگ کے ساتھ ڈی وی وی پر عمل کرنے کا وقت۔"
+  },
+  "popup_blog_reason_foco": {
+    "message": "آج کے بکھروں پر مبنی ہے۔"
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "اسلئےکہ آجکل آپ کا مزار قانونی حد پار کر رہا ہے ۔"
+  },
+  "popup_blog_reason_remoto": {
+    "message": "مکمل متحرک موڈ جانے کے بغیر دور دراز کام."
+  },
+  "popup_blog_section_subtitle": {
+    "message": "ہم آپ کے نمبر پڑھ کر ساؤل کے مضمون کی طرف اشارہ کرتے ہیں۔"
+  },
+  "popup_blog_section_title": {
+    "message": "ہاتھ سے چلنے والی بلاگ سر"
+  },
+  "popup_chart_aria": {
+    "message": "پُرکشش وقت"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "چین"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "ترقی"
+  },
+  "popup_chart_label_productive": {
+    "message": "پیداوار"
+  },
+  "popup_chart_label_vscode": {
+    "message": "وی ایس کوڈ"
+  },
+  "popup_chart_title": {
+    "message": "ڈیلی ریڈار"
+  },
+  "popup_context_option_dayOff": {
+    "message": "پھول"
+  },
+  "popup_context_option_leisure": {
+    "message": "لازر"
+  },
+  "popup_context_option_personal": {
+    "message": "ذاتی"
+  },
+  "popup_context_option_study": {
+    "message": "مطالعے کا مضمون"
+  },
+  "popup_context_option_vacation": {
+    "message": "رنگ"
+  },
+  "popup_context_option_work": {
+    "message": "کام"
+  },
+  "popup_critical_close_aria": {
+    "message": "حشرات آگاہی"
+  },
+  "popup_critical_countdown_final": {
+    "message": "کوئی عذر: اس وقت تین تبتیوں کے قریب!"
+  },
+  "popup_critical_default_message": {
+    "message": "اس انڈیکس میں بھی آپ کا دفاع نہیں کر سکتے. اِس سے اَور بھی بہت سے فائدے ہوں گے ۔"
+  },
+  "popup_critical_message_1": {
+    "message": "کلنٹن، انڈیکس کے ساتھ{threshold}میں بھی آپ کا دفاع نہیں کر سکتے. خطرات کا اطلاق ہوتا ہے !"
+  },
+  "popup_critical_message_2": {
+    "message": "یہ زلزلہ ؟ قاضی نے آپ کی غداری کی ۔"
+  },
+  "popup_critical_message_3": {
+    "message": "بند کرو یا میں آپ کی کہانی سنانے کے لئے پرائم ٹائم اشتہار خرید لیں گے."
+  },
+  "popup_critical_message_4": {
+    "message": "آپ کا دفاع کرنا: ان تبتیوں کو بند کرو، میں ڈالر میں بلنگ شروع کرنے سے پہلے."
+  },
+  "popup_critical_plan_action": {
+    "message": "[ تصویر کا حوالہ ]"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "جگہ"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "ایس ."
+  },
+  "popup_critical_review": {
+    "message": "غیر متصل"
+  },
+  "popup_critical_sound_now": {
+    "message": "اب ٹریگر کا نام"
+  },
+  "popup_critical_title": {
+    "message": "ساؤل زلزلہ میں"
+  },
+  "popup_csv_category": {
+    "message": "کیٹیگری"
+  },
+  "popup_csv_column_date": {
+    "message": "تاریخ"
+  },
+  "popup_csv_column_inactive": {
+    "message": "Induction (min)"
+  },
+  "popup_csv_column_index": {
+    "message": "انڈیکس"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "ترقی (مین)۔"
+  },
+  "popup_csv_column_productive": {
+    "message": "پیداوار (مین)"
+  },
+  "popup_csv_column_switches": {
+    "message": "بستر کو تبدیل کریں"
+  },
+  "popup_csv_column_vscode": {
+    "message": "وی ایس کوڈ (مین)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "کیٹیگری"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "کا نامہ‌نگار"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "ڈومنو"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "مدت (مس)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "آخر (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "انصاف"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "شروع ( آئی‌او )"
+  },
+  "popup_csv_detailed_title": {
+    "message": "دی گئی ٹائم لائن"
+  },
+  "popup_csv_domain": {
+    "message": "جگہ"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "اوپر مرکزی ڈومین ڈومین"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "فعال فوکس (%s)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "وقت (%s)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "پریڈ وس پروک"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "سوئز فی گھنٹہ"
+  },
+  "popup_csv_kpi_time": {
+    "message": "وقت"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "اُس دَور کا ذکر"
+  },
+  "popup_csv_kpis_title": {
+    "message": "عطارد اشارے"
+  },
+  "popup_csv_minutes": {
+    "message": "چین"
+  },
+  "popup_csv_summary_title": {
+    "message": "عمومی خلاصہ"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "اوپری ڈومین"
+  },
+  "popup_error_no_data": {
+    "message": "کوئی ڈیٹا دستیاب نہیں"
+  },
+  "popup_error_runtime": {
+    "message": "اوپس! دفتر تک رسائی ممکن نہیں۔"
+  },
+  "popup_error_unknown": {
+    "message": "نامعلوم"
+  },
+  "popup_export_csv": {
+    "message": "CSV گرا ئيں"
+  },
+  "popup_export_description": {
+    "message": "اپنے شمارے کو سول محسن–استی دلائل میں تبدیل کریں۔"
+  },
+  "popup_export_pdf": {
+    "message": "جی‌نہیں ۔"
+  },
+  "popup_export_report": {
+    "message": "کھولیں"
+  },
+  "popup_export_title": {
+    "message": "اپنی توجہ کا مرکز بنائیں"
+  },
+  "popup_fairness_context_label": {
+    "message": "زبان پر پرنٹ"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "آج ایک تہوار ہے، اسکور خودبخود بند کر دیا."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "( ۱ - کرنتھیوں ۱۵ : ۵۸ ) آجکل بھی کوئی سزا نہیں ملتی ۔"
+  },
+  "popup_fairness_manual_label": {
+    "message": "آجکل سکی‌انگ"
+  },
+  "popup_fairness_note": {
+    "message": "ساؤل نے آپ کو پوپ میں منتخب ہونے والے ضمنی پس‌منظر پر مبنی اسکور واپس کر دیا ۔ آجکل اسکیپنگ اسکورر اور اسکرنر کی نگرانی کرتی ہے۔ کام کو جاری رکھتا ہے 100%، شخصی طور پر ہر چیز، لیویشن کی اہمیت 30% مرکوز ہوتی ہے اور غلط فہمیوں کو نظر انداز کرتا ہے، مطالعے کے لیے سزا، دن بھر اور چھٹیوں سے قطع نظر صفر کو دن بہ دن جاری رکھتا ہے۔"
+  },
+  "popup_fairness_note_label": {
+    "message": "ساؤل"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "اِس دن کو ریکارڈ کِیا گیا ۔"
+  },
+  "popup_fairness_status_default": {
+    "message": "دییا سوتیلی نارمل۔"
+  },
+  "popup_fairness_status_holiday": {
+    "message": "قومی تہوار اس اسکور کو غیر جانبدار قرار دیتا ہے۔"
+  },
+  "popup_fairness_status_leisure": {
+    "message": "مدورائیر سرخوز ایک پریساو."
+  },
+  "popup_fairness_status_manual": {
+    "message": "دیوالیہ پنرنگ."
+  },
+  "popup_fairness_status_personal": {
+    "message": "شخصی موڈ سرگرم — کوئی بھی نہیں ۔"
+  },
+  "popup_fairness_status_study": {
+    "message": "مطالعے کے موڈ میں اسکور نرمی پیدا ہوتی ہے ۔"
+  },
+  "popup_fairness_status_vacation": {
+    "message": "یومِ‌کفارہ کے موڈ کو تباہ کر دیتا ہے ۔"
+  },
+  "popup_fairness_title": {
+    "message": "روزِعدالت"
+  },
+  "popup_head_title": {
+    "message": "ساؤل حسن – دھیان بہادر –"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "فوکس چیمپئن"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "آجکل آپ نے زیادہ سے زیادہ وقت خرچ کِیا ہے ۔"
+  },
+  "popup_kpi_focus_hint": {
+    "message": "پیداوار / کام"
+  },
+  "popup_kpi_focus_label": {
+    "message": "فعال توجہ"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "آجکل ہر چیز پر پھلدار وقت کا انحصار."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "دن کا مرکز"
+  },
+  "popup_kpi_idle_label": {
+    "message": "وقت"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "اس دن کی دیکھ‌بھال کرنے والے شخص نے رابطے کے بغیر کھلے رہنے کی کوشش کی ۔"
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "صنعت‌کاری کا وقت"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "پریڈ وس پروک"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "ہر دو گھنٹے کے بعد بجلی کی رفتار بڑھ جاتی ہے ۔"
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "سیدھے راستے پر : آپ کے دن کے حساب سے کم نمبر."
+  },
+  "popup_kpi_section_title": {
+    "message": "عطارد اشارے"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "ہر گھنٹے"
+  },
+  "popup_kpi_switch_label": {
+    "message": "سوئز فی گھنٹہ"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "اوسط تبت فی گھنٹہ کی نگرانی میں تبدیل ہوتی ہے۔"
+  },
+  "popup_kpi_villain_label": {
+    "message": "اُس دَور کا ذکر"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "آپ کا زیادہ تر وقت چوری کرنے والا ڈومین"
+  },
+  "popup_last_sync": {
+    "message": "تجدید{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "آرام کرنا..."
+  },
+  "popup_loading": {
+    "message": "لوڈ کریں..."
+  },
+  "popup_options_button": {
+    "message": "اوپر لکھیں"
+  },
+  "popup_pdf_date": {
+    "message": "تاریخ"
+  },
+  "popup_pdf_inactive": {
+    "message": "عمل"
+  },
+  "popup_pdf_index": {
+    "message": "انڈیکس"
+  },
+  "popup_pdf_kpis": {
+    "message": "عطارد اشارے"
+  },
+  "popup_pdf_procrastination": {
+    "message": "ترقی"
+  },
+  "popup_pdf_productive": {
+    "message": "پیداوار"
+  },
+  "popup_pdf_summary": {
+    "message": "ڈیلی خلاصہ"
+  },
+  "popup_pdf_switches": {
+    "message": "بستر کو تبدیل کریں"
+  },
+  "popup_pdf_title": {
+    "message": "ساؤل محسن رپورٹ دیتا ہے"
+  },
+  "popup_pdf_top_domains": {
+    "message": "اوپری ڈومین"
+  },
+  "popup_pdf_vscode": {
+    "message": "وی ایس کوڈ"
+  },
+  "popup_privacy_note": {
+    "message": "آپ کے براؤزر میں تمام اعداد باقی رہے۔ سول وکیل–صدر اعزاز کا اعزاز دیتا ہے۔"
+  },
+  "popup_refresh_button": {
+    "message": "خوشی"
+  },
+  "popup_release_notes_button": {
+    "message": "دیکھیں نئی کیا ہے۔"
+  },
+  "popup_release_notes_error": {
+    "message": "ریلیز کے نوٹس نہیں کھول سکتے۔ توسیع دوبارہ لوڈ کریں اور دوبارہ کوشش کریں۔"
+  },
+  "popup_score_message_alert": {
+    "message": "آپ آتش بازی کے ساتھ کھیلتے ہیں۔ میں نے آگ نکالنے کے لئے گھڑی کی طرف سے بل."
+  },
+  "popup_score_message_excellent": {
+    "message": "گولڈن کلائنٹ! اسے قائم رکھیں اور میں مکمل طور پر سنبھال سکتا ہوں."
+  },
+  "popup_score_message_ok": {
+    "message": "پھر بھی دفتری گھنٹوں کے طور پر شمار ہوتا ہے۔ مجھے آپ کی توجہ کا نام مت بناؤ."
+  },
+  "popup_score_message_warning": {
+    "message": "میں یہاں غیر واضح دیکھا. کھیل میں واپس آنے کا وقت۔"
+  },
+  "popup_score_placeholder": {
+    "message": "تبدیل کریں..."
+  },
+  "popup_status_no_data": {
+    "message": "کوئی ڈیٹا نہیں"
+  },
+  "popup_status_no_domains": {
+    "message": "آج کے لئے کوئی ڈیٹا نہیں."
+  },
+  "popup_summary_inactive_label": {
+    "message": "مصر"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "کچھ دیر بعد جب براؤزر انٹرٹینمنٹ کے بغیر کھلتا رہا۔"
+  },
+  "popup_summary_procrastination_label": {
+    "message": "ضرب"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "اِس کے بعد مَیں نے اُن سے پوچھا : ” کیا مَیں اُن کی بات مانتا ہوں ؟ “"
+  },
+  "popup_summary_productive_label": {
+    "message": "پیداوار"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "ڈومینن پر وقت پھلدار ہونے کی علامت تھا ۔"
+  },
+  "popup_tooltip_aria": {
+    "message": "تفصیل"
+  },
+  "popup_top_domains_title": {
+    "message": "۵ ڈومین"
+  },
+  "postInvalid": {
+    "message": "اِس کے بعد یا گم‌شُدہ باتیں ۔"
+  },
+  "postLoadError": {
+    "message": "اس مضمون کو لوڈ کرنے کے دوران غلطی."
+  },
+  "postLoadingBody": {
+    "message": "لوڈ کریں..."
+  },
+  "postLoadingTitle": {
+    "message": "لوڈ شدہ مضمون..."
+  },
+  "postNotFound": {
+    "message": "پوسٹ نہیں ملا."
+  },
+  "previousPost": {
+    "message": "پہلے"
+  },
+  "privacyError": {
+    "message": "اب ہم پالیسی نہیں لے سکتے تھے. ایک لمحے میں دوبارہ کوشش کریں."
+  },
+  "privacyEyebrow": {
+    "message": "بھرپور استعمال"
+  },
+  "privacyHeading": {
+    "message": "تعلیمی پالیسی"
+  },
+  "privacyLoading": {
+    "message": "بند سے پالیسی کو براہ راست لوڈ کریں..."
+  },
+  "privacySubheading": {
+    "message": "یہاں دہلی میں شائع ہونے والی سیاست کا تازہ ترین نسخہ ہے۔"
+  },
+  "privacyTitle": {
+    "message": "تعلیمی پالیسی"
+  },
+  "process1Body": {
+    "message": "اگر آپ مطالعہ کر رہے ہیں ، کام کر رہے ہیں یا سزا دینے کی کوشش کر رہے ہیں تو بِل خاموشی سے بیٹھتا ہے ۔"
+  },
+  "process1Title": {
+    "message": "اپنے فعال ٹیبلس کو چلا وٴ"
+  },
+  "process2Body": {
+    "message": "آپ پیداواری vs.Bolin ڈومین شناخت. اگر آپ چلے جاتے ہیں تو ساؤل پردے کو اُبھارتا ہے ۔"
+  },
+  "process2Title": {
+    "message": "معاملات"
+  },
+  "process3Body": {
+    "message": "ہر روز ایک صاف رپورٹ پر ختم ہوتا ہے: چارٹ، نکات اور کل کے لیے ایک عمل کا منصوبہ۔"
+  },
+  "process3Title": {
+    "message": "ہمیں قابلِ‌اعتماد ثبوت فراہم کرتا ہے"
+  },
+  "processEyebrow": {
+    "message": "کیسے کام کرتا ہے۔"
+  },
+  "processLead": {
+    "message": "کوئی قانونی پکوان نہیں: اسے نصب کرو، اپنے تبتی کو دیکھتے رہو، چوکس محسوس کرو اور تیار شدہ سندوں سے اپنے دن کو ختم کرو۔"
+  },
+  "processTitle": {
+    "message": "ساؤل نے تین قدم اُٹھائے ۔"
+  },
+  "quakeBody": {
+    "message": "اِس سے ظاہر ہوتا ہے کہ اِن میں سے زیادہ‌تر تباہ‌کُن ٹی‌ٹی‌ٹی‌اے ہیں ۔ اِس سلسلے میں ایک مثال پر غور کریں ۔"
+  },
+  "quakeButton": {
+    "message": "سفر کا آغاز"
+  },
+  "quakeCallout": {
+    "message": "آنے والے زلزلے!"
+  },
+  "quakeDemoBody": {
+    "message": "[ تصویر کا حوالہ ] توسیع کے طور پر سیم لیکن یہاں صرف چند سیکنڈ کے لئے."
+  },
+  "quakeDemoButton": {
+    "message": "زلزلے کا طریقہ"
+  },
+  "quakeDemoEyebrow": {
+    "message": "زلزلے موڈ (demo)"
+  },
+  "quakeDemoTitle": {
+    "message": "ساؤل کی سب سے بڑی ہوشیاری ۔"
+  },
+  "quakeDisplayCopy": {
+    "message": "اُس نے کہا : ” اَے [ یہوواہ ] !"
+  },
+  "quakeEyebrow": {
+    "message": "دباؤ کا ریشو:"
+  },
+  "quakeLead": {
+    "message": "یہاں کی فضا سے وہی ڈرامائی شعور ظاہر کرتا ہے کہ سیاح محسوس کرتے ہیں کہ آگاہی کتنی سنگین ہے ۔"
+  },
+  "quakeMicro": {
+    "message": "\"آپ کو سزا دینے کے لئے! اثر و رسوخ کے لیے استعمال کرنا۔"
+  },
+  "quakeOverlayBody": {
+    "message": "ساؤل تبریز سے چلا رہا ہے جب وہ تب سے چلا گیا ۔ وہ اضافی الزامات لگانے سے پہلے توجہ مرکوز کرنے کے لئے."
+  },
+  "quakeOverlayClose": {
+    "message": "توجہ مرکوز کریں"
+  },
+  "quakeOverlayTitle": {
+    "message": "زلزلے کے موڈ طوفان!"
+  },
+  "quakeTip": {
+    "message": "سکون : پیشگی منظر چند سیکنڈ کا ہوتا ہے۔"
+  },
+  "quakeTitle": {
+    "message": "جب ساؤل بُرے لوگوں پر حملہ کرتا ہے تو اُس کا صفحہ اُس کے ساتھ پڑتا ہے ۔"
+  },
+  "ratingBadgeAlt": {
+    "message": "کروم ویب اسٹور پر اوسط شرح خواندگی"
+  },
+  "reactionBlockAlt": {
+    "message": "ساؤل نے رسائی روک لی"
+  },
+  "reactionBlockHint": {
+    "message": "ساؤل نے ساؤل کے دروازے کو بند کر دیا ۔"
+  },
+  "reactionBlockLabel": {
+    "message": "بلاک موڈ"
+  },
+  "reactionBlockText": {
+    "message": "\" اس کی جانچ بھی نہ کرو: مفسرین فوراً رک جاتے ہیں۔"
+  },
+  "reactionDisbeliefHint": {
+    "message": "جب زلزلے کی لہروں کو عبور کِیا جاتا ہے تو اِس کی رفتار تیز ہو جاتی ہے ۔"
+  },
+  "reactionDisbeliefLabel": {
+    "message": "غیر متصل طریقہ"
+  },
+  "reactionDisbeliefText": {
+    "message": "\"کیا تم اس توجہ کو کہتے ہو؟"
+  },
+  "reactionHypeHint": {
+    "message": "جب آپ پھلدار ٹیٹوز کی طرف رجوع کرتے ہیں تو ظاہر کریں ۔"
+  },
+  "reactionHypeLabel": {
+    "message": "غیر متصل طریقہ"
+  },
+  "reactionHypeText": {
+    "message": "میں اپنا اجر ادا کرتا ہوں۔"
+  },
+  "reactionsBody": {
+    "message": "( ۱ - سموئیل ۱۶ : ۱ - ۳ ) جب ساؤل کا نام‌ونشان مٹ جاتا ہے تو اُس وقت ساؤل بہت مایوس ہو جاتا ہے ۔ جب آپ توجہ کا مرکز واپس جاتے ہیں تو وہ جشن مناتے ہیں۔ انصاف کی بار بار کو اپنی جگہ رکھنے کے لیے تیز نظر آتے ہیں۔"
+  },
+  "reactionsEyebrow": {
+    "message": "ساؤل کا ردِعمل"
+  },
+  "reactionsTitle": {
+    "message": "ساؤل کا فوری فیصلہ ۔"
+  },
+  "readArticle": {
+    "message": "مضمون کو پڑھیں ۔"
+  },
+  "readingTimeLabel": {
+    "message": "پڑھنا"
+  },
+  "readTimeUnit": {
+    "message": "منٹ"
+  },
+  "reason1Body": {
+    "message": "پاپ اپ انڈیکس آپ کی موجودہ حیثیت کو ظاہر کرتا ہے تاکہ آپ کو معلوم ہو کہ اس کے بعد کیا کرنے کے لئے."
+  },
+  "reason1Title": {
+    "message": "ہدایت کار"
+  },
+  "reason2Body": {
+    "message": "اِس زلزلے سے پہلے کہ آپ کا ردِعمل تباہ‌کُن ہو جاتا ہے ۔"
+  },
+  "reason2Title": {
+    "message": "گر تے هو ئے قدم سے خبردار"
+  },
+  "reason3Body": {
+    "message": "چارٹ اور نقشہ سازی میں مکمل طور پر ایک روزہ، اسٹینڈ اپ یا کلائنٹ اپ ڈیٹڈ میں۔"
+  },
+  "reason3Title": {
+    "message": "قابل ذکر اطلاعات"
+  },
+  "reason4Body": {
+    "message": "ہر میٹرک کروم کے اندر رہتا ہے؛ آپ کی مشین چھوڑ دیتا ہے۔"
+  },
+  "reason4Title": {
+    "message": "مکمل تنہائی"
+  },
+  "reasonsEyebrow": {
+    "message": "کلیدی فوائد"
+  },
+  "reasonsLead": {
+    "message": "چار جلدی کارڈ صفر کے ساتھ قیمت کو واضح کرتے ہیں۔"
+  },
+  "reasonsTitle": {
+    "message": "ساؤل نیک شخص کیوں استعمال کرتا ہے ؟"
+  },
+  "relatedTitle": {
+    "message": "جگہ"
+  },
+  "report_ai_error_generic": {
+    "message": "ساؤل ڈیجیٹل جج کو قائل نہیں کر سکتا تھا۔ بعد میں کوشش کریں."
+  },
+  "report_ai_generate": {
+    "message": "تفصیلات"
+  },
+  "report_ai_heading": {
+    "message": "ساؤل کی دلیل"
+  },
+  "report_ai_hint": {
+    "message": "\"جناح بیان\" پر کلک کریں تو ساؤل اپنے طنز سے اپنے دن کا جائزہ لے سکتا ہے۔"
+  },
+  "report_ai_loading": {
+    "message": "اب بھی بند بحث کی تیاری ..."
+  },
+  "report_ai_missing_key": {
+    "message": "تفسیر کو شروع کرنے سے پہلے معاملات میں اپنی اوپنAI کلید ڈالیں۔"
+  },
+  "report_ai_no_metrics": {
+    "message": "کوئی میٹرک آج کہانی سنانے کے لیے نہیں۔"
+  },
+  "report_ai_retry": {
+    "message": "دوبارہ کوشش"
+  },
+  "report_ai_subtitle": {
+    "message": "آپ کے اعداد و شمار پر مبنی ڈرامائی دفاع۔"
+  },
+  "report_alert_pdf_missing": {
+    "message": "پی ڈی ایف لائبریری کے بغیر."
+  },
+  "report_banner_countdown_final": {
+    "message": "عمل کرنے کا وقت: مفسرین تبوک کو بند کر کے واپس آ جائے۔"
+  },
+  "report_banner_message_1": {
+    "message": "میں بھی جوری کو انڈیکس سے قائل نہیں کر سکتا{threshold}چیزیں کاٹ دو!"
+  },
+  "report_banner_message_2": {
+    "message": "اس کو جاری رکھیں اور میں آپ کے مالک کو آگاہ کرنے کے لئے ایک بیل بورڈ نکال دیں گے."
+  },
+  "report_banner_message_3": {
+    "message": "یہ زلزلہ آپ کے گندے تبتیوں کی آواز ہے. اب ان کو بند کرو."
+  },
+  "report_banner_message_4": {
+    "message": "ٹیبل بل بڑھتا جا رہا ہے: اب توجہ مرکوز کریں یا ہم مزید ٹیکس ادا کریں."
+  },
+  "report_banner_title": {
+    "message": "ساؤل بڑی ہوشیاری سے !"
+  },
+  "report_category_activity": {
+    "message": "غیر متصل"
+  },
+  "report_category_neutral": {
+    "message": "نیوٹریل"
+  },
+  "report_composition_heading": {
+    "message": "دن کی ترتیب"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "پھلدار ، غیرضروری اور غیرجانبداری میں توڑ دیں ۔"
+  },
+  "report_context_breakdown_context": {
+    "message": "کا نامہ‌نگار"
+  },
+  "report_context_breakdown_index": {
+    "message": "انڈیکس"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "100% کی خوشبو کے قریب؛ 0% کے قریب آپ نے کام کیا -- اور میں آپ کا دفاع کر سکتا ہوں."
+  },
+  "report_context_breakdown_time": {
+    "message": "وقت"
+  },
+  "report_context_breakdown_title": {
+    "message": "سیاق‌وسباق سے وقت"
+  },
+  "report_domain_heading": {
+    "message": "ہر ڈومین ڈومین"
+  },
+  "report_domain_subtitle": {
+    "message": "اس دن کے لئے قائد اعظم اور ناقدین نے حلف اٹھایا۔"
+  },
+  "report_error_no_data": {
+    "message": "کوئی میٹرک دستیاب نہیں۔"
+  },
+  "report_error_runtime": {
+    "message": "ریکارڈ آفس تک نہیں پہنچ سکتا."
+  },
+  "report_error_unknown": {
+    "message": "نامعلوم"
+  },
+  "report_export_pdf": {
+    "message": "برآمد"
+  },
+  "report_fairness_holiday_active": {
+    "message": "آج ایک تہوار ہے، اسکور خودبخود بند کر دیا."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "( ۱ - کرنتھیوں ۱۵ : ۵۸ ) آجکل بھی کوئی سزا نہیں ملتی ۔"
+  },
+  "report_fairness_status_day_off": {
+    "message": "ایک دن اسکور توڑ دیا."
+  },
+  "report_fairness_status_default": {
+    "message": "دییا سوتیلی نارمل۔"
+  },
+  "report_fairness_status_holiday": {
+    "message": "قومی تہوار نے اس اسکور کو بے نقاب کیا۔"
+  },
+  "report_fairness_status_leisure": {
+    "message": "قانون‌سازی کرنے والے موڈ نے الزامات کم کر دئے ۔"
+  },
+  "report_fairness_status_manual": {
+    "message": "دیوالیہ پنرنگ."
+  },
+  "report_fairness_status_personal": {
+    "message": "ذاتی طریقہ — کوئی بھی نقل نہیں کرتا ۔"
+  },
+  "report_fairness_status_study": {
+    "message": "مطالعے کے انداز میں سزاؤں کا ذکر کِیا گیا ۔"
+  },
+  "report_fairness_status_vacation": {
+    "message": "مڈو فیریاس صفرو اودیا۔"
+  },
+  "report_fairness_title": {
+    "message": "روزِعدالت"
+  },
+  "report_fairness_tooltip": {
+    "message": "( ب ) ہم کن سوالوں پر غور کریں گے ؟ ہم جب بھی یہ ہوتا ہے اسے لا."
+  },
+  "report_filter_apply": {
+    "message": "فائلز"
+  },
+  "report_filter_from": {
+    "message": "از"
+  },
+  "report_filter_reset": {
+    "message": "مصر"
+  },
+  "report_filter_to": {
+    "message": "جگہ"
+  },
+  "report_head_title": {
+    "message": "سول محسن – روزنامہ رپورٹ –"
+  },
+  "report_heading": {
+    "message": "طےشدہ"
+  },
+  "report_hero_message_alert": {
+    "message": "وردک واضح ہے: مقدمے پر تنقید۔ ہمیں ایک فوری منصوبہ کی ضرورت ہے."
+  },
+  "report_hero_message_excellent": {
+    "message": "قابلِ‌غور شیڈول ۔ ساؤل ایک ٹی‌وی اشتہار میں آپ کو استعمال کر سکتا تھا ۔"
+  },
+  "report_hero_message_ok": {
+    "message": "قابلِ‌رسائی چیزیں قبول. ہم اب بھی آپ نے کام کیا جوہر بتا سکتے ہیں."
+  },
+  "report_hero_message_warning": {
+    "message": "ظاہر آج ہے. اُس نے کہا : ” مَیں . . ."
+  },
+  "report_hero_placeholder": {
+    "message": "ساؤل اب بھی آپ کے زمانے کے بارے میں ثبوت جمع کر رہا ہے ۔"
+  },
+  "report_hourly_empty": {
+    "message": "ابھی اتنا منٹ نہیں ہے کہ اس نہر کی تعمیر کی جائے۔"
+  },
+  "report_hourly_heading": {
+    "message": "قیامت کی آمد"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "( ۱ - تیمتھیس ۵ : ۸ ) اس سے ظاہر ہوتا ہے کہ ہم ایک دوسرے سے بہت پیار کرتے ہیں ۔"
+  },
+  "report_hourly_subtitle": {
+    "message": "دن کے دوران بے روزگاری کی آزمائشوں۔"
+  },
+  "report_kpi_audio_hint": {
+    "message": "بُری جگہوں پر آڈیوز کیساتھ چلنا"
+  },
+  "report_kpi_audio_label": {
+    "message": "وائرس"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "اِس سلسلے میں ایک مثال پر غور کریں ۔"
+  },
+  "report_kpi_grouped_hint": {
+    "message": "گروہی تبتیوں میں حصہ لیں"
+  },
+  "report_kpi_grouped_label": {
+    "message": "گروہوں میں وقت"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "اُنہوں نے کہا : ” مَیں اِس بات پر بہت خوش ہوں کہ مَیں یہوواہ خدا سے دُعا کرتا ہوں ۔ “"
+  },
+  "report_kpi_heading": {
+    "message": "اضافی اشارے"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Extra KPIs: نیکوسیان میڈیا، اصلی بے کار وقت، اسپیس روٹ، گروہی تبتی۔"
+  },
+  "report_kpi_restored_hint": {
+    "message": "حالیہ تبتی یا کھڑکیاں"
+  },
+  "report_kpi_restored_label": {
+    "message": "آجکل چیزیں بند کریں"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "آج تک تبتی یا کھڑکیوں کی تعداد بند ہو گئی۔"
+  },
+  "report_kpi_spa_hint": {
+    "message": "ریکارڈ کردہ راستے میں تبدیلیاں"
+  },
+  "report_kpi_spa_label": {
+    "message": "سپیس روٹ"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "ایک ہی صفحے میں اندرونی راستہ تبدیل ہوتا ہے۔"
+  },
+  "report_kpi_subtitle": {
+    "message": "حقیقی بیکار، اسپیس روٹس اور میڈیا وقت."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "پس‌منظر میں تبدیلی"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "براہ راست"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "ایک اَور کھڑکی سے رابطہ کریں ۔"
+  },
+  "report_logo_alt_critical": {
+    "message": "ساؤل اچھے آدمی آپ کی توجہ کا مرکز بنا"
+  },
+  "report_logo_alt_default": {
+    "message": "ساؤل نیکمن لاگو"
+  },
+  "report_metric_index_label": {
+    "message": "انڈیکس"
+  },
+  "report_metric_switches_label": {
+    "message": "بستر کو تبدیل کریں"
+  },
+  "report_pdf_ai_title": {
+    "message": "ساؤل کی دلیل"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "کیٹیگری"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "حصہ"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "وقت"
+  },
+  "report_pdf_composition_title": {
+    "message": "دن کی ترتیب"
+  },
+  "report_pdf_context_header_context": {
+    "message": "کا نامہ‌نگار"
+  },
+  "report_pdf_context_header_index": {
+    "message": "پرنٹ کے مسائل"
+  },
+  "report_pdf_context_header_time": {
+    "message": "وقت"
+  },
+  "report_pdf_context_title": {
+    "message": "سیاق‌وسباق سے ٹوٹنا"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "کو ئيٹ گارڈ ریل فعال"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "دن‌بھر نے اسکور کِیا"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "وجہ"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "دستی طور پر"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "ایس . اے ."
+  },
+  "report_pdf_narrative_title": {
+    "message": "کلیدی بیان"
+  },
+  "report_pdf_overview_heading": {
+    "message": "پوناما ڈییا"
+  },
+  "report_pdf_status_label": {
+    "message": "سٹیٹس"
+  },
+  "report_pdf_title": {
+    "message": "تفصیلی رپورٹ — ساؤل نیک شخص"
+  },
+  "report_pdf_top_domains": {
+    "message": "اوپری ڈومین"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "اوپر"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "وقتاً فوقتاً ڈومینوں کی ریٹنگ."
+  },
+  "report_ranking_productive_heading": {
+    "message": "اوپری پیداوار"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "وقت کے ساتھ ساتھ پیداواری ڈومینوں کی ریٹنگ."
+  },
+  "report_share_argument_label": {
+    "message": "ساؤل کی دلیل شیئر کریں"
+  },
+  "report_share_argument_title": {
+    "message": "ساؤل کا انتقام"
+  },
+  "report_share_copy_error": {
+    "message": "اب پوسٹ کاپی نہیں کیا."
+  },
+  "report_share_copy_instagram": {
+    "message": "متن نقل کرتا ہے ۔ دوبارہ شروع ہونے سے پہلے، خالی اور ماضی."
+  },
+  "report_share_copy_linkedin": {
+    "message": "متن نقل کرتا ہے ۔ اسے دوبارہ لائن میں پیسٹ کریں قبل اس کے کہ محفوظ ہوں۔"
+  },
+  "report_share_copy_success": {
+    "message": "پوسٹ نے نقل کیا۔ لنکڈ ان، ٹویٹر پر، کہیں بھی."
+  },
+  "report_share_cta": {
+    "message": "ساؤل حسن کی طرف سے آپ کے سپرد."
+  },
+  "report_share_error": {
+    "message": "اب شرکت نہیں کیا."
+  },
+  "report_share_error_no_metrics": {
+    "message": "شیئر کرنے کے لئے کوئی اعداد."
+  },
+  "report_share_error_no_narrative": {
+    "message": "شرکت سے پہلے ساؤل کی دلیل۔"
+  },
+  "report_share_hashtags": {
+    "message": "#Sault Goodman #Antiprocrastination"
+  },
+  "report_share_headline": {
+    "message": "اے کپڑے میں لپٹنے والے کیس نمایاں کرتا ہے۔"
+  },
+  "report_share_hint_instagram": {
+    "message": "انٹرنیٹ مووی ڈیٹابیس (IMDb) پر پہلے سے نہیں چل سکتا: جو کچھ ہم نے نقل کیا ہے"
+  },
+  "report_share_hint_linkedin": {
+    "message": "لنک پہلے سے نہیں بلکہ سائٹ پر نقل شدہ مواد کا جائزہ لیں."
+  },
+  "report_share_index_label": {
+    "message": "انڈیکس"
+  },
+  "report_share_menu_argument": {
+    "message": "ساؤل کی دلیل"
+  },
+  "report_share_menu_copy": {
+    "message": "متن نقل کریں"
+  },
+  "report_share_menu_highlights": {
+    "message": "اہم"
+  },
+  "report_share_menu_label": {
+    "message": "شیئر کریں"
+  },
+  "report_share_menu_native": {
+    "message": "مشترکہ حصہ"
+  },
+  "report_share_menu_native_action": {
+    "message": "سسٹم شیئر شیٹ"
+  },
+  "report_share_opening": {
+    "message": "میرے کلائنٹ نے سخت محنت کی اور میرے پاس ثبوت ہیں۔"
+  },
+  "report_share_post_argument_label": {
+    "message": "دلیل نقل کریں"
+  },
+  "report_share_post_label": {
+    "message": "نقل و حمل (Social)"
+  },
+  "report_share_report_label": {
+    "message": "شیئر خصوصیات"
+  },
+  "report_share_social_tagline": {
+    "message": "اے کپڑے میں لپٹنے والے میرے کلائنٹ نے کام میں ڈال دیا۔"
+  },
+  "report_share_success": {
+    "message": "شیئر شیٹ کھولی! اگر یہ ظاہر نہ ہو تو ہم نے اسے آپ کے محور میں نقل کیا۔"
+  },
+  "report_share_title": {
+    "message": "ساؤل — اہم نکات"
+  },
+  "report_story_empty": {
+    "message": "آج کے لیے کافی کہانیاں نہیں۔"
+  },
+  "report_story_focus_body": {
+    "message": "{domain}منعقد{duration}توجہ سے."
+  },
+  "report_story_focus_title": {
+    "message": "فوکس چیمپئن"
+  },
+  "report_story_heading": {
+    "message": "مقابلہ‌بازی اور بدکاری"
+  },
+  "report_story_idle_body": {
+    "message": "درمیان{range}ڈرائیور بیکار رہتا تھا۔{duration}. ."
+  },
+  "report_story_idle_title": {
+    "message": "طویل خاموشی"
+  },
+  "report_story_loading": {
+    "message": "ڈیٹا اب بھی لوڈ کررہا ہے..."
+  },
+  "report_story_short_day": {
+    "message": "ایک کہانی سنانے کے لیے دن بہت مختصر تھا۔"
+  },
+  "report_story_villain_body": {
+    "message": "{domain}ختم ہوا{duration}. ."
+  },
+  "report_story_villain_title": {
+    "message": "اُس دَور کا ذکر"
+  },
+  "report_subtitle_prefix": {
+    "message": "ڈیلی خلاصہ"
+  },
+  "report_tab_switch_empty": {
+    "message": "ابھی تک اس چارٹ کو بنانے کے لئے کافی نہیں ہے."
+  },
+  "report_tab_switch_heading": {
+    "message": "ٹی‌ٹی گھنٹے کا وقفہ"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "سوئچ تقسیم پورے پروڈ/Proc/Neutral۔"
+  },
+  "report_tab_switch_subtitle": {
+    "message": "آپ پھلدار ، محنتی اور غیرجانبدار کیسے بن گئے ؟"
+  },
+  "report_tagline": {
+    "message": "باضابطہ توجہ لاگ بک"
+  },
+  "report_time_column": {
+    "message": "وقت"
+  },
+  "report_timeline_heading": {
+    "message": "مُتَّعْبِي مِّنْ عَلَى الْمُتَّقِينَ سانچہ:قرآن-سورہ 70 آیت 19۔۔۔*"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "کلیدی گروہ جو گھنٹے اور رات کے وقت کے حساب سے بنایا گیا۔"
+  },
+  "report_timeline_loading": {
+    "message": "مداخلت کے لئے انتظار کریں..."
+  },
+  "report_timeline_subtitle": {
+    "message": "اہم بات یہ ہے کہ آپ اپنی تبدیلی کی کہانی بتائیں ۔"
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}مصر"
+  },
+  "rssCta": {
+    "message": "ایس ."
+  },
+  "searchLabel": {
+    "message": "تلاش"
+  },
+  "searchPlaceholder": {
+    "message": "تلاش کے عنوان ، جمع یا ٹیگ . . ."
+  },
+  "searchReset": {
+    "message": "صاف فیلڈز"
+  },
+  "seoDescription": {
+    "message": "ساؤل حسن پولیس آپ کے تبتیوں سے لڑتا ہے اور آپ کے براؤزر میں ڈرامائی خبریں لاتا ہے۔ سب کچھ مقامی رہے، کوئی بیرونی سرور."
+  },
+  "seoTitle": {
+    "message": "سول محسن - اینٹی-پراسشن توسیع -"
+  },
+  "shareCopied": {
+    "message": "لنک نے نقل کیا ہے!"
+  },
+  "shareCopy": {
+    "message": "فولڈر کاپی کریں"
+  },
+  "shareCopyPrompt": {
+    "message": "شیئر کرنے کے لیے اس لنک کاپی:"
+  },
+  "shareIndexCopied": {
+    "message": "لنک نے نقل کیا ہے!"
+  },
+  "shareIndexCopy": {
+    "message": "فولڈر کاپی کریں"
+  },
+  "shareIndexLinkedin": {
+    "message": "لنک"
+  },
+  "shareIndexTitle": {
+    "message": "بلاگ شیئر کریں"
+  },
+  "shareIndexTwitter": {
+    "message": "X"
+  },
+  "shareLinkedin": {
+    "message": "لنک"
+  },
+  "shareTitle": {
+    "message": "شیئر کریں"
+  },
+  "shareTwitter": {
+    "message": "X"
+  },
+  "socialProofCaption": {
+    "message": "ساؤل پہلے ہی سے ہزاروں کی مدد کرتا ہے ۔"
+  },
+  "socialProofMetricLabel": {
+    "message": "شاد کار"
+  },
+  "splitPopupBody": {
+    "message": "پینل میں انڈیکس، ٹاپ ڈومینکس، اضافی اشارے دکھائے جاتے ہیں اور آپ کو سی ایس وی/پی ڈی ایف برآمد کرنے کی اجازت دیتا ہے۔ جب مرکزی توجہ گرتی ہے تو انصاف کے بار کو بچانے کے لیے زلزلے موڈ طوفان آتے ہیں۔"
+  },
+  "splitPopupCaption": {
+    "message": "انڈیکس، ٹاپ ڈومین اور برآمد کے ساتھ پاپ اپ."
+  },
+  "splitPopupCaption2": {
+    "message": "KPIs، توپ ڈومینکس، اور تیزی سے برآمد."
+  },
+  "splitPopupCaption3": {
+    "message": "Productive/villain کے اختیارات پینل میں درج ہیں۔"
+  },
+  "splitPopupCaption4": {
+    "message": "انڈیکس کے لیے قابل وزن اور شیڈول وضع کرنا۔"
+  },
+  "splitPopupTitle": {
+    "message": "پریپ پاپ پر"
+  },
+  "splitReportBody": {
+    "message": "چارٹ فی گھنٹہ،villin ranking، اے آئی اے بیان اور تنقیدی بینر ایکشن پلان کے ساتھ. ہر قسم کے نظریات کے ساتھ ۔"
+  },
+  "splitReportCaption": {
+    "message": "رپورٹ کا خلاصہ چارٹ اور شرح کے ساتھ۔"
+  },
+  "splitReportCaption2": {
+    "message": "آئی اے تفسیر اور منٹو ٹائم لائن۔"
+  },
+  "splitReportCaption3": {
+    "message": "ویلین کرنسی، چیمپئنز اور تقسیم۔"
+  },
+  "splitReportTitle": {
+    "message": "ڈرامائی رپورٹ"
+  },
+  "splitStats1": {
+    "message": "صحت یاب / دن"
+  },
+  "splitStats2": {
+    "message": "قرض لینے والے"
+  },
+  "statsCategories": {
+    "message": "آزمائش ميں رنگ"
+  },
+  "statsFresh": {
+    "message": "آخری تجدید"
+  },
+  "statsPosts": {
+    "message": "پوسٹ شائع ہوا۔"
+  },
+  "statsTitle": {
+    "message": "بلاگ ریڈار"
+  },
+  "stickyCtaButton": {
+    "message": "چورم پر انسٹال کریں"
+  },
+  "stickyCtaText": {
+    "message": "ساؤل اپنا تبتی دیکھ رہا ہے ۔"
+  },
+  "stickyToggleLabel": {
+    "message": "کوگلنا"
+  },
+  "tagsTitle": {
+    "message": "آگ پر توپیں"
+  },
+  "testimonial1Cite": {
+    "message": "— شناخت کنندہ"
+  },
+  "testimonial1Quote": {
+    "message": "\" ساؤل نے مجھے یاد دلایا کہ 40 تبت فی گھنٹہ تبدیل کرنا جرم ہے۔"
+  },
+  "testimonial2Cite": {
+    "message": "— افسوسناک انجینئر"
+  },
+  "testimonial2Quote": {
+    "message": "\"یہ رپورٹ میرے امام سے ملاقات میں ایک دفاعی پارہ بن گئی\"۔"
+  },
+  "testimonial3Cite": {
+    "message": "— پیداواری منیجر"
+  },
+  "testimonial3Quote": {
+    "message": "” مَیں نے زمین‌دوز پانی کے موڈ کو محفوظ رکھا ۔ فیز نے خوشی سے ادا کیا۔"
+  },
+  "testimonialNext": {
+    "message": "اگلے امتحان"
+  },
+  "testimonialPrev": {
+    "message": "اس سے پہلے امتحان"
+  },
+  "testimonialsEyebrow": {
+    "message": "امتحانات"
+  },
+  "testimonialsTitle": {
+    "message": "کام معاف."
+  },
+  "timeline1Body": {
+    "message": "مواد تحریر اول تبوک پر عمل کر تا ہے۔ ساؤل کی کتابت جو پھلدار یا شریر ہے ۔"
+  },
+  "timeline1Title": {
+    "message": "ریڈار"
+  },
+  "timeline2Body": {
+    "message": "اگر انڈیکس بہت زیادہ اونچائی پر چڑھ جائے تو زلزلے کی شدت میں زلزلے آنے والے زلزلے زلزلے زلزلے زلزلے زلزلے، دھماکے اور سی ٹی اے کے کھیل کو موڑنے کے لیے آتے ہیں۔"
+  },
+  "timeline2Title": {
+    "message": "غیر فعال نوٹس"
+  },
+  "timeline3Body": {
+    "message": "اِس سلسلے میں ایک رپورٹ پر غور کریں ۔"
+  },
+  "timeline3Title": {
+    "message": "روزمرہ کی بات"
+  },
+  "timelineEyebrow": {
+    "message": "وقت"
+  },
+  "timelineTitle": {
+    "message": "فیصلہ کرنے سے ۔"
+  },
+  "transparencyBody": {
+    "message": "پڑھیں کہ ہم آپ کے اعداد و شمار کو کس طرح حل کرتے ہیں اور ہر ریلیز کے نوٹ کو صفر کے ساتھ"
+  },
+  "transparencyChangelogCta": {
+    "message": "مکمل تبدیلی لاگس کھولیں"
+  },
+  "transparencyEyebrow": {
+    "message": "انکار"
+  },
+  "transparencyPrivacyCta": {
+    "message": "پرویز مشرف کو پڑھیں"
+  },
+  "transparencyTitle": {
+    "message": "کھلے میں Privay & Privacy &"
+  },
+  "trustCard1Body": {
+    "message": "میٹرکز جی این ڈی- آئی ڈی: https://TAG0 chrome.storage.local TAG1 TAG1 T. 26 دسمبر 2018 میں آباد ہیں۔ کوئی بھی چیز بیرونی سروروں کو چھو نہیں سکتی."
+  },
+  "trustCard1Title": {
+    "message": "100% مقامی"
+  },
+  "trustCard2Body": {
+    "message": "ہر لائن عوامی ہوتی ہے اس لیے کمیونٹی تبدیل کر سکتی ہے۔"
+  },
+  "trustCard2Title": {
+    "message": "کھولیں"
+  },
+  "trustCard3Body": {
+    "message": "آپ جب بھی ضرورت پڑنے پر ساؤل کو خاموش کر سکتے ہیں ۔"
+  },
+  "trustCard3Title": {
+    "message": "ہوشیار"
+  },
+  "trustEyebrow": {
+    "message": "پُراعتماد"
+  },
+  "trustLead": {
+    "message": "پُرتپاک ، سنجیدہ تحفظ : یہاں ایسے اعداد و شمار اور آگاہییں واقعی کام کرتی ہیں ۔"
+  },
+  "trustTitle": {
+    "message": "آپ اور آپ کے براؤزر کے درمیان سب کچھ باقی ہے."
+  },
+  "usersBadgeAlt": {
+    "message": "کروم ویب اسٹور پر صارفین"
+  }
+}

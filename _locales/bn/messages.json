@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "সাউল গুডম্যান"
+  },
+  "backToHome": {
+    "message": "পূর্ববর্তী অবস্থানে প্রত্যাবর্তন করুন"
+  },
+  "benefit1Body": {
+    "message": "আপনার বস, টিম বা নিজের বিবেক দেখানোর জন্য চার্ট এবং CSV."
+  },
+  "benefit1Title": {
+    "message": "অজানা প্রমাণ"
+  },
+  "benefit2Body": {
+    "message": "ভূমিকম্প মোড এবং বিদ্রুপাত্মক বার্তা আপনি উপেক্ষা করতে পারেন না।"
+  },
+  "benefit2Title": {
+    "message": "সিনেমা"
+  },
+  "benefit3Body": {
+    "message": "সকল বিচার স্থানীয়ভাবে ঘটেছে; আপনার ব্রাউজার থেকে কোন তথ্য নেই।"
+  },
+  "benefit3Title": {
+    "message": "ব্যক্তিগত তথ্য"
+  },
+  "benefitsEyebrow": {
+    "message": "উপকার"
+  },
+  "benefitsTitle": {
+    "message": "সাউল কেসটা পরিচালনা করেন, তুমি এটা বন্ধ করে দাও."
+  },
+  "block_page_back": {
+    "message": "ফিরে যাও"
+  },
+  "block_page_body": {
+    "message": "তুমি এই সাইটটিকে প্রোগ্রেশন হিসেবে চিহ্নিত করেছ। ট্যাব বন্ধ করো অথবা তালিকা পরিবর্তন করো ।"
+  },
+  "block_page_heading": {
+    "message": "এই ডোমেনটি বন্ধ করে দেওয়া হয়েছে"
+  },
+  "block_page_image_alt": {
+    "message": "শৌল গুডম্যান হতাশ হয়েছিলেন"
+  },
+  "block_page_local_note": {
+    "message": "স্থানীয় ব্লক — আপনার ব্রাউজার ছাড়া কিছুই নয় ।"
+  },
+  "block_page_options": {
+    "message": "বৈশিষ্ট্য খুলুন"
+  },
+  "block_page_title": {
+    "message": "এই ডোমেনটি বন্ধ করে দেওয়া হয়েছে"
+  },
+  "blogCategoryAll": {
+    "message": "সকল"
+  },
+  "blogEmptyState": {
+    "message": "এখানে এখনো কোন প্রবন্ধ প্রকাশিত হয়নি।"
+  },
+  "blogError": {
+    "message": "ব্লগ লোড করতে ব্যর্থ"
+  },
+  "blogHeroEyebrow": {
+    "message": "সাউল গুডম্যান ব্লগ"
+  },
+  "blogHeroLead": {
+    "message": "সার্কাস্টিক মনোযোগ, মনোযোগ এবং অনুশীলনের উপর মনোযোগ প্রদান করছে। এক সাপ্তাহিক প্রবন্ধ শৌলের স্বরে লেখা হয়েছে- কোন কোচ ভিবে না।"
+  },
+  "blogHeroTitle": {
+    "message": "ডিজিটাল পরিপক্কতার বিরুদ্ধে আইনগত ব্যবস্থা গ্রহণ"
+  },
+  "blogPreviewCta": {
+    "message": "অধ্যয়ন প্রবন্ধগুলো"
+  },
+  "blogPreviewEmpty": {
+    "message": "বর্তমানে কোনো বার্তা উপস্থিত নেই ।"
+  },
+  "blogPreviewError": {
+    "message": "বার্তা লোড করতে অক্ষম"
+  },
+  "blogPreviewEyebrow": {
+    "message": "সাউল ব্লগ"
+  },
+  "blogPreviewImageAlt": {
+    "message": "শৌল উত্তম দৃষ্টান্ত"
+  },
+  "blogPreviewLead": {
+    "message": "আপনি কি মনে করতে পারেন?"
+  },
+  "blogPreviewLoading": {
+    "message": "বার্তা লোড করা হচ্ছে..."
+  },
+  "blogPreviewRead": {
+    "message": "পড়ুন"
+  },
+  "blogPreviewTitle": {
+    "message": "ডিজিটাল আদালত থেকে সর্বশেষ খবর এসেছে।"
+  },
+  "breadcrumbArticle": {
+    "message": "পদাশ্রিত নির্দেশক"
+  },
+  "breadcrumbBlog": {
+    "message": "ব্লগ"
+  },
+  "categoriesTitle": {
+    "message": "সেশানের মধ্যে বিভাগ"
+  },
+  "categoryActiveLabel": {
+    "message": "সক্রিয় বিভাগ"
+  },
+  "categoryClear": {
+    "message": "বিভাগ মুছে ফেলুন"
+  },
+  "categoryDevLead": {
+    "message": "যে কেউ জ্যুলিং ভিএস কোড, জনসংযোগ এবং দূরবর্তী সভার জন্য কার্যকর উৎপাদন করেন।"
+  },
+  "categoryDevTitle": {
+    "message": "একজন দোষীর বিরুদ্ধে কাজ করা"
+  },
+  "categoryEyebrow": {
+    "message": "শ্রেণীবিভাগ"
+  },
+  "categoryFocoLead": {
+    "message": "প্রতিদিন গবেষণা এবং নাটকে আপনার মাথা না রেখে কোডে রাখা।"
+  },
+  "categoryFocoTitle": {
+    "message": "পরীক্ষার প্রতি ফোকাস"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "( ১ শমূ."
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "তদন্তের অধীনে প্রসিকিউশন"
+  },
+  "categoryRemotoLead": {
+    "message": "বাড়ির অফিস, নিউরেজ উপস্থিতির গল্প এবং একটি বড় নিখোঁজ হওয়া এড়িয়ে যাওয়া।"
+  },
+  "categoryRemotoTitle": {
+    "message": "কোনবাইর সঙ্গে দূরবর্তী কাজ"
+  },
+  "changelogError": {
+    "message": "আমরা এই মুহূর্তে পরিবর্তন করতে পারি না। পরে চেষ্টা করো।"
+  },
+  "changelogEyebrow": {
+    "message": "সকল নথিবদ্ধ করা হয়েছে"
+  },
+  "changelogHeading": {
+    "message": "সরকারি লগ"
+  },
+  "changelogLoading": {
+    "message": "রিপোজিটরি থেকে পরিবর্তন লোড..."
+  },
+  "changelogSubheading": {
+    "message": "রিপোজিটরি থেকে সরাসরি মুক্তির প্রতিটি পরিবর্তন ট্র্যাক করুন।"
+  },
+  "changelogTitle": {
+    "message": "লেবেল পরিবর্তন করো"
+  },
+  "codeconBuildChip": {
+    "message": "এনকোডিংয়ের ৪"
+  },
+  "codeconBulletChallenge": {
+    "message": "চ্যালেঞ্জ: হস্তনির্মিত কোড ৪ ঘন্টার মধ্যে দূরবর্তী কাজ প্রমাণ করুন।"
+  },
+  "codeconBulletNarrative": {
+    "message": "“এন্তের্নি” বর্ণনা ম্যানেজার/জুরির পক্ষে অবস্থান নিয়েছে।"
+  },
+  "codeconBulletRepoLink": {
+    "message": "প্রকৃত পুনরায়"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "হ্যাক ল্যাব ওপেন সোর্স:"
+  },
+  "codeconBulletTracking": {
+    "message": "এক্সটেনশন দ্বারা ট্যাব বন্ধ, অলস সময় এবং ভিলেন সাইট একটি সূচক তৈরি করতে পারে।"
+  },
+  "codeconCtaRepo": {
+    "message": "হ্যাক ল্যাব কোড দেখুন"
+  },
+  "codeconCtaSite": {
+    "message": "কোডের বিবরণ"
+  },
+  "codeconCtaVideo": {
+    "message": "সম্পূর্ণ ভিডিও নিরীক্ষণ করুন"
+  },
+  "codeconEyebrow": {
+    "message": "হ্যাকার ল্যাব কোডকন"
+  },
+  "codeconLead": {
+    "message": "একটি কোডকন হ্যাক ল্যাবে এই চিন্তাটি জন্ম নেয়: ওতিয়েভো রিবেইরো (টিজি টিজি১)  BAR   BAR   টিজিটি  জিটিজিটি জিটি টিজিটি ৩), শৌলের বিরুদ্ধে ব্যক্তিগত আইনজীবী হিসেবে কল্পনা করা হয়।"
+  },
+  "codeconPlanChip": {
+    "message": "৩০ মিনিট"
+  },
+  "codeconStoryLead": {
+    "message": "৩০ মিনিটের মধ্যে ওতিয়েভিও এমভিপি এবং পরবর্তী ৪ ঘন্টা ধরে শৌলের বীজ সংগ্রহ করে: এমন একটি এক্সটেনশন তৈরি করেছে যা একটি দূরবর্তী কাজের প্রমাণ দেয় যা ট্যাব দেখে, একটি সূচক তৈরি করে এবং “জুর” (জুর বস) এর প্রতিরক্ষা নিশ্চিত করে।"
+  },
+  "codeconTag": {
+    "message": "কমিউনিটিতে জন্ম"
+  },
+  "codeconTitle": {
+    "message": "যেখানে সাউল গুডম্যান ছিলেন"
+  },
+  "codeconVideoCaption": {
+    "message": "কোড CochD ল্যাব থেকে উদ্ধৃতি করা হয়েছে যেখানে শৌল একটি ধূমপায়ী এক্সটেনশন হিসাবে জীবন ফিরে পেয়েছিলেন।"
+  },
+  "demoCta": {
+    "message": "সম্পূর্ণ নমুনা প্রদর্শন"
+  },
+  "demoEyebrow": {
+    "message": "দ্রুত ডেমো"
+  },
+  "demoLead": {
+    "message": "এক ঝলক যথেষ্ট: তাৎক্ষণিক প্রতিক্রিয়ার জন্য পপ আপ করে রাখা, শেষ দিনের সিদ্ধান্তের উপর রিপোর্ট করা।"
+  },
+  "demoPopupBody": {
+    "message": "দৈনিক ইনডেক্স, শীর্ষ ডোমেইন, এবং হাতে রপ্তানির শর্টকাট।"
+  },
+  "demoPopupTitle": {
+    "message": "তাৎক্ষনিক সিদ্ধান্তের জন্য পপ-আপ"
+  },
+  "demoReportBody": {
+    "message": "চার্ট, হালকা গল্প বলা এবং পরবর্তী পদক্ষেপের পরামর্শ দেওয়া হয়েছে।"
+  },
+  "demoReportTitle": {
+    "message": "পরিকল্পনা জন্য রিপোর্ট"
+  },
+  "demoTitle": {
+    "message": "দেখ তুমি কোথায় সিদ্ধান্ত নিয়েছ আর কোথায় শৌল হস্তক্ষেপ করেন।"
+  },
+  "demoViewFull": {
+    "message": "সম্পূর্ণ মাপ প্রদর্শন"
+  },
+  "devBody": {
+    "message": "স্থানীয় ডিমন এবং ভিএস কোড এক্সটেনশন স্থানীয় হোস্ট ছাড়া সম্পাদক সময় সময়ের সীমা অতিক্রম করে।"
+  },
+  "devCtaDocs": {
+    "message": "docs প্রদর্শন"
+  },
+  "devCtaReadme": {
+    "message": "পড়া/ পড়ো"
+  },
+  "devCtaVsCode": {
+    "message": "VS কোড এক্সটেনশন ইনস্টল করুন"
+  },
+  "devEyebrow": {
+    "message": "ডেভেলপার"
+  },
+  "devLead": {
+    "message": "সকল প্রযুক্তিগত বিস্তারিত মূল প্রবাহের বাইরে চলে গেছে। নিচের গাইড দিয়ে শুরু করো।"
+  },
+  "devTitle": {
+    "message": "অবদান রাখতে চান নাকি সহযোগিতা করতে চান?"
+  },
+  "extDescription": {
+    "message": "সারকাস্টিক ফোকাস ট্র্যাকার, যা ডোমেইনকে পরিচালনা করে... ...আর তাতে তোমার প্রবঞ্চনা সূচক রাখা যায়।"
+  },
+  "extensionsChromeCta": {
+    "message": "ক্রোম এক্সটেনশন"
+  },
+  "extensionsCopy": {
+    "message": "সাউল ক্রোম এবং ভিএস কোডকে তোমার সততা বজায় রাখার জন্য নিয়ে এসো।"
+  },
+  "extensionsTitle": {
+    "message": "শৌলের এক্সটেনশন ইনস্টল করুন"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS কোড এক্সটেনশন"
+  },
+  "extName": {
+    "message": "সাউল গুডম্যান"
+  },
+  "faq1Answer": {
+    "message": "পুরোপুরি। সা. কা."
+  },
+  "faq1Question": {
+    "message": "এটা কি মুক্ত?"
+  },
+  "faq2Answer": {
+    "message": "কখনোই না। সব কিছু TA TA jobortstst.local  local TGa1  AGaG1  EGa1  ( TaGaGa1     EGaGase    EGasooooch."
+  },
+  "faq2Question": {
+    "message": "ব্রাউজার ছেড়ে আমার তথ্য কি দিন?"
+  },
+  "faq3Answer": {
+    "message": "যদি আপনি রিপোর্টে কিছু বিবরণ চান। বাকিরা অফলাইন।"
+  },
+  "faq3Question": {
+    "message": "আমার কি AI প্রয়োজন?"
+  },
+  "faq4Answer": {
+    "message": "না। সবকিছু স্থানীয় কোন লগ-ইন সঙ্গে চালায়।"
+  },
+  "faq4Question": {
+    "message": "আমার অ্যাকাউন্ট লাগবে?"
+  },
+  "faq5Answer": {
+    "message": "যখন ইন্ডেক্স আপনার পর্দার প্রান্ত অতিক্রম করে এবং একটি সাইরেন কয়েক সেকেন্ডের জন্য খেলা হয়।"
+  },
+  "faq5Question": {
+    "message": "কীভাবে ভূমিকম্প মোড কাজ করে?"
+  },
+  "faq6Answer": {
+    "message": "হ্যাঁ। পর্দা সংক্রান্ত বিকল্পের সাহায্যে, সময় ও তালিকা পরিবর্তন করা যাবে ।"
+  },
+  "faq6Question": {
+    "message": "আমি কি ডোমেইনকে স্বনির্ধারিত করতে পারি?"
+  },
+  "faq7Answer": {
+    "message": "হ্যাঁ। CSV ও PDF বাটন অবিলম্বে তথ্য ডাউনলোড করা যাবে।"
+  },
+  "faq7Question": {
+    "message": "আমি কি আমার তথ্য রপ্তানী করতে পারি?"
+  },
+  "faq8Answer": {
+    "message": "ক্রোমের জন্য তৈরি কিন্তু ক্রোমিয়াম-ভিত্তিক ব্রাউজার যেমন ব্রাভে বা এজ এর সাথে সুসংগত।"
+  },
+  "faq8Question": {
+    "message": "অন্য ব্রাউজারে কাজ করে?"
+  },
+  "faq9Answer": {
+    "message": "AI গল্প শোনা ঐচ্ছিক; যদি আপনি খোলা কী আউট সব অফ-লাইন রাখেন তাহলে এটি বন্ধ থাকবে।"
+  },
+  "faq9Question": {
+    "message": "AI রিপোর্ট কি নিরাপদ?"
+  },
+  "faqEyebrow": {
+    "message": "দ্রুত প্রশ্ন"
+  },
+  "faqTitle": {
+    "message": "সোজা ফিএকিউ।"
+  },
+  "feature1Item1": {
+    "message": "বর্তমান সূচক এবং বিদ্রুপাত্মক বার্তা নিয়ে বাজে মন্তব্য।"
+  },
+  "feature1Item2": {
+    "message": "সময়ের সাথে সময়ের সীমা এবং ভিলেন ডোমেইন।"
+  },
+  "feature1Item3": {
+    "message": "একবার ক্লিক করে CSV এক্সপোর্ট করুন।"
+  },
+  "feature1Title": {
+    "message": "বাস্তব সময় ড্যাশবোর্ড"
+  },
+  "feature2Item1": {
+    "message": "সর্বোচ্চ সীমানা এবং ঐচ্ছিক স্যার।"
+  },
+  "feature2Item2": {
+    "message": "গণনা এবং সিটিএ-এর সাথে গুরুতর সমস্যা।"
+  },
+  "feature2Item3": {
+    "message": "শুধুমাত্র ভিলেন ট্যাবই ব্লক করে রাখতে পারবে।"
+  },
+  "feature2Title": {
+    "message": "ভূমিকম্প মোড"
+  },
+  "feature3Item1": {
+    "message": "প্রতি ঘন্টায় চার্ট এবং ট্যাব-১২ কমে যায়।"
+  },
+  "feature3Item2": {
+    "message": "( ১ তীম."
+  },
+  "feature3Item3": {
+    "message": "সাথে সাথে ব্যবস্থা নেয়ায় গুরুত্বপূর্ণ ব্যানার।"
+  },
+  "feature3Title": {
+    "message": "কা. পূ."
+  },
+  "feature4Item1": {
+    "message": "local TAG jobertory BAR এ টাজি১ এ এ তিজি১ – মেঘ থেকে কোন তথ্য আসে না।"
+  },
+  "feature4Item2": {
+    "message": "প্রোডাকশন/vilotin শুধুমাত্র আপনার ব্রাউজার তালিকায় সংরক্ষিত।"
+  },
+  "feature4Item3": {
+    "message": "ঐচ্ছিক কী (key) সংরক্ষণ করো।"
+  },
+  "feature4Title": {
+    "message": "সর্বমোট স্তর"
+  },
+  "featureBlockBody": {
+    "message": "যদি আপনি মোড সক্রিয় করেন, তাহলে শৌল ভিলেন ট্যাব পুরো পর্দার উপর মনোযোগ না দেওয়া পর্যন্ত ফিরে আসবে."
+  },
+  "featureBlockHint": {
+    "message": "\"যখন আপনি চাইবেন, তখনই সুইচটি বন্ধ করে দিন: একমাত্র উৎপাদনশীল ট্যাব খোলা থাকে।"
+  },
+  "featureBlockTitle": {
+    "message": "ভিলেন ট্যাব লক"
+  },
+  "featureContextBody": {
+    "message": "এখন আপনি সেই দিনের কনস্টাইল (কাজ, অবসর, ব্যক্তিগত অধ্যয়ন, ব্যক্তিগত অধ্যয়ন) সেট করতে পারেন; শৌল পুনরায় সেই স্কোরকে হালকা করে দেন, সংশোধন করেন এবং সেগুলোকে নিরপেক্ষ রাখতে পারেন ।"
+  },
+  "featureContextLabel": {
+    "message": "নতুন"
+  },
+  "featureCustomBody": {
+    "message": "সময়ের সঙ্গে সঙ্গে ভূমিকম্প ও ভূমিকম্পের অবস্থা ব্যাখ্যা করুন ।"
+  },
+  "featureCustomHint": {
+    "message": "\"স্পজলেট? ভিআই. বেকার খাবার? প্রতিরোধক।"
+  },
+  "featureCustomTitle": {
+    "message": "স্বনির্বাচিত & গুরুত্বের তালিকা"
+  },
+  "featuredEyebrow": {
+    "message": "বৈশিষ্ট্য"
+  },
+  "featuredTitle": {
+    "message": "সপ্তাহের কেস"
+  },
+  "featureGaugeHint": {
+    "message": "৭০% পার হয়ে গেলে শৌল ভূমিকম্পের প্রস্তুতি নেন।"
+  },
+  "featureGaugeLabel": {
+    "message": "লাইভ স্ট্যাটাস"
+  },
+  "featureGaugeTitle": {
+    "message": "প্রসেটেশন ইন্ডেক্স"
+  },
+  "featureNextLabel": {
+    "message": "পরবর্তী তাস"
+  },
+  "featurePrevLabel": {
+    "message": "পূর্ববর্তী তাস"
+  },
+  "featurePrivacyBody": {
+    "message": "local TA jobrtortst. local TG AG1 (টিজিএ), কোনো বাইরের সার্ভার অথবা প্রকাশ করা হবে না।"
+  },
+  "featurePrivacyHint": {
+    "message": "এমনকি বিচারক আপনার তথ্য দেখে না।"
+  },
+  "featurePrivacyTitle": {
+    "message": "গোপনীয়তা"
+  },
+  "featureQuakeBody": {
+    "message": "স্ক্রিন কাপ, স্যারেন আর শৌল... ...যে ভিলেন ট্যাবের জন্য চিৎকার করে... ...তুমি ট্র্যাকে ফিরে যাও."
+  },
+  "featureQuakeHint": {
+    "message": "\"আপনার কি অবস্থা! এখন ফল্ট ট্যাবে ফিরে যাও।"
+  },
+  "featureQuakeTest": {
+    "message": "সতর্কবার্তা"
+  },
+  "featureQuakeTitle": {
+    "message": "সিনেমাটিক ভূমিকম্প মোড"
+  },
+  "featureRealtimeBody": {
+    "message": "ব্যাজটা প্রতিটা ট্যাবের দিকে তাকিয়ে থাকে এবং আপনার দিনকে এক পরিষ্কার জায়গায় পরিণত করে।"
+  },
+  "featureRealtimeHint": {
+    "message": "“সাল ওই ৩৭টি ট্যাব দেখছে”।"
+  },
+  "featureRealtimeTitle": {
+    "message": "প্রকৃত সময় অনুসরণ"
+  },
+  "featureReportBody": {
+    "message": "চার্ট, ভ্রমণ, CSV/PDF রপ্তানি, এবং পরবর্তী পদক্ষেপের জন্য মিনিট টাইমলাইন।"
+  },
+  "featureReportHint": {
+    "message": "“এখানে আপনার এবং আপনার বসের প্রমাণ”।"
+  },
+  "featureReportTitle": {
+    "message": "কা. পূ."
+  },
+  "featureSectionEyebrow": {
+    "message": "বৈশিষ্ট্য"
+  },
+  "featureSectionLead": {
+    "message": "প্রত্যেক কার্ড কৌতুক ও স্বচ্ছতার মিশ্রণ, যাতে ধীরে ধীরে বুঝতে পারে যে শৌল ক্রোমের মধ্যে কী করেন ।"
+  },
+  "featureSectionTitle": {
+    "message": "সব কিছু চেক করতে হবে।"
+  },
+  "featuresEyebrow": {
+    "message": "বিস্তারিত বর্ণনা"
+  },
+  "featuresTitle": {
+    "message": "সা. কা."
+  },
+  "featureSwipeHint": {
+    "message": "কা. পূ."
+  },
+  "feedbackLink": {
+    "message": "সাড়া দাও"
+  },
+  "finalCtaBody": {
+    "message": "আপনার ডোমেইন নির্ধারণ করুন, এবং ভিলেন ট্যাব জয়ের পূর্বে মনোযোগ আকর্ষণ করুন।"
+  },
+  "finalCtaTitle": {
+    "message": "সা. কা."
+  },
+  "finalPrimary": {
+    "message": "ক্রোমের উপর ইনস্টল করুন"
+  },
+  "footerBody": {
+    "message": "আপনার ভিলেনদের তালিকা করুন, এবং শৌলকে ফোকাস ফি সংগ্রহ করতে দিন।"
+  },
+  "footerChangelogLink": {
+    "message": "লেবেল পরিবর্তন করো"
+  },
+  "footerLinkArchitecture": {
+    "message": "স্থাপত্য"
+  },
+  "footerLinkGithub": {
+    "message": "গিটহাব"
+  },
+  "footerLinkIndicators": {
+    "message": "নির্দেশক"
+  },
+  "footerPrivacy": {
+    "message": "১০০% স্থানীয় ডাটা। এমনকি বিচারকও সেটা দেখছে না।"
+  },
+  "footerPrivacyLink": {
+    "message": "ব্যক্তিগত তথ্যের নীতিমালা"
+  },
+  "footerTitle": {
+    "message": "সাউল গুডম্যান এক্সটেনশন"
+  },
+  "heroBadge": {
+    "message": "\"আলতামিরার ক্ষেত্রে ... সুয়াদ!\""
+  },
+  "heroConfidence1": {
+    "message": "স্বনির্ধারিত ভূমিকম্প মোড"
+  },
+  "heroConfidence2": {
+    "message": "কালো তালিকা"
+  },
+  "heroConfidence3": {
+    "message": "AI'র গল্পের রিপোর্ট"
+  },
+  "heroGaugeHint": {
+    "message": "যখন এটা ৭০% আঘাত করে, ভূমিকম্প মোডে।"
+  },
+  "heroGaugeLabel": {
+    "message": "লাইভ ইনডেক্স"
+  },
+  "heroPill": {
+    "message": "সাপ্তাহিক ফোঁটা, প্রতিদিন বিদ্রুপ"
+  },
+  "heroPrimaryCta": {
+    "message": "ক্রোমের উপর ইনস্টল করুন"
+  },
+  "heroSecondaryCta": {
+    "message": "দেখ কিভাবে কাজ করে"
+  },
+  "heroSubtitle": {
+    "message": "এটা আপনার ট্যাবকে চিহ্নিত করে, পতাকার ধাঁধা চিহ্নিত করে এবং দিনের শুরুতে আপনি মনোযোগ আকর্ষণ করতে পারেন- সবই ক্রোমের ভিতরে, সাইনআপ নয়।"
+  },
+  "heroTag": {
+    "message": "বাস্তব জীবনের জন্য সরকারবিরোধী এক্সটেনশন"
+  },
+  "heroTitle": {
+    "message": "বাড়াবাড়ি করা বন্ধ করো। সা."
+  },
+  "indexCalloutLabel": {
+    "message": "শৌলের কথা"
+  },
+  "indexCalloutQuote": {
+    "message": "“ ৬০% এর বেশি আর আমি আপনার বসকে ডাকছি। ১০% নিচে নামুন আর আমি আপনার ক্রসিস্টকে বইটা দিচ্ছি। ডকেটের ভারসাম্য বজায় রাখো, ক্লায়েন্ট!"
+  },
+  "indexClueAlert": {
+    "message": "ভূমিকম্প থেকে রক্ষা করুন"
+  },
+  "indexClueAlertBody": {
+    "message": "ডাবল চেক তালিকা, স্যার, এবং কপি করুন ঠিক সময়ে কলগুলো আঘাত দেয়।"
+  },
+  "indexClueBreak": {
+    "message": "মাইক্রো- সরঞ্জাম নির্মাণ করুন"
+  },
+  "indexClueBreakBody": {
+    "message": "১৫-২২ সালের মধ্যে কৌশলগত শ্বাস-প্রশ্বাসের দাবী করা হয়। আপনার বর্ষপঞ্জিতে ব্লক দিন, ক্লায়েন্ট।"
+  },
+  "indexClueFocus": {
+    "message": "আপনার ভিলেনের তালিকা"
+  },
+  "indexClueFocusBody": {
+    "message": "শৌল কোনো স্থানান্তর করার পূর্বে ইনডেক্সের একটি জীবন্ত তালিকা রাখুন ।"
+  },
+  "indexCluesLabel": {
+    "message": "কেস চেকলিস্ট"
+  },
+  "indexEyebrow": {
+    "message": "শৌলের টেবিলে"
+  },
+  "indexFootnote": {
+    "message": "১৫ থেকে ২২ বছরের শৌল “স্টিডি ক্লায়েন্ট” এর মধ্যে। ভূমিকম্পের উপরে সে যে হাত ধরে আছে, তার নিচে আছে সে বিশ্রাম, অতিরিক্ত কাজ নয়।"
+  },
+  "indexGaugeHint": {
+    "message": "১৮% মিষ্টি স্পটে আঘাত করে — স্থির মনোযোগ দিয়ে পুরো রোবট না ফেলে।"
+  },
+  "indexGaugeLabel": {
+    "message": "সুইট স্পট"
+  },
+  "indexLead": {
+    "message": "আইনী অনুবাদ সার্ভিস: ০ এর একটি ফলাফল কোন টেশে না এবং ১০০ জন কোন জয়ের যোগ্য নয়। শৌল প্রত্যেক ব্যান্ডকে পড়ে সিদ্ধান্ত নিতে বলেন যে, আপনার চেয়ার কি ছুটির দিনে অথবা জোর করবে কি না ।"
+  },
+  "indexMemoBody": {
+    "message": "যদি কোন ভিলেন ট্যাব সূচিকে পুরো পর্দা জুড়ে দেয়, তাহলে পুরো পর্দা ব্লক মোড চালু করে। সা. কা."
+  },
+  "indexMemoHeading": {
+    "message": "অফিস"
+  },
+  "indexMemoSign": {
+    "message": "— শৌল, আপনার উৎপাদনশীল উকিল"
+  },
+  "indexPitch1": {
+    "message": "ইন্ডেক্স সীমা 0 থেকে ১০০ - র মধ্যে । প্রায় ১০০ জনের মত, তুমি কেসটা ছেড়ে দিলে... ...এবং অত্যন্ত গুরুত্বপূর্ণ হয়ে উঠেছিলো।"
+  },
+  "indexPitch2": {
+    "message": "কিন্তু শূন্যকে আঘাত করাও সন্দেহজনক মনে হচ্ছে: কেউ যদি ২৪/৭ টা ফল উৎপন্ন করতে চায়, তাহলে তাকে আগুনে পোড়াতে হবে।"
+  },
+  "indexRange0to14Body": {
+    "message": "আপনি কাজে এতটাই লেগে আছেন যে শৌল এটাকে “সভ্যমূলক উদ্যোগ” বলেছেন। শ্বাস নাও, উঠে পড়ো, আর সাক্ষ্য দেওয়ার আগেই পানি নিয়ে আসো."
+  },
+  "indexRange0to14Title": {
+    "message": "০- ১৪-এর ক্ষেত্রে প্রশ্নযোগ্য"
+  },
+  "indexRange15to22Body": {
+    "message": "আদর্শ রায়: সঠিক মনোযোগ, সুস্থ ভঙ্গ, শূন্য সাইরেন। ( ১ শমূ."
+  },
+  "indexRange15to22Title": {
+    "message": "২২: সুবর্ণ ভারসাম্য"
+  },
+  "indexRange23to60Body": {
+    "message": "আপনি এখনো মামলাটির কাছে আবেদন করছেন কিন্তু ভিলেনের ফিডে হোঁচট খাচ্ছেন। শৌল কৌতুকপূর্ণ কাজ করেন ।"
+  },
+  "indexRange23to60Title": {
+    "message": "২৩- ৬০: ফোকাস"
+  },
+  "indexRange61to100Body": {
+    "message": "এখন ভূমিকম্পের সময়। স্ক্রিন কাঁপিয়েছে, আর শৌল... ...সব ভিলেন ট্যাবের জন্য একটা বিরতি নিয়ে যাচ্ছে."
+  },
+  "indexRange61to100Title": {
+    "message": "৬১- ১০০: অজেয় অগ্রগতি"
+  },
+  "indexStamp": {
+    "message": "ক্লায়েন্ট সহজ ঘুম"
+  },
+  "indexTitle": {
+    "message": "শৌল যেভাবে প্রসিকিউশন ইনডেক্স পড়েন"
+  },
+  "integrationCard1Body": {
+    "message": "কি'র মান পরিবর্তন ও সুসংগত করুন। কিছুই আপনার ব্রাউজার ছেড়ে যাচ্ছে না।"
+  },
+  "integrationCard1Title": {
+    "message": "অপশন সক্রিয় করো"
+  },
+  "integrationCard2Body": {
+    "message": "VS কোড এক্সটেনশন ব্যবহার করুন: এটি আগে থেকেই PATH-APPE - এর আগে থেকেই ব্যবহার করুন এবং ডেমন ফোল্ডার এ খোলা হবে ।"
+  },
+  "integrationCard2Title": {
+    "message": "স্থানীয় ডেমন"
+  },
+  "integrationCard3Body": {
+    "message": "কমান্ড \"সাউল গুডম্যান: প্রিপায়ার ডো সামানোডো ডো সাউল ডিনামোনের জাহাজটি ইনস্টল করার পর প্রস্তুত এবং সম্পাদক হার্টবিটস ক্রোমের কাছে পাঠান।"
+  },
+  "integrationCard3Title": {
+    "message": "VS কোড এক্সটেনশন"
+  },
+  "integrationCta": {
+    "message": "যোগাযোগ সংক্রান্ত বিবরণ দেখুন"
+  },
+  "integrationEyebrow": {
+    "message": "sdev জন্য"
+  },
+  "integrationLead": {
+    "message": "ঐচ্ছিক একতা চালু করুন: শৌল স্থানীয় হোস্ট ছেড়ে না দিয়ে সম্পাদক সময় ব্যয় করেন।"
+  },
+  "integrationTitle": {
+    "message": "ভিএস কোড + স্থানীয় ডেমন, সব গণনা ফলপ্রদ হিসাবে।"
+  },
+  "integrationVsixCta": {
+    "message": "VS কোড এক্সটেনশন ইনস্টল করুন"
+  },
+  "label_vscode": {
+    "message": "ভি- ভি- আই (TLS)"
+  },
+  "languageLabel": {
+    "message": "ভাষা নির্বাচন করুন"
+  },
+  "latestEyebrow": {
+    "message": "তাজা"
+  },
+  "latestTitle": {
+    "message": "উৎপাদন আদালত থেকে দ্রুত"
+  },
+  "lightboxClose": {
+    "message": "বন্ধ"
+  },
+  "manifesto1Body": {
+    "message": "ব্রাউজারের মধ্যে আপনার দিন বিচার করা হবে। কোন তথ্যই কম্পিউটার ছেড়ে যায় নি, এমনকি আদালতের আদেশও না।"
+  },
+  "manifesto1Title": {
+    "message": "১০০% স্থানীয়"
+  },
+  "manifesto2Body": {
+    "message": "কল্পনা করুন এবং শব্দের বিপদ থেকে সাবধান থাকুন"
+  },
+  "manifesto2Title": {
+    "message": "স্বচ্ছ বিলিং"
+  },
+  "manifesto3Body": {
+    "message": "সারকাস্টিক মেসেজ এবং নাটকীয় ব্যানারের মাধ্যমে আপনাকে মনে করিয়ে দেওয়া হয়েছে যে এগুলো অনেক ব্যয়বহুল।"
+  },
+  "manifesto3Title": {
+    "message": "অস্ত্র হিসেবে হুমর"
+  },
+  "manifestoEyebrow": {
+    "message": "প্রদর্শন ( V)"
+  },
+  "manifestoTitle": {
+    "message": "নৈতিকতার এক চিমটিক মার্কেটিং।"
+  },
+  "mediaTaglineDev": {
+    "message": "হার্ড মেট্রিকদের বিচার করা হয়েছে।"
+  },
+  "mediaTaglineFoco": {
+    "message": "প্রতিদিন জিজ্ঞাসাবাদের সময় মনোযোগ দিন।"
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "মন ও অসিলোস্কোপ শৌলের ধর্ষণকে উপহাসের সঙ্গে সাক্ষাৎ করে ।"
+  },
+  "mediaTaglineRemoto": {
+    "message": "ভূত-mode এর সাথে দূরবর্তী কাজ."
+  },
+  "metaCategory": {
+    "message": "শ্রেণীবিভাগ"
+  },
+  "metaPublishedAt": {
+    "message": "ব্লগে প্রকাশিত"
+  },
+  "metaSource": {
+    "message": "উৎস"
+  },
+  "metaSourcePublishedAt": {
+    "message": "প্রকাশিত উৎস"
+  },
+  "metaSourceUrl": {
+    "message": "উৎসের URL"
+  },
+  "metaTags": {
+    "message": "ট্যাগ"
+  },
+  "mobileMenuToggle": {
+    "message": "মেনু খুলুন"
+  },
+  "multilingualLabel": {
+    "message": "পিটি - তে বিদ্যমান  পেরেথ ইএস এ"
+  },
+  "navBenefits": {
+    "message": "উপকার"
+  },
+  "navBlog": {
+    "message": "ব্লগ"
+  },
+  "navClients": {
+    "message": "ক্লায়েন্ট"
+  },
+  "navCodeCon": {
+    "message": "কোডের বিবরণ"
+  },
+  "navCta": {
+    "message": "ইনস্টল করুন"
+  },
+  "navDemo": {
+    "message": "নমুনা"
+  },
+  "navIndex": {
+    "message": "সূচিপত্র"
+  },
+  "navProcess": {
+    "message": "প্রসেস"
+  },
+  "newsletterCopy": {
+    "message": "সংক্ষিপ্ত রূপ ধারণ করা এবং শাসন করা, যাতে আপনার ভিএস কোড নেটফ্লেক্সের মত আচরণ বন্ধ করে।"
+  },
+  "newsletterCta": {
+    "message": "শৌলের সঙ্গে দেখা"
+  },
+  "newsletterDisclaimer": {
+    "message": "কোন স্প্যাম নেই. শুধু মজা করলে তুমি হ্যান্ডেল করতে পারবে।"
+  },
+  "newsletterError": {
+    "message": "অনুগ্রহ করে বৈধ ই-মেইল ঠিকানা নির্বাচন করুন।"
+  },
+  "newsletterLabel": {
+    "message": "আপনার ই-মেইল"
+  },
+  "newsletterPlaceholder": {
+    "message": "আপনি @এক্সপ্লোক্স"
+  },
+  "newsletterSubmit": {
+    "message": "কর্মসূচী প্রাপ্ত করুন"
+  },
+  "newsletterSuccess": {
+    "message": "তুমি রেডারে আছ. শীঘ্রই নতুন ফোঁটা আসবে।"
+  },
+  "newsletterTitle": {
+    "message": "সা."
+  },
+  "nextPost": {
+    "message": "পরবর্তী"
+  },
+  "options_back_to_popup": {
+    "message": "পপ-আপ- এ প্রত্যাবর্তন করুন"
+  },
+  "options_confirm_reset": {
+    "message": "এর দ্বারা ডিফল্ট মান পুনরুদ্ধার করা হবে। চালিয়ে যাওয়া হবে কি?"
+  },
+  "options_critical_sound_hint": {
+    "message": "সক্রিয় করা হলে, সতর্কবার্তাসূচক বার কার্যকরী হলে সাইরেন বাজানো হবে ।"
+  },
+  "options_critical_sound_label": {
+    "message": "স্বয়ংক্রিয় ভূমিকম্প সাইরেন"
+  },
+  "options_critical_threshold_hint": {
+    "message": "[ অধ্যয়ন প্রশ্নাবলি]"
+  },
+  "options_critical_threshold_label": {
+    "message": "কোয়েক মোড (০- ১০০)"
+  },
+  "options_digital_branch": {
+    "message": "ডিজিট্যাল শাখা"
+  },
+  "options_domain_add": {
+    "message": "যোগ করুন"
+  },
+  "options_domain_duplicate": {
+    "message": "ডোমেইন আগে থেকেই তালিকাবদ্ধ করা হয়েছে ।"
+  },
+  "options_domain_empty": {
+    "message": "ডোমেইন এখনও নেই।"
+  },
+  "options_domain_invalid": {
+    "message": "বৈধ ডোমেইন লিখুন ।"
+  },
+  "options_footer_note": {
+    "message": "সাউল কারো সাথে আপনার তথ্য শেয়ার করেন না. এমনকি বিচারকও না।"
+  },
+  "options_head_title": {
+    "message": "সাউল গুডম্যান- সেটিংস"
+  },
+  "options_heading": {
+    "message": "অফিস সেটিংস"
+  },
+  "options_holiday_context_hint": {
+    "message": "পপ- আপ ব্যবহার করুন দিনের কনফিউজ (কাজ, অবসর, পড়াশোনা, ছুটি, ছুটি)। সা. কা."
+  },
+  "options_holiday_country_error": {
+    "message": "শুধুমাত্র দুটি বর্ণ, যেমন, BR বা মার্কিন ব্যবহার করুন।"
+  },
+  "options_holiday_country_hint": {
+    "message": "বিআর, যুক্তরাষ্ট্র, পিটি। শৌল কখনো আপনার দেশকে স্বয়ংক্রিয়ভাবে সনাক্ত করার চেষ্টা করেন নি।"
+  },
+  "options_holiday_country_label": {
+    "message": "দেশ কোড (ISO-৩১ আবার চালু হয়েছে)"
+  },
+  "options_holiday_heading": {
+    "message": "ছুটি এবং ন্যায্য কনটেক্সট"
+  },
+  "options_holiday_hint": {
+    "message": "( ১ শমূ. আজকের দিনটি জাতীয় ছুটির দিন কিনা তা দেখার তারিখ।"
+  },
+  "options_holiday_toggle_hint": {
+    "message": "আপনি যদি সক্রিয় এবং দেশ সেট করতে পারেন তাহলে কল হয়। স্বয়ংক্রিয় অবস্থান অনুপস্থিত।"
+  },
+  "options_holiday_toggle_label": {
+    "message": "জাতীয় ছুটির দিনগুলো স্থগিত রাখা"
+  },
+  "options_inactivity_threshold": {
+    "message": "নিষ্ক্রিয় করার পূর্বে অতিবাহিত সময় (সেকেন্ডে)"
+  },
+  "options_language_auto": {
+    "message": "স্বয়ংক্রিয় (বরের)"
+  },
+  "options_language_en": {
+    "message": "ইংরেজি (US)"
+  },
+  "options_language_es": {
+    "message": "স্প্যানিশ"
+  },
+  "options_language_hint": {
+    "message": "ভাষাটা দিয়ে দাও অথবা ক্রোমকে অনুসরণ করো।"
+  },
+  "options_language_label": {
+    "message": "ভাষা"
+  },
+  "options_language_pt": {
+    "message": "পোর্তুগিজ (মোগুয়ে)"
+  },
+  "options_openai_hint": {
+    "message": "রিপোর্টটিতে স্থানীয় ভাষায় বর্ণনা তৈরি করার জন্যে সংরক্ষিত।"
+  },
+  "options_openai_label": {
+    "message": "কি খুলুন (ঐচ্ছিক)"
+  },
+  "options_openai_placeholder": {
+    "message": "শ..."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "এর ফলে, শৌল ও শৌলের মধ্যে বন্ধুত্ব আরও দৃঢ় হয়েছিল ।"
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "এই তালিকা থেকে প্রতিরোধ করা হবে"
+  },
+  "options_procrastination_heading": {
+    "message": "প্র্যাট্রোন ডোমেইন"
+  },
+  "options_procrastination_hint": {
+    "message": "এই যে প্রলোভন। যদি আপনি একটি সাইট পছন্দ করেন, এটা সম্ভবত এখানে।"
+  },
+  "options_procrastination_placeholder": {
+    "message": "উদাহরণ:"
+  },
+  "options_productive_heading": {
+    "message": "উৎপাদনের ডোমেইন"
+  },
+  "options_productive_hint": {
+    "message": "সা. আপনার রুটিন ভিত্তিক তালিকা যোগ অথবা অপসারণ করুন।"
+  },
+  "options_productive_placeholder": {
+    "message": "উদাহরণ স্বরূপ, ডক.I.log.com"
+  },
+  "options_promise": {
+    "message": "( ১ শমূ."
+  },
+  "options_restore_defaults": {
+    "message": "ডিফল্ট মান পুনরায় স্থাপন করুন"
+  },
+  "options_save_weights": {
+    "message": "ওজন"
+  },
+  "options_schedule_add": {
+    "message": "বিরতি যোগ করুন"
+  },
+  "options_schedule_heading": {
+    "message": "কার্যদিবস"
+  },
+  "options_schedule_hint": {
+    "message": "শৌলকে বল যখন তোমার অফিসিয়াল শিফট হবে. এই ব্লকের বাইরে, উৎপাদন মিনিট দ্বিগুণ."
+  },
+  "options_schedule_to": {
+    "message": "চিহ্নিত স্থানে চলুন"
+  },
+  "options_status_blocklist_saved": {
+    "message": "পছন্দসই মান সংক্রান্ত আপডেট করা হয়েছে।"
+  },
+  "options_status_critical_saved": {
+    "message": "ভূমিকম্প মোড আপডেট."
+  },
+  "options_status_defaults_restored": {
+    "message": "ডিফল্ট আবার চালু।"
+  },
+  "options_status_domain_removed": {
+    "message": "ডোমেন সরিয়ে ফেলা হয়েছে।"
+  },
+  "options_status_holiday_saved": {
+    "message": "ছুটির পছন্দসমূহ।"
+  },
+  "options_status_language_saved": {
+    "message": "ভাষার আপডেট."
+  },
+  "options_status_list_updated": {
+    "message": "আপডেট সম্পন্ন।"
+  },
+  "options_status_ready": {
+    "message": "ঠিক আছে."
+  },
+  "options_status_schedule_updated": {
+    "message": "নির্ধারিত আপডেট করা হয়েছে।"
+  },
+  "options_status_vscode_saved": {
+    "message": "ভিএস কোডের সমন্বয় ঘটেছে."
+  },
+  "options_status_weights_saved": {
+    "message": "আমাদের কাছে খবর আছে."
+  },
+  "options_subtitle": {
+    "message": "তোমার প্রবালপ্রাচীর স্টাইলের সাথে মিলিয়ে নাও. সবকিছু স্থানীয় থাকে."
+  },
+  "options_tagline": {
+    "message": "তোমার ব্যক্তিগত আইনজীবী প্রবালপ্রাচীরের বিরুদ্ধে"
+  },
+  "options_thresholds_heading": {
+    "message": "& ওজন"
+  },
+  "options_vscode_heading": {
+    "message": "VS কোড একত্রীকরণ"
+  },
+  "options_vscode_install_hint": {
+    "message": "ফোকাস সেশানের জন্য অফিসিয়াল ভিএস কোড এক্সটেনশন ইনস্টল করুন।"
+  },
+  "options_vscode_install_link": {
+    "message": "VS কোড এক্সটেনশন ইনস্টল করুন"
+  },
+  "options_vscode_key_copied": {
+    "message": "চাবি কপি করা হয়েছে।"
+  },
+  "options_vscode_key_copy": {
+    "message": "কি কপি করুন"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "কপি করার উদ্দেশ্যে কোনো কি উপস্থিত নেই।"
+  },
+  "options_vscode_key_generate": {
+    "message": "একটি নতুন কি নির্মাণ করুন"
+  },
+  "options_vscode_key_generated": {
+    "message": "নতুন কি তৈরী."
+  },
+  "options_vscode_key_hint": {
+    "message": "শৌল Deadet/VS কোডের মধ্যে কি-র উপস্থিতি আবশ্যক।"
+  },
+  "options_vscode_key_label": {
+    "message": "জুটি কি"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "সা. কা."
+  },
+  "options_vscode_test_button": {
+    "message": "সংযোগ পরীক্ষা করো"
+  },
+  "options_vscode_test_disabled": {
+    "message": "পরীক্ষার আগে ভিএস এল কোড পরিকল্পনা সক্রিয় করো ।"
+  },
+  "options_vscode_test_error": {
+    "message": "শৌলের সাথে সংযোগ করতে ব্যর্থ{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "%s-র সাথে সংযোগ স্থাপন করতে ব্যর্থ{origin}স্বাস্থ্য{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "অবৈধ ইউ- আর- এল । কিছু ব্যবহার করুন http://127.10.10.1:৩১২৩."
+  },
+  "options_vscode_test_running": {
+    "message": "টেস্টান্ডু..."
+  },
+  "options_vscode_test_success": {
+    "message": "সা.{origin}আজকের সেশন:{sessions}মিনিট:{minutes}. ."
+  },
+  "options_vscode_test_timeout": {
+    "message": "সাউলেমন নোওওও এর সাড়া দেন।"
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "চাও ডিফারেন্ট. একটা মেসমা চাবি ব্যবহার করো, কোন ক্রোম নয়, ভিএস কোড নেই।"
+  },
+  "options_vscode_toggle_hint": {
+    "message": "আপনার স্কোর সতেজ করার পূর্বে স্থানীয় সাউলেমন (স্থানীয়)-এর স্থানীয় ফোন কল করুন।"
+  },
+  "options_vscode_toggle_label": {
+    "message": "কোড থেকে সময় সন্নিবেশ করুন"
+  },
+  "options_vscode_url_hint": {
+    "message": "শুধু স্থানীয় হোস্টের সাথে কথা বলা; আপনার মেশিন ছেড়ে কিছু না।"
+  },
+  "options_vscode_url_label": {
+    "message": "স্থানীয় ব্যাক-এন্ড URL"
+  },
+  "options_weight_inactivity": {
+    "message": "সমমানতা (inversion)"
+  },
+  "options_weight_procrastination": {
+    "message": "গঠনবিহীন সময় (ন)"
+  },
+  "options_weight_switches": {
+    "message": "ট্যাব বদল (owas)"
+  },
+  "options_weights_sum_error": {
+    "message": "ওজন ১ হতে হবে."
+  },
+  "popup_alert_no_data": {
+    "message": "এখনো তথ্য অনুপস্থিত। কিছু ট্যাব খুলুন ও পুনরায় চেষ্টা করুন।"
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF মডিউল উপলব্ধ নয় ।"
+  },
+  "popup_badge_label": {
+    "message": "সূচিপত্র"
+  },
+  "popup_blog_badge": {
+    "message": "শৌল পাঠ করার পরামর্শ দেন"
+  },
+  "popup_blog_button_all": {
+    "message": "খোলা ব্লগ"
+  },
+  "popup_blog_category_prefix": {
+    "message": "শ্রেণী:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "এখন পড়ুন"
+  },
+  "popup_blog_empty": {
+    "message": "কোনো বার্তা উপলব্ধ নেই"
+  },
+  "popup_blog_error": {
+    "message": "এই মুহূর্তে ব্লগে পৌঁছাতে পারছি না।"
+  },
+  "popup_blog_loading": {
+    "message": "নিখুঁত কেসের খোঁজে..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "সময় এসেছে শূন্য সস্তা কোচিং এর সাথে দক্ষতা বাড়ানোর।"
+  },
+  "popup_blog_reason_foco": {
+    "message": "আজকের বিচ্ছিন্ন মনোযোগের উপর ভিত্তি করে।"
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "কারণ আজকের আইনী সীমা অতিক্রম করেছে।"
+  },
+  "popup_blog_reason_remoto": {
+    "message": "পুরো ভূত মোড ত্যাগ না করে সারভে কাজ করে।"
+  },
+  "popup_blog_section_subtitle": {
+    "message": "আমরা আপনার সংখ্যা পড়ি এবং একটি শৌল স্টাইলে প্রতিবেদন নির্দেশ করি।"
+  },
+  "popup_blog_section_title": {
+    "message": "হ্যান্ডকেড ব্লগ বকশিশ"
+  },
+  "popup_chart_aria": {
+    "message": "উৎপাদনশীল voice ঘন্টা"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "মিনিট"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "প্রয়োগ"
+  },
+  "popup_chart_label_productive": {
+    "message": "উৎপাদনের-সমূহ"
+  },
+  "popup_chart_label_vscode": {
+    "message": "কোড"
+  },
+  "popup_chart_title": {
+    "message": "রেডার ম্যাপ"
+  },
+  "popup_context_option_dayOff": {
+    "message": "ফোলা"
+  },
+  "popup_context_option_leisure": {
+    "message": "লাজার"
+  },
+  "popup_context_option_personal": {
+    "message": "ব্যক্তিগত"
+  },
+  "popup_context_option_study": {
+    "message": "অধ্যয়ন"
+  },
+  "popup_context_option_vacation": {
+    "message": "ছুটি"
+  },
+  "popup_context_option_work": {
+    "message": "কর্ম"
+  },
+  "popup_critical_close_aria": {
+    "message": "সতর্ককারী বন্ধ করুন"
+  },
+  "popup_critical_countdown_final": {
+    "message": "কোন অজুহাত নেই: এখন তিনটি ভিন্ন ভিন্ন দল গড়ে উঠছে!"
+  },
+  "popup_critical_default_message": {
+    "message": "এই সূচকে আমি তোমাকে রক্ষা করতে পারবো না। এর জন্য খরচের খরচ পড়বে!"
+  },
+  "popup_critical_message_1": {
+    "message": "ক্লায়েন্ট, ইন্ডেক্সের সাথে ক্লায়েন্ট{threshold}এমনকি আমি তোমাকে রক্ষা করতে পারবো না। ঝুঁকি পে এর প্রয়োগ!"
+  },
+  "popup_critical_message_2": {
+    "message": "কম্পন? বিচারক তোমার উৎপাদনে রাগ করেছে."
+  },
+  "popup_critical_message_3": {
+    "message": "আমি আপনার গল্প বলা প্রধান সময় কিনবো."
+  },
+  "popup_critical_message_4": {
+    "message": "আমাকে সাহায্য করো: ডলার বিল করার আগে ঐ ট্যাবগুলো বন্ধ করো।"
+  },
+  "popup_critical_plan_action": {
+    "message": "বন্ধ 3 ভিলেন ট্যাব ট্যাব"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "কর্মের পরিকল্পনা:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "স."
+  },
+  "popup_critical_review": {
+    "message": "রিভিউ ভিলেন"
+  },
+  "popup_critical_sound_now": {
+    "message": "ট্রিগারian এখন আরম্ভ করুন"
+  },
+  "popup_critical_title": {
+    "message": "ভূমিকম্প মোড"
+  },
+  "popup_csv_category": {
+    "message": "শ্রেণীবিভাগ"
+  },
+  "popup_csv_column_date": {
+    "message": "তারিখ"
+  },
+  "popup_csv_column_inactive": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "popup_csv_column_index": {
+    "message": "সূচিপত্র"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "প্রসেটেশন (intemin)"
+  },
+  "popup_csv_column_productive": {
+    "message": "উৎপাদন (m)"
+  },
+  "popup_csv_column_switches": {
+    "message": "ট্যাব বদল"
+  },
+  "popup_csv_column_vscode": {
+    "message": "ভি- আই- এস কোড (এন)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "শ্রেণীবিভাগ"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "কনটেক্সট"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "ডমিনো"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "অবকাল (m)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "সমাপ্তি (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "নিরপেক্ষতা নিয়ম"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "আরম্ভ (ISO-8859-1)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "বিস্তারিত সময়সীমা"
+  },
+  "popup_csv_domain": {
+    "message": "ডোমেইন"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "উপরে ফোকাস ডোমেইন"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "সক্রিয় ফোকাস (%s)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "কর্মবিহীন অবস্থার সময় (%d)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod vS প্রসেট"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "১২ ঘন্টা অনুযায়ী পরিবর্তন"
+  },
+  "popup_csv_kpi_time": {
+    "message": "সময়"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "আজকের বাণী"
+  },
+  "popup_csv_kpis_title": {
+    "message": "অতিরিক্ত নির্দেশক"
+  },
+  "popup_csv_minutes": {
+    "message": "মিনিট"
+  },
+  "popup_csv_summary_title": {
+    "message": "সাধারণ সারসংক্ষেপ"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "ডোমেইন"
+  },
+  "popup_error_no_data": {
+    "message": "কোনো তথ্য উপলব্ধ নেই"
+  },
+  "popup_error_runtime": {
+    "message": "ওহ! অফিসে যেতে ব্যর্থ ।"
+  },
+  "popup_error_unknown": {
+    "message": "অজানা ত্রুটি"
+  },
+  "popup_export_csv": {
+    "message": "ভি- কার্ড ডাউনলোড করো"
+  },
+  "popup_export_description": {
+    "message": "শৌল গুডম্যানের যুক্তিতে আপনার নম্বর পরিবর্তন করুন।"
+  },
+  "popup_export_pdf": {
+    "message": "সাধারণ ( G)"
+  },
+  "popup_export_report": {
+    "message": "রিপোর্ট খুলুন"
+  },
+  "popup_export_title": {
+    "message": "আপনার মনোযোগ রক্ষা করুন"
+  },
+  "popup_fairness_context_label": {
+    "message": "প্রসঙ্গ অনুযায়ী"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "আজ ছুটির দিন।"
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "ছুটির দিনগুলো — কোনো শাস্তি নয় ।"
+  },
+  "popup_fairness_manual_label": {
+    "message": "আজকের তারিখ প্রদর্শন করা হবে"
+  },
+  "popup_fairness_note": {
+    "message": "সা. কা. আজকের দৈর্ঘ্য শূন্য করা হচ্ছে এবং নিঃশব্দ সতর্কবার্তা প্রদর্শন করুন । প্রসঙ্গ: কাজ ১০০% বজায় থাকে, ব্যক্তিগত নিরপেক্ষতা সব কিছু থেকে বেশী করে, লেইসরে ৩০% মনোযোগের ভাগ করে নেন আর ভিলেনদের শাস্তি উপেক্ষা করেন।"
+  },
+  "popup_fairness_note_label": {
+    "message": "সা. কা."
+  },
+  "popup_fairness_status_day_off": {
+    "message": "দিনের শুরু — স্কোর স্থগিত ।"
+  },
+  "popup_fairness_status_default": {
+    "message": "ডিয়াল স্বাভাবিক."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "জাতীয় ছুটির দিন স্কোরকে নিরপেক্ষ রাখে।"
+  },
+  "popup_fairness_status_leisure": {
+    "message": "মোডো লাজার রেডজ একটি প্রেসার।"
+  },
+  "popup_fairness_status_manual": {
+    "message": "দিয়ানরডো ম্যানুয়ালমেন্ট."
+  },
+  "popup_fairness_status_personal": {
+    "message": "ব্যক্তিগত মোড সক্রিয় - কোনো সন্দেহ নেই ।"
+  },
+  "popup_fairness_status_study": {
+    "message": "অনুশীলন করুন ।"
+  },
+  "popup_fairness_status_vacation": {
+    "message": "ছুটির দিনে নিরপেক্ষ থাকে।"
+  },
+  "popup_fairness_title": {
+    "message": "বিচার দিবসের"
+  },
+  "popup_head_title": {
+    "message": "সাউল গুডম্যান - ফোকাস রেডার"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "ফোকাস বিজয়ী"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "উৎপাদনশীল ডোমেইন যেখানে আজকে আপনি আরো বেশী সময় ব্যয় করেছেন।"
+  },
+  "popup_kpi_focus_hint": {
+    "message": "উৎপাদন / কাজের সময়কাল"
+  },
+  "popup_kpi_focus_label": {
+    "message": "সক্রিয় ফোকাস"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "সব ঠিক সময়ে কাজ শেষ হয়ে যাবে."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "দিনের মধ্যে"
+  },
+  "popup_kpi_idle_label": {
+    "message": "কর্মবিহীন অবস্থার অবকাল"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "ব্রাউজারের মধ্যে কোনো ধরনের আলাপন ছাড়া ব্রাউজার আরম্ভ করা হয়নি।"
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "ভিলেনের জন্য উৎপাদন ঘণ্টা"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod vS প্রসেট"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "প্রতি ঘন্টায় উৎপাদনশীল ঘন্টার পর ঘন্টা।"
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "সোজা পয়েন্টে যাও: তোমার দিন থেকে ক্ষুদ্র সংখ্যা।"
+  },
+  "popup_kpi_section_title": {
+    "message": "অতিরিক্ত নির্দেশক"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "প্রতিটি চিহ্নিত সময়ে ট্যাব সংখ্যা"
+  },
+  "popup_kpi_switch_label": {
+    "message": "১২ ঘন্টা অনুযায়ী পরিবর্তন"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "প্রতি মনিটরের উপর নজর রাখা হবে।"
+  },
+  "popup_kpi_villain_label": {
+    "message": "আজকের বাণী"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "আপনার অধিকাংশ সময় চুরি হয়েছে।"
+  },
+  "popup_last_sync": {
+    "message": "আপডেট করা হয়েছে{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "আপডেট করা হচ্ছে..."
+  },
+  "popup_loading": {
+    "message": "লোড করা হচ্ছে..."
+  },
+  "popup_options_button": {
+    "message": "কনফিগার"
+  },
+  "popup_pdf_date": {
+    "message": "তারিখ"
+  },
+  "popup_pdf_inactive": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "popup_pdf_index": {
+    "message": "সূচিপত্র"
+  },
+  "popup_pdf_kpis": {
+    "message": "অতিরিক্ত নির্দেশক"
+  },
+  "popup_pdf_procrastination": {
+    "message": "প্রয়োগ"
+  },
+  "popup_pdf_productive": {
+    "message": "উৎপাদনের-সমূহ"
+  },
+  "popup_pdf_summary": {
+    "message": "দৈনিক সারসংক্ষেপ"
+  },
+  "popup_pdf_switches": {
+    "message": "ট্যাব বদল"
+  },
+  "popup_pdf_title": {
+    "message": "সাউল গুডম্যান রিপোর্ট করেন"
+  },
+  "popup_pdf_top_domains": {
+    "message": "ডোমেইন"
+  },
+  "popup_pdf_vscode": {
+    "message": "কোড"
+  },
+  "popup_privacy_note": {
+    "message": "সকল তথ্য ব্রাউজারের মধ্যে রাখা হবে। শৌল উকিলদের সম্মান করেন-clientন বিশেষ সুযোগ।"
+  },
+  "popup_refresh_button": {
+    "message": "নতুন করে প্রদর্শন"
+  },
+  "popup_release_notes_button": {
+    "message": "দেখ নতুন কি"
+  },
+  "popup_release_notes_error": {
+    "message": "লিংক খোলা যায়নি এক্সটেনশন পুনরায় লোড করে পুনরায় প্রচেষ্টা করুন।"
+  },
+  "popup_score_message_alert": {
+    "message": "তুমি আগুন নিয়ে খেলছে। আমি এক ঘন্টার জন্য বিল করে দিচ্ছি."
+  },
+  "popup_score_message_excellent": {
+    "message": "গোল্ডেন ক্লায়েন্ট! এটা রেখে দাও আর আমি সম্পূর্ণ ভারসাম্য বজায় রাখতে পারবো।"
+  },
+  "popup_score_message_ok": {
+    "message": "এখনো অফিসের সময় নির্ধারণ করা হচ্ছে। আমাকে মনোযোগ দিতে বাধ্য করো না।"
+  },
+  "popup_score_message_warning": {
+    "message": "আমি এখানে এড়িয়ে যেতে দেখছি। খেলার সময় হয়েছে."
+  },
+  "popup_score_placeholder": {
+    "message": "লোড করা হচ্ছে..."
+  },
+  "popup_status_no_data": {
+    "message": "কোনো বার্তা নেই"
+  },
+  "popup_status_no_domains": {
+    "message": "আজকের জন্য কোনো তথ্য নেই।"
+  },
+  "popup_summary_inactive_label": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "যখনই ব্রাউজার কোন যোগাযোগ ছাড়াই খোলা হত কাল।"
+  },
+  "popup_summary_procrastination_label": {
+    "message": "প্রক্টর"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "সময় এসেছে দীর্ঘায়িত ডোমেইনে।"
+  },
+  "popup_summary_productive_label": {
+    "message": "উৎপাদনের-সমূহ"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "ডোমেইন পার হয়ে কাজ করেছে।"
+  },
+  "popup_tooltip_aria": {
+    "message": "ব্যাখ্যা"
+  },
+  "popup_top_domains_title": {
+    "message": "উপরের ৫ ডোমেইন"
+  },
+  "postInvalid": {
+    "message": "অবৈধ পোস্ট অথবা মিটা-ডাটা অনুপস্থিত।"
+  },
+  "postLoadError": {
+    "message": "এই বার্তা লোড করা হচ্ছে"
+  },
+  "postLoadingBody": {
+    "message": "লোড করা হচ্ছে..."
+  },
+  "postLoadingTitle": {
+    "message": "বার্তা লোড করা হচ্ছে..."
+  },
+  "postNotFound": {
+    "message": "পোস্ট করা হয়নি।"
+  },
+  "previousPost": {
+    "message": "পূর্ববর্তী"
+  },
+  "privacyError": {
+    "message": "আমরা এখন নীতিটা লোড করতে পারিনি। আবার চেষ্টা করো।"
+  },
+  "privacyEyebrow": {
+    "message": "সম্পূর্ণ স্বচ্ছতা"
+  },
+  "privacyHeading": {
+    "message": "ব্যক্তিগত তথ্যের নীতিমালা"
+  },
+  "privacyLoading": {
+    "message": "সংগ্রহস্থল থেকে সরাসরি নীতি লোড করা হচ্ছে..."
+  },
+  "privacySubheading": {
+    "message": "রিপোজিটরিতে প্রকাশিত নীতির সাম্প্রতিক সংস্করণ এখানে তুলে ধরা হল।"
+  },
+  "privacyTitle": {
+    "message": "ব্যক্তিগত তথ্যের নীতিমালা"
+  },
+  "process1Body": {
+    "message": "ব্যাজ বসে বসে বসে আছে খোলা দেখে এবং সাথে সাথে জানে যে আপনি পড়াশোনা করছেন, কাজ করছেন কি না অথবা শাস্তি ভোগ করছেন কিনা।"
+  },
+  "process1Title": {
+    "message": "সক্রিয় ট্যাবের ট্র্যাক"
+  },
+  "process2Body": {
+    "message": "আপনি উৎপাদন বনাম ভিলেন ডোমেইন নির্ধারণ করেন। ( ১ করি."
+  },
+  "process2Title": {
+    "message": "পতাকার ক্ষোভ"
+  },
+  "process3Body": {
+    "message": "প্রতিদিন পরিষ্কার রিপোর্ট দিয়ে শেষ হয়: চার্ট, গুরুত্বপূর্ণ বিষয়, এবং আগামীকালের জন্য একটি কর্ম পরিকল্পনা।"
+  },
+  "process3Title": {
+    "message": "ব্যবহার উপযোগী প্রমাণ"
+  },
+  "processEyebrow": {
+    "message": "এটা কিভাবে কাজ করে"
+  },
+  "processLead": {
+    "message": "কোন আইনী জারগন নেই: ইনস্টল করুন, আপনার ট্যাব দেখতে দিন, সতর্কতা অনুভব করুন এবং প্রস্তুত প্রমাণ দিয়ে দিন শেষ করুন।"
+  },
+  "processTitle": {
+    "message": "সা. কা."
+  },
+  "quakeBody": {
+    "message": "ওভারলে ব্লক ভিলেন ট্যাব, একটি সাহসী সিতা দেখায় এবং ঐচ্ছিক সাইরেন বিস্ফোরণ করতে পারে। ( আদি."
+  },
+  "quakeButton": {
+    "message": "তুলনা ট্রিগার ট্রিগার"
+  },
+  "quakeCallout": {
+    "message": "ভূমিকম্প আসছে!"
+  },
+  "quakeDemoBody": {
+    "message": "ভূমিকম্প মোড অনুকরণের জন্য ক্লিক করুন: স্ক্রিন কাঁপুনি, এবং একটি নাটকীয় বার্তা। এক্সটেনশন অনুযায়ী, কিন্তু এখানে মাত্র কয়েক সেকেন্ডের জন্য।"
+  },
+  "quakeDemoButton": {
+    "message": "ভূমিকম্প মোড অনুকরণ"
+  },
+  "quakeDemoEyebrow": {
+    "message": "ভূমিকম্প মোড (ডিমো)"
+  },
+  "quakeDemoTitle": {
+    "message": "( ১ শমূ."
+  },
+  "quakeDisplayCopy": {
+    "message": "কা. পূ."
+  },
+  "quakeEyebrow": {
+    "message": "ভূমিকম্প মোড"
+  },
+  "quakeLead": {
+    "message": "এই এক্সটেনশন থেকে একই নাটকীয় সতর্কবাণী দেখা দেয় যাতে লোকেরা মনে করে যে, এই সাবধানবাণী কতটা গুরুতর ।"
+  },
+  "quakeMicro": {
+    "message": "\"তুমি শাস্তি ভোগ করেছো! প্রভাবের জন্য প্রস্তুত।"
+  },
+  "quakeOverlayBody": {
+    "message": "সা. কা. তার বিরুদ্ধে আনা অভিযোগের আগে মনোযোগ দিন।"
+  },
+  "quakeOverlayClose": {
+    "message": "ফোকাস"
+  },
+  "quakeOverlayTitle": {
+    "message": "ভূমিকম্পের মোড!"
+  },
+  "quakeTip": {
+    "message": "শান্ত হও: মাত্র কয়েক সেকেন্ড বাকি।"
+  },
+  "quakeTitle": {
+    "message": "শৌলের সবচেয়ে সেরা ভিলেনের মতো, এই পাতা তার সাথে কাঁপিয়ে দেয়।"
+  },
+  "ratingBadgeAlt": {
+    "message": "ক্রোম ওয়েব স্টোরের গড় হার"
+  },
+  "reactionBlockAlt": {
+    "message": "শৌল সংযোগ বন্ধ করে দিয়েছিলেন"
+  },
+  "reactionBlockHint": {
+    "message": "শৌল দরজা বন্ধ করে দেওয়ার সময় ব্লকের দিকে নির্দেশ করা হয় ।"
+  },
+  "reactionBlockLabel": {
+    "message": "ব্লক মোড"
+  },
+  "reactionBlockText": {
+    "message": "“ এমনকি চেষ্টাও করবেন না: ভিলেনরা সাথে সাথেই বন্ধ করে দিবে”।"
+  },
+  "reactionDisbeliefHint": {
+    "message": "ভূমিকম্পের সীমা অতিক্রমের সময় ট্রিগার করা হয়।"
+  },
+  "reactionDisbeliefLabel": {
+    "message": "অবিশ্বাস্য মোড"
+  },
+  "reactionDisbeliefText": {
+    "message": "\"তুমি কি মনোযোগ দাও?"
+  },
+  "reactionHypeHint": {
+    "message": "কর্ম সমাপ্তির সময় প্রিন্ট করার সময় প্রদর্শন করা হবে।"
+  },
+  "reactionHypeLabel": {
+    "message": "অনুমোদন মোড"
+  },
+  "reactionHypeText": {
+    "message": "“এখন আমি আমার ফি ফেরত দিতে পারি”।"
+  },
+  "reactionsBody": {
+    "message": "( ১ শমূ. যখন তুমি মনোযোগ দিতে ফিরে আসবে, সে উদযাপন করবে। দ্রুত দৃশ্যমান যাতে ন্যায় বিচার ব্যবস্থা বজায় রাখা যায়।"
+  },
+  "reactionsEyebrow": {
+    "message": "শৌল প্রতিক্রিয়া দেখিয়েছিলেন"
+  },
+  "reactionsTitle": {
+    "message": "শৌলের তাৎক্ষণিক রায় ।"
+  },
+  "readArticle": {
+    "message": "পড়ুন"
+  },
+  "readingTimeLabel": {
+    "message": "সময় পড়া হচ্ছে"
+  },
+  "readTimeUnit": {
+    "message": "মিনিট পড়া"
+  },
+  "reason1Body": {
+    "message": "পপ ইনডেক্স আপনার বর্তমান অবস্থা দেখায় তাই আপনি জানেন পরবর্তী কী সংশোধন করতে হবে।"
+  },
+  "reason1Title": {
+    "message": "সহায়ক ফোকাস"
+  },
+  "reason2Body": {
+    "message": "একজন ভিলেন ট্যাব ধ্বংস করার আগে ভূমিকম্প পর্দায় দখল করে নেয়."
+  },
+  "reason2Title": {
+    "message": "সিস্টেম পাঠানো অসম্ভব"
+  },
+  "reason3Body": {
+    "message": "চার্ট এবং সংক্ষেপে প্রতিদিনের পরিস্থিতি একেবারে পরিষ্কার হয়ে যায়।"
+  },
+  "reason3Title": {
+    "message": "শেয়ার করার যোগ্য রিপোর্ট"
+  },
+  "reason4Body": {
+    "message": "প্রতিটি মেট্রিক ক্রোমের ভিতরে থাকে; আপনার মেশিন ছাড়া।"
+  },
+  "reason4Title": {
+    "message": "সর্বমোট স্তর"
+  },
+  "reasonsEyebrow": {
+    "message": "কী (Key) সুবিধা"
+  },
+  "reasonsLead": {
+    "message": "চার নম্বর কার্ড শূন্য ফ্লুর মূল্য ব্যাখ্যা করে।"
+  },
+  "reasonsTitle": {
+    "message": "কেন শৌল গুডম্যানকে ব্যবহার করবেন?"
+  },
+  "relatedTitle": {
+    "message": "সম্পর্কিত পোস্ট"
+  },
+  "report_ai_error_generic": {
+    "message": "( ১ শমূ. পরে চেষ্টা করো।"
+  },
+  "report_ai_generate": {
+    "message": "উত্‍পাদন করো"
+  },
+  "report_ai_heading": {
+    "message": "সাউলের যুক্তি"
+  },
+  "report_ai_hint": {
+    "message": "এখানে ক্লিক করুন “দি গল্প” যাতে শৌল আপনার দিন নিয়ে ব্যঙ্গ করে বিশ্লেষণ করতে পারেন।"
+  },
+  "report_ai_loading": {
+    "message": "এখনো বন্ধ করা যুক্তি প্রস্তুত করছি..."
+  },
+  "report_ai_missing_key": {
+    "message": "বিবরণ নির্মাণের পূর্বে, OpenADIO কি কনফিগার করুন ।"
+  },
+  "report_ai_no_metrics": {
+    "message": "আজকের গল্প বলতে কোন মেট্রিক নেই।"
+  },
+  "report_ai_retry": {
+    "message": "পুনরায় প্রচেষ্টা করুন"
+  },
+  "report_ai_subtitle": {
+    "message": "আপনার তথ্য ভিত্তিক একটি নাটকীয় প্রতিরক্ষা।"
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF লাইব্রেরি উপলব্ধ নয়।"
+  },
+  "report_banner_countdown_final": {
+    "message": "সময় হয়েছে: ভিলেন ট্যাব বন্ধ করে কন্ট্রোলে ফিরে আসুন."
+  },
+  "report_banner_message_1": {
+    "message": "এমনকি আমি জুরিকে সূচক দ্বারা প্ররোচিত করতে পারে না{threshold}বেরিয়ে আসো!"
+  },
+  "report_banner_message_2": {
+    "message": "এটা রেখে দাও, আমি বিলবোর্ড ভাড়া করে তোমার বসকে সতর্ক করে দেব।"
+  },
+  "report_banner_message_3": {
+    "message": "এই ভূমিকম্প আপনার ভিলেন ট্যাবের প্রতিধ্বনি। এখনি বন্ধ করো।"
+  },
+  "report_banner_message_4": {
+    "message": "ট্যাব বিল এখন বাড়ছে: মনোযোগ দিন, অথবা আমরা অতিরিক্ত ফি চার্জ করছি।"
+  },
+  "report_banner_title": {
+    "message": "সা."
+  },
+  "report_category_activity": {
+    "message": "কর্ম"
+  },
+  "report_category_neutral": {
+    "message": "ক্লীব"
+  },
+  "report_composition_heading": {
+    "message": "দিনMarch"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "তারপর, আমরা আবার একসঙ্গে কাজ করি ।"
+  },
+  "report_context_breakdown_context": {
+    "message": "কনটেক্সট"
+  },
+  "report_context_breakdown_index": {
+    "message": "সূচিপত্র"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "১০০% গন্ধের কাছাকাছি, প্রায় ০% এর কাছাকাছি আপনি কাজ করেছেন- আর আমি আপনাকে রক্ষা করতে পারবো।"
+  },
+  "report_context_breakdown_time": {
+    "message": "সময়"
+  },
+  "report_context_breakdown_title": {
+    "message": "প্রসঙ্গ অনুসারে সময়"
+  },
+  "report_domain_heading": {
+    "message": "মিনিট"
+  },
+  "report_domain_subtitle": {
+    "message": "প্রধান বিজয়ী এবং ভিলেনরা দিনের জন্য পৃথক হয়ে গেছে।"
+  },
+  "report_error_no_data": {
+    "message": "কোনো মেট্রিক বিদ্যমান নেই।"
+  },
+  "report_error_runtime": {
+    "message": "রেকর্ড অফিসে পৌঁছাতে পারেনি."
+  },
+  "report_error_unknown": {
+    "message": "অজানা ত্রুটি"
+  },
+  "report_export_pdf": {
+    "message": "PDF এক্সপোর্ট করুন"
+  },
+  "report_fairness_holiday_active": {
+    "message": "আজ ছুটির দিন।"
+  },
+  "report_fairness_holiday_detected": {
+    "message": "ছুটির দিনগুলো — কোনো শাস্তি নয় ।"
+  },
+  "report_fairness_status_day_off": {
+    "message": "সেরা স্কোর বাতিল করা হয়েছে।"
+  },
+  "report_fairness_status_default": {
+    "message": "ডিয়াল স্বাভাবিক."
+  },
+  "report_fairness_status_holiday": {
+    "message": "জাতীয় ছুটির দিন স্কোর নিরপেক্ষ করে দেয়।"
+  },
+  "report_fairness_status_leisure": {
+    "message": "Lissive মোড অভিযোগ কমিয়ে দিয়েছে।"
+  },
+  "report_fairness_status_manual": {
+    "message": "দিয়ানরডো ম্যানুয়ালমেন্ট."
+  },
+  "report_fairness_status_personal": {
+    "message": "ব্যক্তিগত মোড — ভয় দেখানো নয় ।"
+  },
+  "report_fairness_status_study": {
+    "message": "অধ্যয়ন করুন ।"
+  },
+  "report_fairness_status_vacation": {
+    "message": "মোডো হাফিরিয়াস জিরোয়া।"
+  },
+  "report_fairness_title": {
+    "message": "বিচার দিবসের"
+  },
+  "report_fairness_tooltip": {
+    "message": "ম্যানুয়াল পেজ, কনটেক্সট অথবা ছুটি স্কোরকে নিরপেক্ষ করতে পারে। এটা তখনই ঘটবে।"
+  },
+  "report_filter_apply": {
+    "message": "ফিল্টার"
+  },
+  "report_filter_from": {
+    "message": "প্রেরক"
+  },
+  "report_filter_reset": {
+    "message": "রিসেট"
+  },
+  "report_filter_to": {
+    "message": "চিহ্নিত স্থানে চলুন"
+  },
+  "report_head_title": {
+    "message": "শৌল গুডম্যান - ডেইলি রিপোর্ট"
+  },
+  "report_heading": {
+    "message": "বিস্তারিত রিপোর্ট"
+  },
+  "report_hero_message_alert": {
+    "message": "রায় পরিষ্কার: বিচারকে দীর্ঘায়িত করা হয়েছে। আমাদের একটা জরুরি পরিকল্পনা দরকার।"
+  },
+  "report_hero_message_excellent": {
+    "message": "নিখুঁত শিডিউল। সা. কা."
+  },
+  "report_hero_message_ok": {
+    "message": "গ্রহণযোগ্যতা আমরা এখনো জুরিদের বলতে পারি যে তুমি কাজ করেছ।"
+  },
+  "report_hero_message_warning": {
+    "message": "দৃশ্যমান আজ. সাহায্য করার সময় হয়েছে।"
+  },
+  "report_hero_placeholder": {
+    "message": "সা. কা."
+  },
+  "report_hourly_empty": {
+    "message": "এই প্রবাহ নির্মাণ করার জন্য যথেষ্ট মিনিট নেই।"
+  },
+  "report_hourly_heading": {
+    "message": "প্রতি ঘন্টায়"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "উৎপাদন, প্রনয়ন, এবং ঘন্টার পর ঘন্টা অলস."
+  },
+  "report_hourly_subtitle": {
+    "message": "উৎপাদন বনাম দিনের মধ্যে প্রলোভন."
+  },
+  "report_kpi_audio_hint": {
+    "message": "ভিলেনের সাইটে অডিওর মাধ্যমে মিনিট"
+  },
+  "report_kpi_audio_label": {
+    "message": "হ্যাইন মিডিয়া"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "সময় এসেছে বর্ণানুক্রমিক ডোমেইন নিয়ে।"
+  },
+  "report_kpi_grouped_hint": {
+    "message": "গ্রুপকৃত ট্যাবগুলির মধ্যে মিনিট"
+  },
+  "report_kpi_grouped_label": {
+    "message": "দলে"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "কয়েক মিনিট আগে গ্রুপ ট্যাবে অতিবাহিত হয়েছিল।"
+  },
+  "report_kpi_heading": {
+    "message": "অতিরিক্ত নির্দেশক"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "অতিরিক্ত KPIs: ভিলেন মিডিয়া, সত্যিকারের অলস সময়, এস- এস রুট, গ্রুপ করা ট্যাব ।"
+  },
+  "report_kpi_restored_hint": {
+    "message": "ট্যাব বা উইন্ডো"
+  },
+  "report_kpi_restored_label": {
+    "message": "সব সূত্র গুটিয়ে নাও"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "ট্যাব বা উইন্ডো বন্ধ করা হয়েছে।"
+  },
+  "report_kpi_spa_hint": {
+    "message": "রেকর্ড পরিবর্তন বাতিল করা হয়েছে"
+  },
+  "report_kpi_spa_label": {
+    "message": "এস- এস- এস রুট"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "এক সপ্তাহের মধ্যে অভ্যন্তরীণ পরিবর্তন।"
+  },
+  "report_kpi_subtitle": {
+    "message": "বাস্তব অলস, টিএসপি রুট এবং মিডিয়ার সময়।"
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "পটভূমিতে মিনিট"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "ব্রাউজার unloaded"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "অন্য জানালা দিয়ে মিনিট."
+  },
+  "report_logo_alt_critical": {
+    "message": "শৌল গুডম্যান আপনার মনোযোগ দিয়ে শকুন"
+  },
+  "report_logo_alt_default": {
+    "message": "সাউল গুডম্যান লোগো"
+  },
+  "report_metric_index_label": {
+    "message": "সূচিপত্র"
+  },
+  "report_metric_switches_label": {
+    "message": "ট্যাব বদল"
+  },
+  "report_pdf_ai_title": {
+    "message": "সাউলের যুক্তি"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "শ্রেণীবিভাগ"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "পার্টিসিপিকা"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "সময়"
+  },
+  "report_pdf_composition_title": {
+    "message": "দিনMarch"
+  },
+  "report_pdf_context_header_context": {
+    "message": "কনটেক্সট"
+  },
+  "report_pdf_context_header_index": {
+    "message": "কনটেক্সট ইনডেক্স"
+  },
+  "report_pdf_context_header_time": {
+    "message": "সময় ব্যয়"
+  },
+  "report_pdf_context_title": {
+    "message": "কনটেক্সট দ্বারা ব্রেক-আপ করা হবে"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "কনটেক্সট গার্ড-রেল সক্রিয়"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "ছুটির খেলা"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "কারণ"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "দিন"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "টোর্নানডিনাডো"
+  },
+  "report_pdf_narrative_title": {
+    "message": "কি-টি বিবরণ"
+  },
+  "report_pdf_overview_heading": {
+    "message": "প্যানোরোমা দো ডিয়া"
+  },
+  "report_pdf_status_label": {
+    "message": "অবস্থা"
+  },
+  "report_pdf_title": {
+    "message": "বিস্তারিত রিপোর্ট — শৌল গুডম্যান"
+  },
+  "report_pdf_top_domains": {
+    "message": "ডোমেইন"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "উচ্চপদী"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "সময়ের সাথে সাথে সীমা আরোপ করা হয়েছে।"
+  },
+  "report_ranking_productive_heading": {
+    "message": "উপরে"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "সময়ের সাথে কাজের ডোমেইনিং করা।"
+  },
+  "report_share_argument_label": {
+    "message": "শৌলের যুক্তি শেয়ার করুন"
+  },
+  "report_share_argument_title": {
+    "message": "সা. কা."
+  },
+  "report_share_copy_error": {
+    "message": "অনুলিপি করতে ব্যর্থ।"
+  },
+  "report_share_copy_instagram": {
+    "message": "টেক্সট কপি করা হয়েছে। পোস্ট করার আগে ইন্সটাগ্রাম এবং পেস্ট করুন।"
+  },
+  "report_share_copy_linkedin": {
+    "message": "টেক্সট কপি করা হয়েছে। পোস্ট করার পূর্বে লিঙ্কডইনে এটি পেস্ট করুন।"
+  },
+  "report_share_copy_success": {
+    "message": "পোস্ট কপি. যে কোন স্থানে লিঙ্কডইন, টুইটারে পেস্ট করুন।"
+  },
+  "report_share_cta": {
+    "message": "কা. পূ."
+  },
+  "report_share_error": {
+    "message": "এখন শেয়ার করতে পারছি না।"
+  },
+  "report_share_error_no_metrics": {
+    "message": "শেয়ার করার কোন তথ্য নেই।"
+  },
+  "report_share_error_no_narrative": {
+    "message": "শেয়ার করার আগে শৌলের যুক্তি তৈরি করো."
+  },
+  "report_share_hashtags": {
+    "message": "#সাউলভালমান #আন্তানুবাদ"
+  },
+  "report_share_headline": {
+    "message": "প্রতিরোধ! হরফের ছাঁদ মেলানো হবে"
+  },
+  "report_share_hint_instagram": {
+    "message": "ইন্সটাগ্রাম ওয়েব পোস্ট বাক্সে আমরা যা কপি করেছি সেগুলো পেস্ট করতে পারবে না।"
+  },
+  "report_share_hint_linkedin": {
+    "message": "লিঙ্ক করা এই সাইটে কপি করা বিষয়বস্তু পেস্ট করা যাবে না।"
+  },
+  "report_share_index_label": {
+    "message": "সূচিপত্র"
+  },
+  "report_share_menu_argument": {
+    "message": "সাউলের যুক্তি"
+  },
+  "report_share_menu_copy": {
+    "message": "টেক্সট কপি করুন"
+  },
+  "report_share_menu_highlights": {
+    "message": "উজ্জ্বল"
+  },
+  "report_share_menu_label": {
+    "message": "যৌথ ব্যবহার"
+  },
+  "report_share_menu_native": {
+    "message": "নেটিভ শেয়ার"
+  },
+  "report_share_menu_native_action": {
+    "message": "System Monitor শেয়ার করুন"
+  },
+  "report_share_opening": {
+    "message": "আমার মক্কেল কঠোর পরিশ্রম করেছে এবং আমার কাছে প্রমাণ আছে।"
+  },
+  "report_share_post_argument_label": {
+    "message": "আর্গুমেন্ট কপি করুন"
+  },
+  "report_share_post_label": {
+    "message": "পোস্টটি কপি করুন (সামাজিক)"
+  },
+  "report_share_report_label": {
+    "message": "যৌথরূপে ব্যবহার করা হবে"
+  },
+  "report_share_social_tagline": {
+    "message": "প্রতিরোধ! আমার মক্কেল কাজ করে."
+  },
+  "report_share_success": {
+    "message": "শেয়ার শীট খুলে দাও! যদি এটি না হয়, তাহলে আমরা আপনার ক্লিপ-বোর্ডে কপি করেছি."
+  },
+  "report_share_title": {
+    "message": "সাউল গুডম্যান — মূল বিষয়গুলো"
+  },
+  "report_story_empty": {
+    "message": "আজকের জন্য যথেষ্ট গল্প নেই।"
+  },
+  "report_story_focus_body": {
+    "message": "{domain}স্থগিত{duration}ফোকাস।"
+  },
+  "report_story_focus_title": {
+    "message": "ফোকাস বিজয়ী"
+  },
+  "report_story_heading": {
+    "message": "বিজয়ী এবং ভিলেন"
+  },
+  "report_story_idle_body": {
+    "message": "দুইয়ের মধ্যে{range}ব্রাউজার সম্ভবত আটকে ছিল{duration}. ."
+  },
+  "report_story_idle_title": {
+    "message": "দীর্ঘ নীরবতা"
+  },
+  "report_story_loading": {
+    "message": "তথ্য লোড করা হচ্ছে..."
+  },
+  "report_story_short_day": {
+    "message": "একটি গল্প বলার জন্য দিনটি খুব কম ছিল।"
+  },
+  "report_story_villain_body": {
+    "message": "{domain}বিচ্ছিন্ন করা হয়েছে{duration}. ."
+  },
+  "report_story_villain_title": {
+    "message": "আজকের বাণী"
+  },
+  "report_subtitle_prefix": {
+    "message": "দৈনিক সারসংক্ষেপ"
+  },
+  "report_tab_switch_empty": {
+    "message": "চার্টের প্লটের জন্য যথেষ্ট সুইচ নেই ।"
+  },
+  "report_tab_switch_heading": {
+    "message": "ট্যাব প্রতি ঘন্টায় পরিবর্তন করা হয়"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "প্রোডিডি/প্যাটাল এ সুইচ."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "তুমি কিভাবে উৎপাদন, নিরঙ্কুশতা আর নিরপেক্ষ মধ্যে লাফ দিলে।"
+  },
+  "report_tagline": {
+    "message": "অফিসিয়াল ফোকাস লগবুক"
+  },
+  "report_time_column": {
+    "message": "সময়"
+  },
+  "report_timeline_heading": {
+    "message": "মিনিট"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "এই গ্রুপ এক ঘন্টা এবং শ্রেণীতে বিভক্ত।"
+  },
+  "report_timeline_loading": {
+    "message": "এন্ট্রির জন্য অপেক্ষা করা হচ্ছে..."
+  },
+  "report_timeline_subtitle": {
+    "message": "এটাই তোমার শিফটের গল্প।"
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}রেখাংশ"
+  },
+  "rssCta": {
+    "message": "RSS থেকে সাবস্ক্রাইব করুন"
+  },
+  "searchLabel": {
+    "message": "অনুসন্ধান"
+  },
+  "searchPlaceholder": {
+    "message": "শিরোনাম, সারাংশ অথবা ট্যাগ অনুসন্ধান করুন..."
+  },
+  "searchReset": {
+    "message": "ফিল্টার পরিশ্রুত করুন ( C)"
+  },
+  "seoDescription": {
+    "message": "শৌল গুডম্যান আপনার ট্যাবের পুলিশ, যুদ্ধ করেন এবং আপনার ব্রাউজারের নাটকীয় রিপোর্ট পাঠান। সবকিছু স্থানীয় থাকবে, কোন বাইরের সার্ভার থাকবে না।"
+  },
+  "seoTitle": {
+    "message": "সা. কা."
+  },
+  "shareCopied": {
+    "message": "লিঙ্ক কপি!"
+  },
+  "shareCopy": {
+    "message": "লিংক দ্বারা চিহ্নিত ঠিকানা কপি করুন"
+  },
+  "shareCopyPrompt": {
+    "message": "চিহ্নিত লিংক সহযোগে এই লিংক কপি করুন:"
+  },
+  "shareIndexCopied": {
+    "message": "লিঙ্ক কপি!"
+  },
+  "shareIndexCopy": {
+    "message": "লিংক দ্বারা চিহ্নিত ঠিকানা কপি করুন"
+  },
+  "shareIndexLinkedin": {
+    "message": "লিঙ্ক করা"
+  },
+  "shareIndexTitle": {
+    "message": "ব্লগ শেয়ার করুন"
+  },
+  "shareIndexTwitter": {
+    "message": "এক্স"
+  },
+  "shareLinkedin": {
+    "message": "লিঙ্ক করা"
+  },
+  "shareTitle": {
+    "message": "যৌথ ব্যবহার"
+  },
+  "shareTwitter": {
+    "message": "এক্স"
+  },
+  "socialProofCaption": {
+    "message": "( ১ শমূ."
+  },
+  "socialProofMetricLabel": {
+    "message": "শুভ ব্যবহারকারী"
+  },
+  "splitPopupBody": {
+    "message": "প্যানেলের বিন্যাস, সর্বোচ্চ ডোমেইন, অতিরিক্ত নির্দেশক এবং আপনি রপ্তানি করুন। যখন মনোযোগ কমে যায়, তখন ন্যায়বিচারের বারগুলো রক্ষা করার জন্য ভূমিকম্প মোড।"
+  },
+  "splitPopupCaption": {
+    "message": "সূচি, শীর্ষ ডোমেইন এবং এক্সপোর্ট দ্বারা পপ-আপ করা।"
+  },
+  "splitPopupCaption2": {
+    "message": "KPIs, শীর্ষ ডোমেইন, এবং দ্রুত রপ্তানি।"
+  },
+  "splitPopupCaption3": {
+    "message": "প্যানেলের মধ্যে উপস্থিত বিকল্পের তালিকা নির্মাণ করা হবে।"
+  },
+  "splitPopupCaption4": {
+    "message": "বিশেষ করে ওজনের ওজন এবং সূচীর জন্য তালিকা।"
+  },
+  "splitPopupTitle": {
+    "message": "পপ-আপ- আপ- এ"
+  },
+  "splitReportBody": {
+    "message": "প্রতি ঘন্টায়, ভিলেন র‍্যাংকিং, AI বর্ণনা এবং কঠোর ব্যানারের তালিকা। সবাই শপথ নিয়েছে."
+  },
+  "splitReportCaption": {
+    "message": "চার্ট এবং র‍্যাংকিং-এর সাথে সংক্ষিপ্ত প্রতিবেদন।"
+  },
+  "splitReportCaption2": {
+    "message": "AI বর্ণনা এবং মিনিট এক মিনিট সময়।"
+  },
+  "splitReportCaption3": {
+    "message": "ভিলেন র‍্যাংকিং, বিজয়ী এবং বিতরণ."
+  },
+  "splitReportTitle": {
+    "message": "কা. পূ."
+  },
+  "splitStats1": {
+    "message": "মিনিট"
+  },
+  "splitStats2": {
+    "message": "ক্লায়েন্ট বাতিল"
+  },
+  "statsCategories": {
+    "message": "চিহ্নিত সময়ে বিভাগ"
+  },
+  "statsFresh": {
+    "message": "সর্বশেষ আপডেট"
+  },
+  "statsPosts": {
+    "message": "পোস্ট প্রকাশ"
+  },
+  "statsTitle": {
+    "message": "ব্লগ রেডার ম্যাপ"
+  },
+  "stickyCtaButton": {
+    "message": "ক্রোমের উপর ইনস্টল করুন"
+  },
+  "stickyCtaText": {
+    "message": "সাউল আপনার ট্যাব দেখার জন্য প্রস্তুত."
+  },
+  "stickyToggleLabel": {
+    "message": "পর্দা"
+  },
+  "tagsTitle": {
+    "message": "বিষয় অনুসারে"
+  },
+  "testimonial1Cite": {
+    "message": "— নামবিহীন ক্লায়েন্ট"
+  },
+  "testimonial1Quote": {
+    "message": "“সুল আমাকে মনে করিয়ে দিয়েছেন যে প্রতি ঘন্টায় ৪০ টি ট্যাব পরিবর্তন একটি অপরাধ”।"
+  },
+  "testimonial2Cite": {
+    "message": "— দুঃখদায়ক প্রকৌশলী"
+  },
+  "testimonial2Quote": {
+    "message": "এই রিপোর্ট আমার বসের সাথে মিটিং এ প্রতিরক্ষামূলক লেখাতে পরিণত হয়েছে।"
+  },
+  "testimonial3Cite": {
+    "message": "— উৎপাদন ব্যবস্থাপক"
+  },
+  "testimonial3Quote": {
+    "message": "“এরিয়াক মোড আমার প্রিন্টারকে রক্ষা করেছে। ফেয়েস আনন্দের সাথে টাকা দিয়েছেন।"
+  },
+  "testimonialNext": {
+    "message": "পরবর্তী পরীক্ষান"
+  },
+  "testimonialPrev": {
+    "message": "পূর্ববর্তী পরীক্ষা"
+  },
+  "testimonialsEyebrow": {
+    "message": "পরীক্ষা"
+  },
+  "testimonialsTitle": {
+    "message": "মক্কেলকে মুক্তি দেয়া হয়েছে।"
+  },
+  "timeline1Body": {
+    "message": "কোনো ট্যাবের মধ্যে প্রথম ট্যাবে কর্ম সনাক্ত করা যায়নি । শৌল লগ করবে যে কিনা তার ফলপ্রসু অথবা ভিলেন."
+  },
+  "timeline1Title": {
+    "message": "রেডার ম্যাপ"
+  },
+  "timeline2Body": {
+    "message": "যদি এই সূচকটি অনেক বেশী শক্তিশালী হয়, তাহলে ভূমিকম্পের ফলে প্রচণ্ড ঝড়ের সৃষ্টি হয়।"
+  },
+  "timeline2Title": {
+    "message": "বিজ্ঞপ্তি"
+  },
+  "timeline3Body": {
+    "message": "বিস্তারিত রিপোর্ট জাহাজ চার্ট, টাইমলাইন আর AI বিবরণ প্রমাণসহ দিনের শেষ করতে।"
+  },
+  "timeline3Title": {
+    "message": "দৈনিক বাক্য"
+  },
+  "timelineEyebrow": {
+    "message": "সময়তালিকা"
+  },
+  "timelineTitle": {
+    "message": "রায় অনুসরণ থেকে."
+  },
+  "transparencyBody": {
+    "message": "আমরা কি ভাবে আপনার তথ্য পরিচালনা করব এবং প্রতিটি নোট শূন্য ফ্লুর মাধ্যমে প্রকাশ করব।"
+  },
+  "transparencyChangelogCta": {
+    "message": "সম্পূর্ণ পরিবর্তনগুলি মুছে ফেলুন"
+  },
+  "transparencyEyebrow": {
+    "message": "স্বচ্ছতা"
+  },
+  "transparencyPrivacyCta": {
+    "message": "ব্যক্তিগত নীতিমালা পড়ুন"
+  },
+  "transparencyTitle": {
+    "message": "খোলা ও পরিবর্তিত তথ্য ।"
+  },
+  "trustCard1Body": {
+    "message": "MT TA G0 ochrom-এ বাস করে। স্থানীয় ব্যবহারকারী  TGaG1  TGaG1      TGaGGa1       TG1-র বহিস্থিত সার্ভার দ্বারা কোনো বার্তা স্পর্শ করা হবে না।"
+  },
+  "trustCard1Title": {
+    "message": "১০০% স্থানীয়"
+  },
+  "trustCard2Body": {
+    "message": "প্রতিটি রেখা জনসম্মুখে রয়েছে, যাতে সম্প্রদায়ের পরিবর্তন পর্যবেক্ষণ করা যায়।"
+  },
+  "trustCard2Title": {
+    "message": "সোর্স খুলুন"
+  },
+  "trustCard3Body": {
+    "message": "( ১ শমূ."
+  },
+  "trustCard3Title": {
+    "message": "স্বচ্ছ সতর্কবাণী"
+  },
+  "trustEyebrow": {
+    "message": "গোপনীয়তা (S)"
+  },
+  "trustLead": {
+    "message": "খেলাধুলাপূর্ণ স্বর, সিরিয়াস নিরাপত্তা: এখানে কি ভাবে তথ্য এবং সতর্কতা কাজ করতে হয়।"
+  },
+  "trustTitle": {
+    "message": "তোমার আর তোমার ব্রাউজারের মধ্যে সবকিছুই থাকবে।"
+  },
+  "usersBadgeAlt": {
+    "message": "ক্রোম ওয়েব স্টোরের উপর ব্যবহারকারী"
+  }
+}

@@ -12,7 +12,10 @@
     "package:webstore": "node tools/package-webstore.js",
     "blog:index": "node tools/content_engine/build-index.js",
     "content:engine": "node tools/content_engine/main.js",
-    "content:engine:dry-run": "node tools/content_engine/main.js --dry-run"
+    "content:engine:dry-run": "node tools/content_engine/main.js --dry-run",
+    "i18n:sync": "node tools/i18n/sync-site-locales.js",
+    "i18n:check": "node tools/i18n/check-missing-keys.js",
+    "i18n:stubs": "node tools/i18n/generate-locale-stubs.js"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.246",

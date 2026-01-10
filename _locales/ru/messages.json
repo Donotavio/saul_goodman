@@ -1,0 +1,2381 @@
+{
+  "actionTitle": {
+    "message": "Сол Гудман"
+  },
+  "backToHome": {
+    "message": "Вернуться на сайт"
+  },
+  "benefit1Body": {
+    "message": "Графики и CSV, чтобы показать боссу, команде или собственной совести."
+  },
+  "benefit1Title": {
+    "message": "неоспоримые доказательства"
+  },
+  "benefit2Body": {
+    "message": "Режим землетрясения и саркастические сообщения, которые вы не можете игнорировать."
+  },
+  "benefit2Title": {
+    "message": "Кинематографические предупреждения"
+  },
+  "benefit3Body": {
+    "message": "Все суждения происходят локально; никакие данные не покидают ваш браузер."
+  },
+  "benefit3Title": {
+    "message": "Гарантированная конфиденциальность"
+  },
+  "benefitsEyebrow": {
+    "message": "Преимущества"
+  },
+  "benefitsTitle": {
+    "message": "Саул занимается делом, ты его закрываешь."
+  },
+  "block_page_back": {
+    "message": "Вернуться назад"
+  },
+  "block_page_body": {
+    "message": "Вы отметили этот сайт как прокрастинацию. Закройте вкладку или скорректируйте список, если вы передумаете."
+  },
+  "block_page_heading": {
+    "message": "Саул заблокировал домен"
+  },
+  "block_page_image_alt": {
+    "message": "Саул Гудман разочарован"
+  },
+  "block_page_local_note": {
+    "message": "Локальный блок — ничто не покидает ваш браузер."
+  },
+  "block_page_options": {
+    "message": "Открытые настройки"
+  },
+  "block_page_title": {
+    "message": "Саул заблокировал домен"
+  },
+  "blogCategoryAll": {
+    "message": "Все"
+  },
+  "blogEmptyState": {
+    "message": "Никаких статей здесь пока не опубликовано."
+  },
+  "blogError": {
+    "message": "Не удалось загрузить блог"
+  },
+  "blogHeroEyebrow": {
+    "message": "Блог Сола Гудмана"
+  },
+  "blogHeroLead": {
+    "message": "Sarcastic берет на себя фокус, внимание и производительность. Еженедельные статьи, написанные в тоне Саула — без тренерской вибрации."
+  },
+  "blogHeroTitle": {
+    "message": "Законодательство берет на себя цифровую прокрастинацию"
+  },
+  "blogPreviewCta": {
+    "message": "Смотреть все статьи"
+  },
+  "blogPreviewEmpty": {
+    "message": "Никаких статей сейчас нет."
+  },
+  "blogPreviewError": {
+    "message": "Невозможно загрузить статьи."
+  },
+  "blogPreviewEyebrow": {
+    "message": "Блог Saul"
+  },
+  "blogPreviewImageAlt": {
+    "message": "Иллюстрация Saul Goodman"
+  },
+  "blogPreviewLead": {
+    "message": "Прочитайте 3 новейшие статьи и посмотрите, как Саул защищает ваше внимание с помощью юридического сарказма."
+  },
+  "blogPreviewLoading": {
+    "message": "Загрузка статей..."
+  },
+  "blogPreviewRead": {
+    "message": "Читать статью"
+  },
+  "blogPreviewTitle": {
+    "message": "Последние дела из цифрового зала суда."
+  },
+  "breadcrumbArticle": {
+    "message": "Статья"
+  },
+  "breadcrumbBlog": {
+    "message": "блог"
+  },
+  "categoriesTitle": {
+    "message": "Категории в сессии"
+  },
+  "categoryActiveLabel": {
+    "message": "Активная категория"
+  },
+  "categoryClear": {
+    "message": "Четкая категория"
+  },
+  "categoryDevLead": {
+    "message": "Практическая производительность для всех, кто жонглирует VS Code, PR и удаленными встречами."
+  },
+  "categoryDevTitle": {
+    "message": "Спектакль Dev с признанием вины"
+  },
+  "categoryEyebrow": {
+    "message": "Категория"
+  },
+  "categoryFocoLead": {
+    "message": "Ежедневные исследования и драмы о том, чтобы держать голову в коде, не сдаваясь на корма."
+  },
+  "categoryFocoTitle": {
+    "message": "Внимание и внимание к суду"
+  },
+  "categoryProcrastinacaoLead": {
+    "message": "Реальные случаи задержки, цифровой лени и охоты за вкладками Саул любит преследовать."
+  },
+  "categoryProcrastinacaoTitle": {
+    "message": "Промедление под следствием"
+  },
+  "categoryRemotoLead": {
+    "message": "Истории о домашнем офисе, присутствии Слэка и предотвращении исчезновения Зума."
+  },
+  "categoryRemotoTitle": {
+    "message": "Удаленная работа без алиби"
+  },
+  "changelogError": {
+    "message": "Мы не могли загрузить журнал изменений прямо сейчас. Попробуй позже."
+  },
+  "changelogEyebrow": {
+    "message": "Все документировано"
+  },
+  "changelogHeading": {
+    "message": "Официальный Changelog"
+  },
+  "changelogLoading": {
+    "message": "Загрузка changelog прямо из хранилища..."
+  },
+  "changelogSubheading": {
+    "message": "Отслеживайте каждое изменение за выпуск непосредственно из хранилища."
+  },
+  "changelogTitle": {
+    "message": "Изменить"
+  },
+  "codeconBuildChip": {
+    "message": "4h кодирования"
+  },
+  "codeconBulletChallenge": {
+    "message": "Задача: доказать удаленную работу за 4 часа с помощью ручного кода, без ИИ."
+  },
+  "codeconBulletNarrative": {
+    "message": "Нарратив «Атторни» превращает показатели в защиту менеджера/присяжного."
+  },
+  "codeconBulletRepoLink": {
+    "message": "оригинальное репо"
+  },
+  "codeconBulletRepoPrefix": {
+    "message": "Hack Lab с открытым исходным кодом"
+  },
+  "codeconBulletTracking": {
+    "message": "Расширение часов включает переключатели вкладок, время простоя и сайты злодеев для создания индекса."
+  },
+  "codeconCtaRepo": {
+    "message": "Скачать Hack Lab Code"
+  },
+  "codeconCtaSite": {
+    "message": "Знакомство с CodeCon"
+  },
+  "codeconCtaVideo": {
+    "message": "Смотреть полное видео"
+  },
+  "codeconEyebrow": {
+    "message": "Разработчик: CodeCon Lab"
+  },
+  "codeconLead": {
+    "message": "Идея родилась в лаборатории взлома CodeCon: Отавио Рибейро (  TAG0  LinkedIn  TAG1  ,   TAG2  GitHub  TAG3  ) представил Саула в качестве личного адвоката против прокрастинации — с тремором, сиреной и отчетами класса зала суда."
+  },
+  "codeconPlanChip": {
+    "message": "30 минут планирования"
+  },
+  "codeconStoryLead": {
+    "message": "За 30 минут доски Отавио набросал MVP и в течение следующих 4 часов отправил семя Саула: расширение, которое доказывает удаленную работу, просматривая вкладки, вычисляя индекс и разрабатывая защиту разработчика для «присяжного» (босса) — все без ИИ."
+  },
+  "codeconTag": {
+    "message": "Родился в сообществе"
+  },
+  "codeconTitle": {
+    "message": "Saul Goodman стал расширением Chrome"
+  },
+  "codeconVideoCaption": {
+    "message": "Клип из Лаборатории взлома CodeCon, где Сол ожил как отвлекающее расширение."
+  },
+  "demoCta": {
+    "message": "Смотреть полное демо"
+  },
+  "demoEyebrow": {
+    "message": "Быстрая демонстрация"
+  },
+  "demoLead": {
+    "message": "Достаточно одного взгляда: всплывающее окно для мгновенной реакции, отчет для принятия решений в конце дня."
+  },
+  "demoPopupBody": {
+    "message": "Ежедневный индекс, лучшие домены и экспортные ярлыки под рукой."
+  },
+  "demoPopupTitle": {
+    "message": "Всплывающее окно для мгновенных решений"
+  },
+  "demoReportBody": {
+    "message": "Графики, легкое повествование и предлагаемые последующие ходы."
+  },
+  "demoReportTitle": {
+    "message": "Доклад о планировании"
+  },
+  "demoTitle": {
+    "message": "Посмотрите, где вы решаете и где Саул вмешивается."
+  },
+  "demoViewFull": {
+    "message": "Посмотреть полный размер"
+  },
+  "devBody": {
+    "message": "Загрузите расширение местного демона и VS Code, чтобы считать время редактора продуктивными минутами, не покидая localhost."
+  },
+  "devCtaDocs": {
+    "message": "Смотреть docs"
+  },
+  "devCtaReadme": {
+    "message": "Открытое чтение"
+  },
+  "devCtaVsCode": {
+    "message": "Установить расширение VS Code"
+  },
+  "devEyebrow": {
+    "message": "Для разработчиков"
+  },
+  "devLead": {
+    "message": "Все технические детали вышли из основного потока. Начните с гидов ниже."
+  },
+  "devTitle": {
+    "message": "Хотите внести свой вклад или интегрироваться?"
+  },
+  "extDescription": {
+    "message": "Саркастический трекер фокусировки, который измеряет домены и контролирует ваш индекс прокрастинации."
+  },
+  "extensionsChromeCta": {
+    "message": "Расширение Chrome"
+  },
+  "extensionsCopy": {
+    "message": "Принесите Saul в Chrome и VS Code, чтобы держать фокус честным."
+  },
+  "extensionsTitle": {
+    "message": "Установите расширения Saul"
+  },
+  "extensionsVscodeCta": {
+    "message": "VS расширение кода"
+  },
+  "extName": {
+    "message": "Сол Гудман"
+  },
+  "faq1Answer": {
+    "message": "Абсолютно. Саул заряжает вниманием и юмором."
+  },
+  "faq1Question": {
+    "message": "Это бесплатно?"
+  },
+  "faq2Answer": {
+    "message": "Никогда. Все остается в   TAG0  chrome.storage.local  TAG1  ."
+  },
+  "faq2Question": {
+    "message": "Мои данные покидают браузер?"
+  },
+  "faq3Answer": {
+    "message": "Только если вам нужны нарративы в отчете. Остальные работают в автономном режиме."
+  },
+  "faq3Question": {
+    "message": "Мне нужен ИИ?"
+  },
+  "faq4Answer": {
+    "message": "Нет. Все работает локально без входа."
+  },
+  "faq4Question": {
+    "message": "Нужен ли мне счет?"
+  },
+  "faq5Answer": {
+    "message": "Когда индекс пересекает порог, экран встряхивается, и сирена играет в течение нескольких секунд."
+  },
+  "faq5Question": {
+    "message": "Как работает режим землетрясения?"
+  },
+  "faq6Answer": {
+    "message": "Да. На экране опций вы устанавливаете продуктивные / злодейские списки, веса и графики."
+  },
+  "faq6Question": {
+    "message": "Могу ли я настроить домены и расписания?"
+  },
+  "faq7Answer": {
+    "message": "Да. Кнопки CSV и PDF позволяют мгновенно загружать данные."
+  },
+  "faq7Question": {
+    "message": "Могу ли я экспортировать данные?"
+  },
+  "faq8Answer": {
+    "message": "Создан для Chrome, но совместим с браузерами на основе Chromium, такими как Brave или Edge."
+  },
+  "faq8Question": {
+    "message": "Работает ли он в других браузерах?"
+  },
+  "faq9Answer": {
+    "message": "Рассказывание историй ИИ необязательно; если вы пропустите ключ OpenAI, все останется в автономном режиме."
+  },
+  "faq9Question": {
+    "message": "Является ли отчет безопасным?"
+  },
+  "faqEyebrow": {
+    "message": "Быстрые вопросы"
+  },
+  "faqTitle": {
+    "message": "Прямолинейный FAQ."
+  },
+  "feature1Item1": {
+    "message": "Знак с текущим индексом и саркастическими сообщениями."
+  },
+  "feature1Item2": {
+    "message": "Лучшие производительные и злодейские домены с отформатированным временем."
+  },
+  "feature1Item3": {
+    "message": "Экспорт CSV/PDF в один клик."
+  },
+  "feature1Title": {
+    "message": "приборная панель реального времени"
+  },
+  "feature2Item1": {
+    "message": "Настраиваемый порог и необязательная сирена."
+  },
+  "feature2Item2": {
+    "message": "Критическое наложение с обратным отсчетом и CTA."
+  },
+  "feature2Item3": {
+    "message": "Блокирует только вкладки злодея, чтобы вы могли восстановиться в продуктивных."
+  },
+  "feature2Title": {
+    "message": "Режим землетрясения"
+  },
+  "feature3Item1": {
+    "message": "Графики за час и поломка переключателя вкладок."
+  },
+  "feature3Item2": {
+    "message": "Оригинальное название: Better Call Saul Tone"
+  },
+  "feature3Item3": {
+    "message": "Критический баннер с планом действий."
+  },
+  "feature3Title": {
+    "message": "Драматический доклад"
+  },
+  "feature4Item1": {
+    "message": "Данные в   TAG0  chrome.storage.local  TAG1   — в облако ничего не попадает."
+  },
+  "feature4Item2": {
+    "message": "Продуктивные / злодейские списки, сохраненные только в вашем браузере."
+  },
+  "feature4Item3": {
+    "message": "Опциональный ключ OpenAI, хранящийся локально."
+  },
+  "feature4Title": {
+    "message": "Полная конфиденциальность"
+  },
+  "featureBlockBody": {
+    "message": "Если вы включите режим, Саул захлопнет вкладки злодея в полный экран, пока вы не вернетесь к фокусу и не выиграете очки."
+  },
+  "featureBlockHint": {
+    "message": "Переверните выключатель, когда хотите: только продуктивная вкладка остается открытой."
+  },
+  "featureBlockTitle": {
+    "message": "Злодейский замок вкладок"
+  },
+  "featureContextBody": {
+    "message": "Теперь вы можете установить дневной CONTEXT (работа, досуг, учеба, личный) в всплывающем потоке; Саул перенастраивает счет, смягчает штрафы и сохраняет справедливость."
+  },
+  "featureContextLabel": {
+    "message": "Новый"
+  },
+  "featureCustomBody": {
+    "message": "Определите продуктивные и злодейские домены, почасовые веса и пороги землетрясений, настроенные на вашу рутину."
+  },
+  "featureCustomHint": {
+    "message": "\"Расшифровка? ВИП. Бесконечный корм? Подсудимый\"."
+  },
+  "featureCustomTitle": {
+    "message": "Пользовательские списки и весы"
+  },
+  "featuredEyebrow": {
+    "message": "характерный"
+  },
+  "featuredTitle": {
+    "message": "Случай недели"
+  },
+  "featureGaugeHint": {
+    "message": "Когда он пересекает 70%, Саул готовит землетрясение."
+  },
+  "featureGaugeLabel": {
+    "message": "Живой статус"
+  },
+  "featureGaugeTitle": {
+    "message": "Индекс прокрастинации"
+  },
+  "featureNextLabel": {
+    "message": "Следующая карта"
+  },
+  "featurePrevLabel": {
+    "message": "Предыдущая карта"
+  },
+  "featurePrivacyBody": {
+    "message": "Все работает внутри   TAG0  chrome.storage.local  TAG1  ; никаких внешних серверов или просочившихся вердиктов."
+  },
+  "featurePrivacyHint": {
+    "message": "Даже судья не видит ваших данных."
+  },
+  "featurePrivacyTitle": {
+    "message": "Конфиденциальность первая"
+  },
+  "featureQuakeBody": {
+    "message": "Экранный коктейль, сирена и Сол наверху злодейских вкладок кричат, чтобы вы вернулись на трассу."
+  },
+  "featureQuakeHint": {
+    "message": "\"Поймал тебя! Вернемся к продуктивной вкладке сейчас»."
+  },
+  "featureQuakeTest": {
+    "message": "Предупреждение"
+  },
+  "featureQuakeTitle": {
+    "message": "Режим кинематографического землетрясения"
+  },
+  "featureRealtimeBody": {
+    "message": "Значок следит за каждой вкладкой и превращает ваш день в четкую оценку фокуса против прокрастинации."
+  },
+  "featureRealtimeHint": {
+    "message": "«Саул смотрит эти 37 вкладок»."
+  },
+  "featureRealtimeTitle": {
+    "message": "Отслеживание в реальном времени"
+  },
+  "featureReportBody": {
+    "message": "Графики, рассказывание историй ИИ, экспорт CSV / PDF и поминутная графика для вашего следующего стендапа."
+  },
+  "featureReportHint": {
+    "message": "Вот доказательства для вас и вашего босса."
+  },
+  "featureReportTitle": {
+    "message": "Драматический доклад"
+  },
+  "featureSectionEyebrow": {
+    "message": "Основные характеристики"
+  },
+  "featureSectionLead": {
+    "message": "Каждая карта сочетает в себе юмор и ясность, поэтому новички мгновенно понимают, что делает Саул внутри Chrome."
+  },
+  "featureSectionTitle": {
+    "message": "Все, что вам нужно, чтобы держать вкладки под контролем."
+  },
+  "featuresEyebrow": {
+    "message": "Подробные характеристики"
+  },
+  "featuresTitle": {
+    "message": "Арсенал расширения Саула Гудмана."
+  },
+  "featureSwipeHint": {
+    "message": "Прокрутите боком, чтобы просмотреть каждую функцию, которую обрабатывает Saul."
+  },
+  "feedbackLink": {
+    "message": "давать обратную связь"
+  },
+  "finalCtaBody": {
+    "message": "Установите, установите свои домены и сосредоточьтесь, прежде чем злодейские вкладки выиграют день."
+  },
+  "finalCtaTitle": {
+    "message": "Готовы позволить Солу захватить власть?"
+  },
+  "finalPrimary": {
+    "message": "Установить в Chrome"
+  },
+  "footerBody": {
+    "message": "Установите, перечислите своих злодеев и позвольте Солу собрать плату за фокус."
+  },
+  "footerChangelogLink": {
+    "message": "Изменить"
+  },
+  "footerLinkArchitecture": {
+    "message": "Архитектура"
+  },
+  "footerLinkGithub": {
+    "message": "GitHub"
+  },
+  "footerLinkIndicators": {
+    "message": "Показатели"
+  },
+  "footerPrivacy": {
+    "message": "100% локальные данные. Даже судья этого не видит."
+  },
+  "footerPrivacyLink": {
+    "message": "Политика конфиденциальности"
+  },
+  "footerTitle": {
+    "message": "Продление Сола Гудмана"
+  },
+  "heroBadge": {
+    "message": "«В случае лени... позвони Солу!»"
+  },
+  "heroConfidence1": {
+    "message": "Пользовательский режим землетрясения"
+  },
+  "heroConfidence2": {
+    "message": "Списки доменов Blacklist & VIP"
+  },
+  "heroConfidence3": {
+    "message": "Репортаж с AI Storytelling"
+  },
+  "heroGaugeHint": {
+    "message": "Когда он достигает 70%, режим землетрясения бурлит."
+  },
+  "heroGaugeLabel": {
+    "message": "Живой индекс"
+  },
+  "heroPill": {
+    "message": "Еженедельные капли, ежедневный сарказм"
+  },
+  "heroPrimaryCta": {
+    "message": "Установить в Chrome"
+  },
+  "heroSecondaryCta": {
+    "message": "Посмотрите, как это работает"
+  },
+  "heroSubtitle": {
+    "message": "Он отслеживает ваши вкладки, отвлекает флаги и подталкивает вас к фокусировке до того, как день сойдет на нет — все внутри Chrome, никаких регистраций."
+  },
+  "heroTag": {
+    "message": "Расширение антипрокрастинации для реальной жизни"
+  },
+  "heroTitle": {
+    "message": "Хватит медлить. Сол Гудман берется за дело."
+  },
+  "indexCalloutLabel": {
+    "message": "Записка Саула"
+  },
+  "indexCalloutQuote": {
+    "message": "«Через 60% и я звоню твоему боссу. Упадите ниже 10%, и я закажу вашего терапевта. Сбалансируйте докет, клиент!"
+  },
+  "indexClueAlert": {
+    "message": "Проверить землетрясение"
+  },
+  "indexClueAlertBody": {
+    "message": "Дважды проверьте порог, сирена, и копируйте, чтобы повестка попала в нужное время."
+  },
+  "indexClueBreak": {
+    "message": "Расписание микроразрывов"
+  },
+  "indexClueBreakBody": {
+    "message": "Диапазон 15-22 требует стратегического дыхания. Блокируйте их в календаре, клиент."
+  },
+  "indexClueFocus": {
+    "message": "Список злодеев"
+  },
+  "indexClueFocusBody": {
+    "message": "Держите живой список вкладок, которые увеличивают индекс, прежде чем Саул подаст движение."
+  },
+  "indexCluesLabel": {
+    "message": "Контрольный список дел"
+  },
+  "indexEyebrow": {
+    "message": "На столе Саула"
+  },
+  "indexFootnote": {
+    "message": "От 15 до 22 файлов Saul «устойчивый клиент». Сверху он вооружает землетрясение, снизу предписывает отдых, а не дополнительные задания."
+  },
+  "indexGaugeHint": {
+    "message": "18% попадают в «сладкое место» — стабильный фокус без полного робота."
+  },
+  "indexGaugeLabel": {
+    "message": "Сладкое место"
+  },
+  "indexLead": {
+    "message": "Услуга юридического перевода: 0 баллов не является трофеем, а 100 баллов не являются всеобъемлющими. Сол читает каждую группу, чтобы решить, встряхнуть стул или заставить провести отпуск."
+  },
+  "indexMemoBody": {
+    "message": "Если вкладка злодея повышает индекс, запустите полноэкранный режим блокировки. Сол запирает злодеев, освобождает только продуктивную вкладку, и ваш счет дышит снова."
+  },
+  "indexMemoHeading": {
+    "message": "Записка из офиса"
+  },
+  "indexMemoSign": {
+    "message": "Сол, ваш адвокат по производительности"
+  },
+  "indexPitch1": {
+    "message": "Индекс составляет от 0 до 100. Чем ближе к 100, тем яснее вы бросали дело в середине судебного разбирательства и становились VIP-клиентом прокрастинации."
+  },
+  "indexPitch2": {
+    "message": "Но достижение нуля также выглядит подозрительным: любой, кто приклеен к продуктивным вкладкам 24/7, находится в одном шаге от выгорания."
+  },
+  "indexRange0to14Body": {
+    "message": "Вы настолько привязаны к работе, что Сол называет это «чрезмерным рвением». Вдохните, встаньте и возьмите воду, прежде чем это станет свидетельством."
+  },
+  "indexRange0to14Title": {
+    "message": "0 - 14: сомнительная переработка"
+  },
+  "indexRange15to22Body": {
+    "message": "Идеальный вердикт: последовательный фокус, здоровые перерывы, ноль сирен. Саул может даже подумать о скидке."
+  },
+  "indexRange15to22Title": {
+    "message": "15-22: Золотой баланс"
+  },
+  "indexRange23to60Body": {
+    "message": "Вы все еще оспариваете дело, но натыкаетесь на злодейские корма. Саул запускает остроумные уведомления, чтобы вернуть суд на правильный путь."
+  },
+  "indexRange23to60Title": {
+    "message": "23-60: фокус Уоббли"
+  },
+  "indexRange61to100Body": {
+    "message": "Сейчас час землетрясения. Экран трясется, сирена блестит, и Саул входит с прекращением и сопротивлением для каждой вкладки злодея."
+  },
+  "indexRange61to100Title": {
+    "message": "61 – 100: Прокрастинация на флаганте"
+  },
+  "indexStamp": {
+    "message": "Клиент спит спокойно"
+  },
+  "indexTitle": {
+    "message": "Как Саул читает индекс прокрастинации"
+  },
+  "integrationCard1Body": {
+    "message": "Создайте ключ сопряжения, переключите интеграцию и установите локальный URL. Ничто не покидает ваш браузер."
+  },
+  "integrationCard1Title": {
+    "message": "Включить в опции"
+  },
+  "integrationCard2Body": {
+    "message": "Используйте команду расширения VS Code, чтобы запустить его: он предварительно заполняет PAIRING KEY/PORT и открывается в папке daemon."
+  },
+  "integrationCard2Title": {
+    "message": "Местный демон"
+  },
+  "integrationCard3Body": {
+    "message": "Команда «Saul Goodman: preparar comando do SaulDaemon» готова после установки и отправляет редактору сердцебиения в Chrome."
+  },
+  "integrationCard3Title": {
+    "message": "VS расширение кода"
+  },
+  "integrationCta": {
+    "message": "См. руководство по интеграции"
+  },
+  "integrationEyebrow": {
+    "message": "Для разработчиков"
+  },
+  "integrationLead": {
+    "message": "Включите опциональную интеграцию: Saul добавляет время редактора как продуктивное."
+  },
+  "integrationTitle": {
+    "message": "VS Code + местный демон, все считается продуктивным."
+  },
+  "integrationVsixCta": {
+    "message": "Установить расширение VS Code"
+  },
+  "label_vscode": {
+    "message": "VS Code (IDE)"
+  },
+  "languageLabel": {
+    "message": "Выберите язык"
+  },
+  "latestEyebrow": {
+    "message": "Свежий"
+  },
+  "latestTitle": {
+    "message": "Горячий суд по производительности"
+  },
+  "lightboxClose": {
+    "message": "Закрыть"
+  },
+  "manifesto1Body": {
+    "message": "Ваш день оценивается внутри браузера. Никакие данные не покидают компьютер, даже по решению суда."
+  },
+  "manifesto1Title": {
+    "message": "100% местный"
+  },
+  "manifesto2Body": {
+    "message": "Визуальные и звуковые оповещения дают понять, когда Саул собирается взимать дополнительную плату."
+  },
+  "manifesto2Title": {
+    "message": "Прозрачный биллинг"
+  },
+  "manifesto3Body": {
+    "message": "Саркастические сообщения и драматические баннеры напоминают вам, что прокрастинация также стоит дорого."
+  },
+  "manifesto3Title": {
+    "message": "Юмор как оружие"
+  },
+  "manifestoEyebrow": {
+    "message": "Манифест"
+  },
+  "manifestoTitle": {
+    "message": "Агрессивный маркетинг с щепоткой этики."
+  },
+  "mediaTaglineDev": {
+    "message": "Производительность Dev оценивается по жестким показателям."
+  },
+  "mediaTaglineFoco": {
+    "message": "Сосредоточьтесь и внимание при ежедневном опросе."
+  },
+  "mediaTaglineProcrastinacao": {
+    "message": "Психические осциллографы отвечают терапевтическому сарказму Саула."
+  },
+  "mediaTaglineRemoto": {
+    "message": "Удаленная работа с нулевыми оправданиями в режиме призрака."
+  },
+  "metaCategory": {
+    "message": "Категория"
+  },
+  "metaPublishedAt": {
+    "message": "Опубликовано в блоге"
+  },
+  "metaSource": {
+    "message": "Источник"
+  },
+  "metaSourcePublishedAt": {
+    "message": "Источник опубликован в"
+  },
+  "metaSourceUrl": {
+    "message": "Источник URL"
+  },
+  "metaTags": {
+    "message": "Тэги"
+  },
+  "mobileMenuToggle": {
+    "message": "Открытое меню"
+  },
+  "multilingualLabel": {
+    "message": "Доступно в PT   · EN   · ES  "
+  },
+  "navBenefits": {
+    "message": "Преимущества"
+  },
+  "navBlog": {
+    "message": "блог"
+  },
+  "navClients": {
+    "message": "Клиенты"
+  },
+  "navCodeCon": {
+    "message": "Кодкон"
+  },
+  "navCta": {
+    "message": "устанавливать"
+  },
+  "navDemo": {
+    "message": "Демо"
+  },
+  "navIndex": {
+    "message": "Индекс"
+  },
+  "navProcess": {
+    "message": "процесс"
+  },
+  "newsletterCopy": {
+    "message": "Короткие всплески сарказма и дисциплины, чтобы ваш VS-код перестал действовать как Netflix."
+  },
+  "newsletterCta": {
+    "message": "Познакомьтесь с Саулом"
+  },
+  "newsletterDisclaimer": {
+    "message": "Никакого спама. Только с сарказмом можно справиться."
+  },
+  "newsletterError": {
+    "message": "Пожалуйста, оставьте действительное электронное письмо."
+  },
+  "newsletterLabel": {
+    "message": "Ваш e-mail"
+  },
+  "newsletterPlaceholder": {
+    "message": "you@mail.dev"
+  },
+  "newsletterSubmit": {
+    "message": "Получить записку"
+  },
+  "newsletterSuccess": {
+    "message": "Ты на радаре. Скоро появятся новые капли."
+  },
+  "newsletterTitle": {
+    "message": "Получить записку Сола"
+  },
+  "nextPost": {
+    "message": "Следующий"
+  },
+  "options_back_to_popup": {
+    "message": "Вернуться в Popup"
+  },
+  "options_confirm_reset": {
+    "message": "Это восстановит значения по умолчанию. Продолжай?"
+  },
+  "options_critical_sound_hint": {
+    "message": "Когда включено, сирена играет всякий раз, когда критическое предупреждение горит."
+  },
+  "options_critical_sound_label": {
+    "message": "Автоматическая сирена землетрясений"
+  },
+  "options_critical_threshold_hint": {
+    "message": "Когда индекс достигает этого значения, Саул вызывает критическое предупреждение."
+  },
+  "options_critical_threshold_label": {
+    "message": "Порог режима землетрясения (0-100)"
+  },
+  "options_digital_branch": {
+    "message": "Цифровой филиал"
+  },
+  "options_domain_add": {
+    "message": "Добавить"
+  },
+  "options_domain_duplicate": {
+    "message": "Домен уже указан."
+  },
+  "options_domain_empty": {
+    "message": "До сих пор нет доменов."
+  },
+  "options_domain_invalid": {
+    "message": "Введите действительный домен."
+  },
+  "options_footer_note": {
+    "message": "Сол не делится вашими данными ни с кем. Даже судья."
+  },
+  "options_head_title": {
+    "message": "Сол Гудман - Настройки"
+  },
+  "options_heading": {
+    "message": "Офисные настройки"
+  },
+  "options_holiday_context_hint": {
+    "message": "Используйте всплывающее окно, чтобы выбрать дневной CONTEXT (работа, отдых, учеба, выходной, отпуск или личный). Саул записывает историю и справедливо корректирует счет."
+  },
+  "options_holiday_country_error": {
+    "message": "Используйте только две буквы, например, BR или US."
+  },
+  "options_holiday_country_hint": {
+    "message": "БР, США, ПТ. Саул никогда не пытается обнаружить вашу страну автоматически."
+  },
+  "options_holiday_country_label": {
+    "message": "Код страны (ISO-3166)"
+  },
+  "options_holiday_heading": {
+    "message": "Праздники и справедливый контекст"
+  },
+  "options_holiday_hint": {
+    "message": "При включении Саул вызывает только Нагера. Дата, чтобы увидеть, если сегодня национальный праздник и нейтрализует счет."
+  },
+  "options_holiday_toggle_hint": {
+    "message": "Звонки происходят только в том случае, если вы включите и установите страну. Автоматического расположения нет."
+  },
+  "options_holiday_toggle_label": {
+    "message": "Пауза на национальных праздниках"
+  },
+  "options_inactivity_threshold": {
+    "message": "Максимальное время простоя перед подсчетом как неактивное (секунды)"
+  },
+  "options_language_auto": {
+    "message": "Автоматический (браузер)"
+  },
+  "options_language_en": {
+    "message": "Английский (США)"
+  },
+  "options_language_es": {
+    "message": "испанский"
+  },
+  "options_language_hint": {
+    "message": "Выберите вручную или позвольте языку следовать за Chrome."
+  },
+  "options_language_label": {
+    "message": "Язык интерфейса"
+  },
+  "options_language_pt": {
+    "message": "Португальский (Бразилия)"
+  },
+  "options_openai_hint": {
+    "message": "Хранится локально, чтобы генерировать повествования в отчете."
+  },
+  "options_openai_label": {
+    "message": "OpenAI Key (необязательно)"
+  },
+  "options_openai_placeholder": {
+    "message": "Ск-"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "При включении Saul блокирует навигацию на эти сайты, используя локальные правила Chrome."
+  },
+  "options_procrastination_block_toggle_label": {
+    "message": "Блокировать доступ к этому списку"
+  },
+  "options_procrastination_heading": {
+    "message": "Прокрастинация доменов"
+  },
+  "options_procrastination_hint": {
+    "message": "Здесь живут искушения. Если вы любите сайт, он, вероятно, принадлежит вам."
+  },
+  "options_procrastination_placeholder": {
+    "message": "Например, youtube.com"
+  },
+  "options_productive_heading": {
+    "message": "Продуктивные домены"
+  },
+  "options_productive_hint": {
+    "message": "Саул знает, где происходит работа. Добавить или удалить в зависимости от вашей рутины."
+  },
+  "options_productive_placeholder": {
+    "message": "Например, docs.google.com"
+  },
+  "options_promise": {
+    "message": "Saul хранит ваши данные под замком во время переговоров с вами."
+  },
+  "options_restore_defaults": {
+    "message": "Восстановление дефолтов"
+  },
+  "options_save_weights": {
+    "message": "Сохранить весы"
+  },
+  "options_schedule_add": {
+    "message": "Добавить интервал"
+  },
+  "options_schedule_heading": {
+    "message": "Рабочее время"
+  },
+  "options_schedule_hint": {
+    "message": "Скажи Солу, когда произойдет твоя официальная смена. За пределами этих блоков продуктивное количество минут увеличивается вдвое."
+  },
+  "options_schedule_to": {
+    "message": "то"
+  },
+  "options_status_blocklist_saved": {
+    "message": "Блокировка предпочтений обновляется."
+  },
+  "options_status_critical_saved": {
+    "message": "Режим землетрясения обновлен."
+  },
+  "options_status_defaults_restored": {
+    "message": "Дефолты восстановлены."
+  },
+  "options_status_domain_removed": {
+    "message": "Домен удален."
+  },
+  "options_status_holiday_saved": {
+    "message": "Обновлены праздничные предпочтения."
+  },
+  "options_status_language_saved": {
+    "message": "Язык обновлен."
+  },
+  "options_status_list_updated": {
+    "message": "Список обновлен."
+  },
+  "options_status_ready": {
+    "message": "Все хорошо."
+  },
+  "options_status_schedule_updated": {
+    "message": "Расписание обновлено."
+  },
+  "options_status_vscode_saved": {
+    "message": "Обновлена интеграция VS-кода."
+  },
+  "options_status_weights_saved": {
+    "message": "Весы обновлены."
+  },
+  "options_subtitle": {
+    "message": "Настройте радар, чтобы соответствовать вашему стилю прокрастинации. Все остается локальным."
+  },
+  "options_tagline": {
+    "message": "Ваш личный адвокат против прокрастинации"
+  },
+  "options_thresholds_heading": {
+    "message": "Пороги и весы"
+  },
+  "options_vscode_heading": {
+    "message": "Интеграция кода"
+  },
+  "options_vscode_install_hint": {
+    "message": "Установите официальное расширение VS Code для отправки фокус-сессий."
+  },
+  "options_vscode_install_link": {
+    "message": "Установить расширение VS Code"
+  },
+  "options_vscode_key_copied": {
+    "message": "Ключ скопирован."
+  },
+  "options_vscode_key_copy": {
+    "message": "Копировать ключ"
+  },
+  "options_vscode_key_copy_error": {
+    "message": "Ключей нет."
+  },
+  "options_vscode_key_generate": {
+    "message": "Создайте новый ключ"
+  },
+  "options_vscode_key_generated": {
+    "message": "Создан новый ключ."
+  },
+  "options_vscode_key_hint": {
+    "message": "Должен соответствовать ключу, настроенному в коде SaulDaemon/VS."
+  },
+  "options_vscode_key_label": {
+    "message": "Парный ключ"
+  },
+  "options_vscode_key_placeholder": {
+    "message": "Вставить ключ SaulDaemon"
+  },
+  "options_vscode_test_button": {
+    "message": "Испытательное соединение"
+  },
+  "options_vscode_test_disabled": {
+    "message": "Включите интеграцию VS-кода перед тестированием."
+  },
+  "options_vscode_test_error": {
+    "message": "Не удалось подключиться к SaulDaemon{reason}"
+  },
+  "options_vscode_test_health_error": {
+    "message": "Не удалось достичь{origin}здоровье{reason}"
+  },
+  "options_vscode_test_invalid_url": {
+    "message": "Недействительный URL. Используйте что-то вроде http://127.0.0.1:3123."
+  },
+  "options_vscode_test_running": {
+    "message": "Testando conexão..."
+  },
+  "options_vscode_test_success": {
+    "message": "Саул Даймон ответил{origin}Сессии сегодня:{sessions}Минуты:{minutes}."
+  },
+  "options_vscode_test_timeout": {
+    "message": "SaulDaemon não responseeu a tempo."
+  },
+  "options_vscode_test_unauthorized": {
+    "message": "Чаве Диференте. Используйте клавишу mesma no Chrome e no VS Code."
+  },
+  "options_vscode_toggle_hint": {
+    "message": "Позвоните местному SaulDaemon (локальный хозяин), прежде чем обновить свой счет."
+  },
+  "options_vscode_toggle_label": {
+    "message": "Включить время фокусировки из VS Code"
+  },
+  "options_vscode_url_hint": {
+    "message": "Разговаривает только с местным хозяином; ничто не покидает вашу машину."
+  },
+  "options_vscode_url_label": {
+    "message": "Местный URL-адрес"
+  },
+  "options_weight_inactivity": {
+    "message": "Неактивность (вес)"
+  },
+  "options_weight_procrastination": {
+    "message": "Непродуктивное время (вес)"
+  },
+  "options_weight_switches": {
+    "message": "Переключатели вкладок (вес)"
+  },
+  "options_weights_sum_error": {
+    "message": "Сумма весов должна быть 1."
+  },
+  "popup_alert_no_data": {
+    "message": "Пока нет данных. Откройте несколько вкладок и попробуйте снова."
+  },
+  "popup_alert_pdf_missing": {
+    "message": "PDF модуль недоступен."
+  },
+  "popup_badge_label": {
+    "message": "Индекс"
+  },
+  "popup_blog_badge": {
+    "message": "Саул рекомендует читать"
+  },
+  "popup_blog_button_all": {
+    "message": "Открытый блог"
+  },
+  "popup_blog_category_prefix": {
+    "message": "Категория:{category}"
+  },
+  "popup_blog_cta": {
+    "message": "Читать сейчас"
+  },
+  "popup_blog_empty": {
+    "message": "Никакой статьи пока нет."
+  },
+  "popup_blog_error": {
+    "message": "Не могу сейчас дойти до блога."
+  },
+  "popup_blog_loading": {
+    "message": "Охота на идеальный случай..."
+  },
+  "popup_blog_reason_dev": {
+    "message": "Время повысить производительность с нулевым дешевым коучингом."
+  },
+  "popup_blog_reason_foco": {
+    "message": "Основываясь на сегодняшнем рассеянном фокусе."
+  },
+  "popup_blog_reason_procrastinacao": {
+    "message": "Потому что сегодня ваша прокрастинация преодолела юридический предел."
+  },
+  "popup_blog_reason_remoto": {
+    "message": "Переживите удаленную работу, не переходя в режим полного призрака."
+  },
+  "popup_blog_section_subtitle": {
+    "message": "Мы читаем ваши номера и указываем на статью в стиле Саула."
+  },
+  "popup_blog_section_title": {
+    "message": "Подборка подсказок для блога"
+  },
+  "popup_chart_aria": {
+    "message": "Производительность vs прокрастинация часов"
+  },
+  "popup_chart_axis_minutes": {
+    "message": "Минуты"
+  },
+  "popup_chart_label_procrastination": {
+    "message": "прокрастинация"
+  },
+  "popup_chart_label_productive": {
+    "message": "продуктивный"
+  },
+  "popup_chart_label_vscode": {
+    "message": "VS код"
+  },
+  "popup_chart_title": {
+    "message": "Ежедневный радар"
+  },
+  "popup_context_option_dayOff": {
+    "message": "Фолга"
+  },
+  "popup_context_option_leisure": {
+    "message": "Лазер"
+  },
+  "popup_context_option_personal": {
+    "message": "Личный"
+  },
+  "popup_context_option_study": {
+    "message": "Исследование"
+  },
+  "popup_context_option_vacation": {
+    "message": "Отпуск"
+  },
+  "popup_context_option_work": {
+    "message": "Работа"
+  },
+  "popup_critical_close_aria": {
+    "message": "Оповещение об увольнении"
+  },
+  "popup_critical_countdown_final": {
+    "message": "Никаких оправданий: закройте три вкладки прокрастинации сейчас!"
+  },
+  "popup_critical_default_message": {
+    "message": "По этому показателю даже я не могу вас защитить. Это будет стоить платы за риск!"
+  },
+  "popup_critical_message_1": {
+    "message": "Клиент с индексом{threshold}Даже я не могу защитить тебя. Рисковые сборы действуют!"
+  },
+  "popup_critical_message_2": {
+    "message": "Этот тремор? Судья бьет по вашей производительности."
+  },
+  "popup_critical_message_3": {
+    "message": "Перестань медлить, или я куплю рекламу в прайм-тайм, рассказывающую твою историю."
+  },
+  "popup_critical_message_4": {
+    "message": "Помогите мне защитить вас: закройте эти вкладки, прежде чем я начну выставлять счета в долларах."
+  },
+  "popup_critical_plan_action": {
+    "message": "3 Злодейские вкладки в"
+  },
+  "popup_critical_plan_prefix": {
+    "message": "План действий:"
+  },
+  "popup_critical_plan_suffix": {
+    "message": "С."
+  },
+  "popup_critical_review": {
+    "message": "Обсуждение Villains"
+  },
+  "popup_critical_sound_now": {
+    "message": "Сирена триггера"
+  },
+  "popup_critical_title": {
+    "message": "Саул в режиме землетрясения"
+  },
+  "popup_csv_category": {
+    "message": "Категория"
+  },
+  "popup_csv_column_date": {
+    "message": "Дата"
+  },
+  "popup_csv_column_inactive": {
+    "message": "Неактивный (мин)"
+  },
+  "popup_csv_column_index": {
+    "message": "Индекс"
+  },
+  "popup_csv_column_procrastination": {
+    "message": "Прокрастинация (мин)"
+  },
+  "popup_csv_column_productive": {
+    "message": "Продуктивный (мин)"
+  },
+  "popup_csv_column_switches": {
+    "message": "Переключатели вкладок"
+  },
+  "popup_csv_column_vscode": {
+    "message": "VS Code (min)"
+  },
+  "popup_csv_detailed_column_category": {
+    "message": "Категория"
+  },
+  "popup_csv_detailed_column_context": {
+    "message": "контекст"
+  },
+  "popup_csv_detailed_column_domain": {
+    "message": "Доминио"
+  },
+  "popup_csv_detailed_column_duration": {
+    "message": "Продолжительность (мс)"
+  },
+  "popup_csv_detailed_column_end": {
+    "message": "Конец (ISO)"
+  },
+  "popup_csv_detailed_column_fairness": {
+    "message": "Правило справедливости"
+  },
+  "popup_csv_detailed_column_start": {
+    "message": "Старт (ISO)"
+  },
+  "popup_csv_detailed_title": {
+    "message": "Подробный график"
+  },
+  "popup_csv_domain": {
+    "message": "домен"
+  },
+  "popup_csv_kpi_champion": {
+    "message": "Top Focus домен"
+  },
+  "popup_csv_kpi_focus": {
+    "message": "Активный фокус (%)"
+  },
+  "popup_csv_kpi_idle": {
+    "message": "Время простоя (%)"
+  },
+  "popup_csv_kpi_ratio": {
+    "message": "Prod vs Proc"
+  },
+  "popup_csv_kpi_switches": {
+    "message": "Переключатели в час"
+  },
+  "popup_csv_kpi_time": {
+    "message": "Время"
+  },
+  "popup_csv_kpi_villain": {
+    "message": "Злодей дня"
+  },
+  "popup_csv_kpis_title": {
+    "message": "Дополнительные показатели"
+  },
+  "popup_csv_minutes": {
+    "message": "Минуты"
+  },
+  "popup_csv_summary_title": {
+    "message": "Общее резюме"
+  },
+  "popup_csv_top_domains_title": {
+    "message": "Лучшие домены"
+  },
+  "popup_error_no_data": {
+    "message": "Нет данных"
+  },
+  "popup_error_runtime": {
+    "message": "Упс! Не удалось добраться до офиса."
+  },
+  "popup_error_unknown": {
+    "message": "Неизвестная ошибка"
+  },
+  "popup_export_csv": {
+    "message": "Скачать CSV"
+  },
+  "popup_export_description": {
+    "message": "Превратите свои цифры в аргументы в стиле Сола Гудмана."
+  },
+  "popup_export_pdf": {
+    "message": "Создайте PDF"
+  },
+  "popup_export_report": {
+    "message": "Открытый доклад"
+  },
+  "popup_export_title": {
+    "message": "Защитите свой фокус"
+  },
+  "popup_fairness_context_label": {
+    "message": "Контекстный атуальный"
+  },
+  "popup_fairness_holiday_active": {
+    "message": "Сегодня праздник, счет замер автоматически."
+  },
+  "popup_fairness_holiday_detected": {
+    "message": "Выявлен праздник — никаких штрафов."
+  },
+  "popup_fairness_manual_label": {
+    "message": "Скип сегодня"
+  },
+  "popup_fairness_note": {
+    "message": "Сол перекалибровывает оценку на основе контекста, который вы выбираете в всплывающем окне. Пропуск сегодня сводит счет к нулю и приглушает предупреждения. Работа держит 100%, Личный нейтрализует все, Досуг подсчитывает 30% фокуса и игнорирует злодеев, Исследование половина штрафов, Выходной и Отпуск нулевой день независимо от праздников."
+  },
+  "popup_fairness_note_label": {
+    "message": "Саул объясняет"
+  },
+  "popup_fairness_status_day_off": {
+    "message": "Записанный выходной — счет остановился."
+  },
+  "popup_fairness_status_default": {
+    "message": "Всё нормально."
+  },
+  "popup_fairness_status_holiday": {
+    "message": "Национальный праздник нейтрализует счет."
+  },
+  "popup_fairness_status_leisure": {
+    "message": "Modo lazer reduz a pressão."
+  },
+  "popup_fairness_status_manual": {
+    "message": "Диа Игнорадо Манументе."
+  },
+  "popup_fairness_status_personal": {
+    "message": "Личный режим активен — нет забивания."
+  },
+  "popup_fairness_status_study": {
+    "message": "Учебный режим смягчает счет."
+  },
+  "popup_fairness_status_vacation": {
+    "message": "Отпускной режим нейтрализует день."
+  },
+  "popup_fairness_title": {
+    "message": "День справедливости"
+  },
+  "popup_head_title": {
+    "message": "Сол Гудман — Focus Radar"
+  },
+  "popup_kpi_focus_domain_label": {
+    "message": "Фокус чемпион"
+  },
+  "popup_kpi_focus_domain_tooltip": {
+    "message": "Продуктивный домен, в который вы вложили больше времени."
+  },
+  "popup_kpi_focus_hint": {
+    "message": "Продуктивный / рабочий день"
+  },
+  "popup_kpi_focus_label": {
+    "message": "Активный фокус"
+  },
+  "popup_kpi_focus_tooltip": {
+    "message": "Процент продуктивного времени во всем отслеживается сегодня."
+  },
+  "popup_kpi_idle_hint": {
+    "message": "Процент дня"
+  },
+  "popup_kpi_idle_label": {
+    "message": "Время безделья"
+  },
+  "popup_kpi_idle_tooltip": {
+    "message": "Процент времени, в течение которого браузер оставался открытым без взаимодействия."
+  },
+  "popup_kpi_ratio_hint": {
+    "message": "Продуктивные часы на одного злодея"
+  },
+  "popup_kpi_ratio_label": {
+    "message": "Prod vs Proc"
+  },
+  "popup_kpi_ratio_tooltip": {
+    "message": "Продуктивные часы компенсируют каждый час прокрастинации."
+  },
+  "popup_kpi_section_subtitle": {
+    "message": "Прямо к делу: необработанные цифры с вашего дня."
+  },
+  "popup_kpi_section_title": {
+    "message": "Дополнительные показатели"
+  },
+  "popup_kpi_switch_hint": {
+    "message": "Таблички за отслеживаемый час"
+  },
+  "popup_kpi_switch_label": {
+    "message": "Переключатели в час"
+  },
+  "popup_kpi_switch_tooltip": {
+    "message": "Средние переключатели вкладок за контролируемый час."
+  },
+  "popup_kpi_villain_label": {
+    "message": "Злодей дня"
+  },
+  "popup_kpi_villain_tooltip": {
+    "message": "Прокрастинация домена, который украл большую часть вашего времени."
+  },
+  "popup_last_sync": {
+    "message": "Обновлено в{time}"
+  },
+  "popup_last_sync_pending": {
+    "message": "Обновление..."
+  },
+  "popup_loading": {
+    "message": "Загрузка..."
+  },
+  "popup_options_button": {
+    "message": "конфигурировать"
+  },
+  "popup_pdf_date": {
+    "message": "Дата"
+  },
+  "popup_pdf_inactive": {
+    "message": "неактивный"
+  },
+  "popup_pdf_index": {
+    "message": "Индекс"
+  },
+  "popup_pdf_kpis": {
+    "message": "Дополнительные показатели"
+  },
+  "popup_pdf_procrastination": {
+    "message": "прокрастинация"
+  },
+  "popup_pdf_productive": {
+    "message": "продуктивный"
+  },
+  "popup_pdf_summary": {
+    "message": "Ежедневное резюме"
+  },
+  "popup_pdf_switches": {
+    "message": "Переключатели вкладок"
+  },
+  "popup_pdf_title": {
+    "message": "Сол Гудман доклад"
+  },
+  "popup_pdf_top_domains": {
+    "message": "Лучшие домены"
+  },
+  "popup_pdf_vscode": {
+    "message": "VS код"
+  },
+  "popup_privacy_note": {
+    "message": "Все данные остаются в вашем браузере. Саул уважает привилегию адвоката-клиента."
+  },
+  "popup_refresh_button": {
+    "message": "освежить"
+  },
+  "popup_release_notes_button": {
+    "message": "Посмотрим, что нового"
+  },
+  "popup_release_notes_error": {
+    "message": "Не смог открыть заметки об освобождении. Перезагрузите расширение и попробуйте снова."
+  },
+  "popup_score_message_alert": {
+    "message": "Ты играешь с огнем. Я выписываю счет за час, чтобы потушить пожар."
+  },
+  "popup_score_message_excellent": {
+    "message": "Золотой клиент! Продолжайте, и я могу заряжать полный таймер."
+  },
+  "popup_score_message_ok": {
+    "message": "Все еще считается рабочим временем. Не заставляй меня фокусироваться."
+  },
+  "popup_score_message_warning": {
+    "message": "Я вижу здесь избегание. Пора возвращаться в игру."
+  },
+  "popup_score_placeholder": {
+    "message": "Загрузочная смена..."
+  },
+  "popup_status_no_data": {
+    "message": "Нет данных"
+  },
+  "popup_status_no_domains": {
+    "message": "Никаких данных на сегодня."
+  },
+  "popup_summary_inactive_label": {
+    "message": "безделье"
+  },
+  "popup_summary_inactive_tooltip": {
+    "message": "Периоды, когда браузер оставался открытым без взаимодействия."
+  },
+  "popup_summary_procrastination_label": {
+    "message": "деспотичный"
+  },
+  "popup_summary_procrastination_tooltip": {
+    "message": "Время, потраченное на прокрастинацию доменов."
+  },
+  "popup_summary_productive_label": {
+    "message": "продуктивный"
+  },
+  "popup_summary_productive_tooltip": {
+    "message": "Время, потраченное на домены, отмеченные как продуктивные."
+  },
+  "popup_tooltip_aria": {
+    "message": "Объяснение"
+  },
+  "popup_top_domains_title": {
+    "message": "Топ 5 доменов"
+  },
+  "postInvalid": {
+    "message": "Недействительный пост или недостающие метаданные."
+  },
+  "postLoadError": {
+    "message": "Ошибка при загрузке этой статьи."
+  },
+  "postLoadingBody": {
+    "message": "Загрузка..."
+  },
+  "postLoadingTitle": {
+    "message": "Загрузить статью..."
+  },
+  "postNotFound": {
+    "message": "Пост не найден."
+  },
+  "previousPost": {
+    "message": "Предыдущий"
+  },
+  "privacyError": {
+    "message": "Мы не могли загрузить политику прямо сейчас. Попробуй еще раз через минуту."
+  },
+  "privacyEyebrow": {
+    "message": "Полная прозрачность"
+  },
+  "privacyHeading": {
+    "message": "Политика конфиденциальности"
+  },
+  "privacyLoading": {
+    "message": "Загрузка полиса прямо из хранилища..."
+  },
+  "privacySubheading": {
+    "message": "Вот последняя версия политики, опубликованная в репозитории."
+  },
+  "privacyTitle": {
+    "message": "Политика конфиденциальности"
+  },
+  "process1Body": {
+    "message": "Значок спокойно сидит, наблюдая за тем, что открыто, и мгновенно знает, учитесь ли вы, работаете или прокручиваете."
+  },
+  "process1Title": {
+    "message": "Отслеживайте свои активные вкладки"
+  },
+  "process2Body": {
+    "message": "Вы определяете продуктивные и злодейские домены. Если вы блуждаете, Саул трясет экран и кричит перед началом спирали."
+  },
+  "process2Title": {
+    "message": "Флаги отвлекают"
+  },
+  "process3Body": {
+    "message": "Каждый день заканчивается чистым отчетом: графиками, основными моментами и планом действий на завтра."
+  },
+  "process3Title": {
+    "message": "Полезные доказательства"
+  },
+  "processEyebrow": {
+    "message": "Как это работает"
+  },
+  "processLead": {
+    "message": "Никакого юридического жаргона: установите его, дайте ему посмотреть ваши вкладки, почувствовать предупреждения и закончить свой день с готовыми доказательствами."
+  },
+  "processTitle": {
+    "message": "Саул запирает прокрастинацию в три шага."
+  },
+  "quakeBody": {
+    "message": "Наложение блокирует вкладки злодея, показывает смелый CTA и может взорвать дополнительную сирену. Невозможно игнорировать — именно так, как планировалось."
+  },
+  "quakeButton": {
+    "message": "Провоцировать дрожь"
+  },
+  "quakeCallout": {
+    "message": "Землетрясение приближается!"
+  },
+  "quakeDemoBody": {
+    "message": "Нажмите, чтобы смоделировать режим землетрясения: сотрясение экрана, сирена и драматическое сообщение. То же самое, что расширение, но только на несколько секунд."
+  },
+  "quakeDemoButton": {
+    "message": "Моделирование режима землетрясения"
+  },
+  "quakeDemoEyebrow": {
+    "message": "Режим землетрясения (демо)"
+  },
+  "quakeDemoTitle": {
+    "message": "Испытайте самую драматическую тревогу Сола."
+  },
+  "quakeDisplayCopy": {
+    "message": "Прыгайте назад, чтобы сосредоточиться, или Саул повышает свои гонорары."
+  },
+  "quakeEyebrow": {
+    "message": "Режим землетрясения"
+  },
+  "quakeLead": {
+    "message": "То же самое драматическое предупреждение от расширения отображается здесь, так что посетители чувствуют, насколько серьезно предупреждение за порогом."
+  },
+  "quakeMicro": {
+    "message": "\"Поймал тебя на прокрутке! Готовность к удару\"."
+  },
+  "quakeOverlayBody": {
+    "message": "Саул трясет закладки злодеев. Вернись к фокусу, пока он не взял дополнительную плату."
+  },
+  "quakeOverlayClose": {
+    "message": "Назад, чтобы сосредоточиться"
+  },
+  "quakeOverlayTitle": {
+    "message": "Режим землетрясения сработал!"
+  },
+  "quakeTip": {
+    "message": "Расслабьтесь: предварительный просмотр длится всего несколько секунд."
+  },
+  "quakeTitle": {
+    "message": "Когда Саул обнаруживает злодеев, страница трясется вместе с ним."
+  },
+  "ratingBadgeAlt": {
+    "message": "Средний рейтинг в Chrome Web Store"
+  },
+  "reactionBlockAlt": {
+    "message": "Саул блокирует доступ"
+  },
+  "reactionBlockHint": {
+    "message": "Перенаправляет на страницу блока, когда Сол закрывает дверь."
+  },
+  "reactionBlockLabel": {
+    "message": "Режим блокировки"
+  },
+  "reactionBlockText": {
+    "message": "Даже не пытайтесь: злодеи мгновенно блокируются."
+  },
+  "reactionDisbeliefHint": {
+    "message": "Триггеры, когда порог землетрясения пересекается."
+  },
+  "reactionDisbeliefLabel": {
+    "message": "Невероятный режим"
+  },
+  "reactionDisbeliefText": {
+    "message": "Вы называете это фокусом?"
+  },
+  "reactionHypeHint": {
+    "message": "Появляется, когда вы прыгаете обратно к продуктивным вкладкам."
+  },
+  "reactionHypeLabel": {
+    "message": "Утвержденный режим"
+  },
+  "reactionHypeText": {
+    "message": "Теперь я могу скидывать свои гонорары."
+  },
+  "reactionsBody": {
+    "message": "Когда индекс растет, Саул недоверчив. Когда вы возвращаетесь, чтобы сосредоточиться, он празднует. Быстрые визуальные эффекты, чтобы сохранить планку справедливости."
+  },
+  "reactionsEyebrow": {
+    "message": "Саул реагирует"
+  },
+  "reactionsTitle": {
+    "message": "Моментальный вердикт Саула."
+  },
+  "readArticle": {
+    "message": "Читать статью"
+  },
+  "readingTimeLabel": {
+    "message": "Время чтения"
+  },
+  "readTimeUnit": {
+    "message": "мин читать"
+  },
+  "reason1Body": {
+    "message": "Индекс всплывающих окон показывает ваш текущий статус, чтобы вы знали, что исправить дальше."
+  },
+  "reason1Title": {
+    "message": "Руководящая направленность"
+  },
+  "reason2Body": {
+    "message": "Землетрясение захватывает экран, прежде чем вкладка злодея испортит ваш импульс."
+  },
+  "reason2Title": {
+    "message": "Невозможно игнорировать предупреждения"
+  },
+  "reason3Body": {
+    "message": "Диаграммы и резюме идеально подходят для ежедневного обновления, стендапа или клиента."
+  },
+  "reason3Title": {
+    "message": "Общие отчеты"
+  },
+  "reason4Body": {
+    "message": "Каждая метрика живет внутри Chrome; ничто не покидает вашу машину."
+  },
+  "reason4Title": {
+    "message": "Полная конфиденциальность"
+  },
+  "reasonsEyebrow": {
+    "message": "Ключевые преимущества"
+  },
+  "reasonsLead": {
+    "message": "Четыре быстрые карты объясняют значение с нулевым пухом."
+  },
+  "reasonsTitle": {
+    "message": "Зачем использовать Сола Гудмана?"
+  },
+  "relatedTitle": {
+    "message": "Связанные сообщения"
+  },
+  "report_ai_error_generic": {
+    "message": "Саул не смог убедить цифрового судьи. Попробуй позже."
+  },
+  "report_ai_generate": {
+    "message": "Создать повествование"
+  },
+  "report_ai_heading": {
+    "message": "Аргумент Саула"
+  },
+  "report_ai_hint": {
+    "message": "Нажмите «Развитие повествования», чтобы Сол мог проанализировать ваш день с помощью сарказма."
+  },
+  "report_ai_loading": {
+    "message": "Готовим заключительный аргумент..."
+  },
+  "report_ai_missing_key": {
+    "message": "Настройте свой ключ OpenAI в опциях, прежде чем создавать повествование."
+  },
+  "report_ai_no_metrics": {
+    "message": "Нет метрик, чтобы рассказать историю сегодня."
+  },
+  "report_ai_retry": {
+    "message": "Попробуйте еще раз"
+  },
+  "report_ai_subtitle": {
+    "message": "Драматическая защита на основе ваших данных."
+  },
+  "report_alert_pdf_missing": {
+    "message": "PDF библиотека недоступна."
+  },
+  "report_banner_countdown_final": {
+    "message": "Время действовать: закройте вкладки злодея и вернитесь под контроль."
+  },
+  "report_banner_message_1": {
+    "message": "Даже я не могу убедить жюри с индексом.{threshold}Прекратите отвлекать!"
+  },
+  "report_banner_message_2": {
+    "message": "Продолжайте, и я возьму напрокат рекламный щит, предупреждающий вашего босса."
+  },
+  "report_banner_message_3": {
+    "message": "Это землетрясение - эхо твоих злодеев. Закройте их сейчас."
+  },
+  "report_banner_message_4": {
+    "message": "Счет за вкладку растет: сосредоточьтесь сейчас или мы взимаем дополнительные сборы."
+  },
+  "report_banner_title": {
+    "message": "Саул в боевой готовности!"
+  },
+  "report_category_activity": {
+    "message": "Деятельность"
+  },
+  "report_category_neutral": {
+    "message": "нейтральный"
+  },
+  "report_composition_heading": {
+    "message": "Дневная композиция"
+  },
+  "report_composition_heading_tooltip": {
+    "message": "Распад на продуктивную, прокрастинацию, праздность и нейтральность."
+  },
+  "report_context_breakdown_context": {
+    "message": "контекст"
+  },
+  "report_context_breakdown_index": {
+    "message": "Индекс"
+  },
+  "report_context_breakdown_index_tooltip": {
+    "message": "Ближе к 100% пахнет промедлением; ближе к 0% означает, что вы работали, и я могу защитить вас."
+  },
+  "report_context_breakdown_time": {
+    "message": "Время"
+  },
+  "report_context_breakdown_title": {
+    "message": "Время в контексте"
+  },
+  "report_domain_heading": {
+    "message": "Минуты на домен"
+  },
+  "report_domain_subtitle": {
+    "message": "Главные чемпионы и злодеи агрегировались за день."
+  },
+  "report_error_no_data": {
+    "message": "Метрики отсутствуют."
+  },
+  "report_error_runtime": {
+    "message": "Не смог добраться до офиса записей."
+  },
+  "report_error_unknown": {
+    "message": "Неизвестная ошибка"
+  },
+  "report_export_pdf": {
+    "message": "Экспорт PDF"
+  },
+  "report_fairness_holiday_active": {
+    "message": "Сегодня праздник, счет замер автоматически."
+  },
+  "report_fairness_holiday_detected": {
+    "message": "Выявлен праздник — никаких штрафов."
+  },
+  "report_fairness_status_day_off": {
+    "message": "Выходной нейтрализовал счет."
+  },
+  "report_fairness_status_default": {
+    "message": "Всё нормально."
+  },
+  "report_fairness_status_holiday": {
+    "message": "Национальный праздник нейтрализовал счет."
+  },
+  "report_fairness_status_leisure": {
+    "message": "Режим досуга снизил сборы."
+  },
+  "report_fairness_status_manual": {
+    "message": "Диа Игнорадо Манументе."
+  },
+  "report_fairness_status_personal": {
+    "message": "Личный режим — без скоринга."
+  },
+  "report_fairness_status_study": {
+    "message": "Учебный режим смягчил наказания."
+  },
+  "report_fairness_status_vacation": {
+    "message": "Modo férias zerou o dia."
+  },
+  "report_fairness_title": {
+    "message": "День справедливости"
+  },
+  "report_fairness_tooltip": {
+    "message": "Ручное переопределение, контекст или праздники могут нейтрализовать счет. Мы регистрируем его всякий раз, когда это происходит."
+  },
+  "report_filter_apply": {
+    "message": "фильтр"
+  },
+  "report_filter_from": {
+    "message": "из"
+  },
+  "report_filter_reset": {
+    "message": "сброс"
+  },
+  "report_filter_to": {
+    "message": "то"
+  },
+  "report_head_title": {
+    "message": "Сол Гудман - Daily Report"
+  },
+  "report_heading": {
+    "message": "Подробный доклад"
+  },
+  "report_hero_message_alert": {
+    "message": "Вердикт ясен: промедление в суде. Нам нужен срочный план."
+  },
+  "report_hero_message_excellent": {
+    "message": "Безупречный график. Сол может использовать тебя в телевизионной рекламе."
+  },
+  "report_hero_message_ok": {
+    "message": "Приемлемые качели. Мы все еще можем сказать присяжным, что вы работали."
+  },
+  "report_hero_message_warning": {
+    "message": "Сегодня видимые рецидивы. Пора вызывать подкрепление."
+  },
+  "report_hero_placeholder": {
+    "message": "Саул все еще собирает улики о вашем дне."
+  },
+  "report_hourly_empty": {
+    "message": "Не хватает времени, чтобы построить этот поток."
+  },
+  "report_hourly_heading": {
+    "message": "Почасовой поток"
+  },
+  "report_hourly_heading_tooltip": {
+    "message": "Продуктивная, прокрастинация и праздные минуты в час."
+  },
+  "report_hourly_subtitle": {
+    "message": "Производительность против соблазнов в течение дня."
+  },
+  "report_kpi_audio_hint": {
+    "message": "Минуты с аудио на сайтах злодеев"
+  },
+  "report_kpi_audio_label": {
+    "message": "Злодейские СМИ"
+  },
+  "report_kpi_audio_tooltip": {
+    "message": "Время с воспроизведением аудио на доменах прокрастинации."
+  },
+  "report_kpi_grouped_hint": {
+    "message": "Минуты в сгруппированных вкладках"
+  },
+  "report_kpi_grouped_label": {
+    "message": "Время в группах"
+  },
+  "report_kpi_grouped_tooltip": {
+    "message": "Минуты, проведенные в сгруппированных вкладках."
+  },
+  "report_kpi_heading": {
+    "message": "Дополнительные показатели"
+  },
+  "report_kpi_heading_tooltip": {
+    "message": "Дополнительные KPI: злодейские СМИ, реальное время простоя, маршруты SPA, сгруппированные вкладки."
+  },
+  "report_kpi_restored_hint": {
+    "message": "Последние вкладки или окна"
+  },
+  "report_kpi_restored_label": {
+    "message": "Закрытые предметы сегодня"
+  },
+  "report_kpi_restored_tooltip": {
+    "message": "Количество закладок или окон сегодня закрыто."
+  },
+  "report_kpi_spa_hint": {
+    "message": "Записанные изменения маршрута"
+  },
+  "report_kpi_spa_label": {
+    "message": "Маршруты SPA"
+  },
+  "report_kpi_spa_tooltip": {
+    "message": "Внутренние изменения маршрута в одностраничных приложениях."
+  },
+  "report_kpi_subtitle": {
+    "message": "Реальное бездействие, маршруты SPA и медиа-время."
+  },
+  "report_kpi_unfocused_hint": {
+    "message": "Минуты на заднем плане"
+  },
+  "report_kpi_unfocused_label": {
+    "message": "Браузер не сфокусированный"
+  },
+  "report_kpi_unfocused_tooltip": {
+    "message": "Минуты с другим сфокусированным окном."
+  },
+  "report_logo_alt_critical": {
+    "message": "Сол Гудман шокирован вашим вниманием"
+  },
+  "report_logo_alt_default": {
+    "message": "Логотип Saul Goodman"
+  },
+  "report_metric_index_label": {
+    "message": "Индекс"
+  },
+  "report_metric_switches_label": {
+    "message": "Переключатели вкладок"
+  },
+  "report_pdf_ai_title": {
+    "message": "Аргумент Саула"
+  },
+  "report_pdf_composition_header_category": {
+    "message": "Категория"
+  },
+  "report_pdf_composition_header_share": {
+    "message": "Участие"
+  },
+  "report_pdf_composition_header_time": {
+    "message": "Время"
+  },
+  "report_pdf_composition_title": {
+    "message": "Дневная композиция"
+  },
+  "report_pdf_context_header_context": {
+    "message": "контекст"
+  },
+  "report_pdf_context_header_index": {
+    "message": "Индекс контекста"
+  },
+  "report_pdf_context_header_time": {
+    "message": "Время, потраченное"
+  },
+  "report_pdf_context_title": {
+    "message": "Разбивка по контексту"
+  },
+  "report_pdf_fairness_reason_context": {
+    "message": "Контекстная гвардия активная"
+  },
+  "report_pdf_fairness_reason_holiday": {
+    "message": "Праздник нейтрализовал счет"
+  },
+  "report_pdf_fairness_reason_label": {
+    "message": "Причина"
+  },
+  "report_pdf_fairness_reason_manual": {
+    "message": "День пропущен вручную"
+  },
+  "report_pdf_index_neutralized": {
+    "message": "Índice neutralizado"
+  },
+  "report_pdf_narrative_title": {
+    "message": "Ключевое повествование"
+  },
+  "report_pdf_overview_heading": {
+    "message": "Panorama do dia"
+  },
+  "report_pdf_status_label": {
+    "message": "статус"
+  },
+  "report_pdf_title": {
+    "message": "Подробный отчет — Сол Гудман"
+  },
+  "report_pdf_top_domains": {
+    "message": "Лучшие домены"
+  },
+  "report_ranking_procrastination_heading": {
+    "message": "Главная Прокрастинация"
+  },
+  "report_ranking_procrastination_tooltip": {
+    "message": "Рейтинг доменов прокрастинации по времени."
+  },
+  "report_ranking_productive_heading": {
+    "message": "Самый продуктивный"
+  },
+  "report_ranking_productive_tooltip": {
+    "message": "Рейтинг производственных доменов по времени."
+  },
+  "report_share_argument_label": {
+    "message": "Обсуждение Saul"
+  },
+  "report_share_argument_title": {
+    "message": "Аргумент Саула"
+  },
+  "report_share_copy_error": {
+    "message": "Не могу сейчас скопировать пост."
+  },
+  "report_share_copy_instagram": {
+    "message": "Текст скопирован. Откройте Instagram и вставьте перед публикацией."
+  },
+  "report_share_copy_linkedin": {
+    "message": "Текст скопирован. Вставьте его в LinkedIn перед публикацией."
+  },
+  "report_share_copy_success": {
+    "message": "Пост скопирован. Вставить в LinkedIn, Twitter, где угодно."
+  },
+  "report_share_cta": {
+    "message": "Привез тебе Сол Гудман."
+  },
+  "report_share_error": {
+    "message": "Не могу сейчас поделиться."
+  },
+  "report_share_error_no_metrics": {
+    "message": "Нет данных для обмена."
+  },
+  "report_share_error_no_narrative": {
+    "message": "Сформируйте аргумент Саула, прежде чем делиться."
+  },
+  "report_share_hashtags": {
+    "message": "#Соул Гудман #Антипрокрастинация"
+  },
+  "report_share_headline": {
+    "message": "Протестую! Основные моменты дела"
+  },
+  "report_share_hint_instagram": {
+    "message": "Instagram Web не может предварительно заполнить текст: вставить то, что мы скопировали в поле публикации."
+  },
+  "report_share_hint_linkedin": {
+    "message": "связанный In не заполнит текст; вставьте скопированный контент на сайт."
+  },
+  "report_share_index_label": {
+    "message": "Индекс"
+  },
+  "report_share_menu_argument": {
+    "message": "Аргумент Саула"
+  },
+  "report_share_menu_copy": {
+    "message": "Копировать текст"
+  },
+  "report_share_menu_highlights": {
+    "message": "Основные моменты"
+  },
+  "report_share_menu_label": {
+    "message": "Доля"
+  },
+  "report_share_menu_native": {
+    "message": "Родная доля"
+  },
+  "report_share_menu_native_action": {
+    "message": "Системный лист"
+  },
+  "report_share_opening": {
+    "message": "Мой клиент много работал, и у меня есть доказательства."
+  },
+  "report_share_post_argument_label": {
+    "message": "Copy Argument Post"
+  },
+  "report_share_post_label": {
+    "message": "Copy post (социальный)"
+  },
+  "report_share_report_label": {
+    "message": "Поделитесь основными моментами"
+  },
+  "report_share_social_tagline": {
+    "message": "Протестую! Мой клиент взялся за работу."
+  },
+  "report_share_success": {
+    "message": "Открылся лист акций! Если он не появится, мы скопировали его в ваш буфер обмена."
+  },
+  "report_share_title": {
+    "message": "Сол Гудман - Основные моменты"
+  },
+  "report_story_empty": {
+    "message": "Недостаточно историй на сегодня."
+  },
+  "report_story_focus_body": {
+    "message": "{domain}проведенный{duration}сосредоточенность."
+  },
+  "report_story_focus_title": {
+    "message": "Фокус чемпион"
+  },
+  "report_story_heading": {
+    "message": "Чемпионы и злодеи"
+  },
+  "report_story_idle_body": {
+    "message": "Между{range}Браузер остался бездействовать для{duration}."
+  },
+  "report_story_idle_title": {
+    "message": "Долгое молчание"
+  },
+  "report_story_loading": {
+    "message": "Данные продолжают загружаться..."
+  },
+  "report_story_short_day": {
+    "message": "День был слишком коротким, чтобы рассказать историю."
+  },
+  "report_story_villain_body": {
+    "message": "{domain}сливной{duration}."
+  },
+  "report_story_villain_title": {
+    "message": "Злодей дня"
+  },
+  "report_subtitle_prefix": {
+    "message": "Ежедневное резюме"
+  },
+  "report_tab_switch_empty": {
+    "message": "Пока еще недостаточно переключателей для построения этой диаграммы."
+  },
+  "report_tab_switch_heading": {
+    "message": "Выключатели Tab в час"
+  },
+  "report_tab_switch_heading_tooltip": {
+    "message": "Дистрибутив переключателя через Prod/Proc/Neutral."
+  },
+  "report_tab_switch_subtitle": {
+    "message": "Как вы прыгнули между продуктивностью, прокрастинацией и нейтральностью."
+  },
+  "report_tagline": {
+    "message": "Официальный журнал фокуса"
+  },
+  "report_time_column": {
+    "message": "Время"
+  },
+  "report_timeline_heading": {
+    "message": "Поминутный рассказ"
+  },
+  "report_timeline_heading_tooltip": {
+    "message": "Ключевые срезы, сгруппированные по часам и категориям."
+  },
+  "report_timeline_loading": {
+    "message": "В ожидании поступления..."
+  },
+  "report_timeline_subtitle": {
+    "message": "Основные моменты, которые рассказывают историю вашей смены."
+  },
+  "report_timeline_summary": {
+    "message": "{duration}•{count}сегменты"
+  },
+  "rssCta": {
+    "message": "Подписаться на RSS"
+  },
+  "searchLabel": {
+    "message": "Поиск"
+  },
+  "searchPlaceholder": {
+    "message": "Заголовок поиска, отрывок или тег..."
+  },
+  "searchReset": {
+    "message": "Чистые фильтры"
+  },
+  "seoDescription": {
+    "message": "Сол Гудман следит за вашими вкладками, борется с промедлением и предоставляет драматические отчеты в вашем браузере. Все остается локальным, никаких внешних серверов."
+  },
+  "seoTitle": {
+    "message": "Сол Гудман - Продление антипрокрастинации"
+  },
+  "shareCopied": {
+    "message": "Ссылка скопирована!"
+  },
+  "shareCopy": {
+    "message": "Копировать ссылку"
+  },
+  "shareCopyPrompt": {
+    "message": "Скопируйте эту ссылку, чтобы поделиться:"
+  },
+  "shareIndexCopied": {
+    "message": "Ссылка скопирована!"
+  },
+  "shareIndexCopy": {
+    "message": "Копировать ссылку"
+  },
+  "shareIndexLinkedin": {
+    "message": "LinkedIn"
+  },
+  "shareIndexTitle": {
+    "message": "Поделитесь блогом"
+  },
+  "shareIndexTwitter": {
+    "message": "XX"
+  },
+  "shareLinkedin": {
+    "message": "LinkedIn"
+  },
+  "shareTitle": {
+    "message": "Доля"
+  },
+  "shareTwitter": {
+    "message": "XX"
+  },
+  "socialProofCaption": {
+    "message": "Саул уже помогает тысячам людей сосредоточиться."
+  },
+  "socialProofMetricLabel": {
+    "message": "Счастливые пользователи"
+  },
+  "splitPopupBody": {
+    "message": "Панель показывает индекс, верхние домены, дополнительные индикаторы и позволяет экспортировать CSV / PDF. Когда фокус падает, режим землетрясения врывается, чтобы спасти планку правосудия."
+  },
+  "splitPopupCaption": {
+    "message": "Всплывающее окно с индексом, верхними доменами и экспортом."
+  },
+  "splitPopupCaption2": {
+    "message": "KPI, топовые домены и быстрый экспорт."
+  },
+  "splitPopupCaption3": {
+    "message": "Продуктивные/злодейские списки в панели опций."
+  },
+  "splitPopupCaption4": {
+    "message": "Настраиваемые весы и графики для индекса."
+  },
+  "splitPopupTitle": {
+    "message": "Всплывающее окно по вызову"
+  },
+  "splitReportBody": {
+    "message": "Графики в час, рейтинг злодеев, повествование ИИ и критический баннер с планом действий. Все с заклятыми изображениями."
+  },
+  "splitReportCaption": {
+    "message": "Резюме отчета с диаграммами и рейтингом."
+  },
+  "splitReportCaption2": {
+    "message": "Нарратив ИИ и поминутная шкала времени."
+  },
+  "splitReportCaption3": {
+    "message": "Ранжирование злодеев, чемпионов и распространение."
+  },
+  "splitReportTitle": {
+    "message": "Драматический доклад"
+  },
+  "splitStats1": {
+    "message": "Восстановление минут/день"
+  },
+  "splitStats2": {
+    "message": "Клиенты оправданы"
+  },
+  "statsCategories": {
+    "message": "категории в суде"
+  },
+  "statsFresh": {
+    "message": "Последнее обновление"
+  },
+  "statsPosts": {
+    "message": "опубликованные посты"
+  },
+  "statsTitle": {
+    "message": "Блог радар"
+  },
+  "stickyCtaButton": {
+    "message": "Установить в Chrome"
+  },
+  "stickyCtaText": {
+    "message": "Саул готов следить за твоими вкладками."
+  },
+  "stickyToggleLabel": {
+    "message": "Переключатель CTA"
+  },
+  "tagsTitle": {
+    "message": "Темы в огне"
+  },
+  "testimonial1Cite": {
+    "message": "Анонимный клиент"
+  },
+  "testimonial1Quote": {
+    "message": "Саул напомнил мне, что переключение 40 вкладок в час является преступлением."
+  },
+  "testimonial2Cite": {
+    "message": "Жалкий инженер"
+  },
+  "testimonial2Quote": {
+    "message": "Отчет стал частью защиты на встрече с моим боссом."
+  },
+  "testimonial3Cite": {
+    "message": "Менеджер по продуктам"
+  },
+  "testimonial3Quote": {
+    "message": "\"Режим землетрясения спас мой спринт. Сборы с удовольствием оплачены\"."
+  },
+  "testimonialNext": {
+    "message": "Следующее свидетельство"
+  },
+  "testimonialPrev": {
+    "message": "Предыдущее свидетельство"
+  },
+  "testimonialsEyebrow": {
+    "message": "Отзывы"
+  },
+  "testimonialsTitle": {
+    "message": "Клиенты оправданы."
+  },
+  "timeline1Body": {
+    "message": "Сценарий контента обнаруживает активность на первых вкладках. Сол бревен, который продуктивен или злодей."
+  },
+  "timeline1Title": {
+    "message": "Первоначальный радар"
+  },
+  "timeline2Body": {
+    "message": "Если индекс поднимается слишком высоко, режим землетрясения штурмует Chrome землетрясением, сиреной и CTA, чтобы повернуть игру."
+  },
+  "timeline2Title": {
+    "message": "Уведомление о нарушении"
+  },
+  "timeline3Body": {
+    "message": "Подробный отчет показывает графики, временные рамки и повествование ИИ, чтобы закрыть день доказательствами."
+  },
+  "timeline3Title": {
+    "message": "Ежедневное предложение"
+  },
+  "timelineEyebrow": {
+    "message": "график"
+  },
+  "timelineTitle": {
+    "message": "От отслеживания до вердикта."
+  },
+  "transparencyBody": {
+    "message": "Читайте, как мы обрабатываем ваши данные и каждую записку с нулевым пухом."
+  },
+  "transparencyChangelogCta": {
+    "message": "Открыть полный Changelog"
+  },
+  "transparencyEyebrow": {
+    "message": "Прозрачность"
+  },
+  "transparencyPrivacyCta": {
+    "message": "Читайте Политику конфиденциальности"
+  },
+  "transparencyTitle": {
+    "message": "Privacy & Changelog в открытом доступе."
+  },
+  "trustCard1Body": {
+    "message": "Метрики живут в   TAG0  chrome.storage.local  TAG1  . Ничего не касается внешних серверов."
+  },
+  "trustCard1Title": {
+    "message": "100% местный"
+  },
+  "trustCard2Body": {
+    "message": "Каждая строка является общедоступной, поэтому сообщество может проверять изменения."
+  },
+  "trustCard2Title": {
+    "message": "Открытый источник"
+  },
+  "trustCard3Body": {
+    "message": "Вы выбираете порог и можете заставить замолчать Саула, когда вам нужно."
+  },
+  "trustCard3Title": {
+    "message": "Прозрачные предупреждения"
+  },
+  "trustEyebrow": {
+    "message": "Конфиденциальность и доверие"
+  },
+  "trustLead": {
+    "message": "Игривый тон, серьезная безопасность: вот как работают данные и оповещения."
+  },
+  "trustTitle": {
+    "message": "Все остается между вами и вашим браузером."
+  },
+  "usersBadgeAlt": {
+    "message": "Пользователи в Chrome Web Store"
+  }
+}
