@@ -1,10 +1,19 @@
 const DEFAULT_LOCALE = 'en-US';
-const SUPPORTED_LOCALES = ['pt-BR', 'en-US', 'es-419'];
-const LOCALE_DIR_MAP = {
-  'pt-BR': 'pt_BR',
-  'en-US': 'en_US',
-  'es-419': 'es_419'
-};
+const SUPPORTED_LOCALES = [
+  'pt-BR',
+  'en-US',
+  'es-419',
+  'fr',
+  'de',
+  'it',
+  'tr',
+  'zh-CN',
+  'hi',
+  'ar',
+  'bn',
+  'ru',
+  'ur',
+];
 const SETTINGS_KEY = 'sg:settings';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,6 +129,22 @@ async function loadLocalePreference() {
   }
 }
 
+function normalizeLocaleCode(localeCode) {
+  const uiLanguage = (localeCode ?? '').toLowerCase();
+  const normalized = uiLanguage.split('-')[0];
+
+  if (normalized === 'pt') return 'pt-BR';
+  if (normalized === 'es') return 'es-419';
+  if (normalized === 'zh') return 'zh-CN';
+
+  const directMatch = SUPPORTED_LOCALES.find(
+    (supported) => supported.toLowerCase() === normalized
+  );
+  if (directMatch) return directMatch;
+
+  return DEFAULT_LOCALE;
+}
+
 function resolveLocale(preference, storedLocale) {
   if (preference && preference !== 'auto' && SUPPORTED_LOCALES.includes(preference)) {
     return preference;
@@ -129,21 +154,16 @@ function resolveLocale(preference, storedLocale) {
     return storedLocale;
   }
 
-  const uiLanguage = (chrome?.i18n?.getUILanguage?.() ?? navigator.language ?? '').toLowerCase();
-  const normalized = uiLanguage.split('-')[0];
+  const uiLanguage = chrome?.i18n?.getUILanguage?.() ?? navigator.language;
+  return normalizeLocaleCode(uiLanguage);
+}
 
-  if (uiLanguage.startsWith('pt') || normalized === 'pt') {
-    return 'pt-BR';
-  }
-  if (uiLanguage.startsWith('es') || normalized === 'es') {
-    return 'es-419';
-  }
-
-  return DEFAULT_LOCALE;
+function localeToDir(locale) {
+  return String(locale || DEFAULT_LOCALE).replace(/-/g, '_');
 }
 
 async function loadMessages(locale) {
-  const dir = LOCALE_DIR_MAP[locale] ?? LOCALE_DIR_MAP[DEFAULT_LOCALE];
+  const dir = localeToDir(locale);
   try {
     const response = await fetch(chrome.runtime.getURL(`_locales/${dir}/messages.json`));
     if (!response.ok) {
