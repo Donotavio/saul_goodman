@@ -364,13 +364,20 @@ function renderSuggestionSection(
   suggestionSectionEl.classList.remove('hidden');
   suggestionSectionEl.removeAttribute('hidden');
   const labelMap: Record<DomainSuggestion['classification'], string> = {
-    productive: 'Produtivo',
-    procrastination: 'Procrastinador',
-    neutral: 'Neutro'
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'Produtivo',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'Procrastinador',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'Neutro'
   };
-  suggestionReportTitleEl.textContent = `Sugestão: ${labelMap[suggestion.classification]} (${Math.round(
-    suggestion.confidence
-  )}%) para ${suggestion.domain}`;
+  const title =
+    i18n?.t('report_suggestion_title_filled', {
+      label: labelMap[suggestion.classification],
+      confidence: Math.round(suggestion.confidence),
+      domain: suggestion.domain
+    }) ??
+    `Sugestão: ${labelMap[suggestion.classification]} (${Math.round(
+      suggestion.confidence
+    )}%) para ${suggestion.domain}`;
+  suggestionReportTitleEl.textContent = title;
   suggestionReportReasonsEl.innerHTML = '';
   suggestion.reasons.slice(0, 5).forEach((reason) => {
     const li = document.createElement('li');

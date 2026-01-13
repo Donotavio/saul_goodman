@@ -2500,5 +2500,27 @@
   },
   "usersBadgeLabel": {
     "message": "Usuarios"
-  }
+  },
+  "popup_suggestion_title": { "message": "Sugerencia automática" },
+  "popup_suggestion_confidence": { "message": "Confianza" },
+  "popup_suggestion_add_productive": { "message": "Agregar como productivo" },
+  "popup_suggestion_add_procrastination": { "message": "Agregar como procrastinador" },
+  "popup_suggestion_ignore": { "message": "Ignorar hoy" },
+  "popup_suggestion_manual": { "message": "Clasificar manualmente" },
+  "popup_suggestion_label_productive": { "message": "PRODUCTIVO" },
+  "popup_suggestion_label_procrastination": { "message": "PROCRASTINADOR" },
+  "popup_suggestion_label_neutral": { "message": "NEUTRO" },
+  "popup_suggestion_title_filled": { "message": "Este sitio parece ser {label}" },
+  "popup_suggestion_confidence_filled": { "message": "Confianza {confidence}%" },
+  "options_auto_classification_title": { "message": "Clasificación automática" },
+  "options_auto_classification_hint": { "message": "Todo corre localmente. Leemos solo título, meta description/keywords, og:type y señales de video/scroll infinito para sugerir una etiqueta." },
+  "options_auto_classification_toggle": { "message": "Activar sugerencias automáticas" },
+  "options_auto_classification_toggle_hint": { "message": "Opcional: sugiere una etiqueta cuando un dominio no está en tu lista." },
+  "options_auto_classification_ai": { "message": "Sugerencias por IA (próximamente)" },
+  "options_auto_classification_ai_hint": { "message": "Reservado para una IA futura. Se mantiene apagado." },
+  "options_auto_classification_cooldown": { "message": "No volver a sugerir por (horas)" },
+  "options_auto_classification_cooldown_hint": { "message": "Respeta el intervalo antes de recordar el mismo dominio. Predeterminado: 24h." },
+  "report_suggestion_title": { "message": "Sugerencia de clasificación automática" },
+  "report_suggestion_title_filled": { "message": "Sugerencia: {label} ({confidence}%) para {domain}" }
+}
 }

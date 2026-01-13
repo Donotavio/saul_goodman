@@ -181,24 +181,30 @@
           </div>
 
           <div class="panel auto-classification-panel">
-            <h2>Classificação automática</h2>
-            <p class="hint">
+            <h2 data-i18n="options_auto_classification_title">Classificação automática</h2>
+            <p class="hint" data-i18n="options_auto_classification_hint">
               Tudo roda localmente. Coletamos apenas título, metatags (description/keywords), og:type e sinais de vídeo/scroll infinito para sugerir rótulo.
             </p>
             <fieldset class="field-group">
-              <legend>Classificação automática</legend>
+              <legend data-i18n="options_auto_classification_title">Classificação automática</legend>
               <label class="toggle field" for="enableAutoClassification">
-                <span>Ativar sugestões automáticas</span>
+                <span data-i18n="options_auto_classification_toggle">Ativar sugestões automáticas</span>
                 <input type="checkbox" id="enableAutoClassification" />
-                <small class="hint">Opcional: gera uma sugestão quando um domínio não está na sua lista.</small>
+                <small class="hint" data-i18n="options_auto_classification_toggle_hint">
+                  Opcional: gera uma sugestão quando um domínio não está na sua lista.
+                </small>
               </label>
               <label class="toggle field" for="enableAISuggestions">
-                <span>Sugestões por IA (em breve)</span>
+                <span data-i18n="options_auto_classification_ai">Sugestões por IA (em breve)</span>
                 <input type="checkbox" id="enableAISuggestions" disabled />
-                <small class="hint">Reservado para futura IA. Mantemos desligado.</small>
+                <small class="hint" data-i18n="options_auto_classification_ai_hint">
+                  Reservado para futura IA. Mantemos desligado.
+                </small>
               </label>
               <label class="field" for="suggestionCooldownHours">
-                <span>Não sugerir novamente por (horas)</span>
+                <span data-i18n="options_auto_classification_cooldown">
+                  Não sugerir novamente por (horas)
+                </span>
                 <input
                   type="number"
                   id="suggestionCooldownHours"
@@ -208,7 +214,7 @@
                   aria-describedby="suggestionCooldownHint"
                   inputmode="numeric"
                 />
-                <small id="suggestionCooldownHint" class="hint">
+                <small id="suggestionCooldownHint" class="hint" data-i18n="options_auto_classification_cooldown_hint">
                   Respeita o intervalo antes de lembrar do mesmo domínio. Padrão: 24h.
                 </small>
               </label>

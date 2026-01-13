@@ -375,12 +375,20 @@ function renderSuggestionCard(
   }
   suggestionCardEl.classList.remove('hidden');
   const labelMap: Record<DomainSuggestion['classification'], string> = {
-    productive: 'PRODUTIVO',
-    procrastination: 'PROCRASTINADOR',
-    neutral: 'NEUTRO'
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'PRODUTIVO',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'PROCRASTINADOR',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'NEUTRO'
   };
-  suggestionTitleEl.textContent = `Este site parece ser ${labelMap[suggestion.classification]}`;
-  suggestionConfidenceEl.textContent = `Confiança ${Math.round(suggestion.confidence)}%`;
+  const titleTemplate =
+    i18n?.t('popup_suggestion_title_filled', {
+      label: labelMap[suggestion.classification]
+    }) ?? `Este site parece ser ${labelMap[suggestion.classification]}`;
+  suggestionTitleEl.textContent = titleTemplate;
+  const confidenceTemplate =
+    i18n?.t('popup_suggestion_confidence_filled', {
+      confidence: Math.round(suggestion.confidence)
+    }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
+  suggestionConfidenceEl.textContent = confidenceTemplate;
   suggestionReasonsEl.innerHTML = '';
   suggestion.reasons.slice(0, 4).forEach((reason) => {
     const li = document.createElement('li');

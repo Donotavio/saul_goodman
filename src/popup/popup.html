@@ -27,19 +27,27 @@
     <main>
       <section id="suggestionCard" class="suggestion-card hidden" aria-live="polite">
         <div class="suggestion-header">
-          <p id="suggestionTitle">Sugestão automática</p>
-          <small id="suggestionConfidence"></small>
+          <p id="suggestionTitle" data-i18n="popup_suggestion_title">Sugestão automática</p>
+          <small id="suggestionConfidence" data-i18n="popup_suggestion_confidence"></small>
         </div>
         <ul id="suggestionReasons"></ul>
         <div class="suggestion-actions">
-          <button id="suggestionProductiveButton" class="primary">
+          <button id="suggestionProductiveButton" class="primary" data-i18n="popup_suggestion_add_productive">
             Adicionar como produtivo
           </button>
-          <button id="suggestionProcrastinationButton" class="danger">
+          <button
+            id="suggestionProcrastinationButton"
+            class="danger"
+            data-i18n="popup_suggestion_add_procrastination"
+          >
             Adicionar como procrastinador
           </button>
-          <button id="suggestionIgnoreButton" class="ghost">Ignorar hoje</button>
-          <button id="suggestionManualButton" class="ghost">Classificar manualmente</button>
+          <button id="suggestionIgnoreButton" class="ghost" data-i18n="popup_suggestion_ignore">
+            Ignorar hoje
+          </button>
+          <button id="suggestionManualButton" class="ghost" data-i18n="popup_suggestion_manual">
+            Classificar manualmente
+          </button>
         </div>
       </section>
 
