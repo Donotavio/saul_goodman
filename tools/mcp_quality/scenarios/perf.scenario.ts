@@ -3,7 +3,6 @@ import fs from 'node:fs';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import fs from 'node:fs';
 import crypto from 'node:crypto';
 
 function firstJson(result: { json: unknown[]; text: string[] }): unknown {
