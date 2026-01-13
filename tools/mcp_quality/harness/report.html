@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="report_head_title">Saul Goodman - Relatório do dia</title>
+    <link rel="icon" type="image/png" href="/src/img/logotipo_saul_goodman.png" />
+    <link rel="stylesheet" href="/src/report/report.css" />
+    <script src="./chrome-stub.js"></script>
+    <script src="/src/vendor/chart.umd.js" defer></script>
+    <script src="/src/vendor/jspdf.umd.min.js" defer></script>
+    <script type="module" src="/dist/report/report.js" defer></script>
+  </head>
+  <body>
+    <header class="report-hero">
+      <div class="hero-text">
+        <span class="tagline" data-i18n="report_tagline">Diário oficial do foco</span>
+        <h1 data-i18n="report_heading">Relatório detalhado</h1>
+        <p class="subtitle">
+          <span data-i18n="report_subtitle_prefix">Resumo do dia</span>
+          <span id="reportDate">--</span>
+        </p>
+        <p id="heroMessage" class="hero-message" data-i18n="report_hero_placeholder">
+          Saul ainda está coletando provas para contar como foi o seu dia.
+        </p>
+        <div class="hero-metrics">
+          <article>
+            <span class="label" data-i18n="report_metric_index_label">Índice</span>
+            <strong id="heroIndex">--</strong>
+          </article>
+          <article>
+            <span class="label" data-i18n="popup_kpi_focus_label">Foco ativo</span>
+            <strong id="heroFocus">--</strong>
+          </article>
+          <article>
+            <span class="label" data-i18n="report_metric_switches_label">Trocas de abas</span>
+            <strong id="heroSwitches">--</strong>
+          </article>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <div class="logo-frame">
+          <img
+            src="../img/logotipo_saul_goodman.png"
+            alt="Logotipo Saul Goodman"
+            class="logo"
+          />
+          <span class="logo-caption" data-i18n="options_digital_branch">Filial digital</span>
+        </div>
+        <button id="pdfReportButton" class="primary-button" data-i18n="report_export_pdf">
+          Exportar PDF
+        </button>
+        <button id="backButton" class="ghost-button" data-i18n="options_back_to_popup">
+          Voltar ao popup
+        </button>
+      </div>
+    </header>
+
+    <section id="criticalBanner" class="critical-banner hidden" aria-live="assertive">
+      <div class="banner-content">
+        <strong data-i18n="report_banner_title">Saul em alerta máximo!</strong>
+        <p id="criticalBannerMessage" data-i18n="report_banner_message_default">
+          Esse índice está explodindo. Vou precisar de bônus de risco!
+        </p>
+        <div class="plan-row">
+          <p class="plan">
+            <span data-i18n="popup_critical_plan_prefix">Plano de ação:</span>
+            <span data-i18n="popup_critical_plan_action">feche 3 abas vilãs em</span>
+            <span id="criticalBannerCountdown">45</span>s.
+          </p>
+          <button id="criticalBannerAction" class="ghost-button" data-i18n="popup_critical_review">
+            Revisar vilões
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="fairness-banner">
+        <div class="fairness-banner__body">
+          <h2>
+            <span data-i18n="report_fairness_title">Justiça do dia</span>
+            <span
+              class="info-icon"
+              aria-label="Explicação"
+              data-i18n-aria-label="popup_tooltip_aria"
+              data-tooltip="Manual override, contexto ou feriados podem neutralizar o índice. Registramos aqui sempre que isso acontecer."
+              data-i18n-tooltip="report_fairness_tooltip"
+            >
+              i
+            </span>
+          </h2>
+          <p
+            id="fairnessStatusReport"
+            data-i18n="report_fairness_status_default"
+          >
+            Dia útil normal.
+          </p>
+          <p
+            id="fairnessHintReport"
+            class="fairness-hint hidden"
+            hidden
+            data-i18n="report_fairness_holiday_detected"
+          >
+            Feriado detectado — sem penalidades.
+          </p>
+        </div>
+      </section>
+
+      <section id="contextBreakdownSection" class="context-breakdown hidden" hidden>
+        <h2>
+          <span data-i18n="report_context_breakdown_title">Context breakdown</span>
+        </h2>
+        <table id="contextBreakdownTable">
+          <thead>
+            <tr>
+              <th data-i18n="report_context_breakdown_context">Context</th>
+              <th data-i18n="report_context_breakdown_time">Time</th>
+              <th>
+                <span data-i18n="report_context_breakdown_index">Index</span>
+                <span
+                  class="info-icon"
+                  data-tooltip="Lembre-se, quanto mais perto de 100% você está devendo foco, quanto mais perto de 0% você provou ser produtivo."
+                  data-i18n-tooltip="report_context_breakdown_index_tooltip"
+                  data-i18n-aria-label="popup_tooltip_aria"
+                  aria-label="Explicação"
+                >
+                  i
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="panel kpi-panel">
+        <div class="panel-header">
+          <h2>
+            <span data-i18n="report_kpi_heading">Indicadores adicionais</span>
+            <span
+              class="info-icon"
+              data-tooltip="KPIs extras: mídia em vilões, ociosidade real, rotas SPA e agrupamentos de abas."
+              data-i18n-tooltip="report_kpi_heading_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <p data-i18n="report_kpi_subtitle">Ociosidade real, rotas em SPA e tempo de mídia.</p>
+        </div>
+        <div class="kpi-row">
+          <article>
+            <span class="label">
+              <span data-i18n="report_kpi_audio_label">Mídia em vilões</span>
+              <span
+                class="info-icon"
+                data-tooltip="Tempo com áudio tocando em domínios marcados como procrastinação."
+                data-i18n-tooltip="report_kpi_audio_tooltip"
+                data-i18n-aria-label="popup_tooltip_aria"
+                aria-label="Explicação"
+                >i</span
+              >
+            </span>
+            <strong id="audioProcrastinationValue">--</strong>
+            <small data-i18n="report_kpi_audio_hint">Tempo com áudio em sites procrastinatórios</small>
+          </article>
+          <article>
+            <span class="label">
+              <span data-i18n="report_kpi_unfocused_label">Navegador fora de foco</span>
+              <span
+                class="info-icon"
+                data-tooltip="Minutos em que o browser ficou em segundo plano (outra janela focada)."
+                data-i18n-tooltip="report_kpi_unfocused_tooltip"
+                data-i18n-aria-label="popup_tooltip_aria"
+                aria-label="Explicação"
+                >i</span
+              >
+            </span>
+            <strong id="unfocusedValue">--</strong>
+            <small data-i18n="report_kpi_unfocused_hint">Minutos com o browser em segundo plano</small>
+          </article>
+          <article>
+            <span class="label">
+              <span data-i18n="report_kpi_spa_label">Rotas em SPA</span>
+              <span
+                class="info-icon"
+                data-tooltip="Trocas de rota internas em apps de página única (YouTube, LinkedIn, Slack web)."
+                data-i18n-tooltip="report_kpi_spa_tooltip"
+                data-i18n-aria-label="popup_tooltip_aria"
+                aria-label="Explicação"
+                >i</span
+              >
+            </span>
+            <strong id="spaNavigationsValue">--</strong>
+            <small data-i18n="report_kpi_spa_hint">Trocas de rota registradas</small>
+          </article>
+          <article>
+            <span class="label">
+              <span data-i18n="report_kpi_grouped_label">Tempo em grupos</span>
+              <span
+                class="info-icon"
+                data-tooltip="Minutos em abas que pertencem a grupos (quando agrupadas)."
+                data-i18n-tooltip="report_kpi_grouped_tooltip"
+                data-i18n-aria-label="popup_tooltip_aria"
+                aria-label="Explicação"
+                >i</span
+              >
+            </span>
+            <strong id="groupedTimeValue">--</strong>
+            <small data-i18n="report_kpi_grouped_hint">Minutos em abas agrupadas</small>
+          </article>
+          <article>
+            <span class="label">
+              <span data-i18n="report_kpi_restored_label">Itens fechados hoje</span>
+              <span
+                class="info-icon"
+                data-tooltip="Quantidade de abas ou janelas fechadas hoje (recente)."
+                data-i18n-tooltip="report_kpi_restored_tooltip"
+                data-i18n-aria-label="popup_tooltip_aria"
+                aria-label="Explicação"
+                >i</span
+              >
+            </span>
+            <strong id="restoredItemsValue">--</strong>
+            <small data-i18n="report_kpi_restored_hint">Abas ou janelas recentes</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>
+            <span data-i18n="report_hourly_heading">Fluxo horário</span>
+            <span
+              class="info-icon"
+              data-tooltip="Minutos produtivos, procrastinação e inatividade por hora do dia."
+              data-i18n-tooltip="report_hourly_heading_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <p data-i18n="report_hourly_subtitle">Produtividade versus tentações ao longo do dia.</p>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="hourlyChart" height="200"></canvas>
+          <p id="hourlyEmpty" class="empty-state hidden" data-i18n="report_hourly_empty">
+            Ainda não registramos minutos suficientes para montar o fluxo.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>
+            <span data-i18n="report_tab_switch_heading">Trocas de abas por hora</span>
+            <span
+              class="info-icon"
+              data-tooltip="Distribuição das trocas de aba por origem/destino (Prod/Proc/Neutro) ao longo do dia."
+              data-i18n-tooltip="report_tab_switch_heading_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <p data-i18n="report_tab_switch_subtitle">
+            Como você pulou entre produtivo, procrastinação e neutro ao longo do dia.
+          </p>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="tabSwitchChart" height="200"></canvas>
+          <p id="tabSwitchEmpty" class="empty-state hidden" data-i18n="report_tab_switch_empty">
+            Ainda não registramos trocas suficientes para montar este gráfico.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel duo">
+        <div class="panel-block">
+          <h2>
+            <span data-i18n="report_composition_heading">Composição do dia</span>
+            <span
+              class="info-icon"
+              data-tooltip="Divisão do dia em produtivo, procrastinação, inatividade e neutro."
+              data-i18n-tooltip="report_composition_heading_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <canvas id="compositionChart" height="200"></canvas>
+        </div>
+        <div class="panel-block">
+          <h2 data-i18n="report_story_heading">Campeões e vilões</h2>
+          <ul id="storyList" class="story-list">
+            <li data-i18n="report_story_loading">Os dados ainda estão sendo carregados...</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel duo ranking-section">
+        <div class="panel-block">
+          <h2>
+            <span data-i18n="report_ranking_productive_heading">Top produtivos</span>
+            <span
+              class="info-icon"
+              data-tooltip="Ranking de domínios produtivos pelo tempo agregado no dia."
+              data-i18n-tooltip="report_ranking_productive_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <table class="ranking-table" id="productiveRanking">
+            <thead>
+              <tr>
+                <th data-i18n="popup_csv_domain">Domínio</th>
+                <th data-i18n="report_time_column">Tempo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" data-i18n="report_story_loading">Aguardando dados...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-block">
+          <h2>
+            <span data-i18n="report_ranking_procrastination_heading">Top procrastinação</span>
+            <span
+              class="info-icon"
+              data-tooltip="Ranking de domínios procrastinatórios pelo tempo agregado no dia."
+              data-i18n-tooltip="report_ranking_procrastination_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <table class="ranking-table" id="procrastinationRanking">
+            <thead>
+              <tr>
+                <th data-i18n="popup_csv_domain">Domínio</th>
+                <th data-i18n="report_time_column">Tempo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" data-i18n="report_story_loading">Aguardando dados...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel timeline-panel">
+        <div class="panel-header">
+          <h2>
+            <span data-i18n="report_timeline_heading">Narrativa minuto a minuto</span>
+            <span
+              class="info-icon"
+              data-tooltip="Principais trechos do dia, agrupados por hora com categoria de atividade."
+              data-i18n-tooltip="report_timeline_heading_tooltip"
+              data-i18n-aria-label="popup_tooltip_aria"
+              aria-label="Explicação"
+              >i</span
+            >
+          </h2>
+          <p data-i18n="report_timeline_subtitle">
+            Principais trechos que contam a história do seu expediente.
+          </p>
+          <div class="timeline-filter">
+            <label>
+              <span data-i18n="report_filter_from">De</span>
+              <input type="number" id="timelineStartHour" min="0" max="23" value="0" />
+            </label>
+            <label>
+              <span data-i18n="report_filter_to">até</span>
+              <input type="number" id="timelineEndHour" min="0" max="23" value="23" />
+            </label>
+            <button
+              type="button"
+              id="timelineFilterButton"
+              class="ghost-button small"
+              data-i18n="report_filter_apply"
+            >
+              Filtrar
+            </button>
+            <button
+              type="button"
+              id="timelineResetButton"
+              class="ghost-button small"
+              data-i18n="report_filter_reset"
+            >
+              Resetar
+            </button>
+          </div>
+        </div>
+        <ol id="timelineList" class="timeline-list">
+          <li data-i18n="report_timeline_loading">Aguardando registros...</li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2 data-i18n="report_domain_heading">Minutos por domínio</h2>
+          <p data-i18n="report_domain_subtitle">Principais campeões e vilões agregados no dia.</p>
+        </div>
+        <canvas id="domainBreakdownChart" height="220"></canvas>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2 data-i18n="report_ai_heading">Argumento do Saul</h2>
+          <p data-i18n="report_ai_subtitle">Uma defesa dramática baseada nos seus dados.</p>
+        </div>
+        <div id="aiNarrative" class="ai-narrative" data-i18n="report_ai_loading">
+          Ainda estou preparando a sustentação oral...
+        </div>
+        <div class="ai-actions">
+          <button id="aiGenerateButton" class="primary-button" data-i18n="report_ai_generate">
+            Gerar narrativa
+          </button>
+          <button id="aiRetryButton" class="ghost-button hidden" data-i18n="report_ai_retry">
+            Tentar novamente
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div class="floating-share">
+      <button id="shareMenuButton" class="secondary-button" data-i18n="report_share_menu_label">
+        Compartilhar
+      </button>
+      <div id="shareMenu" class="share-menu hidden" role="menu">
+        <p class="menu-heading" data-i18n="report_share_menu_highlights">Highlights</p>
+        <button data-channel="x" data-kind="summary" type="button">X</button>
+        <button data-channel="linkedin" data-kind="summary" type="button">LinkedIn</button>
+        <button data-channel="instagram" data-kind="summary" type="button">Instagram</button>
+        <button data-channel="copy" data-kind="summary" type="button" data-i18n="report_share_menu_copy">
+          Copiar texto
+        </button>
+        <p class="menu-heading" data-i18n="report_share_menu_argument">Argumento do Saul</p>
+        <button data-channel="x" data-kind="argument" type="button">X</button>
+        <button data-channel="linkedin" data-kind="argument" type="button">LinkedIn</button>
+        <button data-channel="instagram" data-kind="argument" type="button">Instagram</button>
+        <button data-channel="copy" data-kind="argument" type="button" data-i18n="report_share_menu_copy">
+          Copiar texto
+        </button>
+        <p class="menu-heading" data-i18n="report_share_menu_native">Nativo</p>
+        <button data-channel="native" data-kind="summary" type="button" data-i18n="report_share_menu_native_action">
+          Share sheet do sistema
+        </button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite">
+      <span id="toastMessage"></span>
+    </div>
+  </body>
+</html>
