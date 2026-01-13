@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "Новинки — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "Предложения от ИИ (скоро)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Резервировано для будущего ИИ. Мы отключаем."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Не предлагать снова в течение (часов)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Соблюдает интервал перед напоминанием о том же домене. По умолчанию: 24ч."
+  },
+  "options_auto_classification_hint": {
+    "message": "Все работает локально. Мы собираем только заголовок, метатеги (description/keywords), og:type и сигналы видео/бесконечного прокрутки для предложения метки."
+  },
+  "options_auto_classification_title": {
+    "message": "Автоматическая классификация"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Включить автоматические предложения"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "Необязательно: генерирует предложение, когда домен не находится в вашем списке."
+  },
   "options_back_to_popup": {
     "message": "Вернуться в Popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "то"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Автоматическая классификация обновлена."
   },
   "options_status_blocklist_saved": {
     "message": "Блокировка предпочтений обновляется."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "Никаких данных на сегодня."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Добавить как прокрастинатор"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Добавить как продуктивный"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Уверенность"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Уверенность {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Игнорировать сегодня"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "НЕЙТРАЛЬНЫЙ"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "ПРОКРАСТИНАТОР"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "ПРОДУКТИВНЫЙ"
+  },
+  "popup_suggestion_manual": {
+    "message": "Классифицировать вручную"
+  },
+  "popup_suggestion_title": {
+    "message": "Автоматическое предложение"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "Этот сайт кажется {label}"
   },
   "popup_summary_inactive_label": {
     "message": "безделье"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "Ежедневное резюме"
+  },
+  "report_suggestion_title": {
+    "message": "Предложение автоматической классификации"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Предложение: {label} ({confidence}%) для {domain}"
   },
   "report_tab_switch_empty": {
     "message": "Пока еще недостаточно переключателей для построения этой диаграммы."

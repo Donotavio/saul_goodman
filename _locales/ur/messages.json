@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "نئی چیزیں — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "AI کی تجاویز (جلد ہی)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "مستقبل کی AI کے لیے محفوظ۔ ہم بند رکھتے ہیں۔"
+  },
+  "options_auto_classification_cooldown": {
+    "message": "دوبارہ تجویز نہ کریں (گھنٹے)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "ایک ہی ڈومین کو یاد کرنے سے پہلے وقفہ کا احترام کرتا ہے۔ معیاری: 24 گھنٹے۔"
+  },
+  "options_auto_classification_hint": {
+    "message": "سب کچھ مقامی طور پر چلتا ہے۔ ہم صرف عنوان، میٹا ٹیگ (تفصیل/کی ورڈز)، og:type اور ویڈیو/انفینٹ اسکرول کے سگنل جمع کرتے ہیں تاکہ لیبل کی تجویز کریں۔"
+  },
+  "options_auto_classification_title": {
+    "message": "خودکار درجہ بندی"
+  },
+  "options_auto_classification_toggle": {
+    "message": "خودکار تجاویز کو فعال کریں"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "اختیاری: جب کوئی ڈومین آپ کی فہرست میں نہیں ہوتا تو ایک تجویز پیدا کرتا ہے۔"
+  },
   "options_back_to_popup": {
     "message": "واپسی پوپ"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "جگہ"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "خودکار درجہ بندی کو اپ ڈیٹ کیا گیا۔"
   },
   "options_status_blocklist_saved": {
     "message": "ترجیحی تجدید بند کرنا."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "آج کے لئے کوئی ڈیٹا نہیں."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "بطور ٹال مٹول کرنے والا شامل کریں"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "بطور پیداواری شامل کریں"
+  },
+  "popup_suggestion_confidence": {
+    "message": "اعتماد"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "اعتماد {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "آج نظر انداز کریں"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "غیر جانبدار"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "ٹال مٹول کرنے والا"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "پیداواری"
+  },
+  "popup_suggestion_manual": {
+    "message": "ہاتھ سے درجہ بندی کریں"
+  },
+  "popup_suggestion_title": {
+    "message": "خودکار تجویز"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "یہ سائٹ {label} لگتی ہے"
   },
   "popup_summary_inactive_label": {
     "message": "مصر"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "ڈیلی خلاصہ"
+  },
+  "report_suggestion_title": {
+    "message": "خودکار درجہ بندی کی تجویز"
+  },
+  "report_suggestion_title_filled": {
+    "message": "تجویز: {label} ({confidence}%) کے لیے {domain}"
   },
   "report_tab_switch_empty": {
     "message": "ابھی تک اس چارٹ کو بنانے کے لئے کافی نہیں ہے."

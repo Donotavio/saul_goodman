@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "Novidades — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "Sugestões por IA (em breve)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Reservado para futura IA. Mantemos desligado."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Não sugerir novamente por (horas)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Respeita o intervalo antes de lembrar do mesmo domínio. Padrão: 24h."
+  },
+  "options_auto_classification_hint": {
+    "message": "Tudo roda localmente. Coletamos apenas título, metatags (description/keywords), og:type e sinais de vídeo/scroll infinito para sugerir rótulo."
+  },
+  "options_auto_classification_title": {
+    "message": "Classificação automática"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Ativar sugestões automáticas"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "Opcional: gera uma sugestão quando um domínio não está na sua lista."
+  },
   "options_back_to_popup": {
     "message": "Voltar ao popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "até"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Classificação automática atualizada."
   },
   "options_status_blocklist_saved": {
     "message": "Preferência de bloqueio atualizada."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "Sem dados para hoje."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Adicionar como procrastinador"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Adicionar como produtivo"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Confiança"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Confiança {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Ignorar hoje"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "NEUTRO"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "PROCRASTINADOR"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "PRODUTIVO"
+  },
+  "popup_suggestion_manual": {
+    "message": "Classificar manualmente"
+  },
+  "popup_suggestion_title": {
+    "message": "Sugestão automática"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "Este site parece ser {label}"
   },
   "popup_summary_inactive_label": {
     "message": "Inativo"
@@ -2246,6 +2306,12 @@
   "report_subtitle_prefix": {
     "message": "Resumo diário"
   },
+  "report_suggestion_title": {
+    "message": "Sugestão de classificação automática"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Sugestão: {label} ({confidence}%) para {domain}"
+  },
   "report_tab_switch_empty": {
     "message": "Ainda não há trocas suficientes para mostrar este gráfico."
   },
@@ -2500,27 +2566,5 @@
   },
   "usersBadgeLabel": {
     "message": "Usuários"
-  },
-  "popup_suggestion_title": { "message": "Sugestão automática" },
-  "popup_suggestion_confidence": { "message": "Confiança" },
-  "popup_suggestion_add_productive": { "message": "Adicionar como produtivo" },
-  "popup_suggestion_add_procrastination": { "message": "Adicionar como procrastinador" },
-  "popup_suggestion_ignore": { "message": "Ignorar hoje" },
-  "popup_suggestion_manual": { "message": "Classificar manualmente" },
-  "popup_suggestion_label_productive": { "message": "PRODUTIVO" },
-  "popup_suggestion_label_procrastination": { "message": "PROCRASTINADOR" },
-  "popup_suggestion_label_neutral": { "message": "NEUTRO" },
-  "popup_suggestion_title_filled": { "message": "Este site parece ser {label}" },
-  "popup_suggestion_confidence_filled": { "message": "Confiança {confidence}%"} ,
-  "options_auto_classification_title": { "message": "Classificação automática" },
-  "options_auto_classification_hint": { "message": "Tudo roda localmente. Coletamos apenas título, metatags (description/keywords), og:type e sinais de vídeo/scroll infinito para sugerir rótulo." },
-  "options_auto_classification_toggle": { "message": "Ativar sugestões automáticas" },
-  "options_auto_classification_toggle_hint": { "message": "Opcional: gera uma sugestão quando um domínio não está na sua lista." },
-  "options_auto_classification_ai": { "message": "Sugestões por IA (em breve)" },
-  "options_auto_classification_ai_hint": { "message": "Reservado para futura IA. Mantemos desligado." },
-  "options_auto_classification_cooldown": { "message": "Não sugerir novamente por (horas)" },
-  "options_auto_classification_cooldown_hint": { "message": "Respeita o intervalo antes de lembrar do mesmo domínio. Padrão: 24h." },
-  "report_suggestion_title": { "message": "Sugestão de classificação automática" },
-  "report_suggestion_title_filled": { "message": "Sugestão: {label} ({confidence}%) para {domain}" }
-}
+  }
 }

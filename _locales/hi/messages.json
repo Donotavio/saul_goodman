@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "नवीनताएँ — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "आई द्वारा सुझाव (जल्द ही)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "भविष्य के आई के लिए आरक्षित। हम इसे बंद रखते हैं।"
+  },
+  "options_auto_classification_cooldown": {
+    "message": "फिर से सुझाव न दें (घंटे)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "एक ही डोमेन को याद करने से पहले अंतराल का सम्मान करें। डिफ़ॉल्ट: 24 घंटे।"
+  },
+  "options_auto_classification_hint": {
+    "message": "सब कुछ स्थानीय रूप से चलता है। हम केवल शीर्षक, मेटाटैग (विवरण/कीवर्ड), og:type और वीडियो/अनंत स्क्रॉल संकेत इकट्ठा करते हैं ताकि लेबल का सुझाव दिया जा सके।"
+  },
+  "options_auto_classification_title": {
+    "message": "स्वचालित वर्गीकरण"
+  },
+  "options_auto_classification_toggle": {
+    "message": "स्वचालित सुझाव सक्रिय करें"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "वैकल्पिक: जब एक डोमेन आपकी सूची में नहीं होता है तो एक सुझाव उत्पन्न करता है।"
+  },
   "options_back_to_popup": {
     "message": "पॉपअप पर वापस जाएं"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "to"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "स्वचालित वर्गीकरण अपडेट किया गया।"
   },
   "options_status_blocklist_saved": {
     "message": "ब्लॉकिंग वरीयता अद्यतन किया गया।"
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "आज के लिए कोई डेटा नहीं।"
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "प्रस्तावक के रूप में जोड़ें"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "उत्पादक के रूप में जोड़ें"
+  },
+  "popup_suggestion_confidence": {
+    "message": "विश्वास"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "विश्वास {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "आज अनदेखा करें"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "तटस्थ"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "प्रस्तावक"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "उत्पादक"
+  },
+  "popup_suggestion_manual": {
+    "message": "हाथ से वर्गीकृत करें"
+  },
+  "popup_suggestion_title": {
+    "message": "स्वचालित सुझाव"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "यह साइट {label} प्रतीत होती है"
   },
   "popup_summary_inactive_label": {
     "message": "आइडल"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "दैनिक सारांश"
+  },
+  "report_suggestion_title": {
+    "message": "स्वचालित वर्गीकरण का सुझाव"
+  },
+  "report_suggestion_title_filled": {
+    "message": "सुझाव: {label} ({confidence}%) के लिए {domain}"
   },
   "report_tab_switch_empty": {
     "message": "इस चार्ट पर अभी तक पर्याप्त स्विच नहीं है।"

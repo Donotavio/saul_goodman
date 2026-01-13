@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "Yeni özellikler — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "Yapay Zeka Önerileri (yakında)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Gelecek yapay zeka için ayrılmıştır. Kapalı tutuyoruz."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Tekrar önermemek için (saatler)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Aynı alan adını hatırlamadan önceki aralığı dikkate alır. Varsayılan: 24saat."
+  },
+  "options_auto_classification_hint": {
+    "message": "Her şey yerel olarak çalışır. Sadece başlık, metatagler (açıklama/anahtar kelimeler), og:type ve video/infinite scroll sinyalleri toplarız öneri etiketlemek için."
+  },
+  "options_auto_classification_title": {
+    "message": "Otomatik Sınıflandırma"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Otomatik önerileri etkinleştir"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "İsteğe bağlı: bir alan adı listenizde yoksa öneri oluşturur."
+  },
   "options_back_to_popup": {
     "message": "Geri popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "toklanmak için"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Otomatik sınıflandırma güncellendi."
   },
   "options_status_blocklist_saved": {
     "message": "Tercih etmek güncellendi."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "Bugün için hiçbir veri yok."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Erteleyici olarak ekle"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Verimli olarak ekle"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Güven"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Güven {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Bugün görmezden gel"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "NÖTR"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "ERTELEYİCİ"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "VERİMLİ"
+  },
+  "popup_suggestion_manual": {
+    "message": "Manuel olarak sınıflandır"
+  },
+  "popup_suggestion_title": {
+    "message": "Otomatik Öneri"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "Bu site {label} gibi görünüyor"
   },
   "popup_summary_inactive_label": {
     "message": "Idle"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "Daily summary"
+  },
+  "report_suggestion_title": {
+    "message": "Otomatik sınıflandırma önerisi"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Öneri: {label} ({confidence}%) için {domain}"
   },
   "report_tab_switch_empty": {
     "message": "Bu grafiği henüz yeterince anahtarlamamak için değil."

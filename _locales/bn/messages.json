@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "নতুনত্ব — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "এআই দ্বারা প্রস্তাবনা (শীঘ্রই)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "ভবিষ্যতের এআই-এর জন্য সংরক্ষিত। আমরা এটি বন্ধ রেখেছি।"
+  },
+  "options_auto_classification_cooldown": {
+    "message": "পুনরায় প্রস্তাবনা না দেওয়া (ঘণ্টা)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "একই ডোমেইনের কথা মনে করানোর আগে সময়সীমা মেনে চলে। ডিফল্ট: 24 ঘণ্টা।"
+  },
+  "options_auto_classification_hint": {
+    "message": "সবকিছু স্থানীয়ভাবে চলে। আমরা শুধুমাত্র শিরোনাম, মেটাট্যাগ (বর্ণনা/কীওয়ার্ড), og:type এবং ভিডিও/অন্তহীন স্ক্রোল সিগন্যাল সংগ্রহ করি রেটিং প্রস্তাব করার জন্য।"
+  },
+  "options_auto_classification_title": {
+    "message": "স্বয়ংক্রিয় শ্রেণীবিভাগ"
+  },
+  "options_auto_classification_toggle": {
+    "message": "স্বয়ংক্রিয় প্রস্তাবনা সক্রিয় করুন"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "ঐচ্ছিক: যখন একটি ডোমেইন আপনার তালিকায় নেই তখন একটি প্রস্তাবনা তৈরি করে।"
+  },
   "options_back_to_popup": {
     "message": "পপ-আপ- এ প্রত্যাবর্তন করুন"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "চিহ্নিত স্থানে চলুন"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "স্বয়ংক্রিয় শ্রেণীবিভাগ আপডেট হয়েছে।"
   },
   "options_status_blocklist_saved": {
     "message": "পছন্দসই মান সংক্রান্ত আপডেট করা হয়েছে।"
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "আজকের জন্য কোনো তথ্য নেই।"
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "প্রকৃতিরূপে যোগ করুন"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "উৎপাদনশীল হিসাবে যোগ করুন"
+  },
+  "popup_suggestion_confidence": {
+    "message": "বিশ্বাস"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "বিশ্বাস {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "আজ উপেক্ষা করুন"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "নিউট্রাল"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "প্রকৃতিরূপে"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "উৎপাদনশীল"
+  },
+  "popup_suggestion_manual": {
+    "message": "ম্যানুয়ালি শ্রেণীবিভাগ করুন"
+  },
+  "popup_suggestion_title": {
+    "message": "স্বয়ংক্রিয় প্রস্তাবনা"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "এই সাইটটি {label} মনে হচ্ছে"
   },
   "popup_summary_inactive_label": {
     "message": "নিষ্ক্রিয়"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "দৈনিক সারসংক্ষেপ"
+  },
+  "report_suggestion_title": {
+    "message": "স্বয়ংক্রিয় শ্রেণীবিভাগের প্রস্তাবনা"
+  },
+  "report_suggestion_title_filled": {
+    "message": "প্রস্তাবনা: {label} ({confidence}%) জন্য {domain}"
   },
   "report_tab_switch_empty": {
     "message": "চার্টের প্লটের জন্য যথেষ্ট সুইচ নেই ।"

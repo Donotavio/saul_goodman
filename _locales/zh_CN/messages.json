@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "新功能 — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "AI建议（即将推出）"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "保留给未来的AI。我们保持关闭。"
+  },
+  "options_auto_classification_cooldown": {
+    "message": "在（小时）内不再建议"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "在提醒同一域名之前遵守间隔。默认：24小时。"
+  },
+  "options_auto_classification_hint": {
+    "message": "一切都在本地运行。我们仅收集标题、元标签（描述/关键词）、og:type和视频/无限滚动信号以建议标签。"
+  },
+  "options_auto_classification_title": {
+    "message": "自动分类"
+  },
+  "options_auto_classification_toggle": {
+    "message": "启用自动建议"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "可选：当域名不在您的列表中时生成建议。"
+  },
   "options_back_to_popup": {
     "message": "回弹出"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "改为:"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "自动分类已更新。"
   },
   "options_status_blocklist_saved": {
     "message": "屏蔽偏好更新 。"
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "今日无数据."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "添加为拖延者"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "添加为高效者"
+  },
+  "popup_suggestion_confidence": {
+    "message": "信心"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "信心 {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "今天忽略"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "中立"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "拖延者"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "高效者"
+  },
+  "popup_suggestion_manual": {
+    "message": "手动分类"
+  },
+  "popup_suggestion_title": {
+    "message": "自动建议"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "该网站似乎是 {label}"
   },
   "popup_summary_inactive_label": {
     "message": "闲置"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "每天摘要"
+  },
+  "report_suggestion_title": {
+    "message": "自动分类建议"
+  },
+  "report_suggestion_title_filled": {
+    "message": "建议：{label} ({confidence}%) 针对 {domain}"
   },
   "report_tab_switch_empty": {
     "message": "尚不足以绘制此图表 。"

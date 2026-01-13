@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "أخبار جديدة — الإصدار {version}"
   },
+  "options_auto_classification_ai": {
+    "message": "اقتراحات بواسطة الذكاء الاصطناعي (قريباً)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "مخصص للذكاء الاصطناعي المستقبلي. نحن نحتفظ به معطلاً."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "لا تقترح مرة أخرى لمدة (ساعات)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "احترم الفاصل الزمني قبل تذكير بنفس المجال. الافتراضي: 24 ساعة."
+  },
+  "options_auto_classification_hint": {
+    "message": "كل شيء يعمل محليًا. نجمع فقط العنوان، والميتا تاجز (الوصف/الكلمات الرئيسية)، og:type وإشارات الفيديو/التمرير اللانهائي لاقتراح التصنيف."
+  },
+  "options_auto_classification_title": {
+    "message": "التصنيف التلقائي"
+  },
+  "options_auto_classification_toggle": {
+    "message": "تفعيل الاقتراحات التلقائية"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "اختياري: يولد اقتراحًا عندما لا يكون المجال في قائمتك."
+  },
   "options_back_to_popup": {
     "message": "العودة إلى البابا"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "إلى"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "تم تحديث التصنيف التلقائي."
   },
   "options_status_blocklist_saved": {
     "message": "تحديث الأفضلية"
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "لا توجد بيانات اليوم"
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "إضافة كمماطل"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "إضافة كمنتج"
+  },
+  "popup_suggestion_confidence": {
+    "message": "ثقة"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "ثقة {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "تجاهل اليوم"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "محايد"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "مماطل"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "منتج"
+  },
+  "popup_suggestion_manual": {
+    "message": "تصنيف يدوي"
+  },
+  "popup_suggestion_title": {
+    "message": "اقتراح تلقائي"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "يبدو أن هذا الموقع هو {label}"
   },
   "popup_summary_inactive_label": {
     "message": "خمول"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "الموجز اليومي"
+  },
+  "report_suggestion_title": {
+    "message": "اقتراح التصنيف التلقائي"
+  },
+  "report_suggestion_title_filled": {
+    "message": "اقتراح: {label} ({confidence}%) لـ {domain}"
   },
   "report_tab_switch_empty": {
     "message": "ليست مفاتيح كافية حتى الآن لرسم هذا المخطط."

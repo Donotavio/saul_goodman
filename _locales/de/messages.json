@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "Neuigkeiten — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "Vorschläge von IA (bald verfügbar)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Reserviert für zukünftige IA. Wir halten es deaktiviert."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Nicht erneut vorschlagen für (Stunden)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Hält den Abstand ein, bevor dasselbe Gebiet erinnert wird. Standard: 24h."
+  },
+  "options_auto_classification_hint": {
+    "message": "Alles läuft lokal. Wir sammeln nur Titel, Metatags (Beschreibung/Schlüsselwörter), og:type und Video-/Scrollsignale, um ein Label vorzuschlagen."
+  },
+  "options_auto_classification_title": {
+    "message": "Automatische Klassifizierung"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Automatische Vorschläge aktivieren"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "Optional: erzeugt einen Vorschlag, wenn eine Domain nicht in Ihrer Liste steht."
+  },
   "options_back_to_popup": {
     "message": "Zurück zum Popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "bis"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Automatische Klassifizierung aktualisiert."
   },
   "options_status_blocklist_saved": {
     "message": "Blockierung Präferenz aktualisiert."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "Keine Daten für heute."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Als Prokrastinator hinzufügen"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Als produktiv hinzufügen"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Vertrauen"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Vertrauen {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Heute ignorieren"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "NEUTRAL"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "PROKRASTINATOR"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "PRODUKTIV"
+  },
+  "popup_suggestion_manual": {
+    "message": "Manuell klassifizieren"
+  },
+  "popup_suggestion_title": {
+    "message": "Automatischer Vorschlag"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "Diese Seite scheint {label} zu sein"
   },
   "popup_summary_inactive_label": {
     "message": "I"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "Tagesübersicht"
+  },
+  "report_suggestion_title": {
+    "message": "Vorschlag zur automatischen Klassifizierung"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Vorschlag: {label} ({confidence}%) für {domain}"
   },
   "report_tab_switch_empty": {
     "message": "Noch nicht genug Schalter, um dieses Diagramm zu erstellen."

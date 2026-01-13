@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "What's New — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "AI suggestions (coming soon)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Reserved for future AI; stays off."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Do not suggest again for (hours)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Respects the interval before reminding about the same domain. Default: 24h."
+  },
+  "options_auto_classification_hint": {
+    "message": "Runs locally. We only read title, meta description/keywords, og:type and video/scroll signals to suggest a label."
+  },
+  "options_auto_classification_title": {
+    "message": "Auto classification"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Enable auto suggestions"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "Optional: suggests a label when a domain is not on your list."
+  },
   "options_back_to_popup": {
     "message": "Back to popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "to"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Auto classification updated."
   },
   "options_status_blocklist_saved": {
     "message": "Blocking preference updated."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "No data for today."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Add as procrastinator"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Add as productive"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Confidence"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Confidence {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Ignore for today"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "NEUTRAL"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "PROCRASTINATOR"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "PRODUCTIVE"
+  },
+  "popup_suggestion_manual": {
+    "message": "Classify manually"
+  },
+  "popup_suggestion_title": {
+    "message": "Auto suggestion"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "This site seems {label}"
   },
   "popup_summary_inactive_label": {
     "message": "Idle"
@@ -2246,6 +2306,12 @@
   "report_subtitle_prefix": {
     "message": "Daily summary"
   },
+  "report_suggestion_title": {
+    "message": "Auto classification suggestion"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Suggestion: {label} ({confidence}%) for {domain}"
+  },
   "report_tab_switch_empty": {
     "message": "Not enough switches yet to plot this chart."
   },
@@ -2500,27 +2566,5 @@
   },
   "usersBadgeLabel": {
     "message": "Users"
-  },
-  "popup_suggestion_title": { "message": "Auto suggestion" },
-  "popup_suggestion_confidence": { "message": "Confidence" },
-  "popup_suggestion_add_productive": { "message": "Add as productive" },
-  "popup_suggestion_add_procrastination": { "message": "Add as procrastinator" },
-  "popup_suggestion_ignore": { "message": "Ignore for today" },
-  "popup_suggestion_manual": { "message": "Classify manually" },
-  "popup_suggestion_label_productive": { "message": "PRODUCTIVE" },
-  "popup_suggestion_label_procrastination": { "message": "PROCRASTINATOR" },
-  "popup_suggestion_label_neutral": { "message": "NEUTRAL" },
-  "popup_suggestion_title_filled": { "message": "This site seems {label}" },
-  "popup_suggestion_confidence_filled": { "message": "Confidence {confidence}%" },
-  "options_auto_classification_title": { "message": "Auto classification" },
-  "options_auto_classification_hint": { "message": "Runs locally. We only read title, meta description/keywords, og:type and video/scroll signals to suggest a label." },
-  "options_auto_classification_toggle": { "message": "Enable auto suggestions" },
-  "options_auto_classification_toggle_hint": { "message": "Optional: suggests a label when a domain is not on your list." },
-  "options_auto_classification_ai": { "message": "AI suggestions (coming soon)" },
-  "options_auto_classification_ai_hint": { "message": "Reserved for future AI; stays off." },
-  "options_auto_classification_cooldown": { "message": "Do not suggest again for (hours)" },
-  "options_auto_classification_cooldown_hint": { "message": "Respects the interval before reminding about the same domain. Default: 24h." },
-  "report_suggestion_title": { "message": "Auto classification suggestion" },
-  "report_suggestion_title_filled": { "message": "Suggestion: {label} ({confidence}%) for {domain}" }
-}
+  }
 }

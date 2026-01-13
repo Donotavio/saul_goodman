@@ -899,6 +899,30 @@
   "notification_update_title": {
     "message": "Novità — v{version}"
   },
+  "options_auto_classification_ai": {
+    "message": "Suggerimenti da IA (prossimamente)"
+  },
+  "options_auto_classification_ai_hint": {
+    "message": "Riservato per futura IA. Manteniamo disattivato."
+  },
+  "options_auto_classification_cooldown": {
+    "message": "Non suggerire di nuovo per (ore)"
+  },
+  "options_auto_classification_cooldown_hint": {
+    "message": "Rispetta l'intervallo prima di ricordare lo stesso dominio. Predefinito: 24h."
+  },
+  "options_auto_classification_hint": {
+    "message": "Tutto funziona localmente. Raccogliamo solo titolo, metatags (description/keywords), og:type e segnali di video/scroll infinito per suggerire etichetta."
+  },
+  "options_auto_classification_title": {
+    "message": "Classificazione automatica"
+  },
+  "options_auto_classification_toggle": {
+    "message": "Attiva suggerimenti automatici"
+  },
+  "options_auto_classification_toggle_hint": {
+    "message": "Opzionale: genera un suggerimento quando un dominio non è nella tua lista."
+  },
   "options_back_to_popup": {
     "message": "Torna a popup"
   },
@@ -1042,6 +1066,9 @@
   },
   "options_schedule_to": {
     "message": "a"
+  },
+  "options_status_auto_classification_saved": {
+    "message": "Classificazione automatica aggiornata."
   },
   "options_status_blocklist_saved": {
     "message": "Bloccare le preferenze aggiornate."
@@ -1582,6 +1609,39 @@
   },
   "popup_status_no_domains": {
     "message": "Nessun dato per oggi."
+  },
+  "popup_suggestion_add_procrastination": {
+    "message": "Aggiungi come procrastinatore"
+  },
+  "popup_suggestion_add_productive": {
+    "message": "Aggiungi come produttivo"
+  },
+  "popup_suggestion_confidence": {
+    "message": "Fiducia"
+  },
+  "popup_suggestion_confidence_filled": {
+    "message": "Fiducia {confidence}%"
+  },
+  "popup_suggestion_ignore": {
+    "message": "Ignora oggi"
+  },
+  "popup_suggestion_label_neutral": {
+    "message": "NEUTRO"
+  },
+  "popup_suggestion_label_procrastination": {
+    "message": "PROCRASTINATORE"
+  },
+  "popup_suggestion_label_productive": {
+    "message": "PRODUTTIVO"
+  },
+  "popup_suggestion_manual": {
+    "message": "Classifica manualmente"
+  },
+  "popup_suggestion_title": {
+    "message": "Suggerimento automatico"
+  },
+  "popup_suggestion_title_filled": {
+    "message": "Questo sito sembra essere {label}"
   },
   "popup_summary_inactive_label": {
     "message": "Idle"
@@ -2245,6 +2305,12 @@
   },
   "report_subtitle_prefix": {
     "message": "Riepilogo giornaliero"
+  },
+  "report_suggestion_title": {
+    "message": "Suggerimento di classificazione automatica"
+  },
+  "report_suggestion_title_filled": {
+    "message": "Suggerimento: {label} ({confidence}%) per {domain}"
   },
   "report_tab_switch_empty": {
     "message": "Non abbastanza interruttori ancora per tracciare questo grafico."
