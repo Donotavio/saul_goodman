@@ -16,7 +16,9 @@ import { runPopupScenario } from './scenarios/popup.scenario.js';
 import { runReportScenario } from './scenarios/report.scenario.js';
 import { runSiteScenario } from './scenarios/site.scenario.js';
 import { runBlogScenario } from './scenarios/blog.scenario.js';
+import { runDaemonScenario } from './scenarios/daemon.scenario.js';
 import type { ScenarioContext, ScenarioResult } from './scenarios/types.js';
+import { spawn } from 'node:child_process';
 
 const MIN_NODE_MAJOR = 18;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -193,7 +195,8 @@ const SCENARIO_RUNNERS: Record<
   report: runReportScenario,
   perf: runPerfScenario,
   site: runSiteScenario,
-  blog: runBlogScenario
+  blog: runBlogScenario,
+  daemon: runDaemonScenario
 };
 
 function parseCliArgs(argv: string[]): CliOptions {
@@ -286,6 +289,44 @@ async function writeSummaries(results: ScenarioResult[], artifactsDir: string): 
   await fs.writeFile(markdownPath, lines.join('\n'), 'utf-8');
 }
 
+interface DaemonHandle {
+  process: ReturnType<typeof spawn>;
+  origin: string;
+  key: string;
+}
+
+async function waitForHealth(origin: string, attempts = 20): Promise<void> {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(`${origin}/health`);
+      if (res.ok) {
+        return;
+      }
+    } catch {
+      // ignore
+    }
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  }
+  throw new Error('Daemon healthcheck timed out');
+}
+
+async function startDaemon(): Promise<DaemonHandle> {
+  const port = 43123;
+  const key = 'mcp-test-key';
+  const origin = `http://127.0.0.1:${port}`;
+  const proc = spawn('node', ['saul-daemon/index.cjs'], {
+    cwd: path.resolve('.'),
+    env: {
+      ...process.env,
+      PORT: String(port),
+      PAIRING_KEY: key
+    },
+    stdio: 'ignore'
+  });
+  await waitForHealth(origin);
+  return { process: proc, origin, key };
+}
+
 async function main(): Promise<void> {
   const cli = parseCliArgs(process.argv.slice(2));
   await prepareArtifactDirs(cli.artifactsDir);
@@ -295,6 +336,9 @@ async function main(): Promise<void> {
   if (!baseUrl) {
     throw new Error('Base URL not defined.');
   }
+
+  const needsDaemon = cli.only.includes('daemon');
+  const daemonHandle = needsDaemon ? await startDaemon() : null;
 
   // eslint-disable-next-line no-console
   console.log(`[mcp-quality] Base URL: ${baseUrl}`);
@@ -322,7 +366,8 @@ async function main(): Promise<void> {
       viewportName,
       viewport: DEFAULT_VIEWPORTS[viewportName],
       allowWarnings: cli.allowWarnings,
-      updateBaseline: cli.updateBaseline
+      updateBaseline: cli.updateBaseline,
+      daemon: daemonHandle ? { origin: daemonHandle.origin, key: daemonHandle.key } : undefined
     };
 
     for (const scenario of cli.only) {
@@ -357,6 +402,9 @@ async function main(): Promise<void> {
 
   await writeSummaries(allResults, cli.artifactsDir);
   await server?.close();
+  if (daemonHandle?.process) {
+    daemonHandle.process.kill();
+  }
 }
 
 const isDirectRun = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;

@@ -9,6 +9,10 @@ export interface ScenarioContext {
   viewport: Viewport;
   allowWarnings: boolean;
   updateBaseline: boolean;
+  daemon?: {
+    origin: string;
+    key: string;
+  };
 }
 
 export interface ScenarioResult {

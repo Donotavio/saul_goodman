@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-export type ScenarioName = 'popup' | 'options' | 'report' | 'perf' | 'site' | 'blog';
+export type ScenarioName = 'popup' | 'options' | 'report' | 'perf' | 'site' | 'blog' | 'daemon';
 
 export interface Viewport {
   width: number;
@@ -12,7 +12,15 @@ export const DEFAULT_VIEWPORTS: Record<'desktop' | 'mobile', Viewport> = {
   mobile: { width: 390, height: 844 }
 };
 
-export const DEFAULT_SCENARIOS: ScenarioName[] = ['popup', 'options', 'report', 'perf', 'site', 'blog'];
+export const DEFAULT_SCENARIOS: ScenarioName[] = [
+  'popup',
+  'options',
+  'report',
+  'perf',
+  'site',
+  'blog',
+  'daemon'
+];
 
 export const HARNESS_PAGES: Record<'popup' | 'options' | 'report', string> = {
   popup: '/tools/mcp_quality/harness/popup.html',
