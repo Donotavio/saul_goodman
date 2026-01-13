@@ -1,5 +1,6 @@
-import { Client, type CallToolResult } from '@modelcontextprotocol/sdk/client/index.js';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import path from 'node:path';
 
 export interface McpLaunchOptions {
