@@ -72,7 +72,12 @@ main {
 }
 
 .suggestion-header small {
-  color: #555;
+  color: #111;
+  background: #fff3d9;
+  border: 1px solid #c7a86c;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 600;
 }
 
 .suggestion-reasons,
@@ -80,12 +85,23 @@ main {
   margin: 0 0 10px;
   padding-left: 18px;
   color: #333;
+  line-height: 1.4;
 }
 
 .suggestion-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    'primary primary'
+    'danger danger'
+    'ignore manual';
+  gap: 10px;
+  align-items: stretch;
+}
+
+.suggestion-actions button {
+  width: 100%;
+  box-shadow: 2px 2px 0 #111;
 }
 
 .suggestion-actions button.primary {
@@ -96,6 +112,7 @@ main {
   padding: 8px 10px;
   font-weight: 700;
   cursor: pointer;
+  grid-area: primary;
 }
 
 .suggestion-actions button.danger {
@@ -106,6 +123,7 @@ main {
   padding: 8px 10px;
   font-weight: 700;
   cursor: pointer;
+  grid-area: danger;
 }
 
 .suggestion-actions button.ghost {
@@ -114,6 +132,16 @@ main {
   border-radius: 6px;
   padding: 8px 10px;
   cursor: pointer;
+  font-weight: 600;
+  grid-area: unset;
+}
+
+.suggestion-actions button.ghost:first-of-type {
+  grid-area: ignore;
+}
+
+.suggestion-actions button.ghost:last-of-type {
+  grid-area: manual;
 }
 
 .suggestion-actions button:disabled {
