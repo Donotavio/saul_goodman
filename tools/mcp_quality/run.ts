@@ -2,7 +2,19 @@ import { createServer, IncomingMessage, ServerResponse } from 'node:http';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { HARNESS_PAGES } from './config.js';
+import {
+  DEFAULT_ARTIFACTS_DIR,
+  DEFAULT_SCENARIOS,
+  DEFAULT_VIEWPORTS,
+  HARNESS_PAGES,
+  type ScenarioName
+} from './config.js';
+import { DevtoolsMcpClient } from './mcp/client.js';
+import { runOptionsScenario } from './scenarios/options.scenario.js';
+import { runPerfScenario } from './scenarios/perf.scenario.js';
+import { runPopupScenario } from './scenarios/popup.scenario.js';
+import { runReportScenario } from './scenarios/report.scenario.js';
+import type { ScenarioContext, ScenarioResult } from './scenarios/types.js';
 
 const MIN_NODE_MAJOR = 18;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -158,14 +170,189 @@ export async function startStaticServer(options: {
   };
 }
 
+type ViewportKey = 'desktop' | 'mobile';
+
+interface CliOptions {
+  viewports: ViewportKey[];
+  only: ScenarioName[];
+  updateBaseline: boolean;
+  allowWarnings: boolean;
+  networkOffline: boolean;
+  artifactsDir: string;
+  baseUrl?: string;
+}
+
+const SCENARIO_RUNNERS: Record<
+  ScenarioName,
+  (client: DevtoolsMcpClient, ctx: ScenarioContext) => Promise<ScenarioResult>
+> = {
+  popup: runPopupScenario,
+  options: runOptionsScenario,
+  report: runReportScenario,
+  perf: runPerfScenario
+};
+
+function parseCliArgs(argv: string[]): CliOptions {
+  const defaults: CliOptions = {
+    viewports: ['desktop', 'mobile'],
+    only: [...DEFAULT_SCENARIOS],
+    updateBaseline: false,
+    allowWarnings: false,
+    networkOffline: false,
+    artifactsDir: DEFAULT_ARTIFACTS_DIR
+  };
+
+  for (const arg of argv) {
+    if (arg === '--update-baseline') {
+      defaults.updateBaseline = true;
+      continue;
+    }
+    if (arg === '--allow-warnings') {
+      defaults.allowWarnings = true;
+      continue;
+    }
+    if (arg === '--network-offline') {
+      defaults.networkOffline = true;
+      continue;
+    }
+    if (arg.startsWith('--viewports=')) {
+      const raw = arg.split('=')[1] ?? '';
+      const values = raw.split(',').map((v) => v.trim()).filter(Boolean) as ViewportKey[];
+      const filtered = values.filter((v) => v === 'desktop' || v === 'mobile');
+      if (filtered.length > 0) {
+        defaults.viewports = filtered;
+      }
+      continue;
+    }
+    if (arg.startsWith('--only=')) {
+      const raw = arg.split('=')[1] ?? '';
+      const values = raw.split(',').map((v) => v.trim()).filter(Boolean) as ScenarioName[];
+      const valid = values.filter((v) => (SCENARIO_RUNNERS as Record<string, unknown>)[v]);
+      if (valid.length > 0) {
+        defaults.only = valid;
+      }
+      continue;
+    }
+    if (arg.startsWith('--artifacts-dir=')) {
+      const raw = arg.split('=')[1];
+      if (raw) {
+        defaults.artifactsDir = path.resolve(raw);
+      }
+      continue;
+    }
+    if (arg.startsWith('--base-url=')) {
+      const raw = arg.split('=')[1];
+      if (raw) {
+        defaults.baseUrl = raw.replace(/\/$/, '');
+      }
+    }
+  }
+
+  return defaults;
+}
+
+async function prepareArtifactDirs(root: string): Promise<void> {
+  const dirs = [
+    root,
+    path.join(root, 'screenshots'),
+    path.join(root, 'traces'),
+    path.join(root, 'logs')
+  ];
+  await Promise.all(dirs.map((dir) => fs.mkdir(dir, { recursive: true })));
+}
+
+async function writeSummaries(results: ScenarioResult[], artifactsDir: string): Promise<void> {
+  const summaryPath = path.join(artifactsDir, 'summary.json');
+  const markdownPath = path.join(artifactsDir, 'summary.md');
+
+  const payload = {
+    createdAt: new Date().toISOString(),
+    results
+  };
+  await fs.writeFile(summaryPath, JSON.stringify(payload, null, 2), 'utf-8');
+
+  const lines: string[] = ['# MCP Quality Suite', '', `Total cenários: ${results.length}`, ''];
+  for (const result of results) {
+    lines.push(
+      `- ${result.name} (${result.viewport}): ${result.passed ? '✅' : '❌'}${
+        result.errors?.length ? ` — ${result.errors.join('; ')}` : ''
+      }`
+    );
+  }
+  await fs.writeFile(markdownPath, lines.join('\n'), 'utf-8');
+}
+
 async function main(): Promise<void> {
-  const server = await startStaticServer();
+  const cli = parseCliArgs(process.argv.slice(2));
+  await prepareArtifactDirs(cli.artifactsDir);
+
+  const server = cli.baseUrl ? null : await startStaticServer();
+  const baseUrl = cli.baseUrl ?? server?.baseUrl;
+  if (!baseUrl) {
+    throw new Error('Base URL not defined.');
+  }
+
   // eslint-disable-next-line no-console
-  console.log(`[mcp-quality] Static server ready at ${server.baseUrl}`);
-  Object.entries(HARNESS_PAGES).forEach(([name, pathValue]) => {
-    // eslint-disable-next-line no-console
-    console.log(`- ${name}: ${server.baseUrl}${pathValue}`);
-  });
+  console.log(`[mcp-quality] Base URL: ${baseUrl}`);
+  // eslint-disable-next-line no-console
+  console.log(
+    `[mcp-quality] Running scenarios: ${cli.only.join(', ')} | viewports: ${cli.viewports.join(', ')}`
+  );
+
+  const allResults: ScenarioResult[] = [];
+  for (const viewportName of cli.viewports) {
+    const client = new DevtoolsMcpClient();
+    await client.connect({
+      headless: true,
+      isolated: true,
+      viewport: DEFAULT_VIEWPORTS[viewportName]
+    });
+    if (cli.networkOffline) {
+      await client.emulate({ networkConditions: 'Offline' });
+    }
+
+    const ctx: ScenarioContext = {
+      client,
+      baseUrl,
+      artifactsDir: cli.artifactsDir,
+      viewportName,
+      viewport: DEFAULT_VIEWPORTS[viewportName],
+      allowWarnings: cli.allowWarnings,
+      updateBaseline: cli.updateBaseline
+    };
+
+    for (const scenario of cli.only) {
+      const runner = SCENARIO_RUNNERS[scenario];
+      if (!runner) {
+        // eslint-disable-next-line no-console
+        console.warn(`[mcp-quality] Scenario ${scenario} not implemented.`);
+        continue;
+      }
+      try {
+        const result = await runner(client, ctx);
+        allResults.push(result);
+        // eslint-disable-next-line no-console
+        console.log(
+          `[mcp-quality] ${scenario} (${viewportName}): ${result.passed ? 'ok' : 'fail'}`
+        );
+      } catch (error) {
+        allResults.push({
+          name: scenario,
+          viewport: viewportName,
+          passed: false,
+          errors: [(error as Error).message],
+          warnings: []
+        });
+        // eslint-disable-next-line no-console
+        console.error(`[mcp-quality] ${scenario} (${viewportName}) falhou`, error);
+      }
+    }
+
+    await client.dispose();
+  }
+
+  await writeSummaries(allResults, cli.artifactsDir);
+  await server?.close();
 }
 
 const isDirectRun = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;
