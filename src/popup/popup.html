@@ -25,6 +25,24 @@
     </header>
 
     <main>
+      <section id="suggestionCard" class="suggestion-card hidden" aria-live="polite">
+        <div class="suggestion-header">
+          <p id="suggestionTitle">Sugestão automática</p>
+          <small id="suggestionConfidence"></small>
+        </div>
+        <ul id="suggestionReasons"></ul>
+        <div class="suggestion-actions">
+          <button id="suggestionProductiveButton" class="primary">
+            Adicionar como produtivo
+          </button>
+          <button id="suggestionProcrastinationButton" class="danger">
+            Adicionar como procrastinador
+          </button>
+          <button id="suggestionIgnoreButton" class="ghost">Ignorar hoje</button>
+          <button id="suggestionManualButton" class="ghost">Classificar manualmente</button>
+        </div>
+      </section>
+
       <section class="fairness-card">
         <div class="fairness-header">
           <div>

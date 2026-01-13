@@ -189,6 +189,28 @@ body.earthquake {
   gap: 8px;
 }
 
+.suggestion-banner {
+  border: 2px dashed #c77b30;
+  background: #fffaf2;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.suggestion-banner__body h2 {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.suggestion-banner__body p {
+  margin: 0 0 8px;
+}
+
+.suggestion-banner__body ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #333;
+}
+
 .fairness-banner h2 {
   margin: 0;
   font-size: 1.1rem;

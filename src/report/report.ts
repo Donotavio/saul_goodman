@@ -1,13 +1,15 @@
 import {
   DailyMetrics,
   DomainStats,
+  DomainSuggestion,
   FairnessRule,
   FairnessSummary,
   HourlyBucket,
   LocalePreference,
   TimelineEntry,
   WorkInterval,
-  ContextModeValue
+  ContextModeValue,
+  ExtensionSettings
 } from '../shared/types.js';
 import {
   formatDuration,
@@ -37,6 +39,9 @@ const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
 const fairnessStatusReportEl = document.getElementById('fairnessStatusReport') as HTMLElement | null;
 const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HTMLElement | null;
+const suggestionSectionEl = document.getElementById('suggestionSection') as HTMLElement | null;
+const suggestionReportTitleEl = document.getElementById('suggestionReportTitle') as HTMLElement | null;
+const suggestionReportReasonsEl = document.getElementById('suggestionReportReasons') as HTMLUListElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -157,13 +162,7 @@ let tabSwitchChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let locale = 'pt-BR';
 let openAiKey = '';
-let latestSettings: {
-  locale?: string;
-  localePreference?: LocalePreference;
-  openAiKey?: string;
-  criticalScoreThreshold?: number;
-  workSchedule?: WorkInterval[];
-} | null = null;
+let latestSettings: ExtensionSettings | null = null;
 let bannerCountdownTimer: number | null = null;
 let bannerCountdownValue = 45;
 let latestTimelineNarrative: string[] = [];
@@ -175,6 +174,7 @@ let activeLocalePreference: LocalePreference = 'auto';
 let hasAiNarrative = false;
 let toastTimer: number | null = null;
 let latestFairness: FairnessSummary | null = null;
+let latestSuggestion: DomainSuggestion | null = null;
 const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -247,6 +247,7 @@ async function hydrate(): Promise<void> {
     locale = latestSettings?.locale ?? 'pt-BR';
     openAiKey = latestSettings?.openAiKey ?? '';
     latestFairness = response.fairness ?? null;
+    latestSuggestion = response.activeSuggestion ?? null;
     renderReport(latestMetrics);
   } catch (error) {
     console.error(error);
@@ -301,6 +302,7 @@ function renderReport(metrics: DailyMetrics): void {
   }
 
   renderFairnessSummary(latestFairness);
+  renderSuggestionSection(latestSuggestion, latestSettings);
   renderContextBreakdown(enriched.contextDurations, enriched.contextIndices);
 
   renderHourlyChart(enriched);
@@ -344,6 +346,37 @@ export function renderFairnessSummary(summary?: FairnessSummary | null): void {
     fairnessHintReportEl.hidden = true;
     fairnessHintReportEl.classList.add('hidden');
   }
+}
+
+function renderSuggestionSection(
+  suggestion: DomainSuggestion | null,
+  settings?: ExtensionSettings | null
+): void {
+  if (!suggestionSectionEl || !suggestionReportTitleEl || !suggestionReportReasonsEl) {
+    return;
+  }
+  const featureEnabled = settings?.enableAutoClassification;
+  if (!featureEnabled || !suggestion) {
+    suggestionSectionEl.classList.add('hidden');
+    suggestionSectionEl.setAttribute('hidden', 'true');
+    return;
+  }
+  suggestionSectionEl.classList.remove('hidden');
+  suggestionSectionEl.removeAttribute('hidden');
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: 'Produtivo',
+    procrastination: 'Procrastinador',
+    neutral: 'Neutro'
+  };
+  suggestionReportTitleEl.textContent = `Sugestão: ${labelMap[suggestion.classification]} (${Math.round(
+    suggestion.confidence
+  )}%) para ${suggestion.domain}`;
+  suggestionReportReasonsEl.innerHTML = '';
+  suggestion.reasons.slice(0, 5).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = reason;
+    suggestionReportReasonsEl.appendChild(li);
+  });
 }
 
 /**
@@ -1669,14 +1702,10 @@ interface OpenAiResponse {
 
 interface MetricsResponse {
   metrics: DailyMetrics;
-  settings?: {
-    locale?: string;
-    localePreference?: LocalePreference;
-    openAiKey?: string;
-    criticalScoreThreshold?: number;
-    workSchedule?: WorkInterval[];
-  };
+  settings?: ExtensionSettings;
   fairness?: FairnessSummary;
+  activeSuggestion?: DomainSuggestion | null;
+  suggestions?: DomainSuggestion[];
 }
 
 function formatAiNarrative(text: string): string {

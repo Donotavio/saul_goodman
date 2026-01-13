@@ -1,6 +1,7 @@
 import {
   DailyMetrics,
   DomainStats,
+  DomainSuggestion,
   FairnessSummary,
   LocalePreference,
   PopupData,
@@ -51,6 +52,22 @@ const csvExportButton = document.getElementById('csvExportButton') as HTMLButton
 const pdfExportButton = document.getElementById('pdfExportButton') as HTMLButtonElement;
 const reportButton = document.getElementById('reportButton') as HTMLButtonElement;
 const releaseNotesButton = document.getElementById('releaseNotesButton') as HTMLButtonElement | null;
+const suggestionCardEl = document.getElementById('suggestionCard') as HTMLDivElement | null;
+const suggestionTitleEl = document.getElementById('suggestionTitle') as HTMLElement | null;
+const suggestionConfidenceEl = document.getElementById('suggestionConfidence') as HTMLElement | null;
+const suggestionReasonsEl = document.getElementById('suggestionReasons') as HTMLUListElement | null;
+const suggestionProductiveButton = document.getElementById(
+  'suggestionProductiveButton'
+) as HTMLButtonElement | null;
+const suggestionProcrastinationButton = document.getElementById(
+  'suggestionProcrastinationButton'
+) as HTMLButtonElement | null;
+const suggestionIgnoreButton = document.getElementById(
+  'suggestionIgnoreButton'
+) as HTMLButtonElement | null;
+const suggestionManualButton = document.getElementById(
+  'suggestionManualButton'
+) as HTMLButtonElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -167,6 +184,7 @@ let latestFairness: FairnessSummary | null = null;
 let cachedBlogPosts: BlogPost[] | null = null;
 let blogFetchPromise: Promise<BlogPost[] | null> | null = null;
 let blogSelectedPostUrl: string | null = null;
+let currentSuggestion: DomainSuggestion | null = null;
 
 const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'popup_critical_message_1', needsThreshold: true },
@@ -241,6 +259,14 @@ function attachListeners(): void {
     }
     void chrome.tabs.create({ url: blogSelectedPostUrl });
   });
+  suggestionProductiveButton?.addEventListener('click', () =>
+    void handleSuggestionDecision('productive')
+  );
+  suggestionProcrastinationButton?.addEventListener('click', () =>
+    void handleSuggestionDecision('procrastination')
+  );
+  suggestionIgnoreButton?.addEventListener('click', () => void handleSuggestionIgnore());
+  suggestionManualButton?.addEventListener('click', () => void openManualClassification());
   manualOverrideToggle?.addEventListener('change', () => {
     const enabled = manualOverrideToggle.checked;
     void handleManualOverrideToggle(enabled);
@@ -304,6 +330,7 @@ async function hydrate(): Promise<void> {
     await ensureI18n(preference);
     latestData = data;
     latestFairness = data.fairness ?? null;
+    currentSuggestion = data.activeSuggestion ?? null;
     criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
@@ -311,6 +338,7 @@ async function hydrate(): Promise<void> {
     renderTopDomains(data.metrics);
     renderChart(data.metrics);
     renderFairness(latestFairness);
+    renderSuggestionCard(currentSuggestion, data.settings);
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -331,6 +359,91 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
   i18n = await createI18n(preference);
   activeLocalePreference = preference;
   i18n.apply();
+}
+
+function renderSuggestionCard(
+  suggestion: DomainSuggestion | null,
+  settings?: { enableAutoClassification?: boolean }
+): void {
+  if (!suggestionCardEl || !suggestionTitleEl || !suggestionReasonsEl || !suggestionConfidenceEl) {
+    return;
+  }
+  const featureEnabled = settings?.enableAutoClassification;
+  if (!featureEnabled || !suggestion) {
+    suggestionCardEl.classList.add('hidden');
+    return;
+  }
+  suggestionCardEl.classList.remove('hidden');
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: 'PRODUTIVO',
+    procrastination: 'PROCRASTINADOR',
+    neutral: 'NEUTRO'
+  };
+  suggestionTitleEl.textContent = `Este site parece ser ${labelMap[suggestion.classification]}`;
+  suggestionConfidenceEl.textContent = `Confiança ${Math.round(suggestion.confidence)}%`;
+  suggestionReasonsEl.innerHTML = '';
+  suggestion.reasons.slice(0, 4).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = reason;
+    suggestionReasonsEl.appendChild(li);
+  });
+}
+
+async function handleSuggestionDecision(target: 'productive' | 'procrastination'): Promise<void> {
+  if (!currentSuggestion) {
+    return;
+  }
+  setSuggestionBusy(true);
+  try {
+    await sendRuntimeMessage('apply-suggestion', {
+      domain: currentSuggestion.domain,
+      classification: target
+    });
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to apply suggestion', error);
+  } finally {
+    setSuggestionBusy(false);
+  }
+}
+
+async function handleSuggestionIgnore(): Promise<void> {
+  if (!currentSuggestion) {
+    return;
+  }
+  setSuggestionBusy(true);
+  try {
+    await sendRuntimeMessage('ignore-suggestion', { domain: currentSuggestion.domain });
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to ignore suggestion', error);
+  } finally {
+    setSuggestionBusy(false);
+  }
+}
+
+function openManualClassification(): void {
+  const url = chrome.runtime.getURL('src/options/options.html#vilains');
+  void chrome.tabs.create({ url });
+}
+
+function setSuggestionBusy(busy: boolean): void {
+  [
+    suggestionProductiveButton,
+    suggestionProcrastinationButton,
+    suggestionIgnoreButton,
+    suggestionManualButton
+  ].forEach((button) => {
+    if (!button) {
+      return;
+    }
+    button.disabled = busy;
+    if (busy) {
+      button.setAttribute('aria-busy', 'true');
+    } else {
+      button.removeAttribute('aria-busy');
+    }
+  });
 }
 
 function renderSummary(metrics: DailyMetrics): void {

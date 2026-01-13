@@ -34,6 +34,11 @@ const criticalThresholdEl = document.getElementById('criticalThreshold') as HTML
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const holidayAutoEnabledEl = document.getElementById('holidayAutoEnabled') as HTMLInputElement;
 const holidayCountryCodeEl = document.getElementById('holidayCountryCode') as HTMLInputElement;
+const enableAutoClassificationEl = document.getElementById(
+  'enableAutoClassification'
+) as HTMLInputElement;
+const enableAISuggestionsEl = document.getElementById('enableAISuggestions') as HTMLInputElement;
+const suggestionCooldownEl = document.getElementById('suggestionCooldownHours') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
@@ -132,6 +137,29 @@ function attachListeners(): void {
     }
     currentSettings.blockProcrastination = blockProcrastinationEl.checked;
     void persistSettings('options_status_blocklist_saved');
+  });
+  enableAutoClassificationEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.enableAutoClassification = enableAutoClassificationEl.checked;
+    void persistSettings('options_status_auto_classification_saved');
+  });
+  enableAISuggestionsEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.enableAISuggestions = enableAISuggestionsEl.checked;
+    void persistSettings('options_status_auto_classification_saved');
+  });
+  suggestionCooldownEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    const hours = Math.max(1, Number.parseInt(suggestionCooldownEl.value, 10) || 24);
+    currentSettings.suggestionCooldownMs = hours * 3600000;
+    suggestionCooldownEl.value = hours.toString();
+    void persistSettings('options_status_auto_classification_saved');
   });
 
   resetButton.addEventListener('click', () => {
@@ -462,6 +490,17 @@ function renderForms(): void {
   }
   if (blockProcrastinationEl) {
     blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
+  }
+  if (enableAutoClassificationEl) {
+    enableAutoClassificationEl.checked = Boolean(currentSettings.enableAutoClassification);
+  }
+  if (enableAISuggestionsEl) {
+    enableAISuggestionsEl.checked = Boolean(currentSettings.enableAISuggestions);
+    enableAISuggestionsEl.disabled = true;
+  }
+  if (suggestionCooldownEl) {
+    const hours = Math.round((currentSettings.suggestionCooldownMs ?? 86_400_000) / 3600000);
+    suggestionCooldownEl.value = hours.toString();
   }
   renderWorkSchedule();
 

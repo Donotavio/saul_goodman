@@ -20,6 +20,9 @@ import {
   ActivityPingPayload,
   DailyMetrics,
   DomainCategory,
+  DomainMetadata,
+  DomainSuggestion,
+  SuggestionHistoryEntry,
   ExtensionSettings,
   FairnessSummary,
   HourlyBucket,
@@ -32,7 +35,8 @@ import {
   ManualOverrideState,
   HolidaysCache
 } from '../shared/types.js';
-import { classifyDomain, extractDomain, normalizeDomain } from '../shared/utils/domain.js';
+import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
+import { classifyDomain as classifyWithMetadata } from '../shared/domain-classifier.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -66,6 +70,8 @@ const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
 const BLOCK_PAGE_PATH = '/src/block/block.html';
 const VS_CODE_DOMAIN_ID = '__vscode:ide';
 const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
+const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
+const MAX_SUGGESTIONS = 10;
 
 interface TrackingState {
   currentDomain: string | null;
@@ -120,6 +126,78 @@ let holidaysCache: HolidaysCache = {};
 let holidayNeutralToday = false;
 let fairnessSnapshot: FairnessSummary | null = null;
 let lastScoreComputation: ScoreComputation | null = null;
+const suggestionCache: Map<string, DomainSuggestion> = new Map();
+
+function normalizeHostCandidate(domain: string): string {
+  return normalizeDomain(domain);
+}
+
+function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
+  const host = normalizeHostCandidate(domain);
+  if (!host) {
+    return false;
+  }
+  const listedProductive = settings.productiveDomains.some((candidate) =>
+    domainMatches(host, candidate)
+  );
+  const listedProcrastination = settings.procrastinationDomains.some((candidate) =>
+    domainMatches(host, candidate)
+  );
+  return listedProductive || listedProcrastination;
+}
+
+function getSuggestionCooldownMs(settings: ExtensionSettings): number {
+  return settings.suggestionCooldownMs ?? 86_400_000;
+}
+
+function isDomainInCooldown(domain: string, settings: ExtensionSettings): boolean {
+  const host = normalizeHostCandidate(domain);
+  const history = settings.suggestionsHistory?.[host];
+  if (!history) {
+    return false;
+  }
+  const now = Date.now();
+  if (history.ignoredUntil && history.ignoredUntil > now) {
+    return true;
+  }
+  if (history.decidedAt && history.decidedAs && history.decidedAt + getSuggestionCooldownMs(settings) > now) {
+    return true;
+  }
+  return false;
+}
+
+function pruneSuggestionCache(settings: ExtensionSettings): void {
+  const now = Date.now();
+  for (const [domain, suggestion] of suggestionCache.entries()) {
+    if (isDomainClassified(domain, settings) || isDomainInCooldown(domain, settings)) {
+      suggestionCache.delete(domain);
+      continue;
+    }
+    const maxAge = getSuggestionCooldownMs(settings) * 2;
+    if (maxAge > 0 && suggestion.timestamp + maxAge < now) {
+      suggestionCache.delete(domain);
+    }
+  }
+  if (suggestionCache.size > MAX_SUGGESTIONS) {
+    const sorted = Array.from(suggestionCache.values()).sort(
+      (a, b) => b.timestamp - a.timestamp
+    );
+    const keep = new Set(sorted.slice(0, MAX_SUGGESTIONS).map((entry) => entry.domain));
+    for (const key of suggestionCache.keys()) {
+      if (!keep.has(key)) {
+        suggestionCache.delete(key);
+      }
+    }
+  }
+}
+
+function getActiveSuggestion(): DomainSuggestion | null {
+  const domain = trackingState.currentDomain ? normalizeHostCandidate(trackingState.currentDomain) : null;
+  if (!domain) {
+    return null;
+  }
+  return suggestionCache.get(domain) ?? null;
+}
 
 const messageHandlers: Record<
   RuntimeMessageType,
@@ -130,7 +208,14 @@ const messageHandlers: Record<
     await updateRestoredItems();
     await syncVscodeMetrics(true);
     const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
-    return { metrics, settings, fairness: getFairnessSummary() };
+    pruneSuggestionCache(settings);
+    return {
+      metrics,
+      settings,
+      fairness: getFairnessSummary(),
+      suggestions: Array.from(suggestionCache.values()),
+      activeSuggestion: getActiveSuggestion()
+    };
   },
   'clear-data': async () => clearTodayData(),
   'settings-updated': async () => {
@@ -140,6 +225,7 @@ const messageHandlers: Record<
     await syncBlockingRules(settings);
     await syncVscodeMetrics(true);
     await refreshScore();
+    pruneSuggestionCache(settings);
   },
   'release-notes': async (payload?: unknown) => {
     const reset = Boolean((payload as { reset?: boolean })?.reset);
@@ -147,9 +233,187 @@ const messageHandlers: Record<
       await chrome.storage.local.remove(LAST_NOTIFIED_VERSION_KEY);
     }
     await notifyReleaseNotesIfNeeded(true);
-  }
+  },
+  'apply-suggestion': async (payload?: unknown) =>
+    handleApplySuggestion(payload as { domain?: string; classification?: DomainCategory }),
+  'ignore-suggestion': async (payload?: unknown) =>
+    handleIgnoreSuggestion(payload as { domain?: string })
 };
 
+async function handleApplySuggestion(payload: {
+  domain?: string;
+  classification?: DomainCategory;
+}): Promise<void> {
+  const domain = normalizeHostCandidate(payload?.domain ?? '');
+  const classification = payload?.classification;
+  if (!domain || (classification !== 'productive' && classification !== 'procrastination')) {
+    return;
+  }
+  const settings = await getSettingsCache();
+  const listKey = classification === 'productive' ? 'productiveDomains' : 'procrastinationDomains';
+  const list = Array.isArray(settings[listKey]) ? settings[listKey] : [];
+  if (!list.some((candidate) => domainMatches(domain, candidate))) {
+    list.push(domain);
+    settings[listKey] = Array.from(new Set(list.map(normalizeHostCandidate))).filter(Boolean);
+  }
+
+  const now = Date.now();
+  const history = settings.suggestionsHistory ?? {};
+  history[domain] = {
+    ...(history[domain] ?? { lastSuggestedAt: now }),
+    decidedAt: now,
+    decidedAs: classification
+  };
+  settings.suggestionsHistory = history;
+  settingsCache = settings;
+  suggestionCache.delete(domain);
+  pruneSuggestionCache(settings);
+  await saveSettings(settings);
+  await syncBlockingRules(settings);
+  await refreshScore();
+}
+
+async function handleIgnoreSuggestion(payload: { domain?: string }): Promise<void> {
+  const domain = normalizeHostCandidate(payload?.domain ?? '');
+  if (!domain) {
+    return;
+  }
+  const settings = await getSettingsCache();
+  const now = Date.now();
+  const history = settings.suggestionsHistory ?? {};
+  const cooldown = getSuggestionCooldownMs(settings);
+  history[domain] = {
+    ...(history[domain] ?? { lastSuggestedAt: now }),
+    ignoredUntil: now + cooldown,
+    decidedAt: now,
+    decidedAs: 'ignored'
+  };
+  settings.suggestionsHistory = history;
+  settingsCache = settings;
+  suggestionCache.delete(domain);
+  pruneSuggestionCache(settings);
+  await saveSettings(settings);
+}
+
+async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Promise<void> {
+  const normalizedDomain = normalizeHostCandidate(domain);
+  const settings = await getSettingsCache();
+  pruneSuggestionCache(settings);
+
+  if (!settings.enableAutoClassification) {
+    return;
+  }
+
+  if (!normalizedDomain || isDomainClassified(normalizedDomain, settings)) {
+    suggestionCache.delete(normalizedDomain);
+    return;
+  }
+
+  if (isDomainInCooldown(normalizedDomain, settings)) {
+    suggestionCache.delete(normalizedDomain);
+    return;
+  }
+
+  if (!tab?.url || !/^https?:/i.test(tab.url)) {
+    return;
+  }
+
+  if (suggestionCache.has(normalizedDomain)) {
+    return;
+  }
+
+  const metadata = await collectDomainMetadata(tab, normalizedDomain);
+  if (!metadata) {
+    return;
+  }
+
+  const result = classifyWithMetadata(metadata);
+  const suggestion: DomainSuggestion = {
+    domain: normalizedDomain,
+    classification: result.classification,
+    confidence: result.confidence,
+    reasons: result.reasons,
+    timestamp: Date.now()
+  };
+
+  suggestionCache.set(normalizedDomain, suggestion);
+  await recordSuggestionHistory(normalizedDomain, {
+    lastSuggestedAt: suggestion.timestamp,
+    decidedAs: undefined,
+    decidedAt: undefined,
+    ignoredUntil: undefined
+  });
+  pruneSuggestionCache(settings);
+}
+
+async function collectDomainMetadata(
+  tab: chrome.tabs.Tab,
+  fallbackHost: string
+): Promise<DomainMetadata | null> {
+  return new Promise((resolve) => {
+    if (!tab?.id) {
+      resolve(null);
+      return;
+    }
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      resolve(null);
+    }, 2000);
+    chrome.tabs.sendMessage(tab.id, { type: METADATA_REQUEST_MESSAGE }, (response) => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      clearTimeout(timer);
+      if (chrome.runtime.lastError) {
+        resolve(null);
+        return;
+      }
+      const payload = response as DomainMetadata | undefined;
+      if (!payload || typeof payload !== 'object') {
+        resolve(null);
+        return;
+      }
+      const hostname = normalizeHostCandidate(payload.hostname || fallbackHost);
+      resolve({
+        hostname,
+        title: payload.title,
+        description: payload.description,
+        keywords: Array.isArray(payload.keywords)
+          ? payload.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
+          : [],
+        ogType: payload.ogType,
+        hasVideoPlayer: Boolean(payload.hasVideoPlayer),
+        hasInfiniteScroll: Boolean(payload.hasInfiniteScroll)
+      });
+    });
+  });
+}
+
+async function recordSuggestionHistory(
+  domain: string,
+  updates: Partial<SuggestionHistoryEntry>
+): Promise<void> {
+  const settings = await getSettingsCache();
+  const history = settings.suggestionsHistory ?? {};
+  const normalized = normalizeHostCandidate(domain);
+  const now = Date.now();
+  const existing = history[normalized] ?? { lastSuggestedAt: updates.lastSuggestedAt ?? now };
+  history[normalized] = {
+    ...existing,
+    lastSuggestedAt: updates.lastSuggestedAt ?? existing.lastSuggestedAt ?? now,
+    ignoredUntil: updates.ignoredUntil,
+    decidedAt: updates.decidedAt,
+    decidedAs: updates.decidedAs
+  };
+  settings.suggestionsHistory = history;
+  settingsCache = settings;
+  await saveSettings(settings);
+}
 chrome.runtime.onInstalled.addListener(() => {
   void initialize();
 });
@@ -411,6 +675,7 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
   trackingState.currentTabAudible = audible;
   trackingState.currentTabGroupId = groupId;
   trackingState.lastTimestamp = Date.now();
+  void maybeHandleSuggestion(domain, tab);
 }
 
 async function handleActivityPing(payload: ActivityPingPayload): Promise<void> {

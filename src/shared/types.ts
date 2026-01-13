@@ -137,7 +137,7 @@ export interface ExtensionSettings {
   enableAutoClassification?: boolean;
   enableAISuggestions?: boolean;
   suggestionCooldownMs?: number;
-  suggestionsHistory?: Record<string, number>;
+  suggestionsHistory?: Record<string, SuggestionHistoryEntry>;
   locale: SupportedLocale;
   localePreference?: LocalePreference;
   openAiKey?: string;
@@ -177,6 +177,8 @@ export interface RuntimeMessageResponse {
   metrics?: DailyMetrics;
   settings?: ExtensionSettings;
   fairness?: FairnessSummary;
+  suggestions?: DomainSuggestion[];
+  activeSuggestion?: DomainSuggestion | null;
 }
 
 export type RuntimeMessageType =
@@ -184,12 +186,16 @@ export type RuntimeMessageType =
   | 'metrics-request'
   | 'clear-data'
   | 'settings-updated'
-  | 'release-notes';
+  | 'release-notes'
+  | 'apply-suggestion'
+  | 'ignore-suggestion';
 
 export interface PopupData {
   metrics: DailyMetrics;
   settings: ExtensionSettings;
   fairness?: FairnessSummary;
+  suggestions?: DomainSuggestion[];
+  activeSuggestion?: DomainSuggestion | null;
 }
 
 export interface ManualOverrideState {
@@ -246,6 +252,31 @@ export interface FairnessSummary {
   contextMode: ContextModeState;
   holidayNeutral: boolean;
   isHolidayToday: boolean;
+}
+
+export interface DomainMetadata {
+  hostname: string;
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  ogType?: string;
+  hasVideoPlayer: boolean;
+  hasInfiniteScroll: boolean;
+}
+
+export interface DomainSuggestion {
+  domain: string;
+  classification: DomainCategory;
+  confidence: number;
+  reasons: string[];
+  timestamp: number;
+}
+
+export interface SuggestionHistoryEntry {
+  lastSuggestedAt: number;
+  ignoredUntil?: number;
+  decidedAt?: number;
+  decidedAs?: DomainCategory | 'ignored';
 }
 
 

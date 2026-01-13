@@ -217,6 +217,7 @@ export async function getSettings(): Promise<ExtensionSettings> {
       ...stored,
       locale,
       localePreference: preference,
+      suggestionsHistory: stored.suggestionsHistory ?? defaults.suggestionsHistory ?? {},
       weights: {
         ...defaults.weights,
         ...(stored.weights ?? {})

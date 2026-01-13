@@ -19,6 +19,7 @@ Extensão MV3 para Chrome/Chromium que assume o alter ego vendedor de Saul Goodm
 - **Content script** envia pings de atividade (mouse/teclado/scroll) para o background não marcar você como ausente antes da hora.
 - **Popup** mostra índice atual, gráfico Chart.js (produtivo vs procrastinação), resumo diário, top 5 domínios e botões de ação.
 - **Options page** permite ajustar pesos do cálculo, threshold de inatividade, listas de domínios produtivos/vilões, limiar do "modo terremoto", idioma da interface (auto + 13 idiomas suportados) e definir o seu horário de trabalho (minutos produtivos fora desse período contam em dobro).
+- **Classificação automática local (opt-in)**: ao visitar um domínio não classificado, a extensão pode sugerir produtivo/procrastinador/neutro usando apenas metadados da página (title, description, keywords, og:type, presença de vídeo/scroll infinito). Nada sai do navegador; é possível ignorar por tempo configurável ou aceitar direto no popup/report.
 - **Teste de conexão com SaulDaemon** direto nas opções: valida URL, pairing key e exibe sessões/minutos do dia.
 - **Badge em tempo real** sempre exibindo o índice atual arredondado.
 - **Indicadores extras**: foco ativo, elasticidade de abas por hora, tempo ocioso %, razão Prod x Proc e vilões/campeões do dia calculados on-the-fly.

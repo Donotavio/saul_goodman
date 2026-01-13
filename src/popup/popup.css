@@ -51,6 +51,76 @@ main {
   padding-top: 5%;
 }
 
+.suggestion-card {
+  border: 2px dashed #111;
+  border-radius: 10px;
+  background: #fffef7;
+  padding: 12px;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.suggestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.suggestion-header p {
+  font-weight: 700;
+}
+
+.suggestion-header small {
+  color: #555;
+}
+
+.suggestion-reasons,
+#suggestionReasons {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  color: #333;
+}
+
+.suggestion-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestion-actions button.primary {
+  background: #29c56d;
+  color: #0c160f;
+  border: 2px solid #0c160f;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.suggestion-actions button.danger {
+  background: #ffebd9;
+  color: #a52c00;
+  border: 2px solid #a52c00;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.suggestion-actions button.ghost {
+  background: transparent;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.suggestion-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 h2 {
   margin: 0;
   font-size: 1rem;

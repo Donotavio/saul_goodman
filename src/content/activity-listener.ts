@@ -1,5 +1,8 @@
+import type { DomainMetadata } from '../shared/types.js';
+
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
+const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const EARTHQUAKE_CLASS = 'sg-earthquake-active';
 const OVERLAY_ID = 'sg-earthquake-overlay';
 const STYLE_ID = 'sg-earthquake-style';
@@ -16,8 +19,24 @@ let intervalId: number | null = null;
 let listenersBound = false;
 let overlayElement: HTMLDivElement | null = null;
 let earthquakeActive = false;
+let infiniteScrollDetected = false;
+let lastScrollHeight = document.documentElement.scrollHeight;
 const sirenPlayer =
   typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
+
+window.addEventListener(
+  'scroll',
+  () => {
+    const currentHeight = document.documentElement.scrollHeight;
+    if (currentHeight - lastScrollHeight > window.innerHeight * 0.2) {
+      infiniteScrollDetected = true;
+    }
+    if (currentHeight > lastScrollHeight) {
+      lastScrollHeight = currentHeight;
+    }
+  },
+  { passive: true }
+);
 
 const activityHandler = () => {
   lastEventTimestamp = Date.now();
@@ -85,7 +104,7 @@ async function sendPing(): Promise<void> {
 }
 
 setupActivityTracking();
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === CRITICAL_MESSAGE) {
     const payload = message.payload as { active: boolean; soundEnabled?: boolean } | undefined;
     if (payload?.active) {
@@ -94,7 +113,58 @@ chrome.runtime.onMessage.addListener((message) => {
       deactivateEarthquake();
     }
   }
+
+  if (message?.type === METADATA_REQUEST_MESSAGE) {
+    sendResponse(collectPageMetadata());
+  }
 });
+
+function collectPageMetadata(): DomainMetadata {
+  const title = document.title || undefined;
+  const description = getMetaContent('meta[name=\"description\"]');
+  const keywordsContent = getMetaContent('meta[name=\"keywords\"]');
+  const keywords = keywordsContent
+    ? keywordsContent
+        .split(',')
+        .map((kw) => kw.trim())
+        .filter(Boolean)
+    : [];
+  const ogType = getMetaContent('meta[property=\"og:type\"]');
+  const hasVideoPlayer = Boolean(
+    document.querySelector('video, [role=\"video\"], video-player, .video-player, [data-testid*=\"video\"]')
+  );
+  const hasInfiniteScroll = detectInfiniteScroll();
+
+  return {
+    hostname: window.location.hostname,
+    title,
+    description: description || undefined,
+    keywords,
+    ogType: ogType || undefined,
+    hasVideoPlayer,
+    hasInfiniteScroll
+  };
+}
+
+function getMetaContent(selector: string): string {
+  const element = document.querySelector(selector);
+  if (!element) {
+    return '';
+  }
+  const content = element.getAttribute('content');
+  return content ?? '';
+}
+
+function detectInfiniteScroll(): boolean {
+  const doc = document.documentElement;
+  const viewport = window.innerHeight || doc.clientHeight || 0;
+  const longPage = doc.scrollHeight > viewport * 3;
+  const pagination = document.querySelector('a[rel=\"next\"], nav[aria-label*=\"pag\"], [data-testid*=\"pagination\"]');
+  if (pagination) {
+    return false;
+  }
+  return infiniteScrollDetected || longPage;
+}
 
 function activateEarthquake(shouldPlaySound: boolean): void {
   if (earthquakeActive) {
