@@ -1,5 +1,3 @@
-import type { DomainMetadata } from '../shared/types.js';
-
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -13,6 +11,16 @@ const CRITICAL_QUOTES = [
   'O terremoto é real: finalize 3 abas procrastinatórias agora!'
 ];
 const LOGO_URL = chrome.runtime.getURL('src/img/logotipo_saul_goodman.png');
+
+type DomainMetadata = {
+  hostname: string;
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  ogType?: string;
+  hasVideoPlayer: boolean;
+  hasInfiniteScroll: boolean;
+};
 
 let lastEventTimestamp = Date.now();
 let intervalId: number | null = null;
