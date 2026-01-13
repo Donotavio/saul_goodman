@@ -344,6 +344,12 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     ignoredUntil: undefined
   });
   pruneSuggestionCache(settings);
+  if (tab.id) {
+    chrome.tabs.sendMessage(tab.id, {
+      type: 'sg:auto-classification-toast',
+      payload: { suggestion }
+    });
+  }
 }
 
 async function collectDomainMetadata(

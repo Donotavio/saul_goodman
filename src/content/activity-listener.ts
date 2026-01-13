@@ -1,6 +1,7 @@
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
+const SUGGESTION_TOAST_MESSAGE = 'sg:auto-classification-toast';
 const EARTHQUAKE_CLASS = 'sg-earthquake-active';
 const OVERLAY_ID = 'sg-earthquake-overlay';
 const STYLE_ID = 'sg-earthquake-style';
@@ -22,6 +23,13 @@ type DomainMetadata = {
   hasInfiniteScroll: boolean;
 };
 
+type DomainSuggestion = {
+  domain: string;
+  classification: 'productive' | 'procrastination' | 'neutral';
+  confidence: number;
+  reasons: string[];
+};
+
 let lastEventTimestamp = Date.now();
 let intervalId: number | null = null;
 let listenersBound = false;
@@ -29,6 +37,11 @@ let overlayElement: HTMLDivElement | null = null;
 let earthquakeActive = false;
 let infiniteScrollDetected = false;
 let lastScrollHeight = document.documentElement.scrollHeight;
+let suggestionToastEl: HTMLDivElement | null = null;
+let suggestionToastTimer: number | null = null;
+const suggestionToastImage = typeof chrome !== 'undefined' && chrome.runtime?.getURL
+  ? chrome.runtime.getURL('src/img/saul_nao_corte.png')
+  : '';
 const sirenPlayer =
   typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
 
@@ -125,6 +138,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === METADATA_REQUEST_MESSAGE) {
     sendResponse(collectPageMetadata());
   }
+
+  if (message?.type === SUGGESTION_TOAST_MESSAGE) {
+    const suggestion = (message.payload as { suggestion?: DomainSuggestion } | undefined)
+      ?.suggestion;
+    if (suggestion) {
+      showSuggestionToast(suggestion);
+    }
+  }
 });
 
 function collectPageMetadata(): DomainMetadata {
@@ -172,6 +193,170 @@ function detectInfiniteScroll(): boolean {
     return false;
   }
   return infiniteScrollDetected || longPage;
+}
+
+function showSuggestionToast(suggestion: DomainSuggestion): void {
+  ensureSuggestionToastStyles();
+
+  if (suggestionToastTimer) {
+    window.clearTimeout(suggestionToastTimer);
+    suggestionToastTimer = null;
+  }
+  if (suggestionToastEl) {
+    suggestionToastEl.remove();
+    suggestionToastEl = null;
+  }
+
+  const labels: Record<DomainSuggestion['classification'], string> = {
+    productive: 'produtivo',
+    procrastination: 'procrastinador',
+    neutral: 'neutro'
+  };
+
+  const container = document.createElement('div');
+  container.id = 'sg-auto-classification-toast';
+  container.setAttribute('role', 'status');
+  container.setAttribute('aria-live', 'polite');
+  container.innerHTML = `
+    <div class="sg-toast-card">
+      <div class="sg-toast-header">
+        <strong>Sugestão automática</strong>
+        <span class="sg-toast-confidence">Confiança ${Math.round(suggestion.confidence)}%</span>
+      </div>
+      <div class="sg-toast-body">
+        ${
+          suggestionToastImage
+            ? `<img src="${suggestionToastImage}" alt="Saul Goodman" class="sg-toast-avatar" />`
+            : ''
+        }
+        <div class="sg-toast-content">
+          <p class="sg-toast-title">${suggestion.domain} parece ${labels[suggestion.classification]}</p>
+          <ul class="sg-toast-reasons">
+            ${suggestion.reasons.slice(0, 3).map((reason) => `<li>${reason}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <button class="sg-toast-close" aria-label="Fechar sugestão">×</button>
+    </div>
+  `;
+
+  const closeButton = container.querySelector('.sg-toast-close');
+  closeButton?.addEventListener('click', () => {
+    container.remove();
+    suggestionToastEl = null;
+    if (suggestionToastTimer) {
+      window.clearTimeout(suggestionToastTimer);
+      suggestionToastTimer = null;
+    }
+  });
+
+  document.body.appendChild(container);
+  suggestionToastEl = container;
+  suggestionToastTimer = window.setTimeout(() => {
+    container.remove();
+    suggestionToastEl = null;
+    suggestionToastTimer = null;
+  }, 8000);
+}
+
+function ensureSuggestionToastStyles(): void {
+  const STYLE_ID_TOAST = 'sg-auto-classification-toast-style';
+  if (document.getElementById(STYLE_ID_TOAST)) {
+    return;
+  }
+  const style = document.createElement('style');
+  style.id = STYLE_ID_TOAST;
+  style.textContent = `
+    #sg-auto-classification-toast {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 2147483646;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #111;
+    }
+
+    #sg-auto-classification-toast .sg-toast-card {
+      position: relative;
+      min-width: 260px;
+      max-width: min(420px, 90vw);
+      background: #fffdf7;
+      border: 2px solid #111;
+      border-radius: 12px;
+      box-shadow: 6px 6px 0 #111;
+      padding: 12px 14px 14px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-confidence {
+      background: #fff3d9;
+      border: 1px solid #c7a86c;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    #sg-auto-classification-toast .sg-toast-title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    #sg-auto-classification-toast .sg-toast-body {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    #sg-auto-classification-toast .sg-toast-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 3px 3px 0 #111;
+      flex-shrink: 0;
+    }
+
+    #sg-auto-classification-toast .sg-toast-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #sg-auto-classification-toast .sg-toast-reasons {
+      margin: 0 0 10px 16px;
+      padding: 0;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #sg-auto-classification-toast .sg-toast-reasons li {
+      margin-bottom: 4px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      border: none;
+      background: transparent;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #444;
+      padding: 2px 6px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-close:hover {
+      color: #000;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function activateEarthquake(shouldPlaySound: boolean): void {
