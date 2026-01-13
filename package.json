@@ -18,6 +18,7 @@
     "i18n:stubs": "node tools/i18n/generate-locale-stubs.js",
     "i18n:copy-site": "node tools/i18n/copy-locales-to-site.js",
     "i18n:repair-locale": "node tools/i18n/repair-locale-with-llm.js",
+    "mcp:sync-harness": "tsx tools/mcp_quality/sync-harness.ts",
     "mcp:quality": "npm run build && tsx tools/mcp_quality/run.ts",
     "mcp:quality:update-baseline": "npm run mcp:quality -- --update-baseline"
   },
