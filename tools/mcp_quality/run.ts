@@ -14,6 +14,8 @@ import { runOptionsScenario } from './scenarios/options.scenario.js';
 import { runPerfScenario } from './scenarios/perf.scenario.js';
 import { runPopupScenario } from './scenarios/popup.scenario.js';
 import { runReportScenario } from './scenarios/report.scenario.js';
+import { runSiteScenario } from './scenarios/site.scenario.js';
+import { runBlogScenario } from './scenarios/blog.scenario.js';
 import type { ScenarioContext, ScenarioResult } from './scenarios/types.js';
 
 const MIN_NODE_MAJOR = 18;
@@ -189,7 +191,9 @@ const SCENARIO_RUNNERS: Record<
   popup: runPopupScenario,
   options: runOptionsScenario,
   report: runReportScenario,
-  perf: runPerfScenario
+  perf: runPerfScenario,
+  site: runSiteScenario,
+  blog: runBlogScenario
 };
 
 function parseCliArgs(argv: string[]): CliOptions {

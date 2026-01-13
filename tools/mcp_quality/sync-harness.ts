@@ -21,20 +21,23 @@ function rewriteAssets(html: string): string {
   return (
     html
       // CSS
-      .replace(/href="\\.?\\.\\/popup\\.css"/g, 'href="/src/popup/popup.css"')
-      .replace(/href="\\.?\\.\\/options\\.css"/g, 'href="/src/options/options.css"')
-      .replace(/href="\\.?\\.\\/report\\.css"/g, 'href="/src/report/report.css"')
+      .replace(/href="\.?\.\/popup\.css"/g, 'href="/src/popup/popup.css"')
+      .replace(/href="\.?\.\/options\.css"/g, 'href="/src/options/options.css"')
+      .replace(/href="\.?\.\/report\.css"/g, 'href="/src/report/report.css"')
       // vendor/shared scripts
-      .replace(/src="\\.\\.\\/vendor\\//g, 'src="/src/vendor/')
-      .replace(/src="\\.\\.\\/shared\\//g, 'src="/src/shared/')
+      .replace(/src="\.\.\/vendor\//g, 'src="/src/vendor/')
+      .replace(/src="\.\/vendor\//g, 'src="/src/vendor/')
+      .replace(/src="\.\.\/shared\//g, 'src="/src/shared/')
+      .replace(/src="\.\/shared\//g, 'src="/src/shared/')
       // dist entrypoints
-      .replace(/src="\\.\\.\\/\\.\\.\\/dist\\//g, 'src="/dist/')
+      .replace(/src="\.\.\/\.\.\/dist\//g, 'src="/dist/')
+      .replace(/src="\.\/dist\//g, 'src="/dist/')
       // icons and images
-      .replace(/href="\\.\\.\\/img\\//g, 'href="/src/img/')
-      .replace(/src="\\.\\.\\/img\\//g, 'src="/src/img/')
+      .replace(/href="\.\.\/img\//g, 'href="/src/img/')
+      .replace(/src="\.\.\/img\//g, 'src="/src/img/')
       // site/blog assets if present
-      .replace(/src="\\.\\.\\/\\.\\.\\/site\\//g, 'src="/site/')
-      .replace(/href="\\.\\.\\/\\.\\.\\/site\\//g, 'href="/site/')
+      .replace(/src="\.\.\/\.\.\/site\//g, 'src="/site/')
+      .replace(/href="\.\.\/\.\.\/site\//g, 'href="/site/')
   );
 }
 

@@ -1,0 +1,65 @@
+import path from 'node:path';
+import type { DevtoolsMcpClient } from '../mcp/client.js';
+import type { ScenarioContext, ScenarioResult } from './types.js';
+import { extractJson } from './helpers.js';
+
+export async function runBlogScenario(
+  client: DevtoolsMcpClient,
+  ctx: ScenarioContext
+): Promise<ScenarioResult> {
+  const pageUrl = `${ctx.baseUrl}/site/blog/index.html`;
+  const screenshotPath = path.join(
+    ctx.artifactsDir,
+    'screenshots',
+    `${ctx.viewportName}-blog.png`
+  );
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const details: string[] = [];
+
+  await client.newPage(pageUrl, 20000);
+  await client.waitFor('Blog do Saul Goodman', 10000);
+
+  const check = await client.evaluateScript(
+    `() => {
+      const header = document.querySelector('h1');
+      const posts = Array.from(document.querySelectorAll('.post-card, article'));
+      const firstTitle = posts[0]?.textContent?.trim() ?? '';
+      const filters = document.querySelectorAll('[data-category]');
+      return {
+        header: header?.textContent?.trim() ?? '',
+        postCount: posts.length,
+        firstTitle,
+        filterCount: filters.length
+      };
+    }`
+  );
+  const payload = extractJson(check) as
+    | { header?: string; postCount?: number; firstTitle?: string; filterCount?: number }
+    | undefined;
+
+  if ((payload?.postCount ?? 0) === 0) {
+    errors.push('Nenhum post listado no blog.');
+  }
+  if (!payload?.header) {
+    warnings.push('Título principal do blog não encontrado.');
+  }
+  if ((payload?.filterCount ?? 0) === 0) {
+    warnings.push('Filtros/categorias não renderizados.');
+  }
+
+  await client.takeScreenshot(screenshotPath, { fullPage: true });
+  details.push(
+    `Posts: ${payload?.postCount ?? 0}, primeiro título: "${payload?.firstTitle ?? '--'}"`
+  );
+
+  return {
+    name: 'blog',
+    viewport: ctx.viewportName,
+    passed: errors.length === 0,
+    errors,
+    warnings,
+    screenshotPath,
+    details
+  };
+}
