@@ -2,7 +2,7 @@ import path from 'node:path';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import { extractJson } from './helpers.js';
+import { extractJson, saveJsonArtifact } from './helpers.js';
 
 export async function runReportScenario(
   client: DevtoolsMcpClient,
@@ -27,6 +27,7 @@ export async function runReportScenario(
   );
   const consoleErrors =
     consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  const consolePath = saveJsonArtifact(ctx, 'report', 'console', consolePayload ?? {});
   if (consoleErrors.length > 0 && !ctx.allowWarnings) {
     errors.push(`Console errors: ${consoleErrors.length}`);
   } else if (consoleErrors.length > 0) {
@@ -39,6 +40,7 @@ export async function runReportScenario(
   );
   const failed =
     networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+  const networkPath = saveJsonArtifact(ctx, 'report', 'network', networkPayload ?? {});
   if (failed.length > 0 && !ctx.allowWarnings) {
     errors.push(`Requests com status >=400: ${failed.length}`);
   } else if (failed.length > 0) {
@@ -87,6 +89,10 @@ export async function runReportScenario(
     errors,
     warnings,
     screenshotPath,
+    artifacts: {
+      console: consolePath,
+      network: networkPath
+    },
     details
   };
 }

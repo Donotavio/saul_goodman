@@ -2,7 +2,7 @@ import path from 'node:path';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import { extractJson } from './helpers.js';
+import { extractJson, saveJsonArtifact } from './helpers.js';
 
 export async function runPopupScenario(
   client: DevtoolsMcpClient,
@@ -27,6 +27,7 @@ export async function runPopupScenario(
   );
   const consoleErrors =
     consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  const consolePath = saveJsonArtifact(ctx, 'popup', 'console', consolePayload ?? {});
   if (consoleErrors.length > 0 && !ctx.allowWarnings) {
     errors.push(`Console errors: ${consoleErrors.length}`);
   } else if (consoleErrors.length > 0) {
@@ -39,6 +40,7 @@ export async function runPopupScenario(
   );
   const failed =
     networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+  const networkPath = saveJsonArtifact(ctx, 'popup', 'network', networkPayload ?? {});
   if (failed.length > 0 && !ctx.allowWarnings) {
     errors.push(`Requests com status >=400: ${failed.length}`);
   } else if (failed.length > 0) {
@@ -97,6 +99,10 @@ export async function runPopupScenario(
     errors,
     warnings,
     screenshotPath,
+    artifacts: {
+      console: consolePath,
+      network: networkPath
+    },
     details
   };
 }

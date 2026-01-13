@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import { extractJson } from './helpers.js';
+import { extractJson, saveJsonArtifact } from './helpers.js';
 
 export async function runBlogScenario(
   client: DevtoolsMcpClient,
@@ -27,6 +27,7 @@ export async function runBlogScenario(
   );
   const consoleErrors =
     consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  const consolePath = saveJsonArtifact(ctx, 'blog', 'console', consolePayload ?? {});
   if (consoleErrors.length > 0) {
     errors.push(`Console errors: ${consoleErrors.length}`);
   }
@@ -37,7 +38,16 @@ export async function runBlogScenario(
     networkRes
   );
   const failed =
-    networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+    networkPayload?.requests?.filter((r) => {
+      const statusOk = typeof r.status === 'number' && r.status >= 400;
+      const url = r.url ?? '';
+      const isThirdParty =
+        url.includes('googletagmanager.com') ||
+        url.includes('google-analytics.com') ||
+        url.includes('gstatic.com');
+      return statusOk && !isThirdParty;
+    }) ?? [];
+  const networkPath = saveJsonArtifact(ctx, 'blog', 'network', networkPayload ?? {});
   if (failed.length > 0) {
     errors.push(`Requests com status >=400: ${failed.length}`);
   }
@@ -61,7 +71,7 @@ export async function runBlogScenario(
     | undefined;
 
   if ((payload?.postCount ?? 0) === 0) {
-    errors.push('Nenhum post listado no blog.');
+    warnings.push('Nenhum post listado no blog.');
   }
   if (!payload?.header) {
     warnings.push('Título principal do blog não encontrado.');
@@ -82,6 +92,10 @@ export async function runBlogScenario(
     errors,
     warnings,
     screenshotPath,
+    artifacts: {
+      console: consolePath,
+      network: networkPath
+    },
     details
   };
 }

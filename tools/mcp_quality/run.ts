@@ -1,5 +1,4 @@
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
-import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
@@ -20,6 +19,9 @@ import { runDaemonScenario } from './scenarios/daemon.scenario.js';
 import { runVscodeScenario } from './scenarios/vscode.scenario.js';
 import type { ScenarioContext, ScenarioResult } from './scenarios/types.js';
 import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import fsp from 'node:fs/promises';
+import { compareScreenshot } from './scenarios/helpers.js';
 
 const MIN_NODE_MAJOR = 18;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -64,7 +66,9 @@ function getContentType(filePath: string): string {
 async function tryResolveFile(requestUrl: string, rootDir: string): Promise<string | null> {
   const parsed = new URL(requestUrl, 'http://localhost');
   const decodedPath = decodeURIComponent(parsed.pathname);
-  const requestedPath = path.join(rootDir, decodedPath);
+  // Avoid absolute paths discarding rootDir
+  const safePath = decodedPath.startsWith('/') ? `.${decodedPath}` : decodedPath;
+  const requestedPath = path.join(rootDir, safePath);
   const normalized = path.normalize(requestedPath);
   if (!normalized.startsWith(rootDir)) {
     return null;
@@ -72,7 +76,7 @@ async function tryResolveFile(requestUrl: string, rootDir: string): Promise<stri
 
   let candidate = normalized;
   try {
-    const stats = await fs.stat(candidate);
+    const stats = await fsp.stat(candidate);
     if (stats.isDirectory()) {
       candidate = path.join(candidate, 'index.html');
     }
@@ -81,7 +85,7 @@ async function tryResolveFile(requestUrl: string, rootDir: string): Promise<stri
     if (!path.extname(candidate)) {
       const htmlCandidate = `${candidate}.html`;
       try {
-        await fs.access(htmlCandidate);
+        await fsp.access(htmlCandidate);
         candidate = htmlCandidate;
       } catch (_innerError) {
         return null;
@@ -92,7 +96,7 @@ async function tryResolveFile(requestUrl: string, rootDir: string): Promise<stri
   }
 
   try {
-    await fs.access(candidate);
+    await fsp.access(candidate);
     return candidate;
   } catch (_error) {
     return null;
@@ -101,7 +105,7 @@ async function tryResolveFile(requestUrl: string, rootDir: string): Promise<stri
 
 async function serveFile(filePath: string, res: ServerResponse): Promise<void> {
   try {
-    const content = await fs.readFile(filePath);
+    const content = await fsp.readFile(filePath);
     res.statusCode = 200;
     res.setHeader('Content-Type', getContentType(filePath));
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -267,7 +271,17 @@ async function prepareArtifactDirs(root: string): Promise<void> {
     path.join(root, 'traces'),
     path.join(root, 'logs')
   ];
-  await Promise.all(dirs.map((dir) => fs.mkdir(dir, { recursive: true })));
+  await Promise.all(
+    dirs.map(
+      (dir) =>
+        new Promise<void>((resolve, reject) => {
+          fs.mkdir(dir, { recursive: true }, (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        })
+    )
+  );
 }
 
 async function writeSummaries(results: ScenarioResult[], artifactsDir: string): Promise<void> {
@@ -278,29 +292,34 @@ async function writeSummaries(results: ScenarioResult[], artifactsDir: string): 
     createdAt: new Date().toISOString(),
     results
   };
-  await fs.writeFile(summaryPath, JSON.stringify(payload, null, 2), 'utf-8');
+  await fsp.writeFile(summaryPath, JSON.stringify(payload, null, 2), 'utf-8');
 
   const lines: string[] = ['# MCP Quality Suite', '', `Total cenários: ${results.length}`, ''];
   for (const result of results) {
-    lines.push(
-      `- ${result.name} (${result.viewport}): ${result.passed ? '✅' : '❌'}${
-        result.errors?.length ? ` — ${result.errors.join('; ')}` : ''
-      }`
-    );
+    const status = result.passed ? '✅' : '❌';
+    const errs = result.errors?.length ? ` errors: ${result.errors.join('; ')}` : '';
+    const warns = result.warnings?.length ? ` warnings: ${result.warnings.join('; ')}` : '';
+    const shot = result.screenshotPath ? ` screenshot: ${result.screenshotPath}` : '';
+    const baseline = result.expectedScreenshotPath
+      ? ` baseline: ${result.expectedScreenshotPath}`
+      : '';
+    lines.push(`- ${result.name} (${result.viewport}): ${status}${errs}${warns}${shot}${baseline}`);
   }
-  await fs.writeFile(markdownPath, lines.join('\n'), 'utf-8');
+  await fsp.writeFile(markdownPath, lines.join('\n'), 'utf-8');
 }
 
 interface DaemonHandle {
   process: ReturnType<typeof spawn>;
   origin: string;
   key: string;
+  logs: { stdout?: string; stderr?: string };
+  buffers: { out: string[]; err: string[] };
 }
 
 async function waitForHealth(origin: string, attempts = 20): Promise<void> {
   for (let i = 0; i < attempts; i++) {
     try {
-      const res = await fetch(`${origin}/health`);
+    const res = await fetch(`${origin}/health`);
       if (res.ok) {
         return;
       }
@@ -312,7 +331,7 @@ async function waitForHealth(origin: string, attempts = 20): Promise<void> {
   throw new Error('Daemon healthcheck timed out');
 }
 
-async function startDaemon(): Promise<DaemonHandle> {
+async function startDaemon(artifactsDir: string): Promise<DaemonHandle> {
   const port = 43123;
   const key = 'mcp-test-key';
   const origin = `http://127.0.0.1:${port}`;
@@ -323,10 +342,17 @@ async function startDaemon(): Promise<DaemonHandle> {
       PORT: String(port),
       PAIRING_KEY: key
     },
-    stdio: 'ignore'
+    stdio: ['ignore', 'pipe', 'pipe']
   });
+  const buffers = { out: [] as string[], err: [] as string[] };
+  proc.stdout?.on('data', (chunk) => buffers.out.push(chunk.toString()));
+  proc.stderr?.on('data', (chunk) => buffers.err.push(chunk.toString()));
   await waitForHealth(origin);
-  return { process: proc, origin, key };
+  const logDir = path.join(artifactsDir, 'logs');
+  fs.mkdirSync(logDir, { recursive: true });
+  const stdoutPath = path.join(logDir, 'daemon.stdout.log');
+  const stderrPath = path.join(logDir, 'daemon.stderr.log');
+  return { process: proc, origin, key, logs: { stdout: stdoutPath, stderr: stderrPath }, buffers };
 }
 
 async function main(): Promise<void> {
@@ -340,7 +366,7 @@ async function main(): Promise<void> {
   }
 
   const needsDaemon = cli.only.includes('daemon') || cli.only.includes('vscode');
-  const daemonHandle = needsDaemon ? await startDaemon() : null;
+  const daemonHandle = needsDaemon ? await startDaemon(cli.artifactsDir) : null;
 
   // eslint-disable-next-line no-console
   console.log(`[mcp-quality] Base URL: ${baseUrl}`);
@@ -381,6 +407,28 @@ async function main(): Promise<void> {
       }
       try {
         const result = await runner(client, ctx);
+        // Screenshot baseline compare
+        if (result.screenshotPath) {
+          const baselineDir = path.join(
+            cli.artifactsDir,
+            '..',
+            'baselines',
+            viewportName as string
+          );
+          const compare = compareScreenshot(
+            result.screenshotPath,
+            baselineDir,
+            `${scenario}`,
+            cli.updateBaseline
+          );
+          result.expectedScreenshotPath = compare.expected;
+          result.diffScreenshotPath = compare.diff;
+          if (!compare.matches && !cli.updateBaseline) {
+            result.passed = false;
+            result.errors.push('Screenshot divergiu do baseline.');
+          }
+        }
+
         allResults.push(result);
         // eslint-disable-next-line no-console
         console.log(
@@ -406,6 +454,16 @@ async function main(): Promise<void> {
   await server?.close();
   if (daemonHandle?.process) {
     daemonHandle.process.kill();
+    try {
+      if (daemonHandle.logs.stdout) {
+        fs.writeFileSync(daemonHandle.logs.stdout, daemonHandle.buffers.out.join(''), 'utf-8');
+      }
+      if (daemonHandle.logs.stderr) {
+        fs.writeFileSync(daemonHandle.logs.stderr, daemonHandle.buffers.err.join(''), 'utf-8');
+      }
+    } catch {
+      // ignore log write errors
+    }
   }
 }
 

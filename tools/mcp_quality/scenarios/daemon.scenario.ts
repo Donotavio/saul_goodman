@@ -67,6 +67,10 @@ export async function runDaemonScenario(
     passed: errors.length === 0,
     errors,
     warnings,
+    artifacts: {
+      stdout: ctx.daemon.logs?.stdout,
+      stderr: ctx.daemon.logs?.stderr
+    },
     details
   };
 }

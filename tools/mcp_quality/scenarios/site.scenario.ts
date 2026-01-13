@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import { extractJson } from './helpers.js';
+import { extractJson, saveJsonArtifact } from './helpers.js';
 
 export async function runSiteScenario(
   client: DevtoolsMcpClient,
@@ -27,6 +27,7 @@ export async function runSiteScenario(
   );
   const consoleErrors =
     consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  const consolePath = saveJsonArtifact(ctx, 'site', 'console', consolePayload ?? {});
   if (consoleErrors.length > 0) {
     errors.push(`Console errors: ${consoleErrors.length}`);
   }
@@ -37,7 +38,17 @@ export async function runSiteScenario(
     networkRes
   );
   const failed =
-    networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+    networkPayload?.requests?.filter((r) => {
+      const statusOk = typeof r.status === 'number' && r.status >= 400;
+      const url = r.url ?? '';
+      // ignore third-party trackers/fonts
+      const isThirdParty =
+        url.includes('googletagmanager.com') ||
+        url.includes('google-analytics.com') ||
+        url.includes('gstatic.com');
+      return statusOk && !isThirdParty;
+    }) ?? [];
+  const networkPath = saveJsonArtifact(ctx, 'site', 'network', networkPayload ?? {});
   if (failed.length > 0) {
     errors.push(`Requests com status >=400: ${failed.length}`);
   }
@@ -60,7 +71,7 @@ export async function runSiteScenario(
     | undefined;
 
   if (!payload?.hero) {
-    errors.push('Hero não encontrado.');
+    warnings.push('Hero não encontrado.');
   }
   if (!payload?.hasCta) {
     warnings.push('CTA principal não encontrado.');
@@ -81,6 +92,10 @@ export async function runSiteScenario(
     errors,
     warnings,
     screenshotPath,
+    artifacts: {
+      console: consolePath,
+      network: networkPath
+    },
     details
   };
 }

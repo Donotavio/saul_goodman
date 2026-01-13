@@ -12,6 +12,10 @@ export interface ScenarioContext {
   daemon?: {
     origin: string;
     key: string;
+    logs?: {
+      stdout?: string;
+      stderr?: string;
+    };
   };
 }
 
@@ -22,6 +26,8 @@ export interface ScenarioResult {
   errors: string[];
   warnings: string[];
   screenshotPath?: string;
+  expectedScreenshotPath?: string;
+  diffScreenshotPath?: string;
   details?: string[];
   metrics?: Record<string, unknown>;
   artifacts?: Record<string, string>;
