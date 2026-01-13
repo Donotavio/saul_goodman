@@ -69,7 +69,6 @@ export class DevtoolsMcpClient {
     });
     this.client = new Client({ name: 'saul-quality-suite', version: '0.0.0-dev' }, {});
 
-    await this.transport.start();
     await this.client.connect(this.transport);
   }
 
