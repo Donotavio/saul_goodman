@@ -20,6 +20,28 @@ export async function runSiteScenario(
   await client.newPage(pageUrl, 20000);
   await client.waitFor('Saul Goodman', 10000);
 
+  // Console errors
+  const consoleRes = await client.listConsoleMessages();
+  const consolePayload = extractJson<{ messages?: Array<{ type?: string; text?: string }> }>(
+    consoleRes
+  );
+  const consoleErrors =
+    consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  if (consoleErrors.length > 0) {
+    errors.push(`Console errors: ${consoleErrors.length}`);
+  }
+
+  // Network failures
+  const networkRes = await client.listNetworkRequests();
+  const networkPayload = extractJson<{ requests?: Array<{ status?: number; url?: string }> }>(
+    networkRes
+  );
+  const failed =
+    networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+  if (failed.length > 0) {
+    errors.push(`Requests com status >=400: ${failed.length}`);
+  }
+
   const check = await client.evaluateScript(
     `() => {
       const hero = document.querySelector('h1');

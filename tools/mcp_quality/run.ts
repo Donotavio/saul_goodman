@@ -17,6 +17,7 @@ import { runReportScenario } from './scenarios/report.scenario.js';
 import { runSiteScenario } from './scenarios/site.scenario.js';
 import { runBlogScenario } from './scenarios/blog.scenario.js';
 import { runDaemonScenario } from './scenarios/daemon.scenario.js';
+import { runVscodeScenario } from './scenarios/vscode.scenario.js';
 import type { ScenarioContext, ScenarioResult } from './scenarios/types.js';
 import { spawn } from 'node:child_process';
 
@@ -196,7 +197,8 @@ const SCENARIO_RUNNERS: Record<
   perf: runPerfScenario,
   site: runSiteScenario,
   blog: runBlogScenario,
-  daemon: runDaemonScenario
+  daemon: runDaemonScenario,
+  vscode: runVscodeScenario
 };
 
 function parseCliArgs(argv: string[]): CliOptions {
@@ -337,7 +339,7 @@ async function main(): Promise<void> {
     throw new Error('Base URL not defined.');
   }
 
-  const needsDaemon = cli.only.includes('daemon');
+  const needsDaemon = cli.only.includes('daemon') || cli.only.includes('vscode');
   const daemonHandle = needsDaemon ? await startDaemon() : null;
 
   // eslint-disable-next-line no-console

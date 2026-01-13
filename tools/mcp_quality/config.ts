@@ -1,6 +1,14 @@
 import path from 'node:path';
 
-export type ScenarioName = 'popup' | 'options' | 'report' | 'perf' | 'site' | 'blog' | 'daemon';
+export type ScenarioName =
+  | 'popup'
+  | 'options'
+  | 'report'
+  | 'perf'
+  | 'site'
+  | 'blog'
+  | 'daemon'
+  | 'vscode';
 
 export interface Viewport {
   width: number;
@@ -19,7 +27,8 @@ export const DEFAULT_SCENARIOS: ScenarioName[] = [
   'perf',
   'site',
   'blog',
-  'daemon'
+  'daemon',
+  'vscode'
 ];
 
 export const HARNESS_PAGES: Record<'popup' | 'options' | 'report', string> = {
