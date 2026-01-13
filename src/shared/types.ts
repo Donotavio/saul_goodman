@@ -134,6 +134,10 @@ export interface ExtensionSettings {
   blockProcrastination?: boolean;
   weights: WeightConfig;
   inactivityThresholdMs: number;
+  enableAutoClassification?: boolean;
+  enableAISuggestions?: boolean;
+  suggestionCooldownMs?: number;
+  suggestionsHistory?: Record<string, number>;
   locale: SupportedLocale;
   localePreference?: LocalePreference;
   openAiKey?: string;

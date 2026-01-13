@@ -83,6 +83,10 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
     'pokemongolive.com'
   ],
   blockProcrastination: false,
+  enableAutoClassification: false,
+  enableAISuggestions: false,
+  suggestionCooldownMs: 86_400_000,
+  suggestionsHistory: {},
   weights: {
     procrastinationWeight: 0.6,
     tabSwitchWeight: 0.25,
