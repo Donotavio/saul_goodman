@@ -35,6 +35,30 @@ export async function runOptionsScenario(
     }`
   );
 
+  const consoleRes = await client.listConsoleMessages();
+  const consolePayload = extractJson<{ messages?: Array<{ type?: string; text?: string }> }>(
+    consoleRes
+  );
+  const consoleErrors =
+    consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  if (consoleErrors.length > 0 && !ctx.allowWarnings) {
+    errors.push(`Console errors: ${consoleErrors.length}`);
+  } else if (consoleErrors.length > 0) {
+    warnings.push(`Console errors: ${consoleErrors.length}`);
+  }
+
+  const networkRes = await client.listNetworkRequests();
+  const networkPayload = extractJson<{ requests?: Array<{ status?: number; url?: string }> }>(
+    networkRes
+  );
+  const failed =
+    networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+  if (failed.length > 0 && !ctx.allowWarnings) {
+    errors.push(`Requests com status >=400: ${failed.length}`);
+  } else if (failed.length > 0) {
+    warnings.push(`Requests com status >=400: ${failed.length}`);
+  }
+
   // Captura settings atuais
   const initialSettingsResult = await client.evaluateScript(
     `async () => {

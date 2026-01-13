@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
 
 function firstJson(result: { json: unknown[]; text: string[] }): unknown {
   if (result.json.length > 0) {
@@ -23,6 +25,11 @@ interface PerfTarget {
   url: string;
 }
 
+function hashFile(filePath: string): string {
+  const buf = fs.readFileSync(filePath);
+  return crypto.createHash('sha1').update(buf).digest('hex');
+}
+
 export async function runPerfScenario(
   client: DevtoolsMcpClient,
   ctx: ScenarioContext
@@ -38,6 +45,7 @@ export async function runPerfScenario(
   const warnings: string[] = [];
   const details: string[] = [];
   const artifacts: Record<string, string> = {};
+  const metrics: Record<string, unknown> = {};
 
   for (const target of targets) {
     const tracePath = path.join(tracesDir, `${ctx.viewportName}-${target.key}.json`);
@@ -55,6 +63,48 @@ export async function runPerfScenario(
 
     await client.performanceStop(tracePath);
     artifacts[`${target.key}Trace`] = tracePath;
+
+    if (fs.existsSync(tracePath)) {
+      const stats = fs.statSync(tracePath);
+      metrics[target.key] = {
+        tracePath,
+        bytes: stats.size,
+        hash: hashFile(tracePath)
+      };
+    }
+  }
+
+  // Perf baseline compare
+  const baselinePath = path.join(
+    ctx.artifactsDir,
+    '..',
+    'baselines',
+    `perf.${ctx.viewportName}.json`
+  );
+  try {
+    const baseline = JSON.parse(fs.readFileSync(baselinePath, 'utf-8'));
+    for (const key of Object.keys(metrics)) {
+      const current = metrics[key] as { bytes?: number };
+      const prev = baseline[key];
+      if (prev?.bytes && current?.bytes) {
+        const delta = (current.bytes - prev.bytes) / prev.bytes;
+        if (delta > 0.3) {
+          warnings.push(`Trace ${key} aumentou ${Math.round(delta * 100)}% vs baseline.`);
+        }
+      }
+    }
+    details.push(`Perf baseline comparado: ${baselinePath}`);
+  } catch {
+    if (ctx.updateBaseline) {
+      fs.writeFileSync(baselinePath, JSON.stringify(metrics, null, 2), 'utf-8');
+      details.push('Baseline de perf atualizado.');
+    } else {
+      warnings.push('Baseline de perf ausente. Rode com --update-baseline para criar.');
+    }
+  }
+
+  if (ctx.updateBaseline) {
+    fs.writeFileSync(baselinePath, JSON.stringify(metrics, null, 2), 'utf-8');
   }
 
   return {
@@ -63,6 +113,7 @@ export async function runPerfScenario(
     passed: errors.length === 0,
     errors,
     warnings,
+    metrics,
     artifacts,
     details
   };

@@ -1,0 +1,32 @@
+name: MCP Quality
+
+on:
+  pull_request:
+
+jobs:
+  mcp-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run MCP Quality
+        run: npm run mcp:quality
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcp-quality-artifacts
+          path: tools/mcp_quality/artifacts/**
