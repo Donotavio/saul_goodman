@@ -2,20 +2,7 @@ import path from 'node:path';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-
-function firstJson(result: { json: unknown[]; text: string[] }): unknown {
-  if (result.json.length > 0) {
-    return result.json[0];
-  }
-  for (const entry of result.text) {
-    try {
-      return JSON.parse(entry);
-    } catch (_error) {
-      // ignore parsing failures
-    }
-  }
-  return undefined;
-}
+import { extractJson } from './helpers.js';
 
 export async function runPopupScenario(
   client: DevtoolsMcpClient,
@@ -49,7 +36,7 @@ export async function runPopupScenario(
       };
     }`
   );
-  const checkPayload = firstJson(checkResult) as
+  const checkPayload = extractJson(checkResult) as
     | {
         presence: Record<string, boolean>;
         scoreText: string;

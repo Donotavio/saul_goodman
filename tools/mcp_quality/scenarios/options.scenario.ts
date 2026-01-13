@@ -2,20 +2,7 @@ import path from 'node:path';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-
-function firstJson(result: { json: unknown[]; text: string[] }): unknown {
-  if (result.json.length > 0) {
-    return result.json[0];
-  }
-  for (const entry of result.text) {
-    try {
-      return JSON.parse(entry);
-    } catch (_error) {
-      // ignore
-    }
-  }
-  return undefined;
-}
+import { extractJson } from './helpers.js';
 
 export async function runOptionsScenario(
   client: DevtoolsMcpClient,
@@ -34,6 +21,20 @@ export async function runOptionsScenario(
   await client.newPage(pageUrl, 15000);
   await client.waitFor('Configurações', 10000);
 
+  // Aguarda hidratação inicial preencher os campos.
+  await client.evaluateScript(
+    `async () => {
+      for (let i = 0; i < 30; i++) {
+        const input = document.getElementById('inactivityThreshold');
+        if (input && input.value) {
+          return true;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      return false;
+    }`
+  );
+
   // Captura settings atuais
   const initialSettingsResult = await client.evaluateScript(
     `async () => {
@@ -41,27 +42,32 @@ export async function runOptionsScenario(
       return data['sg:settings'];
     }`
   );
-  const initialSettings = firstJson(initialSettingsResult) as Record<string, unknown> | undefined;
+  const initialSettings = extractJson<Record<string, unknown> | undefined>(initialSettingsResult);
 
-  const newThreshold = 90000;
+  const newThresholdSeconds = 120;
   const updateResult = await client.evaluateScript(
-    `async (threshold) => {
+    `async () => {
       const form = document.getElementById('weightsForm');
       const input = document.getElementById('inactivityThreshold');
       if (!form || !input) {
         return { ok: false, reason: 'missing elements' };
       }
-      input.value = String(threshold);
-      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      input.value = '${newThresholdSeconds}';
+      form.requestSubmit();
+      await new Promise((resolve) => setTimeout(resolve, 800));
       const data = await chrome.storage.local.get('sg:settings');
       return { ok: true, stored: data['sg:settings']?.inactivityThresholdMs };
-    }`,
-    [newThreshold]
+    }`
   );
-  const updatePayload = firstJson(updateResult) as { ok?: boolean; stored?: number } | undefined;
+  const updatePayload = extractJson<{ ok?: boolean; stored?: number; reason?: string } | undefined>(
+    updateResult
+  );
+  const expectedMs = newThresholdSeconds * 1000;
+  const storedMs = updatePayload?.stored;
   if (!updatePayload?.ok) {
-    errors.push('Falha ao submeter formulário de pesos.');
+    errors.push(`Falha ao submeter formulário de pesos.${updatePayload?.reason ? ` ${updatePayload.reason}` : ''}`);
+  } else if (typeof storedMs !== 'number' || Math.abs(storedMs - expectedMs) > 1) {
+    errors.push(`Persistência falhou: esperado ${expectedMs}, obtido ${storedMs ?? 'n/a'}`);
   }
 
   // Recarrega para validar persistência
@@ -73,9 +79,11 @@ export async function runOptionsScenario(
       return input ? Number(input.value) : null;
     }`
   );
-  const reloadedThreshold = firstJson(afterReload) as number | null | undefined;
-  if (reloadedThreshold !== newThreshold) {
-    errors.push(`Persistência falhou: esperado ${newThreshold}, obtido ${reloadedThreshold ?? 'n/a'}`);
+  const reloadedThreshold = extractJson<number | null | undefined>(afterReload);
+  if (reloadedThreshold !== newThresholdSeconds) {
+    errors.push(
+      `Persistência falhou: esperado ${newThresholdSeconds}, obtido ${reloadedThreshold ?? 'n/a'}`
+    );
   }
 
   if (initialSettings?.localePreference === undefined) {
@@ -87,7 +95,7 @@ export async function runOptionsScenario(
   details.push(
     `inactivityThreshold inicial: ${
       (initialSettings?.inactivityThresholdMs as number | undefined) ?? 'n/a'
-    }, atualizado para ${newThreshold}`
+    }, atualizado para ${newThresholdSeconds}s`
   );
 
   return {
