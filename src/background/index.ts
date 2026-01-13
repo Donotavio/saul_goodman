@@ -318,7 +318,14 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     return;
   }
 
-  if (suggestionCache.has(normalizedDomain)) {
+  const cached = suggestionCache.get(normalizedDomain);
+  if (cached) {
+    if (tab.id) {
+      chrome.tabs.sendMessage(tab.id, {
+        type: 'sg:auto-classification-toast',
+        payload: { suggestion: cached }
+      });
+    }
     return;
   }
 
