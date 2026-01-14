@@ -53,3 +53,38 @@ test('neutral when signals balance', () => {
   assert.equal(res.classification, 'neutral');
   assert.ok(res.confidence <= 60);
 });
+
+test('handles empty hostname gracefully', () => {
+  const res = resultFor('', { title: 'Some title' });
+  assert.equal(res.classification, 'neutral');
+  assert.ok(res.confidence >= 10);
+});
+
+test('confidence never exceeds 100', () => {
+  const res = resultFor('docs.google.com', {
+    title: 'docs project dashboard tasks repository',
+    description: 'work admin dev',
+    keywords: ['docs', 'api', 'project', 'work'],
+    ogType: 'article'
+  });
+  assert.ok(res.confidence <= 100, `Confidence ${res.confidence} exceeds 100`);
+  assert.equal(res.classification, 'productive');
+});
+
+test('handles special characters in keywords', () => {
+  const res = resultFor('example.com', {
+    keywords: ['café☕', 'naïve', '日本語']
+  });
+  assert.ok(res.classification !== undefined);
+});
+
+test('classifies based on multiple strong signals', () => {
+  const res = resultFor('unknown-streaming.tv', {
+    title: 'Watch video clips',
+    hasVideoPlayer: true,
+    hasInfiniteScroll: true,
+    ogType: 'video'
+  });
+  assert.equal(res.classification, 'procrastination');
+  assert.ok(res.confidence >= 60);
+});

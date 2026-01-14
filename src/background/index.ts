@@ -140,13 +140,11 @@ let holidayNeutralToday = false;
 let fairnessSnapshot: FairnessSummary | null = null;
 let lastScoreComputation: ScoreComputation | null = null;
 const suggestionCache: Map<string, DomainSuggestion> = new Map();
-
-function normalizeHostCandidate(domain: string): string {
-  return normalizeDomain(domain);
-}
+let lastPruneTimestamp = 0;
+const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
 
 function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
-  const host = normalizeHostCandidate(domain);
+  const host = normalizeDomain(domain);
   if (!host) {
     return false;
   }
@@ -164,7 +162,7 @@ function getSuggestionCooldownMs(settings: ExtensionSettings): number {
 }
 
 function isDomainInCooldown(domain: string, settings: ExtensionSettings): boolean {
-  const host = normalizeHostCandidate(domain);
+  const host = normalizeDomain(domain);
   const history = settings.suggestionsHistory?.[host];
   if (!history) {
     return false;
@@ -179,8 +177,13 @@ function isDomainInCooldown(domain: string, settings: ExtensionSettings): boolea
   return false;
 }
 
-function pruneSuggestionCache(settings: ExtensionSettings): void {
+function pruneSuggestionCache(settings: ExtensionSettings, force = false): void {
   const now = Date.now();
+  if (!force && now - lastPruneTimestamp < PRUNE_INTERVAL_MS) {
+    return;
+  }
+  lastPruneTimestamp = now;
+  
   for (const [domain, suggestion] of suggestionCache.entries()) {
     if (isDomainClassified(domain, settings) || isDomainInCooldown(domain, settings)) {
       suggestionCache.delete(domain);
@@ -205,7 +208,7 @@ function pruneSuggestionCache(settings: ExtensionSettings): void {
 }
 
 function getActiveSuggestion(): DomainSuggestion | null {
-  const domain = trackingState.currentDomain ? normalizeHostCandidate(trackingState.currentDomain) : null;
+  const domain = trackingState.currentDomain ? normalizeDomain(trackingState.currentDomain) : null;
   if (!domain) {
     return null;
   }
@@ -257,7 +260,7 @@ async function handleApplySuggestion(payload: {
   domain?: string;
   classification?: DomainCategory;
 }): Promise<void> {
-  const domain = normalizeHostCandidate(payload?.domain ?? '');
+  const domain = normalizeDomain(payload?.domain ?? '');
   const classification = payload?.classification;
   if (!domain || (classification !== 'productive' && classification !== 'procrastination')) {
     return;
@@ -267,7 +270,7 @@ async function handleApplySuggestion(payload: {
   const list = Array.isArray(settings[listKey]) ? settings[listKey] : [];
   if (!list.some((candidate) => domainMatches(domain, candidate))) {
     list.push(domain);
-    settings[listKey] = Array.from(new Set(list.map(normalizeHostCandidate))).filter(Boolean);
+    settings[listKey] = Array.from(new Set(list.map(normalizeDomain))).filter(Boolean);
   }
 
   const now = Date.now();
@@ -287,7 +290,7 @@ async function handleApplySuggestion(payload: {
 }
 
 async function handleIgnoreSuggestion(payload: { domain?: string }): Promise<void> {
-  const domain = normalizeHostCandidate(payload?.domain ?? '');
+  const domain = normalizeDomain(payload?.domain ?? '');
   if (!domain) {
     return;
   }
@@ -309,7 +312,7 @@ async function handleIgnoreSuggestion(payload: { domain?: string }): Promise<voi
 }
 
 async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Promise<void> {
-  const normalizedDomain = normalizeHostCandidate(domain);
+  const normalizedDomain = normalizeDomain(domain);
   const settings = await getSettingsCache();
   pruneSuggestionCache(settings);
 
@@ -383,34 +386,43 @@ async function collectDomainMetadata(
       settled = true;
       resolve(null);
     }, 2000);
-    chrome.tabs.sendMessage(tab.id, { type: METADATA_REQUEST_MESSAGE }, (response) => {
-      if (settled) {
-        return;
-      }
-      settled = true;
-      clearTimeout(timer);
-      if (chrome.runtime.lastError) {
-        resolve(null);
-        return;
-      }
-      const payload = response as DomainMetadata | undefined;
-      if (!payload || typeof payload !== 'object') {
-        resolve(null);
-        return;
-      }
-      const hostname = normalizeHostCandidate(payload.hostname || fallbackHost);
-      resolve({
-        hostname,
-        title: payload.title,
-        description: payload.description,
-        keywords: Array.isArray(payload.keywords)
-          ? payload.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
-          : [],
-        ogType: payload.ogType,
-        hasVideoPlayer: Boolean(payload.hasVideoPlayer),
-        hasInfiniteScroll: Boolean(payload.hasInfiniteScroll)
+    
+    try {
+      chrome.tabs.sendMessage(tab.id, { type: METADATA_REQUEST_MESSAGE }, (response) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        clearTimeout(timer);
+        if (chrome.runtime.lastError) {
+          resolve(null);
+          return;
+        }
+        const payload = response as DomainMetadata | undefined;
+        if (!payload || typeof payload !== 'object') {
+          resolve(null);
+          return;
+        }
+        const hostname = normalizeDomain(payload.hostname || fallbackHost);
+        resolve({
+          hostname,
+          title: payload.title,
+          description: payload.description,
+          keywords: Array.isArray(payload.keywords)
+            ? payload.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
+            : [],
+          ogType: payload.ogType,
+          hasVideoPlayer: Boolean(payload.hasVideoPlayer),
+          hasInfiniteScroll: Boolean(payload.hasInfiniteScroll)
+        });
       });
-    });
+    } catch (error) {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timer);
+        resolve(null);
+      }
+    }
   });
 }
 
@@ -420,7 +432,7 @@ async function recordSuggestionHistory(
 ): Promise<void> {
   const settings = await getSettingsCache();
   const history = settings.suggestionsHistory ?? {};
-  const normalized = normalizeHostCandidate(domain);
+  const normalized = normalizeDomain(domain);
   const now = Date.now();
   const existing = history[normalized] ?? { lastSuggestedAt: updates.lastSuggestedAt ?? now };
   history[normalized] = {
