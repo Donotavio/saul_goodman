@@ -2601,7 +2601,7 @@
     "message": "El daemon local se comunica con la extensión y registra tiempo en el editor como minutos productivos. Nada sale del localhost, pero el cronómetro nunca duerme."
   },
   "vscodeCard1Kicker": {
-    "message": "Relógio de foco"
+    "message": "Reloj de foco"
   },
   "vscodeCard1Title": {
     "message": "Cada commit cuenta como hora facturable."
