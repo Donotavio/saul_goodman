@@ -1,5 +1,3 @@
-import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
-
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -58,6 +56,77 @@ const translate = (
     return acc.replace(new RegExp(`\\{${token}\\}`, 'g'), String(value));
   }, template);
 };
+
+type TranslatorFn = (key: string, substitutions?: Record<string, string | number>) => string;
+
+const FALLBACK_TRANSLATOR: TranslatorFn = (key, substitutions) => {
+  if (!substitutions) {
+    return key;
+  }
+  return Object.entries(substitutions).reduce((acc, [token, value]) => {
+    return acc.replace(new RegExp(`\\{${token}\\}`, 'g'), String(value));
+  }, key);
+};
+
+function normalizeTranslator(source?: TranslatorFn | null): TranslatorFn {
+  if (!source) {
+    return FALLBACK_TRANSLATOR;
+  }
+  return source;
+}
+
+function resolveSourceLabel(raw: string, translateFn: TranslatorFn): string {
+  const normalized = raw.trim().toLowerCase();
+  const mapping: Record<string, string> = {
+    hostname: 'suggestion_reason_source_hostname',
+    dominio: 'suggestion_reason_source_hostname',
+    domain: 'suggestion_reason_source_hostname',
+    domínio: 'suggestion_reason_source_hostname',
+    titulo: 'suggestion_reason_source_title',
+    título: 'suggestion_reason_source_title',
+    title: 'suggestion_reason_source_title',
+    descricao: 'suggestion_reason_source_description',
+    descrição: 'suggestion_reason_source_description',
+    description: 'suggestion_reason_source_description',
+    keywords: 'suggestion_reason_source_keywords'
+  };
+
+  const key = mapping[normalized];
+  return key ? translateFn(key) : raw;
+}
+
+function translateSuggestionReason(reason: string, translator?: TranslatorFn | null): string {
+  const translateFn = normalizeTranslator(translator ?? translate);
+  const knownHostMatch = reason.match(/^Host conhecido:\s*(.+)$/i);
+  if (knownHostMatch) {
+    const host = knownHostMatch[1];
+    return translateFn('suggestion_reason_known_host', { host });
+  }
+
+  const keywordMatch = reason.match(/^Palavra-chave\s+"(.+)"\s+em\s+(.+)$/i);
+  if (keywordMatch) {
+    const keyword = keywordMatch[1];
+    const source = resolveSourceLabel(keywordMatch[2], translateFn);
+    return translateFn('suggestion_reason_keyword', { keyword, source });
+  }
+
+  const videoMatch = reason.match(/Player de v[íi]deo detectado/i);
+  if (videoMatch) {
+    return translateFn('suggestion_reason_video');
+  }
+
+  const scrollMatch = reason.match(/Scroll infinito detectado/i);
+  if (scrollMatch) {
+    return translateFn('suggestion_reason_infinite_scroll');
+  }
+
+  const ogMatch = reason.match(/^og:type\s*=\s*(.+)$/i);
+  if (ogMatch) {
+    return translateFn('suggestion_reason_og_type', { type: ogMatch[1] });
+  }
+
+  return reason;
+}
 
 window.addEventListener(
   'scroll',
@@ -226,6 +295,7 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
     procrastination: translate('popup_suggestion_label_procrastination'),
     neutral: translate('popup_suggestion_label_neutral')
   };
+  const labelText = labels[suggestion.classification];
 
   const title = translate('popup_suggestion_title');
   const confidenceText = translate('popup_suggestion_confidence_filled', {
@@ -234,6 +304,10 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
   const seemsText = translate('popup_suggestion_title_filled', {
     label: labels[suggestion.classification]
   });
+  const addProductive = translate('popup_suggestion_add_productive');
+  const addProcrastination = translate('popup_suggestion_add_procrastination');
+  const productivePrimary = suggestion.classification === 'productive';
+  const procrastinationPrimary = suggestion.classification === 'procrastination';
 
   const container = document.createElement('div');
   container.id = 'sg-auto-classification-toast';
@@ -252,13 +326,26 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
             : ''
         }
         <div class="sg-toast-content">
-          <p class="sg-toast-title">${suggestion.domain} ${seemsText}</p>
+          <p class="sg-toast-title">
+            <span class="sg-toast-chip ${suggestion.classification}">${labelText}</span>
+            <span class="sg-toast-domain">${suggestion.domain}</span> ${seemsText}
+          </p>
           <ul class="sg-toast-reasons">
             ${suggestion.reasons
               .slice(0, 3)
               .map((reason) => `<li>${translateSuggestionReason(reason, translate)}</li>`)
               .join('')}
           </ul>
+          <div class="sg-toast-actions" role="group" aria-label="${translate(
+            'popup_suggestion_title'
+          )}">
+            <button class="sg-toast-action ${productivePrimary ? 'primary' : ''}" data-target="productive">
+              ${addProductive}
+            </button>
+            <button class="sg-toast-action ${procrastinationPrimary ? 'primary' : ''}" data-target="procrastination">
+              ${addProcrastination}
+            </button>
+          </div>
         </div>
       </div>
       <button class="sg-toast-close" aria-label="${translate(
@@ -274,6 +361,25 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
     if (suggestionToastTimer) {
       window.clearTimeout(suggestionToastTimer);
       suggestionToastTimer = null;
+    }
+  });
+
+  const actionButtons = container.querySelectorAll<HTMLButtonElement>('.sg-toast-action');
+  actionButtons.forEach((button) => {
+    const target = button.dataset.target;
+    if (target === 'productive' || target === 'procrastination') {
+      button.addEventListener('click', () => {
+        chrome.runtime.sendMessage({
+          type: 'apply-suggestion',
+          payload: { domain: suggestion.domain, classification: target }
+        });
+        container.remove();
+        suggestionToastEl = null;
+        if (suggestionToastTimer) {
+          window.clearTimeout(suggestionToastTimer);
+          suggestionToastTimer = null;
+        }
+      });
     }
   });
 
@@ -296,8 +402,8 @@ function ensureSuggestionToastStyles(): void {
   style.textContent = `
     #sg-auto-classification-toast {
       position: fixed;
-      bottom: 16px;
-      right: 16px;
+      bottom: 24px;
+      right: 24px;
       z-index: 2147483646;
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: #111;
@@ -307,11 +413,12 @@ function ensureSuggestionToastStyles(): void {
       position: relative;
       min-width: 260px;
       max-width: min(420px, 90vw);
-      background: #fffdf7;
-      border: 2px solid #111;
-      border-radius: 12px;
-      box-shadow: 6px 6px 0 #111;
-      padding: 12px 14px 14px;
+      background: linear-gradient(135deg, #fff6d9, #ffd6a5);
+      border: 3px solid #111;
+      border-radius: 14px;
+      box-shadow: 8px 10px 0 #111;
+      padding: 14px 16px 16px;
+      animation: sg-toast-pop 220ms ease-out;
     }
 
     #sg-auto-classification-toast .sg-toast-header {
@@ -328,12 +435,18 @@ function ensureSuggestionToastStyles(): void {
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
+      animation: sg-toast-badge 1.6s ease-in-out infinite;
     }
 
     #sg-auto-classification-toast .sg-toast-title {
       margin: 0 0 6px;
-      font-weight: 700;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
     }
 
     #sg-auto-classification-toast .sg-toast-body {
@@ -347,8 +460,10 @@ function ensureSuggestionToastStyles(): void {
       height: 64px;
       border-radius: 12px;
       object-fit: cover;
-      box-shadow: 3px 3px 0 #111;
+      box-shadow: 5px 5px 0 #111;
       flex-shrink: 0;
+      border: 2px solid #111;
+      transform: rotate(-2deg);
     }
 
     #sg-auto-classification-toast .sg-toast-content {
@@ -361,10 +476,65 @@ function ensureSuggestionToastStyles(): void {
       padding: 0;
       color: #333;
       line-height: 1.4;
+      list-style: disc;
     }
 
     #sg-auto-classification-toast .sg-toast-reasons li {
       margin-bottom: 4px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 10px;
+      border: 2px solid #111;
+      box-shadow: 3px 3px 0 #111;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    #sg-auto-classification-toast .sg-toast-chip.productive {
+      background: #32c36b;
+      color: #0b1b10;
+      transform: rotate(-2deg);
+    }
+
+    #sg-auto-classification-toast .sg-toast-chip.procrastination {
+      position: relative;
+      background: #d62828;
+      color: #fff9f5;
+      transform: rotate(-4deg);
+      overflow: hidden;
+    }
+
+    #sg-auto-classification-toast .sg-toast-chip.procrastination::after {
+      content: '';
+      position: absolute;
+      inset: -10%;
+      background: linear-gradient( -8deg, transparent 30%, #8c0c0c 45%, transparent 60% );
+      pointer-events: none;
+    }
+
+    #sg-auto-classification-toast .sg-toast-chip.neutral {
+      background: #ececec;
+      color: #222;
+      transform: rotate(-1deg);
+    }
+
+    #sg-auto-classification-toast .sg-toast-domain {
+      font-weight: 700;
+      background: #111;
+      color: #fffdf5;
+      padding: 4px 10px;
+      border-radius: 999px;
+      box-shadow: 2px 2px 0 #111;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     #sg-auto-classification-toast .sg-toast-close {
@@ -381,6 +551,51 @@ function ensureSuggestionToastStyles(): void {
 
     #sg-auto-classification-toast .sg-toast-close:hover {
       color: #000;
+    }
+
+    #sg-auto-classification-toast .sg-toast-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    #sg-auto-classification-toast .sg-toast-action {
+      border: 2px solid #111;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #fffef6;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #111;
+      transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease, color 80ms ease;
+    }
+
+    #sg-auto-classification-toast .sg-toast-action.primary {
+      background: #111;
+      color: #fff;
+      box-shadow: 4px 4px 0 #ffd166;
+    }
+
+    #sg-auto-classification-toast .sg-toast-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 5px 5px 0 #111;
+    }
+
+    #sg-auto-classification-toast .sg-toast-action.primary:hover {
+      box-shadow: 6px 6px 0 #ffd166;
+    }
+
+    @keyframes sg-toast-pop {
+      0% { opacity: 0; transform: translateY(6px) scale(0.96); }
+      70% { opacity: 1; transform: translateY(-2px) scale(1.02); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes sg-toast-badge {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(199, 168, 108, 0.6); }
+      60% { transform: scale(1.06); box-shadow: 0 0 0 6px rgba(199, 168, 108, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(199, 168, 108, 0); }
     }
   `;
   document.head.appendChild(style);

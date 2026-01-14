@@ -27,8 +27,33 @@
     <main>
       <section id="suggestionCard" class="suggestion-card hidden" aria-live="polite">
         <div class="suggestion-header">
-          <p id="suggestionTitle" data-i18n="popup_suggestion_title">Sugestão automática</p>
-          <small id="suggestionConfidence" data-i18n="popup_suggestion_confidence"></small>
+          <div class="suggestion-title-wrapper">
+            <p id="suggestionTitle" data-i18n="popup_suggestion_title">Sugestão automática</p>
+            <p id="suggestionDomain" class="suggestion-domain" aria-live="polite"></p>
+            <p id="suggestionClassification" class="suggestion-classification" aria-live="polite"></p>
+          </div>
+          <div class="suggestion-meta">
+            <div class="suggestion-nav" aria-label="Navegar recomendações">
+              <button
+                id="suggestionPrevButton"
+                class="suggestion-nav-btn"
+                aria-label="Anterior recomendação"
+                type="button"
+              >
+                ‹
+              </button>
+              <span id="suggestionCounter" class="suggestion-counter"></span>
+              <button
+                id="suggestionNextButton"
+                class="suggestion-nav-btn"
+                aria-label="Próxima recomendação"
+                type="button"
+              >
+                ›
+              </button>
+            </div>
+            <small id="suggestionConfidence" data-i18n="popup_suggestion_confidence"></small>
+          </div>
         </div>
         <ul id="suggestionReasons"></ul>
         <div class="suggestion-actions">

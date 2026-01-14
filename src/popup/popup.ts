@@ -57,6 +57,17 @@ const suggestionCardEl = document.getElementById('suggestionCard') as HTMLDivEle
 const suggestionTitleEl = document.getElementById('suggestionTitle') as HTMLElement | null;
 const suggestionConfidenceEl = document.getElementById('suggestionConfidence') as HTMLElement | null;
 const suggestionReasonsEl = document.getElementById('suggestionReasons') as HTMLUListElement | null;
+const suggestionDomainEl = document.getElementById('suggestionDomain') as HTMLElement | null;
+const suggestionClassificationEl = document.getElementById(
+  'suggestionClassification'
+) as HTMLElement | null;
+const suggestionPrevButton = document.getElementById(
+  'suggestionPrevButton'
+) as HTMLButtonElement | null;
+const suggestionNextButton = document.getElementById(
+  'suggestionNextButton'
+) as HTMLButtonElement | null;
+const suggestionCounterEl = document.getElementById('suggestionCounter') as HTMLElement | null;
 const suggestionProductiveButton = document.getElementById(
   'suggestionProductiveButton'
 ) as HTMLButtonElement | null;
@@ -186,6 +197,8 @@ let cachedBlogPosts: BlogPost[] | null = null;
 let blogFetchPromise: Promise<BlogPost[] | null> | null = null;
 let blogSelectedPostUrl: string | null = null;
 let currentSuggestion: DomainSuggestion | null = null;
+let suggestionList: DomainSuggestion[] = [];
+let suggestionIndex = 0;
 
 const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'popup_critical_message_1', needsThreshold: true },
@@ -260,6 +273,8 @@ function attachListeners(): void {
     }
     void chrome.tabs.create({ url: blogSelectedPostUrl });
   });
+  suggestionPrevButton?.addEventListener('click', () => moveSuggestion(-1));
+  suggestionNextButton?.addEventListener('click', () => moveSuggestion(1));
   suggestionProductiveButton?.addEventListener('click', () =>
     void handleSuggestionDecision('productive')
   );
@@ -331,7 +346,9 @@ async function hydrate(): Promise<void> {
     await ensureI18n(preference);
     latestData = data;
     latestFairness = data.fairness ?? null;
-    currentSuggestion = data.activeSuggestion ?? null;
+    suggestionList = buildSuggestionList(data);
+    suggestionIndex = 0;
+    currentSuggestion = suggestionList[0] ?? null;
     criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
@@ -339,7 +356,7 @@ async function hydrate(): Promise<void> {
     renderTopDomains(data.metrics);
     renderChart(data.metrics);
     renderFairness(latestFairness);
-    renderSuggestionCard(currentSuggestion, data.settings);
+    renderSuggestionCard(currentSuggestion, data.settings, suggestionList.length, suggestionIndex);
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -353,6 +370,26 @@ async function hydrate(): Promise<void> {
   }
 }
 
+function buildSuggestionList(data: PopupData): DomainSuggestion[] {
+  const combined: DomainSuggestion[] = [
+    ...(data.activeSuggestion ? [data.activeSuggestion] : []),
+    ...(data.suggestions ?? [])
+  ].filter((item): item is DomainSuggestion => Boolean(item));
+
+  const seen = new Set<string>();
+  const sorted = combined.sort((a, b) => b.timestamp - a.timestamp);
+  const deduped: DomainSuggestion[] = [];
+  for (const entry of sorted) {
+    const key = entry.domain;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(entry);
+  }
+  return deduped;
+}
+
 async function ensureI18n(preference: LocalePreference): Promise<void> {
   if (i18n && activeLocalePreference === preference) {
     return;
@@ -362,16 +399,34 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
   i18n.apply();
 }
 
+function moveSuggestion(delta: number): void {
+  if (!suggestionList.length) {
+    return;
+  }
+  suggestionIndex = (suggestionIndex + delta + suggestionList.length) % suggestionList.length;
+  currentSuggestion = suggestionList[suggestionIndex] ?? null;
+  renderSuggestionCard(currentSuggestion, latestData?.settings, suggestionList.length, suggestionIndex);
+}
+
 function renderSuggestionCard(
   suggestion: DomainSuggestion | null,
-  settings?: { enableAutoClassification?: boolean }
+  settings?: { enableAutoClassification?: boolean },
+  totalCount?: number,
+  currentIndexValue?: number
 ): void {
   if (!suggestionCardEl || !suggestionTitleEl || !suggestionReasonsEl || !suggestionConfidenceEl) {
     return;
   }
+  const total = totalCount ?? suggestionList.length;
+  const activeIndex = currentIndexValue ?? suggestionIndex;
   const featureEnabled = settings?.enableAutoClassification;
   if (!featureEnabled || !suggestion) {
     suggestionCardEl.classList.add('hidden');
+    if (suggestionCounterEl) {
+      suggestionCounterEl.textContent = '';
+    }
+    suggestionPrevButton?.setAttribute('disabled', 'true');
+    suggestionNextButton?.setAttribute('disabled', 'true');
     return;
   }
   suggestionCardEl.classList.remove('hidden');
@@ -385,6 +440,32 @@ function renderSuggestionCard(
       label: labelMap[suggestion.classification]
     }) ?? `Este site parece ser ${labelMap[suggestion.classification]}`;
   suggestionTitleEl.textContent = titleTemplate;
+  if (suggestionClassificationEl) {
+    suggestionClassificationEl.textContent = labelMap[suggestion.classification];
+    const baseClass = 'suggestion-classification';
+    const variant =
+      suggestion.classification === 'productive'
+        ? 'success'
+        : suggestion.classification === 'procrastination'
+        ? 'danger'
+        : 'neutral';
+    suggestionClassificationEl.className = `${baseClass} ${variant}`;
+  }
+  if (suggestionDomainEl) {
+    suggestionDomainEl.textContent = suggestion.domain;
+  }
+  if (suggestionCounterEl) {
+    if (total > 1) {
+      suggestionCounterEl.textContent = `${activeIndex + 1}/${total}`;
+    } else {
+      suggestionCounterEl.textContent = '';
+    }
+  }
+  if (suggestionPrevButton && suggestionNextButton) {
+    const enableNav = total > 1;
+    suggestionPrevButton.disabled = !enableNav;
+    suggestionNextButton.disabled = !enableNav;
+  }
   const confidenceTemplate =
     i18n?.t('popup_suggestion_confidence_filled', {
       confidence: Math.round(suggestion.confidence)
