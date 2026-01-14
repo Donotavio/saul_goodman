@@ -63,37 +63,69 @@ function resolveSourceLabel(raw: string, translate: TranslatorFn): string {
   return key ? translate(key) : raw;
 }
 
+function decodeHtmlEntities(value: string): string {
+  return value.replace(/&(?:quot|apos|amp|lt|gt);|&#(?:\d+|x[0-9a-fA-F]+);/g, (match) => {
+    switch (match) {
+      case '&quot;':
+      case '&#34;':
+      case '&#x22;':
+        return '"';
+      case '&apos;':
+      case '&#39;':
+      case '&#x27;':
+        return "'";
+      case '&amp;':
+        return '&';
+      case '&lt;':
+        return '<';
+      case '&gt;':
+        return '>';
+      default:
+        if (match.startsWith('&#x')) {
+          const code = Number.parseInt(match.slice(3, -1), 16);
+          return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+        }
+        if (match.startsWith('&#')) {
+          const code = Number.parseInt(match.slice(2, -1), 10);
+          return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+        }
+        return match;
+    }
+  });
+}
+
 function translateSuggestionReason(reason: string, translator?: TranslatorFn | null): string {
   const translate = normalizeTranslator(translator);
-  const knownHostMatch = reason.match(/^Host conhecido:\s*(.+)$/i);
+  const normalizedReason = decodeHtmlEntities(reason);
+  const knownHostMatch = normalizedReason.match(/^Host conhecido:\s*(.+)$/i);
   if (knownHostMatch) {
     const host = knownHostMatch[1];
     return translate('suggestion_reason_known_host', { host });
   }
 
-  const keywordMatch = reason.match(/^Palavra-chave\s+"(.+)"\s+em\s+(.+)$/i);
+  const keywordMatch = normalizedReason.match(/^Palavra-chave\s+"(.+)"\s+em\s+(.+)$/i);
   if (keywordMatch) {
     const keyword = keywordMatch[1];
     const source = resolveSourceLabel(keywordMatch[2], translate);
     return translate('suggestion_reason_keyword', { keyword, source });
   }
 
-  const videoMatch = reason.match(/Player de v[íi]deo detectado/i);
+  const videoMatch = normalizedReason.match(/Player de v[íi]deo detectado/i);
   if (videoMatch) {
     return translate('suggestion_reason_video');
   }
 
-  const scrollMatch = reason.match(/Scroll infinito detectado/i);
+  const scrollMatch = normalizedReason.match(/Scroll infinito detectado/i);
   if (scrollMatch) {
     return translate('suggestion_reason_infinite_scroll');
   }
 
-  const ogMatch = reason.match(/^og:type\s*=\s*(.+)$/i);
+  const ogMatch = normalizedReason.match(/^og:type\s*=\s*(.+)$/i);
   if (ogMatch) {
     return translate('suggestion_reason_og_type', { type: ogMatch[1] });
   }
 
-  return reason;
+  return normalizedReason;
 }
 
 const INACTIVITY_PING_MS = 15000;

@@ -15,3 +15,18 @@ test('translateSuggestionReason keeps unknown text as-is', () => {
   const translated = translateSuggestionReason(raw, (key) => key);
   assert.ok(typeof translated === 'string');
 });
+
+test('translateSuggestionReason decodes HTML entities before matching', () => {
+  const raw = 'Palavra-chave &quot;dashboard&quot; em título';
+  const translated = translateSuggestionReason(raw, (key, substitutions) => {
+    const tokens = (substitutions ?? {}) as Record<string, string | number>;
+    if (key === 'suggestion_reason_source_title') {
+      return 'título';
+    }
+    if (key === 'suggestion_reason_keyword') {
+      return `Palavra-chave "${tokens.keyword ?? ''}" em ${tokens.source ?? ''}`;
+    }
+    return key;
+  });
+  assert.equal(translated, 'Palavra-chave "dashboard" em título');
+});
