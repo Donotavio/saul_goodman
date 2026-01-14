@@ -1,5 +1,3 @@
-import { sanitizeReasonText } from '../shared/utils/suggestion-reasons.js';
-
 type DomainMetadata = {
   hostname: string;
   title?: string;
@@ -85,6 +83,15 @@ function translateSuggestionReason(reason: string, translator?: TranslatorFn | n
   }
 
   return reason;
+}
+
+function sanitizeReasonText(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 const INACTIVITY_PING_MS = 15000;
