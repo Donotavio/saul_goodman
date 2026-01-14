@@ -777,18 +777,8 @@ function handleHolidayCountryChange(): void {
 }
 
 function returnToPopup(): void {
-  const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
-  if (!chrome?.tabs?.create) {
-    window.location.href = popupUrl;
-    return;
-  }
-  chrome.tabs.create({ url: popupUrl }, () => {
-    if (chrome.runtime.lastError) {
-      window.location.href = popupUrl;
-      return;
-    }
-    closeCurrentTab();
-  });
+  // Mirror report behavior: simplesmente fecha a aba atual.
+  closeCurrentTab();
 }
 
 function generatePairingKey(): string {
