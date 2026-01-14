@@ -6,6 +6,16 @@ type DomainMetadata = {
   ogType?: string;
   hasVideoPlayer: boolean;
   hasInfiniteScroll: boolean;
+  hasAutoplayMedia?: boolean;
+  hasFeedLayout?: boolean;
+  hasFormFields?: boolean;
+  hasRichEditor?: boolean;
+  hasLargeTable?: boolean;
+  hasShortsPattern?: boolean;
+  schemaTypes?: string[];
+  headings?: string[];
+  pathTokens?: string[];
+  language?: string;
 };
 
 type DomainSuggestion = {
@@ -255,6 +265,23 @@ function collectPageMetadata(): DomainMetadata {
     document.querySelector('video, [role=\"video\"], video-player, .video-player, [data-testid*=\"video\"]')
   );
   const hasInfiniteScroll = detectInfiniteScroll();
+  const hasAutoplayMedia = Boolean(document.querySelector('video[autoplay], audio[autoplay]'));
+  const hasFeedLayout = detectFeedLayout();
+  const hasFormFields = detectFormFields();
+  const hasRichEditor = detectRichEditor();
+  const hasLargeTable = detectLargeTable();
+  const hasShortsPattern = detectShortsPattern();
+  const schemaTypes = Array.from(
+    new Set(
+      Array.from(document.querySelectorAll('[itemtype]'))
+        .map((el) => el.getAttribute('itemtype') || '')
+        .map((value) => value.trim())
+        .filter(Boolean)
+    )
+  );
+  const headings = collectHeadings();
+  const pathTokens = collectPathTokens();
+  const language = (document.documentElement.lang || '').trim() || undefined;
 
   return {
     hostname: window.location.hostname,
@@ -263,7 +290,17 @@ function collectPageMetadata(): DomainMetadata {
     keywords,
     ogType: ogType || undefined,
     hasVideoPlayer,
-    hasInfiniteScroll
+    hasInfiniteScroll,
+    hasAutoplayMedia,
+    hasFeedLayout,
+    hasFormFields,
+    hasRichEditor,
+    hasLargeTable,
+    hasShortsPattern,
+    schemaTypes,
+    headings,
+    pathTokens,
+    language
   };
 }
 
@@ -285,6 +322,62 @@ function detectInfiniteScroll(): boolean {
     return false;
   }
   return infiniteScrollDetected || longPage;
+}
+
+function detectFeedLayout(): boolean {
+  return Boolean(
+    document.querySelector(
+      '[role=\"feed\"], [data-testid*=\"feed\"], .feed, .timeline, ytd-rich-grid-renderer, ytd-reel-shelf-renderer, div[aria-label*=\"feed\" i], div[aria-label*=\"timeline\" i]'
+    )
+  );
+}
+
+function detectFormFields(): boolean {
+  const inputs = document.querySelectorAll('input, textarea, select');
+  return inputs.length >= 3;
+}
+
+function detectRichEditor(): boolean {
+  return Boolean(
+    document.querySelector(
+      '[contenteditable=\"true\"], .monaco-editor, .CodeMirror, .ace_editor, [data-editor], [role=\"textbox\"][aria-multiline=\"true\"]'
+    )
+  );
+}
+
+function detectLargeTable(): boolean {
+  const table = document.querySelector('table');
+  if (!table) return false;
+  const rows = table.querySelectorAll('tr');
+  return rows.length >= 30;
+}
+
+function detectShortsPattern(): boolean {
+  const path = window.location.pathname.toLowerCase();
+  if (path.includes('/shorts') || path.includes('/stories') || path.includes('/reels')) {
+    return true;
+  }
+  return Boolean(
+    document.querySelector('[data-testid*=\"short\" i], [data-testid*=\"story\" i], ytd-reel-video-renderer, ytd-reel-shelf-renderer')
+  );
+}
+
+function collectHeadings(): string[] {
+  const MAX = 5;
+  const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
+    .map((el) => el.textContent || '')
+    .map((text) => text.trim())
+    .filter(Boolean)
+    .slice(0, MAX);
+  return headings;
+}
+
+function collectPathTokens(): string[] {
+  const path = window.location.pathname || '';
+  return path
+    .split('/')
+    .map((part) => part.trim().toLowerCase())
+    .filter((part) => part.length >= 3 && part.length <= 40);
 }
 
 function showSuggestionToast(suggestion: DomainSuggestion): void {

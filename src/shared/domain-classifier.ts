@@ -14,6 +14,16 @@ export interface ClassificationInput {
   ogType?: string;
   hasVideoPlayer: boolean;
   hasInfiniteScroll: boolean;
+  hasAutoplayMedia?: boolean;
+  hasFeedLayout?: boolean;
+  hasFormFields?: boolean;
+  hasRichEditor?: boolean;
+  hasLargeTable?: boolean;
+  hasShortsPattern?: boolean;
+  schemaTypes?: string[];
+  headings?: string[];
+  pathTokens?: string[];
+  language?: string;
 }
 
 type LearningToken =
@@ -21,8 +31,17 @@ type LearningToken =
   | `root:${string}`
   | `kw:${string}`
   | `og:${string}`
+  | `path:${string}`
+  | `schema:${string}`
+  | `lang:${string}`
   | 'flag:video'
-  | 'flag:scroll';
+  | 'flag:scroll'
+  | 'flag:autoplay'
+  | 'flag:feed'
+  | 'flag:form'
+  | 'flag:editor'
+  | 'flag:table'
+  | 'flag:shorts';
 
 type LearningSide = 'productive' | 'procrastination';
 
@@ -33,6 +52,9 @@ const LEARNING_TOKEN_WEIGHTS: Record<string, number> = {
   root: 2,
   kw: 1,
   og: 1.5,
+  path: 1.25,
+  schema: 1.25,
+  lang: 0.5,
   flag: 1
 };
 const MAX_LEARNING_REASONS = 3;
@@ -135,6 +157,34 @@ const PROCRASTINATION_KEYWORDS = [
 
 const PRODUCTIVE_OG_TYPES = ['article', 'book', 'profile'];
 const PROCRASTINATION_OG_TYPES = ['video', 'video.other', 'movie', 'tv_show'];
+const PATH_PRODUCTIVE = [
+  'dashboard',
+  'issue',
+  'issues',
+  'pull',
+  'merge',
+  'repo',
+  'project',
+  'task',
+  'admin',
+  'editor',
+  'edit',
+  'workspace'
+];
+const PATH_PROCRASTINATION = [
+  'watch',
+  'video',
+  'feed',
+  'timeline',
+  'shorts',
+  'reels',
+  'stories',
+  'story',
+  'live',
+  'playlist'
+];
+const SCHEMA_PRODUCTIVE = ['article', 'techarticle', 'course', 'creativework', 'softwareapplication'];
+const SCHEMA_PROCRASTINATION = ['videoobject', 'mediaobject', 'movie', 'tvseason', 'tvseries'];
 
 export function classifyDomain(
   data: ClassificationInput,
@@ -176,7 +226,8 @@ export function classifyDomain(
     { label: 'hostname', text: host },
     { label: 'título', text: data.title },
     { label: 'descrição', text: data.description },
-    { label: 'keywords', list: data.keywords }
+    { label: 'keywords', list: data.keywords },
+    { label: 'headings', list: data.headings }
   ];
 
   const evaluateKeyword = (
@@ -239,6 +290,54 @@ export function classifyDomain(
     } else if (PRODUCTIVE_OG_TYPES.some((value) => lowerOg.includes(value))) {
       addSignal('productive', 20, `og:type=${lowerOg}`, 'medium');
     }
+  }
+
+  if (Array.isArray(data.pathTokens) && data.pathTokens.length) {
+    const seen = new Set<string>();
+    data.pathTokens.forEach((raw) => {
+      const token = raw.toLowerCase();
+      if (!token || seen.has(token)) return;
+      seen.add(token);
+      if (PATH_PROCRASTINATION.includes(token)) {
+        addSignal('procrastination', 18, `Caminho contém "${token}"`, 'medium');
+      }
+      if (PATH_PRODUCTIVE.includes(token)) {
+        addSignal('productive', 18, `Caminho contém "${token}"`, 'medium');
+      }
+    });
+  }
+
+  if (Array.isArray(data.schemaTypes) && data.schemaTypes.length) {
+    const seen = new Set<string>();
+    data.schemaTypes.forEach((schema) => {
+      const normalized = schema.toLowerCase();
+      if (!normalized || seen.has(normalized)) return;
+      seen.add(normalized);
+      if (SCHEMA_PROCRASTINATION.some((candidate) => normalized.includes(candidate))) {
+        addSignal('procrastination', 16, `schema:${normalized}`, 'medium');
+      } else if (SCHEMA_PRODUCTIVE.some((candidate) => normalized.includes(candidate))) {
+        addSignal('productive', 14, `schema:${normalized}`, 'medium');
+      }
+    });
+  }
+
+  if (data.hasAutoplayMedia) {
+    addSignal('procrastination', 18, 'Mídia em autoplay detectada', 'medium');
+  }
+  if (data.hasFeedLayout) {
+    addSignal('procrastination', 22, 'Layout de feed detectado', 'strong');
+  }
+  if (data.hasShortsPattern) {
+    addSignal('procrastination', 20, 'Padrão de shorts/reels detectado', 'medium');
+  }
+  if (data.hasFormFields) {
+    addSignal('productive', 12, 'Formulário interativo detectado', 'medium');
+  }
+  if (data.hasRichEditor) {
+    addSignal('productive', 24, 'Editor de texto/código detectado', 'strong');
+  }
+  if (data.hasLargeTable) {
+    addSignal('productive', 12, 'Tabela extensa detectada', 'medium');
   }
 
   const tokens = buildLearningTokens(data);
@@ -310,7 +409,8 @@ export function buildLearningTokens(data: ClassificationInput): LearningToken[] 
     host,
     data.title,
     data.description,
-    ...(data.keywords ?? [])
+    ...(data.keywords ?? []),
+    ...(data.headings ?? [])
   ];
   keywordSources.forEach((source) => {
     if (!source) return;
@@ -325,6 +425,39 @@ export function buildLearningTokens(data: ClassificationInput): LearningToken[] 
   }
   if (data.hasInfiniteScroll) {
     tokens.add('flag:scroll');
+  }
+  if (data.hasAutoplayMedia) {
+    tokens.add('flag:autoplay');
+  }
+  if (data.hasFeedLayout) {
+    tokens.add('flag:feed');
+  }
+  if (data.hasFormFields) {
+    tokens.add('flag:form');
+  }
+  if (data.hasRichEditor) {
+    tokens.add('flag:editor');
+  }
+  if (data.hasLargeTable) {
+    tokens.add('flag:table');
+  }
+  if (data.hasShortsPattern) {
+    tokens.add('flag:shorts');
+  }
+  if (Array.isArray(data.pathTokens)) {
+    data.pathTokens
+      .map((token) => (token ?? '').toLowerCase().trim())
+      .filter(Boolean)
+      .forEach((token) => tokens.add(`path:${token}` as LearningToken));
+  }
+  if (Array.isArray(data.schemaTypes)) {
+    data.schemaTypes
+      .map((schema) => (schema ?? '').toLowerCase().trim())
+      .filter(Boolean)
+      .forEach((schema) => tokens.add(`schema:${schema}` as LearningToken));
+  }
+  if (data.language) {
+    tokens.add(`lang:${data.language.toLowerCase()}` as LearningToken);
   }
 
   return Array.from(tokens);
@@ -377,6 +510,9 @@ function getTokenWeight(token: LearningToken): number {
   if (token.startsWith('root:')) return LEARNING_TOKEN_WEIGHTS.root;
   if (token.startsWith('kw:')) return LEARNING_TOKEN_WEIGHTS.kw;
   if (token.startsWith('og:')) return LEARNING_TOKEN_WEIGHTS.og;
+  if (token.startsWith('path:')) return LEARNING_TOKEN_WEIGHTS.path;
+  if (token.startsWith('schema:')) return LEARNING_TOKEN_WEIGHTS.schema;
+  if (token.startsWith('lang:')) return LEARNING_TOKEN_WEIGHTS.lang;
   if (token.startsWith('flag:')) return LEARNING_TOKEN_WEIGHTS.flag;
   return 0;
 }
@@ -394,11 +530,38 @@ function buildLearningReason(token: LearningToken, side: LearningSide): string {
   if (token.startsWith('og:')) {
     return `Sinal aprendido: og:type ${token.replace('og:', '')} indica ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
   }
+  if (token.startsWith('path:')) {
+    return `Sinal aprendido: caminho "${token.replace('path:', '')}" indica ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token.startsWith('schema:')) {
+    return `Sinal aprendido: schema ${token.replace('schema:', '')} indica ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token.startsWith('lang:')) {
+    return `Sinal aprendido: idioma ${token.replace('lang:', '')} tende a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
   if (token === 'flag:video') {
     return `Sinal aprendido: páginas com vídeo tendem a ser ${side === 'productive' ? 'produtivas' : 'procrastinação'}`;
   }
   if (token === 'flag:scroll') {
     return `Sinal aprendido: scroll infinito tende a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token === 'flag:autoplay') {
+    return `Sinal aprendido: autoplay tende a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token === 'flag:feed') {
+    return `Sinal aprendido: layout de feed tende a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token === 'flag:form') {
+    return `Sinal aprendido: páginas com formulário tendem a ser ${side === 'productive' ? 'produtivas' : 'procrastinação'}`;
+  }
+  if (token === 'flag:editor') {
+    return `Sinal aprendido: editor rico tende a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
+  }
+  if (token === 'flag:table') {
+    return `Sinal aprendido: tabelas extensas tendem a ser ${side === 'productive' ? 'produtivas' : 'procrastinação'}`;
+  }
+  if (token === 'flag:shorts') {
+    return `Sinal aprendido: shorts/reels tendem a ser ${side === 'productive' ? 'produtivo' : 'procrastinação'}`;
   }
   return `Sinal aprendido favorece ${side}`;
 }

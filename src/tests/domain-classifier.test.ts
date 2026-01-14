@@ -11,6 +11,15 @@ function resultFor(
     hostname,
     hasVideoPlayer: false,
     hasInfiniteScroll: false,
+    hasAutoplayMedia: false,
+    hasFeedLayout: false,
+    hasFormFields: false,
+    hasRichEditor: false,
+    hasLargeTable: false,
+    hasShortsPattern: false,
+    schemaTypes: [],
+    headings: [],
+    pathTokens: [],
     ...overrides
   });
 }
@@ -125,4 +134,31 @@ test('learning signal decays when very old', () => {
     learning
   );
   assert.ok(res.classification !== 'procrastination');
+});
+
+test('path and autoplay push to procrastination', () => {
+  const res = resultFor('videos.example', {
+    hasVideoPlayer: true,
+    hasAutoplayMedia: true,
+    pathTokens: ['watch', 'v'],
+    ogType: 'video'
+  });
+  assert.equal(res.classification, 'procrastination');
+});
+
+test('rich editor and forms push to productive', () => {
+  const res = resultFor('workspace.example', {
+    hasRichEditor: true,
+    hasFormFields: true,
+    pathTokens: ['editor', 'dashboard']
+  });
+  assert.equal(res.classification, 'productive');
+});
+
+test('schema video object influences procrastination', () => {
+  const res = resultFor('media.example', {
+    schemaTypes: ['http://schema.org/VideoObject'],
+    hasVideoPlayer: true
+  });
+  assert.equal(res.classification, 'procrastination');
 });

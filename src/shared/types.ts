@@ -263,6 +263,16 @@ export interface DomainMetadata {
   ogType?: string;
   hasVideoPlayer: boolean;
   hasInfiniteScroll: boolean;
+  hasAutoplayMedia?: boolean;
+  hasFeedLayout?: boolean;
+  hasFormFields?: boolean;
+  hasRichEditor?: boolean;
+  hasLargeTable?: boolean;
+  hasShortsPattern?: boolean;
+  schemaTypes?: string[];
+  headings?: string[];
+  pathTokens?: string[];
+  language?: string;
 }
 
 export interface LearningTokenStat {

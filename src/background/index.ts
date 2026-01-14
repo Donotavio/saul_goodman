@@ -467,17 +467,39 @@ async function collectDomainMetadata(
           resolve(null);
           return;
         }
-        const hostname = normalizeDomain(payload.hostname || fallbackHost);
+        const meta = (payload ?? {}) as DomainMetadata;
+        const hostname = normalizeDomain(meta.hostname || fallbackHost);
         resolve({
           hostname,
-          title: payload.title,
-          description: payload.description,
-          keywords: Array.isArray(payload.keywords)
-            ? payload.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
+          title: meta.title,
+          description: meta.description,
+          keywords: Array.isArray(meta.keywords)
+            ? meta.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
             : [],
-          ogType: payload.ogType,
-          hasVideoPlayer: Boolean(payload.hasVideoPlayer),
-          hasInfiniteScroll: Boolean(payload.hasInfiniteScroll)
+          ogType: meta.ogType,
+          hasVideoPlayer: Boolean(meta.hasVideoPlayer),
+          hasInfiniteScroll: Boolean(meta.hasInfiniteScroll),
+          hasAutoplayMedia: Boolean(meta.hasAutoplayMedia),
+          hasFeedLayout: Boolean(meta.hasFeedLayout),
+          hasFormFields: Boolean(meta.hasFormFields),
+          hasRichEditor: Boolean(meta.hasRichEditor),
+          hasLargeTable: Boolean(meta.hasLargeTable),
+          hasShortsPattern: Boolean(meta.hasShortsPattern),
+          schemaTypes: Array.isArray(meta.schemaTypes)
+            ? (meta.schemaTypes ?? []).filter(
+                (entry) => typeof entry === 'string' && entry.trim().length > 0
+              )
+            : [],
+          headings: Array.isArray(meta.headings)
+            ? (meta.headings ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0)
+            : [],
+          pathTokens: Array.isArray(meta.pathTokens)
+            ? (meta.pathTokens ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0)
+            : [],
+          language:
+            typeof meta.language === 'string' && meta.language.trim().length > 0
+              ? meta.language.trim()
+              : undefined
         });
       });
     } catch (error) {

@@ -8,7 +8,7 @@
 - A extensão roda 100% local no seu navegador. Métricas (tempo em domínios, inatividade, trocas de abas), configurações e preferências ficam apenas em `chrome.storage.local`.
 - O histórico de contexto (`sg:context-history`) guarda somente o modo selecionado e os timestamps de início/fim para compor o relatório. Esse array é resetado diariamente e nunca sai do seu navegador.
 - Não gravamos conteúdo das páginas, apenas o domínio/hostname para classificação.
-- Se você ativar a Classificação Automática, coletamos apenas metadados leves da página atual (título, meta description/keywords, `og:type`, presença de vídeo e um sinal simples de scroll infinito) para sugerir uma categoria localmente. Nada disso é enviado para a rede.
+- Se você ativar a Classificação Automática, coletamos apenas metadados leves da página atual (título, meta description/keywords, `og:type`), sinais estruturais simples (player de vídeo, autoplay, feed/shorts, formulário, editor rico, tabela grande, scroll infinito) e esquema (`itemtype`) para sugerir uma categoria localmente. Nada disso é enviado para a rede. Quando você aceita/recusa uma sugestão ou adiciona domínios manualmente, gravamos apenas contadores locais desses sinais (domínio, host base, palavras, flags de vídeo/scroll/feed/form/editor etc.) em `chrome.storage.local` para personalizar futuras recomendações.
 - Não armazenamos ou enviamos teclas pressionadas; eventos de teclado/mouse/scroll são usados apenas como “sinal de atividade” (ping de presença), sem conteúdo.
 
 ## Rede
@@ -61,7 +61,7 @@ Last update: 2025-12-02
 - The extension runs 100% locally in your browser. Metrics (time per domain, idle time, tab switches), settings, and preferences stay in `chrome.storage.local`.
 - The context history (`sg:context-history`) keeps only the selected mode plus start/end timestamps to compose the report. It resets every day and never leaves your browser.
 - We never store page content — only the domain/hostname used for classification.
-- If you enable Auto Classification, we read only lightweight page metadata (title, meta description/keywords, `og:type`, presence of a video player, and a simple infinite-scroll hint) to suggest a category locally. None of this metadata is sent over the network.
+- If you enable Auto Classification, we read only lightweight page metadata (title, meta description/keywords, `og:type`), simple structural hints (video player, autoplay, feed/shorts, form, rich editor, large table, infinite scroll), and schema (`itemtype`) to suggest a category locally. None of this metadata is sent over the network. When you accept/decline a suggestion or manually add domains, we store local counters for those signals (domain, base host, words, video/scroll/feed/form/editor flags, etc.) in `chrome.storage.local` to personalize future recommendations.
 - We do not log or transmit keystrokes. Keyboard, mouse, and scroll events are used solely as “activity pings” without payload.
 
 ## Network
@@ -114,7 +114,7 @@ Last update: 2025-12-02
 - La extensión funciona 100% local en tu navegador. Las métricas (tiempo por dominio, inactividad, cambios de pestaña), configuraciones y preferencias viven únicamente en `chrome.storage.local`.
 - El historial de contexto (`sg:context-history`) almacena solo el modo elegido y las marcas de tiempo de inicio/fin para generar el informe. Se restablece diariamente y nunca sale de tu navegador.
 - No almacenamos el contenido de las páginas; solo el dominio/hostname usado para la clasificación.
-- Si activas la Clasificación Automática, solo leemos metadatos ligeros de la página (título, meta description/keywords, `og:type`, presencia de video y una pista simple de scroll infinito) para sugerir una categoría localmente. Nada de esto se envía por la red.
+- Si activas la Clasificación Automática, solo leemos metadatos ligeros de la página (título, meta description/keywords, `og:type`), pistas estructurales simples (reproductor de video, autoplay, feed/shorts, formulario, editor enriquecido, tabla grande, scroll infinito) y schema (`itemtype`) para sugerir una categoría de forma local. Nada de esto se envía por la red. Cuando aceptas/rechazas una sugerencia o agregas dominios manualmente, guardamos contadores locales de esas señales (dominio, host base, palabras, flags de video/scroll/feed/form/editor, etc.) en `chrome.storage.local` para personalizar recomendaciones futuras.
 - No registramos ni enviamos pulsaciones de teclado. Los eventos de teclado, mouse o scroll sirven únicamente como “ping” de actividad sin contenido.
 
 ## Red
