@@ -2596,5 +2596,80 @@
   },
   "usersBadgeLabel": {
     "message": "उपयोगकर्ता"
+  },
+  "vscodeCard1Body": {
+    "message": "स्थानीय डेमॉन एक्सटेंशन के साथ बातचीत करता है और संपादक में उत्पादक मिनटों के रूप में समय दर्ज करता है। कुछ भी लोकलहोस्ट से बाहर नहीं जाता, लेकिन टाइमर कभी नहीं सोता।"
+  },
+  "vscodeCard1Kicker": {
+    "message": "फोकस घड़ी"
+  },
+  "vscodeCard1Title": {
+    "message": "हर कमिट एक बिल योग्य घंटे के रूप में गिना जाता है।"
+  },
+  "vscodeCard2Body": {
+    "message": "क्या आप संपादक से फीड में स्विच कर गए? सॉउल रिपोर्ट में व्याकुलता को चिह्नित करता है। क्या आप कोड में वापस आए? वह इसे निर्दोषता के सबूत के रूप में दर्ज करता है।"
+  },
+  "vscodeCard2Kicker": {
+    "message": "संदर्भ जासूस"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code और Chrome सुरागों का आदान-प्रदान करते हैं।"
+  },
+  "vscodeCard3Body": {
+    "message": "रिपोर्ट में कोड का समय, व्यवधान और अक्सर संदिग्ध शामिल होते हैं। प्रबंधक को दिखाने के लिए बिल्कुल सही कि आलस्य का कोई मौका नहीं है।"
+  },
+  "vscodeCard3Kicker": {
+    "message": "सुनवाई के लिए तैयार"
+  },
+  "vscodeCard3Title": {
+    "message": "मेट्रिक्स और स्क्रीनशॉट के साथ बचाव का निर्यात करें।"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code अदालत में"
+  },
+  "vscodeLead": {
+    "message": "सॉउल VS Code को मामले से जोड़ता है: संपादक के मिनट फोकस के सबूत में बदल जाते हैं, व्यवधान संदिग्ध बन जाते हैं, और रिपोर्ट जूरी (आपकी टीम) को मनाने के लिए तैयार आती है।"
+  },
+  "vscodeMetaBridge": {
+    "message": "क्रोम + वीएस कोड ब्रिज।"
+  },
+  "vscodeMetaLocal": {
+    "message": "100% स्थानीय, कुछ भी आपके संपादक से बाहर नहीं जाता।"
+  },
+  "vscodeMetaProof": {
+    "message": "प्रिंट और CSV के साथ रिपोर्ट।"
+  },
+  "vscodePrimaryCta": {
+    "message": "VS Code में इंस्टॉल करें"
+  },
+  "vscodeProofBody": {
+    "message": "एक समयरेखा जो दिखाती है कि कौन कोड में रहा और कौन फीड में भाग गया। अगली बैठक में Exhibit A के रूप में उपयोग करें।"
+  },
+  "vscodeProofChipAlert": {
+    "message": "चेतावनी"
+  },
+  "vscodeProofChipDefense": {
+    "message": "रक्षा"
+  },
+  "vscodeProofChipFocus": {
+    "message": "फोकस"
+  },
+  "vscodeProofEyebrow": {
+    "message": "सौल के पसंदीदा सबूत"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — वीएस कोड सक्रिय · 38 मिनट बिना टैब बदले।"
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — यूट्यूब पर कूद गया · सौल ने इसे व्याकुलता के रूप में चिह्नित किया।"
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — वीएस कोड पर वापसी · 21 मिनट का ध्यान पुनः प्राप्त किया।"
+  },
+  "vscodeSecondaryCta": {
+    "message": "त्वरित गाइड देखें"
+  },
+  "vscodeTitle": {
+    "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
   }
 }

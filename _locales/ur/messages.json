@@ -2596,5 +2596,80 @@
   },
   "usersBadgeLabel": {
     "message": "صارفین"
+  },
+  "vscodeCard1Body": {
+    "message": "مقامی ڈیمون توسیع کے ساتھ بات چیت کرتا ہے اور ایڈیٹر میں وقت کو پیداواری منٹ کے طور پر ریکارڈ کرتا ہے۔ کچھ بھی لوکل ہوسٹ سے باہر نہیں جاتا، لیکن ٹائمر کبھی نہیں سوتا۔"
+  },
+  "vscodeCard1Kicker": {
+    "message": "فوکس کا گھڑی"
+  },
+  "vscodeCard1Title": {
+    "message": "ہر کمیٹ ایک بلable گھنٹے کے طور پر شمار ہوتا ہے۔"
+  },
+  "vscodeCard2Body": {
+    "message": "کیا آپ ایڈیٹر سے فیڈ میں منتقل ہو گئے؟ ساؤل رپورٹ میں توجہ کی خرابی کو نشان زد کرتا ہے۔ کیا آپ نے کوڈ میں واپس آ گئے؟ وہ بے گناہی کے ثبوت کے طور پر ریکارڈ کرتا ہے۔"
+  },
+  "vscodeCard2Kicker": {
+    "message": "سیاق و سباق کا تفتیشی"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code اور Chrome سراغوں کا تبادلہ کرتے ہیں۔"
+  },
+  "vscodeCard3Body": {
+    "message": "رپورٹس کوڈ کا وقت، مداخلتیں اور بار بار کے مشتبہ افراد لاتی ہیں۔ مینیجر کو دکھانے کے لیے بہترین کہ سست روی کا کوئی موقع نہیں ہے۔"
+  },
+  "vscodeCard3Kicker": {
+    "message": "آڈینس کے لیے تیار"
+  },
+  "vscodeCard3Title": {
+    "message": "میٹرکس اور اسکرین شاٹس کے ساتھ دفاع برآمد کرتا ہے۔"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code عدالت میں"
+  },
+  "vscodeLead": {
+    "message": "ساؤل VS Code کو کیس سے جوڑتا ہے: ایڈیٹر کے منٹ توجہ کے ثبوت میں تبدیل ہوتے ہیں، مداخلتیں مشتبہ افراد بن جاتی ہیں، اور رپورٹ جوری (آپ کی ٹیم) کو قائل کرنے کے لیے تیار آتی ہے۔"
+  },
+  "vscodeMetaBridge": {
+    "message": "کروم + VS کوڈ پل."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% مقامی، کچھ بھی آپ کے ایڈیٹر سے باہر نہیں جاتا."
+  },
+  "vscodeMetaProof": {
+    "message": "رپورٹس کے ساتھ اسکرین شاٹس اور CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "VS Code میں انسٹال کریں"
+  },
+  "vscodeProofBody": {
+    "message": "ایک ٹائم لائن جو ثابت کرتی ہے کہ کون کوڈ میں رہا اور کون فیڈ میں بھاگ گیا. اگلی میٹنگ میں نمونہ A کے طور پر استعمال کریں."
+  },
+  "vscodeProofChipAlert": {
+    "message": "خبردار"
+  },
+  "vscodeProofChipDefense": {
+    "message": "دفاع"
+  },
+  "vscodeProofChipFocus": {
+    "message": "توجہ"
+  },
+  "vscodeProofEyebrow": {
+    "message": "ساؤل کی پسندیدہ شواہد"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS کوڈ فعال · 38 منٹ بغیر ٹیب تبدیل کیے."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — یوٹیوب پر چھلانگ لگائی · ساؤل نے اسے توجہ ہٹانے کے طور پر نشان زد کیا."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — VS کوڈ پر واپسی · 21 منٹ کی توجہ بحال ہوئی."
+  },
+  "vscodeSecondaryCta": {
+    "message": "جلدی گائیڈ دیکھیں"
+  },
+  "vscodeTitle": {
+    "message": "ایڈیٹر کو پیداواری اثاثے میں تبدیل کریں۔"
   }
 }

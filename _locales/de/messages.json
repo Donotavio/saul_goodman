@@ -2596,5 +2596,80 @@
   },
   "usersBadgeLabel": {
     "message": "Nutzer"
+  },
+  "vscodeCard1Body": {
+    "message": "Der lokale Daemon kommuniziert mit der Erweiterung und registriert Zeit im Editor als produktive Minuten. Nichts verlässt den localhost, aber der Timer schläft nie."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Fokus-Uhr"
+  },
+  "vscodeCard1Title": {
+    "message": "Jeder Commit zählt als abrechenbare Stunde."
+  },
+  "vscodeCard2Body": {
+    "message": "Wechselte vom Editor zum Feed? Saul stempelt die Ablenkung im Bericht. Zurück zum Code? Er registriert es als Beweis der Unschuld."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Kontextdetektiv"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code und Chrome tauschen Hinweise aus."
+  },
+  "vscodeCard3Body": {
+    "message": "Berichte bringen Codezeit, Unterbrechungen und häufige Verdächtige. Perfekt, um dem Manager zu zeigen, dass Prokrastination keine Chance hat."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Bereit für die Anhörung"
+  },
+  "vscodeCard3Title": {
+    "message": "Exportiert Verteidigung mit Metriken und Screenshots."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code vor Gericht"
+  },
+  "vscodeLead": {
+    "message": "Saul verbindet VS Code mit dem Fall: Minuten im Editor werden zu Beweisen für Fokus, Unterbrechungen werden zu Verdächtigen, und der Bericht kommt bereit, um die Jury (dein Team) zu überzeugen."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome-Brücke + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% lokal, nichts verlässt deinen Editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Berichte mit Screenshots und CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Im VS Code installieren"
+  },
+  "vscodeProofBody": {
+    "message": "Eine Zeitleiste, die beweist, wer im Code geblieben ist und wer ins Feed geflüchtet ist. Verwende es als Beweisstück A in der nächsten Besprechung."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alarm"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Verteidigung"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Fokus"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Bevorzugte Beweise von Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code aktiv · 38 min ohne Tabwechsel."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Auf YouTube gewechselt · Saul als Ablenkung markiert."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Rückkehr zu VS Code · 21 min wiederhergestellter Fokus."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Schnellleitfaden ansehen"
+  },
+  "vscodeTitle": {
+    "message": "Verwandle den Editor in ein Produktivitäts-Asset."
   }
 }

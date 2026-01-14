@@ -2596,5 +2596,80 @@
   },
   "usersBadgeLabel": {
     "message": "Пользователи"
+  },
+  "vscodeCard1Body": {
+    "message": "Локальный демон общается с расширением и регистрирует время в редакторе как продуктивные минуты. Ничего не выходит за пределы localhost, но таймер никогда не спит."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Часы фокуса"
+  },
+  "vscodeCard1Title": {
+    "message": "Каждый коммит считается как оплачиваемый час."
+  },
+  "vscodeCard2Body": {
+    "message": "Переключился с редактора на ленту? Саул фиксирует отвлечение в отчете. Вернулся к коду? Он регистрирует это как доказательство невиновности."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Детектив контекста"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code и Chrome обмениваются подсказками."
+  },
+  "vscodeCard3Body": {
+    "message": "Отчеты показывают время кода, перерывы и частых подозреваемых. Идеально, чтобы показать менеджеру, что прокрастинация не имеет шансов."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Готов к слушанию"
+  },
+  "vscodeCard3Title": {
+    "message": "Экспортирует защиту с метриками и скриншотами."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code в суде"
+  },
+  "vscodeLead": {
+    "message": "Саул соединяет VS Code с делом: минуты редактора становятся доказательством фокуса, перерывы становятся подозреваемыми, и отчет готов, чтобы убедить присяжных (вашу команду)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Мост Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% локально, ничего не уходит из вашего редактора."
+  },
+  "vscodeMetaProof": {
+    "message": "Отчеты с снимками экрана и CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Установить в VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Хронология, которая доказывает, кто остался в коде, а кто сбежал в ленту. Используйте как Exhibit A на следующей встрече."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Предупреждение"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Защита"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Фокус"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Предпочтительные доказательства от Саула"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code активен · 38 мин без смены вкладки."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Перешел на YouTube · Саул отметил как отвлечение."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Возврат к VS Code · 21 мин восстановленного фокуса."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Посмотреть быстрое руководство"
+  },
+  "vscodeTitle": {
+    "message": "Преобразуйте редактор в актив продуктивности."
   }
 }

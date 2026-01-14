@@ -2596,5 +2596,80 @@
   },
   "usersBadgeLabel": {
     "message": "Usuários"
+  },
+  "vscodeCard1Body": {
+    "message": "O daemon local conversa com a extensão e registra tempo no editor como minutos produtivos. Nada sai do localhost, mas o cronômetro nunca dorme."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Relógio de foco"
+  },
+  "vscodeCard1Title": {
+    "message": "Cada commit conta como hora faturável."
+  },
+  "vscodeCard2Body": {
+    "message": "Alternou do editor para o feed? Saul carimba a distração no relatório. Voltou ao código? Ele registra como prova de inocência."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Detetive de contexto"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code e Chrome trocam pistas."
+  },
+  "vscodeCard3Body": {
+    "message": "Relatórios trazem tempo de código, interrupções e suspeitos frequentes. Perfeito para mostrar ao gestor que a procrastinação não tem chance."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Pronto para a audiência"
+  },
+  "vscodeCard3Title": {
+    "message": "Exporta defesa com métricas e prints."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code no tribunal"
+  },
+  "vscodeLead": {
+    "message": "Saul conecta o VS Code ao caso: minutos de editor viram prova de foco, interrupções viram suspeitos, e o relatório chega pronto para convencer o júri (seu time)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Ponte Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nada sai do seu editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Relatórios com prints e CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Instalar no VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Uma linha do tempo que prova quem ficou no código e quem fugiu para o feed. Use como Exhibit A na próxima reunião."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alerta"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defesa"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Foco"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Evidências preferidas do Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code ativo · 38 min sem trocar de aba."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Pulou pro YouTube · Saul marcou como distração."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Retorno ao VS Code · 21 min de foco recuperado."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Ver guia rápido"
+  },
+  "vscodeTitle": {
+    "message": "Transforme o editor em ativo de produtividade."
   }
 }
