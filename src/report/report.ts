@@ -38,6 +38,9 @@ const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
 const heroIndexEl = document.getElementById('heroIndex') as HTMLElement;
 const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
+const heroProductiveEl = document.getElementById('heroProductive') as HTMLElement | null;
+const heroProcrastinationEl = document.getElementById('heroProcrastination') as HTMLElement | null;
+const heroIdleEl = document.getElementById('heroIdle') as HTMLElement | null;
 const fairnessStatusReportEl = document.getElementById('fairnessStatusReport') as HTMLElement | null;
 const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HTMLElement | null;
 const suggestionSectionEl = document.getElementById('suggestionSection') as HTMLElement | null;
@@ -286,6 +289,16 @@ function renderReport(metrics: DailyMetrics): void {
   const kpis = calculateKpis(enriched);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
   heroSwitchesEl.textContent = `${enriched.tabSwitches}`;
+  const totalProductive = (enriched.productiveMs ?? 0) + (enriched.vscodeActiveMs ?? 0);
+  if (heroProductiveEl) {
+    heroProductiveEl.textContent = formatDuration(totalProductive);
+  }
+  if (heroProcrastinationEl) {
+    heroProcrastinationEl.textContent = formatDuration(enriched.procrastinationMs ?? 0);
+  }
+  if (heroIdleEl) {
+    heroIdleEl.textContent = formatDuration(enriched.inactiveMs ?? 0);
+  }
   if (audioProcrastinationEl) {
     audioProcrastinationEl.textContent = formatDuration(enriched.audibleProcrastinationMs ?? 0);
   }

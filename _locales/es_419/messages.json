@@ -1956,13 +1956,13 @@
     "message": "Solo 30% de foco contado e ignora villanos. Contexto más flexible."
   },
   "report_context_effect_personal": {
-    "message": "Neutraliza todo. Saul se queda en asuntos personales."
+    "message": "Neutraliza todo: sin crédito ni deuda. Saul se queda en asuntos personales."
   },
   "report_context_effect_study": {
     "message": "El foco vale 75% y las penalidades bajan a la mitad. Flexible pero con disciplina."
   },
   "report_context_effect_vacation": {
-    "message": "Neutraliza índice y villanos. Trátalo como vacaciones declaradas."
+    "message": "Neutraliza índice y villanos: el día queda 0/0. Trátalo como vacaciones declaradas."
   },
   "report_context_effect_work": {
     "message": "Cuenta 100% del foco y de las penalidades."

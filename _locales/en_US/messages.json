@@ -1956,13 +1956,13 @@
     "message": "Only 30% focus counted and villains ignored. Most flexible context."
   },
   "report_context_effect_personal": {
-    "message": "Neutralizes everything. Saul takes the day for personal matters."
+    "message": "Neutralizes everything: no credit, no debt. Saul takes the day for personal matters."
   },
   "report_context_effect_study": {
     "message": "Focus counts 75% and penalties drop by half. Flexible but still disciplined."
   },
   "report_context_effect_vacation": {
-    "message": "Neutralizes index and villains. Treats declared vacations."
+    "message": "Neutralizes index and villains: day stays 0/0. Treats declared vacations."
   },
   "report_context_effect_work": {
     "message": "Counts 100% of focus and penalties."

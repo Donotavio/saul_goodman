@@ -1950,19 +1950,19 @@
     "message": "Tempo por contexto"
   },
   "report_context_effect_dayOff": {
-    "message": "Zera o dia: nem crédito nem débito. Serve como folga oficial."
+    "message": "Zera o dia: nenhum ponto contado, nenhum débito. Folga oficial."
   },
   "report_context_effect_leisure": {
     "message": "Conta só 30% do foco e ignora vilões. Contexto mais flexível."
   },
   "report_context_effect_personal": {
-    "message": "Neutraliza tudo. Saul tira o dia para assuntos pessoais."
+    "message": "Neutraliza tudo: nem crédito nem débito. Saul tira o dia para assuntos pessoais."
   },
   "report_context_effect_study": {
     "message": "Foco vale 75% e penalidades caem pela metade. Flexível, mas ainda disciplina."
   },
   "report_context_effect_vacation": {
-    "message": "Neutraliza índice e vilões. Considera férias declaradas."
+    "message": "Neutraliza índice e vilões: dia fica 0/0. Considera férias declaradas."
   },
   "report_context_effect_work": {
     "message": "Conta 100% do foco e das penalidades."
