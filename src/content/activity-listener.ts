@@ -85,6 +85,15 @@ function translateSuggestionReason(reason: string, translator?: TranslatorFn | n
   return reason;
 }
 
+function sanitizeReasonText(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -312,49 +321,90 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
   container.id = 'sg-auto-classification-toast';
   container.setAttribute('role', 'status');
   container.setAttribute('aria-live', 'polite');
-  container.innerHTML = `
-    <div class="sg-toast-card">
-      <div class="sg-toast-header">
-        <strong>${title}</strong>
-        <span class="sg-toast-confidence">${confidenceText}</span>
-      </div>
-      <div class="sg-toast-body">
-        ${
-          suggestionToastImage
-            ? `<img src="${suggestionToastImage}" alt="Saul Goodman" class="sg-toast-avatar" />`
-            : ''
-        }
-        <div class="sg-toast-content">
-          <p class="sg-toast-title">
-            <span class="sg-toast-chip ${suggestion.classification}">${labelText}</span>
-            <span class="sg-toast-domain">${suggestion.domain}</span> ${seemsText}
-          </p>
-          <ul class="sg-toast-reasons">
-            ${suggestion.reasons
-              .slice(0, 3)
-              .map((reason) => `<li>${translateSuggestionReason(reason, translate)}</li>`)
-              .join('')}
-          </ul>
-          <div class="sg-toast-actions" role="group" aria-label="${translate(
-            'popup_suggestion_title'
-          )}">
-            <button class="sg-toast-action ${productivePrimary ? 'primary' : ''}" data-target="productive">
-              ${addProductive}
-            </button>
-            <button class="sg-toast-action ${procrastinationPrimary ? 'primary' : ''}" data-target="procrastination">
-              ${addProcrastination}
-            </button>
-          </div>
-        </div>
-      </div>
-      <button class="sg-toast-close" aria-label="${translate(
-        'suggestion_toast_close'
-      )}">×</button>
-    </div>
-  `;
 
-  const closeButton = container.querySelector('.sg-toast-close');
-  closeButton?.addEventListener('click', () => {
+  const card = document.createElement('div');
+  card.className = 'sg-toast-card';
+
+  const header = document.createElement('div');
+  header.className = 'sg-toast-header';
+  const headerTitle = document.createElement('strong');
+  headerTitle.textContent = title;
+  const confidenceBadge = document.createElement('span');
+  confidenceBadge.className = 'sg-toast-confidence';
+  confidenceBadge.textContent = confidenceText;
+  header.appendChild(headerTitle);
+  header.appendChild(confidenceBadge);
+
+  const body = document.createElement('div');
+  body.className = 'sg-toast-body';
+
+  if (suggestionToastImage) {
+    const avatar = document.createElement('img');
+    avatar.src = suggestionToastImage;
+    avatar.alt = 'Saul Goodman';
+    avatar.className = 'sg-toast-avatar';
+    body.appendChild(avatar);
+  }
+
+  const content = document.createElement('div');
+  content.className = 'sg-toast-content';
+
+  const titleRow = document.createElement('p');
+  titleRow.className = 'sg-toast-title';
+  const chip = document.createElement('span');
+  chip.className = `sg-toast-chip ${suggestion.classification}`;
+  chip.textContent = labelText;
+  const domainEl = document.createElement('span');
+  domainEl.className = 'sg-toast-domain';
+  domainEl.textContent = suggestion.domain;
+  const seemsEl = document.createElement('span');
+  seemsEl.textContent = ` ${seemsText}`;
+  titleRow.appendChild(chip);
+  titleRow.appendChild(domainEl);
+  titleRow.appendChild(seemsEl);
+
+  const reasonsList = document.createElement('ul');
+  reasonsList.className = 'sg-toast-reasons';
+  suggestion.reasons.slice(0, 3).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = sanitizeReasonText(translateSuggestionReason(reason, translate));
+    reasonsList.appendChild(li);
+  });
+
+  const actions = document.createElement('div');
+  actions.className = 'sg-toast-actions';
+  actions.setAttribute('role', 'group');
+  actions.setAttribute('aria-label', translate('popup_suggestion_title'));
+
+  const productiveBtn = document.createElement('button');
+  productiveBtn.className = `sg-toast-action ${productivePrimary ? 'primary' : ''}`;
+  productiveBtn.dataset.target = 'productive';
+  productiveBtn.textContent = addProductive;
+
+  const procrastinationBtn = document.createElement('button');
+  procrastinationBtn.className = `sg-toast-action ${procrastinationPrimary ? 'primary' : ''}`;
+  procrastinationBtn.dataset.target = 'procrastination';
+  procrastinationBtn.textContent = addProcrastination;
+
+  actions.appendChild(productiveBtn);
+  actions.appendChild(procrastinationBtn);
+
+  content.appendChild(titleRow);
+  content.appendChild(reasonsList);
+  content.appendChild(actions);
+  body.appendChild(content);
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'sg-toast-close';
+  closeBtn.setAttribute('aria-label', translate('suggestion_toast_close'));
+  closeBtn.textContent = '×';
+
+  card.appendChild(header);
+  card.appendChild(body);
+  card.appendChild(closeBtn);
+  container.appendChild(card);
+
+  closeBtn.addEventListener('click', () => {
     container.remove();
     suggestionToastEl = null;
     if (suggestionToastTimer) {
@@ -363,8 +413,7 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
     }
   });
 
-  const actionButtons = container.querySelectorAll<HTMLButtonElement>('.sg-toast-action');
-  actionButtons.forEach((button) => {
+  [productiveBtn, procrastinationBtn].forEach((button) => {
     const target = button.dataset.target;
     if (target === 'productive' || target === 'procrastination') {
       button.addEventListener('click', () => {

@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "এই সাইটটি {label} মনে হচ্ছে"
   },
+  "popup_summary_idle_label": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "যতক্ষণ ব্রাউজারটি কার্যকলাপ ছাড়াই খোলা ছিল।"
+  },
   "popup_summary_inactive_label": {
     "message": "নিষ্ক্রিয়"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "কনটেক্সট"
   },
+  "report_context_breakdown_effect": {
+    "message": "প্রভাব"
+  },
   "report_context_breakdown_index": {
     "message": "সূচিপত্র"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "প্রসঙ্গ অনুসারে সময়"
+  },
+  "report_context_effect_dayOff": {
+    "message": "দিন শূন্য: না ক্রেডিট না ডেবিট। অফিসিয়াল ছুটির মতো কাজ করে।"
+  },
+  "report_context_effect_leisure": {
+    "message": "শুধু 30% ফোকাস গণনা করে এবং ভিলেনদের উপেক্ষা করে। আরও নমনীয় প্রেক্ষাপট।"
+  },
+  "report_context_effect_personal": {
+    "message": "সবকিছু নিরপেক্ষ করে। Saul ব্যক্তিগত বিষয়ের জন্য দিনটি নেয়।"
+  },
+  "report_context_effect_study": {
+    "message": "ফোকাস 75% মূল্যবান এবং শাস্তি অর্ধেক কমে যায়। নমনীয়, কিন্তু এখনও শৃঙ্খলাবদ্ধ।"
+  },
+  "report_context_effect_vacation": {
+    "message": "সূচক এবং ভিলেনদের নিরপেক্ষ করে। ঘোষিত ছুটির কথা বিবেচনা করে।"
+  },
+  "report_context_effect_work": {
+    "message": "ফোকাস এবং শাস্তির 100% গণনা করে।"
   },
   "report_domain_heading": {
     "message": "মিনিট"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "ব্যবহারকারী"
+  },
+  "vscodeCard1Body": {
+    "message": "স্থানীয় ডেমন এক্সটেনশনের সাথে কথা বলে এবং সম্পাদককে উৎপাদনশীল মিনিট হিসাবে সময় রেকর্ড করে। কিছুই লোকালহোস্ট থেকে বের হয় না, কিন্তু টাইমার কখনও ঘুমায় না।"
+  },
+  "vscodeCard1Kicker": {
+    "message": "ফোকাস ঘড়ি"
+  },
+  "vscodeCard1Title": {
+    "message": "প্রতিটি কমিট বিলযোগ্য ঘন্টা হিসাবে গণনা হয়।"
+  },
+  "vscodeCard2Body": {
+    "message": "সম্পাদক থেকে ফিডে স্যুইচ করেছেন? সাউল রিপোর্টে বিভ্রান্তি চিহ্নিত করে। কোডে ফিরে এসেছেন? তিনি নির্দোষতার প্রমাণ হিসাবে রেকর্ড করেন।"
+  },
+  "vscodeCard2Kicker": {
+    "message": "প্রেক্ষাপটের গোয়েন্দা"
+  },
+  "vscodeCard2Title": {
+    "message": "VS কোড এবং ক্রোম pistas বিনিময় করে।"
+  },
+  "vscodeCard3Body": {
+    "message": "রিপোর্টগুলি কোডের সময়, বিঘ্ন এবং ঘন ঘন সন্দেহভাজনদের নিয়ে আসে। ব্যবস্থাপককে দেখানোর জন্য নিখুঁত যে অলসতার কোন সুযোগ নেই।"
+  },
+  "vscodeCard3Kicker": {
+    "message": "শ্রবণের জন্য প্রস্তুত"
+  },
+  "vscodeCard3Title": {
+    "message": "মেট্রিক্স এবং স্ক্রিনশট সহ প্রতিরক্ষা রপ্তানি করে।"
+  },
+  "vscodeEyebrow": {
+    "message": "VS কোড আদালতে"
+  },
+  "vscodeLead": {
+    "message": "সাউল VS কোডকে মামলার সাথে সংযুক্ত করে: সম্পাদক থেকে মিনিটগুলি ফোকাসের প্রমাণে পরিণত হয়, বিঘ্নগুলি সন্দেহভাজনে পরিণত হয়, এবং রিপোর্টটি জুরি (আপনার দলের) বোঝানোর জন্য প্রস্তুত হয়ে আসে।"
+  },
+  "vscodeMetaBridge": {
+    "message": "ক্রোম + VS কোড ব্রিজ।"
+  },
+  "vscodeMetaLocal": {
+    "message": "১০০% লোকাল, কিছুই আপনার সম্পাদক থেকে বের হয় না।"
+  },
+  "vscodeMetaProof": {
+    "message": "প্রমাণপত্রগুলি স্ক্রীনশট এবং CSV সহ।"
+  },
+  "vscodePrimaryCta": {
+    "message": "VS কোডে ইনস্টল করুন"
+  },
+  "vscodeProofBody": {
+    "message": "একটি টাইমলাইন যা প্রমাণ করে কে কোডে ছিল এবং কে ফিডে পালিয়ে গিয়েছিল। পরবর্তী বৈঠকে Exhibit A হিসাবে ব্যবহার করুন।"
+  },
+  "vscodeProofChipAlert": {
+    "message": "সতর্কতা"
+  },
+  "vscodeProofChipDefense": {
+    "message": "রক্ষা"
+  },
+  "vscodeProofChipFocus": {
+    "message": "ফোকাস"
+  },
+  "vscodeProofEyebrow": {
+    "message": "সাউলের পছন্দের প্রমাণ"
+  },
+  "vscodeProofLine1": {
+    "message": "০৯:১২ — VS কোড সক্রিয় · ৩৮ মিনিট কোন ট্যাব পরিবর্তন না করে।"
+  },
+  "vscodeProofLine2": {
+    "message": "০৯:৫০ — ইউটিউবে চলে গেছে · সাউল বিভ্রান্তি হিসাবে চিহ্নিত করেছে।"
+  },
+  "vscodeProofLine3": {
+    "message": "১০:০৫ — VS কোডে ফিরে এসেছে · ২১ মিনিটের ফোকাস পুনরুদ্ধার হয়েছে।"
+  },
+  "vscodeSecondaryCta": {
+    "message": "দ্রুত গাইড দেখুন"
+  },
+  "vscodeTitle": {
+    "message": "সম্পাদককে উৎপাদনশীলতার সম্পদে রূপান্তর করুন।"
   }
 }

@@ -38,6 +38,9 @@ const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
 const heroIndexEl = document.getElementById('heroIndex') as HTMLElement;
 const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
+const heroProductiveEl = document.getElementById('heroProductive') as HTMLElement | null;
+const heroProcrastinationEl = document.getElementById('heroProcrastination') as HTMLElement | null;
+const heroIdleEl = document.getElementById('heroIdle') as HTMLElement | null;
 const fairnessStatusReportEl = document.getElementById('fairnessStatusReport') as HTMLElement | null;
 const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HTMLElement | null;
 const suggestionSectionEl = document.getElementById('suggestionSection') as HTMLElement | null;
@@ -286,6 +289,16 @@ function renderReport(metrics: DailyMetrics): void {
   const kpis = calculateKpis(enriched);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
   heroSwitchesEl.textContent = `${enriched.tabSwitches}`;
+  const totalProductive = (enriched.productiveMs ?? 0) + (enriched.vscodeActiveMs ?? 0);
+  if (heroProductiveEl) {
+    heroProductiveEl.textContent = formatDuration(totalProductive);
+  }
+  if (heroProcrastinationEl) {
+    heroProcrastinationEl.textContent = formatDuration(enriched.procrastinationMs ?? 0);
+  }
+  if (heroIdleEl) {
+    heroIdleEl.textContent = formatDuration(enriched.inactiveMs ?? 0);
+  }
   if (audioProcrastinationEl) {
     audioProcrastinationEl.textContent = formatDuration(enriched.audibleProcrastinationMs ?? 0);
   }
@@ -412,15 +425,32 @@ export function renderContextBreakdown(
   CONTEXT_ORDER.forEach((context) => {
     const row = document.createElement('tr');
     const labelCell = document.createElement('td');
+    labelCell.className = `context-cell context-${context}`;
     labelCell.textContent = i18n?.t(`popup_context_option_${context}`) ?? context;
     const durationCell = document.createElement('td');
     durationCell.textContent = formatDuration(durations?.[context] ?? 0);
     const indexCell = document.createElement('td');
+    indexCell.className = 'index-cell';
     const indexValue = indices?.[context];
-    indexCell.textContent = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    const formattedIndex = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    indexCell.textContent = formattedIndex;
+    if (typeof indexValue === 'number' && Number.isFinite(indexValue)) {
+      const hue = Math.max(0, Math.min(120, 120 - indexValue * 1.2));
+      if (indexCell.style && typeof indexCell.style.setProperty === 'function') {
+        indexCell.style.setProperty('--index-hue', hue.toString());
+      } else {
+        indexCell.setAttribute('style', `--index-hue:${hue}`);
+      }
+      indexCell.classList.remove('index-cell--unknown');
+    } else {
+      indexCell.classList.add('index-cell--unknown');
+    }
+    const effectCell = document.createElement('td');
+    effectCell.textContent = i18n?.t(`report_context_effect_${context}`) ?? '';
     row.appendChild(labelCell);
     row.appendChild(durationCell);
     row.appendChild(indexCell);
+    row.appendChild(effectCell);
     contextBreakdownBody.appendChild(row);
   });
 }
@@ -1602,6 +1632,7 @@ async function generateNarrative(): Promise<void> {
 function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
   const enriched = enrichMetricsWithVscode(metrics);
   const kpis = calculateKpis(enriched);
+  const contextBreakdown = buildContextSummary(enriched);
   const timelineSnippets = enriched.timeline
     .sort((a, b) => a.startTime - b.startTime)
     .slice(0, 10)
@@ -1624,7 +1655,9 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
     topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
     timeline: timelineSnippets,
     fairnessRule: fairness.rule,
-    fairnessStatus
+    fairnessStatus,
+    contextMode: fairness.contextMode?.value ?? 'work',
+    contextBreakdown
   };
 }
 
@@ -1658,6 +1691,15 @@ async function requestAiNarrative(
     throw new Error('OPENAI_API_KEY not configured.');
   }
 
+  const contextSummary = payload.contextBreakdown
+    ? payload.contextBreakdown
+        .map(
+          (entry) =>
+            `${entry.context}: ${entry.duration}${typeof entry.index === 'number' ? ` (índice ${entry.index}%)` : ''}`
+        )
+        .join('; ')
+    : 'Sem breakdown de contexto.';
+
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -1674,9 +1716,9 @@ async function requestAiNarrative(
         },
         {
           role: 'user',
-          content: `Write a short narrative (2 paragraphs) using these data points:\n${JSON.stringify(
-            payload
-          )}`
+          content:
+            `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
+            `${JSON.stringify(payload)}`
         }
       ]
     })
@@ -1700,6 +1742,8 @@ interface AiPromptPayload {
   timeline: Array<{ domain: string; category: string; duration: string; range: string }>;
   fairnessRule: FairnessRule;
   fairnessStatus: string;
+  contextMode: ContextModeValue;
+  contextBreakdown?: Array<{ context: ContextModeValue; duration: string; index?: number }>;
 }
 
 interface OpenAiResponse {
@@ -1733,6 +1777,42 @@ function formatParagraph(content: string): string {
   const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
   const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
   return `<p>${italic}</p>`;
+}
+
+function buildContextSummary(
+  metrics: DailyMetrics
+): Array<{ context: ContextModeValue; duration: string; index?: number }> | undefined {
+  const durations = metrics.contextDurations;
+  const indices = metrics.contextIndices;
+  if (!durations && !indices) {
+    return undefined;
+  }
+  const entries: Array<{ context: ContextModeValue; duration: string; index?: number }> = [];
+  const seen = new Set<ContextModeValue>();
+  if (durations) {
+    Object.entries(durations).forEach(([context, value]) => {
+      const ctx = context as ContextModeValue;
+      seen.add(ctx);
+      entries.push({
+        context: ctx,
+        duration: formatDuration(value ?? 0),
+        index: indices?.[ctx]
+      });
+    });
+  }
+  if (indices) {
+    Object.entries(indices).forEach(([context, idx]) => {
+      const ctx = context as ContextModeValue;
+      if (!seen.has(ctx)) {
+        entries.push({
+          context: ctx,
+          duration: formatDuration(durations?.[ctx] ?? 0),
+          index: idx
+        });
+      }
+    });
+  }
+  return entries.length ? entries : undefined;
 }
 
 /**

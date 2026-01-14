@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Este sitio parece ser {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Inactivo"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Tiempo con el navegador abierto sin actividad."
+  },
   "popup_summary_inactive_label": {
     "message": "Inactivo"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "Contexto"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impacto"
+  },
   "report_context_breakdown_index": {
     "message": "Índice"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Desglose por contexto"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Deja el día en cero: sin crédito ni deuda. Sirve como día libre."
+  },
+  "report_context_effect_leisure": {
+    "message": "Solo 30% de foco contado e ignora villanos. Contexto más flexible."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutraliza todo: sin crédito ni deuda. Saul se queda en asuntos personales."
+  },
+  "report_context_effect_study": {
+    "message": "El foco vale 75% y las penalidades bajan a la mitad. Flexible pero con disciplina."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutraliza índice y villanos: el día queda 0/0. Trátalo como vacaciones declaradas."
+  },
+  "report_context_effect_work": {
+    "message": "Cuenta 100% del foco y de las penalidades."
   },
   "report_domain_heading": {
     "message": "Minutos por dominio"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "Usuarios"
+  },
+  "vscodeCard1Body": {
+    "message": "El daemon local se comunica con la extensión y registra tiempo en el editor como minutos productivos. Nada sale del localhost, pero el cronómetro nunca duerme."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Reloj de foco"
+  },
+  "vscodeCard1Title": {
+    "message": "Cada commit cuenta como hora facturable."
+  },
+  "vscodeCard2Body": {
+    "message": "¿Cambiaste del editor al feed? Saul marca la distracción en el informe. ¿Volviste al código? Él registra como prueba de inocencia."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Detective de contexto"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code y Chrome intercambian pistas."
+  },
+  "vscodeCard3Body": {
+    "message": "Los informes traen tiempo de código, interrupciones y sospechosos frecuentes. Perfecto para mostrar al gestor que la procrastinación no tiene oportunidad."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Listo para la audiencia"
+  },
+  "vscodeCard3Title": {
+    "message": "Exporta defensa con métricas y capturas."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code en el tribunal"
+  },
+  "vscodeLead": {
+    "message": "Saul conecta el VS Code al caso: minutos de editor se convierten en prueba de foco, interrupciones se convierten en sospechosos, y el informe llega listo para convencer al jurado (tu equipo)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Puente Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nada sale de tu editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Informes con capturas y CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Instalar en VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Una línea de tiempo que prueba quién se quedó en el código y quién huyó al feed. Usa como Exhibit A en la próxima reunión."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alerta"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defensa"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Foco"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Evidencias preferidas de Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code activo · 38 min sin cambiar de pestaña."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Saltó a YouTube · Saul marcó como distracción."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Regreso a VS Code · 21 min de foco recuperado."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Ver guía rápida"
+  },
+  "vscodeTitle": {
+    "message": "Transforma el editor en un activo de productividad."
   }
 }

@@ -10,6 +10,26 @@ const loadingText = container?.querySelector('[data-i18n="privacyLoading"]');
 const FALLBACK_LANG = 'pt';
 const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
 
+const sanitizeHtml = (html) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  doc.querySelectorAll('script, style').forEach((el) => el.remove());
+  doc.querySelectorAll('*').forEach((el) => {
+    for (const attr of Array.from(el.attributes)) {
+      const name = attr.name.toLowerCase();
+      const value = attr.value || '';
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+        continue;
+      }
+      if ((name === 'href' || name === 'src') && value.trim().toLowerCase().startsWith('javascript:')) {
+        el.removeAttribute(attr.name);
+      }
+    }
+  });
+  return doc.body.innerHTML;
+};
+
 const resolveLanguage = (value) => {
   if (!value) return null;
   const normalized = value.toLowerCase();
@@ -46,7 +66,7 @@ const renderPrivacy = async () => {
     const markdown = await response.text();
     const localized = extractLocalizedMarkdown(markdown, getDocumentLanguage());
     const html = marked.parse(localized);
-    container.innerHTML = html;
+    container.innerHTML = sanitizeHtml(html);
     container.classList.add('document-ready');
   } catch (error) {
     console.error('Falha ao carregar política de privacidade', error);

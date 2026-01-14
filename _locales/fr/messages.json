@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Ce site semble être {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Inactif"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Temps pendant lequel le navigateur est resté ouvert sans activité."
+  },
   "popup_summary_inactive_label": {
     "message": "Idée"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "Contexte"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impact"
+  },
   "report_context_breakdown_index": {
     "message": "Sommaire"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Ventilation du contexte"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Annule la journée : ni crédit ni débit. Sert de congé officiel."
+  },
+  "report_context_effect_leisure": {
+    "message": "Compte seulement 30% de concentration et ignore les méchants. Contexte plus flexible."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralise tout. Saul prend la journée pour des affaires personnelles."
+  },
+  "report_context_effect_study": {
+    "message": "La concentration vaut 75% et les pénalités sont réduites de moitié. Flexible, mais reste discipliné."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralise l'indice et les méchants. Prend en compte les vacances déclarées."
+  },
+  "report_context_effect_work": {
+    "message": "Compte 100% de la concentration et des pénalités."
   },
   "report_domain_heading": {
     "message": "Procès-verbal par domaine"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "Utilisateurs"
+  },
+  "vscodeCard1Body": {
+    "message": "Le daemon local communique avec l'extension et enregistre le temps dans l'éditeur comme des minutes productives. Rien ne sort du localhost, mais le chronomètre ne dort jamais."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Montre de concentration"
+  },
+  "vscodeCard1Title": {
+    "message": "Chaque commit compte comme une heure facturable."
+  },
+  "vscodeCard2Body": {
+    "message": "Passé de l'éditeur au fil d'actualités ? Saul marque la distraction dans le rapport. Revenez au code ? Il enregistre comme preuve d'innocence."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Détective de contexte"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code et Chrome échangent des indices."
+  },
+  "vscodeCard3Body": {
+    "message": "Les rapports apportent le temps de code, les interruptions et les suspects fréquents. Parfait pour montrer au gestionnaire que la procrastination n'a aucune chance."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Prêt pour l'audience"
+  },
+  "vscodeCard3Title": {
+    "message": "Exporte la défense avec des métriques et des captures d'écran."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code au tribunal"
+  },
+  "vscodeLead": {
+    "message": "Saul connecte VS Code au cas : les minutes de l'éditeur deviennent des preuves de concentration, les interruptions deviennent des suspects, et le rapport arrive prêt à convaincre le jury (votre équipe)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Pont Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, rien ne sort de votre éditeur."
+  },
+  "vscodeMetaProof": {
+    "message": "Rapports avec captures d'écran et CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Installer dans VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Une chronologie qui prouve qui est resté dans le code et qui s'est échappé dans le fil. Utilisez comme Exhibit A lors de la prochaine réunion."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alerte"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Défense"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Concentration"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Preuves préférées de Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code actif · 38 min sans changer d'onglet."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Passé sur YouTube · Saul a marqué comme distraction."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Retour à VS Code · 21 min de concentration récupérée."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Voir le guide rapide"
+  },
+  "vscodeTitle": {
+    "message": "Transformez l'éditeur en actif de productivité."
   }
 }

@@ -54,6 +54,7 @@ import {
   startContextSegment
 } from '../shared/utils/context-history.js';
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
+import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -1062,42 +1063,6 @@ async function publishIndexToDaemon(
   }
 }
 
-function clearCachedVscodeMetrics(metrics: DailyMetrics): boolean {
-  let changed = false;
-
-  if (typeof metrics.vscodeActiveMs !== 'number' || metrics.vscodeActiveMs !== 0) {
-    metrics.vscodeActiveMs = 0;
-    changed = true;
-  }
-
-  if (typeof metrics.vscodeSessions !== 'number' || metrics.vscodeSessions !== 0) {
-    metrics.vscodeSessions = 0;
-    changed = true;
-  }
-
-  if (typeof metrics.vscodeSwitches !== 'number' || metrics.vscodeSwitches !== 0) {
-    metrics.vscodeSwitches = 0;
-    changed = true;
-  }
-
-  if (Array.isArray(metrics.vscodeTimeline) && metrics.vscodeTimeline.length) {
-    metrics.vscodeTimeline = [];
-    changed = true;
-  }
-
-  const needsSwitchHourlyReset =
-    !Array.isArray(metrics.vscodeSwitchHourly) ||
-    metrics.vscodeSwitchHourly.length !== 24 ||
-    metrics.vscodeSwitchHourly.some((value) => value !== 0);
-
-  if (needsSwitchHourlyReset) {
-    metrics.vscodeSwitchHourly = Array.from({ length: 24 }, () => 0);
-    changed = true;
-  }
-
-  return changed;
-}
-
 async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
   const version = chrome.runtime.getManifest().version;
   if (!version) {
@@ -1168,7 +1133,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
 
   if (integrationDisabled) {
-    const cleared = clearCachedVscodeMetrics(metrics);
+    const cleared = clearVscodeMetrics(metrics);
     if (cleared) {
       await persistMetrics();
     }
@@ -1181,8 +1146,6 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     return;
   }
 
-  lastVscodeSyncAt = now;
-
   let url: URL;
   try {
     url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
@@ -1193,8 +1156,12 @@ async function syncVscodeMetrics(force = false): Promise<void> {
   url.searchParams.set('key', pairingKey);
 
   try {
-    const response = await fetch(url.toString());
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const response = await fetch(url.toString(), { signal: controller.signal });
+    clearTimeout(timer);
     if (!response.ok) {
+      await handleVscodeSyncFailure(metrics);
       return;
     }
 
@@ -1221,6 +1188,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
 
     lastVscodeSyncAt = now;
   } catch (error) {
+    await handleVscodeSyncFailure(metrics);
     console.warn('Falha ao sincronizar métricas do VS Code', error);
   }
 }
@@ -1697,4 +1665,12 @@ async function bumpRestoredItems(delta: number): Promise<void> {
   const metrics = await getMetricsCache();
   metrics.restoredItems = (metrics.restoredItems ?? 0) + delta;
   await persistMetrics();
+}
+
+async function handleVscodeSyncFailure(metrics: DailyMetrics): Promise<void> {
+  const cleared = clearVscodeMetrics(metrics);
+  if (cleared) {
+    await persistMetrics();
+  }
+  lastVscodeSyncAt = 0;
 }

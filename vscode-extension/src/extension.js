@@ -1,10 +1,9 @@
 const vscode = require('vscode');
-const http = require('http');
-const https = require('https');
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const { fetchWithTimeout, postWithNodeHttp, parsePort } = require('./net-helpers');
 
 let statusBarItem = null;
 let statusPollTimer = null;
@@ -188,11 +187,7 @@ class ActivityTracker {
     this.config = readConfig();
     this.promptedMissingKey = false;
 
-    if (!this.config.enabled) {
-      return;
-    }
-
-    if (!this.config.pairingKey) {
+    if (this.config.enabled && !this.config.pairingKey) {
       void this.promptMissingKey();
     }
 
@@ -369,7 +364,12 @@ async function prepareDaemonCommand() {
   if (portInput === undefined) {
     return;
   }
-  const port = portInput.trim() || '3123';
+  const parsedPort = parsePort(portInput.trim() || '3123');
+  if (!parsedPort) {
+    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: 'Porta inválida (1-65535)' }));
+    return;
+  }
+  const port = String(parsedPort);
 
   const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   const daemonDir = workspace ? path.join(workspace, 'saul-daemon') : null;
@@ -452,10 +452,7 @@ async function testDaemonHealth() {
   const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
   const url = new URL('/health', apiBase);
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
-    const res = await fetch(url.toString(), { signal: controller.signal });
-    clearTimeout(timer);
+    const res = await fetchWithTimeout(url.toString(), 4000);
     if (res.ok) {
       vscode.window.showInformationMessage(localize('test.healthSuccess', { origin: url.origin }));
       void updateStatusBar('ok', url.port || '3123');
@@ -561,67 +558,6 @@ function startStatusPolling() {
   statusPollTimer = setInterval(run, 60000);
 }
 
-function fetchWithTimeout(url, timeout = 4000, options = {}) {
-  if (typeof fetch === 'function') {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeout);
-    const opts = { ...options, signal: controller.signal };
-    return fetch(url, opts)
-      .finally(() => clearTimeout(timer));
-  }
-
-  return new Promise((resolve, reject) => {
-    try {
-      const parsed = new URL(url);
-      const isHttps = parsed.protocol === 'https:';
-      const client = isHttps ? https : http;
-      const req = client.request(
-        {
-          method: options.method || 'GET',
-          hostname: parsed.hostname,
-          port: parsed.port || (isHttps ? 443 : 80),
-          path: parsed.pathname + parsed.search,
-          headers: options.headers || {},
-          timeout
-        },
-        (res) => {
-          const chunks = [];
-          res.on('data', (chunk) => chunks.push(chunk));
-          res.on('end', () => {
-            const body = Buffer.concat(chunks).toString('utf8');
-            const result = {
-              ok: res.statusCode >= 200 && res.statusCode < 300,
-              status: res.statusCode ?? 0,
-              json: async () => {
-                if (!body) {
-                  return {};
-                }
-                try {
-                  return JSON.parse(body);
-                } catch (error) {
-                  throw error;
-                }
-              },
-              text: async () => body
-            };
-            resolve(result);
-          });
-        }
-      );
-      req.on('error', reject);
-      req.on('timeout', () => {
-        req.destroy(new Error('Request timed out'));
-      });
-      if (options.body) {
-        req.write(options.body);
-      }
-      req.end();
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
 async function postHeartbeat(apiBase, payload) {
   const url = new URL('/v1/tracking/vscode/heartbeat', apiBase);
   const body = JSON.stringify(payload);
@@ -647,36 +583,6 @@ async function postHeartbeat(apiBase, payload) {
   }
 
   return postWithNodeHttp(url, body);
-}
-
-function postWithNodeHttp(url, body) {
-  return new Promise((resolve, reject) => {
-    const isHttps = url.protocol === 'https:';
-    const client = isHttps ? https : http;
-    const req = client.request(
-      {
-        method: 'POST',
-        hostname: url.hostname,
-        port: url.port || (isHttps ? 443 : 80),
-        path: url.pathname + url.search,
-        headers: {
-          'content-type': 'application/json',
-          'content-length': Buffer.byteLength(body)
-        },
-        timeout: 5000
-      },
-      (res) => {
-        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          resolve();
-        } else {
-          reject(new Error(`HTTP ${res.statusCode ?? 'ERR'}`));
-        }
-      }
-    );
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
 }
 
 module.exports = {

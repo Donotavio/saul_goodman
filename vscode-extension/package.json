@@ -16,13 +16,19 @@
   "main": "./src/extension.js",
   "activationEvents": [
     "onStartupFinished",
-    "onCommand:saulGoodman.startDaemon"
+    "onCommand:saulGoodman.startDaemon",
+    "onCommand:saulGoodman.testDaemon"
   ],
   "contributes": {
     "commands": [
       {
         "command": "saulGoodman.startDaemon",
         "title": "Saul Goodman: preparar comando do SaulDaemon",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.testDaemon",
+        "title": "Saul Goodman: testar conexão com o SaulDaemon",
         "category": "Saul Goodman"
       }
     ],

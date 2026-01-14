@@ -23,15 +23,31 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import { compareScreenshot } from './scenarios/helpers.js';
 
-const MIN_NODE_MAJOR = 18;
+const SUPPORTED_NODE_RANGES = [
+  { major: 20, minor: 19 },
+  { major: 22, minor: 12 }
+];
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const DEFAULT_HOST = '127.0.0.1';
 
-if (Number.parseInt(process.versions.node.split('.')[0] ?? '0', 10) < MIN_NODE_MAJOR) {
-  console.error(`[mcp-quality] Node ${MIN_NODE_MAJOR}+ required. Found ${process.versions.node}.`);
-  process.exit(1);
+function ensureSupportedNodeVersion(): void {
+  const [majorRaw, minorRaw] = process.versions.node.split('.');
+  const major = Number.parseInt(majorRaw ?? '0', 10);
+  const minor = Number.parseInt(minorRaw ?? '0', 10);
+  const supported =
+    major >= 23 ||
+    SUPPORTED_NODE_RANGES.some((range) => major === range.major && minor >= range.minor);
+
+  if (!supported) {
+    console.error(
+      `[mcp-quality] chrome-devtools-mcp requires Node 20.19+ or 22.12+. Found ${process.versions.node}.`
+    );
+    process.exit(1);
+  }
 }
+
+ensureSupportedNodeVersion();
 
 const MIME_TYPES: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -464,6 +480,24 @@ async function main(): Promise<void> {
     } catch {
       // ignore log write errors
     }
+  }
+
+  const hasFailures = allResults.some((result) => !result.passed);
+  // Somente bloqueia por avisos se o cenário também falhou e warnings não são permitidos
+  const hasBlockingWarnings =
+    !cli.allowWarnings &&
+    allResults.some((result) => !result.passed && (result.warnings?.length ?? 0) > 0);
+  if (hasFailures || hasBlockingWarnings) {
+    process.exitCode = 1;
+    // eslint-disable-next-line no-console
+    console.error(
+      `[mcp-quality] Suite finalizada com ${
+        hasFailures ? 'falhas' : 'avisos bloqueantes'
+      }. Consulte tools/mcp_quality/artifacts/summary.md`
+    );
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('[mcp-quality] Suite finalizada com sucesso.');
   }
 }
 

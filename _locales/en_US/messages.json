@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "This site seems {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Idle"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Time the browser stayed open without activity."
+  },
   "popup_summary_inactive_label": {
     "message": "Idle"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "Context"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impact"
+  },
   "report_context_breakdown_index": {
     "message": "Index"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Time by context"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Zeros the day—no credit, no debt. Official day off."
+  },
+  "report_context_effect_leisure": {
+    "message": "Only 30% focus counted and villains ignored. Most flexible context."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralizes everything: no credit, no debt. Saul takes the day for personal matters."
+  },
+  "report_context_effect_study": {
+    "message": "Focus counts 75% and penalties drop by half. Flexible but still disciplined."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralizes index and villains: day stays 0/0. Treats declared vacations."
+  },
+  "report_context_effect_work": {
+    "message": "Counts 100% of focus and penalties."
   },
   "report_domain_heading": {
     "message": "Minutes per domain"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "Users"
+  },
+  "vscodeCard1Body": {
+    "message": "The local daemon talks to the extension and logs editor time as productive minutes. Nothing leaves localhost, but the stopwatch never sleeps."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Focus clock"
+  },
+  "vscodeCard1Title": {
+    "message": "Every commit counts as billable time."
+  },
+  "vscodeCard2Body": {
+    "message": "Jumped from editor to the feed? Saul stamps the distraction in the report. Back to code? He records it as proof of innocence."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Context detective"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code and Chrome swap clues."
+  },
+  "vscodeCard3Body": {
+    "message": "Reports bring coding time, interruptions, and usual suspects. Perfect to show your manager procrastination never stood a chance."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Ready for court"
+  },
+  "vscodeCard3Title": {
+    "message": "Export the defense with metrics and receipts."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code on the stand"
+  },
+  "vscodeLead": {
+    "message": "Saul plugs VS Code into the case: editor minutes become focus evidence, distractions become suspects, and the report arrives ready to convince the jury (your team)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome + VS Code bridge."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nothing leaves your editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Reports with screenshots and CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Install on VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "A timeline that proves who stayed in code and who ran to the feed. Bring it as Exhibit A to your next meeting."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alert"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defense"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Focus"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Saul's favorite evidence"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code active · 38 min without tab hopping."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Jumped to YouTube · Saul flagged it as distraction."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Back to VS Code · 21 min of focus recovered."
+  },
+  "vscodeSecondaryCta": {
+    "message": "View quick guide"
+  },
+  "vscodeTitle": {
+    "message": "Turn your editor into a productivity asset."
   }
 }

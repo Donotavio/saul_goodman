@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "该网站似乎是 {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "闲置"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "浏览器在没有活动的情况下保持打开的时间。"
+  },
   "popup_summary_inactive_label": {
     "message": "闲置"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "背景情况"
   },
+  "report_context_breakdown_effect": {
+    "message": "影响"
+  },
   "report_context_breakdown_index": {
     "message": "Í"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "临时上下文"
+  },
+  "report_context_effect_dayOff": {
+    "message": "清零一天：既没有信用也没有借记。作为正式假期使用。"
+  },
+  "report_context_effect_leisure": {
+    "message": "只计算30%的专注度，忽略恶棍。更灵活的上下文。"
+  },
+  "report_context_effect_personal": {
+    "message": "中和一切。Saul把这一天留给个人事务。"
+  },
+  "report_context_effect_study": {
+    "message": "专注度值75%，惩罚减半。灵活，但仍然有纪律。"
+  },
+  "report_context_effect_vacation": {
+    "message": "中和指数和恶棍。考虑已申报的假期。"
+  },
+  "report_context_effect_work": {
+    "message": "计算100%的专注度和惩罚。"
   },
   "report_domain_heading": {
     "message": "每个域的分钟"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "用户"
+  },
+  "vscodeCard1Body": {
+    "message": "本地守护进程与扩展进行通信，并将时间记录为编辑器中的有效分钟。没有任何数据离开本地主机，但计时器从不休眠。"
+  },
+  "vscodeCard1Kicker": {
+    "message": "专注时钟"
+  },
+  "vscodeCard1Title": {
+    "message": "每次提交都算作可计费小时。"
+  },
+  "vscodeCard2Body": {
+    "message": "从编辑器切换到信息流了吗？Saul 在报告中标记了干扰。回到代码了吗？他将其记录为无罪的证据。"
+  },
+  "vscodeCard2Kicker": {
+    "message": "上下文侦探"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code 和 Chrome 交换线索。"
+  },
+  "vscodeCard3Body": {
+    "message": "报告提供代码时间、中断和常见嫌疑人。完美展示给管理者，表明拖延没有机会。"
+  },
+  "vscodeCard3Kicker": {
+    "message": "准备好出庭"
+  },
+  "vscodeCard3Title": {
+    "message": "导出带有指标和截图的辩护。"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code 在法庭上"
+  },
+  "vscodeLead": {
+    "message": "Saul 将 VS Code 连接到案件：编辑器的分钟变成专注的证据，中断变成嫌疑人，报告准备好说服陪审团（你的团队）。"
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome + VS Code 桥接。"
+  },
+  "vscodeMetaLocal": {
+    "message": "100% 本地，所有内容都在您的编辑器中。"
+  },
+  "vscodeMetaProof": {
+    "message": "带有截图和 CSV 的报告。"
+  },
+  "vscodePrimaryCta": {
+    "message": "在 VS Code 中安装"
+  },
+  "vscodeProofBody": {
+    "message": "一条时间线证明谁留在代码中，谁逃到信息流。下次会议上用作证据 A。"
+  },
+  "vscodeProofChipAlert": {
+    "message": "警报"
+  },
+  "vscodeProofChipDefense": {
+    "message": "辩护"
+  },
+  "vscodeProofChipFocus": {
+    "message": "专注"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Saul 的首选证据"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code 活动 · 38 分钟未切换标签。"
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — 跳到 YouTube · Saul 标记为分心。"
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — 返回 VS Code · 恢复 21 分钟的专注。"
+  },
+  "vscodeSecondaryCta": {
+    "message": "查看快速指南"
+  },
+  "vscodeTitle": {
+    "message": "将编辑器转变为生产力资产。"
   }
 }

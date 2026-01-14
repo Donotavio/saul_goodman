@@ -27,8 +27,8 @@ const CONTEXT_IMPACTS: Record<ContextModeValue, ContextImpact> = {
     rule: 'context-personal'
   },
   leisure: {
-    productiveMultiplier: 0.3,
-    procrastinationMultiplier: 0,
+    productiveMultiplier: 0.55,
+    procrastinationMultiplier: 0.1,
     neutralize: false,
     rule: 'context-leisure'
   },
@@ -39,15 +39,15 @@ const CONTEXT_IMPACTS: Record<ContextModeValue, ContextImpact> = {
     rule: 'context-study'
   },
   dayOff: {
-    productiveMultiplier: 0,
-    procrastinationMultiplier: 0,
-    neutralize: true,
+    productiveMultiplier: 0.85,
+    procrastinationMultiplier: 0.15,
+    neutralize: false,
     rule: 'context-day-off'
   },
   vacation: {
-    productiveMultiplier: 0,
-    procrastinationMultiplier: 0,
-    neutralize: true,
+    productiveMultiplier: 0.95,
+    procrastinationMultiplier: 0.20,
+    neutralize: false,
     rule: 'context-vacation'
   }
 };

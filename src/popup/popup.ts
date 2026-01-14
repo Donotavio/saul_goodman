@@ -315,7 +315,14 @@ async function handleContextChange(value: ContextModeValue): Promise<void> {
   if (!contextSelect) {
     return;
   }
-  const normalized: ContextModeValue = ['work', 'personal', 'leisure', 'study'].includes(value)
+  const normalized: ContextModeValue = [
+    'work',
+    'personal',
+    'leisure',
+    'study',
+    'dayOff',
+    'vacation'
+  ].includes(value)
     ? value
     : 'work';
   contextSelect.disabled = true;

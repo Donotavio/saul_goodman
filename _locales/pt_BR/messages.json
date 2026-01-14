@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Este site parece ser {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Inativo"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Tempo em que o navegador ficou aberto sem atividade."
+  },
   "popup_summary_inactive_label": {
     "message": "Inativo"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "Contexto"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impacto"
+  },
   "report_context_breakdown_index": {
     "message": "Índice"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Tempo por contexto"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Zera o dia: nenhum ponto contado, nenhum débito. Folga oficial."
+  },
+  "report_context_effect_leisure": {
+    "message": "Conta só 30% do foco e ignora vilões. Contexto mais flexível."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutraliza tudo: nem crédito nem débito. Saul tira o dia para assuntos pessoais."
+  },
+  "report_context_effect_study": {
+    "message": "Foco vale 75% e penalidades caem pela metade. Flexível, mas ainda disciplina."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutraliza índice e vilões: dia fica 0/0. Considera férias declaradas."
+  },
+  "report_context_effect_work": {
+    "message": "Conta 100% do foco e das penalidades."
   },
   "report_domain_heading": {
     "message": "Minutos por domínio"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "Usuários"
+  },
+  "vscodeCard1Body": {
+    "message": "O daemon local conversa com a extensão e registra tempo no editor como minutos produtivos. Nada sai do localhost, mas o cronômetro nunca dorme."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Relógio de foco"
+  },
+  "vscodeCard1Title": {
+    "message": "Cada commit conta como hora faturável."
+  },
+  "vscodeCard2Body": {
+    "message": "Alternou do editor para o feed? Saul carimba a distração no relatório. Voltou ao código? Ele registra como prova de inocência."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Detetive de contexto"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code e Chrome trocam pistas."
+  },
+  "vscodeCard3Body": {
+    "message": "Relatórios trazem tempo de código, interrupções e suspeitos frequentes. Perfeito para mostrar ao gestor que a procrastinação não tem chance."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Pronto para a audiência"
+  },
+  "vscodeCard3Title": {
+    "message": "Exporta defesa com métricas e prints."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code no tribunal"
+  },
+  "vscodeLead": {
+    "message": "Saul conecta o VS Code ao caso: minutos de editor viram prova de foco, interrupções viram suspeitos, e o relatório chega pronto para convencer o júri (seu time)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Ponte Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nada sai do seu editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Relatórios com prints e CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Instalar no VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Uma linha do tempo que prova quem ficou no código e quem fugiu para o feed. Use como Exhibit A na próxima reunião."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alerta"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defesa"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Foco"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Evidências preferidas do Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code ativo · 38 min sem trocar de aba."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Pulou pro YouTube · Saul marcou como distração."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Retorno ao VS Code · 21 min de foco recuperado."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Ver guia rápido"
+  },
+  "vscodeTitle": {
+    "message": "Transforme o editor em ativo de produtividade."
   }
 }

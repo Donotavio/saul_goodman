@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Diese Seite scheint {label} zu sein"
   },
+  "popup_summary_idle_label": {
+    "message": "Inaktiv"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Zeit, in der der Browser ohne Aktivität geöffnet war."
+  },
   "popup_summary_inactive_label": {
     "message": "I"
   },
@@ -1934,6 +1940,9 @@
   "report_context_breakdown_context": {
     "message": "Kontext"
   },
+  "report_context_breakdown_effect": {
+    "message": "Auswirkung"
+  },
   "report_context_breakdown_index": {
     "message": "Index"
   },
@@ -1945,6 +1954,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Zeit nach Kontext"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Setzt den Tag auf null: weder Kredit noch Debit. Gilt als offizieller Urlaub."
+  },
+  "report_context_effect_leisure": {
+    "message": "Zählt nur 30% des Fokus und ignoriert Bösewichte. Flexibler Kontext."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralisiert alles. Saul nimmt sich den Tag für persönliche Angelegenheiten."
+  },
+  "report_context_effect_study": {
+    "message": "Fokus zählt 75% und Strafen halbieren sich. Flexibel, aber immer noch diszipliniert."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralisiert Index und Bösewichte. Berücksichtigt deklarierte Ferien."
+  },
+  "report_context_effect_work": {
+    "message": "Zählt 100% des Fokus und der Strafen."
   },
   "report_domain_heading": {
     "message": "Protokolle pro Domain"
@@ -2596,5 +2623,80 @@
   },
   "usersBadgeLabel": {
     "message": "Nutzer"
+  },
+  "vscodeCard1Body": {
+    "message": "Der lokale Daemon kommuniziert mit der Erweiterung und registriert Zeit im Editor als produktive Minuten. Nichts verlässt den localhost, aber der Timer schläft nie."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Fokus-Uhr"
+  },
+  "vscodeCard1Title": {
+    "message": "Jeder Commit zählt als abrechenbare Stunde."
+  },
+  "vscodeCard2Body": {
+    "message": "Wechselte vom Editor zum Feed? Saul stempelt die Ablenkung im Bericht. Zurück zum Code? Er registriert es als Beweis der Unschuld."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Kontextdetektiv"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code und Chrome tauschen Hinweise aus."
+  },
+  "vscodeCard3Body": {
+    "message": "Berichte bringen Codezeit, Unterbrechungen und häufige Verdächtige. Perfekt, um dem Manager zu zeigen, dass Prokrastination keine Chance hat."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Bereit für die Anhörung"
+  },
+  "vscodeCard3Title": {
+    "message": "Exportiert Verteidigung mit Metriken und Screenshots."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code vor Gericht"
+  },
+  "vscodeLead": {
+    "message": "Saul verbindet VS Code mit dem Fall: Minuten im Editor werden zu Beweisen für Fokus, Unterbrechungen werden zu Verdächtigen, und der Bericht kommt bereit, um die Jury (dein Team) zu überzeugen."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome-Brücke + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% lokal, nichts verlässt deinen Editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Berichte mit Screenshots und CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Im VS Code installieren"
+  },
+  "vscodeProofBody": {
+    "message": "Eine Zeitleiste, die beweist, wer im Code geblieben ist und wer ins Feed geflüchtet ist. Verwende es als Beweisstück A in der nächsten Besprechung."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alarm"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Verteidigung"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Fokus"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Bevorzugte Beweise von Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code aktiv · 38 min ohne Tabwechsel."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Auf YouTube gewechselt · Saul als Ablenkung markiert."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Rückkehr zu VS Code · 21 min wiederhergestellter Fokus."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Schnellleitfaden ansehen"
+  },
+  "vscodeTitle": {
+    "message": "Verwandle den Editor in ein Produktivitäts-Asset."
   }
 }
