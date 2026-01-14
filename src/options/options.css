@@ -330,6 +330,23 @@ button {
   height: 100%;
 }
 
+.domain-filter-row {
+  grid-column: 1 / -1;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #d7b247;
+}
+
+.panel.two-columns > .domain-filter-row {
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+}
+
+.domain-filter-row input {
+  max-width: 420px;
+  width: 100%;
+}
+
 .domain-panel-header {
   flex: 0 0 auto;
   display: flex;

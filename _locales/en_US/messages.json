@@ -953,8 +953,20 @@
   "options_domain_empty": {
     "message": "No domains yet."
   },
+  "options_domain_filter_hint": {
+    "message": "Type part of a domain to filter the lists below."
+  },
+  "options_domain_filter_label": {
+    "message": "Filter domains"
+  },
+  "options_domain_filter_placeholder": {
+    "message": "Search domain..."
+  },
   "options_domain_invalid": {
     "message": "Enter a valid domain."
+  },
+  "options_domain_no_match": {
+    "message": "No domains found."
   },
   "options_footer_note": {
     "message": "Saul doesn't share your data with anyone. Not even the judge."

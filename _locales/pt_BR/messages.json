@@ -953,8 +953,20 @@
   "options_domain_empty": {
     "message": "Ainda não há domínios."
   },
+  "options_domain_filter_hint": {
+    "message": "Digite parte do domínio para localizar nas listas abaixo."
+  },
+  "options_domain_filter_label": {
+    "message": "Filtrar domínios"
+  },
+  "options_domain_filter_placeholder": {
+    "message": "Buscar domínio..."
+  },
   "options_domain_invalid": {
     "message": "Informe um domínio válido."
+  },
+  "options_domain_no_match": {
+    "message": "Nenhum domínio encontrado."
   },
   "options_footer_note": {
     "message": "Saul não compartilha seus dados com ninguém. Nem com o juiz."

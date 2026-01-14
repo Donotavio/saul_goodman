@@ -19,6 +19,7 @@ const productiveInput = document.getElementById('productiveInput') as HTMLInputE
 const procrastinationInput = document.getElementById('procrastinationInput') as HTMLInputElement;
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
+const domainFilterInput = document.getElementById('domainFilterInput') as HTMLInputElement | null;
 const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
@@ -136,6 +137,11 @@ function attachListeners(): void {
     if (target?.dataset.domain) {
       void removeDomain('procrastinationDomains', target.dataset.domain);
     }
+  });
+
+  domainFilterInput?.addEventListener('input', () => {
+    renderDomainList('productiveDomains', productiveListEl);
+    renderDomainList('procrastinationDomains', procrastinationListEl);
   });
 
   blockProcrastinationEl?.addEventListener('change', () => {
@@ -523,6 +529,10 @@ function translateOrFallback(key: string, fallback: string): string {
   return translated;
 }
 
+function getDomainFilter(): string {
+  return (domainFilterInput?.value ?? '').trim().toLowerCase();
+}
+
 function renderDomainList(key: DomainListKey, container: HTMLUListElement): void {
   if (!currentSettings) {
     return;
@@ -530,15 +540,21 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
 
   container.innerHTML = '';
   const domains = currentSettings[key];
+  const filter = getDomainFilter();
+  const visibleDomains = filter
+    ? domains.filter((domain) => domain.toLowerCase().includes(filter))
+    : domains;
 
-  if (!domains.length) {
+  if (!visibleDomains.length) {
     const li = document.createElement('li');
-    li.textContent = translateOrFallback('options_domain_empty', 'No domains yet.');
+    li.textContent = filter
+      ? translateOrFallback('options_domain_no_match', 'No domains found.')
+      : translateOrFallback('options_domain_empty', 'No domains yet.');
     container.appendChild(li);
     return;
   }
 
-  for (const domain of domains) {
+  for (const domain of visibleDomains) {
     const li = document.createElement('li');
     li.textContent = domain;
     const button = document.createElement('button');
