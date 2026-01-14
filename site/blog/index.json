@@ -1,6 +1,28 @@
 {
   "posts": [
     {
+      "title": "Mudança: A Nova Palavra da Moda para 2026",
+      "url": "./posts/2026/2026-01-14-mudanca-a-nova-palavra-da-moda-para-2026/",
+      "markdown": "2026/2026-01-14-mudanca-a-nova-palavra-da-moda-para-2026.md",
+      "date": "2026-01-14",
+      "category": "trabalho-remoto",
+      "tags": [
+        "produtividade",
+        "mudança",
+        "trabalho-remoto",
+        "procrastinação"
+      ],
+      "excerpt": "A receita secreta para a mudança? Trabalhar duro, porque claro, o universo deve estar esperando por você.",
+      "title_en": "Change: The New Buzzword for 2026",
+      "title_es": "Cambio: La Nueva Palabra de Moda para 2026",
+      "tone": "incredulo",
+      "source_title": "<![CDATA[[Newsletter] If You Want Change, Start Here]]>",
+      "source_url": "https://remotive.com/blog/newsletter-if-you-want-change-start-here/",
+      "source_published_at": "Mon, 12 Jan 2026 14:57:43 GMT",
+      "excerpt_en": "The secret recipe for change? Work hard, because of course, the universe must be waiting for you.",
+      "excerpt_es": "¿La receta secreta para el cambio? Trabajar duro, porque claro, el universo debe estar esperando por ti."
+    },
+    {
       "title": "Como ser um Engenheiro Frontend Sênior e Não Perder a Sanidade",
       "url": "./posts/2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade/",
       "markdown": "2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade.md",
