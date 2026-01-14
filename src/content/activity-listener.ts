@@ -64,29 +64,40 @@ function resolveSourceLabel(raw: string, translate: TranslatorFn): string {
 }
 
 function decodeHtmlEntities(value: string): string {
-  return value.replace(/&(?:quot|apos|amp|lt|gt);|&#(?:\d+|x[0-9a-fA-F]+);/g, (match) => {
+  return value.replace(/&(?:quot|apos|amp|lt|gt);?|&#(?:\d+|x[0-9a-fA-F]+);?/g, (match) => {
     switch (match) {
       case '&quot;':
+      case '&quot':
       case '&#34;':
+      case '&#34':
       case '&#x22;':
+      case '&#x22':
         return '"';
       case '&apos;':
+      case '&apos':
       case '&#39;':
+      case '&#39':
       case '&#x27;':
+      case '&#x27':
         return "'";
       case '&amp;':
+      case '&amp':
         return '&';
       case '&lt;':
+      case '&lt':
         return '<';
       case '&gt;':
+      case '&gt':
         return '>';
       default:
         if (match.startsWith('&#x')) {
-          const code = Number.parseInt(match.slice(3, -1), 16);
+          const raw = match.slice(3);
+          const code = Number.parseInt(raw.endsWith(';') ? raw.slice(0, -1) : raw, 16);
           return Number.isFinite(code) ? String.fromCodePoint(code) : match;
         }
         if (match.startsWith('&#')) {
-          const code = Number.parseInt(match.slice(2, -1), 10);
+          const raw = match.slice(2);
+          const code = Number.parseInt(raw.endsWith(';') ? raw.slice(0, -1) : raw, 10);
           return Number.isFinite(code) ? String.fromCodePoint(code) : match;
         }
         return match;

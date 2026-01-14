@@ -30,3 +30,18 @@ test('translateSuggestionReason decodes HTML entities before matching', () => {
   });
   assert.equal(translated, 'Palavra-chave "dashboard" em título');
 });
+
+test('translateSuggestionReason decodes HTML entities without semicolons', () => {
+  const raw = 'Palavra-chave &quotdashboard&quot em título';
+  const translated = translateSuggestionReason(raw, (key, substitutions) => {
+    const tokens = (substitutions ?? {}) as Record<string, string | number>;
+    if (key === 'suggestion_reason_source_title') {
+      return 'título';
+    }
+    if (key === 'suggestion_reason_keyword') {
+      return `Palavra-chave "${tokens.keyword ?? ''}" em ${tokens.source ?? ''}`;
+    }
+    return key;
+  });
+  assert.equal(translated, 'Palavra-chave "dashboard" em título');
+});

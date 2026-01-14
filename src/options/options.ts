@@ -1,7 +1,9 @@
 import {
   DomainCategory,
+  DomainSuggestion,
   ExtensionSettings,
   LocalePreference,
+  RuntimeMessageResponse,
   SupportedLocale,
   WorkInterval
 } from '../shared/types.js';
@@ -9,6 +11,7 @@ import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings }
 import { normalizeDomain } from '../shared/utils/domain.js';
 import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../shared/i18n.js';
 import { buildLearningTokens } from '../shared/domain-classifier.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -20,6 +23,18 @@ const procrastinationInput = document.getElementById('procrastinationInput') as 
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
 const domainFilterInput = document.getElementById('domainFilterInput') as HTMLInputElement | null;
+const recommendationsProductiveListEl = document.getElementById(
+  'recommendationsProductiveList'
+) as HTMLUListElement | null;
+const recommendationsProcrastinationListEl = document.getElementById(
+  'recommendationsProcrastinationList'
+) as HTMLUListElement | null;
+const recommendationsNeutralListEl = document.getElementById(
+  'recommendationsNeutralList'
+) as HTMLUListElement | null;
+const recommendationsEmptyEl = document.getElementById(
+  'recommendationsEmpty'
+) as HTMLParagraphElement | null;
 const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
@@ -78,6 +93,7 @@ let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
 let procrastinationHighlightDone = false;
 let i18n: I18nService | null = null;
+let suggestionList: DomainSuggestion[] = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -142,6 +158,7 @@ function attachListeners(): void {
   domainFilterInput?.addEventListener('input', () => {
     renderDomainList('productiveDomains', productiveListEl);
     renderDomainList('procrastinationDomains', procrastinationListEl);
+    renderRecommendations();
   });
 
   blockProcrastinationEl?.addEventListener('change', () => {
@@ -460,6 +477,7 @@ async function hydrate(): Promise<void> {
   await refreshTranslations();
   populateLocaleSelect();
   renderForms();
+  await loadSuggestions();
   if (window.location.hash === '#vilains' && !procrastinationHighlightDone) {
     focusProcrastinationSection();
     procrastinationHighlightDone = true;
@@ -519,6 +537,7 @@ function renderForms(): void {
 
   renderDomainList('productiveDomains', productiveListEl);
   renderDomainList('procrastinationDomains', procrastinationListEl);
+  renderRecommendations();
 }
 
 function translateOrFallback(key: string, fallback: string): string {
@@ -546,11 +565,11 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
     : domains;
 
   if (!visibleDomains.length) {
-    const li = document.createElement('li');
-    li.textContent = filter
-      ? translateOrFallback('options_domain_no_match', 'No domains found.')
-      : translateOrFallback('options_domain_empty', 'No domains yet.');
-    container.appendChild(li);
+    if (!filter) {
+      const li = document.createElement('li');
+      li.textContent = translateOrFallback('options_domain_empty', 'No domains yet.');
+      container.appendChild(li);
+    }
     return;
   }
 
@@ -659,6 +678,7 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
   bumpLearningFromDomain(normalized, category);
   input.value = '';
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
+  renderRecommendations();
   await persistSettings('options_status_list_updated');
 }
 
@@ -669,7 +689,137 @@ async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
 
   currentSettings[key] = currentSettings[key].filter((item) => item !== domain);
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
+  renderRecommendations();
   await persistSettings('options_status_domain_removed');
+}
+
+async function loadSuggestions(): Promise<void> {
+  try {
+    const response = (await chrome.runtime.sendMessage({
+      type: 'metrics-request'
+    })) as RuntimeMessageResponse | undefined;
+    if (!response) {
+      suggestionList = [];
+      renderRecommendations();
+      return;
+    }
+    suggestionList = buildSuggestionList(response);
+    renderRecommendations();
+  } catch (error) {
+    console.warn('[options] Falha ao carregar sugestões:', error);
+  }
+}
+
+function buildSuggestionList(data: RuntimeMessageResponse): DomainSuggestion[] {
+  const combined: DomainSuggestion[] = [
+    ...(data.activeSuggestion ? [data.activeSuggestion] : []),
+    ...(data.suggestions ?? [])
+  ].filter((item): item is DomainSuggestion => Boolean(item));
+
+  const seen = new Set<string>();
+  const sorted = combined.sort((a, b) => b.timestamp - a.timestamp);
+  const deduped: DomainSuggestion[] = [];
+  for (const entry of sorted) {
+    const key = entry.domain;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(entry);
+  }
+  return deduped;
+}
+
+function renderRecommendations(): void {
+  if (
+    !recommendationsProductiveListEl ||
+    !recommendationsProcrastinationListEl ||
+    !recommendationsNeutralListEl
+  ) {
+    return;
+  }
+
+  recommendationsProductiveListEl.innerHTML = '';
+  recommendationsProcrastinationListEl.innerHTML = '';
+  recommendationsNeutralListEl.innerHTML = '';
+
+  const filter = getDomainFilter();
+  const classified = new Set<string>([
+    ...(currentSettings?.productiveDomains ?? []),
+    ...(currentSettings?.procrastinationDomains ?? [])
+  ]);
+
+  const productiveSuggestions: DomainSuggestion[] = [];
+  const procrastinationSuggestions: DomainSuggestion[] = [];
+  const neutralSuggestions: DomainSuggestion[] = [];
+
+  suggestionList.forEach((suggestion) => {
+    if (classified.has(suggestion.domain)) {
+      return;
+    }
+    if (filter && !suggestion.domain.toLowerCase().includes(filter)) {
+      return;
+    }
+    if (suggestion.classification === 'productive') {
+      productiveSuggestions.push(suggestion);
+    }
+    if (suggestion.classification === 'procrastination') {
+      procrastinationSuggestions.push(suggestion);
+    }
+    if (suggestion.classification === 'neutral') {
+      neutralSuggestions.push(suggestion);
+    }
+  });
+
+  productiveSuggestions.forEach((suggestion) => {
+    recommendationsProductiveListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+  procrastinationSuggestions.forEach((suggestion) => {
+    recommendationsProcrastinationListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+  neutralSuggestions.forEach((suggestion) => {
+    recommendationsNeutralListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+
+  if (recommendationsEmptyEl) {
+    const isEmpty =
+      recommendationsProductiveListEl.childElementCount === 0 &&
+      recommendationsProcrastinationListEl.childElementCount === 0 &&
+      recommendationsNeutralListEl.childElementCount === 0;
+    recommendationsEmptyEl.classList.toggle('visible', isEmpty);
+  }
+}
+
+function buildRecommendationItem(suggestion: DomainSuggestion): HTMLLIElement {
+  const item = document.createElement('li');
+  const header = document.createElement('div');
+  header.className = 'recommendation-header';
+
+  const domainEl = document.createElement('span');
+  domainEl.className = 'recommendation-domain';
+  domainEl.textContent = suggestion.domain;
+
+  const confidenceEl = document.createElement('span');
+  confidenceEl.className = 'recommendation-confidence';
+  const confidenceText =
+    i18n?.t('popup_suggestion_confidence_filled', {
+      confidence: Math.round(suggestion.confidence)
+    }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
+  confidenceEl.textContent = confidenceText;
+
+  header.appendChild(domainEl);
+  header.appendChild(confidenceEl);
+  item.appendChild(header);
+
+  const reasonsList = document.createElement('ul');
+  reasonsList.className = 'recommendation-reasons';
+  suggestion.reasons.slice(0, 3).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = translateSuggestionReason(reason, i18n);
+    reasonsList.appendChild(li);
+  });
+  item.appendChild(reasonsList);
+  return item;
 }
 
 async function persistSettings(messageKey: string): Promise<void> {

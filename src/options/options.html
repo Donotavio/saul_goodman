@@ -411,6 +411,40 @@
           </div>
           <ul id="procrastinationList" class="domain-list scrollable"></ul>
         </div>
+
+        <div class="domain-panel recommendations-panel">
+          <div class="domain-panel-header field-group">
+            <h2 data-i18n="options_recommendations_heading">Domínios recomendados</h2>
+            <p class="hint" data-i18n="options_recommendations_hint">
+              Sugestões rápidas para iniciar suas listas. Ajuste conforme seu fluxo e tentações.
+            </p>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_productive_heading">
+              Produtividade sugerida
+            </h3>
+            <ul id="recommendationsProductiveList" class="recommendation-list"></ul>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_procrastination_heading">
+              Procrastinação provável
+            </h3>
+            <ul id="recommendationsProcrastinationList" class="recommendation-list"></ul>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_neutral_heading">
+              Revisar manualmente
+            </h3>
+            <ul id="recommendationsNeutralList" class="recommendation-list"></ul>
+          </div>
+          <p
+            id="recommendationsEmpty"
+            class="hint recommendations-empty"
+            data-i18n="options_recommendations_empty"
+          >
+            Nenhuma recomendação no momento.
+          </p>
+        </div>
       </section>
 
 

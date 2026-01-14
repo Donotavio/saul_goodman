@@ -2710,5 +2710,23 @@
   },
   "vscodeTitle": {
     "message": "Transforme o editor em ativo de produtividade."
+  },
+  "options_recommendations_heading": {
+    "message": "Domínios recomendados"
+  },
+  "options_recommendations_hint": {
+    "message": "Sugestões rápidas para iniciar suas listas. Ajuste conforme seu fluxo e tentações."
+  },
+  "options_recommendations_productive_heading": {
+    "message": "Produtividade sugerida"
+  },
+  "options_recommendations_procrastination_heading": {
+    "message": "Procrastinação provável"
+  },
+  "options_recommendations_neutral_heading": {
+    "message": "Revisar manualmente"
+  },
+  "options_recommendations_empty": {
+    "message": "Nenhuma recomendação no momento."
   }
 }
