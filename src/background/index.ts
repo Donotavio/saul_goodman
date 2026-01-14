@@ -73,6 +73,19 @@ const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 
+function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
+  chrome.tabs.sendMessage(
+    tabId,
+    {
+      type: 'sg:auto-classification-toast',
+      payload: { suggestion }
+    },
+    () => {
+      void chrome.runtime.lastError;
+    }
+  );
+}
+
 interface TrackingState {
   currentDomain: string | null;
   currentTabId: number | null;
@@ -321,10 +334,7 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
   const cached = suggestionCache.get(normalizedDomain);
   if (cached) {
     if (tab.id) {
-      chrome.tabs.sendMessage(tab.id, {
-        type: 'sg:auto-classification-toast',
-        payload: { suggestion: cached }
-      });
+      sendSuggestionToast(tab.id, cached);
     }
     return;
   }
@@ -352,10 +362,7 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
   });
   pruneSuggestionCache(settings);
   if (tab.id) {
-    chrome.tabs.sendMessage(tab.id, {
-      type: 'sg:auto-classification-toast',
-      payload: { suggestion }
-    });
+    sendSuggestionToast(tab.id, suggestion);
   }
 }
 
