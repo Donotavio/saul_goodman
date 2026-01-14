@@ -41,13 +41,13 @@ const CONTEXT_IMPACTS: Record<ContextModeValue, ContextImpact> = {
   dayOff: {
     productiveMultiplier: 0.85,
     procrastinationMultiplier: 0.15,
-    neutralize: true,
+    neutralize: false,
     rule: 'context-day-off'
   },
   vacation: {
     productiveMultiplier: 0.95,
     procrastinationMultiplier: 0.20,
-    neutralize: true,
+    neutralize: false,
     rule: 'context-vacation'
   }
 };
