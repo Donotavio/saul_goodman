@@ -47,7 +47,7 @@ Este documento explica como a extensão sugere categorias (Produtivo, Procrastin
 
 ## Controles e cooldown
 
-- A auto‑classificação é opt‑in (`enableAutoClassification` na Options).
+- A auto‑classificação vem ativada por padrão (`enableAutoClassification` na Options) e pode ser desativada.
 - Há cooldown configurável entre sugestões para o mesmo domínio; domínios de baixa confiança podem ser perguntados com um cooldown mais curto.
 - Ignorar uma sugestão registra um prazo de silêncio para aquele domínio.
 

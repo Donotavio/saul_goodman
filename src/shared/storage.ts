@@ -83,7 +83,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
     'pokemongolive.com'
   ],
   blockProcrastination: false,
-  enableAutoClassification: false,
+  enableAutoClassification: true,
   enableAISuggestions: false,
   suggestionCooldownMs: 86_400_000,
   suggestionsHistory: {},
