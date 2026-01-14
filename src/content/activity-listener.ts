@@ -96,15 +96,6 @@ function translateSuggestionReason(reason: string, translator?: TranslatorFn | n
   return reason;
 }
 
-function sanitizeReasonText(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -461,7 +452,7 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
   reasonsList.className = 'sg-toast-reasons';
   suggestion.reasons.slice(0, 3).forEach((reason) => {
     const li = document.createElement('li');
-    li.textContent = sanitizeReasonText(translateSuggestionReason(reason, translate));
+    li.textContent = translateSuggestionReason(reason, translate);
     reasonsList.appendChild(li);
   });
 
