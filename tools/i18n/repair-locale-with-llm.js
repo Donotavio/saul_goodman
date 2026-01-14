@@ -193,6 +193,12 @@ async function repairLocale(localeFolder, mode, limit) {
   for (const key of keys) {
     const baseMsg = base[key]?.message;
     const msg = target[key]?.message;
+    if (mode === 'missing') {
+      if (typeof msg !== 'string' || !msg.trim()) {
+        toFix.push(key);
+      }
+      continue;
+    }
     if (mode === 'all') {
       if (typeof baseMsg === 'string' && baseMsg.trim()) {
         toFix.push(key);
