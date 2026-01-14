@@ -1,7 +1,7 @@
 ## MCP Quality Suite
 
 ### Requisitos
-- Node 18+
+- Node 20.19+ (ou 22.12+)
 - Chrome/Chromium disponível para `npx chrome-devtools-mcp@latest`
 - `npm install` já executado
 
