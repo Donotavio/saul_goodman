@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, '../..');
 const LOCALES_DIR = path.join(ROOT, '_locales');
 
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
-const TIMEOUT_MS = 15000;
+const TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS) || 45000;
 const MAX_RETRIES = 2;
 
 const LOCALE_META = {
