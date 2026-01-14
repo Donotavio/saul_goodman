@@ -1632,6 +1632,7 @@ async function generateNarrative(): Promise<void> {
 function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
   const enriched = enrichMetricsWithVscode(metrics);
   const kpis = calculateKpis(enriched);
+  const contextBreakdown = buildContextSummary(enriched);
   const timelineSnippets = enriched.timeline
     .sort((a, b) => a.startTime - b.startTime)
     .slice(0, 10)
@@ -1654,7 +1655,9 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
     topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
     timeline: timelineSnippets,
     fairnessRule: fairness.rule,
-    fairnessStatus
+    fairnessStatus,
+    contextMode: fairness.contextMode?.value ?? 'work',
+    contextBreakdown
   };
 }
 
@@ -1688,6 +1691,15 @@ async function requestAiNarrative(
     throw new Error('OPENAI_API_KEY not configured.');
   }
 
+  const contextSummary = payload.contextBreakdown
+    ? payload.contextBreakdown
+        .map(
+          (entry) =>
+            `${entry.context}: ${entry.duration}${typeof entry.index === 'number' ? ` (índice ${entry.index}%)` : ''}`
+        )
+        .join('; ')
+    : 'Sem breakdown de contexto.';
+
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -1704,9 +1716,9 @@ async function requestAiNarrative(
         },
         {
           role: 'user',
-          content: `Write a short narrative (2 paragraphs) using these data points:\n${JSON.stringify(
-            payload
-          )}`
+          content:
+            `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
+            `${JSON.stringify(payload)}`
         }
       ]
     })
@@ -1730,6 +1742,8 @@ interface AiPromptPayload {
   timeline: Array<{ domain: string; category: string; duration: string; range: string }>;
   fairnessRule: FairnessRule;
   fairnessStatus: string;
+  contextMode: ContextModeValue;
+  contextBreakdown?: Array<{ context: ContextModeValue; duration: string; index?: number }>;
 }
 
 interface OpenAiResponse {
@@ -1763,6 +1777,42 @@ function formatParagraph(content: string): string {
   const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
   const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
   return `<p>${italic}</p>`;
+}
+
+function buildContextSummary(
+  metrics: DailyMetrics
+): Array<{ context: ContextModeValue; duration: string; index?: number }> | undefined {
+  const durations = metrics.contextDurations;
+  const indices = metrics.contextIndices;
+  if (!durations && !indices) {
+    return undefined;
+  }
+  const entries: Array<{ context: ContextModeValue; duration: string; index?: number }> = [];
+  const seen = new Set<ContextModeValue>();
+  if (durations) {
+    Object.entries(durations).forEach(([context, value]) => {
+      const ctx = context as ContextModeValue;
+      seen.add(ctx);
+      entries.push({
+        context: ctx,
+        duration: formatDuration(value ?? 0),
+        index: indices?.[ctx]
+      });
+    });
+  }
+  if (indices) {
+    Object.entries(indices).forEach(([context, idx]) => {
+      const ctx = context as ContextModeValue;
+      if (!seen.has(ctx)) {
+        entries.push({
+          context: ctx,
+          duration: formatDuration(durations?.[ctx] ?? 0),
+          index: idx
+        });
+      }
+    });
+  }
+  return entries.length ? entries : undefined;
 }
 
 /**
