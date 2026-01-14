@@ -43,11 +43,23 @@ type LearningToken =
   | 'flag:table'
   | 'flag:shorts';
 
+type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'lang' | 'flag';
+
 type LearningSide = 'productive' | 'procrastination';
 
 const LEARNING_LOG_MULTIPLIER = 20;
-const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-const LEARNING_TOKEN_WEIGHTS: Record<string, number> = {
+const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000; // default 30 days
+const LEARNING_HALF_LIFE_BY_TYPE: Record<string, number> = {
+  host: LEARNING_HALF_LIFE_MS,
+  root: LEARNING_HALF_LIFE_MS,
+  kw: LEARNING_HALF_LIFE_MS,
+  og: LEARNING_HALF_LIFE_MS,
+  path: 20 * 24 * 60 * 60 * 1000, // 20 days
+  schema: 20 * 24 * 60 * 60 * 1000,
+  lang: 45 * 24 * 60 * 60 * 1000,
+  flag: 25 * 24 * 60 * 60 * 1000
+};
+const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
   host: 3,
   root: 2,
   kw: 1,
@@ -483,12 +495,13 @@ function applyLearnedSignals(
       continue;
     }
 
-    const weight = getTokenWeight(token);
+    const weight = getTokenWeight(token, learningSignals);
     if (weight === 0) {
       continue;
     }
 
-    const decayFactor = Math.pow(0.5, Math.max(0, now - stat.lastUpdated) / LEARNING_HALF_LIFE_MS);
+    const halfLife = getHalfLifeForToken(token);
+    const decayFactor = Math.pow(0.5, Math.max(0, now - stat.lastUpdated) / halfLife);
     const productive = stat.productive * decayFactor + 1;
     const procrastination = stat.procrastination * decayFactor + 1;
     const tokenScore = Math.log(productive / procrastination) * weight * LEARNING_LOG_MULTIPLIER;
@@ -505,16 +518,36 @@ function applyLearnedSignals(
   return { score, signalsUsed };
 }
 
-function getTokenWeight(token: LearningToken): number {
-  if (token.startsWith('host:')) return LEARNING_TOKEN_WEIGHTS.host;
-  if (token.startsWith('root:')) return LEARNING_TOKEN_WEIGHTS.root;
-  if (token.startsWith('kw:')) return LEARNING_TOKEN_WEIGHTS.kw;
-  if (token.startsWith('og:')) return LEARNING_TOKEN_WEIGHTS.og;
-  if (token.startsWith('path:')) return LEARNING_TOKEN_WEIGHTS.path;
-  if (token.startsWith('schema:')) return LEARNING_TOKEN_WEIGHTS.schema;
-  if (token.startsWith('lang:')) return LEARNING_TOKEN_WEIGHTS.lang;
-  if (token.startsWith('flag:')) return LEARNING_TOKEN_WEIGHTS.flag;
+function getTokenWeight(token: LearningToken, learningSignals?: LearningSignals): number {
+  const base = (learningSignals?.weights ?? {}) as Partial<Record<LearningWeightKey, number>>;
+  const weights: Record<LearningWeightKey, number> = { ...DEFAULT_LEARNING_WEIGHTS };
+  (Object.keys(base) as LearningWeightKey[]).forEach((key) => {
+    const value = base[key];
+    if (typeof value === 'number') {
+      weights[key] = value;
+    }
+  });
+  if (token.startsWith('host:')) return weights.host;
+  if (token.startsWith('root:')) return weights.root;
+  if (token.startsWith('kw:')) return weights.kw;
+  if (token.startsWith('og:')) return weights.og;
+  if (token.startsWith('path:')) return weights.path;
+  if (token.startsWith('schema:')) return weights.schema;
+  if (token.startsWith('lang:')) return weights.lang;
+  if (token.startsWith('flag:')) return weights.flag;
   return 0;
+}
+
+function getHalfLifeForToken(token: LearningToken): number {
+  if (token.startsWith('host:')) return LEARNING_HALF_LIFE_BY_TYPE.host ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('root:')) return LEARNING_HALF_LIFE_BY_TYPE.root ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('kw:')) return LEARNING_HALF_LIFE_BY_TYPE.kw ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('og:')) return LEARNING_HALF_LIFE_BY_TYPE.og ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('path:')) return LEARNING_HALF_LIFE_BY_TYPE.path ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('schema:')) return LEARNING_HALF_LIFE_BY_TYPE.schema ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('lang:')) return LEARNING_HALF_LIFE_BY_TYPE.lang ?? LEARNING_HALF_LIFE_MS;
+  if (token.startsWith('flag:')) return LEARNING_HALF_LIFE_BY_TYPE.flag ?? LEARNING_HALF_LIFE_MS;
+  return LEARNING_HALF_LIFE_MS;
 }
 
 function buildLearningReason(token: LearningToken, side: LearningSide): string {
@@ -567,11 +600,21 @@ function buildLearningReason(token: LearningToken, side: LearningSide): string {
 }
 
 function extractKeywordTokens(text: string): string[] {
-  return text
+  const words = text
     .toLowerCase()
     .split(/[^a-z0-9á-úà-ùãõâêîôûç]+/i)
     .map((kw) => kw.trim())
     .filter((kw) => kw.length >= 3 && kw.length <= 32);
+
+  const ngrams: string[] = [];
+  for (let i = 0; i < words.length - 1; i++) {
+    const pair = `${words[i]}_${words[i + 1]}`;
+    if (pair.length <= 40) {
+      ngrams.push(pair);
+    }
+  }
+
+  return Array.from(new Set([...words, ...ngrams]));
 }
 
 function extractRootHost(host: string): string | null {

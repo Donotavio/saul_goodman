@@ -75,6 +75,31 @@ const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_LEARNING_TOKENS = 5000;
+const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000;
+const LOW_CONFIDENCE_THRESHOLD = 55;
+const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
+const WEIGHT_STEP = 0.1;
+type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'lang' | 'flag';
+const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
+  host: 3,
+  root: 2,
+  kw: 1,
+  og: 1.5,
+  path: 1.25,
+  schema: 1.25,
+  lang: 0.5,
+  flag: 1
+};
+const WEIGHT_MIN_MAX: Record<LearningWeightKey, { min: number; max: number }> = {
+  host: { min: 1.5, max: 5 },
+  root: { min: 1, max: 4 },
+  kw: { min: 0.5, max: 2 },
+  og: { min: 0.5, max: 3 },
+  path: { min: 0.5, max: 2 },
+  schema: { min: 0.5, max: 2 },
+  lang: { min: 0.25, max: 1 },
+  flag: { min: 0.5, max: 2 }
+};
 
 function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
   chrome.tabs.sendMessage(
@@ -149,7 +174,8 @@ const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
 function ensureLearningSignals(settings: ExtensionSettings): LearningSignals {
   const base: LearningSignals = {
     version: settings.learningSignals?.version ?? 1,
-    tokens: settings.learningSignals?.tokens ?? {}
+    tokens: settings.learningSignals?.tokens ?? {},
+    weights: { ...DEFAULT_LEARNING_WEIGHTS, ...(settings.learningSignals?.weights ?? {}) }
   };
   settings.learningSignals = base;
   return base;
@@ -158,9 +184,13 @@ function ensureLearningSignals(settings: ExtensionSettings): LearningSignals {
 function updateLearningSignals(
   settings: ExtensionSettings,
   tokens: string[],
-  classification: DomainCategory
+  classification: DomainCategory,
+  suggested?: DomainCategory
 ): void {
   const learning = ensureLearningSignals(settings);
+  if (!learning.weights) {
+    learning.weights = { ...DEFAULT_LEARNING_WEIGHTS };
+  }
   const now = Date.now();
   const uniqueTokens = Array.from(new Set(tokens));
 
@@ -179,18 +209,34 @@ function updateLearningSignals(
     learning.tokens[token] = current;
   }
 
+  if (suggested && suggested !== classification) {
+    adjustWeights(learning, uniqueTokens, -WEIGHT_STEP);
+  } else {
+    adjustWeights(learning, uniqueTokens, WEIGHT_STEP);
+  }
+
   pruneLearningSignals(learning);
 }
 
 function pruneLearningSignals(learning: LearningSignals): void {
   const entries = Object.entries(learning.tokens ?? {});
-  if (entries.length <= MAX_LEARNING_TOKENS) {
+
+  const now = Date.now();
+  for (const [token, stat] of entries) {
+    const total = stat.productive + stat.procrastination;
+    if (total <= 1 && now - stat.lastUpdated > LEARNING_HALF_LIFE_MS) {
+      delete learning.tokens[token];
+    }
+  }
+
+  const remaining = Object.entries(learning.tokens ?? {});
+  if (remaining.length <= MAX_LEARNING_TOKENS) {
     return;
   }
 
-  entries
+  remaining
     .sort(([, a], [, b]) => (a.lastUpdated ?? 0) - (b.lastUpdated ?? 0))
-    .slice(0, Math.max(0, entries.length - MAX_LEARNING_TOKENS))
+    .slice(0, Math.max(0, remaining.length - MAX_LEARNING_TOKENS))
     .forEach(([token]) => {
       delete learning.tokens[token];
     });
@@ -221,6 +267,9 @@ function isDomainInCooldown(domain: string, settings: ExtensionSettings): boolea
     return false;
   }
   const now = Date.now();
+  if (history.decidedAs === 'ignored' && history.lastSuggestedAt && now - history.lastSuggestedAt > LOW_CONFIDENCE_COOLDOWN_MS) {
+    return false;
+  }
   if (history.ignoredUntil && history.ignoredUntil > now) {
     return true;
   }
@@ -342,7 +391,7 @@ async function handleApplySuggestion(payload: {
       hasInfiniteScroll: false,
       hasVideoPlayer: false
     });
-  updateLearningSignals(settings, tokens, classification);
+  updateLearningSignals(settings, tokens, classification, cached?.classification);
   settingsCache = settings;
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
@@ -387,11 +436,6 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     return;
   }
 
-  if (isDomainInCooldown(normalizedDomain, settings)) {
-    suggestionCache.delete(normalizedDomain);
-    return;
-  }
-
   if (!tab?.url || !/^https?:/i.test(tab.url)) {
     return;
   }
@@ -411,6 +455,21 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
 
   const tokens = buildLearningTokens(metadata);
   const result = classifyWithMetadata(metadata, settings.learningSignals);
+  const lowConfidence = result.confidence <= LOW_CONFIDENCE_THRESHOLD;
+  if (!lowConfidence && isDomainInCooldown(normalizedDomain, settings)) {
+    suggestionCache.delete(normalizedDomain);
+    return;
+  }
+  if (lowConfidence && isDomainInCooldown(normalizedDomain, settings)) {
+    const history = settings.suggestionsHistory?.[normalizedDomain];
+    const now = Date.now();
+    const lastSuggestedAt = history?.lastSuggestedAt ?? 0;
+    if (now - lastSuggestedAt < LOW_CONFIDENCE_COOLDOWN_MS) {
+      suggestionCache.delete(normalizedDomain);
+      return;
+    }
+  }
+
   const suggestion: DomainSuggestion = {
     domain: normalizedDomain,
     classification: result.classification,
@@ -1758,4 +1817,31 @@ async function handleVscodeSyncFailure(metrics: DailyMetrics): Promise<void> {
     await persistMetrics();
   }
   lastVscodeSyncAt = 0;
+}
+function adjustWeights(
+  learning: LearningSignals,
+  tokens: string[],
+  delta: number
+): void {
+  const weights = { ...DEFAULT_LEARNING_WEIGHTS, ...(learning.weights ?? {}) };
+  const tokenTypes = new Set<string>();
+  tokens.forEach((token) => {
+    if (token.startsWith('host:')) tokenTypes.add('host');
+    else if (token.startsWith('root:')) tokenTypes.add('root');
+    else if (token.startsWith('kw:')) tokenTypes.add('kw');
+    else if (token.startsWith('og:')) tokenTypes.add('og');
+    else if (token.startsWith('path:')) tokenTypes.add('path');
+    else if (token.startsWith('schema:')) tokenTypes.add('schema');
+    else if (token.startsWith('lang:')) tokenTypes.add('lang');
+    else if (token.startsWith('flag:')) tokenTypes.add('flag');
+  });
+
+  for (const type of tokenTypes) {
+    const bounds = WEIGHT_MIN_MAX[type as LearningWeightKey];
+    const current = (weights as Record<string, number>)[type] ?? 1;
+    const next = Math.min(bounds.max, Math.max(bounds.min, current + delta));
+    (weights as Record<string, number>)[type] = next;
+  }
+
+  learning.weights = weights;
 }

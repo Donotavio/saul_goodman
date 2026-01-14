@@ -281,9 +281,21 @@ export interface LearningTokenStat {
   lastUpdated: number;
 }
 
+export interface LearningWeights {
+  host: number;
+  root: number;
+  kw: number;
+  og: number;
+  path: number;
+  schema: number;
+  lang: number;
+  flag: number;
+}
+
 export interface LearningSignals {
   version?: number;
   tokens: Record<string, LearningTokenStat>;
+  weights?: LearningWeights;
 }
 
 export interface DomainSuggestion {
