@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "এই সাইটটি {label} মনে হচ্ছে"
   },
+  "popup_summary_idle_label": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "যতক্ষণ ব্রাউজারটি কার্যকলাপ ছাড়াই খোলা ছিল।"
+  },
   "popup_summary_inactive_label": {
     "message": "নিষ্ক্রিয়"
   },

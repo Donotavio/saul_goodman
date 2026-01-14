@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Este site parece ser {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Inativo"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Tempo em que o navegador ficou aberto sem atividade."
+  },
   "popup_summary_inactive_label": {
     "message": "Inativo"
   },

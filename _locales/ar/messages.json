@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "يبدو أن هذا الموقع هو {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "غير نشط"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "الوقت الذي كان فيه المتصفح مفتوحًا بدون نشاط."
+  },
   "popup_summary_inactive_label": {
     "message": "خمول"
   },

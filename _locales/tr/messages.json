@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Bu site {label} gibi görünüyor"
   },
+  "popup_summary_idle_label": {
+    "message": "Pasif"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Tarayıcının etkinlik olmadan açık kaldığı süre."
+  },
   "popup_summary_inactive_label": {
     "message": "Idle"
   },

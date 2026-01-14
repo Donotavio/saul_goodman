@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "यह साइट {label} प्रतीत होती है"
   },
+  "popup_summary_idle_label": {
+    "message": "निष्क्रिय"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "बिना गतिविधि के ब्राउज़र खुला रहने का समय।"
+  },
   "popup_summary_inactive_label": {
     "message": "आइडल"
   },

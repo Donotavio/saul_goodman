@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "یہ سائٹ {label} لگتی ہے"
   },
+  "popup_summary_idle_label": {
+    "message": "غیر فعال"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "وقت جب براؤزر بغیر کسی سرگرمی کے کھلا رہا۔"
+  },
   "popup_summary_inactive_label": {
     "message": "مصر"
   },

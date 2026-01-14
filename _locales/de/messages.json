@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Diese Seite scheint {label} zu sein"
   },
+  "popup_summary_idle_label": {
+    "message": "Inaktiv"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Zeit, in der der Browser ohne Aktivität geöffnet war."
+  },
   "popup_summary_inactive_label": {
     "message": "I"
   },

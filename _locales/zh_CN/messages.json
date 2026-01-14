@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "该网站似乎是 {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "闲置"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "浏览器在没有活动的情况下保持打开的时间。"
+  },
   "popup_summary_inactive_label": {
     "message": "闲置"
   },

@@ -1643,6 +1643,12 @@
   "popup_suggestion_title_filled": {
     "message": "Этот сайт кажется {label}"
   },
+  "popup_summary_idle_label": {
+    "message": "Неактивен"
+  },
+  "popup_summary_idle_tooltip": {
+    "message": "Время, в течение которого браузер был открыт без активности."
+  },
   "popup_summary_inactive_label": {
     "message": "безделье"
   },
