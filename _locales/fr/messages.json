@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "Contexte"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impact"
+  },
   "report_context_breakdown_index": {
     "message": "Sommaire"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Ventilation du contexte"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Annule la journée : ni crédit ni débit. Sert de congé officiel."
+  },
+  "report_context_effect_leisure": {
+    "message": "Compte seulement 30% de concentration et ignore les méchants. Contexte plus flexible."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralise tout. Saul prend la journée pour des affaires personnelles."
+  },
+  "report_context_effect_study": {
+    "message": "La concentration vaut 75% et les pénalités sont réduites de moitié. Flexible, mais reste discipliné."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralise l'indice et les méchants. Prend en compte les vacances déclarées."
+  },
+  "report_context_effect_work": {
+    "message": "Compte 100% de la concentration et des pénalités."
   },
   "report_domain_heading": {
     "message": "Procès-verbal par domaine"

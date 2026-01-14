@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "کا نامہ‌نگار"
   },
+  "report_context_breakdown_effect": {
+    "message": "اثر"
+  },
   "report_context_breakdown_index": {
     "message": "انڈیکس"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "سیاق‌وسباق سے وقت"
+  },
+  "report_context_effect_dayOff": {
+    "message": "دن کو صفر کریں: نہ کریڈٹ نہ ڈیبٹ۔ یہ سرکاری چھٹی کے طور پر کام کرتا ہے۔"
+  },
+  "report_context_effect_leisure": {
+    "message": "صرف 30% توجہ شمار کرتا ہے اور ولن کو نظر انداز کرتا ہے۔ زیادہ لچکدار سیاق و سباق۔"
+  },
+  "report_context_effect_personal": {
+    "message": "سب کچھ غیر جانبدار کرتا ہے۔ Saul ذاتی امور کے لیے دن نکالتا ہے۔"
+  },
+  "report_context_effect_study": {
+    "message": "توجہ 75% کی قیمت رکھتی ہے اور سزائیں آدھی ہو جاتی ہیں۔ لچکدار، لیکن ابھی بھی نظم و ضبط۔"
+  },
+  "report_context_effect_vacation": {
+    "message": "انڈیکس اور ولن کو غیر جانبدار کرتا ہے۔ اعلان کردہ تعطیلات کو مدنظر رکھتا ہے۔"
+  },
+  "report_context_effect_work": {
+    "message": "توجہ اور سزاؤں کا 100% شمار کرتا ہے۔"
   },
   "report_domain_heading": {
     "message": "ہر ڈومین ڈومین"

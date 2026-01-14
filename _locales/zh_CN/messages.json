@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "背景情况"
   },
+  "report_context_breakdown_effect": {
+    "message": "影响"
+  },
   "report_context_breakdown_index": {
     "message": "Í"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "临时上下文"
+  },
+  "report_context_effect_dayOff": {
+    "message": "清零一天：既没有信用也没有借记。作为正式假期使用。"
+  },
+  "report_context_effect_leisure": {
+    "message": "只计算30%的专注度，忽略恶棍。更灵活的上下文。"
+  },
+  "report_context_effect_personal": {
+    "message": "中和一切。Saul把这一天留给个人事务。"
+  },
+  "report_context_effect_study": {
+    "message": "专注度值75%，惩罚减半。灵活，但仍然有纪律。"
+  },
+  "report_context_effect_vacation": {
+    "message": "中和指数和恶棍。考虑已申报的假期。"
+  },
+  "report_context_effect_work": {
+    "message": "计算100%的专注度和惩罚。"
   },
   "report_domain_heading": {
     "message": "每个域的分钟"

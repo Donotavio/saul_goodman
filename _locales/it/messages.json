@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "Contesto"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impatto"
+  },
   "report_context_breakdown_index": {
     "message": "Indice"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Tempo per contesto"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Azzerare il giorno: né credito né debito. Serve come giorno di riposo ufficiale."
+  },
+  "report_context_effect_leisure": {
+    "message": "Conta solo il 30% del focus e ignora i cattivi. Contesto più flessibile."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralizza tutto. Saul prende il giorno per questioni personali."
+  },
+  "report_context_effect_study": {
+    "message": "Il focus vale il 75% e le penalità si riducono della metà. Flessibile, ma ancora disciplinato."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralizza l'indice e i cattivi. Considera le ferie dichiarate."
+  },
+  "report_context_effect_work": {
+    "message": "Conta il 100% del focus e delle penalità."
   },
   "report_domain_heading": {
     "message": "Minuti per dominio"

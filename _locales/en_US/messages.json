@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "Context"
   },
+  "report_context_breakdown_effect": {
+    "message": "Impact"
+  },
   "report_context_breakdown_index": {
     "message": "Index"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Time by context"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Zeros the day—no credit, no debt. Official day off."
+  },
+  "report_context_effect_leisure": {
+    "message": "Only 30% focus counted and villains ignored. Most flexible context."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralizes everything. Saul takes the day for personal matters."
+  },
+  "report_context_effect_study": {
+    "message": "Focus counts 75% and penalties drop by half. Flexible but still disciplined."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralizes index and villains. Treats declared vacations."
+  },
+  "report_context_effect_work": {
+    "message": "Counts 100% of focus and penalties."
   },
   "report_domain_heading": {
     "message": "Minutes per domain"

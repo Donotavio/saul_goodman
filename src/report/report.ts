@@ -412,15 +412,32 @@ export function renderContextBreakdown(
   CONTEXT_ORDER.forEach((context) => {
     const row = document.createElement('tr');
     const labelCell = document.createElement('td');
+    labelCell.className = `context-cell context-${context}`;
     labelCell.textContent = i18n?.t(`popup_context_option_${context}`) ?? context;
     const durationCell = document.createElement('td');
     durationCell.textContent = formatDuration(durations?.[context] ?? 0);
     const indexCell = document.createElement('td');
+    indexCell.className = 'index-cell';
     const indexValue = indices?.[context];
-    indexCell.textContent = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    const formattedIndex = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    indexCell.textContent = formattedIndex;
+    if (typeof indexValue === 'number' && Number.isFinite(indexValue)) {
+      const hue = Math.max(0, Math.min(120, 120 - indexValue * 1.2));
+      if (indexCell.style && typeof indexCell.style.setProperty === 'function') {
+        indexCell.style.setProperty('--index-hue', hue.toString());
+      } else {
+        indexCell.setAttribute('style', `--index-hue:${hue}`);
+      }
+      indexCell.classList.remove('index-cell--unknown');
+    } else {
+      indexCell.classList.add('index-cell--unknown');
+    }
+    const effectCell = document.createElement('td');
+    effectCell.textContent = i18n?.t(`report_context_effect_${context}`) ?? '';
     row.appendChild(labelCell);
     row.appendChild(durationCell);
     row.appendChild(indexCell);
+    row.appendChild(effectCell);
     contextBreakdownBody.appendChild(row);
   });
 }

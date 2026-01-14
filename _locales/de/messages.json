@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "Kontext"
   },
+  "report_context_breakdown_effect": {
+    "message": "Auswirkung"
+  },
   "report_context_breakdown_index": {
     "message": "Index"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Zeit nach Kontext"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Setzt den Tag auf null: weder Kredit noch Debit. Gilt als offizieller Urlaub."
+  },
+  "report_context_effect_leisure": {
+    "message": "Zählt nur 30% des Fokus und ignoriert Bösewichte. Flexibler Kontext."
+  },
+  "report_context_effect_personal": {
+    "message": "Neutralisiert alles. Saul nimmt sich den Tag für persönliche Angelegenheiten."
+  },
+  "report_context_effect_study": {
+    "message": "Fokus zählt 75% und Strafen halbieren sich. Flexibel, aber immer noch diszipliniert."
+  },
+  "report_context_effect_vacation": {
+    "message": "Neutralisiert Index und Bösewichte. Berücksichtigt deklarierte Ferien."
+  },
+  "report_context_effect_work": {
+    "message": "Zählt 100% des Fokus und der Strafen."
   },
   "report_domain_heading": {
     "message": "Protokolle pro Domain"

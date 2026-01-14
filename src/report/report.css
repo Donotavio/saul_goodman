@@ -269,6 +269,75 @@ body.earthquake {
   border-bottom: none;
 }
 
+.index-cell {
+  position: relative;
+  color: transparent;
+}
+
+.context-cell {
+  position: relative;
+  color: inherit;
+}
+
+.context-cell::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: #d8d8d8;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.context-work::before {
+  background: #d8a51a;
+}
+
+.context-personal::before {
+  background: #8a6fe8;
+}
+
+.context-leisure::before {
+  background: #36a45b;
+}
+
+.context-study::before {
+  background: #2e6fb2;
+}
+
+.context-dayOff::before {
+  background: #c98a4c;
+}
+
+.context-vacation::before {
+  background: #2b93c7;
+}
+
+.index-cell {
+  position: relative;
+  padding-left: 18px;
+  color: inherit;
+}
+
+.index-cell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: hsla(var(--index-hue, 120), 70%, 50%, 0.9);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.index-cell--unknown::before {
+  background: #d8d8d8;
+}
+
 .floating-share {
   position: sticky;
   align-self: flex-end;

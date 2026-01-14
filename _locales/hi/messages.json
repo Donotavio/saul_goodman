@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "कोंडो"
   },
+  "report_context_breakdown_effect": {
+    "message": "प्रभाव"
+  },
   "report_context_breakdown_index": {
     "message": "सूचकांक"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "संदर्भ द्वारा समय"
+  },
+  "report_context_effect_dayOff": {
+    "message": "दिन शून्य: न तो क्रेडिट और न ही डेबिट। आधिकारिक छुट्टी के रूप में कार्य करता है।"
+  },
+  "report_context_effect_leisure": {
+    "message": "केवल 30% ध्यान गिनता है और खलनायकों को नजरअंदाज करता है। अधिक लचीला संदर्भ।"
+  },
+  "report_context_effect_personal": {
+    "message": "सब कुछ निष्प्रभावित करता है। Saul व्यक्तिगत मामलों के लिए दिन निकालता है।"
+  },
+  "report_context_effect_study": {
+    "message": "ध्यान 75% मूल्यवान है और दंड आधे हो जाते हैं। लचीला, लेकिन अभी भी अनुशासन।"
+  },
+  "report_context_effect_vacation": {
+    "message": "सूचकांक और खलनायकों को निष्प्रभावित करता है। घोषित छुट्टियों पर विचार करता है।"
+  },
+  "report_context_effect_work": {
+    "message": "ध्यान और दंड का 100% गिनता है।"
   },
   "report_domain_heading": {
     "message": "डोमेन प्रति मिनट"

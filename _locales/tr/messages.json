@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "Bağlam"
   },
+  "report_context_breakdown_effect": {
+    "message": "Etkisi"
+  },
   "report_context_breakdown_index": {
     "message": "Index"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Zaman Tarafından bağlam"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Günü sıfırla: ne kredi ne de borç. Resmi izin olarak geçer."
+  },
+  "report_context_effect_leisure": {
+    "message": "Sadece odaklanmanın %30'unu sayar ve kötüleri göz ardı eder. Daha esnek bir bağlam."
+  },
+  "report_context_effect_personal": {
+    "message": "Her şeyi nötralize eder. Saul kişisel işler için günü alır."
+  },
+  "report_context_effect_study": {
+    "message": "Odak %75 değerindedir ve ceza yarıya düşer. Esnek ama hala disiplinli."
+  },
+  "report_context_effect_vacation": {
+    "message": "İndeksi ve kötüleri nötralize eder. Bildirilen tatilleri dikkate alır."
+  },
+  "report_context_effect_work": {
+    "message": "Odak ve ceza için %100 sayar."
   },
   "report_domain_heading": {
     "message": "Domain başına Dakikalar"

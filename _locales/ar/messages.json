@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "السياق"
   },
+  "report_context_breakdown_effect": {
+    "message": "التأثير"
+  },
   "report_context_breakdown_index": {
     "message": "الفهرس"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "الوقت حسب السياق"
+  },
+  "report_context_effect_dayOff": {
+    "message": "يوم عطلة: لا ائتمان ولا خصم. يعمل كإجازة رسمية."
+  },
+  "report_context_effect_leisure": {
+    "message": "يحسب فقط 30% من التركيز ويتجاهل الأشرار. سياق أكثر مرونة."
+  },
+  "report_context_effect_personal": {
+    "message": "يحيّد كل شيء. يأخذ ساول اليوم لأمور شخصية."
+  },
+  "report_context_effect_study": {
+    "message": "يستحق التركيز 75% وتقل العقوبات إلى النصف. مرن، لكنه لا يزال يتطلب الانضباط."
+  },
+  "report_context_effect_vacation": {
+    "message": "يحيّد المؤشر والأشرار. يأخذ في الاعتبار الإجازات المعلنة."
+  },
+  "report_context_effect_work": {
+    "message": "يحسب 100% من التركيز والعقوبات."
   },
   "report_domain_heading": {
     "message": "دقيقة لكل مجال"

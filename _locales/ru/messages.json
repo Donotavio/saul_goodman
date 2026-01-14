@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "контекст"
   },
+  "report_context_breakdown_effect": {
+    "message": "Влияние"
+  },
   "report_context_breakdown_index": {
     "message": "Индекс"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "Время в контексте"
+  },
+  "report_context_effect_dayOff": {
+    "message": "Обнуляет день: ни кредита, ни дебета. Служит как официальный выходной."
+  },
+  "report_context_effect_leisure": {
+    "message": "Считывает только 30% фокуса и игнорирует злодеев. Более гибкий контекст."
+  },
+  "report_context_effect_personal": {
+    "message": "Нейтрализует всё. Saul берет день для личных дел."
+  },
+  "report_context_effect_study": {
+    "message": "Фокус стоит 75%, а штрафы уменьшаются вдвое. Гибкий, но всё ещё дисциплинированный."
+  },
+  "report_context_effect_vacation": {
+    "message": "Нейтрализует индекс и злодеев. Учитывает заявленные каникулы."
+  },
+  "report_context_effect_work": {
+    "message": "Считывает 100% фокуса и штрафов."
   },
   "report_domain_heading": {
     "message": "Минуты на домен"

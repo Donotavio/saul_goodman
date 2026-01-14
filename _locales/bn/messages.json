@@ -1934,6 +1934,9 @@
   "report_context_breakdown_context": {
     "message": "কনটেক্সট"
   },
+  "report_context_breakdown_effect": {
+    "message": "প্রভাব"
+  },
   "report_context_breakdown_index": {
     "message": "সূচিপত্র"
   },
@@ -1945,6 +1948,24 @@
   },
   "report_context_breakdown_title": {
     "message": "প্রসঙ্গ অনুসারে সময়"
+  },
+  "report_context_effect_dayOff": {
+    "message": "দিন শূন্য: না ক্রেডিট না ডেবিট। অফিসিয়াল ছুটির মতো কাজ করে।"
+  },
+  "report_context_effect_leisure": {
+    "message": "শুধু 30% ফোকাস গণনা করে এবং ভিলেনদের উপেক্ষা করে। আরও নমনীয় প্রেক্ষাপট।"
+  },
+  "report_context_effect_personal": {
+    "message": "সবকিছু নিরপেক্ষ করে। Saul ব্যক্তিগত বিষয়ের জন্য দিনটি নেয়।"
+  },
+  "report_context_effect_study": {
+    "message": "ফোকাস 75% মূল্যবান এবং শাস্তি অর্ধেক কমে যায়। নমনীয়, কিন্তু এখনও শৃঙ্খলাবদ্ধ।"
+  },
+  "report_context_effect_vacation": {
+    "message": "সূচক এবং ভিলেনদের নিরপেক্ষ করে। ঘোষিত ছুটির কথা বিবেচনা করে।"
+  },
+  "report_context_effect_work": {
+    "message": "ফোকাস এবং শাস্তির 100% গণনা করে।"
   },
   "report_domain_heading": {
     "message": "মিনিট"
