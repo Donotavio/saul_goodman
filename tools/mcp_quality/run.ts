@@ -481,6 +481,24 @@ async function main(): Promise<void> {
       // ignore log write errors
     }
   }
+
+  const hasFailures = allResults.some((result) => !result.passed);
+  // Somente bloqueia por avisos se o cenário também falhou e warnings não são permitidos
+  const hasBlockingWarnings =
+    !cli.allowWarnings &&
+    allResults.some((result) => !result.passed && (result.warnings?.length ?? 0) > 0);
+  if (hasFailures || hasBlockingWarnings) {
+    process.exitCode = 1;
+    // eslint-disable-next-line no-console
+    console.error(
+      `[mcp-quality] Suite finalizada com ${
+        hasFailures ? 'falhas' : 'avisos bloqueantes'
+      }. Consulte tools/mcp_quality/artifacts/summary.md`
+    );
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('[mcp-quality] Suite finalizada com sucesso.');
+  }
 }
 
 const isDirectRun = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;
