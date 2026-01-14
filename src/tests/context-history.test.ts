@@ -69,10 +69,20 @@ test('buildContextBreakdown matches score calculation per context', () => {
     manualOverride: undefined,
     holidayNeutral: false
   }).score;
+  const expectedDayOff = calculateProcrastinationIndex(metrics, settings, {
+    contextMode: { value: 'dayOff', updatedAt: now },
+    manualOverride: undefined,
+    holidayNeutral: false
+  }).score;
+  const expectedVacation = calculateProcrastinationIndex(metrics, settings, {
+    contextMode: { value: 'vacation', updatedAt: now },
+    manualOverride: undefined,
+    holidayNeutral: false
+  }).score;
 
   assert.equal(breakdown.indices.work, expectedWork);
   assert.equal(breakdown.indices.personal, 0);
-  assert.equal(breakdown.indices.dayOff, 0);
-  assert.equal(breakdown.indices.vacation, 0);
+  assert.equal(breakdown.indices.dayOff, expectedDayOff);
+  assert.equal(breakdown.indices.vacation, expectedVacation);
   assert.equal(Object.values(breakdown.durations).reduce((acc, value) => acc + value, 0) > 0, true);
 });
