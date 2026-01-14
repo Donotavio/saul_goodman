@@ -88,3 +88,41 @@ test('classifies based on multiple strong signals', () => {
   assert.equal(res.classification, 'procrastination');
   assert.ok(res.confidence >= 60);
 });
+
+test('learned host overrides neutral guess', () => {
+  const learning = {
+    version: 1,
+    tokens: {
+      'host:novosite.com': { productive: 6, procrastination: 0, lastUpdated: Date.now() }
+    }
+  };
+  const res = classifyDomain(
+    {
+      hostname: 'novosite.com',
+      hasVideoPlayer: false,
+      hasInfiniteScroll: false
+    },
+    learning
+  );
+  assert.equal(res.classification, 'productive');
+  assert.ok(res.reasons.some((reason) => reason.toLowerCase().includes('sinal aprendido')));
+});
+
+test('learning signal decays when very old', () => {
+  const old = Date.now() - 200 * 24 * 60 * 60 * 1000;
+  const learning = {
+    version: 1,
+    tokens: {
+      'host:antigo.com': { productive: 0, procrastination: 10, lastUpdated: old }
+    }
+  };
+  const res = classifyDomain(
+    {
+      hostname: 'antigo.com',
+      hasVideoPlayer: false,
+      hasInfiniteScroll: false
+    },
+    learning
+  );
+  assert.ok(res.classification !== 'procrastination');
+});

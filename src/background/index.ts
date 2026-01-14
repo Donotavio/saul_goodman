@@ -24,6 +24,7 @@ import {
   DomainSuggestion,
   SuggestionHistoryEntry,
   ExtensionSettings,
+  LearningSignals,
   FairnessSummary,
   HourlyBucket,
   RuntimeMessage,
@@ -36,7 +37,7 @@ import {
   HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
-import { classifyDomain as classifyWithMetadata } from '../shared/domain-classifier.js';
+import { classifyDomain as classifyWithMetadata, buildLearningTokens } from '../shared/domain-classifier.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -73,6 +74,7 @@ const VS_CODE_DOMAIN_ID = '__vscode:ide';
 const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
+const MAX_LEARNING_TOKENS = 5000;
 
 function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
   chrome.tabs.sendMessage(
@@ -143,6 +145,56 @@ let lastScoreComputation: ScoreComputation | null = null;
 const suggestionCache: Map<string, DomainSuggestion> = new Map();
 let lastPruneTimestamp = 0;
 const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
+
+function ensureLearningSignals(settings: ExtensionSettings): LearningSignals {
+  const base: LearningSignals = {
+    version: settings.learningSignals?.version ?? 1,
+    tokens: settings.learningSignals?.tokens ?? {}
+  };
+  settings.learningSignals = base;
+  return base;
+}
+
+function updateLearningSignals(
+  settings: ExtensionSettings,
+  tokens: string[],
+  classification: DomainCategory
+): void {
+  const learning = ensureLearningSignals(settings);
+  const now = Date.now();
+  const uniqueTokens = Array.from(new Set(tokens));
+
+  for (const token of uniqueTokens) {
+    const current = learning.tokens[token] ?? {
+      productive: 0,
+      procrastination: 0,
+      lastUpdated: now
+    };
+    if (classification === 'productive') {
+      current.productive += 1;
+    } else if (classification === 'procrastination') {
+      current.procrastination += 1;
+    }
+    current.lastUpdated = now;
+    learning.tokens[token] = current;
+  }
+
+  pruneLearningSignals(learning);
+}
+
+function pruneLearningSignals(learning: LearningSignals): void {
+  const entries = Object.entries(learning.tokens ?? {});
+  if (entries.length <= MAX_LEARNING_TOKENS) {
+    return;
+  }
+
+  entries
+    .sort(([, a], [, b]) => (a.lastUpdated ?? 0) - (b.lastUpdated ?? 0))
+    .slice(0, Math.max(0, entries.length - MAX_LEARNING_TOKENS))
+    .forEach(([token]) => {
+      delete learning.tokens[token];
+    });
+}
 
 function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
   const host = normalizeDomain(domain);
@@ -282,6 +334,15 @@ async function handleApplySuggestion(payload: {
     decidedAs: classification
   };
   settings.suggestionsHistory = history;
+  const cached = suggestionCache.get(domain);
+  const tokens =
+    (cached?.learningTokens ?? null) ??
+    buildLearningTokens({
+      hostname: domain,
+      hasInfiniteScroll: false,
+      hasVideoPlayer: false
+    });
+  updateLearningSignals(settings, tokens, classification);
   settingsCache = settings;
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
@@ -348,13 +409,15 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     return;
   }
 
-  const result = classifyWithMetadata(metadata);
+  const tokens = buildLearningTokens(metadata);
+  const result = classifyWithMetadata(metadata, settings.learningSignals);
   const suggestion: DomainSuggestion = {
     domain: normalizedDomain,
     classification: result.classification,
     confidence: result.confidence,
     reasons: result.reasons,
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    learningTokens: tokens
   };
 
   suggestionCache.set(normalizedDomain, suggestion);

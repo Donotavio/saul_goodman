@@ -1,7 +1,14 @@
-import { ExtensionSettings, LocalePreference, SupportedLocale, WorkInterval } from '../shared/types.js';
+import {
+  DomainCategory,
+  ExtensionSettings,
+  LocalePreference,
+  SupportedLocale,
+  WorkInterval
+} from '../shared/types.js';
 import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings } from '../shared/storage.js';
 import { normalizeDomain } from '../shared/utils/domain.js';
 import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../shared/i18n.js';
+import { buildLearningTokens } from '../shared/domain-classifier.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -572,6 +579,41 @@ async function handleWeightsSubmit(): Promise<void> {
   await persistSettings('options_status_weights_saved');
 }
 
+function bumpLearningFromDomain(domain: string, category: DomainCategory): void {
+  if (!currentSettings) {
+    return;
+  }
+  const learning = currentSettings.learningSignals ?? { version: 1, tokens: {} };
+  const now = Date.now();
+  const tokens = buildLearningTokens({
+    hostname: domain,
+    hasInfiniteScroll: false,
+    hasVideoPlayer: false
+  });
+
+  for (const token of tokens) {
+    const stat = learning.tokens[token] ?? { productive: 0, procrastination: 0, lastUpdated: now };
+    if (category === 'productive') {
+      stat.productive += 1;
+    } else if (category === 'procrastination') {
+      stat.procrastination += 1;
+    }
+    stat.lastUpdated = now;
+    learning.tokens[token] = stat;
+  }
+
+  const entries = Object.entries(learning.tokens);
+  const MAX_LEARNING_TOKENS = 5000;
+  if (entries.length > MAX_LEARNING_TOKENS) {
+    entries
+      .sort(([, a], [, b]) => (a.lastUpdated ?? 0) - (b.lastUpdated ?? 0))
+      .slice(0, entries.length - MAX_LEARNING_TOKENS)
+      .forEach(([token]) => delete learning.tokens[token]);
+  }
+
+  currentSettings.learningSignals = learning;
+}
+
 async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): Promise<void> {
   if (!currentSettings) {
     return;
@@ -597,6 +639,8 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
 
   domains.push(normalized);
   domains.sort();
+  const category: DomainCategory = key === 'productiveDomains' ? 'productive' : 'procrastination';
+  bumpLearningFromDomain(normalized, category);
   input.value = '';
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
   await persistSettings('options_status_list_updated');

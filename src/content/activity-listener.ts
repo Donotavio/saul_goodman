@@ -13,6 +13,7 @@ type DomainSuggestion = {
   classification: 'productive' | 'procrastination' | 'neutral';
   confidence: number;
   reasons: string[];
+  learningTokens?: string[];
   timestamp: number;
 };
 

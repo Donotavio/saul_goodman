@@ -133,6 +133,7 @@ export interface ExtensionSettings {
   procrastinationDomains: string[];
   blockProcrastination?: boolean;
   weights: WeightConfig;
+  learningSignals?: LearningSignals;
   inactivityThresholdMs: number;
   enableAutoClassification?: boolean;
   enableAISuggestions?: boolean;
@@ -264,12 +265,24 @@ export interface DomainMetadata {
   hasInfiniteScroll: boolean;
 }
 
+export interface LearningTokenStat {
+  productive: number;
+  procrastination: number;
+  lastUpdated: number;
+}
+
+export interface LearningSignals {
+  version?: number;
+  tokens: Record<string, LearningTokenStat>;
+}
+
 export interface DomainSuggestion {
   domain: string;
   classification: DomainCategory;
   confidence: number;
   reasons: string[];
   timestamp: number;
+  learningTokens?: string[];
 }
 
 export interface SuggestionHistoryEntry {

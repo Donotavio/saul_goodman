@@ -87,6 +87,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   enableAISuggestions: false,
   suggestionCooldownMs: 86_400_000,
   suggestionsHistory: {},
+  learningSignals: { version: 1, tokens: {} },
   weights: {
     procrastinationWeight: 0.6,
     tabSwitchWeight: 0.25,
@@ -215,6 +216,10 @@ export async function getSettings(): Promise<ExtensionSettings> {
     return {
       ...defaults,
       ...stored,
+      learningSignals: {
+        version: stored.learningSignals?.version ?? defaults.learningSignals?.version ?? 1,
+        tokens: stored.learningSignals?.tokens ?? defaults.learningSignals?.tokens ?? {}
+      },
       locale,
       localePreference: preference,
       suggestionsHistory: stored.suggestionsHistory ?? defaults.suggestionsHistory ?? {},
