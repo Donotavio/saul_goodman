@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Alternar CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "Desplazamiento infinito detectado"
+  },
+  "suggestion_reason_keyword": {
+    "message": "Palabra clave \"{keyword}\" en {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "Dominio conocido: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "Tipo de página: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "descripción"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "dominio"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "palabras clave"
+  },
+  "suggestion_reason_source_title": {
+    "message": "título"
+  },
+  "suggestion_reason_video": {
+    "message": "Reproductor de video detectado"
+  },
+  "suggestion_toast_close": {
+    "message": "Cerrar sugerencia"
+  },
   "tagsTitle": {
     "message": "Temas en alta"
   },

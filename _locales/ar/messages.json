@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "تبديل زر الإجراء"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "تم الكشف عن تمرير لا نهائي"
+  },
+  "suggestion_reason_keyword": {
+    "message": "الكلمة الرئيسية \"{keyword}\" في {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "نطاق معروف: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "نوع الصفحة: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "وصف"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "نطاق"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "الكلمات الرئيسية"
+  },
+  "suggestion_reason_source_title": {
+    "message": "عنوان"
+  },
+  "suggestion_reason_video": {
+    "message": "تم الكشف عن مشغل الفيديو"
+  },
+  "suggestion_toast_close": {
+    "message": "إغلاق الاقتراح"
+  },
   "tagsTitle": {
     "message": "مواضيع النار"
   },

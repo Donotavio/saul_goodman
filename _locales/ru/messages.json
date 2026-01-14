@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Переключатель CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "Обнаружен бесконечный прокрутка"
+  },
+  "suggestion_reason_keyword": {
+    "message": "Ключевое слово \"{keyword}\" в {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "Известный домен: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "Тип страницы: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "описание"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "домен"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "ключевые слова"
+  },
+  "suggestion_reason_source_title": {
+    "message": "название"
+  },
+  "suggestion_reason_video": {
+    "message": "Обнаружен видеоплеер"
+  },
+  "suggestion_toast_close": {
+    "message": "Закрыть предложение"
+  },
   "tagsTitle": {
     "message": "Темы в огне"
   },

@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "Unendliches Scrollen erkannt"
+  },
+  "suggestion_reason_keyword": {
+    "message": "Schlüsselwort \"{keyword}\" in {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "Bekannte Domain: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "Seitenart: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "Beschreibung"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "Domain"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "Schlüsselwörter"
+  },
+  "suggestion_reason_source_title": {
+    "message": "Titel"
+  },
+  "suggestion_reason_video": {
+    "message": "Video-Player erkannt"
+  },
+  "suggestion_toast_close": {
+    "message": "Vorschlag schließen"
+  },
   "tagsTitle": {
     "message": "Themen im Feuer"
   },

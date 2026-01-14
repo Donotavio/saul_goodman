@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "Sonsuz kaydırma tespit edildi"
+  },
+  "suggestion_reason_keyword": {
+    "message": "\"{keyword}\" anahtar kelimesi {source} içinde"
+  },
+  "suggestion_reason_known_host": {
+    "message": "Bilinen alan: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "Sayfa türü: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "açıklama"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "alan adı"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "anahtar kelimeler"
+  },
+  "suggestion_reason_source_title": {
+    "message": "başlık"
+  },
+  "suggestion_reason_video": {
+    "message": "Video oynatıcı tespit edildi"
+  },
+  "suggestion_toast_close": {
+    "message": "Öneriyi kapat"
+  },
   "tagsTitle": {
     "message": "Topics on fire"
   },

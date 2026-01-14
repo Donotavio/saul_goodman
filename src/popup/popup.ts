@@ -24,6 +24,7 @@ import { setManualOverride } from '../shared/utils/manual-override.js';
 import { setContextMode } from '../shared/utils/context.js';
 import { LocalStorageKey, readLocalStorage } from '../shared/utils/storage.js';
 import { buildDetailedCsvSection } from '../shared/utils/csv-detail.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -392,7 +393,7 @@ function renderSuggestionCard(
   suggestionReasonsEl.innerHTML = '';
   suggestion.reasons.slice(0, 4).forEach((reason) => {
     const li = document.createElement('li');
-    li.textContent = reason;
+    li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReasonsEl.appendChild(li);
   });
 }

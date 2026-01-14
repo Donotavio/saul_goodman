@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "切换 CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "检测到无限滚动"
+  },
+  "suggestion_reason_keyword": {
+    "message": "关键词 \"{keyword}\" 在 {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "已知域名: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "页面类型: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "描述"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "域名"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "关键词"
+  },
+  "suggestion_reason_source_title": {
+    "message": "标题"
+  },
+  "suggestion_reason_video": {
+    "message": "检测到视频播放器"
+  },
+  "suggestion_toast_close": {
+    "message": "关闭建议"
+  },
   "tagsTitle": {
     "message": "题材着火"
   },

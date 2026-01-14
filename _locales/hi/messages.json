@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "अनंत स्क्रॉल का पता चला"
+  },
+  "suggestion_reason_keyword": {
+    "message": "\"{keyword}\" कीवर्ड {source} में"
+  },
+  "suggestion_reason_known_host": {
+    "message": "ज्ञात डोमेन: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "पृष्ठ प्रकार: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "विवरण"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "डोमेन"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "कीवर्ड"
+  },
+  "suggestion_reason_source_title": {
+    "message": "शीर्षक"
+  },
+  "suggestion_reason_video": {
+    "message": "वीडियो प्लेयर का पता चला"
+  },
+  "suggestion_toast_close": {
+    "message": "सुझाव बंद करें"
+  },
   "tagsTitle": {
     "message": "आग पर विषय"
   },

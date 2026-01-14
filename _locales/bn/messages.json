@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "পর্দা"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "অন্তহীন স্ক্রোল সনাক্ত করা হয়েছে"
+  },
+  "suggestion_reason_keyword": {
+    "message": "\"{keyword}\" শব্দটি {source} এ"
+  },
+  "suggestion_reason_known_host": {
+    "message": "পরিচিত ডোমেন: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "পৃষ্ঠার প্রকার: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "বিবরণ"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "ডোমেন"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "কীওয়ার্ড"
+  },
+  "suggestion_reason_source_title": {
+    "message": "শিরোনাম"
+  },
+  "suggestion_reason_video": {
+    "message": "ভিডিও প্লেয়ার সনাক্ত করা হয়েছে"
+  },
+  "suggestion_toast_close": {
+    "message": "সুপারিশ বন্ধ করুন"
+  },
   "tagsTitle": {
     "message": "বিষয় অনুসারে"
   },

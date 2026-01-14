@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "Scroll infinito rilevato"
+  },
+  "suggestion_reason_keyword": {
+    "message": "Parola chiave \"{keyword}\" in {source}"
+  },
+  "suggestion_reason_known_host": {
+    "message": "Dominio conosciuto: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "Tipo di pagina: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "descrizione"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "dominio"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "keywords"
+  },
+  "suggestion_reason_source_title": {
+    "message": "titolo"
+  },
+  "suggestion_reason_video": {
+    "message": "Player video rilevato"
+  },
+  "suggestion_toast_close": {
+    "message": "Chiudi suggerimento"
+  },
   "tagsTitle": {
     "message": "Argomenti in fuoco"
   },

@@ -2462,6 +2462,36 @@
   "stickyToggleLabel": {
     "message": "کوگلنا"
   },
+  "suggestion_reason_infinite_scroll": {
+    "message": "لامتناہی اسکرول کا پتہ چلا"
+  },
+  "suggestion_reason_keyword": {
+    "message": "\"{keyword}\" کی کلید لفظ {source} میں"
+  },
+  "suggestion_reason_known_host": {
+    "message": "جاننے والا ڈومین: {host}"
+  },
+  "suggestion_reason_og_type": {
+    "message": "صفحة کی قسم: {type}"
+  },
+  "suggestion_reason_source_description": {
+    "message": "تفصیل"
+  },
+  "suggestion_reason_source_hostname": {
+    "message": "ڈومین"
+  },
+  "suggestion_reason_source_keywords": {
+    "message": "کی ورڈز"
+  },
+  "suggestion_reason_source_title": {
+    "message": "عنوان"
+  },
+  "suggestion_reason_video": {
+    "message": "ویڈیو پلیئر کا پتہ چلا"
+  },
+  "suggestion_toast_close": {
+    "message": "سفارش بند کریں"
+  },
   "tagsTitle": {
     "message": "آگ پر توپیں"
   },

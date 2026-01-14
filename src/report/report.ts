@@ -26,6 +26,7 @@ import {
 } from '../shared/metrics.js';
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -381,7 +382,7 @@ function renderSuggestionSection(
   suggestionReportReasonsEl.innerHTML = '';
   suggestion.reasons.slice(0, 5).forEach((reason) => {
     const li = document.createElement('li');
-    li.textContent = reason;
+    li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReportReasonsEl.appendChild(li);
   });
 }

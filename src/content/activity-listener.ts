@@ -1,3 +1,5 @@
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
+
 const INACTIVITY_PING_MS = 15000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -44,6 +46,18 @@ const suggestionToastImage = typeof chrome !== 'undefined' && chrome.runtime?.ge
   : '';
 const sirenPlayer =
   typeof CriticalSirenPlayer !== 'undefined' ? new CriticalSirenPlayer() : null;
+const translate = (
+  key: string,
+  substitutions?: Record<string, string | number>
+): string => {
+  const template = (chrome?.i18n?.getMessage ? chrome.i18n.getMessage(key) : key) || key;
+  if (!substitutions) {
+    return template;
+  }
+  return Object.entries(substitutions).reduce((acc, [token, value]) => {
+    return acc.replace(new RegExp(`\\{${token}\\}`, 'g'), String(value));
+  }, template);
+};
 
 window.addEventListener(
   'scroll',
@@ -208,10 +222,18 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
   }
 
   const labels: Record<DomainSuggestion['classification'], string> = {
-    productive: 'produtivo',
-    procrastination: 'procrastinador',
-    neutral: 'neutro'
+    productive: translate('popup_suggestion_label_productive'),
+    procrastination: translate('popup_suggestion_label_procrastination'),
+    neutral: translate('popup_suggestion_label_neutral')
   };
+
+  const title = translate('popup_suggestion_title');
+  const confidenceText = translate('popup_suggestion_confidence_filled', {
+    confidence: Math.round(suggestion.confidence)
+  });
+  const seemsText = translate('popup_suggestion_title_filled', {
+    label: labels[suggestion.classification]
+  });
 
   const container = document.createElement('div');
   container.id = 'sg-auto-classification-toast';
@@ -220,8 +242,8 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
   container.innerHTML = `
     <div class="sg-toast-card">
       <div class="sg-toast-header">
-        <strong>Sugestão automática</strong>
-        <span class="sg-toast-confidence">Confiança ${Math.round(suggestion.confidence)}%</span>
+        <strong>${title}</strong>
+        <span class="sg-toast-confidence">${confidenceText}</span>
       </div>
       <div class="sg-toast-body">
         ${
@@ -230,13 +252,18 @@ function showSuggestionToast(suggestion: DomainSuggestion): void {
             : ''
         }
         <div class="sg-toast-content">
-          <p class="sg-toast-title">${suggestion.domain} parece ${labels[suggestion.classification]}</p>
+          <p class="sg-toast-title">${suggestion.domain} ${seemsText}</p>
           <ul class="sg-toast-reasons">
-            ${suggestion.reasons.slice(0, 3).map((reason) => `<li>${reason}</li>`).join('')}
+            ${suggestion.reasons
+              .slice(0, 3)
+              .map((reason) => `<li>${translateSuggestionReason(reason, translate)}</li>`)
+              .join('')}
           </ul>
         </div>
       </div>
-      <button class="sg-toast-close" aria-label="Fechar sugestão">×</button>
+      <button class="sg-toast-close" aria-label="${translate(
+        'suggestion_toast_close'
+      )}">×</button>
     </div>
   `;
 
