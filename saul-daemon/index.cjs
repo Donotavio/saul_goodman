@@ -1,19 +1,24 @@
 const http = require('http');
 const path = require('path');
-const { mkdir, readFile, writeFile } = require('fs/promises');
+const { mkdir, readFile, writeFile, rename, stat } = require('fs/promises');
 
-const PORT = Number(process.env.PORT ?? 3123);
+const BIND_HOST = process.env.BIND_HOST || '127.0.0.1';
+const PORT = normalizePort(process.env.PORT);
 const PAIRING_KEY = (process.env.PAIRING_KEY ?? '').trim();
-const DATA_DIR = path.join(__dirname, 'data');
+const LEGACY_DATA_DIR = path.join(__dirname, 'data');
+const DATA_ROOT = process.env.SAUL_DAEMON_DATA_DIR || resolveDefaultDataDir();
+const DATA_DIR = path.join(DATA_ROOT, 'data');
 const STATE_PATH = path.join(DATA_DIR, 'vscode-usage.json');
 const MAX_BODY_BYTES = 64 * 1024;
 const RETENTION_DAYS = 14;
+const MAX_FUTURE_DAYS = 1;
 
 const state = {
   byKey: Object.create(null)
 };
 
 async function loadState() {
+  await ensureDataDir();
   try {
     const raw = await readFile(STATE_PATH, 'utf8');
     const parsed = JSON.parse(raw);
@@ -31,26 +36,34 @@ async function persistState() {
   await writeFile(STATE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
 }
 
-function sendJson(res, status, payload) {
-  res.writeHead(status, {
-    'content-type': 'application/json; charset=utf-8',
-    'access-control-allow-origin': '*'
-  });
+function sendJson(req, res, status, payload) {
+  const origin = getAllowedOrigin(req);
+  const headers = {
+    'content-type': 'application/json; charset=utf-8'
+  };
+  if (origin) {
+    headers['access-control-allow-origin'] = origin;
+  }
+  res.writeHead(status, headers);
   res.end(JSON.stringify(payload));
 }
 
-function sendNoContent(res) {
-  res.writeHead(204, {
-    'access-control-allow-origin': '*'
-  });
+function sendNoContent(req, res) {
+  const origin = getAllowedOrigin(req);
+  const headers = origin ? { 'access-control-allow-origin': origin } : undefined;
+  res.writeHead(204, headers);
   res.end();
 }
 
-function sendError(res, status, message) {
-  res.writeHead(status, {
-    'content-type': 'application/json; charset=utf-8',
-    'access-control-allow-origin': '*'
-  });
+function sendError(req, res, status, message) {
+  const origin = getAllowedOrigin(req);
+  const headers = {
+    'content-type': 'application/json; charset=utf-8'
+  };
+  if (origin) {
+    headers['access-control-allow-origin'] = origin;
+  }
+  res.writeHead(status, headers);
   res.end(JSON.stringify({ error: message }));
 }
 
@@ -59,9 +72,7 @@ function parseDateKey(input) {
     return input;
   }
   const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
-    now.getDate()
-  ).padStart(2, '0')}`;
+  return formatDateKey(now);
 }
 
 function getDateFromTimestamp(ts) {
@@ -69,6 +80,10 @@ function getDateFromTimestamp(ts) {
   if (Number.isNaN(date.getTime())) {
     return parseDateKey();
   }
+  return formatDateKey(date);
+}
+
+function formatDateKey(date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
     date.getDate()
   ).padStart(2, '0')}`;
@@ -122,12 +137,18 @@ function ensureEntry(key, dateKey) {
 }
 
 function pruneOldEntries() {
-  const cutoff = Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const cutoffPast = now - RETENTION_DAYS * 24 * 60 * 60 * 1000;
+  const cutoffFuture = now + MAX_FUTURE_DAYS * 24 * 60 * 60 * 1000;
   for (const key of Object.keys(state.byKey)) {
     const dates = state.byKey[key];
     for (const dateKey of Object.keys(dates)) {
       const timestamp = Date.parse(dateKey);
-      if (Number.isNaN(timestamp) || timestamp < cutoff) {
+      if (
+        Number.isNaN(timestamp) ||
+        timestamp < cutoffPast ||
+        timestamp > cutoffFuture
+      ) {
         delete dates[dateKey];
       }
     }
@@ -138,9 +159,6 @@ function validateKey(receivedKey) {
   const cleaned = (receivedKey ?? '').trim();
   if (!cleaned) {
     return false;
-  }
-  if (!PAIRING_KEY) {
-    return true;
   }
   return cleaned === PAIRING_KEY;
 }
@@ -173,9 +191,15 @@ async function readJsonBody(req) {
   });
 }
 
-function handleOptions(res) {
+function handleOptions(req, res) {
+  const origin = getAllowedOrigin(req);
+  if (!origin) {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
   res.writeHead(204, {
-    'access-control-allow-origin': '*',
+    'access-control-allow-origin': origin,
     'access-control-allow-methods': 'GET,POST,OPTIONS',
     'access-control-allow-headers': 'content-type'
   });
@@ -185,26 +209,30 @@ function handleOptions(res) {
 async function handleHeartbeat(req, res, url) {
   try {
     const body = await readJsonBody(req);
-  const key = body.key ?? url.searchParams.get('key');
-  if (!validateKey(key)) {
-    sendError(res, 401, 'Invalid key');
-    return;
-  }
+    const key = body.key ?? url.searchParams.get('key');
+    if (!validateKey(key)) {
+      sendError(req, res, 401, 'Invalid key');
+      return;
+    }
 
-  const durationMs = Number(body.durationMs ?? 0);
-  const sessionId = typeof body.sessionId === 'string' ? body.sessionId.trim() : '';
-  const timestamp = body.timestamp;
+    const durationMs = Number(body.durationMs ?? 0);
+    const sessionId = typeof body.sessionId === 'string' ? body.sessionId.trim() : '';
+    const timestamp = body.timestamp;
 
     if (!sessionId) {
-      sendError(res, 400, 'sessionId is required');
+      sendError(req, res, 400, 'sessionId is required');
       return;
     }
     if (!Number.isFinite(durationMs) || durationMs <= 0) {
-      sendError(res, 400, 'durationMs must be > 0');
+      sendError(req, res, 400, 'durationMs must be > 0');
       return;
-  }
+    }
 
     const dateKey = getDateFromTimestamp(timestamp);
+    if (!isDateWithinWindow(dateKey)) {
+      sendError(req, res, 400, 'date out of allowed window');
+      return;
+    }
     const entry = ensureEntry(key, dateKey);
 
     entry.totalActiveMs += durationMs;
@@ -231,18 +259,23 @@ async function handleHeartbeat(req, res, url) {
 
     pruneOldEntries();
     await persistState();
-    sendNoContent(res);
+    sendNoContent(req, res);
   } catch (error) {
-    sendError(res, 400, error.message);
+    sendError(req, res, 400, error.message);
   }
 }
 
-function handleSummary(res, url) {
+function handleSummary(req, res, url) {
   const dateKey = parseDateKey(url.searchParams.get('date'));
   const key = url.searchParams.get('key') ?? '';
 
   if (!validateKey(key)) {
-    sendError(res, 401, 'Invalid key');
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+
+  if (!isDateWithinWindow(dateKey)) {
+    sendError(req, res, 400, 'date out of allowed window');
     return;
   }
 
@@ -262,7 +295,7 @@ function handleSummary(res, url) {
     Array.isArray(entry.switchHourly) && entry.switchHourly.length === 24
       ? entry.switchHourly
       : Array.from({ length: 24 }, () => 0);
-  sendJson(res, 200, {
+  sendJson(req, res, 200, {
     totalActiveMs: entry.totalActiveMs ?? 0,
     sessions: entry.sessions ?? 0,
     switches,
@@ -279,12 +312,16 @@ async function handleIndex(req, res, url) {
 
   if (method === 'GET') {
     if (!validateKey(keyFromQuery)) {
-      sendError(res, 401, 'Invalid key');
+      sendError(req, res, 401, 'Invalid key');
       return;
     }
     const dateKey = parseDateKey(url.searchParams.get('date'));
+    if (!isDateWithinWindow(dateKey)) {
+      sendError(req, res, 400, 'date out of allowed window');
+      return;
+    }
     const entry = ensureEntry(keyFromQuery, dateKey);
-    sendJson(res, 200, {
+    sendJson(req, res, 200, {
       index: typeof entry.index === 'number' ? entry.index : null,
       updatedAt: typeof entry.indexUpdatedAt === 'number' ? entry.indexUpdatedAt : null,
       productiveMs: entry.totalActiveMs ?? 0,
@@ -298,52 +335,61 @@ async function handleIndex(req, res, url) {
       const body = await readJsonBody(req);
       const key = body.key ?? keyFromQuery;
       if (!validateKey(key)) {
-        sendError(res, 401, 'Invalid key');
+        sendError(req, res, 401, 'Invalid key');
         return;
       }
       const indexValue = Number(body.index);
       if (!Number.isFinite(indexValue)) {
-        sendError(res, 400, 'index must be a number');
+        sendError(req, res, 400, 'index must be a number');
         return;
       }
       const timestamp = Number(body.updatedAt ?? Date.now());
       const dateKey = parseDateKey(body.date ?? url.searchParams.get('date'));
+      if (!isDateWithinWindow(dateKey)) {
+        sendError(req, res, 400, 'date out of allowed window');
+        return;
+      }
       const entry = ensureEntry(key, dateKey);
       entry.index = indexValue;
       entry.indexUpdatedAt = Number.isFinite(timestamp) ? timestamp : Date.now();
       await persistState();
-      sendNoContent(res);
+      sendNoContent(req, res);
     } catch (error) {
-      sendError(res, 400, error.message ?? 'Invalid payload');
+      sendError(req, res, 400, error.message ?? 'Invalid payload');
     }
     return;
   }
 
-  sendError(res, 405, 'Method not allowed');
+  sendError(req, res, 405, 'Method not allowed');
 }
 
 async function start() {
+  if (!PAIRING_KEY) {
+    console.error('[saul-daemon] PAIRING_KEY is required. Set the environment variable and retry.');
+    process.exit(1);
+  }
+
   await loadState();
   const server = http.createServer(async (req, res) => {
     if (!req.url || !req.method) {
-      sendError(res, 400, 'Invalid request');
+      sendError(req, res, 400, 'Invalid request');
       return;
     }
 
     const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
 
     if (req.method === 'OPTIONS') {
-      handleOptions(res);
+      handleOptions(req, res);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/health') {
-      sendJson(res, 200, { ok: true });
+      sendJson(req, res, 200, { ok: true });
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/tracking/vscode/summary') {
-      handleSummary(res, parsedUrl);
+      handleSummary(req, res, parsedUrl);
       return;
     }
 
@@ -357,14 +403,11 @@ async function start() {
       return;
     }
 
-    sendError(res, 404, 'Not found');
+    sendError(req, res, 404, 'Not found');
   });
 
-  server.listen(PORT, () => {
-    console.log(`[saul-daemon] listening on http://127.0.0.1:${PORT}`);
-    if (!PAIRING_KEY) {
-      console.warn('[saul-daemon] Warning: no PAIRING_KEY set. Set PAIRING_KEY env var to lock access.');
-    }
+  server.listen(PORT, BIND_HOST, () => {
+    console.log(`[saul-daemon] listening on http://${BIND_HOST}:${PORT}`);
   });
 }
 
@@ -372,3 +415,64 @@ start().catch((error) => {
   console.error('Failed to start SaulDaemon', error);
   process.exit(1);
 });
+
+function getAllowedOrigin(req) {
+  const origin = req.headers?.origin;
+  if (!origin) {
+    return null;
+  }
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
+    return origin;
+  }
+  return null;
+}
+
+function normalizePort(value) {
+  const n = Number(value ?? 3123);
+  if (Number.isInteger(n) && n > 0 && n <= 65535) {
+    return n;
+  }
+  return 3123;
+}
+
+function isDateWithinWindow(dateKey) {
+  const ts = Date.parse(dateKey);
+  if (Number.isNaN(ts)) {
+    return false;
+  }
+  const now = new Date();
+  const min = new Date(now.getTime() - RETENTION_DAYS * 24 * 60 * 60 * 1000);
+  const max = new Date(now.getTime() + MAX_FUTURE_DAYS * 24 * 60 * 60 * 1000);
+  return ts >= Date.parse(formatDateKey(min)) && ts <= Date.parse(formatDateKey(max));
+}
+
+async function ensureDataDir() {
+  await mkdir(DATA_DIR, { recursive: true });
+  const legacyState = path.join(LEGACY_DATA_DIR, 'vscode-usage.json');
+  if (STATE_PATH === legacyState) {
+    return;
+  }
+  try {
+    const legacyInfo = await stat(legacyState);
+    const targetInfo = await stat(STATE_PATH).catch(() => null);
+    if (legacyInfo && !targetInfo) {
+      await mkdir(path.dirname(STATE_PATH), { recursive: true });
+      await rename(legacyState, STATE_PATH);
+    }
+  } catch {
+    // ignore migration errors
+  }
+}
+
+function resolveDefaultDataDir() {
+  if (process.env.XDG_DATA_HOME) {
+    return path.join(process.env.XDG_DATA_HOME, 'saul-daemon');
+  }
+  if (process.env.APPDATA) {
+    return path.join(process.env.APPDATA, 'saul-daemon');
+  }
+  if (process.env.HOME) {
+    return path.join(process.env.HOME, '.local', 'share', 'saul-daemon');
+  }
+  return LEGACY_DATA_DIR;
+}
