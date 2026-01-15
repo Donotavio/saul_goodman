@@ -1122,6 +1122,7 @@ function handleVscodeDashboard(req, res, url) {
   const entry = ensureVscodeEntry(key);
 
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
+  const hourly = summarizeDurationsByHour(entry.durations, startMs, endMs, filters);
 
   let totalCommits = 0;
   let totalFilesChanged = 0;
@@ -1193,6 +1194,14 @@ function handleVscodeDashboard(req, res, url) {
       projects: buildBreakdown(summary.projects, summary.totalMs).slice(0, 10),
       languages: buildBreakdown(summary.languages, summary.totalMs).slice(0, 10),
       branches: buildBreakdown(branchMap, Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0)).slice(0, 10),
+      hourly: hourly.map(h => ({
+        hour: h.hour,
+        coding: Math.round(h.codingMs / 1000),
+        debugging: Math.round(h.debuggingMs / 1000),
+        building: Math.round(h.buildingMs / 1000),
+        testing: Math.round(h.testingMs / 1000),
+        total: Math.round(h.totalMs / 1000)
+      })),
       git: {
         totalCommits,
         totalFilesChanged,
@@ -1366,6 +1375,82 @@ function summarizeDurations(durations, startMs, endMs, filters) {
     incrementMap(summary.machines, duration.machineId || 'unknown', overlapMs);
   }
   return summary;
+}
+
+function summarizeDurationsByHour(durations, startMs, endMs, filters) {
+  const hourly = Array.from({ length: 24 }, (_, hour) => ({
+    hour,
+    codingMs: 0,
+    debuggingMs: 0,
+    buildingMs: 0,
+    testingMs: 0,
+    totalMs: 0
+  }));
+
+  for (const duration of durations) {
+    if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
+      continue;
+    }
+    const overlapStart = Math.max(duration.startTime, startMs);
+    const overlapEnd = Math.min(duration.endTime, endMs);
+    const overlapMs = Math.max(0, overlapEnd - overlapStart);
+    if (overlapMs <= 0) {
+      continue;
+    }
+
+    const startHour = new Date(overlapStart).getHours();
+    const endHour = new Date(overlapEnd).getHours();
+    const category = duration.category || 'coding';
+
+    if (startHour === endHour) {
+      const bucket = hourly[startHour];
+      bucket.totalMs += overlapMs;
+      if (category === 'coding') bucket.codingMs += overlapMs;
+      else if (category === 'debugging') bucket.debuggingMs += overlapMs;
+      else if (category === 'building') bucket.buildingMs += overlapMs;
+      else if (category === 'testing') bucket.testingMs += overlapMs;
+      else bucket.codingMs += overlapMs;
+    } else {
+      const startHourEnd = new Date(overlapStart);
+      startHourEnd.setHours(startHour + 1, 0, 0, 0);
+      const firstMs = Math.min(startHourEnd.getTime() - overlapStart, overlapMs);
+      
+      const firstBucket = hourly[startHour];
+      firstBucket.totalMs += firstMs;
+      if (category === 'coding') firstBucket.codingMs += firstMs;
+      else if (category === 'debugging') firstBucket.debuggingMs += firstMs;
+      else if (category === 'building') firstBucket.buildingMs += firstMs;
+      else if (category === 'testing') firstBucket.testingMs += firstMs;
+      else firstBucket.codingMs += firstMs;
+
+      let remainingMs = overlapMs - firstMs;
+      let currentHour = startHour + 1;
+
+      while (currentHour <= endHour && remainingMs > 0) {
+        const hourStart = new Date(overlapStart);
+        hourStart.setHours(currentHour, 0, 0, 0);
+        const hourEnd = new Date(hourStart);
+        hourEnd.setHours(currentHour + 1, 0, 0, 0);
+        
+        const allocMs = currentHour === endHour 
+          ? Math.min(remainingMs, overlapEnd - hourStart.getTime())
+          : Math.min(remainingMs, 3600000);
+
+        const bucket = hourly[currentHour];
+        bucket.totalMs += allocMs;
+        if (category === 'coding') bucket.codingMs += allocMs;
+        else if (category === 'debugging') bucket.debuggingMs += allocMs;
+        else if (category === 'building') bucket.buildingMs += allocMs;
+        else if (category === 'testing') bucket.testingMs += allocMs;
+        else bucket.codingMs += allocMs;
+
+        remainingMs -= allocMs;
+        currentHour++;
+      }
+    }
+  }
+
+  return hourly;
 }
 
 function incrementMap(map, key, value) {

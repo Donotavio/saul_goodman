@@ -109,6 +109,7 @@
       renderActivity(data.activity || {}, data.git || {});
       renderEditorInfo(data.editor);
       renderWorkspaces(data.workspaces || []);
+      renderHourlyChart(data.hourly || []);
 
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
@@ -245,19 +246,103 @@
       return;
     }
 
-    workspaces.slice(0, 5).forEach(ws => {
+    workspaces.forEach(ws => {
       const li = document.createElement('li');
-      li.innerHTML = `
-        <span><strong>${ws.name}</strong><br><small>${ws.totalFiles} files · ${ws.totalSizeMB} MB</small></span>
-      `;
+      li.innerHTML = `<span>${ws.name}</span><span>${ws.totalFiles || 0} files</span>`;
       list.appendChild(li);
+    });
+  }
+
+  function renderHourlyChart(hourlyData) {
+    const canvas = document.getElementById('hourlyChart');
+    const emptyEl = document.getElementById('hourlyEmpty');
+    
+    if (!canvas || !hourlyData || hourlyData.length === 0) {
+      if (canvas) canvas.style.display = 'none';
+      if (emptyEl) emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    const totalSeconds = hourlyData.reduce((sum, h) => sum + (h.total || 0), 0);
+    if (totalSeconds === 0) {
+      canvas.style.display = 'none';
+      if (emptyEl) emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    canvas.style.display = 'block';
+    if (emptyEl) emptyEl.classList.add('hidden');
+
+    const labels = hourlyData.map(h => `${String(h.hour).padStart(2, '0')}h`);
+    const codingMinutes = hourlyData.map(h => Math.round((h.coding || 0) / 60));
+    const debuggingMinutes = hourlyData.map(h => Math.round((h.debugging || 0) / 60));
+    const buildingMinutes = hourlyData.map(h => Math.round((h.building || 0) / 60));
+    const testingMinutes = hourlyData.map(h => Math.round((h.testing || 0) / 60));
+
+    if (window.hourlyChartInstance) {
+      window.hourlyChartInstance.destroy();
+    }
+
+    const ctx = canvas.getContext('2d');
+    window.hourlyChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Coding',
+            data: codingMinutes,
+            backgroundColor: '#3b82f6'
+          },
+          {
+            label: 'Debugging',
+            data: debuggingMinutes,
+            backgroundColor: '#f59e0b'
+          },
+          {
+            label: 'Building',
+            data: buildingMinutes,
+            backgroundColor: '#10b981'
+          },
+          {
+            label: 'Testing',
+            data: testingMinutes,
+            backgroundColor: '#8b5cf6'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            stacked: true,
+            grid: { display: false },
+            ticks: { color: '#6b7280', font: { size: 10 } }
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            grid: { color: '#e5e7eb' },
+            ticks: { color: '#6b7280', font: { size: 10 } },
+            title: { display: true, text: 'Minutes', color: '#374151' }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: { color: '#374151', font: { size: 11 }, usePointStyle: true }
+          }
+        }
+      }
     });
   }
 
   function renderIndex(index) {
     const indexValueEl = document.getElementById('indexValue');
     if (!indexValueEl) return;
-
+    
     if (typeof index !== 'number') {
       indexValueEl.textContent = '--';
       indexValueEl.className = 'index-value';
@@ -265,7 +350,6 @@
     }
 
     indexValueEl.textContent = index.toString();
-    
     indexValueEl.classList.remove('good', 'warn', 'alert');
     
     if (index <= 25) {

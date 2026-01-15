@@ -101,14 +101,29 @@
           </div>
         </section>
 
-        <section class="card">
-          <h3>Editor Info</h3>
-          <div id="editorInfo" class="data-list"></div>
+        <section class="card chart-section">
+          <h3>Hourly Breakdown</h3>
+          <p class="chart-subtitle">Activity distribution throughout the day</p>
+          <div class="chart-container">
+            <canvas id="hourlyChart" height="200"></canvas>
+            <p id="hourlyEmpty" class="empty-state hidden">No hourly data to display yet.</p>
+          </div>
+        </section>
+
+        <section class="grid-two">
+          <div class="card">
+            <h3 id="workspacesTitle">Workspaces</h3>
+            <ul id="workspacesList" class="data-list"></ul>
+          </div>
+          <div class="card">
+            <h3 id="editorInfoTitle">Editor Info</h3>
+            <div id="editorInfo"></div>
+          </div>
         </section>
 
         <section class="card">
-          <h3>Workspaces</h3>
-          <ul id="workspacesList" class="data-list"></ul>
+          <h3>Editor Info</h3>
+          <div id="editorInfo"></div>
         </section>
       </section>
     </main>
