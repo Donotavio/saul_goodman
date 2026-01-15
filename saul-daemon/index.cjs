@@ -999,13 +999,14 @@ async function start() {
     }
 
     const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
+    console.log(`[saul-daemon] ${req.method} ${parsedUrl.pathname}${parsedUrl.search ? parsedUrl.search : ''}`);
 
     if (req.method === 'OPTIONS') {
       handleOptions(req, res);
       return;
     }
 
-    if (req.method === 'GET' && parsedUrl.pathname === '/health') {
+    if (req.method === 'GET' && (parsedUrl.pathname === '/health' || parsedUrl.pathname === '/v1/health')) {
       sendJson(req, res, 200, { ok: true });
       return;
     }

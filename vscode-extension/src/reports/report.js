@@ -79,6 +79,9 @@
       machine: filterMachine.value
     };
 
+    console.log('[Saul Report] Config:', { apiBase: config.apiBase, hasPairingKey: !!config.pairingKey });
+    console.log('[Saul Report] Fetching data with params:', params);
+
     try {
       const [summaries, projects, languages, machines, todayStats] = await Promise.all([
         fetchJson('/v1/vscode/summaries', params),
@@ -87,6 +90,13 @@
         fetchJson('/v1/vscode/machines', params),
         fetchJson('/v1/vscode/stats/today', params)
       ]);
+
+      console.log('[Saul Report] Data received:', {
+        summaries: summaries?.data?.days?.length || 0,
+        projects: projects?.data?.length || 0,
+        languages: languages?.data?.length || 0,
+        todayTotal: todayStats?.data?.human_readable_total
+      });
 
       updateSelect(filterProject, projects.data, params.project);
       updateSelect(filterLanguage, languages.data, params.language);
@@ -100,7 +110,8 @@
 
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
-      statusEl.textContent = i18n.error || 'Error loading data.';
+      console.error('[Saul Report] Error loading data:', error);
+      statusEl.textContent = `${i18n.error || 'Error loading data.'} ${error.message}`;
     }
   }
 
