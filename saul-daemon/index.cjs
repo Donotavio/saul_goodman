@@ -778,6 +778,24 @@ function handleVscodeLanguages(req, res, url) {
   handleVscodeBreakdown(req, res, url, 'languages');
 }
 
+function handleVscodeBreakdown(req, res, url, type) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
+  const map = summary[type];
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    data: buildBreakdown(map, summary.totalMs)
+  });
+}
+
 function handleVscodeEditors(req, res, url) {
   handleVscodeBreakdown(req, res, url, 'editors');
 }
