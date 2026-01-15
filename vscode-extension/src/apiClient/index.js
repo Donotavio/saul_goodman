@@ -57,11 +57,21 @@ async function getBreakdown(apiBase, key, path, params) {
   return res.json();
 }
 
+async function getIndex(apiBase, key, date) {
+  const url = buildUrl(apiBase, '/v1/tracking/index', { key, date });
+  const res = await fetchWithTimeout(url, 5000);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
 module.exports = {
   buildUrl,
   getHealth,
   postHeartbeats,
   getSummaries,
   getStats,
-  getBreakdown
+  getBreakdown,
+  getIndex
 };

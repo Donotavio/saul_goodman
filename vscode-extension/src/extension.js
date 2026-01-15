@@ -448,7 +448,8 @@ async function updateStatusBar(state, port, stats) {
   if (state === 'ok') {
     if (stats && typeof stats.totalSeconds === 'number') {
       const timeLabel = formatDurationSeconds(stats.totalSeconds);
-      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}`;
+      const indexLabel = typeof stats.index === 'number' ? ` | ${stats.index}%` : '';
+      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}${indexLabel}`;
       statusBarItem.tooltip = localize('status_today_tooltip', {
         time: timeLabel,
         port: portSuffix
@@ -500,10 +501,15 @@ function startStatusPolling() {
         throw new Error(`HTTP ${healthRes.status}`);
       }
       const today = new Date().toISOString().slice(0, 10);
-      const summary = await apiClient.getSummaries(baseUrl, key, { start: today, end: today });
+      const [summary, indexData] = await Promise.all([
+        apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
+        apiClient.getIndex(baseUrl, key, today).catch(() => null)
+      ]);
       const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
+      const index = indexData?.index ?? null;
       await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
-        totalSeconds
+        totalSeconds,
+        index
       });
     } catch {
       await updateStatusBar('error');
