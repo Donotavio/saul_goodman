@@ -17,7 +17,8 @@
   "activationEvents": [
     "onStartupFinished",
     "onCommand:saulGoodman.startDaemon",
-    "onCommand:saulGoodman.testDaemon"
+    "onCommand:saulGoodman.testDaemon",
+    "onCommand:saulGoodman.openReports"
   ],
   "contributes": {
     "commands": [
@@ -30,6 +31,11 @@
         "command": "saulGoodman.testDaemon",
         "title": "Saul Goodman: testar conexão com o SaulDaemon",
         "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.openReports",
+        "title": "Saul Goodman: abrir relatórios",
+        "category": "Saul Goodman"
       }
     ],
     "configuration": {
@@ -41,6 +47,21 @@
           "default": true,
           "description": "Habilita o envio de tempo ativo para o SaulDaemon local."
         },
+        "saulGoodman.enableTracking": {
+          "type": "boolean",
+          "default": true,
+          "description": "Controla a coleta e envio de heartbeats para o SaulDaemon."
+        },
+        "saulGoodman.enableReportsInVscode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Exibe o relatório do Saul dentro do VS Code."
+        },
+        "saulGoodman.enableSensitiveTelemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "Autoriza telemetria sensível (ex.: comandos do terminal)."
+        },
         "saulGoodman.apiBase": {
           "type": "string",
           "default": "http://127.0.0.1:3123",
@@ -50,6 +71,16 @@
           "type": "string",
           "default": "",
           "description": "Chave de pareamento compartilhada com a extensão Chrome."
+        },
+        "saulGoodman.hashFilePaths": {
+          "type": "boolean",
+          "default": true,
+          "description": "Faz hash dos caminhos de arquivos enviados nos heartbeats."
+        },
+        "saulGoodman.hashProjectNames": {
+          "type": "boolean",
+          "default": false,
+          "description": "Faz hash dos nomes de projetos antes de enviar ao daemon."
         },
         "saulGoodman.heartbeatIntervalMs": {
           "type": "number",
@@ -79,6 +110,7 @@
     "Other"
   ],
   "devDependencies": {
-    "@types/vscode": "^1.80.0"
+    "@types/vscode": "^1.80.0",
+    "vsce": "^2.15.0"
   }
 }

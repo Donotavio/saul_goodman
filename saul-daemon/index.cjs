@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require('path');
 const { mkdir, readFile, writeFile, rename, stat } = require('fs/promises');
+const { buildDurations, splitDurationByDay } = require('./src/vscode-aggregation.cjs');
 
 const BIND_HOST = process.env.BIND_HOST || '127.0.0.1';
 const PORT = normalizePort(process.env.PORT);
@@ -9,13 +10,21 @@ const LEGACY_DATA_DIR = path.join(__dirname, 'data');
 const DATA_ROOT = process.env.SAUL_DAEMON_DATA_DIR || resolveDefaultDataDir();
 const DATA_DIR = path.join(DATA_ROOT, 'data');
 const STATE_PATH = path.join(DATA_DIR, 'vscode-usage.json');
-const MAX_BODY_BYTES = 64 * 1024;
-const RETENTION_DAYS = 14;
+const VSCODE_STATE_PATH = path.join(DATA_DIR, 'vscode-tracking.json');
+const MAX_BODY_BYTES = parseEnvNumber('SAUL_DAEMON_MAX_BODY_KB', 256) * 1024;
+const RETENTION_DAYS = 1;
+const VSCODE_RETENTION_DAYS = 1;
+const VSCODE_GAP_MS = parseEnvNumber('SAUL_VSCODE_GAP_MINUTES', 5) * 60 * 1000;
+const VSCODE_GRACE_MS = parseEnvNumber('SAUL_VSCODE_GRACE_MINUTES', 2) * 60 * 1000;
 const MAX_FUTURE_DAYS = 1;
 
 const state = {
   byKey: Object.create(null)
 };
+const vscodeState = {
+  byKey: Object.create(null)
+};
+const vscodeIdIndex = new Map();
 
 async function loadState() {
   await ensureDataDir();
@@ -34,6 +43,41 @@ async function persistState() {
   await mkdir(DATA_DIR, { recursive: true });
   const snapshot = { byKey: state.byKey };
   await writeFile(STATE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
+}
+
+async function loadVscodeState() {
+  await ensureDataDir();
+  try {
+    const raw = await readFile(VSCODE_STATE_PATH, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && parsed.byKey) {
+      vscodeState.byKey = parsed.byKey;
+      for (const key of Object.keys(vscodeState.byKey)) {
+        const entry = vscodeState.byKey[key];
+        if (!entry.heartbeats || !Array.isArray(entry.heartbeats)) {
+          entry.heartbeats = [];
+        }
+        if (!entry.durations || !Array.isArray(entry.durations)) {
+          entry.durations = [];
+        }
+        const idSet = new Set();
+        for (const heartbeat of entry.heartbeats) {
+          if (heartbeat && typeof heartbeat.id === 'string') {
+            idSet.add(heartbeat.id);
+          }
+        }
+        vscodeIdIndex.set(key, idSet);
+      }
+    }
+  } catch {
+    vscodeState.byKey = Object.create(null);
+  }
+}
+
+async function persistVscodeState() {
+  await mkdir(DATA_DIR, { recursive: true });
+  const snapshot = { byKey: vscodeState.byKey };
+  await writeFile(VSCODE_STATE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
 }
 
 function sendJson(req, res, status, payload) {
@@ -89,6 +133,10 @@ function formatDateKey(date) {
   ).padStart(2, '0')}`;
 }
 
+function getTodayKey() {
+  return formatDateKey(new Date());
+}
+
 function ensureEntry(key, dateKey) {
   if (!state.byKey[key]) {
     state.byKey[key] = Object.create(null);
@@ -136,6 +184,30 @@ function ensureEntry(key, dateKey) {
   return entry;
 }
 
+function ensureVscodeEntry(key) {
+  if (!vscodeState.byKey[key]) {
+    vscodeState.byKey[key] = {
+      heartbeats: [],
+      durations: []
+    };
+  }
+  const entry = vscodeState.byKey[key];
+  if (!Array.isArray(entry.heartbeats)) {
+    entry.heartbeats = [];
+  }
+  if (!Array.isArray(entry.durations)) {
+    entry.durations = [];
+  }
+  return entry;
+}
+
+function getVscodeIdSet(key) {
+  if (!vscodeIdIndex.has(key)) {
+    vscodeIdIndex.set(key, new Set());
+  }
+  return vscodeIdIndex.get(key);
+}
+
 function pruneOldEntries() {
   const now = Date.now();
   const cutoffPast = now - RETENTION_DAYS * 24 * 60 * 60 * 1000;
@@ -155,12 +227,118 @@ function pruneOldEntries() {
   }
 }
 
+function pruneVscodeEntries(key) {
+  const entry = vscodeState.byKey[key];
+  if (!entry) {
+    return;
+  }
+  const todayKey = getTodayKey();
+  entry.heartbeats = entry.heartbeats.filter((heartbeat) => {
+    const ts = heartbeat?.time;
+    return Number.isFinite(ts) && formatDateKey(new Date(ts)) === todayKey;
+  });
+  entry.durations = entry.durations.filter((duration) => {
+    const ts = duration?.endTime ?? duration?.startTime;
+    return Number.isFinite(ts) && formatDateKey(new Date(ts)) === todayKey;
+  });
+  const idSet = getVscodeIdSet(key);
+  idSet.clear();
+  for (const heartbeat of entry.heartbeats) {
+    if (heartbeat && typeof heartbeat.id === 'string') {
+      idSet.add(heartbeat.id);
+    }
+  }
+}
+
 function validateKey(receivedKey) {
   const cleaned = (receivedKey ?? '').trim();
   if (!cleaned) {
     return false;
   }
   return cleaned === PAIRING_KEY;
+}
+
+function normalizeHeartbeat(raw) {
+  if (!raw || typeof raw !== 'object') {
+    return null;
+  }
+  const time = coerceTimestamp(raw.time ?? raw.timestamp);
+  if (formatDateKey(new Date(time)) !== getTodayKey()) {
+    return null;
+  }
+  const entityType = coerceString(raw.entityType, 'file');
+  const category = coerceString(raw.category, 'coding');
+  return {
+    id: coerceString(raw.id, createHeartbeatId(time)),
+    time,
+    entityType,
+    entity: coerceString(raw.entity, 'unknown'),
+    project: coerceString(raw.project, ''),
+    language: coerceString(raw.language, ''),
+    category,
+    isWrite: Boolean(raw.isWrite),
+    editor: coerceString(raw.editor, 'vscode'),
+    pluginVersion: coerceString(raw.pluginVersion, ''),
+    machineId: coerceString(raw.machineId, 'unknown'),
+    metadata: normalizeMetadata(raw.metadata)
+  };
+}
+
+function normalizeMetadata(metadata) {
+  if (!metadata || typeof metadata !== 'object') {
+    return {};
+  }
+  const normalized = {};
+  if (Number.isFinite(Number(metadata.linesAdded))) {
+    normalized.linesAdded = Number(metadata.linesAdded);
+  }
+  if (Number.isFinite(Number(metadata.linesRemoved))) {
+    normalized.linesRemoved = Number(metadata.linesRemoved);
+  }
+  if (typeof metadata.windowFocused === 'boolean') {
+    normalized.windowFocused = metadata.windowFocused;
+  }
+  if (typeof metadata.workspaceId === 'string') {
+    normalized.workspaceId = metadata.workspaceId;
+  }
+  if (typeof metadata.branch === 'string') {
+    normalized.branch = metadata.branch;
+  }
+  if (typeof metadata.commandId === 'string') {
+    normalized.commandId = metadata.commandId;
+  }
+  return normalized;
+}
+
+function coerceTimestamp(value) {
+  if (Number.isFinite(value)) {
+    return Number(value);
+  }
+  if (typeof value === 'string') {
+    const parsed = Date.parse(value);
+    if (!Number.isNaN(parsed)) {
+      return parsed;
+    }
+    const numeric = Number(value);
+    if (Number.isFinite(numeric)) {
+      return numeric;
+    }
+  }
+  return Date.now();
+}
+
+function coerceString(value, fallback) {
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed.length > 0) {
+      return trimmed;
+    }
+  }
+  return fallback;
+}
+
+function createHeartbeatId(seed) {
+  return `hb-${seed}-${Math.random().toString(16).slice(2, 8)}`;
 }
 
 async function readJsonBody(req) {
@@ -279,6 +457,46 @@ function handleSummary(req, res, url) {
     return;
   }
 
+  const vscodeEntry = vscodeState.byKey[key];
+  if (vscodeEntry && Array.isArray(vscodeEntry.durations) && vscodeEntry.durations.length > 0) {
+    const startMs = getDayStartMs(dateKey);
+    const endMs = getDayEndMsExclusive(dateKey);
+    const timeline = [];
+    const switchHourly = Array.from({ length: 24 }, () => 0);
+    let totalActiveMs = 0;
+    let sessions = 0;
+    for (const duration of vscodeEntry.durations) {
+      if (duration.endTime <= startMs || duration.startTime >= endMs) {
+        continue;
+      }
+      sessions += 1;
+      const hour = new Date(duration.startTime).getHours();
+      if (switchHourly[hour] !== undefined) {
+        switchHourly[hour] += 1;
+      }
+      const slices = splitDurationByDay(duration, startMs, endMs);
+      for (const slice of slices) {
+        totalActiveMs += slice.durationMs;
+        timeline.push({
+          startTime: slice.startTime,
+          endTime: slice.endTime,
+          durationMs: slice.durationMs
+        });
+      }
+    }
+    timeline.sort((a, b) => a.startTime - b.startTime);
+    sendJson(req, res, 200, {
+      totalActiveMs,
+      sessions,
+      switches: sessions,
+      switchHourly,
+      timeline,
+      index: null,
+      indexUpdatedAt: null
+    });
+    return;
+  }
+
   const hasEntry = Boolean(state.byKey[key]?.[dateKey]);
   const entry = hasEntry
     ? ensureEntry(key, dateKey)
@@ -363,6 +581,409 @@ async function handleIndex(req, res, url) {
   sendError(req, res, 405, 'Method not allowed');
 }
 
+async function handleVscodeHeartbeats(req, res, url) {
+  try {
+    const body = await readJsonBody(req);
+    const key = body.key ?? url.searchParams.get('key');
+    if (!validateKey(key)) {
+      sendError(req, res, 401, 'Invalid key');
+      return;
+    }
+    const payload = Array.isArray(body.heartbeats)
+      ? body.heartbeats
+      : Array.isArray(body.data)
+        ? body.data
+        : Array.isArray(body.heartbeat)
+          ? body.heartbeat
+          : body.heartbeat
+            ? [body.heartbeat]
+            : [];
+    if (!payload.length) {
+      sendError(req, res, 400, 'heartbeats array is required');
+      return;
+    }
+    const entry = ensureVscodeEntry(key);
+    const idSet = getVscodeIdSet(key);
+    const normalized = payload
+      .map((heartbeat) => normalizeHeartbeat(heartbeat))
+      .filter(Boolean);
+    const accepted = [];
+    for (const heartbeat of normalized) {
+      if (idSet.has(heartbeat.id)) {
+        continue;
+      }
+      idSet.add(heartbeat.id);
+      accepted.push(heartbeat);
+    }
+    if (accepted.length) {
+      entry.heartbeats.push(...accepted);
+      pruneVscodeEntries(key);
+      entry.durations = buildDurations(entry.heartbeats, {
+        gapMs: VSCODE_GAP_MS,
+        graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
+      });
+      await persistVscodeState();
+    }
+    sendJson(req, res, 200, {
+      accepted: accepted.length,
+      total: entry.heartbeats.length
+    });
+  } catch (error) {
+    sendError(req, res, 400, error.message ?? 'Invalid payload');
+  }
+}
+
+function handleVscodeHeartbeatsGet(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const filtered = entry.heartbeats.filter((heartbeat) => {
+    if (!heartbeat || !Number.isFinite(heartbeat.time)) {
+      return false;
+    }
+    if (heartbeat.time < startMs || heartbeat.time >= endMs) {
+      return false;
+    }
+    return matchesFilters(heartbeat, filters);
+  });
+  const { page, perPage } = resolvePagination(url);
+  const startIdx = (page - 1) * perPage;
+  const data = filtered
+    .slice(startIdx, startIdx + perPage)
+    .map((heartbeat) => ({
+      id: heartbeat.id,
+      time: new Date(heartbeat.time).toISOString(),
+      entityType: heartbeat.entityType,
+      entity: heartbeat.entity,
+      project: heartbeat.project,
+      language: heartbeat.language,
+      category: heartbeat.category,
+      isWrite: heartbeat.isWrite,
+      editor: heartbeat.editor,
+      pluginVersion: heartbeat.pluginVersion,
+      machineId: heartbeat.machineId,
+      metadata: heartbeat.metadata
+    }));
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    pagination: { page, perPage, total: filtered.length },
+    data
+  });
+}
+
+function handleVscodeDurations(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const durations = entry.durations.filter((duration) =>
+    matchesDurationFilters(duration, filters, startMs, endMs)
+  );
+  const { page, perPage } = resolvePagination(url);
+  const startIdx = (page - 1) * perPage;
+  const data = durations.slice(startIdx, startIdx + perPage).map((duration) => ({
+    id: duration.id,
+    start: new Date(duration.startTime).toISOString(),
+    end: new Date(duration.endTime).toISOString(),
+    duration_seconds: Math.round(duration.durationMs / 1000),
+    entityType: duration.entityType,
+    entity: duration.entity,
+    project: duration.project,
+    language: duration.language,
+    category: duration.category,
+    isWrite: duration.isWrite,
+    editor: duration.editor,
+    machineId: duration.machineId,
+    metadata: duration.metadata
+  }));
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    pagination: { page, perPage, total: durations.length },
+    data
+  });
+}
+
+function handleVscodeSummaries(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const daily = summarizeDurationsByDay(entry.durations, startMs, endMs, filters);
+  const days = Array.from(daily.values()).sort((a, b) => a.date.localeCompare(b.date));
+  const totalMs = days.reduce((acc, day) => acc + day.totalMs, 0);
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    data: {
+      total_seconds: Math.round(totalMs / 1000),
+      human_readable_total: formatDurationMs(totalMs),
+      days: days.map((day) => ({
+        date: day.date,
+        total_seconds: Math.round(day.totalMs / 1000),
+        projects: buildBreakdown(day.projects, day.totalMs),
+        languages: buildBreakdown(day.languages, day.totalMs),
+        editors: buildBreakdown(day.editors, day.totalMs),
+        categories: buildBreakdown(day.categories, day.totalMs),
+        machines: buildBreakdown(day.machines, day.totalMs)
+      }))
+    }
+  });
+}
+
+function handleVscodeStatsToday(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    data: {
+      total_seconds: Math.round(summary.totalMs / 1000),
+      human_readable_total: formatDurationMs(summary.totalMs),
+      projects: buildBreakdown(summary.projects, summary.totalMs),
+      languages: buildBreakdown(summary.languages, summary.totalMs),
+      editors: buildBreakdown(summary.editors, summary.totalMs),
+      categories: buildBreakdown(summary.categories, summary.totalMs),
+      machines: buildBreakdown(summary.machines, summary.totalMs)
+    }
+  });
+}
+
+function handleVscodeProjects(req, res, url) {
+  handleVscodeBreakdown(req, res, url, 'projects');
+}
+
+function handleVscodeLanguages(req, res, url) {
+  handleVscodeBreakdown(req, res, url, 'languages');
+}
+
+function handleVscodeEditors(req, res, url) {
+  handleVscodeBreakdown(req, res, url, 'editors');
+}
+
+function handleVscodeMachines(req, res, url) {
+  handleVscodeBreakdown(req, res, url, 'machines');
+}
+
+function handleVscodeBreakdown(req, res, url, type) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+  const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
+  const map = summary[type];
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    data: buildBreakdown(map, summary.totalMs)
+  });
+}
+
+
+function handleVscodeMeta(req, res) {
+  sendJson(req, res, 200, {
+    version: 1,
+    data: {
+      retention_days: VSCODE_RETENTION_DAYS,
+      gap_minutes: Math.round(VSCODE_GAP_MS / 60000),
+      grace_minutes: Math.round(Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS) / 60000)
+    }
+  });
+}
+
+function resolveDateRange(url) {
+  const startKey = getTodayKey();
+  const endKey = startKey;
+  const startMs = getDayStartMs(startKey);
+  const endMs = getDayEndMsExclusive(endKey);
+  return {
+    startKey,
+    endKey,
+    startMs,
+    endMs,
+    timezone: url.searchParams.get('tz') ?? guessTimezone()
+  };
+}
+
+function guessTimezone() {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
+  } catch {
+    return 'local';
+  }
+}
+
+function getDayStartMs(dateKey) {
+  const [year, month, day] = dateKey.split('-').map((value) => Number(value));
+  return new Date(year, month - 1, day).getTime();
+}
+
+function getDayEndMsExclusive(dateKey) {
+  return getDayStartMs(dateKey) + 24 * 60 * 60 * 1000;
+}
+
+function readVscodeFilters(url) {
+  return {
+    project: url.searchParams.get('project') ?? '',
+    language: url.searchParams.get('language') ?? '',
+    editor: url.searchParams.get('editor') ?? '',
+    machineId: url.searchParams.get('machine') ?? '',
+    entityType: url.searchParams.get('entityType') ?? '',
+    category: url.searchParams.get('category') ?? ''
+  };
+}
+
+function matchesFilters(record, filters) {
+  if (filters.project && record.project !== filters.project) {
+    return false;
+  }
+  if (filters.language && record.language !== filters.language) {
+    return false;
+  }
+  if (filters.editor && record.editor !== filters.editor) {
+    return false;
+  }
+  if (filters.machineId && record.machineId !== filters.machineId) {
+    return false;
+  }
+  if (filters.entityType && record.entityType !== filters.entityType) {
+    return false;
+  }
+  if (filters.category && record.category !== filters.category) {
+    return false;
+  }
+  return true;
+}
+
+function matchesDurationFilters(duration, filters, startMs, endMs) {
+  if (!duration || !Number.isFinite(duration.startTime)) {
+    return false;
+  }
+  if (duration.endTime <= startMs || duration.startTime >= endMs) {
+    return false;
+  }
+  return matchesFilters(duration, filters);
+}
+
+function resolvePagination(url) {
+  const perPage = Math.min(200, Math.max(1, Number(url.searchParams.get('per_page') ?? 100)));
+  const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
+  return { page, perPage };
+}
+
+function summarizeDurationsByDay(durations, startMs, endMs, filters) {
+  const daily = new Map();
+  for (const duration of durations) {
+    if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
+      continue;
+    }
+    const slices = splitDurationByDay(duration, startMs, endMs);
+    for (const slice of slices) {
+      const dateKey = slice.dateKey;
+      if (!daily.has(dateKey)) {
+        daily.set(dateKey, {
+          date: dateKey,
+          totalMs: 0,
+          projects: new Map(),
+          languages: new Map(),
+          editors: new Map(),
+          categories: new Map(),
+          machines: new Map()
+        });
+      }
+      const entry = daily.get(dateKey);
+      entry.totalMs += slice.durationMs;
+      incrementMap(entry.projects, duration.project || 'unknown', slice.durationMs);
+      incrementMap(entry.languages, duration.language || 'unknown', slice.durationMs);
+      incrementMap(entry.editors, duration.editor || 'vscode', slice.durationMs);
+      incrementMap(entry.categories, duration.category || 'coding', slice.durationMs);
+      incrementMap(entry.machines, duration.machineId || 'unknown', slice.durationMs);
+    }
+  }
+  return daily;
+}
+
+function summarizeDurations(durations, startMs, endMs, filters) {
+  const summary = {
+    totalMs: 0,
+    projects: new Map(),
+    languages: new Map(),
+    editors: new Map(),
+    categories: new Map(),
+    machines: new Map()
+  };
+  for (const duration of durations) {
+    if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
+      continue;
+    }
+    const overlapStart = Math.max(duration.startTime, startMs);
+    const overlapEnd = Math.min(duration.endTime, endMs);
+    const overlapMs = Math.max(0, overlapEnd - overlapStart);
+    if (overlapMs <= 0) {
+      continue;
+    }
+    summary.totalMs += overlapMs;
+    incrementMap(summary.projects, duration.project || 'unknown', overlapMs);
+    incrementMap(summary.languages, duration.language || 'unknown', overlapMs);
+    incrementMap(summary.editors, duration.editor || 'vscode', overlapMs);
+    incrementMap(summary.categories, duration.category || 'coding', overlapMs);
+    incrementMap(summary.machines, duration.machineId || 'unknown', overlapMs);
+  }
+  return summary;
+}
+
+function incrementMap(map, key, value) {
+  map.set(key, (map.get(key) ?? 0) + value);
+}
+
+function buildBreakdown(map, totalMs) {
+  const items = Array.from(map.entries()).map(([name, ms]) => ({
+    name,
+    total_seconds: Math.round(ms / 1000),
+    percent: totalMs > 0 ? Number((ms / totalMs).toFixed(4)) : 0
+  }));
+  return items.sort((a, b) => b.total_seconds - a.total_seconds);
+}
+
+function formatDurationMs(ms) {
+  const totalSeconds = Math.round(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  if (hours > 0 && minutes > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+  if (hours > 0) {
+    return `${hours}h`;
+  }
+  return `${minutes}m`;
+}
+
+
 async function start() {
   if (!PAIRING_KEY) {
     console.error('[saul-daemon] PAIRING_KEY is required. Set the environment variable and retry.');
@@ -370,6 +991,7 @@ async function start() {
   }
 
   await loadState();
+  await loadVscodeState();
   const server = http.createServer(async (req, res) => {
     if (!req.url || !req.method) {
       sendError(req, res, 400, 'Invalid request');
@@ -403,6 +1025,58 @@ async function start() {
       return;
     }
 
+    if (parsedUrl.pathname === '/v1/vscode/heartbeats') {
+      if (req.method === 'GET') {
+        handleVscodeHeartbeatsGet(req, res, parsedUrl);
+        return;
+      }
+      if (req.method === 'POST') {
+        await handleVscodeHeartbeats(req, res, parsedUrl);
+        return;
+      }
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/durations') {
+      handleVscodeDurations(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/summaries') {
+      handleVscodeSummaries(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/stats/today') {
+      handleVscodeStatsToday(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/projects') {
+      handleVscodeProjects(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/languages') {
+      handleVscodeLanguages(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/editors') {
+      handleVscodeEditors(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/machines') {
+      handleVscodeMachines(req, res, parsedUrl);
+      return;
+    }
+
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/meta') {
+      handleVscodeMeta(req, res, parsedUrl);
+      return;
+    }
+
     sendError(req, res, 404, 'Not found');
   });
 
@@ -424,6 +1098,12 @@ function getAllowedOrigin(req) {
   if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
     return origin;
   }
+  if (/^chrome-extension:\/\/[a-p]{32}$/i.test(origin)) {
+    return origin;
+  }
+  if (/^vscode-webview:\/\/.+/i.test(origin)) {
+    return origin;
+  }
   return null;
 }
 
@@ -436,14 +1116,26 @@ function normalizePort(value) {
 }
 
 function isDateWithinWindow(dateKey) {
+  return isDateWithinWindowWithRetention(dateKey, RETENTION_DAYS);
+}
+
+function isDateWithinWindowWithRetention(dateKey, retentionDays) {
   const ts = Date.parse(dateKey);
   if (Number.isNaN(ts)) {
     return false;
   }
   const now = new Date();
-  const min = new Date(now.getTime() - RETENTION_DAYS * 24 * 60 * 60 * 1000);
+  const min = new Date(now.getTime() - retentionDays * 24 * 60 * 60 * 1000);
   const max = new Date(now.getTime() + MAX_FUTURE_DAYS * 24 * 60 * 60 * 1000);
   return ts >= Date.parse(formatDateKey(min)) && ts <= Date.parse(formatDateKey(max));
+}
+
+function parseEnvNumber(key, fallback) {
+  const raw = Number(process.env[key]);
+  if (Number.isFinite(raw) && raw > 0) {
+    return raw;
+  }
+  return fallback;
 }
 
 async function ensureDataDir() {

@@ -2402,6 +2402,54 @@
   "report_timeline_summary": {
     "message": "{duration} • {count} segmentos"
   },
+  "report_vscode_heading": {
+    "message": "Reportes de VS Code"
+  },
+  "report_vscode_subtitle": {
+    "message": "Tiempo y contexto capturados en el editor."
+  },
+  "report_vscode_disabled": {
+    "message": "Los reportes de VS Code estan desactivados."
+  },
+  "report_vscode_disabled_cta": {
+    "message": "Abrir options"
+  },
+  "report_vscode_missing_config": {
+    "message": "Configura la URL local y la clave de VS Code."
+  },
+  "report_vscode_loading": {
+    "message": "Cargando datos de VS Code..."
+  },
+  "report_vscode_loaded": {
+    "message": "Datos de VS Code sincronizados."
+  },
+  "report_vscode_error": {
+    "message": "No se pudieron cargar los reportes de VS Code."
+  },
+  "report_vscode_filter_project": {
+    "message": "Proyecto"
+  },
+  "report_vscode_filter_language": {
+    "message": "Lenguaje"
+  },
+  "report_vscode_filter_machine": {
+    "message": "Maquina"
+  },
+  "report_vscode_filter_all": {
+    "message": "Todos"
+  },
+  "report_vscode_stat_today": {
+    "message": "Hoy"
+  },
+  "report_vscode_projects": {
+    "message": "Proyectos"
+  },
+  "report_vscode_languages": {
+    "message": "Lenguajes"
+  },
+  "report_vscode_summaries": {
+    "message": "Summaries"
+  },
   "rssCta": {
     "message": "Suscribirse via RSS"
   },
@@ -2419,6 +2467,87 @@
   },
   "seoTitle": {
     "message": "Saul Goodman - Extensión Anti-Procrastinación"
+  },
+  "status.today.text": {
+    "message": "Saul hoy: {time}"
+  },
+  "status.today.tooltip": {
+    "message": "Tiempo hoy {time}{port}"
+  },
+  "status.portSuffix": {
+    "message": " (puerto {port})"
+  },
+  "status.on.text": {
+    "message": "SaulDaemon ON{port}"
+  },
+  "status.on.tooltip": {
+    "message": "SaulDaemon conectado"
+  },
+  "status.off.text": {
+    "message": "SaulDaemon OFF"
+  },
+  "status.off.tooltip": {
+    "message": "SaulDaemon no disponible"
+  },
+  "status.disabled.text": {
+    "message": "Tracking off"
+  },
+  "status.disabled.tooltip": {
+    "message": "Activa el tracking para enviar heartbeats"
+  },
+  "status.loading.text": {
+    "message": "Verificando SaulDaemon..."
+  },
+  "status.loading.tooltip": {
+    "message": "Verificando SaulDaemon"
+  },
+  "prepare.keyTitle": {
+    "message": "Saul Goodman: clave de emparejamiento"
+  },
+  "prepare.keyPrompt": {
+    "message": "Usa la misma clave configurada en la extension de Chrome."
+  },
+  "prepare.portTitle": {
+    "message": "Saul Goodman: puerto del SaulDaemon"
+  },
+  "prepare.portPrompt": {
+    "message": "Puerto HTTP local del daemon."
+  },
+  "prepare.missingDaemon": {
+    "message": "No se encontro saul-daemon/index.cjs. Abre la raiz del repositorio antes de iniciar el daemon."
+  },
+  "prepare.started": {
+    "message": "SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}."
+  },
+  "prepare.startFailed": {
+    "message": "Error al iniciar SaulDaemon: {error}"
+  },
+  "prompt.missingKey.title": {
+    "message": "Saul Goodman: configura una clave"
+  },
+  "prompt.missingKey.prompt": {
+    "message": "Ingresa la misma clave configurada en la extension de Chrome."
+  },
+  "prompt.missingKey.warning": {
+    "message": "Sin clave no enviaremos heartbeats. Abrir configuraciones ahora?"
+  },
+  "prompt.missingKey.openSettings": {
+    "message": "Abrir configuraciones"
+  },
+  "test.healthSuccess": {
+    "message": "SaulDaemon respondio en {origin}"
+  },
+  "test.healthStatus": {
+    "message": "SaulDaemon respondio con estado {status} en {origin}"
+  },
+  "test.healthFailure": {
+    "message": "SaulDaemon no respondio en {origin}: {error}"
+  },
+  "log.heartbeatFailed": {
+    "message": "Error al enviar el heartbeat"
+  },
+  "log.publishIndexFailed": {
+    "message": "Error al publicar el indice en SaulDaemon"
   },
   "shareCopied": {
     "message": "¡Enlace copiado!"

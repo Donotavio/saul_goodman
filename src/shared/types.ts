@@ -153,6 +153,7 @@ export interface ExtensionSettings {
    */
   vscodeIntegrationEnabled?: boolean;
 
+
   /**
    * URL base da API HTTP local do SaulDaemon.
    * Exemplo: http://127.0.0.1:3123

@@ -18,6 +18,93 @@ body.earthquake {
   display: none !important;
 }
 
+.vscode-report-panel {
+  border: 2px solid #111;
+  background: #fff8df;
+}
+
+.vscode-report-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vscode-report-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.vscode-report-filters input,
+.vscode-report-filters select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #111;
+  background: #fff;
+}
+
+.vscode-report-actions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.vscode-report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vscode-report-grid.two-columns {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.vscode-report-card {
+  border: 1px solid #111;
+  border-radius: 12px;
+  background: #fff;
+  padding: 12px;
+  box-shadow: 3px 3px 0 #fde08f;
+}
+
+.vscode-report-card strong {
+  display: block;
+  font-size: 1.3rem;
+  margin-top: 6px;
+}
+
+.vscode-report-card ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vscode-report-card li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.inline-status {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #5d1600;
+}
+
+.inline-status.pending {
+  color: #b07900;
+}
+
+.inline-status.error {
+  color: #b1001a;
+}
+
 @keyframes quake {
   0% {
     transform: translate(0, 0);

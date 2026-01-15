@@ -92,6 +92,26 @@ const contextBreakdownSection = document.getElementById(
 const contextBreakdownBody = document
   .getElementById('contextBreakdownTable')
   ?.querySelector('tbody') as HTMLTableSectionElement | null;
+const vscodeReportSection = document.getElementById('vscodeReportSection') as HTMLElement | null;
+const vscodeReportDisabledEl = document.getElementById('vscodeReportDisabled') as HTMLElement | null;
+const vscodeReportContentEl = document.getElementById('vscodeReportContent') as HTMLElement | null;
+const vscodeReportStatusEl = document.getElementById('vscodeReportStatus') as HTMLElement | null;
+const vscodeFilterProjectEl = document.getElementById('vscodeFilterProject') as HTMLSelectElement | null;
+const vscodeFilterLanguageEl = document.getElementById('vscodeFilterLanguage') as HTMLSelectElement | null;
+const vscodeFilterMachineEl = document.getElementById('vscodeFilterMachine') as HTMLSelectElement | null;
+const vscodeApplyFiltersButton = document.getElementById(
+  'vscodeApplyFilters'
+) as HTMLButtonElement | null;
+const vscodeResetFiltersButton = document.getElementById(
+  'vscodeResetFilters'
+) as HTMLButtonElement | null;
+const vscodeStatTodayEl = document.getElementById('vscodeStatToday') as HTMLElement | null;
+const vscodeProjectsListEl = document.getElementById('vscodeProjectsList') as HTMLUListElement | null;
+const vscodeLanguagesListEl = document.getElementById('vscodeLanguagesList') as HTMLUListElement | null;
+const vscodeSummariesListEl = document.getElementById('vscodeSummariesList') as HTMLUListElement | null;
+const openVscodeOptionsButton = document.getElementById(
+  'openVscodeOptions'
+) as HTMLButtonElement | null;
 
 const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
   { max: 25, key: 'report_hero_message_excellent' },
@@ -178,6 +198,7 @@ let activeLocalePreference: LocalePreference = 'auto';
 let hasAiNarrative = false;
 let toastTimer: number | null = null;
 let latestFairness: FairnessSummary | null = null;
+let vscodeReportReady = false;
 let latestSuggestion: DomainSuggestion | null = null;
 const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
@@ -253,6 +274,7 @@ async function hydrate(): Promise<void> {
     latestFairness = response.fairness ?? null;
     latestSuggestion = response.activeSuggestion ?? null;
     renderReport(latestMetrics);
+    void hydrateVscodeReport();
   } catch (error) {
     console.error(error);
     heroMessageEl.textContent =
@@ -267,6 +289,210 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
   i18n = await createI18n(preference);
   activeLocalePreference = preference;
   i18n.apply();
+}
+
+async function hydrateVscodeReport(): Promise<void> {
+  if (!vscodeReportSection || !latestSettings) {
+    return;
+  }
+  vscodeReportSection.classList.remove('hidden');
+  const enabled = Boolean(latestSettings.vscodeIntegrationEnabled);
+  if (!enabled) {
+    vscodeReportDisabledEl?.classList.remove('hidden');
+    vscodeReportContentEl?.classList.add('hidden');
+    setVscodeReportStatus('report_vscode_disabled', 'Relatorios do VS Code desativados.');
+    return;
+  }
+
+  const baseUrl = latestSettings.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    vscodeReportDisabledEl?.classList.remove('hidden');
+    vscodeReportContentEl?.classList.add('hidden');
+    setVscodeReportStatus(
+      'report_vscode_missing_config',
+      'Configure o backend local e a chave do VS Code nas options.'
+    );
+    return;
+  }
+
+  vscodeReportDisabledEl?.classList.add('hidden');
+  vscodeReportContentEl?.classList.remove('hidden');
+  if (!vscodeReportReady) {
+    resetVscodeFilters();
+    vscodeApplyFiltersButton?.addEventListener('click', () => void refreshVscodeReport());
+    vscodeResetFiltersButton?.addEventListener('click', () => {
+      resetVscodeFilters();
+      void refreshVscodeReport();
+    });
+    openVscodeOptionsButton?.addEventListener('click', () => {
+      const url = chrome.runtime.getURL('src/options/options.html#vscode');
+      void chrome.tabs.create({ url });
+    });
+    vscodeReportReady = true;
+  }
+  await refreshVscodeReport();
+}
+
+function resetVscodeFilters(): void {
+  if (vscodeFilterProjectEl) {
+    vscodeFilterProjectEl.value = '';
+  }
+  if (vscodeFilterLanguageEl) {
+    vscodeFilterLanguageEl.value = '';
+  }
+  if (vscodeFilterMachineEl) {
+    vscodeFilterMachineEl.value = '';
+  }
+}
+
+async function refreshVscodeReport(): Promise<void> {
+  if (!latestSettings?.vscodeIntegrationEnabled) {
+    return;
+  }
+  const baseUrl = latestSettings.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    return;
+  }
+  const start = new Date().toISOString().slice(0, 10);
+  const end = start;
+  const project = vscodeFilterProjectEl?.value ?? '';
+  const language = vscodeFilterLanguageEl?.value ?? '';
+  const machine = vscodeFilterMachineEl?.value ?? '';
+
+  setVscodeReportStatus('report_vscode_loading', 'Carregando dados do VS Code...', 'pending');
+
+  try {
+    const params = { start, end, project, language, machine } as Record<string, string>;
+    const [summaries, projects, languages, machines, todayStats] = await Promise.all([
+      fetchVscodeJson('/v1/vscode/summaries', params),
+      fetchVscodeJson('/v1/vscode/projects', params),
+      fetchVscodeJson('/v1/vscode/languages', params),
+      fetchVscodeJson('/v1/vscode/machines', params),
+      fetchVscodeJson('/v1/vscode/stats/today', params)
+    ]);
+
+    updateVscodeSelect(vscodeFilterProjectEl, projects?.data, project);
+    updateVscodeSelect(vscodeFilterLanguageEl, languages?.data, language);
+    updateVscodeSelect(vscodeFilterMachineEl, machines?.data, machine, true);
+
+    if (vscodeStatTodayEl) {
+      vscodeStatTodayEl.textContent = todayStats?.data?.human_readable_total ?? '--';
+    }
+
+    renderVscodeList(vscodeProjectsListEl, projects?.data);
+    renderVscodeList(vscodeLanguagesListEl, languages?.data);
+    renderVscodeSummaries(vscodeSummariesListEl, summaries?.data?.days);
+
+    setVscodeReportStatus('report_vscode_loaded', 'Dados sincronizados.');
+  } catch (error) {
+    console.warn('Falha ao buscar dados do VS Code', error);
+    setVscodeReportStatus('report_vscode_error', 'Nao foi possivel carregar os relatorios.', 'error');
+  }
+}
+
+async function fetchVscodeJson(path: string, params: Record<string, string>): Promise<any> {
+  const baseUrl = latestSettings?.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings?.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    throw new Error('Missing VS Code config');
+  }
+  const url = new URL(path, baseUrl);
+  url.searchParams.set('key', pairingKey);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      url.searchParams.set(key, value);
+    }
+  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const res = await fetch(url.toString(), { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function updateVscodeSelect(
+  select: HTMLSelectElement | null,
+  data: Array<{ name?: string; id?: string }> | undefined,
+  current: string,
+  useId = false
+): void {
+  if (!select || !Array.isArray(data)) {
+    return;
+  }
+  const saved = current || select.value;
+  select.innerHTML = `<option value="">${i18n?.t('report_vscode_filter_all') ?? 'Todos'}</option>`;
+  data.forEach((item) => {
+    const value = useId ? item.id ?? item.name ?? '' : item.name ?? item.id ?? '';
+    if (!value) {
+      return;
+    }
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+  select.value = saved;
+}
+
+function renderVscodeList(
+  list: HTMLUListElement | null,
+  items: Array<{ name: string; total_seconds: number }> | undefined
+): void {
+  if (!list) {
+    return;
+  }
+  list.innerHTML = '';
+  if (!items || items.length === 0) {
+    const li = document.createElement('li');
+    li.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
+    list.appendChild(li);
+    return;
+  }
+  items.slice(0, 8).forEach((item) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${item.name}</span><span>${formatDuration(item.total_seconds * 1000)}</span>`;
+    list.appendChild(li);
+  });
+}
+
+function renderVscodeSummaries(
+  list: HTMLUListElement | null,
+  days: Array<{ date: string; total_seconds: number }> | undefined
+): void {
+  if (!list) {
+    return;
+  }
+  list.innerHTML = '';
+  if (!days || days.length === 0) {
+    const li = document.createElement('li');
+    li.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
+    list.appendChild(li);
+    return;
+  }
+  days.forEach((day) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${day.date}</span><span>${formatDuration(day.total_seconds * 1000)}</span>`;
+    list.appendChild(li);
+  });
+}
+
+function setVscodeReportStatus(key: string, fallback: string, variant?: 'pending' | 'error'): void {
+  if (!vscodeReportStatusEl) {
+    return;
+  }
+  vscodeReportStatusEl.textContent = i18n?.t(key) ?? fallback;
+  vscodeReportStatusEl.classList.remove('pending', 'error', 'hidden');
+  if (variant) {
+    vscodeReportStatusEl.classList.add(variant);
+  }
 }
 
 function renderReport(metrics: DailyMetrics): void {
@@ -2011,11 +2237,12 @@ interface EnrichedMetrics extends DailyMetrics {
 }
 
 function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
-  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+  const allowVscode = Boolean(latestSettings?.vscodeIntegrationEnabled);
+  const vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
 
   const domains = { ...metrics.domains };
-  if (vscodeMs > 0) {
+  if (vscodeMs > 0 && allowVscode) {
     domains['__vscode:ide'] = {
       domain: label,
       category: 'productive',
@@ -2023,10 +2250,10 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
     };
   }
 
-  const timeline = mergeTimelines(metrics, domains);
+  const timeline = allowVscode ? mergeTimelines(metrics, domains) : [...metrics.timeline];
 
   const hourly = metrics.hourly.map((bucket) => ({ ...bucket }));
-  if (metrics.vscodeTimeline?.length) {
+  if (allowVscode && metrics.vscodeTimeline?.length) {
     for (const entry of metrics.vscodeTimeline) {
       const duration = typeof entry.durationMs === 'number'
         ? entry.durationMs
@@ -2049,6 +2276,11 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
 
   return {
     ...metrics,
+    vscodeActiveMs: vscodeMs,
+    vscodeTimeline: allowVscode ? metrics.vscodeTimeline ?? [] : [],
+    vscodeSwitchHourly: allowVscode
+      ? metrics.vscodeSwitchHourly ?? Array.from({ length: 24 }, () => 0)
+      : Array.from({ length: 24 }, () => 0),
     domains,
     timeline,
     hourly,

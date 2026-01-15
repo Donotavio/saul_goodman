@@ -1,121 +1,46 @@
 const vscode = require('vscode');
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
-const { fetchWithTimeout, postWithNodeHttp, parsePort } = require('./net-helpers');
+const { fetchWithTimeout, parsePort } = require('./net-helpers');
+const apiClient = require('./apiClient');
+const { BufferedEventQueue } = require('./queue/buffered-event-queue');
+const { HeartbeatTracker } = require('./tracking/heartbeat-tracker');
+const { registerExtraEventCollectors } = require('./tracking/extra-events');
+const { createHeartbeatFactory } = require('./tracking/heartbeat-factory');
+const { showReports } = require('./reports/report-view');
 
 let statusBarItem = null;
 let statusPollTimer = null;
-let trackerInstance = null;
+let trackingController = null;
+let localesRootDir = null;
 
-const SUPPORTED_LANGUAGES = ['en-US', 'pt-BR', 'es-419'];
-const DEFAULT_LANGUAGE = 'en-US';
+const SUPPORTED_LOCALES = ['en_US', 'pt_BR', 'es_419'];
+const DEFAULT_LOCALE = 'en_US';
 const LANGUAGE_ALIASES = {
-  'en': 'en-US',
-  'en-us': 'en-US',
-  'pt': 'pt-BR',
-  'pt-br': 'pt-BR',
-  'es': 'es-419',
-  'es-419': 'es-419'
+  'en': 'en_US',
+  'en-us': 'en_US',
+  'pt': 'pt_BR',
+  'pt-br': 'pt_BR',
+  'es': 'es_419',
+  'es-419': 'es_419'
 };
-
-const MESSAGES = {
-  'en-US': {
-    'status.index.text': 'Saul Index: {index}',
-    'status.index.tooltip': 'Index {index} — updated at {time}{port}',
-    'status.portSuffix': ' (port {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon connected',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon unavailable',
-    'status.disabled.text': 'SaulDaemon disabled',
-    'status.disabled.tooltip': 'VS Code integration is disabled',
-    'status.loading.text': 'Checking SaulDaemon...',
-    'status.loading.tooltip': 'Checking SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: pairing key',
-    'prepare.keyPrompt': 'Enter the same key configured in the Chrome extension.',
-    'prepare.portTitle': 'Saul Goodman: daemon port',
-    'prepare.portPrompt': 'Local HTTP port of the daemon.',
-    'prepare.missingDaemon': 'Cannot find saul-daemon/index.cjs. Open the repository root before starting the daemon.',
-    'prepare.started': 'SaulDaemon started in background (port {port}, key {key}). Logs saved at {logFile}.',
-    'prepare.startFailed': 'Failed to start SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configure a pairing key',
-    'prompt.missingKey.prompt': 'Enter the same key configured in the Chrome extension.',
-    'prompt.missingKey.warning': 'Without a pairing key we cannot send active time. Open settings now?',
-    'prompt.missingKey.openSettings': 'Open settings',
-    'test.healthSuccess': 'SaulDaemon responded at {origin}',
-    'test.healthStatus': 'SaulDaemon responded with status {status} at {origin}',
-    'test.healthFailure': 'SaulDaemon did not respond at {origin}: {error}',
-    'log.heartbeatFailed': 'Heartbeat request failed',
-    'log.publishIndexFailed': 'Failed to publish index to SaulDaemon'
-  },
-  'pt-BR': {
-    'status.index.text': 'Índice do Saul: {index}',
-    'status.index.tooltip': 'Índice {index} — atualizado em {time}{port}',
-    'status.portSuffix': ' (porta {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon conectado',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon indisponível',
-    'status.disabled.text': 'SaulDaemon desativado',
-    'status.disabled.tooltip': 'Integração VS Code desativada',
-    'status.loading.text': 'Verificando SaulDaemon...',
-    'status.loading.tooltip': 'Verificando SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: pairing key do SaulDaemon',
-    'prepare.keyPrompt': 'Use a mesma chave configurada na extensão Chrome.',
-    'prepare.portTitle': 'Saul Goodman: porta do SaulDaemon',
-    'prepare.portPrompt': 'Porta HTTP local do daemon.',
-    'prepare.missingDaemon': 'Pasta saul-daemon/index.cjs não encontrada. Abra o repositório raiz antes de iniciar o daemon.',
-    'prepare.started': 'SaulDaemon iniciado em background (porta {port}, key {key}). Logs em {logFile}.',
-    'prepare.startFailed': 'Falha ao iniciar SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configure uma pairing key',
-    'prompt.missingKey.prompt': 'Digite a mesma chave configurada na extensão Chrome.',
-    'prompt.missingKey.warning': 'Sem pairing key não enviaremos tempo. Abrir configurações agora?',
-    'prompt.missingKey.openSettings': 'Abrir configurações',
-    'test.healthSuccess': 'SaulDaemon respondeu em {origin}',
-    'test.healthStatus': 'SaulDaemon respondeu com status {status} em {origin}',
-    'test.healthFailure': 'SaulDaemon não respondeu em {origin}: {error}',
-    'log.heartbeatFailed': 'Falha ao enviar heartbeat',
-    'log.publishIndexFailed': 'Falha ao publicar índice para o SaulDaemon'
-  },
-  'es-419': {
-    'status.index.text': 'Índice de Saul: {index}',
-    'status.index.tooltip': 'Índice {index} — actualizado a las {time}{port}',
-    'status.portSuffix': ' (puerto {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon conectado',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon no disponible',
-    'status.disabled.text': 'SaulDaemon deshabilitado',
-    'status.disabled.tooltip': 'Integración VS Code desactivada',
-    'status.loading.text': 'Verificando SaulDaemon...',
-    'status.loading.tooltip': 'Verificando SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: clave de emparejamiento',
-    'prepare.keyPrompt': 'Usa la misma clave configurada en la extensión de Chrome.',
-    'prepare.portTitle': 'Saul Goodman: puerto del SaulDaemon',
-    'prepare.portPrompt': 'Puerto HTTP local del daemon.',
-    'prepare.missingDaemon': 'No se encontró saul-daemon/index.cjs. Abre la raíz del repositorio antes de iniciar el daemon.',
-    'prepare.started': 'SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}.',
-    'prepare.startFailed': 'Error al iniciar SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configura una clave',
-    'prompt.missingKey.prompt': 'Ingresa la misma clave configurada en la extensión de Chrome.',
-    'prompt.missingKey.warning': 'Sin clave de emparejamiento no enviaremos tiempo. ¿Abrir configuraciones ahora?',
-    'prompt.missingKey.openSettings': 'Abrir configuraciones',
-    'test.healthSuccess': 'SaulDaemon respondió en {origin}',
-    'test.healthStatus': 'SaulDaemon respondió con estado {status} en {origin}',
-    'test.healthFailure': 'SaulDaemon no respondió en {origin}: {error}',
-    'log.heartbeatFailed': 'Error al enviar el heartbeat',
-    'log.publishIndexFailed': 'Error al publicar el índice en SaulDaemon'
-  }
+const CONFIG_LOCALE_MAP = {
+  'en-US': 'en_US',
+  'pt-BR': 'pt_BR',
+  'es-419': 'es_419'
 };
+const messagesCache = new Map();
 
-function getPreferredLanguage() {
+function getPreferredLocale() {
   try {
     const config = vscode.workspace.getConfiguration('saulGoodman');
     const configured = config.get('language', 'auto');
-    if (configured && configured !== 'auto' && SUPPORTED_LANGUAGES.includes(configured)) {
-      return configured;
+    if (configured && configured !== 'auto') {
+      const mapped = CONFIG_LOCALE_MAP[configured];
+      if (mapped && SUPPORTED_LOCALES.includes(mapped)) {
+        return mapped;
+      }
     }
   } catch {
     // ignore configuration errors
@@ -128,15 +53,38 @@ function getPreferredLanguage() {
   if (LANGUAGE_ALIASES[short]) {
     return LANGUAGE_ALIASES[short];
   }
-  return DEFAULT_LANGUAGE;
+  return DEFAULT_LOCALE;
 }
 
 function localize(key, params) {
-  const lang = getPreferredLanguage();
-  const bundle = MESSAGES[lang] ?? MESSAGES[DEFAULT_LANGUAGE];
-  const fallback = MESSAGES[DEFAULT_LANGUAGE];
+  const locale = getPreferredLocale();
+  const bundle = loadMessages(locale) ?? {};
+  const fallback = loadMessages(DEFAULT_LOCALE) ?? {};
   const template = bundle[key] ?? fallback[key] ?? key;
   return formatMessage(template, params);
+}
+
+function loadMessages(locale) {
+  if (messagesCache.has(locale)) {
+    return messagesCache.get(locale);
+  }
+  const rootDir = localesRootDir || path.join(__dirname, '..', '..', '_locales');
+  const filePath = path.join(rootDir, locale, 'messages.json');
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    const mapped = {};
+    for (const [key, value] of Object.entries(parsed)) {
+      if (value && typeof value === 'object' && typeof value.message === 'string') {
+        mapped[key] = value.message;
+      }
+    }
+    messagesCache.set(locale, mapped);
+    return mapped;
+  } catch {
+    messagesCache.set(locale, null);
+    return null;
+  }
 }
 
 function formatMessage(message, params = {}) {
@@ -146,24 +94,39 @@ function formatMessage(message, params = {}) {
   });
 }
 
-function formatTimestamp(value) {
-  const lang = getPreferredLanguage();
-  const date = new Date(typeof value === 'number' ? value : Date.now());
-  if (Number.isNaN(date.getTime())) {
-    return '';
+function formatDurationSeconds(seconds) {
+  if (!Number.isFinite(seconds)) {
+    return '--';
   }
-  return date.toLocaleString(lang);
+  const total = Math.round(seconds);
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+  return `${minutes}m`;
 }
 
 function activate(context) {
-  trackerInstance = new ActivityTracker();
-  context.subscriptions.push(trackerInstance);
+  localesRootDir = path.join(context.extensionPath, '..', '_locales');
+  trackingController = new TrackingController(context);
+  void trackingController.init();
+
   context.subscriptions.push(
-    vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand())
+    vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand()),
+    vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth()),
+    vscode.commands.registerCommand('saulGoodman.openReports', () => showReports(context, readConfig))
   );
+
   context.subscriptions.push(
-    vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth())
+    vscode.workspace.onDidChangeConfiguration((event) => {
+      if (event.affectsConfiguration('saulGoodman')) {
+        trackingController?.reloadConfig();
+        void updateStatusBar('unknown');
+      }
+    })
   );
+
   initStatusBar(context);
 }
 
@@ -172,120 +135,66 @@ function deactivate() {
     clearInterval(statusPollTimer);
     statusPollTimer = null;
   }
-  trackerInstance?.dispose?.();
-  trackerInstance = null;
+  trackingController?.dispose();
+  trackingController = null;
 }
 
-class ActivityTracker {
-  constructor() {
-    this.disposables = [];
-    this.lastActivity = Date.now();
-    this.lastBeat = Date.now();
-    this.windowFocused = true;
-    this.sessionId = null;
-    this.heartbeatTimer = null;
+class TrackingController {
+  constructor(context) {
+    this.context = context;
     this.config = readConfig();
+    this.queue = new BufferedEventQueue({
+      apiClient,
+      storageDir: context.globalStorageUri.fsPath,
+      apiBase: this.config.apiBase,
+      pairingKey: this.config.pairingKey,
+      enabled: this.config.enableTracking
+    });
+    this.buildHeartbeat = createHeartbeatFactory(context, () => this.config);
+    this.heartbeatTracker = new HeartbeatTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    registerExtraEventCollectors({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
     this.promptedMissingKey = false;
+  }
 
-    if (this.config.enabled && !this.config.pairingKey) {
-      void this.promptMissingKey();
-    }
-
-    this.disposables.push(
-      vscode.window.onDidChangeWindowState((state) => this.handleWindowStateChange(state)),
-      vscode.window.onDidChangeActiveTextEditor(() => this.bumpActivity()),
-      vscode.window.onDidChangeTextEditorSelection(() => this.bumpActivity()),
-      vscode.workspace.onDidChangeTextDocument(() => this.bumpActivity()),
-      vscode.workspace.onDidCloseTextDocument(() => this.bumpActivity()),
-      vscode.workspace.onDidChangeConfiguration((event) => {
-        if (event.affectsConfiguration('saulGoodman')) {
-          this.reloadConfig();
-        }
-      })
-    );
-
-    this.startHeartbeat();
+  async init() {
+    await this.queue.init();
+    this.queue.start();
+    this.applyConfig();
   }
 
   dispose() {
-    if (this.heartbeatTimer) {
-      clearInterval(this.heartbeatTimer);
-    }
-    this.disposables.forEach((d) => d.dispose());
+    this.queue.stop();
+    this.heartbeatTracker.dispose();
   }
 
   reloadConfig() {
     this.config = readConfig();
-    if (!this.config.pairingKey) {
-      void this.promptMissingKey();
+    this.queue.updateConfig({
+      apiBase: this.config.apiBase,
+      pairingKey: this.config.pairingKey,
+      enabled: this.config.enableTracking
+    });
+    this.applyConfig();
+  }
+
+  applyConfig() {
+    if (this.config.enableTracking) {
+      this.heartbeatTracker.start();
+      if (!this.config.pairingKey) {
+        void this.promptMissingKey();
+      }
     } else {
-      this.promptedMissingKey = false;
-    }
-  }
-
-  handleWindowStateChange(state) {
-    this.windowFocused = state.focused;
-    if (state.focused) {
-      this.bumpActivity(true);
-    }
-  }
-
-  bumpActivity(forceNewSession = false) {
-    this.lastActivity = Date.now();
-    if (!this.sessionId || forceNewSession) {
-      this.sessionId = createSessionId();
-      this.lastBeat = Date.now();
-    }
-  }
-
-  startHeartbeat() {
-    const period = Math.max(5000, Number(this.config.heartbeatIntervalMs ?? 15000));
-    this.heartbeatTimer = setInterval(() => this.sendHeartbeat(), period);
-  }
-
-  async sendHeartbeat() {
-    if (!this.config.enabled) {
-      this.sessionId = null;
-      this.lastBeat = Date.now();
-      return;
-    }
-
-    const now = Date.now();
-    const idleLimit = Math.max(10000, Number(this.config.idleThresholdMs ?? 60000));
-    const sinceActivity = now - this.lastActivity;
-    const shouldReport = this.windowFocused && sinceActivity <= idleLimit;
-    if (!shouldReport) {
-      this.sessionId = null;
-      this.lastBeat = now;
-      return;
-    }
-
-    if (!this.sessionId) {
-      this.sessionId = createSessionId();
-      this.lastBeat = now;
-      return;
-    }
-
-    const durationMs = Math.max(0, now - this.lastBeat);
-    this.lastBeat = now;
-
-    if (durationMs === 0) {
-      return;
-    }
-
-    if (!this.config.pairingKey) {
-      return;
-    }
-
-    try {
-      await postHeartbeat(this.config.apiBase, {
-        key: this.config.pairingKey,
-        sessionId: this.sessionId,
-        durationMs,
-        timestamp: now
-      });
-    } catch (error) {
-      console.warn('[saul-goodman-vscode] ', localize('log.heartbeatFailed'), error);
+      this.heartbeatTracker.dispose();
     }
   }
 
@@ -322,6 +231,7 @@ class ActivityTracker {
       const config = vscode.workspace.getConfiguration('saulGoodman');
       await config.update('pairingKey', key, vscode.ConfigurationTarget.Global);
       this.config.pairingKey = key;
+      this.queue.updateConfig({ pairingKey: key });
     } catch {
       this.promptedMissingKey = false;
     }
@@ -330,12 +240,18 @@ class ActivityTracker {
 
 function readConfig() {
   const config = vscode.workspace.getConfiguration('saulGoodman');
+  const enableTracking = config.get('enableTracking', config.get('enabled', true));
   return {
-    enabled: config.get('enabled', true),
+    enableTracking,
+    enableReportsInVscode: config.get('enableReportsInVscode', true),
+    enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     apiBase: config.get('apiBase', 'http://127.0.0.1:3123'),
     pairingKey: config.get('pairingKey', ''),
     heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
-    idleThresholdMs: config.get('idleThresholdMs', 60000)
+    idleThresholdMs: config.get('idleThresholdMs', 60000),
+    language: config.get('language', 'auto'),
+    hashFilePaths: config.get('hashFilePaths', true),
+    hashProjectNames: config.get('hashProjectNames', false)
   };
 }
 
@@ -366,7 +282,7 @@ async function prepareDaemonCommand() {
   }
   const parsedPort = parsePort(portInput.trim() || '3123');
   if (!parsedPort) {
-    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: 'Porta inválida (1-65535)' }));
+    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: 'Porta invalida (1-65535)' }));
     return;
   }
   const port = String(parsedPort);
@@ -410,7 +326,7 @@ async function prepareDaemonCommand() {
       localize('prepare.started', { port, key, logFile })
     );
     void updateStatusBar('ok', port);
-    trackerInstance?.reloadConfig?.();
+    trackingController?.reloadConfig?.();
   } catch (error) {
     vscode.window.showErrorMessage(localize('prepare.startFailed', { error: error.message }));
     void updateStatusBar('error');
@@ -429,28 +345,10 @@ function inferPortFromApiBase(apiBase) {
   }
 }
 
-function createSessionId() {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
-  }
-  try {
-    const bytes = crypto.randomBytes?.(16);
-    if (bytes) {
-      return `session-${Date.now()}-${bytes.toString('hex')}`;
-    }
-  } catch {
-    // ignore and fall back below
-  }
-  const fallback = typeof process !== 'undefined' && process.hrtime?.bigint
-    ? process.hrtime.bigint().toString(16)
-    : Date.now().toString(16);
-  return `session-${Date.now()}-${fallback}`;
-}
-
 async function testDaemonHealth() {
   const config = readConfig();
   const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
-  const url = new URL('/health', apiBase);
+  const url = new URL('/v1/health', apiBase);
   try {
     const res = await fetchWithTimeout(url.toString(), 4000);
     if (res.ok) {
@@ -487,14 +385,12 @@ async function updateStatusBar(state, port, stats) {
   }
   const portSuffix = port ? localize('status.portSuffix', { port }) : '';
   if (state === 'ok') {
-    if (stats && typeof stats.index === 'number') {
-      const roundedIndex = Math.round(stats.index);
-      const tooltipPort = portSuffix;
-      statusBarItem.text = `$(law) ${localize('status.index.text', { index: roundedIndex })}`;
-      statusBarItem.tooltip = localize('status.index.tooltip', {
-        index: stats.index.toFixed(1),
-        time: formatTimestamp(stats.updatedAt),
-        port: tooltipPort
+    if (stats && typeof stats.totalSeconds === 'number') {
+      const timeLabel = formatDurationSeconds(stats.totalSeconds);
+      statusBarItem.text = `$(law) ${localize('status.today.text', { time: timeLabel })}`;
+      statusBarItem.tooltip = localize('status.today.tooltip', {
+        time: timeLabel,
+        port: portSuffix
       });
     } else {
       statusBarItem.text = `$(debug-start) ${localize('status.on.text', { port: portSuffix })}`;
@@ -519,7 +415,7 @@ async function updateStatusBar(state, port, stats) {
 function startStatusPolling() {
   const run = async () => {
     const config = readConfig();
-    if (!config.enabled) {
+    if (!config.enableTracking) {
       await updateStatusBar('disabled');
       return;
     }
@@ -531,22 +427,24 @@ function startStatusPolling() {
     const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
     let endpoint;
     try {
-      endpoint = new URL('/v1/tracking/index', baseUrl);
+      endpoint = new URL('/v1/health', baseUrl);
     } catch {
       await updateStatusBar('error');
       return;
     }
-    endpoint.searchParams.set('key', key);
-    endpoint.searchParams.set('date', new Date().toISOString().slice(0, 10));
 
     try {
-      const res = await fetchWithTimeout(endpoint.toString(), 4000);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
+      const healthRes = await apiClient.getHealth(baseUrl);
+      if (!healthRes.ok) {
+        throw new Error(`HTTP ${healthRes.status}`);
       }
-      const body = await res.json();
-      await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), body);
-    } catch (error) {
+      const today = new Date().toISOString().slice(0, 10);
+      const summary = await apiClient.getSummaries(baseUrl, key, { start: today, end: today });
+      const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
+      await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
+        totalSeconds
+      });
+    } catch {
       await updateStatusBar('error');
     }
   };
@@ -556,33 +454,6 @@ function startStatusPolling() {
   }
   void run();
   statusPollTimer = setInterval(run, 60000);
-}
-
-async function postHeartbeat(apiBase, payload) {
-  const url = new URL('/v1/tracking/vscode/heartbeat', apiBase);
-  const body = JSON.stringify(payload);
-
-  if (typeof fetch === 'function') {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 5000);
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body,
-        signal: controller.signal
-      });
-      clearTimeout(timer);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      return;
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-
-  return postWithNodeHttp(url, body);
 }
 
 module.exports = {

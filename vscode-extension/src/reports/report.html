@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src {cspSource} https: http:; style-src {cspSource} 'unsafe-inline'; script-src 'nonce-{nonce}';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{styleUri}" />
+    <title>Saul Goodman VS Code Reports</title>
+  </head>
+  <body>
+    <main class="report">
+      <header class="report__header">
+        <div>
+          <h1>Saul Goodman · VS Code Reports</h1>
+          <p id="reportStatus" class="report__status">Carregando dados do SaulDaemon...</p>
+        </div>
+      </header>
+
+      <section id="reportsDisabled" class="card card--warning hidden">
+        <h2>Relatorios desativados</h2>
+        <p>Ative "Enable Reports in VS Code" nas configuracoes para visualizar os dados.</p>
+      </section>
+
+      <section id="reportContent" class="hidden">
+        <section class="card">
+          <h2>Filtros</h2>
+          <div class="filters">
+            <label>
+              Projeto
+              <select id="filterProject">
+                <option value="">Todos</option>
+              </select>
+            </label>
+            <label>
+              Linguagem
+              <select id="filterLanguage">
+                <option value="">Todas</option>
+              </select>
+            </label>
+            <label>
+              Maquina
+              <select id="filterMachine">
+                <option value="">Todas</option>
+              </select>
+            </label>
+            <div class="filters__actions">
+              <button id="applyFilters">Aplicar</button>
+              <button id="resetFilters" class="ghost">Limpar</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-grid">
+          <div class="card">
+            <h3>Hoje</h3>
+            <p id="statToday" class="stat-value">--</p>
+          </div>
+        </section>
+
+        <section class="grid-two">
+          <div class="card">
+            <h3>Projetos</h3>
+            <ul id="projectsList" class="data-list"></ul>
+          </div>
+          <div class="card">
+            <h3>Linguagens</h3>
+            <ul id="languagesList" class="data-list"></ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Summaries</h3>
+          <ul id="summariesList" class="summary-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script nonce="{nonce}">window.__SAUL_CONFIG__ = {config};</script>
+    <script nonce="{nonce}" src="{scriptUri}"></script>
+  </body>
+</html>
