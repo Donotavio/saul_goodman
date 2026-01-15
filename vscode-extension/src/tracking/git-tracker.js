@@ -160,7 +160,7 @@ class GitTracker {
     const workingTreeChanges = repo.state?.workingTreeChanges?.length || 0;
     const indexChanges = repo.state?.indexChanges?.length || 0;
 
-    if ((workingTreeChanges > 0 || indexChanges > 0) && indexChanges > 0) {
+    if (indexChanges > 0) {
       const diffStats = await this.getDiffStats(repo);
       this.lastDiffStatsCache.set(repoPath, diffStats);
       console.log('[Saul Git] Cached diff stats before commit:', diffStats);

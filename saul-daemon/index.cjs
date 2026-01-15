@@ -1123,6 +1123,7 @@ function handleVscodeDashboard(req, res, url) {
 
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
   const hourly = summarizeDurationsByHour(entry.durations, startMs, endMs, filters);
+  console.log('[saul-daemon] Hourly data:', hourly ? `${hourly.length} hours` : 'null/undefined');
 
   let totalCommits = 0;
   let totalFilesChanged = 0;
