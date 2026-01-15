@@ -29,7 +29,7 @@ function renderHourlyChart(hourlyData) {
   if (window.hourlyChartInstance) {
     window.hourlyChartInstance.destroy();
   }
-
+∏
   const ctx = canvas.getContext('2d');
   window.hourlyChartInstance = new Chart(ctx, {
     type: 'bar',

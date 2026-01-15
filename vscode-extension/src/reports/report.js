@@ -292,22 +292,30 @@
           {
             label: 'Coding',
             data: codingMinutes,
-            backgroundColor: '#3b82f6'
+            backgroundColor: '#2563eb',
+            borderColor: '#1e40af',
+            borderWidth: 1
           },
           {
             label: 'Debugging',
             data: debuggingMinutes,
-            backgroundColor: '#f59e0b'
+            backgroundColor: '#f97316',
+            borderColor: '#ea580c',
+            borderWidth: 1
           },
           {
             label: 'Building',
             data: buildingMinutes,
-            backgroundColor: '#10b981'
+            backgroundColor: '#059669',
+            borderColor: '#047857',
+            borderWidth: 1
           },
           {
             label: 'Testing',
             data: testingMinutes,
-            backgroundColor: '#8b5cf6'
+            backgroundColor: '#7c3aed',
+            borderColor: '#6d28d9',
+            borderWidth: 1
           }
         ]
       },
@@ -318,21 +326,40 @@
           x: {
             stacked: true,
             grid: { display: false },
-            ticks: { color: '#6b7280', font: { size: 10 } }
+            ticks: { color: '#1f2937', font: { size: 11, weight: '500' } }
           },
           y: {
             stacked: true,
             beginAtZero: true,
-            grid: { color: '#e5e7eb' },
-            ticks: { color: '#6b7280', font: { size: 10 } },
-            title: { display: true, text: 'Minutes', color: '#374151' }
+            grid: { color: '#d1d5db' },
+            ticks: { color: '#1f2937', font: { size: 11, weight: '500' } },
+            title: { display: true, text: 'Minutes', color: '#111827', font: { size: 12, weight: 'bold' } }
           }
         },
         plugins: {
           legend: {
             display: true,
             position: 'top',
-            labels: { color: '#374151', font: { size: 11 }, usePointStyle: true }
+            labels: { 
+              color: '#111827', 
+              font: { size: 12, weight: '600' }, 
+              usePointStyle: true,
+              padding: 15
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#374151',
+            borderWidth: 1,
+            padding: 12,
+            displayColors: true,
+            callbacks: {
+              label: function(context) {
+                return `${context.dataset.label}: ${context.parsed.y} min`;
+              }
+            }
           }
         }
       }

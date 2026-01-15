@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; connect-src http://127.0.0.1:* http://localhost:*; img-src {cspSource} https: http: data:; style-src {cspSource} 'unsafe-inline'; script-src 'nonce-{nonce}';"
+      content="default-src 'none'; connect-src http://127.0.0.1:* http://localhost:*; img-src {cspSource} https: http: data:; style-src {cspSource} 'unsafe-inline'; script-src 'nonce-{nonce}' https://cdn.jsdelivr.net;"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{styleUri}" />
@@ -120,14 +120,10 @@
             <div id="editorInfo"></div>
           </div>
         </section>
-
-        <section class="card">
-          <h3>Editor Info</h3>
-          <div id="editorInfo"></div>
-        </section>
       </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script nonce="{nonce}">window.__SAUL_CONFIG__ = {config};</script>
     <script nonce="{nonce}">window.__SAUL_I18N__ = {i18n};</script>
     <script nonce="{nonce}" src="{scriptUri}"></script>

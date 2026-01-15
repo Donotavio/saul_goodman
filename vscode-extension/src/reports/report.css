@@ -374,9 +374,9 @@ p {
 
 .chart-subtitle {
   margin: 0 0 16px 0;
-  color: #666;
+  color: #333;
   font-size: 0.85rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .chart-container {
@@ -395,8 +395,9 @@ p {
 
 .empty-state {
   text-align: center;
-  color: #999;
+  color: #555;
   padding: 60px 20px;
   font-size: 0.9rem;
   font-style: italic;
+  font-weight: 500;
 }
