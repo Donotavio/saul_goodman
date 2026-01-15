@@ -2468,85 +2468,85 @@
   "seoTitle": {
     "message": "Saul Goodman - Anti-Procrastination Extension"
   },
-  "status.today.text": {
+  "status_today_text": {
     "message": "Saul Today: {time}"
   },
-  "status.today.tooltip": {
+  "status_today_tooltip": {
     "message": "Tracked {time} today{port}"
   },
-  "status.portSuffix": {
+  "status_port_suffix": {
     "message": " (port {port})"
   },
-  "status.on.text": {
+  "status_on_text": {
     "message": "SaulDaemon ON{port}"
   },
-  "status.on.tooltip": {
+  "status_on_tooltip": {
     "message": "SaulDaemon connected"
   },
-  "status.off.text": {
+  "status_off_text": {
     "message": "SaulDaemon OFF"
   },
-  "status.off.tooltip": {
+  "status_off_tooltip": {
     "message": "SaulDaemon unavailable"
   },
-  "status.disabled.text": {
+  "status_disabled_text": {
     "message": "Tracking off"
   },
-  "status.disabled.tooltip": {
+  "status_disabled_tooltip": {
     "message": "Enable tracking to resume heartbeats"
   },
-  "status.loading.text": {
+  "status_loading_text": {
     "message": "Checking SaulDaemon..."
   },
-  "status.loading.tooltip": {
+  "status_loading_tooltip": {
     "message": "Checking SaulDaemon"
   },
-  "prepare.keyTitle": {
+  "prepare_key_title": {
     "message": "Saul Goodman: pairing key"
   },
-  "prepare.keyPrompt": {
+  "prepare_key_prompt": {
     "message": "Enter the same key configured in the Chrome extension."
   },
-  "prepare.portTitle": {
+  "prepare_port_title": {
     "message": "Saul Goodman: daemon port"
   },
-  "prepare.portPrompt": {
+  "prepare_port_prompt": {
     "message": "Local HTTP port of the daemon."
   },
-  "prepare.missingDaemon": {
+  "prepare_missing_daemon": {
     "message": "Cannot find saul-daemon/index.cjs. Open the repository root before starting the daemon."
   },
-  "prepare.started": {
+  "prepare_started": {
     "message": "SaulDaemon started in background (port {port}, key {key}). Logs saved at {logFile}."
   },
-  "prepare.startFailed": {
+  "prepare_start_failed": {
     "message": "Failed to start SaulDaemon: {error}"
   },
-  "prompt.missingKey.title": {
+  "prompt_missing_key_title": {
     "message": "Saul Goodman: configure a pairing key"
   },
-  "prompt.missingKey.prompt": {
+  "prompt_missing_key_prompt": {
     "message": "Enter the same key configured in the Chrome extension."
   },
-  "prompt.missingKey.warning": {
+  "prompt_missing_key_warning": {
     "message": "Without a pairing key we cannot send heartbeats. Open settings now?"
   },
-  "prompt.missingKey.openSettings": {
+  "prompt_missing_key_open_settings": {
     "message": "Open settings"
   },
-  "test.healthSuccess": {
+  "test_health_success": {
     "message": "SaulDaemon responded at {origin}"
   },
-  "test.healthStatus": {
+  "test_health_status": {
     "message": "SaulDaemon responded with status {status} at {origin}"
   },
-  "test.healthFailure": {
+  "test_health_failure": {
     "message": "SaulDaemon did not respond at {origin}: {error}"
   },
-  "log.heartbeatFailed": {
+  "log_heartbeat_failed": {
     "message": "Heartbeat request failed"
   },
-  "log.publishIndexFailed": {
+  "log_publish_index_failed": {
     "message": "Failed to publish index to SaulDaemon"
   },
   "shareCopied": {
@@ -2857,5 +2857,59 @@
   },
   "vscodeTitle": {
     "message": "Turn your editor into a productivity asset."
+  },
+  "vscode_reports_disabled": {
+    "message": "Reports disabled"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Enable \"Enable Reports in VS Code\" in settings to view the data."
+  },
+  "vscode_reports_loading": {
+    "message": "Loading data from SaulDaemon..."
+  },
+  "vscode_reports_error": {
+    "message": "Error loading data from SaulDaemon."
+  },
+  "vscode_reports_synced": {
+    "message": "Data synchronized."
+  },
+  "vscode_reports_configure": {
+    "message": "Configure the daemon URL and pairing key."
+  },
+  "vscode_reports_filter_project": {
+    "message": "Project"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Language"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Machine"
+  },
+  "vscode_reports_filter_all": {
+    "message": "All"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Apply"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Clear"
+  },
+  "vscode_reports_today": {
+    "message": "Today"
+  },
+  "vscode_reports_projects": {
+    "message": "Projects"
+  },
+  "vscode_reports_languages": {
+    "message": "Languages"
+  },
+  "vscode_reports_summaries": {
+    "message": "Summaries"
+  },
+  "vscode_reports_no_data": {
+    "message": "No data."
+  },
+  "vscode_reports_no_records": {
+    "message": "No records."
   }
 }

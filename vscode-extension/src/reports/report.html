@@ -20,65 +20,66 @@
       </header>
 
       <section id="reportsDisabled" class="card card--warning hidden">
-        <h2>Relatorios desativados</h2>
-        <p>Ative "Enable Reports in VS Code" nas configuracoes para visualizar os dados.</p>
+        <h2 id="disabledTitle">Reports disabled</h2>
+        <p id="disabledDetail">Enable "Enable Reports in VS Code" in settings to view the data.</p>
       </section>
 
       <section id="reportContent" class="hidden">
         <section class="card">
-          <h2>Filtros</h2>
+          <h2 id="filtersTitle">Filters</h2>
           <div class="filters">
             <label>
-              Projeto
+              <span id="labelProject">Project</span>
               <select id="filterProject">
-                <option value="">Todos</option>
+                <option value="">All</option>
               </select>
             </label>
             <label>
-              Linguagem
+              <span id="labelLanguage">Language</span>
               <select id="filterLanguage">
-                <option value="">Todas</option>
+                <option value="">All</option>
               </select>
             </label>
             <label>
-              Maquina
+              <span id="labelMachine">Machine</span>
               <select id="filterMachine">
-                <option value="">Todas</option>
+                <option value="">All</option>
               </select>
             </label>
             <div class="filters__actions">
-              <button id="applyFilters">Aplicar</button>
-              <button id="resetFilters" class="ghost">Limpar</button>
+              <button id="applyFilters">Apply</button>
+              <button id="resetFilters" class="ghost">Clear</button>
             </div>
           </div>
         </section>
 
         <section class="stats-grid">
           <div class="card">
-            <h3>Hoje</h3>
+            <h3 id="todayTitle">Today</h3>
             <p id="statToday" class="stat-value">--</p>
           </div>
         </section>
 
         <section class="grid-two">
           <div class="card">
-            <h3>Projetos</h3>
+            <h3 id="projectsTitle">Projects</h3>
             <ul id="projectsList" class="data-list"></ul>
           </div>
           <div class="card">
-            <h3>Linguagens</h3>
+            <h3 id="languagesTitle">Languages</h3>
             <ul id="languagesList" class="data-list"></ul>
           </div>
         </section>
 
         <section class="card">
-          <h3>Summaries</h3>
+          <h3 id="summariesTitle">Summaries</h3>
           <ul id="summariesList" class="summary-list"></ul>
         </section>
       </section>
     </main>
 
     <script nonce="{nonce}">window.__SAUL_CONFIG__ = {config};</script>
+    <script nonce="{nonce}">window.__SAUL_I18N__ = {i18n};</script>
     <script nonce="{nonce}" src="{scriptUri}"></script>
   </body>
 </html>

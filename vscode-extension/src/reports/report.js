@@ -1,5 +1,6 @@
 (function () {
   const config = window.__SAUL_CONFIG__ || {};
+  const i18n = window.__SAUL_I18N__ || {};
   const statusEl = document.getElementById('reportStatus');
   const disabledEl = document.getElementById('reportsDisabled');
   const contentEl = document.getElementById('reportContent');
@@ -16,15 +17,43 @@
   const languagesList = document.getElementById('languagesList');
   const summariesList = document.getElementById('summariesList');
 
+  function initI18n() {
+    const disabledTitle = document.getElementById('disabledTitle');
+    const disabledDetail = document.getElementById('disabledDetail');
+    const filtersTitle = document.getElementById('filtersTitle');
+    const labelProject = document.getElementById('labelProject');
+    const labelLanguage = document.getElementById('labelLanguage');
+    const labelMachine = document.getElementById('labelMachine');
+    const todayTitle = document.getElementById('todayTitle');
+    const projectsTitle = document.getElementById('projectsTitle');
+    const languagesTitle = document.getElementById('languagesTitle');
+    const summariesTitle = document.getElementById('summariesTitle');
+
+    if (disabledTitle) disabledTitle.textContent = i18n.disabled || 'Reports disabled';
+    if (disabledDetail) disabledDetail.textContent = i18n.disabledDetail || 'Enable settings to view data.';
+    if (filtersTitle) filtersTitle.textContent = 'Filters';
+    if (labelProject) labelProject.textContent = i18n.filterProject || 'Project';
+    if (labelLanguage) labelLanguage.textContent = i18n.filterLanguage || 'Language';
+    if (labelMachine) labelMachine.textContent = i18n.filterMachine || 'Machine';
+    if (applyBtn) applyBtn.textContent = i18n.filterApply || 'Apply';
+    if (resetBtn) resetBtn.textContent = i18n.filterClear || 'Clear';
+    if (todayTitle) todayTitle.textContent = i18n.today || 'Today';
+    if (projectsTitle) projectsTitle.textContent = i18n.projects || 'Projects';
+    if (languagesTitle) languagesTitle.textContent = i18n.languages || 'Languages';
+    if (summariesTitle) summariesTitle.textContent = i18n.summaries || 'Summaries';
+  }
+
+  initI18n();
+
   if (!config.enableReportsInVscode) {
     disabledEl.classList.remove('hidden');
-    statusEl.textContent = 'Relatorios desativados.';
+    statusEl.textContent = i18n.disabled || 'Reports disabled.';
     return;
   }
 
   if (!config.apiBase || !config.pairingKey) {
     disabledEl.classList.remove('hidden');
-    statusEl.textContent = 'Configure a URL do daemon e a pairing key.';
+    statusEl.textContent = i18n.configure || 'Configure daemon URL and pairing key.';
     return;
   }
 
@@ -41,7 +70,7 @@
   void refresh();
 
   async function refresh() {
-    statusEl.textContent = 'Carregando dados do SaulDaemon...';
+    statusEl.textContent = i18n.loading || 'Loading...';
     const params = {
       start: todayKey(),
       end: todayKey(),
@@ -69,9 +98,9 @@
       renderList(languagesList, languages.data);
       renderSummaries(summariesList, summaries?.data?.days || []);
 
-      statusEl.textContent = 'Dados sincronizados.';
+      statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
-      statusEl.textContent = 'Erro ao carregar dados do SaulDaemon.';
+      statusEl.textContent = i18n.error || 'Error loading data.';
     }
   }
 
@@ -95,7 +124,7 @@
       return;
     }
     const existing = select.value;
-    select.innerHTML = '<option value="">Todos</option>';
+    select.innerHTML = `<option value="">${i18n.filterAll || 'All'}</option>`;
     data.forEach((item) => {
       const option = document.createElement('option');
       option.value = item.name || item.id || '';
@@ -109,7 +138,7 @@
     list.innerHTML = '';
     if (!Array.isArray(items) || !items.length) {
       const li = document.createElement('li');
-      li.textContent = 'Sem dados.';
+      li.textContent = i18n.noData || 'No data.';
       list.appendChild(li);
       return;
     }
@@ -124,7 +153,7 @@
     list.innerHTML = '';
     if (!Array.isArray(days) || !days.length) {
       const li = document.createElement('li');
-      li.textContent = 'Sem registros.';
+      li.textContent = i18n.noRecords || 'No records.';
       list.appendChild(li);
       return;
     }

@@ -2468,85 +2468,85 @@
   "seoTitle": {
     "message": "Saul Goodman - Extensión Anti-Procrastinación"
   },
-  "status.today.text": {
+  "status_today_text": {
     "message": "Saul hoy: {time}"
   },
-  "status.today.tooltip": {
+  "status_today_tooltip": {
     "message": "Tiempo hoy {time}{port}"
   },
-  "status.portSuffix": {
+  "status_port_suffix": {
     "message": " (puerto {port})"
   },
-  "status.on.text": {
+  "status_on_text": {
     "message": "SaulDaemon ON{port}"
   },
-  "status.on.tooltip": {
+  "status_on_tooltip": {
     "message": "SaulDaemon conectado"
   },
-  "status.off.text": {
+  "status_off_text": {
     "message": "SaulDaemon OFF"
   },
-  "status.off.tooltip": {
+  "status_off_tooltip": {
     "message": "SaulDaemon no disponible"
   },
-  "status.disabled.text": {
+  "status_disabled_text": {
     "message": "Tracking off"
   },
-  "status.disabled.tooltip": {
+  "status_disabled_tooltip": {
     "message": "Activa el tracking para enviar heartbeats"
   },
-  "status.loading.text": {
+  "status_loading_text": {
     "message": "Verificando SaulDaemon..."
   },
-  "status.loading.tooltip": {
+  "status_loading_tooltip": {
     "message": "Verificando SaulDaemon"
   },
-  "prepare.keyTitle": {
+  "prepare_key_title": {
     "message": "Saul Goodman: clave de emparejamiento"
   },
-  "prepare.keyPrompt": {
+  "prepare_key_prompt": {
     "message": "Usa la misma clave configurada en la extension de Chrome."
   },
-  "prepare.portTitle": {
+  "prepare_port_title": {
     "message": "Saul Goodman: puerto del SaulDaemon"
   },
-  "prepare.portPrompt": {
+  "prepare_port_prompt": {
     "message": "Puerto HTTP local del daemon."
   },
-  "prepare.missingDaemon": {
+  "prepare_missing_daemon": {
     "message": "No se encontro saul-daemon/index.cjs. Abre la raiz del repositorio antes de iniciar el daemon."
   },
-  "prepare.started": {
+  "prepare_started": {
     "message": "SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}."
   },
-  "prepare.startFailed": {
+  "prepare_start_failed": {
     "message": "Error al iniciar SaulDaemon: {error}"
   },
-  "prompt.missingKey.title": {
+  "prompt_missing_key_title": {
     "message": "Saul Goodman: configura una clave"
   },
-  "prompt.missingKey.prompt": {
+  "prompt_missing_key_prompt": {
     "message": "Ingresa la misma clave configurada en la extension de Chrome."
   },
-  "prompt.missingKey.warning": {
+  "prompt_missing_key_warning": {
     "message": "Sin clave no enviaremos heartbeats. Abrir configuraciones ahora?"
   },
-  "prompt.missingKey.openSettings": {
+  "prompt_missing_key_open_settings": {
     "message": "Abrir configuraciones"
   },
-  "test.healthSuccess": {
+  "test_health_success": {
     "message": "SaulDaemon respondio en {origin}"
   },
-  "test.healthStatus": {
+  "test_health_status": {
     "message": "SaulDaemon respondio con estado {status} en {origin}"
   },
-  "test.healthFailure": {
+  "test_health_failure": {
     "message": "SaulDaemon no respondio en {origin}: {error}"
   },
-  "log.heartbeatFailed": {
+  "log_heartbeat_failed": {
     "message": "Error al enviar el heartbeat"
   },
-  "log.publishIndexFailed": {
+  "log_publish_index_failed": {
     "message": "Error al publicar el indice en SaulDaemon"
   },
   "shareCopied": {
@@ -2856,6 +2856,60 @@
     "message": "Ver guía rápida"
   },
   "vscodeTitle": {
-    "message": "Transforma el editor en un activo de productividad."
+    "message": "Convierte tu editor en un activo de productividad."
+  },
+  "vscode_reports_disabled": {
+    "message": "Informes deshabilitados"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Activa \"Enable Reports in VS Code\" en la configuración para ver los datos."
+  },
+  "vscode_reports_loading": {
+    "message": "Cargando datos de SaulDaemon..."
+  },
+  "vscode_reports_error": {
+    "message": "Error al cargar datos de SaulDaemon."
+  },
+  "vscode_reports_synced": {
+    "message": "Datos sincronizados."
+  },
+  "vscode_reports_configure": {
+    "message": "Configura la URL del daemon y la clave de emparejamiento."
+  },
+  "vscode_reports_filter_project": {
+    "message": "Proyecto"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Lenguaje"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Máquina"
+  },
+  "vscode_reports_filter_all": {
+    "message": "Todos"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Aplicar"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Limpiar"
+  },
+  "vscode_reports_today": {
+    "message": "Hoy"
+  },
+  "vscode_reports_projects": {
+    "message": "Proyectos"
+  },
+  "vscode_reports_languages": {
+    "message": "Lenguajes"
+  },
+  "vscode_reports_summaries": {
+    "message": "Resúmenes"
+  },
+  "vscode_reports_no_data": {
+    "message": "Sin datos."
+  },
+  "vscode_reports_no_records": {
+    "message": "Sin registros."
   }
 }

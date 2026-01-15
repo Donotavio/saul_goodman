@@ -115,7 +115,7 @@ function activate(context) {
   context.subscriptions.push(
     vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand()),
     vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth()),
-    vscode.commands.registerCommand('saulGoodman.openReports', () => showReports(context, readConfig))
+    vscode.commands.registerCommand('saulGoodman.openReports', () => showReports(context, readConfig, getReportI18n))
   );
 
   context.subscriptions.push(
@@ -205,8 +205,8 @@ class TrackingController {
     this.promptedMissingKey = true;
     try {
       const value = await vscode.window.showInputBox({
-        title: localize('prompt.missingKey.title'),
-        prompt: localize('prompt.missingKey.prompt'),
+        title: localize('prompt_missing_key_title'),
+        prompt: localize('prompt_missing_key_prompt'),
         placeHolder: 'ex: teste-123',
         ignoreFocusOut: true
       });
@@ -215,11 +215,11 @@ class TrackingController {
       if (!key) {
         await vscode.window
           .showWarningMessage(
-            localize('prompt.missingKey.warning'),
-            localize('prompt.missingKey.openSettings')
+            localize('prompt_missing_key_warning'),
+            localize('prompt_missing_key_open_settings')
           )
           .then((choice) => {
-            if (choice === localize('prompt.missingKey.openSettings')) {
+            if (choice === localize('prompt_missing_key_open_settings')) {
               void vscode.commands.executeCommand(
                 'workbench.action.openSettings',
                 'saulGoodman.pairingKey'
@@ -236,6 +236,29 @@ class TrackingController {
       this.promptedMissingKey = false;
     }
   }
+}
+
+function getReportI18n() {
+  return {
+    disabled: localize('vscode_reports_disabled'),
+    disabledDetail: localize('vscode_reports_disabled_detail'),
+    loading: localize('vscode_reports_loading'),
+    error: localize('vscode_reports_error'),
+    synced: localize('vscode_reports_synced'),
+    configure: localize('vscode_reports_configure'),
+    filterProject: localize('vscode_reports_filter_project'),
+    filterLanguage: localize('vscode_reports_filter_language'),
+    filterMachine: localize('vscode_reports_filter_machine'),
+    filterAll: localize('vscode_reports_filter_all'),
+    filterApply: localize('vscode_reports_filter_apply'),
+    filterClear: localize('vscode_reports_filter_clear'),
+    today: localize('vscode_reports_today'),
+    projects: localize('vscode_reports_projects'),
+    languages: localize('vscode_reports_languages'),
+    summaries: localize('vscode_reports_summaries'),
+    noData: localize('vscode_reports_no_data'),
+    noRecords: localize('vscode_reports_no_records')
+  };
 }
 
 function readConfig() {
@@ -258,8 +281,8 @@ function readConfig() {
 async function prepareDaemonCommand() {
   const config = readConfig();
   const keyInput = await vscode.window.showInputBox({
-    title: localize('prepare.keyTitle'),
-    prompt: localize('prepare.keyPrompt'),
+    title: localize('prepare_key_title'),
+    prompt: localize('prepare_key_prompt'),
     value: config.pairingKey?.trim() || '',
     ignoreFocusOut: true
   });
@@ -272,8 +295,8 @@ async function prepareDaemonCommand() {
     .update('pairingKey', key, vscode.ConfigurationTarget.Global);
 
   const portInput = await vscode.window.showInputBox({
-    title: localize('prepare.portTitle'),
-    prompt: localize('prepare.portPrompt'),
+    title: localize('prepare_port_title'),
+    prompt: localize('prepare_port_prompt'),
     value: inferPortFromApiBase(config.apiBase) || '3123',
     ignoreFocusOut: true
   });
@@ -282,7 +305,7 @@ async function prepareDaemonCommand() {
   }
   const parsedPort = parsePort(portInput.trim() || '3123');
   if (!parsedPort) {
-    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: 'Porta invalida (1-65535)' }));
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: 'Porta invalida (1-65535)' }));
     return;
   }
   const port = String(parsedPort);
@@ -293,7 +316,7 @@ async function prepareDaemonCommand() {
   const daemonExists = Boolean(daemonIndex && fs.existsSync(daemonIndex));
 
   if (!daemonExists) {
-    vscode.window.showErrorMessage(localize('prepare.missingDaemon'));
+    vscode.window.showErrorMessage(localize('prepare_missing_daemon'));
     return;
   }
 
@@ -323,12 +346,12 @@ async function prepareDaemonCommand() {
       fs.closeSync(stderrFd);
     }
     vscode.window.showInformationMessage(
-      localize('prepare.started', { port, key, logFile })
+      localize('prepare_started', { port, key, logFile })
     );
     void updateStatusBar('ok', port);
     trackingController?.reloadConfig?.();
   } catch (error) {
-    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: error.message }));
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: error.message }));
     void updateStatusBar('error');
   }
 }
@@ -352,17 +375,17 @@ async function testDaemonHealth() {
   try {
     const res = await fetchWithTimeout(url.toString(), 4000);
     if (res.ok) {
-      vscode.window.showInformationMessage(localize('test.healthSuccess', { origin: url.origin }));
+      vscode.window.showInformationMessage(localize('test_health_success', { origin: url.origin }));
       void updateStatusBar('ok', url.port || '3123');
       return;
     }
     vscode.window.showWarningMessage(
-      localize('test.healthStatus', { status: res.status, origin: url.origin })
+      localize('test_health_status', { status: res.status, origin: url.origin })
     );
     void updateStatusBar('error');
   } catch (error) {
     vscode.window.showWarningMessage(
-      localize('test.healthFailure', { origin: url.origin, error: error.message })
+      localize('test_health_failure', { origin: url.origin, error: error.message })
     );
     void updateStatusBar('error');
   }
@@ -371,8 +394,8 @@ async function testDaemonHealth() {
 function initStatusBar(context) {
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   statusBarItem.command = 'saulGoodman.testDaemon';
-  statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
-  statusBarItem.tooltip = localize('status.loading.tooltip');
+  statusBarItem.text = `$(loading~spin) ${localize('status_loading_text')}`;
+  statusBarItem.tooltip = localize('status_loading_tooltip');
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
   void updateStatusBar('unknown');
@@ -383,32 +406,32 @@ async function updateStatusBar(state, port, stats) {
   if (!statusBarItem) {
     return;
   }
-  const portSuffix = port ? localize('status.portSuffix', { port }) : '';
+  const portSuffix = port ? localize('status_port_suffix', { port }) : '';
   if (state === 'ok') {
     if (stats && typeof stats.totalSeconds === 'number') {
       const timeLabel = formatDurationSeconds(stats.totalSeconds);
-      statusBarItem.text = `$(law) ${localize('status.today.text', { time: timeLabel })}`;
-      statusBarItem.tooltip = localize('status.today.tooltip', {
+      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}`;
+      statusBarItem.tooltip = localize('status_today_tooltip', {
         time: timeLabel,
         port: portSuffix
       });
     } else {
-      statusBarItem.text = `$(debug-start) ${localize('status.on.text', { port: portSuffix })}`;
-      statusBarItem.tooltip = localize('status.on.tooltip');
+      statusBarItem.text = `$(debug-start) ${localize('status_on_text', { port: portSuffix })}`;
+      statusBarItem.tooltip = localize('status_on_tooltip');
     }
     statusBarItem.color = undefined;
   } else if (state === 'error') {
-    statusBarItem.text = `$(error) ${localize('status.off.text')}`;
+    statusBarItem.text = `$(error) ${localize('status_off_text')}`;
     statusBarItem.color = new vscode.ThemeColor('errorForeground');
-    statusBarItem.tooltip = localize('status.off.tooltip');
+    statusBarItem.tooltip = localize('status_off_tooltip');
   } else if (state === 'disabled') {
-    statusBarItem.text = `$(circle-slash) ${localize('status.disabled.text')}`;
+    statusBarItem.text = `$(circle-slash) ${localize('status_disabled_text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = localize('status.disabled.tooltip');
+    statusBarItem.tooltip = localize('status_disabled_tooltip');
   } else {
-    statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
+    statusBarItem.text = `$(loading~spin) ${localize('status_loading_text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = localize('status.loading.tooltip');
+    statusBarItem.tooltip = localize('status_loading_tooltip');
   }
 }
 

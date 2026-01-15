@@ -2468,85 +2468,85 @@
   "seoTitle": {
     "message": "Saul Goodman - Extensão Anti-Procrastinação"
   },
-  "status.today.text": {
+  "status_today_text": {
     "message": "Saul hoje: {time}"
   },
-  "status.today.tooltip": {
+  "status_today_tooltip": {
     "message": "Tempo hoje {time}{port}"
   },
-  "status.portSuffix": {
+  "status_port_suffix": {
     "message": " (porta {port})"
   },
-  "status.on.text": {
+  "status_on_text": {
     "message": "SaulDaemon ON{port}"
   },
-  "status.on.tooltip": {
+  "status_on_tooltip": {
     "message": "SaulDaemon conectado"
   },
-  "status.off.text": {
+  "status_off_text": {
     "message": "SaulDaemon OFF"
   },
-  "status.off.tooltip": {
+  "status_off_tooltip": {
     "message": "SaulDaemon indisponivel"
   },
-  "status.disabled.text": {
+  "status_disabled_text": {
     "message": "Tracking off"
   },
-  "status.disabled.tooltip": {
+  "status_disabled_tooltip": {
     "message": "Ative o tracking para enviar heartbeats"
   },
-  "status.loading.text": {
+  "status_loading_text": {
     "message": "Verificando SaulDaemon..."
   },
-  "status.loading.tooltip": {
+  "status_loading_tooltip": {
     "message": "Verificando SaulDaemon"
   },
-  "prepare.keyTitle": {
+  "prepare_key_title": {
     "message": "Saul Goodman: pairing key do SaulDaemon"
   },
-  "prepare.keyPrompt": {
+  "prepare_key_prompt": {
     "message": "Use a mesma chave configurada na extensao Chrome."
   },
-  "prepare.portTitle": {
+  "prepare_port_title": {
     "message": "Saul Goodman: porta do SaulDaemon"
   },
-  "prepare.portPrompt": {
+  "prepare_port_prompt": {
     "message": "Porta HTTP local do daemon."
   },
-  "prepare.missingDaemon": {
+  "prepare_missing_daemon": {
     "message": "Pasta saul-daemon/index.cjs nao encontrada. Abra o repositorio raiz antes de iniciar o daemon."
   },
-  "prepare.started": {
+  "prepare_started": {
     "message": "SaulDaemon iniciado em background (porta {port}, key {key}). Logs em {logFile}."
   },
-  "prepare.startFailed": {
+  "prepare_start_failed": {
     "message": "Falha ao iniciar SaulDaemon: {error}"
   },
-  "prompt.missingKey.title": {
+  "prompt_missing_key_title": {
     "message": "Saul Goodman: configure uma pairing key"
   },
-  "prompt.missingKey.prompt": {
+  "prompt_missing_key_prompt": {
     "message": "Digite a mesma chave configurada na extensao Chrome."
   },
-  "prompt.missingKey.warning": {
+  "prompt_missing_key_warning": {
     "message": "Sem pairing key nao enviaremos heartbeats. Abrir configuracoes agora?"
   },
-  "prompt.missingKey.openSettings": {
+  "prompt_missing_key_open_settings": {
     "message": "Abrir configuracoes"
   },
-  "test.healthSuccess": {
+  "test_health_success": {
     "message": "SaulDaemon respondeu em {origin}"
   },
-  "test.healthStatus": {
+  "test_health_status": {
     "message": "SaulDaemon respondeu com status {status} em {origin}"
   },
-  "test.healthFailure": {
+  "test_health_failure": {
     "message": "SaulDaemon nao respondeu em {origin}: {error}"
   },
-  "log.heartbeatFailed": {
+  "log_heartbeat_failed": {
     "message": "Falha ao enviar heartbeat"
   },
-  "log.publishIndexFailed": {
+  "log_publish_index_failed": {
     "message": "Falha ao publicar indice para o SaulDaemon"
   },
   "shareCopied": {
@@ -2856,6 +2856,60 @@
     "message": "Ver guia rápido"
   },
   "vscodeTitle": {
-    "message": "Transforme o editor em ativo de produtividade."
+    "message": "Transforme seu editor em ativo de produtividade."
+  },
+  "vscode_reports_disabled": {
+    "message": "Relatórios desativados"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Ative \"Enable Reports in VS Code\" nas configurações para visualizar os dados."
+  },
+  "vscode_reports_loading": {
+    "message": "Carregando dados do SaulDaemon..."
+  },
+  "vscode_reports_error": {
+    "message": "Erro ao carregar dados do SaulDaemon."
+  },
+  "vscode_reports_synced": {
+    "message": "Dados sincronizados."
+  },
+  "vscode_reports_configure": {
+    "message": "Configure a URL do daemon e a pairing key."
+  },
+  "vscode_reports_filter_project": {
+    "message": "Projeto"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Linguagem"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Máquina"
+  },
+  "vscode_reports_filter_all": {
+    "message": "Todos"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Aplicar"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Limpar"
+  },
+  "vscode_reports_today": {
+    "message": "Hoje"
+  },
+  "vscode_reports_projects": {
+    "message": "Projetos"
+  },
+  "vscode_reports_languages": {
+    "message": "Linguagens"
+  },
+  "vscode_reports_summaries": {
+    "message": "Sumários"
+  },
+  "vscode_reports_no_data": {
+    "message": "Sem dados."
+  },
+  "vscode_reports_no_records": {
+    "message": "Sem registros."
   }
 }
