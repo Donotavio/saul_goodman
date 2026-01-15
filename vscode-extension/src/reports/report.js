@@ -197,12 +197,18 @@
     
     const items = [
       { label: 'Tab Switches', value: activity.totalTabSwitches || 0 },
-      { label: 'Commits', value: git.totalCommits || 0 }
+      { label: 'Commits', value: git.totalCommits || 0 },
+      { label: 'Files Changed', value: git.totalFilesChanged || 0 },
+      { label: 'Lines Added', value: git.totalLinesAdded || 0, color: '#22c55e' },
+      { label: 'Lines Deleted', value: git.totalLinesDeleted || 0, color: '#ef4444' }
     ];
 
     items.forEach(item => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${item.label}</span><span>${item.value}</span>`;
+      const valueSpan = item.color 
+        ? `<span style="color: ${item.color}">${item.value}</span>` 
+        : `<span>${item.value}</span>`;
+      li.innerHTML = `<span>${item.label}</span>${valueSpan}`;
       list.appendChild(li);
     });
   }

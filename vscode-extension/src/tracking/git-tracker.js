@@ -192,6 +192,7 @@ class GitTracker {
     }
 
     const remote = repo.state?.HEAD?.upstream?.remote || '';
+    const diffStats = await this.getDiffStats(repo);
 
     const heartbeat = this.buildHeartbeat({
       entityType: 'commit',
@@ -202,11 +203,54 @@ class GitTracker {
         branch,
         remote,
         commitMessage: message?.substring(0, 100) || '',
-        eventType: 'commit_created'
+        eventType: 'commit_created',
+        filesChanged: diffStats.filesChanged,
+        linesAdded: diffStats.linesAdded,
+        linesDeleted: diffStats.linesDeleted
       }
     });
 
     this.queue.enqueue(heartbeat);
+  }
+
+  async getDiffStats(repo) {
+    try {
+      const head = repo.state?.HEAD?.commit;
+      if (!head) {
+        return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+      }
+
+      const diff = await repo.diffWithHEAD();
+      const filesChanged = diff ? diff.length : 0;
+
+      let linesAdded = 0;
+      let linesDeleted = 0;
+
+      if (diff && diff.length > 0) {
+        for (const change of diff) {
+          try {
+            const patch = await repo.diffIndexWithHEAD(change.uri.fsPath);
+            if (patch) {
+              const lines = patch.split('\n');
+              for (const line of lines) {
+                if (line.startsWith('+') && !line.startsWith('+++')) {
+                  linesAdded++;
+                } else if (line.startsWith('-') && !line.startsWith('---')) {
+                  linesDeleted++;
+                }
+              }
+            }
+          } catch (err) {
+            console.warn('[Saul Git] Could not get patch for file:', change.uri.fsPath);
+          }
+        }
+      }
+
+      return { filesChanged, linesAdded, linesDeleted };
+    } catch (error) {
+      console.warn('[Saul Git] Could not get diff stats:', error.message);
+      return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    }
   }
 }
 

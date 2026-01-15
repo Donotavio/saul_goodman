@@ -1123,9 +1123,19 @@ function handleVscodeDashboard(req, res, url) {
 
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
 
-  const commits = entry.heartbeats
+  let totalCommits = 0;
+  let totalFilesChanged = 0;
+  let totalLinesAdded = 0;
+  let totalLinesDeleted = 0;
+
+  entry.heartbeats
     .filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs)
-    .length;
+    .forEach((hb) => {
+      totalCommits++;
+      totalFilesChanged += hb.metadata?.filesChanged || 0;
+      totalLinesAdded += hb.metadata?.linesAdded || 0;
+      totalLinesDeleted += hb.metadata?.linesDeleted || 0;
+    });
 
   const branchMap = new Map();
   entry.durations
@@ -1184,7 +1194,10 @@ function handleVscodeDashboard(req, res, url) {
       languages: buildBreakdown(summary.languages, summary.totalMs).slice(0, 10),
       branches: buildBreakdown(branchMap, Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0)).slice(0, 10),
       git: {
-        totalCommits: commits,
+        totalCommits,
+        totalFilesChanged,
+        totalLinesAdded,
+        totalLinesDeleted,
         topBranches: Array.from(branchMap.keys()).slice(0, 5)
       },
       editor: editorMetadata ? {
