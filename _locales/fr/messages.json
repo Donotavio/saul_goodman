@@ -953,8 +953,20 @@
   "options_domain_empty": {
     "message": "Pas encore de domaines."
   },
+  "options_domain_filter_hint": {
+    "message": "Entrez une partie du domaine pour le localiser dans les listes ci-dessous."
+  },
+  "options_domain_filter_label": {
+    "message": "Filtrer les domaines"
+  },
+  "options_domain_filter_placeholder": {
+    "message": "Rechercher un domaine..."
+  },
   "options_domain_invalid": {
     "message": "Saisissez un domaine valide."
+  },
+  "options_domain_no_match": {
+    "message": "Aucun domaine trouvé."
   },
   "options_footer_note": {
     "message": "Saul ne partage vos données avec personne. Même pas le juge."
@@ -1048,6 +1060,24 @@
   },
   "options_promise": {
     "message": "Saul garde vos données sous scellés tout en négociant avec votre objectif."
+  },
+  "options_recommendations_empty": {
+    "message": "Aucune recommandation pour le moment."
+  },
+  "options_recommendations_heading": {
+    "message": "Domaines recommandés"
+  },
+  "options_recommendations_hint": {
+    "message": "Suggestions rapides pour commencer vos listes. Ajustez selon votre flux et vos tentations."
+  },
+  "options_recommendations_neutral_heading": {
+    "message": "Réviser manuellement"
+  },
+  "options_recommendations_procrastination_heading": {
+    "message": "Procrastination probable"
+  },
+  "options_recommendations_productive_heading": {
+    "message": "Productivité suggérée"
   },
   "options_restore_defaults": {
     "message": "Restaurer les valeurs par défaut"

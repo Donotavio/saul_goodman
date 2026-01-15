@@ -953,8 +953,20 @@
   "options_domain_empty": {
     "message": "Henüz domain yok."
   },
+  "options_domain_filter_hint": {
+    "message": "{threshold} için alan adının bir kısmını aşağıdaki listelerde bulmak için yazın."
+  },
+  "options_domain_filter_label": {
+    "message": "Alan adlarını filtrele"
+  },
+  "options_domain_filter_placeholder": {
+    "message": "Alan adı ara..."
+  },
   "options_domain_invalid": {
     "message": "Geçerli bir alan girin."
+  },
+  "options_domain_no_match": {
+    "message": "Hiçbir alan adı bulunamadı."
   },
   "options_footer_note": {
     "message": "Saul verilerinizi herkesle paylaşmaz. Yargıç bile değil."
@@ -1048,6 +1060,24 @@
   },
   "options_promise": {
     "message": "Saul, dikkatinizi odaklarınızla müzakere ederken mühür tutar."
+  },
+  "options_recommendations_empty": {
+    "message": "Şu anda öneri yok."
+  },
+  "options_recommendations_heading": {
+    "message": "Önerilen alan adları"
+  },
+  "options_recommendations_hint": {
+    "message": "Listelerinizi başlatmak için hızlı öneriler. Akışınıza ve isteklerinize göre ayarlayın."
+  },
+  "options_recommendations_neutral_heading": {
+    "message": "Elle gözden geçirin"
+  },
+  "options_recommendations_procrastination_heading": {
+    "message": "Muhtemel erteleme"
+  },
+  "options_recommendations_productive_heading": {
+    "message": "Önerilen verimlilik"
   },
   "options_restore_defaults": {
     "message": "Geri yükleme varsayılanleri geri yükleme"

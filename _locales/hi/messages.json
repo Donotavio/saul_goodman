@@ -953,8 +953,20 @@
   "options_domain_empty": {
     "message": "अभी तक कोई डोमेन नहीं है।"
   },
+  "options_domain_filter_hint": {
+    "message": "सूची में नीचे खोजने के लिए डोमेन का हिस्सा दर्ज करें।"
+  },
+  "options_domain_filter_label": {
+    "message": "डोमेन फ़िल्टर करें"
+  },
+  "options_domain_filter_placeholder": {
+    "message": "डोमेन खोजें..."
+  },
   "options_domain_invalid": {
     "message": "एक वैध डोमेन दर्ज करें।"
+  },
+  "options_domain_no_match": {
+    "message": "कोई डोमेन नहीं मिला।"
   },
   "options_footer_note": {
     "message": "Saul किसी के साथ अपने डेटा साझा नहीं करता है। न्याय भी नहीं।"
@@ -1048,6 +1060,24 @@
   },
   "options_promise": {
     "message": "Saul अपने ध्यान के साथ बातचीत करते समय अपने डेटा को सील के नीचे रखता है।"
+  },
+  "options_recommendations_empty": {
+    "message": "इस समय कोई सिफारिश नहीं है।"
+  },
+  "options_recommendations_heading": {
+    "message": "सिफारिश किए गए डोमेन"
+  },
+  "options_recommendations_hint": {
+    "message": "अपनी सूचियों को शुरू करने के लिए त्वरित सुझाव। अपने प्रवाह और इच्छाओं के अनुसार समायोजित करें।"
+  },
+  "options_recommendations_neutral_heading": {
+    "message": "हाथ से समीक्षा करें"
+  },
+  "options_recommendations_procrastination_heading": {
+    "message": "संभावित टालमटोल"
+  },
+  "options_recommendations_productive_heading": {
+    "message": "सुझाई गई उत्पादकता"
   },
   "options_restore_defaults": {
     "message": "डिफ़ॉल्ट पुनर्स्थापित करें"

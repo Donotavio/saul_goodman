@@ -1061,6 +1061,24 @@
   "options_promise": {
     "message": "Saul keeps your data under seal while negotiating with your focus."
   },
+  "options_recommendations_empty": {
+    "message": "No recommendations right now."
+  },
+  "options_recommendations_heading": {
+    "message": "Recommended domains"
+  },
+  "options_recommendations_hint": {
+    "message": "Quick suggestions to seed your lists. Adjust for your workflow and temptations."
+  },
+  "options_recommendations_neutral_heading": {
+    "message": "Manual review"
+  },
+  "options_recommendations_procrastination_heading": {
+    "message": "Likely procrastination"
+  },
+  "options_recommendations_productive_heading": {
+    "message": "Productivity picks"
+  },
   "options_restore_defaults": {
     "message": "Restore defaults"
   },
@@ -2710,23 +2728,5 @@
   },
   "vscodeTitle": {
     "message": "Turn your editor into a productivity asset."
-  },
-  "options_recommendations_heading": {
-    "message": "Recommended domains"
-  },
-  "options_recommendations_hint": {
-    "message": "Quick suggestions to seed your lists. Adjust for your workflow and temptations."
-  },
-  "options_recommendations_productive_heading": {
-    "message": "Productivity picks"
-  },
-  "options_recommendations_procrastination_heading": {
-    "message": "Likely procrastination"
-  },
-  "options_recommendations_neutral_heading": {
-    "message": "Manual review"
-  },
-  "options_recommendations_empty": {
-    "message": "No recommendations right now."
   }
 }
