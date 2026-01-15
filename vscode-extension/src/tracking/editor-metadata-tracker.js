@@ -74,7 +74,7 @@ class EditorMetadataTracker {
 
     return {
       eventType: 'editor_metadata_snapshot',
-      vscodeVersion: vscode.version,
+      vscodeVersion: vscode.env.appName + ' ' + (vscode.env.appHost || 'desktop'),
       vscodeLanguage: vscode.env.language,
       vscodeMachineId: vscode.env.machineId,
       vscodeSessionId: vscode.env.sessionId,
@@ -103,27 +103,33 @@ class EditorMetadataTracker {
   }
 
   getExtensionsMetadata() {
-    const allExtensions = vscode.extensions.all;
-    const userExtensions = allExtensions.filter((ext) => !ext.packageJSON.isBuiltin);
-    
-    const enabled = userExtensions.filter((ext) => ext.isActive).length;
-    const disabled = userExtensions.length - enabled;
+    try {
+      const allExtensions = vscode.extensions.all;
+      const userExtensions = allExtensions.filter((ext) => {
+        return ext.packageJSON && !ext.packageJSON.isBuiltin;
+      });
+      
+      const enabled = userExtensions.length;
+      const disabled = 0;
 
-    const top = userExtensions
-      .filter((ext) => ext.isActive)
-      .slice(0, 10)
-      .map((ext) => ({
-        id: ext.id,
-        version: ext.packageJSON.version,
-        publisher: ext.packageJSON.publisher
-      }));
+      const top = userExtensions
+        .slice(0, 10)
+        .map((ext) => ({
+          id: ext.id,
+          version: ext.packageJSON?.version || '0.0.0',
+          publisher: ext.packageJSON?.publisher || 'unknown'
+        }));
 
-    return {
-      count: userExtensions.length,
-      enabled,
-      disabled,
-      top
-    };
+      return {
+        count: userExtensions.length,
+        enabled,
+        disabled,
+        top
+      };
+    } catch (error) {
+      console.error('[Saul Metadata] Error getting extensions:', error);
+      return { count: 0, enabled: 0, disabled: 0, top: [] };
+    }
   }
 
   getThemeMetadata() {
@@ -156,18 +162,23 @@ class EditorMetadataTracker {
     const workspaceFile = vscode.workspace.workspaceFile;
 
     let type = 'empty';
+    let name = 'No workspace';
+    
     if (workspaceFile) {
       type = 'workspace';
+      name = vscode.workspace.name || 'workspace';
     } else if (folders.length === 1) {
       type = 'folder';
+      name = folders[0].name;
     } else if (folders.length > 1) {
       type = 'multi-root';
+      name = folders.map(f => f.name).join(', ');
     }
 
     return {
       folders: folders.length,
       type,
-      name: vscode.workspace.name || 'untitled'
+      name
     };
   }
 }

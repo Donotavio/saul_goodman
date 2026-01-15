@@ -5,7 +5,7 @@ function createHeartbeatFactory(context, getConfig) {
   const machineId = getOrCreateMachineId(context);
   const salt = getOrCreateHashSalt(context);
   const pluginVersion = context.extension?.packageJSON?.version || '0.0.0';
-  const vscodeVersion = vscode.version || 'unknown';
+  const vscodeVersion = vscode.env.appName || 'VS Code';
   const uiKind = vscode.env.uiKind === vscode.UIKind.Desktop ? 'desktop' : 'web';
   const remoteName = vscode.env.remoteName || '';
   const shell = vscode.env.shell || '';
