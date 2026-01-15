@@ -597,15 +597,23 @@
   }
 
   function renderCrossReferenceChart(languagesByProject) {
+    console.log('[Saul Report] renderCrossReferenceChart called with:', languagesByProject);
+    
     const canvas = document.getElementById('crossReferenceChart');
     const emptyEl = document.getElementById('crossReferenceEmpty');
     
+    console.log('[Saul Report] Canvas element:', canvas);
+    console.log('[Saul Report] Empty element:', emptyEl);
+    console.log('[Saul Report] languagesByProject length:', languagesByProject?.length);
+    
     if (!canvas || !languagesByProject || languagesByProject.length === 0) {
+      console.log('[Saul Report] Showing empty state for cross-reference chart');
       if (canvas) canvas.style.display = 'none';
       if (emptyEl) emptyEl.classList.remove('hidden');
       return;
     }
 
+    console.log('[Saul Report] Rendering cross-reference chart with', languagesByProject.length, 'projects');
     canvas.style.display = 'block';
     if (emptyEl) emptyEl.classList.add('hidden');
 
@@ -652,8 +660,15 @@
       return name.length > 20 ? name.substring(0, 18) + '...' : name;
     });
 
+    console.log('[Saul Report] Project labels:', projectLabels);
+    console.log('[Saul Report] Datasets:', datasets);
+    console.log('[Saul Report] Chart.js available:', typeof Chart !== 'undefined');
+
     try {
+      console.log('[Saul Report] Getting canvas context...');
       const ctx = canvas.getContext('2d');
+      console.log('[Saul Report] Canvas context:', ctx);
+      console.log('[Saul Report] Creating Chart.js instance...');
       window.crossReferenceChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -718,8 +733,10 @@
           }
         }
       });
+      console.log('[Saul Report] ✓ Cross-reference chart created successfully');
     } catch (error) {
-      console.error('[Saul Report] Error creating cross-reference chart:', error);
+      console.error('[Saul Report] ✗ Error creating cross-reference chart:', error);
+      console.error('[Saul Report] Error stack:', error.stack);
     }
   }
 
