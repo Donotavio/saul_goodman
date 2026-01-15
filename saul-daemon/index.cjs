@@ -307,6 +307,84 @@ function normalizeMetadata(metadata) {
   if (typeof metadata.commandId === 'string') {
     normalized.commandId = metadata.commandId;
   }
+  
+  if (typeof metadata.vscodeVersion === 'string') {
+    normalized.vscodeVersion = metadata.vscodeVersion;
+  }
+  if (typeof metadata.vscodeLanguage === 'string') {
+    normalized.vscodeLanguage = metadata.vscodeLanguage;
+  }
+  if (Number.isFinite(Number(metadata.extensionsCount))) {
+    normalized.extensionsCount = Number(metadata.extensionsCount);
+  }
+  if (Number.isFinite(Number(metadata.extensionsEnabled))) {
+    normalized.extensionsEnabled = Number(metadata.extensionsEnabled);
+  }
+  if (Number.isFinite(Number(metadata.extensionsDisabled))) {
+    normalized.extensionsDisabled = Number(metadata.extensionsDisabled);
+  }
+  if (Array.isArray(metadata.topExtensions)) {
+    normalized.topExtensions = metadata.topExtensions;
+  }
+  if (typeof metadata.themeKind === 'string') {
+    normalized.themeKind = metadata.themeKind;
+  }
+  if (typeof metadata.themeName === 'string') {
+    normalized.themeName = metadata.themeName;
+  }
+  if (typeof metadata.settingsAutoSave === 'string') {
+    normalized.settingsAutoSave = metadata.settingsAutoSave;
+  }
+  if (typeof metadata.settingsFormatOnSave === 'boolean') {
+    normalized.settingsFormatOnSave = metadata.settingsFormatOnSave;
+  }
+  if (Number.isFinite(Number(metadata.workspaceFolders))) {
+    normalized.workspaceFolders = Number(metadata.workspaceFolders);
+  }
+  if (typeof metadata.workspaceType === 'string') {
+    normalized.workspaceType = metadata.workspaceType;
+  }
+  if (typeof metadata.workspaceName === 'string') {
+    normalized.workspaceName = metadata.workspaceName;
+  }
+  
+  if (Number.isFinite(Number(metadata.totalFiles))) {
+    normalized.totalFiles = Number(metadata.totalFiles);
+  }
+  if (Number.isFinite(Number(metadata.totalDirectories))) {
+    normalized.totalDirectories = Number(metadata.totalDirectories);
+  }
+  if (Number.isFinite(Number(metadata.totalSizeBytes))) {
+    normalized.totalSizeBytes = Number(metadata.totalSizeBytes);
+  }
+  if (Array.isArray(metadata.largestFiles)) {
+    normalized.largestFiles = metadata.largestFiles;
+  }
+  if (Array.isArray(metadata.topExtensions)) {
+    normalized.topExtensions = metadata.topExtensions;
+  }
+  
+  if (typeof metadata.eventType === 'string') {
+    normalized.eventType = metadata.eventType;
+  }
+  if (typeof metadata.remote === 'string') {
+    normalized.remote = metadata.remote;
+  }
+  if (Number.isFinite(Number(metadata.ahead))) {
+    normalized.ahead = Number(metadata.ahead);
+  }
+  if (Number.isFinite(Number(metadata.behind))) {
+    normalized.behind = Number(metadata.behind);
+  }
+  if (Number.isFinite(Number(metadata.workingTreeChanges))) {
+    normalized.workingTreeChanges = Number(metadata.workingTreeChanges);
+  }
+  if (Number.isFinite(Number(metadata.indexChanges))) {
+    normalized.indexChanges = Number(metadata.indexChanges);
+  }
+  if (typeof metadata.commitMessage === 'string') {
+    normalized.commitMessage = metadata.commitMessage;
+  }
   return normalized;
 }
 

@@ -58,12 +58,14 @@ class BufferedEventQueue {
     if (!event) {
       return;
     }
+    console.log('[Saul Queue] Enqueued:', event.entityType, '| Buffer size:', this.buffer.length + 1);
     this.buffer.push(event);
     if (this.buffer.length > this.maxBufferSize) {
       this.buffer.splice(0, this.buffer.length - this.maxBufferSize);
     }
     void this.persist();
     if (this.buffer.length >= this.maxBatchSize) {
+      console.log('[Saul Queue] Buffer full, flushing', this.buffer.length, 'events');
       void this.flush();
     }
   }
@@ -87,14 +89,22 @@ class BufferedEventQueue {
     }
 
     const batch = this.buffer.slice(0, this.maxBatchSize);
+    const types = batch.reduce((acc, e) => {
+      acc[e.entityType] = (acc[e.entityType] || 0) + 1;
+      return acc;
+    }, {});
+    console.log('[Saul Queue] Flushing batch:', batch.length, 'events |', JSON.stringify(types));
+    
     this.flushing = true;
     try {
       await this.apiClient.postHeartbeats(this.config.apiBase, this.config.pairingKey, batch);
+      console.log('[Saul Queue] ✓ Flush successful');
       this.buffer.splice(0, batch.length);
       this.backoffMs = 0;
       this.nextFlushAt = 0;
       await this.persist();
     } catch (error) {
+      console.error('[Saul Queue] ✗ Flush failed:', error.message);
       this.logger.warn('[saul-goodman-vscode] failed to flush heartbeats', error);
       this.backoffMs = this.backoffMs ? Math.min(this.backoffMs * 2, 120000) : 2000;
       this.nextFlushAt = Date.now() + this.backoffMs;

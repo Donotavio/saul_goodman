@@ -69,20 +69,15 @@ class WorkspaceTracker {
       const heartbeat = this.buildHeartbeat({
         entityType: 'workspace',
         entity: folder.uri.fsPath,
-        project: folder.name,
-        category: 'workspace',
+        category: 'coding',
         isWrite: false,
         metadata: {
-          eventType: 'workspace_scan',
           workspaceName: folder.name,
-          workspacePath: folder.uri.fsPath,
-          workspaceIndex: folder.index,
           totalFiles: stats.totalFiles,
           totalDirectories: stats.totalDirectories,
           totalSizeBytes: stats.totalSizeBytes,
-          largestFiles: stats.largestFiles,
-          filesByExtension: stats.filesByExtension,
-          topExtensions: stats.topExtensions
+          largestFiles: stats.largestFiles.slice(0, 5),
+          topExtensions: stats.topExtensions.slice(0, 10)
         }
       });
 
