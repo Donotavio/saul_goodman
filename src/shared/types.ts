@@ -189,7 +189,8 @@ export type RuntimeMessageType =
   | 'settings-updated'
   | 'release-notes'
   | 'apply-suggestion'
-  | 'ignore-suggestion';
+  | 'ignore-suggestion'
+  | 'open-extension-page';
 
 export interface PopupData {
   metrics: DailyMetrics;

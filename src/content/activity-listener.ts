@@ -908,13 +908,19 @@ function ensureOverlay(): void {
   const popupButton = document.createElement('button');
   popupButton.textContent = chrome.i18n.getMessage('earthquake_open_popup') ?? 'Abrir popup';
   popupButton.addEventListener('click', () => {
-    window.open(chrome.runtime.getURL('src/popup/popup.html'), '_blank', 'noopener');
+    chrome.runtime.sendMessage({
+      type: 'open-extension-page',
+      payload: { path: 'src/popup/popup.html' }
+    });
   });
 
   const optionsButton = document.createElement('button');
   optionsButton.textContent = chrome.i18n.getMessage('earthquake_review_villains') ?? 'Revisar vilões';
   optionsButton.addEventListener('click', () => {
-    window.open(chrome.runtime.getURL('src/options/options.html#vilains'), '_blank', 'noopener');
+    chrome.runtime.sendMessage({
+      type: 'open-extension-page',
+      payload: { path: 'src/options/options.html#vilains' }
+    });
   });
 
   actionContainer.appendChild(popupButton);

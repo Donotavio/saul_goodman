@@ -355,7 +355,9 @@ const messageHandlers: Record<
   'apply-suggestion': async (payload?: unknown) =>
     handleApplySuggestion(payload as { domain?: string; classification?: DomainCategory }),
   'ignore-suggestion': async (payload?: unknown) =>
-    handleIgnoreSuggestion(payload as { domain?: string })
+    handleIgnoreSuggestion(payload as { domain?: string }),
+  'open-extension-page': async (payload?: unknown) =>
+    openExtensionPage(payload as { path?: string })
 };
 
 async function handleApplySuggestion(payload: {
@@ -420,6 +422,17 @@ async function handleIgnoreSuggestion(payload: { domain?: string }): Promise<voi
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
   await saveSettings(settings);
+}
+
+async function openExtensionPage(payload?: { path?: string }): Promise<void> {
+  const rawPath = payload?.path?.trim() ?? '';
+  if (!rawPath) {
+    return;
+  }
+  const url = rawPath.startsWith('chrome-extension://')
+    ? rawPath
+    : chrome.runtime.getURL(rawPath);
+  await chrome.tabs.create({ url });
 }
 
 async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Promise<void> {
