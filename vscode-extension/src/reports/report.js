@@ -67,6 +67,18 @@
     void refresh();
   });
 
+  const refreshButton = document.getElementById('refreshButton');
+  if (refreshButton) {
+    refreshButton.addEventListener('click', () => {
+      refreshButton.classList.add('spinning');
+      void refresh().finally(() => {
+        setTimeout(() => {
+          refreshButton.classList.remove('spinning');
+        }, 600);
+      });
+    });
+  }
+
   void refresh();
 
   async function refresh() {
@@ -90,40 +102,67 @@
         fetchJson('/v1/vscode/telemetry', params).catch(() => null)
       ]);
 
+      console.log('[Saul Report] ========== RAW API RESPONSES ==========');
+      console.log('[Saul Report] Dashboard response:', dashboard);
       console.log('[Saul Report] Dashboard data:', dashboard?.data);
+      console.log('[Saul Report] Summaries response:', summaries);
+      console.log('[Saul Report] Machines response:', machines);
       console.log('[Saul Report] Telemetry data:', telemetry?.data);
+      console.log('[Saul Report] =======================================');
 
       const data = dashboard?.data || {};
+      
+      console.log('[Saul Report] Extracted data object:', data);
+      console.log('[Saul Report] Projects array:', data.projects);
+      console.log('[Saul Report] Languages array:', data.languages);
+      console.log('[Saul Report] Overview:', data.overview);
       
       updateSelect(filterProject, data.projects || [], params.project);
       updateSelect(filterLanguage, data.languages || [], params.language);
       updateSelect(filterMachine, machines?.data || [], params.machine);
 
+      console.log('[Saul Report] Setting statToday to:', data.overview?.humanReadableTotal || '--');
       statToday.textContent = data.overview?.humanReadableTotal || '--';
       
+      console.log('[Saul Report] Calling renderIndex with:', data.overview?.index);
       renderIndex(data.overview?.index);
 
+      console.log('[Saul Report] Calling renderList for projects');
       renderList(projectsList, data.projects || []);
+      console.log('[Saul Report] Calling renderList for languages');
       renderList(languagesList, data.languages || []);
+      console.log('[Saul Report] Calling renderSummaries');
       renderSummaries(summariesList, summaries?.data?.days || []);
       
+      console.log('[Saul Report] Calling renderList for branches');
       renderList(document.getElementById('branchesList'), data.branches || []);
+      console.log('[Saul Report] Calling renderActivity');
       renderActivity(data.activity || {}, data.git || {});
+      console.log('[Saul Report] Calling renderEditorInfo');
       renderEditorInfo(data.editor);
+      console.log('[Saul Report] Calling renderWorkspaces');
       renderWorkspaces(data.workspaces || []);
+      console.log('[Saul Report] Calling renderKpis');
       renderKpis(data.overview || {}, data.activity || {});
+      console.log('[Saul Report] Calling renderHourlyChart');
       renderHourlyChart(data.hourly || []);
+      console.log('[Saul Report] Calling renderProjectsChart');
       renderProjectsChart(data.projects || []);
+      console.log('[Saul Report] Calling renderCommitsChart');
       renderCommitsChart(data.git || {});
+      console.log('[Saul Report] Calling renderCrossReferenceChart');
       renderCrossReferenceChart(data.languagesByProject || []);
 
       if (telemetry?.data && config.enableTelemetry) {
+        console.log('[Saul Report] Calling renderTelemetry');
         renderTelemetry(telemetry.data, data.overview || {});
       }
 
+      console.log('[Saul Report] ✓ All rendering complete');
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
-      console.error('[Saul Report] Error loading data:', error);
+      console.error('[Saul Report] ✗ Error loading data:', error);
+      console.error('[Saul Report] Error stack:', error.stack);
       statusEl.textContent = `${i18n.error || 'Error loading data.'} ${error.message}`;
     }
   }
@@ -159,18 +198,30 @@
   }
 
   function renderList(list, items) {
+    console.log('[Saul Report] renderList called with:', list?.id, 'items:', items);
+    
+    if (!list) {
+      console.error('[Saul Report] renderList: list element is null!');
+      return;
+    }
+    
     list.innerHTML = '';
     if (!Array.isArray(items) || !items.length) {
+      console.log('[Saul Report] renderList: no items to display');
       const li = document.createElement('li');
       li.textContent = i18n.noData || 'No data.';
       list.appendChild(li);
       return;
     }
-    items.slice(0, 8).forEach((item) => {
+    
+    console.log('[Saul Report] renderList: rendering', items.length, 'items');
+    items.slice(0, 8).forEach((item, idx) => {
+      console.log(`[Saul Report] renderList item ${idx}:`, item);
       const li = document.createElement('li');
       li.innerHTML = `<span>${item.name}</span><span>${formatSeconds(item.total_seconds)}</span>`;
       list.appendChild(li);
     });
+    console.log('[Saul Report] renderList: finished rendering', list.children.length, 'items');
   }
 
   function renderSummaries(list, days) {
@@ -264,11 +315,21 @@
   }
 
   function renderKpis(overview, activity) {
+    console.log('[Saul Report] renderKpis called with:', { overview, activity });
+    
     const focusEl = document.getElementById('kpiFocus');
     const switchesEl = document.getElementById('kpiSwitches');
     const productiveEl = document.getElementById('kpiProductive');
     const procrastEl = document.getElementById('kpiProcrast');
     const inactiveEl = document.getElementById('kpiInactive');
+
+    console.log('[Saul Report] KPI elements found:', {
+      focusEl: !!focusEl,
+      switchesEl: !!switchesEl,
+      productiveEl: !!productiveEl,
+      procrastEl: !!procrastEl,
+      inactiveEl: !!inactiveEl
+    });
 
     const totalSeconds = overview.totalSeconds || 0;
     const totalSwitches = activity.totalTabSwitches || 0;
@@ -279,11 +340,35 @@
 
     const focusRate = totalSeconds > 0 ? Math.round((productiveSeconds / totalSeconds) * 100) : 0;
 
-    if (focusEl) focusEl.textContent = `${focusRate}%`;
-    if (switchesEl) switchesEl.textContent = totalSwitches.toString();
-    if (productiveEl) productiveEl.textContent = formatSeconds(productiveSeconds);
-    if (procrastEl) procrastEl.textContent = formatSeconds(procrastSeconds);
-    if (inactiveEl) inactiveEl.textContent = formatSeconds(inactiveSeconds);
+    console.log('[Saul Report] KPI values:', {
+      totalSeconds,
+      totalSwitches,
+      focusRate,
+      productiveSeconds,
+      procrastSeconds,
+      inactiveSeconds
+    });
+
+    if (focusEl) {
+      focusEl.textContent = `${focusRate}%`;
+      console.log('[Saul Report] Set focus to:', focusEl.textContent);
+    }
+    if (switchesEl) {
+      switchesEl.textContent = totalSwitches.toString();
+      console.log('[Saul Report] Set switches to:', switchesEl.textContent);
+    }
+    if (productiveEl) {
+      productiveEl.textContent = formatSeconds(productiveSeconds);
+      console.log('[Saul Report] Set productive to:', productiveEl.textContent);
+    }
+    if (procrastEl) {
+      procrastEl.textContent = formatSeconds(procrastSeconds);
+      console.log('[Saul Report] Set procrast to:', procrastEl.textContent);
+    }
+    if (inactiveEl) {
+      inactiveEl.textContent = formatSeconds(inactiveSeconds);
+      console.log('[Saul Report] Set inactive to:', inactiveEl.textContent);
+    }
   }
 
   function renderHourlyChart(hourlyData) {
@@ -800,58 +885,12 @@
     document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
     document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
 
-    renderTimeDistributionChart(tel, overview);
     renderTerminalCommandsChart(tel.terminal || {});
     renderFocusPatternsChart(tel.focus || {});
     renderTopExtensions(tel.extensions?.mostUsed || []);
     renderTopDebuggedFiles(tel.debugging?.topFiles || []);
     renderTopErrorFiles(tel.diagnostics?.topErrorFiles || []);
     renderRefactoringStats(tel.refactoring || {});
-  }
-
-  function renderTimeDistributionChart(tel, overview) {
-    const canvas = document.getElementById('timeDistributionChart');
-    const emptyEl = document.getElementById('timeDistributionEmpty');
-    if (!canvas) return;
-
-    const codingMs = (overview.totalSeconds || 0) * 1000;
-    const debugMs = tel.debugging?.totalDurationMs || 0;
-    const terminalMs = tel.terminal?.totalDurationMs || 0;
-    const pauseMs = tel.focus?.totalBlurMs || 0;
-
-    const total = codingMs + debugMs + terminalMs + pauseMs;
-
-    if (total === 0) {
-      canvas.classList.add('hidden');
-      emptyEl.classList.remove('hidden');
-      return;
-    }
-
-    canvas.classList.remove('hidden');
-    emptyEl.classList.add('hidden');
-
-    new Chart(canvas, {
-      type: 'doughnut',
-      data: {
-        labels: ['Coding', 'Debugging', 'Terminal', 'Pausas'],
-        datasets: [{
-          data: [codingMs, debugMs, terminalMs, pauseMs],
-          backgroundColor: ['#3b82f6', '#ef4444', '#eab308', '#10b981']
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'bottom' },
-          tooltip: {
-            callbacks: {
-              label: (ctx) => `${ctx.label}: ${formatDurationMs(ctx.raw)}`
-            }
-          }
-        }
-      }
-    });
   }
 
   function renderTerminalCommandsChart(terminal) {
@@ -1030,4 +1069,25 @@
   function todayKey() {
     return new Date().toISOString().slice(0, 10);
   }
+
+  // Debug helper - call window.__SAUL_DEBUG__() in browser console
+  window.__SAUL_DEBUG__ = function() {
+    console.log('========== SAUL DEBUG INFO ==========');
+    console.log('Config:', config);
+    console.log('reportContent hidden?', contentEl?.classList.contains('hidden'));
+    console.log('reportsDisabled hidden?', disabledEl?.classList.contains('hidden'));
+    console.log('projectsList:', projectsList, 'children:', projectsList?.children.length);
+    console.log('languagesList:', languagesList, 'children:', languagesList?.children.length);
+    console.log('statToday:', statToday?.textContent);
+    console.log('All KPI values:', {
+      focus: document.getElementById('kpiFocus')?.textContent,
+      switches: document.getElementById('kpiSwitches')?.textContent,
+      productive: document.getElementById('kpiProductive')?.textContent,
+      procrast: document.getElementById('kpiProcrast')?.textContent,
+      inactive: document.getElementById('kpiInactive')?.textContent
+    });
+    console.log('=====================================');
+  };
+  
+  console.log('[Saul Report] Debug helper available: window.__SAUL_DEBUG__()');
 })();

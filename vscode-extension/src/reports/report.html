@@ -205,15 +205,6 @@
             </div>
           </section>
 
-          <section class="card chart-section">
-            <h3>Distribuição de Tempo</h3>
-            <p class="chart-subtitle">Como você dividiu seu tempo entre coding, debugging e pausas</p>
-            <div class="chart-container chart-container--medium">
-              <canvas id="timeDistributionChart"></canvas>
-              <p id="timeDistributionEmpty" class="empty-state hidden">Sem dados de telemetria.</p>
-            </div>
-          </section>
-
           <section class="grid-two charts-row">
             <div class="card chart-section">
               <h3>Comandos Terminal</h3>
@@ -257,6 +248,12 @@
         </section>
       </section>
     </main>
+
+    <button id="refreshButton" class="refresh-button" title="Atualizar dados">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+      </svg>
+    </button>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script nonce="{nonce}">window.__SAUL_CONFIG__ = {config};</script>
