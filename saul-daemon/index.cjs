@@ -1117,6 +1117,275 @@ function handleVscodeActivityInsights(req, res, url) {
   });
 }
 
+function aggregateTelemetry(heartbeats, startMs, endMs) {
+  const telemetry = {
+    debugging: {
+      totalSessions: 0,
+      totalDurationMs: 0,
+      averageSessionMs: 0,
+      topDebuggers: {},
+      topFiles: {}
+    },
+    testing: {
+      totalRuns: 0,
+      passed: 0,
+      failed: 0,
+      skipped: 0,
+      successRate: 0,
+      totalDurationMs: 0,
+      averageDurationMs: 0
+    },
+    tasks: {
+      totalTasks: 0,
+      byGroup: {
+        build: { count: 0, totalDurationMs: 0, avgDurationMs: 0, failures: 0, failureRate: 0 },
+        test: { count: 0, totalDurationMs: 0, avgDurationMs: 0, failures: 0, failureRate: 0 },
+        other: { count: 0, totalDurationMs: 0, avgDurationMs: 0, failures: 0, failureRate: 0 }
+      }
+    },
+    extensions: {
+      mostUsed: []
+    },
+    terminal: {
+      totalCommands: 0,
+      byCategory: {},
+      totalDurationMs: 0,
+      avgDurationMs: 0
+    },
+    focus: {
+      totalFocusMs: 0,
+      totalBlurMs: 0,
+      pomodorosCompleted: 0,
+      peakHours: [],
+      avgFocusSessionMs: 0,
+      focusSessions: []
+    },
+    diagnostics: {
+      topErrorFiles: [],
+      totalErrors: 0,
+      totalWarnings: 0,
+      resolvedErrors: 0,
+      fileSnapshots: {}
+    },
+    refactoring: {
+      filesRenamed: 0,
+      editsApplied: 0,
+      codeActionsAvailable: 0
+    }
+  };
+
+  const filteredHeartbeats = heartbeats.filter(hb => hb.time >= startMs && hb.time < endMs);
+
+  filteredHeartbeats.forEach(hb => {
+    const entityType = hb.entityType;
+    const metadata = hb.metadata || {};
+
+    if (entityType === 'debug_session') {
+      if (hb.entity === 'start') {
+        telemetry.debugging.totalSessions++;
+      } else if (hb.entity === 'stop' && metadata.durationMs) {
+        telemetry.debugging.totalDurationMs += metadata.durationMs;
+      }
+      
+      const debugType = metadata.debugType || 'unknown';
+      telemetry.debugging.topDebuggers[debugType] = (telemetry.debugging.topDebuggers[debugType] || 0) + 1;
+    }
+
+    if (entityType === 'debug_breakpoint') {
+      const fileId = metadata.fileId || 'unknown';
+      if (!telemetry.debugging.topFiles[fileId]) {
+        telemetry.debugging.topFiles[fileId] = { sessions: 0, breakpoints: 0 };
+      }
+      telemetry.debugging.topFiles[fileId].breakpoints++;
+    }
+
+    if (entityType === 'test_run') {
+      telemetry.testing.totalRuns++;
+      telemetry.testing.passed += metadata.passed || 0;
+      telemetry.testing.failed += metadata.failed || 0;
+      telemetry.testing.skipped += metadata.skipped || 0;
+      if (metadata.durationMs) {
+        telemetry.testing.totalDurationMs += metadata.durationMs;
+      }
+    }
+
+    if (entityType === 'task') {
+      if (hb.entity === 'start') {
+        telemetry.tasks.totalTasks++;
+        const group = metadata.taskGroup || 'other';
+        if (telemetry.tasks.byGroup[group]) {
+          telemetry.tasks.byGroup[group].count++;
+        }
+      } else if (hb.entity === 'process_end') {
+        const group = metadata.taskGroup || 'other';
+        if (telemetry.tasks.byGroup[group]) {
+          if (metadata.durationMs) {
+            telemetry.tasks.byGroup[group].totalDurationMs += metadata.durationMs;
+          }
+          if (metadata.exitCode && metadata.exitCode !== 0) {
+            telemetry.tasks.byGroup[group].failures++;
+          }
+        }
+      }
+    }
+
+    if (entityType === 'extension' && hb.entity === 'command_usage') {
+      const extensionId = metadata.extensionId || 'unknown';
+      const existing = telemetry.extensions.mostUsed.find(e => e.extensionId === extensionId);
+      if (existing) {
+        existing.commandCount += metadata.totalCommands || 0;
+      } else {
+        telemetry.extensions.mostUsed.push({
+          extensionId,
+          commandCount: metadata.totalCommands || 0
+        });
+      }
+    }
+
+    if (entityType === 'terminal') {
+      if (hb.entity === 'command_end') {
+        telemetry.terminal.totalCommands++;
+        const category = metadata.commandCategory || 'other';
+        telemetry.terminal.byCategory[category] = (telemetry.terminal.byCategory[category] || 0) + 1;
+        if (metadata.durationMs) {
+          telemetry.terminal.totalDurationMs += metadata.durationMs;
+        }
+      }
+    }
+
+    if (entityType === 'window') {
+      if (hb.entity === 'focus' && metadata.focusDurationMs) {
+        telemetry.focus.totalFocusMs += metadata.focusDurationMs;
+        telemetry.focus.focusSessions.push({
+          durationMs: metadata.focusDurationMs,
+          hour: metadata.hourOfDay || 0
+        });
+      } else if (hb.entity === 'blur' && metadata.previousBlurDurationMs) {
+        telemetry.focus.totalBlurMs += metadata.previousBlurDurationMs;
+      } else if (hb.entity === 'pomodoro_milestone') {
+        telemetry.focus.pomodorosCompleted++;
+      }
+    }
+
+    if (entityType === 'diagnostic' && hb.entity === 'snapshot') {
+      const fileId = metadata.fileId || 'unknown';
+      const errors = metadata.errors || 0;
+      const warnings = metadata.warnings || 0;
+      
+      telemetry.diagnostics.totalErrors += errors;
+      telemetry.diagnostics.totalWarnings += warnings;
+
+      if (!telemetry.diagnostics.fileSnapshots[fileId]) {
+        telemetry.diagnostics.fileSnapshots[fileId] = { errors, warnings, lastSeen: hb.time };
+      } else {
+        const prev = telemetry.diagnostics.fileSnapshots[fileId];
+        if (prev.errors > errors) {
+          telemetry.diagnostics.resolvedErrors += (prev.errors - errors);
+        }
+        telemetry.diagnostics.fileSnapshots[fileId] = { errors, warnings, lastSeen: hb.time };
+      }
+    }
+
+    if (entityType === 'refactor') {
+      if (hb.entity === 'rename_files') {
+        telemetry.refactoring.filesRenamed += metadata.count || 0;
+      } else if (hb.entity === 'apply_edit') {
+        telemetry.refactoring.editsApplied += metadata.entryCount || 0;
+      } else if (hb.entity === 'code_action_available') {
+        telemetry.refactoring.codeActionsAvailable += metadata.count || 0;
+      }
+    }
+  });
+
+  if (telemetry.debugging.totalSessions > 0) {
+    telemetry.debugging.averageSessionMs = Math.round(telemetry.debugging.totalDurationMs / telemetry.debugging.totalSessions);
+  }
+
+  if (telemetry.testing.totalRuns > 0) {
+    const totalTests = telemetry.testing.passed + telemetry.testing.failed + telemetry.testing.skipped;
+    telemetry.testing.successRate = totalTests > 0 ? Math.round((telemetry.testing.passed / totalTests) * 10000) / 100 : 0;
+    telemetry.testing.averageDurationMs = Math.round(telemetry.testing.totalDurationMs / telemetry.testing.totalRuns);
+  }
+
+  Object.keys(telemetry.tasks.byGroup).forEach(group => {
+    const g = telemetry.tasks.byGroup[group];
+    if (g.count > 0) {
+      g.avgDurationMs = Math.round(g.totalDurationMs / g.count);
+      g.failureRate = Math.round((g.failures / g.count) * 10000) / 100;
+    }
+  });
+
+  if (telemetry.terminal.totalCommands > 0) {
+    telemetry.terminal.avgDurationMs = Math.round(telemetry.terminal.totalDurationMs / telemetry.terminal.totalCommands);
+  }
+
+  telemetry.extensions.mostUsed.sort((a, b) => b.commandCount - a.commandCount);
+  telemetry.extensions.mostUsed = telemetry.extensions.mostUsed.slice(0, 10);
+
+  if (telemetry.focus.focusSessions.length > 0) {
+    telemetry.focus.avgFocusSessionMs = Math.round(
+      telemetry.focus.focusSessions.reduce((sum, s) => sum + s.durationMs, 0) / telemetry.focus.focusSessions.length
+    );
+
+    const hourCounts = {};
+    telemetry.focus.focusSessions.forEach(s => {
+      hourCounts[s.hour] = (hourCounts[s.hour] || 0) + s.durationMs;
+    });
+    telemetry.focus.peakHours = Object.entries(hourCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4)
+      .map(([hour]) => parseInt(hour));
+  }
+
+  telemetry.diagnostics.topErrorFiles = Object.entries(telemetry.diagnostics.fileSnapshots)
+    .map(([fileId, snap]) => ({
+      fileId,
+      errors: snap.errors,
+      warnings: snap.warnings
+    }))
+    .filter(f => f.errors > 0)
+    .sort((a, b) => b.errors - a.errors)
+    .slice(0, 10);
+
+  const topDebuggers = Object.entries(telemetry.debugging.topDebuggers)
+    .map(([type, sessions]) => ({ type, sessions }))
+    .sort((a, b) => b.sessions - a.sessions)
+    .slice(0, 5);
+  
+  telemetry.debugging.topDebuggers = topDebuggers;
+
+  const topFiles = Object.entries(telemetry.debugging.topFiles)
+    .map(([fileId, data]) => ({ fileId, ...data }))
+    .sort((a, b) => b.breakpoints - a.breakpoints)
+    .slice(0, 10);
+  
+  telemetry.debugging.topFiles = topFiles;
+
+  delete telemetry.focus.focusSessions;
+  delete telemetry.diagnostics.fileSnapshots;
+
+  return telemetry;
+}
+
+function handleVscodeTelemetry(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+
+  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const entry = ensureVscodeEntry(key);
+
+  const telemetry = aggregateTelemetry(entry.heartbeats, startMs, endMs);
+
+  sendJson(req, res, 200, {
+    version: 1,
+    range: { start: startKey, end: endKey, timezone },
+    data: telemetry
+  });
+}
+
 function handleVscodeDashboard(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
   if (!validateKey(key)) {
@@ -1698,6 +1967,11 @@ async function start() {
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/activity-insights') {
       handleVscodeActivityInsights(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/telemetry') {
+      handleVscodeTelemetry(req, res, parsedUrl);
       return;
     }
 

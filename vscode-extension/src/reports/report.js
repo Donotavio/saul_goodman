@@ -83,13 +83,15 @@
     console.log('[Saul Report] Fetching data with params:', params);
 
     try {
-      const [dashboard, summaries, machines] = await Promise.all([
+      const [dashboard, summaries, machines, telemetry] = await Promise.all([
         fetchJson('/v1/vscode/dashboard', params),
         fetchJson('/v1/vscode/summaries', params),
-        fetchJson('/v1/vscode/machines', params)
+        fetchJson('/v1/vscode/machines', params),
+        fetchJson('/v1/vscode/telemetry', params).catch(() => null)
       ]);
 
       console.log('[Saul Report] Dashboard data:', dashboard?.data);
+      console.log('[Saul Report] Telemetry data:', telemetry?.data);
 
       const data = dashboard?.data || {};
       
@@ -114,6 +116,10 @@
       renderProjectsChart(data.projects || []);
       renderCommitsChart(data.git || {});
       renderCrossReferenceChart(data.languagesByProject || []);
+
+      if (telemetry?.data && config.enableTelemetry) {
+        renderTelemetry(telemetry.data, data.overview || {});
+      }
 
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
@@ -772,6 +778,253 @@
     } else if (index >= 70) {
       indexValueEl.classList.add('alert');
     }
+  }
+
+  function renderTelemetry(tel, overview) {
+    const telSection = document.getElementById('telemetrySection');
+    if (!telSection) return;
+
+    telSection.classList.remove('hidden');
+
+    document.getElementById('telDebugSessions').textContent = tel.debugging?.totalSessions || 0;
+    document.getElementById('telDebugTime').textContent = formatDurationMs(tel.debugging?.totalDurationMs || 0);
+
+    const testSuccess = tel.testing?.successRate || 0;
+    document.getElementById('telTestSuccess').textContent = `${testSuccess.toFixed(1)}%`;
+    document.getElementById('telTestRuns').textContent = `${tel.testing?.totalRuns || 0} runs`;
+
+    const buildCount = tel.tasks?.byGroup?.build?.count || 0;
+    document.getElementById('telBuilds').textContent = buildCount;
+    document.getElementById('telBuildTime').textContent = formatDurationMs(tel.tasks?.byGroup?.build?.totalDurationMs || 0);
+
+    document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
+    document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
+
+    renderTimeDistributionChart(tel, overview);
+    renderTerminalCommandsChart(tel.terminal || {});
+    renderFocusPatternsChart(tel.focus || {});
+    renderTopExtensions(tel.extensions?.mostUsed || []);
+    renderTopDebuggedFiles(tel.debugging?.topFiles || []);
+    renderTopErrorFiles(tel.diagnostics?.topErrorFiles || []);
+    renderRefactoringStats(tel.refactoring || {});
+  }
+
+  function renderTimeDistributionChart(tel, overview) {
+    const canvas = document.getElementById('timeDistributionChart');
+    const emptyEl = document.getElementById('timeDistributionEmpty');
+    if (!canvas) return;
+
+    const codingMs = (overview.totalSeconds || 0) * 1000;
+    const debugMs = tel.debugging?.totalDurationMs || 0;
+    const terminalMs = tel.terminal?.totalDurationMs || 0;
+    const pauseMs = tel.focus?.totalBlurMs || 0;
+
+    const total = codingMs + debugMs + terminalMs + pauseMs;
+
+    if (total === 0) {
+      canvas.classList.add('hidden');
+      emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    canvas.classList.remove('hidden');
+    emptyEl.classList.add('hidden');
+
+    new Chart(canvas, {
+      type: 'doughnut',
+      data: {
+        labels: ['Coding', 'Debugging', 'Terminal', 'Pausas'],
+        datasets: [{
+          data: [codingMs, debugMs, terminalMs, pauseMs],
+          backgroundColor: ['#3b82f6', '#ef4444', '#eab308', '#10b981']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.label}: ${formatDurationMs(ctx.raw)}`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function renderTerminalCommandsChart(terminal) {
+    const canvas = document.getElementById('terminalCommandsChart');
+    const emptyEl = document.getElementById('terminalEmpty');
+    if (!canvas) return;
+
+    const categories = terminal.byCategory || {};
+    const labels = Object.keys(categories);
+    const data = Object.values(categories);
+
+    if (labels.length === 0) {
+      canvas.classList.add('hidden');
+      emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    canvas.classList.remove('hidden');
+    emptyEl.classList.add('hidden');
+
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Comandos',
+          data,
+          backgroundColor: '#8b5cf6'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  function renderFocusPatternsChart(focus) {
+    const canvas = document.getElementById('focusPatternsChart');
+    const emptyEl = document.getElementById('focusEmpty');
+    if (!canvas) return;
+
+    const peakHours = focus.peakHours || [];
+
+    if (peakHours.length === 0) {
+      canvas.classList.add('hidden');
+      emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    canvas.classList.remove('hidden');
+    emptyEl.classList.add('hidden');
+
+    const hourData = Array(24).fill(0);
+    peakHours.forEach((hour, idx) => {
+      hourData[hour] = peakHours.length - idx;
+    });
+
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: Array.from({ length: 24 }, (_, i) => `${i}h`),
+        datasets: [{
+          label: 'Intensidade de Foco',
+          data: hourData,
+          backgroundColor: '#10b981'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, display: false }
+        }
+      }
+    });
+  }
+
+  function renderTopExtensions(extensions) {
+    const list = document.getElementById('topExtensionsList');
+    if (!list) return;
+
+    list.innerHTML = '';
+    if (!extensions || extensions.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Nenhuma extensão registrada.';
+      list.appendChild(li);
+      return;
+    }
+
+    extensions.slice(0, 5).forEach((ext) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${ext.extensionId}</span><span>${ext.commandCount} cmds</span>`;
+      list.appendChild(li);
+    });
+  }
+
+  function renderTopDebuggedFiles(files) {
+    const list = document.getElementById('topDebuggedFilesList');
+    if (!list) return;
+
+    list.innerHTML = '';
+    if (!files || files.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Nenhum arquivo debugado.';
+      list.appendChild(li);
+      return;
+    }
+
+    files.slice(0, 5).forEach((file) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${file.fileId}</span><span>${file.breakpoints} BPs</span>`;
+      list.appendChild(li);
+    });
+  }
+
+  function renderTopErrorFiles(files) {
+    const list = document.getElementById('topErrorFilesList');
+    if (!list) return;
+
+    list.innerHTML = '';
+    if (!files || files.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Nenhum erro registrado. 🎉';
+      list.appendChild(li);
+      return;
+    }
+
+    files.slice(0, 5).forEach((file) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${file.fileId}</span><span>⚠️ ${file.errors} | ⚡ ${file.warnings}</span>`;
+      list.appendChild(li);
+    });
+  }
+
+  function renderRefactoringStats(refactoring) {
+    const div = document.getElementById('refactoringStats');
+    if (!div) return;
+
+    div.innerHTML = `
+      <div class="stat-item">
+        <span class="stat-label">Arquivos Renomeados</span>
+        <span class="stat-value">${refactoring.filesRenamed || 0}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Edits Aplicados</span>
+        <span class="stat-value">${refactoring.editsApplied || 0}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Code Actions Disponíveis</span>
+        <span class="stat-value">${refactoring.codeActionsAvailable || 0}</span>
+      </div>
+    `;
+  }
+
+  function formatDurationMs(ms) {
+    if (!ms || ms === 0) return '--';
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    if (hours > 0) return `${hours}h ${minutes % 60}m`;
+    if (minutes > 0) return `${minutes}m`;
+    return `${seconds}s`;
   }
 
   function todayKey() {

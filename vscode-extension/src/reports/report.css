@@ -498,3 +498,115 @@ p {
   font-style: italic;
   font-weight: 500;
 }
+
+/* Telemetry Section */
+.telemetry-section {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 3px dashed #444;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.telemetry-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kpi-card--telemetry {
+  background: linear-gradient(135deg, #2d2d2d 0%, #1e1e1e 100%);
+  border: 2px solid #444;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card--telemetry::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6, #10b981, #eab308);
+}
+
+.kpi-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.kpi-card--telemetry .kpi-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.kpi-card--telemetry .kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.kpi-card--telemetry .kpi-detail {
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.stats-grid-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  border-left: 3px solid #8b5cf6;
+}
+
+.stat-label {
+  color: #aaa;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}

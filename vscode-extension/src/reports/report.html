@@ -171,6 +171,90 @@
             <div id="editorInfo"></div>
           </div>
         </section>
+
+        <section id="telemetrySection" class="telemetry-section hidden">
+          <div class="section-header">
+            <h2>📊 Produtividade & Telemetria</h2>
+            <p class="section-subtitle">Métricas detalhadas de desenvolvimento (100% local)</p>
+          </div>
+
+          <section class="telemetry-kpis">
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon">🐛</span>
+              <span class="kpi-label">SESSÕES DEBUG</span>
+              <span class="kpi-value" id="telDebugSessions">--</span>
+              <span class="kpi-detail" id="telDebugTime">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon">✅</span>
+              <span class="kpi-label">TAXA TESTES</span>
+              <span class="kpi-value" id="telTestSuccess">--</span>
+              <span class="kpi-detail" id="telTestRuns">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon">🔨</span>
+              <span class="kpi-label">BUILDS</span>
+              <span class="kpi-value" id="telBuilds">--</span>
+              <span class="kpi-detail" id="telBuildTime">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon">🍅</span>
+              <span class="kpi-label">POMODOROS</span>
+              <span class="kpi-value" id="telPomodoros">--</span>
+              <span class="kpi-detail" id="telFocusTime">--</span>
+            </div>
+          </section>
+
+          <section class="card chart-section">
+            <h3>Distribuição de Tempo</h3>
+            <p class="chart-subtitle">Como você dividiu seu tempo entre coding, debugging e pausas</p>
+            <div class="chart-container chart-container--medium">
+              <canvas id="timeDistributionChart"></canvas>
+              <p id="timeDistributionEmpty" class="empty-state hidden">Sem dados de telemetria.</p>
+            </div>
+          </section>
+
+          <section class="grid-two charts-row">
+            <div class="card chart-section">
+              <h3>Comandos Terminal</h3>
+              <p class="chart-subtitle">Categorias de comandos executados no terminal</p>
+              <div class="chart-container chart-container--small">
+                <canvas id="terminalCommandsChart"></canvas>
+                <p id="terminalEmpty" class="empty-state hidden">Nenhum comando registrado.</p>
+              </div>
+            </div>
+            <div class="card chart-section">
+              <h3>Padrões de Foco</h3>
+              <p class="chart-subtitle">Horas do dia com maior concentração</p>
+              <div class="chart-container chart-container--small">
+                <canvas id="focusPatternsChart"></canvas>
+                <p id="focusEmpty" class="empty-state hidden">Sem dados de foco.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid-two">
+            <div class="card">
+              <h3>🔧 Top Extensões Usadas</h3>
+              <ul id="topExtensionsList" class="data-list"></ul>
+            </div>
+            <div class="card">
+              <h3>🐛 Arquivos Mais Debugados</h3>
+              <ul id="topDebuggedFilesList" class="data-list"></ul>
+            </div>
+          </section>
+
+          <section class="grid-two">
+            <div class="card">
+              <h3>⚠️ Arquivos com Mais Erros</h3>
+              <ul id="topErrorFilesList" class="data-list"></ul>
+            </div>
+            <div class="card">
+              <h3>📝 Atividade de Refatoração</h3>
+              <div id="refactoringStats" class="stats-grid-mini"></div>
+            </div>
+          </section>
+        </section>
       </section>
     </main>
 
