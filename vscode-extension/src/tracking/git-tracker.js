@@ -11,6 +11,7 @@ class GitTracker {
     this.repositories = new Map();
     this.repoInitTimestamps = new Map();
     this.lastDiffStatsCache = new Map();
+    this.processedCommits = new Set();
     this.GIT_INIT_GRACE_PERIOD_MS = 30000;
   }
 
@@ -137,9 +138,20 @@ class GitTracker {
             console.log('[Saul Git] Commit detected but no cached stats, attempting to get diff from HEAD~1');
             try {
               const diffStats = await this.getDiffStatsFromLastCommit(repo);
-              this.lastDiffStatsCache.set(repoPath, diffStats);
+              if (diffStats && diffStats.filesChanged > 0) {
+                this.lastDiffStatsCache.set(repoPath, diffStats);
+                console.log('[Saul Git] Successfully retrieved diff from HEAD~1:', diffStats);
+              } else {
+                console.warn('[Saul Git] getDiffStatsFromLastCommit returned empty stats, skipping commit tracking');
+                lastCommit = currentCommit;
+                this.trackRepositoryState(repo);
+                return;
+              }
             } catch (err) {
               console.warn('[Saul Git] Failed to get diff stats from last commit:', err);
+              lastCommit = currentCommit;
+              this.trackRepositoryState(repo);
+              return;
             }
           }
           
@@ -208,6 +220,20 @@ class GitTracker {
     }
 
     const repoPath = this.getRepoKey(repo);
+    const commitHash = repo.state?.HEAD?.commit || '';
+    const commitKey = `${repoPath}:${commitHash}`;
+    
+    if (this.processedCommits.has(commitKey)) {
+      console.log(`[Saul Git] Skipping duplicate commit tracking for ${commitHash.substring(0, 7)}`);
+      return;
+    }
+    
+    this.processedCommits.add(commitKey);
+    if (this.processedCommits.size > 100) {
+      const oldestKeys = Array.from(this.processedCommits).slice(0, 50);
+      oldestKeys.forEach(key => this.processedCommits.delete(key));
+    }
+
     const branch = repo.state?.HEAD?.name || 'unknown';
 
     if (this.shouldFilterUnknownBranch(repoPath, branch)) {
@@ -217,7 +243,7 @@ class GitTracker {
 
     const remote = repo.state?.HEAD?.upstream?.remote || '';
     
-    console.log(`[Saul Git] trackCommit for repo "${repoPath}"`);
+    console.log(`[Saul Git] trackCommit for repo "${repoPath}" (${commitHash.substring(0, 7)})`);
     console.log('[Saul Git] Available caches:', Array.from(this.lastDiffStatsCache.keys()));
     
     const cachedStats = this.lastDiffStatsCache.get(repoPath);
@@ -245,6 +271,12 @@ class GitTracker {
         linesAdded: diffStats.linesAdded,
         linesDeleted: diffStats.linesDeleted
       }
+    });
+
+    console.log('[Saul Git] Commit heartbeat metadata:', {
+      filesChanged: heartbeat.metadata.filesChanged,
+      linesAdded: heartbeat.metadata.linesAdded,
+      linesDeleted: heartbeat.metadata.linesDeleted
     });
 
     this.queue.enqueue(heartbeat);

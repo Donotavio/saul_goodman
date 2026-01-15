@@ -1141,8 +1141,9 @@ function handleVscodeDashboard(req, res, url) {
     const added = hb.metadata?.linesAdded || 0;
     const deleted = hb.metadata?.linesDeleted || 0;
     
-    if (idx < 3) {
-      console.log(`[saul-daemon] Commit ${idx + 1} metadata:`, { files, added, deleted });
+    if (idx < 5) {
+      console.log(`[saul-daemon] Commit ${idx + 1} full metadata:`, JSON.stringify(hb.metadata, null, 2));
+      console.log(`[saul-daemon] Commit ${idx + 1} extracted:`, { files, added, deleted });
     }
     
     totalFilesChanged += files;
@@ -1151,6 +1152,12 @@ function handleVscodeDashboard(req, res, url) {
   });
 
   console.log(`[saul-daemon] Git totals: commits=${totalCommits}, files=${totalFilesChanged}, +${totalLinesAdded}, -${totalLinesDeleted}`);
+  console.log(`[saul-daemon] Response git object:`, {
+    totalCommits,
+    totalFilesChanged,
+    totalLinesAdded,
+    totalLinesDeleted
+  });
 
   const branchMap = new Map();
   entry.durations
@@ -1395,6 +1402,10 @@ function summarizeDurations(durations, startMs, endMs, filters) {
 function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
   const projectMap = new Map();
   
+  console.log(`[saul-daemon] summarizeLanguagesByProject: Processing ${durations.length} durations`);
+  let validCount = 0;
+  let sampleDurations = [];
+  
   for (const duration of durations) {
     if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
       continue;
@@ -1408,6 +1419,11 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
 
     const project = duration.project || 'unknown';
     const language = duration.language || 'unknown';
+    
+    if (sampleDurations.length < 3) {
+      sampleDurations.push({ project, language, overlapMs });
+    }
+    validCount++;
 
     if (!projectMap.has(project)) {
       projectMap.set(project, new Map());
@@ -1416,6 +1432,10 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
     const langMap = projectMap.get(project);
     langMap.set(language, (langMap.get(language) || 0) + overlapMs);
   }
+
+  console.log(`[saul-daemon] Valid durations: ${validCount}`);
+  console.log(`[saul-daemon] Sample durations:`, sampleDurations);
+  console.log(`[saul-daemon] Projects found: ${projectMap.size}`);
 
   const result = [];
   for (const [project, langMap] of projectMap.entries()) {
@@ -1441,7 +1461,11 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
   }
   
   result.sort((a, b) => b.totalSeconds - a.totalSeconds);
-  return result.slice(0, 5);
+  const finalResult = result.slice(0, 5);
+  
+  console.log(`[saul-daemon] languagesByProject result:`, JSON.stringify(finalResult, null, 2));
+  
+  return finalResult;
 }
 
 function summarizeDurationsByHour(durations, startMs, endMs, filters) {
