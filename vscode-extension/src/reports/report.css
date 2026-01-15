@@ -106,12 +106,68 @@ body {
   transform: rotate(-5deg) scale(1.05);
 }
 
+.header__logo .stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--saul-gold);
+}
+
 .header__logo .logo-caption {
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--saul-black);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.today-card .today-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.today-card .today-left {
+  flex: 1;
+}
+
+.index-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 20px;
+  background: var(--saul-black);
+  border-radius: 8px;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.index-label {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: #f6f6f6;
+  font-weight: 600;
+}
+
+.index-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffe434;
+  transition: color 0.3s ease;
+}
+
+.index-value.good {
+  color: #4caf50;
+}
+
+.index-value.warn {
+  color: #ff9800;
+}
+
+.index-value.alert {
+  color: #ff1a1a;
 }
 
 .card {

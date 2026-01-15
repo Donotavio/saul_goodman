@@ -98,6 +98,8 @@
       updateSelect(filterMachine, machines?.data || [], params.machine);
 
       statToday.textContent = data.overview?.humanReadableTotal || '--';
+      
+      renderIndex(data.overview?.index);
 
       renderList(projectsList, data.projects || []);
       renderList(languagesList, data.languages || []);
@@ -245,6 +247,29 @@
       `;
       list.appendChild(li);
     });
+  }
+
+  function renderIndex(index) {
+    const indexValueEl = document.getElementById('indexValue');
+    if (!indexValueEl) return;
+
+    if (typeof index !== 'number') {
+      indexValueEl.textContent = '--';
+      indexValueEl.className = 'index-value';
+      return;
+    }
+
+    indexValueEl.textContent = index.toString();
+    
+    indexValueEl.classList.remove('good', 'warn', 'alert');
+    
+    if (index <= 25) {
+      indexValueEl.classList.add('good');
+    } else if (index <= 50) {
+      indexValueEl.classList.add('warn');
+    } else if (index >= 70) {
+      indexValueEl.classList.add('alert');
+    }
   }
 
   function todayKey() {

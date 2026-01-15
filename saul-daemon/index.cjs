@@ -1089,6 +1089,9 @@ function handleVscodeDashboard(req, res, url) {
       if (hb.entityType === 'command') totalCommandExecutions++;
     });
 
+  const chromeEntry = ensureEntry(key, startKey);
+  const index = typeof chromeEntry.index === 'number' ? chromeEntry.index : null;
+
   sendJson(req, res, 200, {
     version: 1,
     range: { start: startKey, end: endKey, timezone },
@@ -1096,7 +1099,8 @@ function handleVscodeDashboard(req, res, url) {
       overview: {
         totalSeconds: Math.round(summary.totalMs / 1000),
         humanReadableTotal: formatDurationMs(summary.totalMs),
-        totalHeartbeats: entry.heartbeats.filter((hb) => hb.time >= startMs && hb.time < endMs).length
+        totalHeartbeats: entry.heartbeats.filter((hb) => hb.time >= startMs && hb.time < endMs).length,
+        index
       },
       projects: buildBreakdown(summary.projects, summary.totalMs).slice(0, 10),
       languages: buildBreakdown(summary.languages, summary.totalMs).slice(0, 10),
