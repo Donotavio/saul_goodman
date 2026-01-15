@@ -80,8 +80,10 @@ function loadMessages(locale) {
       }
     }
     messagesCache.set(locale, mapped);
+    console.log(`[Saul i18n] Loaded ${Object.keys(mapped).length} keys for locale ${locale}`);
     return mapped;
-  } catch {
+  } catch (error) {
+    console.error(`[Saul i18n] Failed to load ${filePath}:`, error.message);
     messagesCache.set(locale, null);
     return null;
   }
@@ -108,7 +110,10 @@ function formatDurationSeconds(seconds) {
 }
 
 function activate(context) {
-  localesRootDir = path.join(context.extensionPath, '..', '_locales');
+  localesRootDir = path.join(context.extensionPath, '_locales');
+  console.log(`[Saul i18n] Locales root dir: ${localesRootDir}`);
+  console.log(`[Saul i18n] Extension path: ${context.extensionPath}`);
+  console.log(`[Saul i18n] Preferred locale: ${getPreferredLocale()}`);
   trackingController = new TrackingController(context);
   void trackingController.init();
 
