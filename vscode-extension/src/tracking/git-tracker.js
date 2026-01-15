@@ -125,15 +125,30 @@ class GitTracker {
     let lastCommit = repo.state?.HEAD?.commit || null;
 
     disposables.push(
-      repo.state.onDidChange(() => {
-        this.trackRepositoryState(repo);
-        
+      repo.state.onDidChange(async () => {
         const currentCommit = repo.state?.HEAD?.commit || null;
-        if (currentCommit && currentCommit !== lastCommit) {
+        const isNewCommit = currentCommit && currentCommit !== lastCommit;
+        
+        if (isNewCommit) {
+          const repoPath = this.getRepoKey(repo);
+          const indexChanges = repo.state?.indexChanges?.length || 0;
+          
+          if (indexChanges === 0 && !this.lastDiffStatsCache.has(repoPath)) {
+            console.log('[Saul Git] Commit detected but no cached stats, attempting to get diff from HEAD~1');
+            try {
+              const diffStats = await this.getDiffStatsFromLastCommit(repo);
+              this.lastDiffStatsCache.set(repoPath, diffStats);
+            } catch (err) {
+              console.warn('[Saul Git] Failed to get diff stats from last commit:', err);
+            }
+          }
+          
           const message = repo.state?.HEAD?.commit || '';
           this.trackCommit(repo, message);
           lastCommit = currentCommit;
         }
+        
+        this.trackRepositoryState(repo);
       })
     );
 
@@ -289,6 +304,37 @@ class GitTracker {
       return { filesChanged, linesAdded, linesDeleted };
     } catch (error) {
       console.warn('[Saul Git] Could not get diff stats:', error.message);
+      return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    }
+  }
+
+  async getDiffStatsFromLastCommit(repo) {
+    try {
+      const patch = await repo.diffWith('HEAD~1', 'HEAD');
+      
+      if (!patch) {
+        return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+      }
+
+      const lines = patch.split(/\r?\n/);
+      let linesAdded = 0;
+      let linesDeleted = 0;
+      let filesChanged = 0;
+
+      for (const line of lines) {
+        if (line.startsWith('diff --git')) {
+          filesChanged++;
+        } else if (line.startsWith('+') && !line.startsWith('+++')) {
+          linesAdded++;
+        } else if (line.startsWith('-') && !line.startsWith('---')) {
+          linesDeleted++;
+        }
+      }
+
+      console.log('[Saul Git] Retrieved diff stats from HEAD~1:', { filesChanged, linesAdded, linesDeleted });
+      return { filesChanged, linesAdded, linesDeleted };
+    } catch (error) {
+      console.warn('[Saul Git] Could not get diff from HEAD~1:', error.message);
       return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
     }
   }
