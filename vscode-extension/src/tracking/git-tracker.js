@@ -163,7 +163,8 @@ class GitTracker {
     if (indexChanges > 0) {
       const diffStats = await this.getDiffStats(repo);
       this.lastDiffStatsCache.set(repoPath, diffStats);
-      console.log('[Saul Git] Cached diff stats before commit:', diffStats);
+      console.log(`[Saul Git] Cached diff stats for repo "${repoPath}":`, diffStats);
+      console.log('[Saul Git] Cache now contains:', Array.from(this.lastDiffStatsCache.keys()));
     }
 
     const heartbeat = this.buildHeartbeat({
@@ -201,14 +202,18 @@ class GitTracker {
 
     const remote = repo.state?.HEAD?.upstream?.remote || '';
     
+    console.log(`[Saul Git] trackCommit for repo "${repoPath}"`);
+    console.log('[Saul Git] Available caches:', Array.from(this.lastDiffStatsCache.keys()));
+    
     const cachedStats = this.lastDiffStatsCache.get(repoPath);
     const diffStats = cachedStats || { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
     
     if (cachedStats) {
       this.lastDiffStatsCache.delete(repoPath);
-      console.log('[Saul Git] Using cached diff stats for commit:', diffStats);
+      console.log(`[Saul Git] Using cached diff stats for commit in "${repoPath}":`, diffStats);
     } else {
-      console.warn('[Saul Git] No cached diff stats found, using zeros');
+      console.warn(`[Saul Git] No cached diff stats found for "${repoPath}", using zeros`);
+      console.warn('[Saul Git] This usually means trackRepositoryState was not called or indexChanges was 0');
     }
 
     const heartbeat = this.buildHeartbeat({

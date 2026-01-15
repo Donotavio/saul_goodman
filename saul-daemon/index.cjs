@@ -1131,14 +1131,26 @@ function handleVscodeDashboard(req, res, url) {
   let totalLinesAdded = 0;
   let totalLinesDeleted = 0;
 
-  entry.heartbeats
-    .filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs)
-    .forEach((hb) => {
-      totalCommits++;
-      totalFilesChanged += hb.metadata?.filesChanged || 0;
-      totalLinesAdded += hb.metadata?.linesAdded || 0;
-      totalLinesDeleted += hb.metadata?.linesDeleted || 0;
-    });
+  const commitHeartbeats = entry.heartbeats.filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs);
+  
+  console.log(`[saul-daemon] Processing ${commitHeartbeats.length} commit heartbeats`);
+  
+  commitHeartbeats.forEach((hb, idx) => {
+    totalCommits++;
+    const files = hb.metadata?.filesChanged || 0;
+    const added = hb.metadata?.linesAdded || 0;
+    const deleted = hb.metadata?.linesDeleted || 0;
+    
+    if (idx < 3) {
+      console.log(`[saul-daemon] Commit ${idx + 1} metadata:`, { files, added, deleted });
+    }
+    
+    totalFilesChanged += files;
+    totalLinesAdded += added;
+    totalLinesDeleted += deleted;
+  });
+
+  console.log(`[saul-daemon] Git totals: commits=${totalCommits}, files=${totalFilesChanged}, +${totalLinesAdded}, -${totalLinesDeleted}`);
 
   const branchMap = new Map();
   entry.durations
