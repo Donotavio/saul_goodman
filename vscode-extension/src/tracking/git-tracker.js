@@ -10,6 +10,7 @@ class GitTracker {
     this.gitExtension = null;
     this.repositories = new Map();
     this.repoInitTimestamps = new Map();
+    this.lastDiffStatsCache = new Map();
     this.GIT_INIT_GRACE_PERIOD_MS = 30000;
   }
 
@@ -55,6 +56,7 @@ class GitTracker {
     this.disposables = [];
     this.repositories.clear();
     this.repoInitTimestamps.clear();
+    this.lastDiffStatsCache.clear();
   }
 
   getRepoKey(repo) {
@@ -138,7 +140,7 @@ class GitTracker {
     this.repositories.set(repoKey, { repo, disposables, lastCommit });
   }
 
-  trackRepositoryState(repo) {
+  async trackRepositoryState(repo) {
     const config = this.getConfig();
     if (!config.enableTracking) {
       return;
@@ -157,6 +159,12 @@ class GitTracker {
     const behind = repo.state?.HEAD?.behind || 0;
     const workingTreeChanges = repo.state?.workingTreeChanges?.length || 0;
     const indexChanges = repo.state?.indexChanges?.length || 0;
+
+    if ((workingTreeChanges > 0 || indexChanges > 0) && indexChanges > 0) {
+      const diffStats = await this.getDiffStats(repo);
+      this.lastDiffStatsCache.set(repoPath, diffStats);
+      console.log('[Saul Git] Cached diff stats before commit:', diffStats);
+    }
 
     const heartbeat = this.buildHeartbeat({
       entityType: 'repository',
@@ -192,7 +200,16 @@ class GitTracker {
     }
 
     const remote = repo.state?.HEAD?.upstream?.remote || '';
-    const diffStats = await this.getDiffStats(repo);
+    
+    const cachedStats = this.lastDiffStatsCache.get(repoPath);
+    const diffStats = cachedStats || { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    
+    if (cachedStats) {
+      this.lastDiffStatsCache.delete(repoPath);
+      console.log('[Saul Git] Using cached diff stats for commit:', diffStats);
+    } else {
+      console.warn('[Saul Git] No cached diff stats found, using zeros');
+    }
 
     const heartbeat = this.buildHeartbeat({
       entityType: 'commit',
@@ -215,19 +232,17 @@ class GitTracker {
 
   async getDiffStats(repo) {
     try {
-      const head = repo.state?.HEAD?.commit;
-      if (!head) {
-        return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
-      }
-
-      const diff = await repo.diffWithHEAD();
-      const filesChanged = diff ? diff.length : 0;
+      const indexChanges = repo.state?.indexChanges || [];
+      const workingTreeChanges = repo.state?.workingTreeChanges || [];
+      
+      const allChanges = [...new Set([...indexChanges, ...workingTreeChanges])];
+      const filesChanged = allChanges.length;
 
       let linesAdded = 0;
       let linesDeleted = 0;
 
-      if (diff && diff.length > 0) {
-        for (const change of diff) {
+      if (filesChanged > 0) {
+        for (const change of indexChanges) {
           try {
             const patch = await repo.diffIndexWithHEAD(change.uri.fsPath);
             if (patch) {
@@ -241,11 +256,12 @@ class GitTracker {
               }
             }
           } catch (err) {
-            console.warn('[Saul Git] Could not get patch for file:', change.uri.fsPath);
+            console.warn('[Saul Git] Could not get patch for file:', change.uri?.fsPath || 'unknown');
           }
         }
       }
 
+      console.log('[Saul Git] Diff stats:', { filesChanged, linesAdded, linesDeleted });
       return { filesChanged, linesAdded, linesDeleted };
     } catch (error) {
       console.warn('[Saul Git] Could not get diff stats:', error.message);

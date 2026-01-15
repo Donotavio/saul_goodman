@@ -209,6 +209,7 @@ body {
   gap: 6px;
   font-size: 0.85rem;
   font-weight: 600;
+  color: #1a1a1a;
 }
 
 .filters input,
@@ -309,6 +310,8 @@ button.ghost:hover {
   border-bottom: 2px solid var(--saul-cream);
   padding-bottom: 8px;
   transition: border-color 0.2s ease;
+  color: #1a1a1a;
+  font-weight: 500;
 }
 
 .data-list li:hover,

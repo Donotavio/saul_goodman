@@ -254,17 +254,29 @@
   }
 
   function renderHourlyChart(hourlyData) {
+    console.log('[Saul Report] renderHourlyChart called with:', hourlyData);
+    console.log('[Saul Report] Chart.js available:', typeof Chart !== 'undefined');
+    
     const canvas = document.getElementById('hourlyChart');
     const emptyEl = document.getElementById('hourlyEmpty');
     
-    if (!canvas || !hourlyData || hourlyData.length === 0) {
-      if (canvas) canvas.style.display = 'none';
+    if (!canvas) {
+      console.error('[Saul Report] Canvas element not found');
+      return;
+    }
+    
+    if (!hourlyData || hourlyData.length === 0) {
+      console.log('[Saul Report] No hourly data, showing empty state');
+      canvas.style.display = 'none';
       if (emptyEl) emptyEl.classList.remove('hidden');
       return;
     }
 
     const totalSeconds = hourlyData.reduce((sum, h) => sum + (h.total || 0), 0);
+    console.log('[Saul Report] Total seconds:', totalSeconds);
+    
     if (totalSeconds === 0) {
+      console.log('[Saul Report] Total is zero, showing empty state');
       canvas.style.display = 'none';
       if (emptyEl) emptyEl.classList.remove('hidden');
       return;
@@ -283,8 +295,19 @@
       window.hourlyChartInstance.destroy();
     }
 
-    const ctx = canvas.getContext('2d');
-    window.hourlyChartInstance = new Chart(ctx, {
+    if (typeof Chart === 'undefined') {
+      console.error('[Saul Report] Chart.js is not loaded!');
+      if (emptyEl) {
+        emptyEl.textContent = 'Chart.js library failed to load';
+        emptyEl.classList.remove('hidden');
+      }
+      return;
+    }
+
+    try {
+      const ctx = canvas.getContext('2d');
+      console.log('[Saul Report] Creating chart...');
+      window.hourlyChartInstance = new Chart(ctx, {
       type: 'bar',
       data: {
         labels,
@@ -364,6 +387,15 @@
         }
       }
     });
+      console.log('[Saul Report] Chart created successfully');
+    } catch (error) {
+      console.error('[Saul Report] Error creating chart:', error);
+      canvas.style.display = 'none';
+      if (emptyEl) {
+        emptyEl.textContent = `Chart error: ${error.message}`;
+        emptyEl.classList.remove('hidden');
+      }
+    }
   }
 
   function renderIndex(index) {
