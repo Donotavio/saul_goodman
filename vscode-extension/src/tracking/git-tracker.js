@@ -342,9 +342,16 @@ class GitTracker {
 
   async getDiffStatsFromLastCommit(repo) {
     try {
+      console.log('[Saul Git] Calling repo.diffWith(HEAD~1, HEAD)...');
       const patch = await repo.diffWith('HEAD~1', 'HEAD');
       
+      console.log('[Saul Git] Patch received:', patch ? `${patch.length} chars` : 'null/empty');
+      if (patch) {
+        console.log('[Saul Git] Patch preview:', patch.substring(0, 300));
+      }
+      
       if (!patch) {
+        console.warn('[Saul Git] Patch is null/empty, returning zeros');
         return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
       }
 
@@ -366,6 +373,7 @@ class GitTracker {
       console.log('[Saul Git] Retrieved diff stats from HEAD~1:', { filesChanged, linesAdded, linesDeleted });
       return { filesChanged, linesAdded, linesDeleted };
     } catch (error) {
+      console.error('[Saul Git] Error in getDiffStatsFromLastCommit:', error);
       console.warn('[Saul Git] Could not get diff from HEAD~1:', error.message);
       return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
     }
