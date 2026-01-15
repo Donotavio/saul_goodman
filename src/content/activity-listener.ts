@@ -822,7 +822,7 @@ function injectStyles(): void {
       80% { transform: translate(2px, -2px) rotate(0.3deg); }
       100% { transform: translate(0, 0); }
     }
-    .${EARTHQUAKE_CLASS} {
+    .${EARTHQUAKE_CLASS} body > *:not(#${OVERLAY_ID}) {
       animation: sg-earthquake 0.6s linear infinite;
     }
     #${OVERLAY_ID} {
