@@ -328,22 +328,33 @@ button {
   display: flex;
   flex-direction: column;
   height: 100%;
+  gap: 12px;
+}
+
+.panel.two-columns > .domain-panel {
+  padding: 14px;
+  border: 1px dashed #d7b247;
+  border-radius: 12px;
+  background: #fffdf2;
+  padding-right: 14px;
 }
 
 .domain-filter-row {
   grid-column: 1 / -1;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed #d7b247;
+  padding: 12px 14px;
+  border: 1px dashed #d7b247;
+  border-radius: 12px;
+  background: #fffdf2;
+  gap: 6px;
 }
 
 .panel.two-columns > .domain-filter-row {
   max-height: none;
   overflow: visible;
-  padding-right: 0;
+  padding: 12px 14px;
 }
 
 .domain-filter-row input {
-  max-width: 420px;
   width: 100%;
 }
 
@@ -352,7 +363,8 @@ button {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #e0c16a;
 }
 
 .domain-list.scrollable {
@@ -364,15 +376,17 @@ button {
 .domain-form {
   flex-direction: row;
   gap: 8px;
+  align-items: center;
 }
 
 .domain-form input {
   flex: 1;
+  margin-top: 0;
 }
 
 .domain-form button {
   background: #f9b319;
-  border: 1px solid #111;
+  border: 2px solid #111;
   color: #111;
 }
 
@@ -393,9 +407,10 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 8px 10px;
+  border: 1px solid #e4d6a5;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
 }
 
 .domain-list.highlighted {
@@ -417,10 +432,10 @@ button {
 
 .domain-list button {
   background: #fff;
-  border: 1px solid #111;
+  border: 2px solid #111;
   color: #111;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
 }
 
 .domain-list button:hover {
