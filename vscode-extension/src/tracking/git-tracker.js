@@ -95,14 +95,22 @@ class GitTracker {
     }
 
     const disposables = [];
+    let lastCommit = repo.state?.HEAD?.commit || null;
 
     disposables.push(
       repo.state.onDidChange(() => {
         this.trackRepositoryState(repo);
+        
+        const currentCommit = repo.state?.HEAD?.commit || null;
+        if (currentCommit && currentCommit !== lastCommit) {
+          const message = repo.state?.HEAD?.commit || '';
+          this.trackCommit(repo, message);
+          lastCommit = currentCommit;
+        }
       })
     );
 
-    this.repositories.set(repoKey, { repo, disposables });
+    this.repositories.set(repoKey, { repo, disposables, lastCommit });
   }
 
   trackRepositoryState(repo) {

@@ -45,10 +45,12 @@ class WorkspaceTracker {
   async scanWorkspaces() {
     const config = this.getConfig();
     if (!config.enableTracking) {
+      console.log('[Saul Workspace] Tracking disabled');
       return;
     }
 
     const folders = vscode.workspace.workspaceFolders || [];
+    console.log('[Saul Workspace] Scanning', folders.length, 'workspace folders');
     
     for (const folder of folders) {
       await this.scanWorkspaceFolder(folder);
@@ -92,6 +94,8 @@ class WorkspaceTracker {
   }
 
   async analyzeWorkspace(folder) {
+    console.log('[Saul Workspace] Analyzing folder:', folder.name, folder.uri.fsPath);
+    
     const stats = {
       totalFiles: 0,
       totalDirectories: 0,
@@ -101,24 +105,17 @@ class WorkspaceTracker {
       topExtensions: []
     };
 
-    const excludePatterns = [
-      '**/node_modules/**',
-      '**/.git/**',
-      '**/dist/**',
-      '**/build/**',
-      '**/.vscode/**',
-      '**/out/**',
-      '**/.next/**',
-      '**/__pycache__/**',
-      '**/.pytest_cache/**'
-    ];
-
     try {
+      const excludePattern = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/.vscode/**,**/out/**,**/.next/**,**/__pycache__/**,**/.pytest_cache/**}';
+      
+      console.log('[Saul Workspace] Finding files...');
       const files = await vscode.workspace.findFiles(
         new vscode.RelativePattern(folder, '**/*'),
-        `{${excludePatterns.join(',')}}`,
+        excludePattern,
         10000
       );
+
+      console.log('[Saul Workspace] Found', files.length, 'files');
 
       const fileSizes = [];
 
@@ -156,6 +153,8 @@ class WorkspaceTracker {
         .map(([ext, count]) => ({ extension: ext, count }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
+
+      console.log('[Saul Workspace] Analysis complete:', stats.totalFiles, 'files,', (stats.totalSizeBytes / (1024 * 1024)).toFixed(2), 'MB');
 
     } catch (error) {
       console.error('[Saul Workspace] Failed to analyze workspace:', error);
