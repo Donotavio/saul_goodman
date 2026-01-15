@@ -697,13 +697,13 @@ async function loadSuggestions(): Promise<void> {
   try {
     const response = (await chrome.runtime.sendMessage({
       type: 'metrics-request'
-    })) as RuntimeMessageResponse | undefined;
-    if (!response) {
+    })) as { ok?: boolean; data?: RuntimeMessageResponse; error?: string } | undefined;
+    if (!response?.ok || !response.data) {
       suggestionList = [];
       renderRecommendations();
       return;
     }
-    suggestionList = buildSuggestionList(response);
+    suggestionList = buildSuggestionList(response.data);
     renderRecommendations();
   } catch (error) {
     console.warn('[options] Falha ao carregar sugestões:', error);
@@ -795,9 +795,25 @@ function buildRecommendationItem(suggestion: DomainSuggestion): HTMLLIElement {
   const header = document.createElement('div');
   header.className = 'recommendation-header';
 
+  const headerLeft = document.createElement('div');
+  headerLeft.className = 'recommendation-header-left';
+
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'PRODUTIVO',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'PROCRASTINADOR',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'NEUTRO'
+  };
+
+  const classificationEl = document.createElement('span');
+  classificationEl.className = `recommendation-classification ${suggestion.classification}`;
+  classificationEl.textContent = labelMap[suggestion.classification];
+
   const domainEl = document.createElement('span');
   domainEl.className = 'recommendation-domain';
   domainEl.textContent = suggestion.domain;
+
+  headerLeft.appendChild(classificationEl);
+  headerLeft.appendChild(domainEl);
 
   const confidenceEl = document.createElement('span');
   confidenceEl.className = 'recommendation-confidence';
@@ -807,7 +823,7 @@ function buildRecommendationItem(suggestion: DomainSuggestion): HTMLLIElement {
     }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
   confidenceEl.textContent = confidenceText;
 
-  header.appendChild(domainEl);
+  header.appendChild(headerLeft);
   header.appendChild(confidenceEl);
   item.appendChild(header);
 

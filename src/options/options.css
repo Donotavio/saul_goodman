@@ -476,6 +476,38 @@ button {
   gap: 8px;
 }
 
+.recommendation-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.recommendation-classification {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #111;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.recommendation-classification.productive {
+  background: #ddf5e4;
+  color: #0f7a39;
+}
+
+.recommendation-classification.procrastination {
+  background: #ffe3e2;
+  color: #b21d12;
+}
+
+.recommendation-classification.neutral {
+  background: #f1f1f1;
+  color: #555;
+}
+
 .recommendation-domain {
   font-weight: 700;
   color: #111;

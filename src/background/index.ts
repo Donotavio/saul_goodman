@@ -69,7 +69,7 @@ const LAST_NOTIFIED_VERSION_KEY = 'sg:last-notified-version';
 const CHANGELOG_URL = 'https://github.com/Donotavio/saul_goodman/blob/main/CHANGELOG.md';
 const BLOCK_RULE_ID_BASE = 50_000;
 const BLOCK_RULE_MAX = 50_500; // reserva 500 IDs para regras de bloqueio
-const BLOCK_PAGE_PATH = '/src/block/block.html';
+const BLOCK_PAGE_PATH = 'src/block/block.html';
 const VS_CODE_DOMAIN_ID = '__vscode:ide';
 const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
@@ -617,22 +617,11 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 });
 
 chrome.tabs.onActivated.addListener(({ tabId }) => {
-  void updateActiveTabContext(tabId, true);
-  void syncCriticalStateToTab(tabId);
+  void handleTabActivated(tabId);
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (!tab.active) {
-    return;
-  }
-
-  if (changeInfo.url || changeInfo.status === 'complete') {
-    void updateActiveTabContext(tabId, false, tab);
-  }
-
-  if (typeof changeInfo.audible === 'boolean' && trackingState.currentTabId === tabId) {
-    trackingState.currentTabAudible = changeInfo.audible;
-  }
+  void handleTabUpdated(tabId, changeInfo, tab);
 });
 
 chrome.windows.onFocusChanged.addListener((windowId) => {
@@ -1347,6 +1336,9 @@ async function handleNavigationEvent(
   }
   try {
     const tab = await chrome.tabs.get(tabId);
+    if (await maybeRedirectBlockedTab(tabId, tab)) {
+      return;
+    }
     if (!tab.active) {
       return;
     }
@@ -1361,11 +1353,93 @@ async function handleNavigationEvent(
   }
 }
 
-async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
-  if (!chrome.declarativeNetRequest?.updateDynamicRules) {
+async function handleTabActivated(tabId: number): Promise<void> {
+  if (await maybeRedirectBlockedTab(tabId)) {
     return;
   }
+  await updateActiveTabContext(tabId, true);
+  await syncCriticalStateToTab(tabId);
+}
+
+async function handleTabUpdated(
+  tabId: number,
+  changeInfo: chrome.tabs.TabChangeInfo,
+  tab: chrome.tabs.Tab
+): Promise<void> {
+  if (await maybeRedirectBlockedTab(tabId, tab)) {
+    return;
+  }
+
+  if (!tab.active) {
+    return;
+  }
+
+  if (changeInfo.url || changeInfo.status === 'complete') {
+    await updateActiveTabContext(tabId, false, tab);
+  }
+
+  if (typeof changeInfo.audible === 'boolean' && trackingState.currentTabId === tabId) {
+    trackingState.currentTabAudible = changeInfo.audible;
+  }
+}
+
+async function maybeRedirectBlockedTab(
+  tabId: number,
+  tab?: chrome.tabs.Tab
+): Promise<boolean> {
+  const target = tab ?? (await chrome.tabs.get(tabId).catch(() => undefined));
+  if (!target?.url || !/^https?:/i.test(target.url)) {
+    return false;
+  }
+
+  const settings = await getSettingsCache();
+  if (!settings?.blockProcrastination) {
+    return false;
+  }
+
+  const domain = extractDomain(target.url);
+  const host = domain ? normalizeDomain(domain) : '';
+  if (!host) {
+    return false;
+  }
+
+  const shouldBlock = settings.procrastinationDomains.some((candidate) =>
+    domainMatches(host, candidate)
+  );
+  if (!shouldBlock) {
+    return false;
+  }
+
+  const blockUrl = chrome.runtime.getURL(BLOCK_PAGE_PATH);
+  if (target.url === blockUrl) {
+    return false;
+  }
+
+  await chrome.tabs.update(tabId, { url: blockUrl });
+  return true;
+}
+
+async function enforceBlockingOnTabs(settings: ExtensionSettings): Promise<void> {
+  if (!settings.blockProcrastination) {
+    return;
+  }
+  try {
+    const tabs = await chrome.tabs.query({});
+    await Promise.all(
+      tabs.map((tab) => (tab.id ? maybeRedirectBlockedTab(tab.id, tab) : Promise.resolve(false)))
+    );
+  } catch (error) {
+    console.warn('Falha ao aplicar bloqueio nos tabs abertos', error);
+  }
+}
+
+
+async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
   if (!settings) {
+    return;
+  }
+  if (!chrome.declarativeNetRequest?.updateDynamicRules) {
+    await enforceBlockingOnTabs(settings);
     return;
   }
 
@@ -1415,6 +1489,8 @@ async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
     });
   } catch (error) {
     console.warn('Falha ao sincronizar regras de bloqueio', error);
+  } finally {
+    await enforceBlockingOnTabs(settings);
   }
 }
 
