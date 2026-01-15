@@ -14,11 +14,15 @@ class EditorMetadataTracker {
   start() {
     this.dispose();
     
+    console.log('[Saul Metadata] EditorMetadataTracker started, will send metadata in 2 seconds');
+    
     setTimeout(() => {
+      console.log('[Saul Metadata] Sending initial editor metadata...');
       this.sendEditorMetadata();
     }, 2000);
     
     const interval = setInterval(() => {
+      console.log('[Saul Metadata] Sending periodic editor metadata...');
       this.sendEditorMetadata();
     }, this.METADATA_INTERVAL_MS);
 
@@ -44,26 +48,32 @@ class EditorMetadataTracker {
   sendEditorMetadata() {
     const config = this.getConfig();
     if (!config.enableTracking) {
+      console.log('[Saul Metadata] Tracking disabled');
       return;
     }
 
     const now = Date.now();
     if (now - this.lastMetadataSentAt < this.METADATA_INTERVAL_MS) {
+      console.log('[Saul Metadata] Skipping - too soon since last send');
       return;
     }
     this.lastMetadataSentAt = now;
 
+    console.log('[Saul Metadata] Collecting editor metadata...');
     const metadata = this.collectEditorMetadata();
+    console.log('[Saul Metadata] Extensions found:', metadata.extensionsCount);
     
     const heartbeat = this.buildHeartbeat({
       entityType: 'editor_metadata',
       entity: 'vscode',
-      category: 'metadata',
+      category: 'coding',
       isWrite: false,
       metadata
     });
 
+    console.log('[Saul Metadata] Enqueueing editor metadata heartbeat');
     this.queue.enqueue(heartbeat);
+    console.log('[Saul Metadata] Editor metadata sent');
   }
 
   collectEditorMetadata() {

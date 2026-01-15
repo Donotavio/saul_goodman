@@ -106,18 +106,23 @@ class WorkspaceTracker {
     };
 
     try {
-      const excludePattern = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/.vscode/**,**/out/**,**/.next/**,**/__pycache__/**,**/.pytest_cache/**}';
+      console.log('[Saul Workspace] Finding files in:', folder.uri.fsPath);
       
-      console.log('[Saul Workspace] Finding files...');
       const files = await vscode.workspace.findFiles(
         new vscode.RelativePattern(folder, '**/*'),
-        excludePattern,
-        10000
+        '**/node_modules/**',
+        5000
       );
 
-      console.log('[Saul Workspace] Found', files.length, 'files');
+      console.log('[Saul Workspace] Found', files.length, 'potential files');
+
+      if (files.length === 0) {
+        console.warn('[Saul Workspace] No files found - workspace might be empty or all excluded');
+        return stats;
+      }
 
       const fileSizes = [];
+      let processedCount = 0;
 
       for (const file of files) {
         try {
@@ -126,8 +131,9 @@ class WorkspaceTracker {
           if (stat.type === vscode.FileType.File) {
             stats.totalFiles++;
             stats.totalSizeBytes += stat.size;
+            processedCount++;
 
-            const ext = path.extname(file.fsPath).toLowerCase() || 'no-extension';
+            const ext = path.extname(file.fsPath).toLowerCase() || '.none';
             stats.filesByExtension[ext] = (stats.filesByExtension[ext] || 0) + 1;
 
             fileSizes.push({
@@ -136,9 +142,11 @@ class WorkspaceTracker {
             });
           }
         } catch (error) {
-          // Ignore files that can't be stat'd
+          console.log('[Saul Workspace] Skipped file (stat failed):', file.fsPath);
         }
       }
+
+      console.log('[Saul Workspace] Processed', processedCount, 'of', files.length, 'files');
 
       stats.largestFiles = fileSizes
         .sort((a, b) => b.size - a.size)
@@ -154,10 +162,12 @@ class WorkspaceTracker {
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
 
-      console.log('[Saul Workspace] Analysis complete:', stats.totalFiles, 'files,', (stats.totalSizeBytes / (1024 * 1024)).toFixed(2), 'MB');
+      const sizeMB = (stats.totalSizeBytes / (1024 * 1024)).toFixed(2);
+      console.log('[Saul Workspace] ✓ Analysis complete:', stats.totalFiles, 'files,', sizeMB, 'MB');
 
     } catch (error) {
-      console.error('[Saul Workspace] Failed to analyze workspace:', error);
+      console.error('[Saul Workspace] ✗ Failed to analyze workspace:', error);
+      console.error('[Saul Workspace] Error stack:', error.stack);
     }
 
     return stats;
