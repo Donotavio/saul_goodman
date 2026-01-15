@@ -2792,7 +2792,6 @@ blockquote p {
   max-width: min(540px, 96vw);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
   text-align: center;
-  animation: quake 0.6s linear infinite;
 }
 
 .quake-title {
@@ -2817,8 +2816,12 @@ blockquote p {
   cursor: pointer;
 }
 
-.quake-active {
+.quake-active > *:not(.quake-overlay) {
   animation: quake 0.6s linear infinite;
+}
+
+.quake-overlay.active .quake-card {
+  animation: none;
 }
 
 .reactions-grid {
