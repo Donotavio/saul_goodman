@@ -111,7 +111,7 @@
   ],
   "scripts": {
     "prebuild:vsix": "cd .. && npm run i18n:copy-site",
-    "build:vsix": "npm run prebuild:vsix && cd vscode-extension && vsce package --out saul-goodman-vscode.vsix"
+    "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
   },
   "devDependencies": {
     "@types/vscode": "^1.80.0",
