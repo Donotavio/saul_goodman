@@ -9,6 +9,8 @@ class GitTracker {
     this.disposables = [];
     this.gitExtension = null;
     this.repositories = new Map();
+    this.repoInitTimestamps = new Map();
+    this.GIT_INIT_GRACE_PERIOD_MS = 30000;
   }
 
   async start() {
@@ -52,10 +54,23 @@ class GitTracker {
     this.disposables.forEach((item) => item.dispose());
     this.disposables = [];
     this.repositories.clear();
+    this.repoInitTimestamps.clear();
   }
 
   getRepoKey(repo) {
     return repo.rootUri?.fsPath || 'unknown';
+  }
+
+  shouldFilterUnknownBranch(repoKey, branch) {
+    if (branch !== 'unknown') {
+      return false;
+    }
+    const initTime = this.repoInitTimestamps.get(repoKey);
+    if (!initTime) {
+      return false;
+    }
+    const elapsed = Date.now() - initTime;
+    return elapsed < this.GIT_INIT_GRACE_PERIOD_MS;
   }
 
   trackRepository(repo) {
@@ -66,6 +81,16 @@ class GitTracker {
 
     const repoPath = this.getRepoKey(repo);
     const branch = repo.state?.HEAD?.name || 'unknown';
+    
+    if (!this.repoInitTimestamps.has(repoPath)) {
+      this.repoInitTimestamps.set(repoPath, Date.now());
+    }
+
+    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
+      console.log('[Saul Git] Skipping heartbeat with unknown branch during init grace period');
+      return;
+    }
+
     const remote = repo.state?.HEAD?.upstream?.remote || '';
     const ahead = repo.state?.HEAD?.ahead || 0;
     const behind = repo.state?.HEAD?.behind || 0;
@@ -121,6 +146,12 @@ class GitTracker {
 
     const repoPath = this.getRepoKey(repo);
     const branch = repo.state?.HEAD?.name || 'unknown';
+
+    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
+      console.log('[Saul Git] Skipping state heartbeat with unknown branch during init grace period');
+      return;
+    }
+
     const remote = repo.state?.HEAD?.upstream?.remote || '';
     const ahead = repo.state?.HEAD?.ahead || 0;
     const behind = repo.state?.HEAD?.behind || 0;
@@ -154,6 +185,12 @@ class GitTracker {
 
     const repoPath = this.getRepoKey(repo);
     const branch = repo.state?.HEAD?.name || 'unknown';
+
+    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
+      console.log('[Saul Git] Skipping commit heartbeat with unknown branch during init grace period');
+      return;
+    }
+
     const remote = repo.state?.HEAD?.upstream?.remote || '';
 
     const heartbeat = this.buildHeartbeat({

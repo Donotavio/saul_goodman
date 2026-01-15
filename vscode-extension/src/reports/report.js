@@ -197,7 +197,6 @@
     
     const items = [
       { label: 'Tab Switches', value: activity.totalTabSwitches || 0 },
-      { label: 'Commands', value: activity.totalCommandExecutions || 0 },
       { label: 'Commits', value: git.totalCommits || 0 }
     ];
 
