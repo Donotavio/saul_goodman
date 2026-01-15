@@ -8,6 +8,9 @@ const { BufferedEventQueue } = require('./queue/buffered-event-queue');
 const { HeartbeatTracker } = require('./tracking/heartbeat-tracker');
 const { registerExtraEventCollectors } = require('./tracking/extra-events');
 const { createHeartbeatFactory } = require('./tracking/heartbeat-factory');
+const { GitTracker } = require('./tracking/git-tracker');
+const { EditorMetadataTracker } = require('./tracking/editor-metadata-tracker');
+const { WorkspaceTracker } = require('./tracking/workspace-tracker');
 const { showReports } = require('./reports/report-view');
 
 let statusBarItem = null;
@@ -162,6 +165,24 @@ class TrackingController {
       getConfig: () => this.config,
       buildHeartbeat: this.buildHeartbeat
     });
+    this.gitTracker = new GitTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.editorMetadataTracker = new EditorMetadataTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.workspaceTracker = new WorkspaceTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
     registerExtraEventCollectors({
       context,
       queue: this.queue,
@@ -174,12 +195,18 @@ class TrackingController {
   async init() {
     await this.queue.init();
     this.queue.start();
+    await this.gitTracker.start();
+    this.editorMetadataTracker.start();
+    this.workspaceTracker.start();
     this.applyConfig();
   }
 
   dispose() {
     this.queue.stop();
     this.heartbeatTracker.dispose();
+    this.gitTracker.dispose();
+    this.editorMetadataTracker.dispose();
+    this.workspaceTracker.dispose();
   }
 
   reloadConfig() {
@@ -195,11 +222,17 @@ class TrackingController {
   applyConfig() {
     if (this.config.enableTracking) {
       this.heartbeatTracker.start();
+      void this.gitTracker.start();
+      this.editorMetadataTracker.start();
+      this.workspaceTracker.start();
       if (!this.config.pairingKey) {
         void this.promptMissingKey();
       }
     } else {
       this.heartbeatTracker.dispose();
+      this.gitTracker.dispose();
+      this.editorMetadataTracker.dispose();
+      this.workspaceTracker.dispose();
     }
   }
 

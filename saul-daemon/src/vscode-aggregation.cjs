@@ -115,8 +115,44 @@ function mergeMetadata(target, source) {
   if (typeof source.branch === 'string') {
     merged.branch = source.branch;
   }
+  if (typeof source.remote === 'string') {
+    merged.remote = source.remote;
+  }
   if (typeof source.commandId === 'string') {
     merged.commandId = source.commandId;
+  }
+  if (typeof source.vscodeVersion === 'string') {
+    merged.vscodeVersion = source.vscodeVersion;
+  }
+  if (typeof source.uiKind === 'string') {
+    merged.uiKind = source.uiKind;
+  }
+  if (typeof source.remoteName === 'string') {
+    merged.remoteName = source.remoteName;
+  }
+  if (typeof source.shell === 'string') {
+    merged.shell = source.shell;
+  }
+  if (typeof source.sessionId === 'string') {
+    merged.sessionId = source.sessionId;
+  }
+  if (typeof source.commitMessage === 'string') {
+    merged.commitMessage = source.commitMessage;
+  }
+  if (typeof source.eventType === 'string') {
+    merged.eventType = source.eventType;
+  }
+  if (Number.isFinite(source.workingTreeChanges)) {
+    merged.workingTreeChanges = source.workingTreeChanges;
+  }
+  if (Number.isFinite(source.indexChanges)) {
+    merged.indexChanges = source.indexChanges;
+  }
+  if (Number.isFinite(source.ahead)) {
+    merged.ahead = source.ahead;
+  }
+  if (Number.isFinite(source.behind)) {
+    merged.behind = source.behind;
   }
   return merged;
 }

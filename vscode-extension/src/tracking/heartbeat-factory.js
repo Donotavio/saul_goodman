@@ -1,15 +1,30 @@
+const vscode = require('vscode');
 const { getOrCreateHashSalt, getOrCreateMachineId, hashValue, createUuid } = require('../utils/identity');
 
 function createHeartbeatFactory(context, getConfig) {
   const machineId = getOrCreateMachineId(context);
   const salt = getOrCreateHashSalt(context);
   const pluginVersion = context.extension?.packageJSON?.version || '0.0.0';
+  const vscodeVersion = vscode.version || 'unknown';
+  const uiKind = vscode.env.uiKind === vscode.UIKind.Desktop ? 'desktop' : 'web';
+  const remoteName = vscode.env.remoteName || '';
+  const shell = vscode.env.shell || '';
 
   return function buildHeartbeat(payload) {
     const config = getConfig();
     const now = new Date();
     const entity = sanitizeEntity(payload.entity, config, salt);
     const project = sanitizeProject(payload.project, config, salt);
+    
+    const metadata = {
+      ...(payload.metadata || {}),
+      vscodeVersion,
+      uiKind,
+      remoteName,
+      shell,
+      sessionId: vscode.env.sessionId
+    };
+
     return {
       id: payload.id || createUuid(),
       time: payload.time || now.toISOString(),
@@ -22,7 +37,7 @@ function createHeartbeatFactory(context, getConfig) {
       editor: 'vscode',
       pluginVersion,
       machineId,
-      metadata: payload.metadata || {}
+      metadata
     };
   };
 }

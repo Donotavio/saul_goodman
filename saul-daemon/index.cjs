@@ -786,7 +786,236 @@ function handleVscodeMachines(req, res, url) {
   handleVscodeBreakdown(req, res, url, 'machines');
 }
 
-function handleVscodeBreakdown(req, res, url, type) {
+function handleVscodeCommits(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+
+  const commits = entry.heartbeats
+    .filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs)
+    .filter((hb) => matchesFilters(hb, filters))
+    .map((hb) => ({
+      time: new Date(hb.time).toISOString(),
+      entity: hb.entity,
+      branch: hb.metadata?.branch || 'unknown',
+      message: hb.metadata?.commitMessage || '',
+      remote: hb.metadata?.remote || ''
+    }))
+    .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+
+  sendJson(req, res, 200, { data: commits });
+}
+
+function handleVscodeBranches(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+
+  const branchMap = new Map();
+  entry.durations
+    .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
+    .forEach((dur) => {
+      const branch = dur.metadata?.branch || 'unknown';
+      const overlapStart = Math.max(dur.startTime, startMs);
+      const overlapEnd = Math.min(dur.endTime, endMs);
+      const overlapMs = Math.max(0, overlapEnd - overlapStart);
+      incrementMap(branchMap, branch, overlapMs);
+    });
+
+  const totalMs = Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0);
+  const data = buildBreakdown(branchMap, totalMs);
+  sendJson(req, res, 200, { data });
+}
+
+function handleVscodeRepositories(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const filters = readVscodeFilters(url);
+  const entry = ensureVscodeEntry(key);
+
+  const repoMap = new Map();
+  entry.heartbeats
+    .filter((hb) => hb.entityType === 'repository' && hb.time >= startMs && hb.time < endMs)
+    .filter((hb) => matchesFilters(hb, filters))
+    .forEach((hb) => {
+      const repo = hb.entity || 'unknown';
+      const data = repoMap.get(repo) || {
+        name: repo,
+        branches: new Set(),
+        remotes: new Set(),
+        commits: 0,
+        lastActivity: hb.time
+      };
+      if (hb.metadata?.branch) data.branches.add(hb.metadata.branch);
+      if (hb.metadata?.remote) data.remotes.add(hb.metadata.remote);
+      if (hb.metadata?.eventType === 'commit_created') data.commits++;
+      data.lastActivity = Math.max(data.lastActivity, hb.time);
+      repoMap.set(repo, data);
+    });
+
+  const data = Array.from(repoMap.values()).map((repo) => ({
+    name: repo.name,
+    branches: Array.from(repo.branches),
+    remotes: Array.from(repo.remotes),
+    commits: repo.commits,
+    lastActivity: new Date(repo.lastActivity).toISOString()
+  }));
+
+  sendJson(req, res, 200, { data });
+}
+
+function handleVscodeEditorMetadata(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const entry = ensureVscodeEntry(key);
+
+  const metadataSnapshots = entry.heartbeats
+    .filter((hb) => hb.entityType === 'editor_metadata' && hb.time >= startMs && hb.time < endMs)
+    .map((hb) => ({
+      time: new Date(hb.time).toISOString(),
+      vscodeVersion: hb.metadata?.vscodeVersion || 'unknown',
+      uiKind: hb.metadata?.vscodeUIKind || 'unknown',
+      remoteName: hb.metadata?.vscodeRemoteName || '',
+      extensionsCount: hb.metadata?.extensionsCount || 0,
+      extensionsEnabled: hb.metadata?.extensionsEnabled || 0,
+      topExtensions: hb.metadata?.topExtensions || [],
+      themeKind: hb.metadata?.themeKind || 'unknown',
+      settingsAutoSave: hb.metadata?.settingsAutoSave || 'off',
+      settingsFormatOnSave: hb.metadata?.settingsFormatOnSave || false,
+      settingsFontSize: hb.metadata?.settingsFontSize || 14,
+      workspaceFolders: hb.metadata?.workspaceFolders || 0,
+      workspaceType: hb.metadata?.workspaceType || 'empty'
+    }))
+    .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+
+  const latest = metadataSnapshots[0] || null;
+
+  sendJson(req, res, 200, {
+    data: {
+      latest,
+      history: metadataSnapshots.slice(0, 10)
+    }
+  });
+}
+
+function handleVscodeWorkspaces(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const entry = ensureVscodeEntry(key);
+
+  const workspaceMap = new Map();
+
+  entry.heartbeats
+    .filter((hb) => hb.entityType === 'workspace' && hb.time >= startMs && hb.time < endMs)
+    .forEach((hb) => {
+      const wsPath = hb.entity || 'unknown';
+      const existing = workspaceMap.get(wsPath) || {
+        name: hb.metadata?.workspaceName || 'unknown',
+        path: wsPath,
+        totalFiles: 0,
+        totalSizeBytes: 0,
+        topExtensions: [],
+        lastScan: hb.time
+      };
+
+      if (hb.time > existing.lastScan) {
+        existing.totalFiles = hb.metadata?.totalFiles || 0;
+        existing.totalSizeBytes = hb.metadata?.totalSizeBytes || 0;
+        existing.topExtensions = hb.metadata?.topExtensions || [];
+        existing.lastScan = hb.time;
+      }
+
+      workspaceMap.set(wsPath, existing);
+    });
+
+  const data = Array.from(workspaceMap.values()).map((ws) => ({
+    name: ws.name,
+    path: ws.path,
+    totalFiles: ws.totalFiles,
+    totalSizeBytes: ws.totalSizeBytes,
+    totalSizeMB: (ws.totalSizeBytes / (1024 * 1024)).toFixed(2),
+    topExtensions: ws.topExtensions,
+    lastScan: new Date(ws.lastScan).toISOString()
+  }));
+
+  sendJson(req, res, 200, { data });
+}
+
+function handleVscodeActivityInsights(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
+  const { startMs, endMs } = resolveDateRange(url);
+  const entry = ensureVscodeEntry(key);
+
+  let totalTabSwitches = 0;
+  let totalCommandExecutions = 0;
+  const commandFrequency = new Map();
+  const activitySummaries = [];
+
+  entry.heartbeats
+    .filter((hb) => hb.time >= startMs && hb.time < endMs)
+    .forEach((hb) => {
+      if (hb.entityType === 'tab_switch') {
+        totalTabSwitches++;
+      }
+
+      if (hb.entityType === 'command') {
+        totalCommandExecutions++;
+        const cmd = hb.metadata?.commandId || hb.entity;
+        commandFrequency.set(cmd, (commandFrequency.get(cmd) || 0) + 1);
+      }
+
+      if (hb.entityType === 'activity_summary') {
+        activitySummaries.push({
+          time: new Date(hb.time).toISOString(),
+          tabSwitchCount: hb.metadata?.tabSwitchCount || 0,
+          commandExecutionCount: hb.metadata?.commandExecutionCount || 0,
+          topCommands: hb.metadata?.topCommands || []
+        });
+      }
+    });
+
+  const topCommands = Array.from(commandFrequency.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20)
+    .map(([cmd, count]) => ({ command: cmd, count }));
+
+  sendJson(req, res, 200, {
+    data: {
+      totalTabSwitches,
+      totalCommandExecutions,
+      topCommands,
+      activitySummaries: activitySummaries.slice(0, 10)
+    }
+  });
+}
+
+function handleVscodeDashboard(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
   if (!validateKey(key)) {
     sendError(req, res, 401, 'Invalid key');
@@ -795,12 +1024,81 @@ function handleVscodeBreakdown(req, res, url, type) {
   const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
+
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
-  const map = summary[type];
+
+  const commits = entry.heartbeats
+    .filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs)
+    .length;
+
+  const branchMap = new Map();
+  entry.durations
+    .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
+    .forEach((dur) => {
+      const branch = dur.metadata?.branch || 'unknown';
+      const overlapStart = Math.max(dur.startTime, startMs);
+      const overlapEnd = Math.min(dur.endTime, endMs);
+      const overlapMs = Math.max(0, overlapEnd - overlapStart);
+      incrementMap(branchMap, branch, overlapMs);
+    });
+
+  const editorMetadata = entry.heartbeats
+    .filter((hb) => hb.entityType === 'editor_metadata' && hb.time >= startMs && hb.time < endMs)
+    .sort((a, b) => b.time - a.time)[0];
+
+  const workspaces = [];
+  const workspaceMap = new Map();
+  entry.heartbeats
+    .filter((hb) => hb.entityType === 'workspace' && hb.time >= startMs && hb.time < endMs)
+    .forEach((hb) => {
+      const wsPath = hb.entity || 'unknown';
+      if (!workspaceMap.has(wsPath) || hb.time > workspaceMap.get(wsPath).time) {
+        workspaceMap.set(wsPath, {
+          name: hb.metadata?.workspaceName || 'unknown',
+          totalFiles: hb.metadata?.totalFiles || 0,
+          totalSizeMB: ((hb.metadata?.totalSizeBytes || 0) / (1024 * 1024)).toFixed(2),
+          time: hb.time
+        });
+      }
+    });
+
+  let totalTabSwitches = 0;
+  let totalCommandExecutions = 0;
+  entry.heartbeats
+    .filter((hb) => hb.time >= startMs && hb.time < endMs)
+    .forEach((hb) => {
+      if (hb.entityType === 'tab_switch') totalTabSwitches++;
+      if (hb.entityType === 'command') totalCommandExecutions++;
+    });
+
   sendJson(req, res, 200, {
     version: 1,
     range: { start: startKey, end: endKey, timezone },
-    data: buildBreakdown(map, summary.totalMs)
+    data: {
+      overview: {
+        totalSeconds: Math.round(summary.totalMs / 1000),
+        humanReadableTotal: formatDurationMs(summary.totalMs),
+        totalHeartbeats: entry.heartbeats.filter((hb) => hb.time >= startMs && hb.time < endMs).length
+      },
+      projects: buildBreakdown(summary.projects, summary.totalMs).slice(0, 10),
+      languages: buildBreakdown(summary.languages, summary.totalMs).slice(0, 10),
+      branches: buildBreakdown(branchMap, Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0)).slice(0, 10),
+      git: {
+        totalCommits: commits,
+        topBranches: Array.from(branchMap.keys()).slice(0, 5)
+      },
+      editor: editorMetadata ? {
+        vscodeVersion: editorMetadata.metadata?.vscodeVersion || 'unknown',
+        extensionsCount: editorMetadata.metadata?.extensionsCount || 0,
+        themeKind: editorMetadata.metadata?.themeKind || 'unknown',
+        workspaceType: editorMetadata.metadata?.workspaceType || 'empty'
+      } : null,
+      workspaces: Array.from(workspaceMap.values()),
+      activity: {
+        totalTabSwitches,
+        totalCommandExecutions
+      }
+    }
   });
 }
 
@@ -1075,6 +1373,41 @@ async function start() {
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/meta') {
       handleVscodeMeta(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/commits') {
+      handleVscodeCommits(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/branches') {
+      handleVscodeBranches(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/repositories') {
+      handleVscodeRepositories(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/editor-metadata') {
+      handleVscodeEditorMetadata(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/workspaces') {
+      handleVscodeWorkspaces(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/activity-insights') {
+      handleVscodeActivityInsights(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/dashboard') {
+      handleVscodeDashboard(req, res, parsedUrl);
       return;
     }
 

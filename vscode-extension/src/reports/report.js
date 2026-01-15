@@ -83,30 +83,30 @@
     console.log('[Saul Report] Fetching data with params:', params);
 
     try {
-      const [summaries, projects, languages, machines, todayStats] = await Promise.all([
+      const [dashboard, summaries, machines] = await Promise.all([
+        fetchJson('/v1/vscode/dashboard', params),
         fetchJson('/v1/vscode/summaries', params),
-        fetchJson('/v1/vscode/projects', params),
-        fetchJson('/v1/vscode/languages', params),
-        fetchJson('/v1/vscode/machines', params),
-        fetchJson('/v1/vscode/stats/today', params)
+        fetchJson('/v1/vscode/machines', params)
       ]);
 
-      console.log('[Saul Report] Data received:', {
-        summaries: summaries?.data?.days?.length || 0,
-        projects: projects?.data?.length || 0,
-        languages: languages?.data?.length || 0,
-        todayTotal: todayStats?.data?.human_readable_total
-      });
+      console.log('[Saul Report] Dashboard data:', dashboard?.data);
 
-      updateSelect(filterProject, projects.data, params.project);
-      updateSelect(filterLanguage, languages.data, params.language);
-      updateSelect(filterMachine, machines.data, params.machine);
+      const data = dashboard?.data || {};
+      
+      updateSelect(filterProject, data.projects || [], params.project);
+      updateSelect(filterLanguage, data.languages || [], params.language);
+      updateSelect(filterMachine, machines?.data || [], params.machine);
 
-      statToday.textContent = todayStats?.data?.human_readable_total || '--';
+      statToday.textContent = data.overview?.humanReadableTotal || '--';
 
-      renderList(projectsList, projects.data);
-      renderList(languagesList, languages.data);
+      renderList(projectsList, data.projects || []);
+      renderList(languagesList, data.languages || []);
       renderSummaries(summariesList, summaries?.data?.days || []);
+      
+      renderList(document.getElementById('branchesList'), data.branches || []);
+      renderActivity(data.activity || {}, data.git || {});
+      renderEditorInfo(data.editor);
+      renderWorkspaces(data.workspaces || []);
 
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
@@ -176,16 +176,75 @@
   }
 
   function formatSeconds(seconds) {
-    if (!Number.isFinite(seconds)) {
-      return '--';
+    if (!seconds || seconds === 0) {
+      return '0m';
     }
-    const total = Math.round(seconds);
-    const hours = Math.floor(total / 3600);
-    const minutes = Math.floor((total % 3600) / 60);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     if (hours > 0) {
       return `${hours}h ${minutes}m`;
     }
     return `${minutes}m`;
+  }
+
+  function renderActivity(activity, git) {
+    const list = document.getElementById('activityList');
+    if (!list) return;
+
+    list.innerHTML = '';
+    
+    const items = [
+      { label: 'Tab Switches', value: activity.totalTabSwitches || 0 },
+      { label: 'Commands', value: activity.totalCommandExecutions || 0 },
+      { label: 'Commits', value: git.totalCommits || 0 }
+    ];
+
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${item.label}</span><span>${item.value}</span>`;
+      list.appendChild(li);
+    });
+  }
+
+  function renderEditorInfo(editor) {
+    const container = document.getElementById('editorInfo');
+    if (!container) return;
+
+    if (!editor) {
+      container.innerHTML = '<p>No editor metadata available</p>';
+      return;
+    }
+
+    container.innerHTML = `
+      <ul class="data-list">
+        <li><span>VS Code Version</span><span>${editor.vscodeVersion || 'unknown'}</span></li>
+        <li><span>Extensions</span><span>${editor.extensionsCount || 0}</span></li>
+        <li><span>Theme</span><span>${editor.themeKind || 'unknown'}</span></li>
+        <li><span>Workspace Type</span><span>${editor.workspaceType || 'empty'}</span></li>
+      </ul>
+    `;
+  }
+
+  function renderWorkspaces(workspaces) {
+    const list = document.getElementById('workspacesList');
+    if (!list) return;
+
+    list.innerHTML = '';
+    
+    if (!workspaces.length) {
+      const li = document.createElement('li');
+      li.textContent = 'No workspaces tracked';
+      list.appendChild(li);
+      return;
+    }
+
+    workspaces.slice(0, 5).forEach(ws => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span><strong>${ws.name}</strong><br><small>${ws.totalFiles} files · ${ws.totalSizeMB} MB</small></span>
+      `;
+      list.appendChild(li);
+    });
   }
 
   function todayKey() {
