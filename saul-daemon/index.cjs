@@ -292,8 +292,14 @@ function normalizeMetadata(metadata) {
   if (Number.isFinite(Number(metadata.linesAdded))) {
     normalized.linesAdded = Number(metadata.linesAdded);
   }
+  if (Number.isFinite(Number(metadata.linesDeleted))) {
+    normalized.linesDeleted = Number(metadata.linesDeleted);
+  }
   if (Number.isFinite(Number(metadata.linesRemoved))) {
     normalized.linesRemoved = Number(metadata.linesRemoved);
+  }
+  if (Number.isFinite(Number(metadata.filesChanged))) {
+    normalized.filesChanged = Number(metadata.filesChanged);
   }
   if (typeof metadata.windowFocused === 'boolean') {
     normalized.windowFocused = metadata.windowFocused;

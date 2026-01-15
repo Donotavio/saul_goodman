@@ -25,7 +25,6 @@ Os endpoints de VS Code retornam apenas o dia atual.
 - `GET/POST /v1/tracking/index`
 
 ## Rodando
-
 ```bash
 cd saul-daemon
 PAIRING_KEY=meu-segredo PORT=3123 node index.cjs
