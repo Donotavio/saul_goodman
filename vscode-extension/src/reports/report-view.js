@@ -31,20 +31,27 @@ function showReports(context, getConfig, getI18n) {
 
 function buildHtml(webview, extensionUri, config, i18n) {
   const templatePath = path.join(extensionUri.fsPath, 'src', 'reports', 'report.html');
+  const cssPath = path.join(extensionUri.fsPath, 'src', 'reports', 'report.css');
+  const logoPath = path.join(extensionUri.fsPath, 'images', 'logotipo_saul_goodman.png');
+  
   const template = fs.readFileSync(templatePath, 'utf8');
+  const cssContent = fs.readFileSync(cssPath, 'utf8');
+  const logoBase64 = fs.readFileSync(logoPath).toString('base64');
+  
   const nonce = getNonce();
   const scriptUri = webview.asWebviewUri(
     vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'report.js')
   );
-  const styleUri = webview.asWebviewUri(
-    vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'report.css')
-  );
+
+  const inlineStyles = `<style nonce="${nonce}">${cssContent}</style>`;
+  const logoDataUri = `data:image/png;base64,${logoBase64}`;
 
   return template
     .replace(/{nonce}/g, nonce)
     .replace('{cspSource}', webview.cspSource)
     .replace('{scriptUri}', scriptUri.toString())
-    .replace('{styleUri}', styleUri.toString())
+    .replace('<link rel="stylesheet" href="{styleUri}" />', inlineStyles)
+    .replace('{logoUri}', logoDataUri)
     .replace('{config}', JSON.stringify(config))
     .replace('{i18n}', JSON.stringify(i18n || {}));
 }

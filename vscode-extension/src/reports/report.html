@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; connect-src http://127.0.0.1:* http://localhost:*; img-src {cspSource} https: http:; style-src {cspSource} 'unsafe-inline'; script-src 'nonce-{nonce}';"
+      content="default-src 'none'; connect-src http://127.0.0.1:* http://localhost:*; img-src {cspSource} https: http: data:; style-src {cspSource} 'unsafe-inline'; script-src 'nonce-{nonce}';"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{styleUri}" />
@@ -13,9 +13,13 @@
   <body>
     <main class="report">
       <header class="report__header">
-        <div>
+        <div class="header__content">
           <h1>Saul Goodman · VS Code Reports</h1>
           <p id="reportStatus" class="report__status">Carregando dados do SaulDaemon...</p>
+        </div>
+        <div class="header__logo">
+          <img src="{logoUri}" alt="Saul Goodman" class="logo" />
+          <span class="logo-caption">Filial digital</span>
         </div>
       </header>
 
