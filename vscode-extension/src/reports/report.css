@@ -10,10 +10,16 @@
   --saul-text: #1b120a;
 }
 
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
   color: var(--saul-text);
   background: linear-gradient(135deg, var(--saul-bg) 0%, var(--saul-cream) 50%, #ffffff 100%);
   min-height: 100vh;

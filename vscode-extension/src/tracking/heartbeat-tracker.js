@@ -41,7 +41,11 @@ class HeartbeatTracker {
     this.disposables = [];
   }
 
-  sendDocumentHeartbeat(document, isWrite, delta) {
+  sendDocumentHeartbeat(document, isWrite = false, delta = null) {
+    void this.queueHeartbeat(document, isWrite, delta);
+  }
+
+  async queueHeartbeat(document, isWrite = false, delta = null) {
     const config = this.getConfig();
     if (!config.enableTracking) {
       return;
@@ -83,6 +87,11 @@ class HeartbeatTracker {
       }
     }
 
+    const branch = await this.getCurrentBranch(document.uri);
+    if (branch) {
+      metadata.branch = branch;
+    }
+
     const heartbeat = this.buildHeartbeat({
       entityType: 'file',
       entity,
@@ -94,6 +103,29 @@ class HeartbeatTracker {
     });
 
     this.queue.enqueue(heartbeat);
+  }
+
+  async getCurrentBranch(fileUri) {
+    try {
+      const gitExtension = vscode.extensions.getExtension('vscode.git');
+      if (!gitExtension) {
+        return null;
+      }
+
+      if (!gitExtension.isActive) {
+        await gitExtension.activate();
+      }
+
+      const git = gitExtension.exports.getAPI(1);
+      const repo = git.getRepository(fileUri);
+      
+      if (repo && repo.state && repo.state.HEAD) {
+        return repo.state.HEAD.name || null;
+      }
+    } catch (error) {
+      return null;
+    }
+    return null;
   }
 }
 

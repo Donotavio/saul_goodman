@@ -14,7 +14,9 @@ class EditorMetadataTracker {
   start() {
     this.dispose();
     
-    this.sendEditorMetadata();
+    setTimeout(() => {
+      this.sendEditorMetadata();
+    }, 2000);
     
     const interval = setInterval(() => {
       this.sendEditorMetadata();

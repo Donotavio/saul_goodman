@@ -16,7 +16,9 @@ class WorkspaceTracker {
   start() {
     this.dispose();
     
-    this.scanWorkspaces();
+    setTimeout(() => {
+      this.scanWorkspaces();
+    }, 5000);
     
     const interval = setInterval(() => {
       this.scanWorkspaces();
