@@ -12,8 +12,11 @@ const DATA_DIR = path.join(DATA_ROOT, 'data');
 const STATE_PATH = path.join(DATA_DIR, 'vscode-usage.json');
 const VSCODE_STATE_PATH = path.join(DATA_DIR, 'vscode-tracking.json');
 const MAX_BODY_BYTES = parseEnvNumber('SAUL_DAEMON_MAX_BODY_KB', 256) * 1024;
-const RETENTION_DAYS = 1;
-const VSCODE_RETENTION_DAYS = 1;
+const RETENTION_DAYS = parseEnvNumber('SAUL_DAEMON_RETENTION_DAYS', 1);
+const VSCODE_RETENTION_DAYS = parseEnvNumber(
+  'SAUL_DAEMON_VSCODE_RETENTION_DAYS',
+  RETENTION_DAYS
+);
 const VSCODE_GAP_MS = parseEnvNumber('SAUL_VSCODE_GAP_MINUTES', 5) * 60 * 1000;
 const VSCODE_GRACE_MS = parseEnvNumber('SAUL_VSCODE_GRACE_MINUTES', 2) * 60 * 1000;
 const MAX_FUTURE_DAYS = 1;
@@ -248,14 +251,19 @@ function pruneVscodeEntries(key) {
   if (!entry) {
     return;
   }
-  const todayKey = getTodayKey();
+  const isKept = (ts) => {
+    if (!Number.isFinite(ts)) {
+      return false;
+    }
+    const dateKey = formatDateKey(new Date(ts));
+    return isDateWithinWindowWithRetention(dateKey, VSCODE_RETENTION_DAYS);
+  };
   entry.heartbeats = entry.heartbeats.filter((heartbeat) => {
-    const ts = heartbeat?.time;
-    return Number.isFinite(ts) && formatDateKey(new Date(ts)) === todayKey;
+    return isKept(heartbeat?.time);
   });
   entry.durations = entry.durations.filter((duration) => {
     const ts = duration?.endTime ?? duration?.startTime;
-    return Number.isFinite(ts) && formatDateKey(new Date(ts)) === todayKey;
+    return isKept(ts);
   });
   const idSet = getVscodeIdSet(key);
   idSet.clear();
@@ -279,7 +287,7 @@ function normalizeHeartbeat(raw) {
     return null;
   }
   const time = coerceTimestamp(raw.time ?? raw.timestamp);
-  if (formatDateKey(new Date(time)) !== getTodayKey()) {
+  if (!isDateWithinWindowWithRetention(formatDateKey(new Date(time)), VSCODE_RETENTION_DAYS)) {
     return null;
   }
   const entityType = coerceString(raw.entityType, 'file');
@@ -317,11 +325,98 @@ function normalizeMetadata(metadata) {
   if (Number.isFinite(Number(metadata.filesChanged))) {
     normalized.filesChanged = Number(metadata.filesChanged);
   }
-  if (typeof metadata.windowFocused === 'boolean') {
-    normalized.windowFocused = metadata.windowFocused;
+  if (Number.isFinite(Number(metadata.durationMs))) {
+    normalized.durationMs = Number(metadata.durationMs);
   }
-  if (typeof metadata.workspaceId === 'string') {
-    normalized.workspaceId = metadata.workspaceId;
+  if (Number.isFinite(Number(metadata.focusDurationMs))) {
+    normalized.focusDurationMs = Number(metadata.focusDurationMs);
+  }
+  if (Number.isFinite(Number(metadata.previousBlurDurationMs))) {
+    normalized.previousBlurDurationMs = Number(metadata.previousBlurDurationMs);
+  }
+  if (Number.isFinite(Number(metadata.hourOfDay))) {
+    normalized.hourOfDay = Number(metadata.hourOfDay);
+  }
+  if (Number.isFinite(Number(metadata.count))) {
+    normalized.count = Number(metadata.count);
+  }
+  if (Number.isFinite(Number(metadata.entryCount))) {
+    normalized.entryCount = Number(metadata.entryCount);
+  }
+  if (Number.isFinite(Number(metadata.passed))) {
+    normalized.passed = Number(metadata.passed);
+  }
+  if (Number.isFinite(Number(metadata.failed))) {
+    normalized.failed = Number(metadata.failed);
+  }
+  if (Number.isFinite(Number(metadata.skipped))) {
+    normalized.skipped = Number(metadata.skipped);
+  }
+  if (Number.isFinite(Number(metadata.errors))) {
+    normalized.errors = Number(metadata.errors);
+  }
+  if (Number.isFinite(Number(metadata.warnings))) {
+    normalized.warnings = Number(metadata.warnings);
+  }
+  if (Number.isFinite(Number(metadata.exitCode))) {
+    normalized.exitCode = Number(metadata.exitCode);
+  }
+  if (Number.isFinite(Number(metadata.extensionsCount))) {
+    normalized.extensionsCount = Number(metadata.extensionsCount);
+  }
+  if (Number.isFinite(Number(metadata.totalCommands))) {
+    normalized.totalCommands = Number(metadata.totalCommands);
+  }
+  if (Number.isFinite(Number(metadata.topCommandCount))) {
+    normalized.topCommandCount = Number(metadata.topCommandCount);
+  }
+  if (typeof metadata.topCommand === 'string') {
+    normalized.topCommand = metadata.topCommand;
+  }
+  if (typeof metadata.debugType === 'string') {
+    normalized.debugType = metadata.debugType;
+  }
+  if (typeof metadata.fileId === 'string') {
+    normalized.fileId = metadata.fileId;
+  }
+  if (typeof metadata.commandCategory === 'string') {
+    normalized.commandCategory = metadata.commandCategory;
+  }
+  if (typeof metadata.shellType === 'string') {
+    normalized.shellType = metadata.shellType;
+  }
+  if (typeof metadata.taskName === 'string') {
+    normalized.taskName = metadata.taskName;
+  }
+  if (typeof metadata.taskGroup === 'string') {
+    normalized.taskGroup = metadata.taskGroup;
+  }
+  if (typeof metadata.source === 'string') {
+    normalized.source = metadata.source;
+  }
+  if (typeof metadata.extensionId === 'string') {
+    normalized.extensionId = metadata.extensionId;
+  }
+  if (typeof metadata.workspaceName === 'string') {
+    normalized.workspaceName = metadata.workspaceName;
+  }
+  if (Number.isFinite(Number(metadata.totalFiles))) {
+    normalized.totalFiles = Number(metadata.totalFiles);
+  }
+  if (Number.isFinite(Number(metadata.totalSizeBytes))) {
+    normalized.totalSizeBytes = Number(metadata.totalSizeBytes);
+  }
+  if (typeof metadata.themeKind === 'string') {
+    normalized.themeKind = metadata.themeKind;
+  }
+  if (typeof metadata.workspaceType === 'string') {
+    normalized.workspaceType = metadata.workspaceType;
+  }
+  if (Number.isFinite(Number(metadata.linesAdded))) {
+    normalized.linesAdded = Number(metadata.linesAdded);
+  }
+  if (Number.isFinite(Number(metadata.linesDeleted))) {
+    normalized.linesDeleted = Number(metadata.linesDeleted);
   }
   if (typeof metadata.branch === 'string') {
     normalized.branch = metadata.branch;
@@ -1232,7 +1327,7 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
         if (telemetry.tasks.byGroup[group]) {
           telemetry.tasks.byGroup[group].count++;
         }
-      } else if (hb.entity === 'process_end') {
+      } else if (hb.entity === 'process_end' || hb.entity === 'end') {
         const group = metadata.taskGroup || 'other';
         if (telemetry.tasks.byGroup[group]) {
           if (metadata.durationMs) {

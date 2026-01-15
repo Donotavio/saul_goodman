@@ -88,6 +88,8 @@ class TaskTracker {
         const execData = this.activeExecutions.get(event.execution);
         if (!execData) return;
 
+        const durationMs = Date.now() - execData.startTime;
+
         const heartbeat = this.buildHeartbeat({
           entityType: 'task',
           entity: 'process_end',
@@ -96,6 +98,7 @@ class TaskTracker {
           metadata: {
             taskName: execData.taskName,
             taskGroup: execData.taskGroup,
+            durationMs,
             exitCode: event.exitCode
           }
         });

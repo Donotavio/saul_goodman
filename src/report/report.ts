@@ -1936,29 +1936,42 @@ async function requestAiNarrative(
         .join('; ')
     : 'Sem breakdown de contexto.';
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      temperature: 0.6,
-      messages: [
-        {
-          role: 'system',
-          content: `You are Saul Goodman, a sarcastic lawyer and relentless salesman. Tell the user's day as if you were defending them, and write the story in ${languageLabel}.`
-        },
-        {
-          role: 'user',
-          content:
-            `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
-            `${JSON.stringify(payload)}`
-        }
-      ]
-    })
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let response: Response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        temperature: 0.6,
+        messages: [
+          {
+            role: 'system',
+            content: `You are Saul Goodman, a sarcastic lawyer and relentless salesman. Tell the user's day as if you were defending them, and write the story in ${languageLabel}.`
+          },
+          {
+            role: 'user',
+            content:
+              `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
+              `${JSON.stringify(payload)}`
+          }
+        ]
+      }),
+      signal: controller.signal
+    });
+  } catch (error) {
+    if ((error as DOMException)?.name === 'AbortError') {
+      throw new Error('OpenAI timeout');
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     throw new Error(`OpenAI falhou: ${response.statusText}`);

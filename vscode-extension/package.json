@@ -18,10 +18,7 @@
   ],
   "main": "./src/extension.js",
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:saulGoodman.startDaemon",
-    "onCommand:saulGoodman.testDaemon",
-    "onCommand:saulGoodman.openReports"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
@@ -128,7 +125,7 @@
     "Other"
   ],
   "scripts": {
-    "prebuild:vsix": "cd .. && npm run i18n:copy-site",
+    "prebuild:vsix": "npm --prefix .. run i18n:copy-site",
     "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
   },
   "devDependencies": {
