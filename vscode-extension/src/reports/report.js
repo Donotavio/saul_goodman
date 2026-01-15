@@ -627,16 +627,28 @@
     });
 
     const languageColors = {
-      'JavaScript': '#f7df1e',
-      'TypeScript': '#3178c6',
-      'Python': '#3776ab',
-      'Java': '#007396',
-      'Go': '#00add8',
-      'Rust': '#ce422b',
-      'C++': '#00599c',
-      'Ruby': '#cc342d',
-      'PHP': '#777bb4',
-      'Swift': '#fa7343',
+      'javascript': '#f7df1e',
+      'typescript': '#3178c6',
+      'python': '#3776ab',
+      'java': '#007396',
+      'go': '#00add8',
+      'rust': '#ce422b',
+      'c++': '#00599c',
+      'ruby': '#cc342d',
+      'php': '#777bb4',
+      'swift': '#fa7343',
+      'html': '#e34c26',
+      'css': '#563d7c',
+      'json': '#292929',
+      'jsonc': '#292929',
+      'markdown': '#083fa1',
+      'sql': '#f29111',
+      'shell': '#89e051',
+      'yaml': '#cb171e',
+      'xml': '#0060ac',
+      'plaintext': '#6b7280',
+      'scminput': '#6b7280',
+      'log': '#6b7280',
       'unknown': '#94a3b8'
     };
 
