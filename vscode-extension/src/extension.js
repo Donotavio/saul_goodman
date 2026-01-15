@@ -11,6 +11,14 @@ const { createHeartbeatFactory } = require('./tracking/heartbeat-factory');
 const { GitTracker } = require('./tracking/git-tracker');
 const { EditorMetadataTracker } = require('./tracking/editor-metadata-tracker');
 const { WorkspaceTracker } = require('./tracking/workspace-tracker');
+const { DebugTracker } = require('./tracking/debug-tracker');
+const { TestTracker } = require('./tracking/test-tracker');
+const { TaskTracker } = require('./tracking/task-tracker');
+const { ExtensionTracker } = require('./tracking/extension-tracker');
+const { TerminalTracker } = require('./tracking/terminal-tracker');
+const { FocusTracker } = require('./tracking/focus-tracker');
+const { DiagnosticTracker } = require('./tracking/diagnostic-tracker');
+const { RefactorTracker } = require('./tracking/refactor-tracker');
 const { showReports } = require('./reports/report-view');
 
 let statusBarItem = null;
@@ -183,6 +191,54 @@ class TrackingController {
       getConfig: () => this.config,
       buildHeartbeat: this.buildHeartbeat
     });
+    this.debugTracker = new DebugTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.testTracker = new TestTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.taskTracker = new TaskTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.extensionTracker = new ExtensionTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.terminalTracker = new TerminalTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.focusTracker = new FocusTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.diagnosticTracker = new DiagnosticTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.refactorTracker = new RefactorTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
     registerExtraEventCollectors({
       context,
       queue: this.queue,
@@ -198,6 +254,16 @@ class TrackingController {
     await this.gitTracker.start();
     this.editorMetadataTracker.start();
     this.workspaceTracker.start();
+    if (this.config.enableTelemetry) {
+      this.debugTracker.start();
+      this.testTracker.start();
+      this.taskTracker.start();
+      this.extensionTracker.start();
+      this.terminalTracker.start();
+      this.focusTracker.start();
+      this.diagnosticTracker.start();
+      this.refactorTracker.start();
+    }
     this.applyConfig();
   }
 
@@ -207,6 +273,14 @@ class TrackingController {
     this.gitTracker.dispose();
     this.editorMetadataTracker.dispose();
     this.workspaceTracker.dispose();
+    this.debugTracker.dispose();
+    this.testTracker.dispose();
+    this.taskTracker.dispose();
+    this.extensionTracker.dispose();
+    this.terminalTracker.dispose();
+    this.focusTracker.dispose();
+    this.diagnosticTracker.dispose();
+    this.refactorTracker.dispose();
   }
 
   reloadConfig() {
@@ -233,6 +307,26 @@ class TrackingController {
       this.gitTracker.dispose();
       this.editorMetadataTracker.dispose();
       this.workspaceTracker.dispose();
+    }
+
+    if (this.config.enableTelemetry) {
+      this.debugTracker.start();
+      this.testTracker.start();
+      this.taskTracker.start();
+      this.extensionTracker.start();
+      this.terminalTracker.start();
+      this.focusTracker.start();
+      this.diagnosticTracker.start();
+      this.refactorTracker.start();
+    } else {
+      this.debugTracker.dispose();
+      this.testTracker.dispose();
+      this.taskTracker.dispose();
+      this.extensionTracker.dispose();
+      this.terminalTracker.dispose();
+      this.focusTracker.dispose();
+      this.diagnosticTracker.dispose();
+      this.refactorTracker.dispose();
     }
   }
 
@@ -304,15 +398,17 @@ function readConfig() {
   const enableTracking = config.get('enableTracking', config.get('enabled', true));
   return {
     enableTracking,
-    enableReportsInVscode: config.get('enableReportsInVscode', true),
-    enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     apiBase: config.get('apiBase', 'http://127.0.0.1:3123'),
     pairingKey: config.get('pairingKey', ''),
+    hashFilePaths: config.get('hashFilePaths', true),
+    hashProjectNames: config.get('hashProjectNames', false),
     heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
     idleThresholdMs: config.get('idleThresholdMs', 60000),
-    language: config.get('language', 'auto'),
-    hashFilePaths: config.get('hashFilePaths', true),
-    hashProjectNames: config.get('hashProjectNames', false)
+    enableReportsInVscode: config.get('enableReportsInVscode', true),
+    enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
+    enableTelemetry: config.get('enableTelemetry', false),
+    telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60),
+    telemetryRetentionDays: config.get('telemetryRetentionDays', 30)
   };
 }
 

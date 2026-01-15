@@ -102,6 +102,21 @@
             "es-419"
           ],
           "description": "Idioma da extensão VS Code (auto usa o idioma do VS Code)."
+        },
+        "saulGoodman.enableTelemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita coleta de métricas de produtividade local (debugging, testes, tasks, terminal, etc). Dados nunca saem da máquina."
+        },
+        "saulGoodman.telemetrySampleDiagnosticsIntervalSec": {
+          "type": "number",
+          "default": 60,
+          "description": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos."
+        },
+        "saulGoodman.telemetryRetentionDays": {
+          "type": "number",
+          "default": 30,
+          "description": "Número de dias para reter dados de telemetria local antes de apagar automaticamente."
         }
       }
     }
