@@ -242,26 +242,45 @@ class GitTracker {
       let linesDeleted = 0;
 
       if (filesChanged > 0) {
+        console.log(`[Saul Git] Processing ${indexChanges.length} staged files for diff stats`);
+        
         for (const change of indexChanges) {
           try {
-            const patch = await repo.diffIndexWithHEAD(change.uri.fsPath);
-            if (patch) {
-              const lines = patch.split('\n');
-              for (const line of lines) {
-                if (line.startsWith('+') && !line.startsWith('+++')) {
-                  linesAdded++;
-                } else if (line.startsWith('-') && !line.startsWith('---')) {
-                  linesDeleted++;
-                }
+            const filePath = change.uri?.fsPath || change.uri;
+            console.log(`[Saul Git] Getting patch for: ${filePath}`);
+            
+            const patch = await repo.diffIndexWithHEAD(filePath);
+            
+            if (!patch) {
+              console.log(`[Saul Git] No patch returned for ${filePath}`);
+              continue;
+            }
+            
+            console.log(`[Saul Git] Patch length: ${patch.length} chars`);
+            console.log(`[Saul Git] Patch preview: ${patch.substring(0, 200)}`);
+            
+            const lines = patch.split(/\r?\n/);
+            let fileAdded = 0;
+            let fileDeleted = 0;
+            
+            for (const line of lines) {
+              if (line.startsWith('+') && !line.startsWith('+++')) {
+                linesAdded++;
+                fileAdded++;
+              } else if (line.startsWith('-') && !line.startsWith('---')) {
+                linesDeleted++;
+                fileDeleted++;
               }
             }
+            
+            console.log(`[Saul Git] File ${filePath}: +${fileAdded} -${fileDeleted}`);
           } catch (err) {
-            console.warn('[Saul Git] Could not get patch for file:', change.uri?.fsPath || 'unknown');
+            console.warn('[Saul Git] Could not get patch for file:', change.uri?.fsPath || 'unknown', err);
           }
         }
       }
 
-      console.log('[Saul Git] Diff stats:', { filesChanged, linesAdded, linesDeleted });
+      console.log('[Saul Git] Final diff stats:', { filesChanged, linesAdded, linesDeleted });
       return { filesChanged, linesAdded, linesDeleted };
     } catch (error) {
       console.warn('[Saul Git] Could not get diff stats:', error.message);

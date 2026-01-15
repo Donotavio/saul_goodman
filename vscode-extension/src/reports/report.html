@@ -74,6 +74,29 @@
           </div>
         </section>
 
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">FOCO ATIVO</span>
+            <span class="kpi-value" id="kpiFocus">--</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">TROCAS DE ABAS</span>
+            <span class="kpi-value" id="kpiSwitches">--</span>
+          </div>
+          <div class="kpi-card kpi-card--productive">
+            <span class="kpi-label">PRODUTIVO</span>
+            <span class="kpi-value" id="kpiProductive">--</span>
+          </div>
+          <div class="kpi-card kpi-card--procrast">
+            <span class="kpi-label">PROCRAST.</span>
+            <span class="kpi-value" id="kpiProcrast">--</span>
+          </div>
+          <div class="kpi-card kpi-card--inactive">
+            <span class="kpi-label">INATIVO</span>
+            <span class="kpi-value" id="kpiInactive">--</span>
+          </div>
+        </section>
+
         <section class="grid-two">
           <div class="card">
             <h3 id="projectsTitle">Projects</h3>
@@ -107,6 +130,34 @@
           <div class="chart-container">
             <canvas id="hourlyChart" height="200"></canvas>
             <p id="hourlyEmpty" class="empty-state hidden">No hourly data to display yet.</p>
+          </div>
+        </section>
+
+        <section class="grid-two charts-row">
+          <div class="card chart-section">
+            <h3>Time by Project</h3>
+            <p class="chart-subtitle">How you distributed your time across projects</p>
+            <div class="chart-container chart-container--small">
+              <canvas id="projectsChart"></canvas>
+              <p id="projectsEmpty" class="empty-state hidden">No project data to display.</p>
+            </div>
+          </div>
+          <div class="card chart-section">
+            <h3>Commit Activity</h3>
+            <p class="chart-subtitle">When you committed code throughout the day</p>
+            <div class="chart-container chart-container--small">
+              <canvas id="commitsChart"></canvas>
+              <p id="commitsEmpty" class="empty-state hidden">No commits recorded today.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card chart-section">
+          <h3>Languages × Projects</h3>
+          <p class="chart-subtitle">Cross-reference: which languages you used in each project</p>
+          <div class="chart-container chart-container--medium">
+            <canvas id="crossReferenceChart"></canvas>
+            <p id="crossReferenceEmpty" class="empty-state hidden">No data to cross-reference.</p>
           </div>
         </section>
 

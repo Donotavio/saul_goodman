@@ -1123,6 +1123,7 @@ function handleVscodeDashboard(req, res, url) {
 
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
   const hourly = summarizeDurationsByHour(entry.durations, startMs, endMs, filters);
+  const languagesByProject = summarizeLanguagesByProject(entry.durations, startMs, endMs, filters);
   console.log('[saul-daemon] Hourly data:', hourly ? `${hourly.length} hours` : 'null/undefined');
 
   let totalCommits = 0;
@@ -1195,6 +1196,7 @@ function handleVscodeDashboard(req, res, url) {
       projects: buildBreakdown(summary.projects, summary.totalMs).slice(0, 10),
       languages: buildBreakdown(summary.languages, summary.totalMs).slice(0, 10),
       branches: buildBreakdown(branchMap, Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0)).slice(0, 10),
+      languagesByProject,
       hourly: hourly.map(h => ({
         hour: h.hour,
         coding: Math.round(h.codingMs / 1000),
@@ -1376,6 +1378,58 @@ function summarizeDurations(durations, startMs, endMs, filters) {
     incrementMap(summary.machines, duration.machineId || 'unknown', overlapMs);
   }
   return summary;
+}
+
+function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
+  const projectMap = new Map();
+  
+  for (const duration of durations) {
+    if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
+      continue;
+    }
+    const overlapStart = Math.max(duration.startTime, startMs);
+    const overlapEnd = Math.min(duration.endTime, endMs);
+    const overlapMs = Math.max(0, overlapEnd - overlapStart);
+    if (overlapMs <= 0) {
+      continue;
+    }
+
+    const project = duration.project || 'unknown';
+    const language = duration.language || 'unknown';
+
+    if (!projectMap.has(project)) {
+      projectMap.set(project, new Map());
+    }
+    
+    const langMap = projectMap.get(project);
+    langMap.set(language, (langMap.get(language) || 0) + overlapMs);
+  }
+
+  const result = [];
+  for (const [project, langMap] of projectMap.entries()) {
+    const languages = [];
+    let projectTotal = 0;
+    
+    for (const [language, ms] of langMap.entries()) {
+      languages.push({
+        language,
+        seconds: Math.round(ms / 1000),
+        minutes: Math.round(ms / 60000)
+      });
+      projectTotal += ms;
+    }
+    
+    languages.sort((a, b) => b.seconds - a.seconds);
+    
+    result.push({
+      project,
+      totalSeconds: Math.round(projectTotal / 1000),
+      languages: languages.slice(0, 5)
+    });
+  }
+  
+  result.sort((a, b) => b.totalSeconds - a.totalSeconds);
+  return result.slice(0, 5);
 }
 
 function summarizeDurationsByHour(durations, startMs, endMs, filters) {
