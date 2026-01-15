@@ -26,6 +26,22 @@ const vscodeState = {
 };
 const vscodeIdIndex = new Map();
 
+let persistChain = Promise.resolve();
+
+function enqueuePersist(task) {
+  persistChain = persistChain.then(task).catch((error) => {
+    console.warn('[saul-daemon] Persist failed', error);
+  });
+  return persistChain;
+}
+
+async function atomicWriteJson(targetPath, snapshot) {
+  await mkdir(path.dirname(targetPath), { recursive: true });
+  const tmpPath = `${targetPath}.tmp`;
+  await writeFile(tmpPath, JSON.stringify(snapshot, null, 2), 'utf8');
+  await rename(tmpPath, targetPath);
+}
+
 async function loadState() {
   await ensureDataDir();
   try {
@@ -42,7 +58,7 @@ async function loadState() {
 async function persistState() {
   await mkdir(DATA_DIR, { recursive: true });
   const snapshot = { byKey: state.byKey };
-  await writeFile(STATE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
+  await enqueuePersist(() => atomicWriteJson(STATE_PATH, snapshot));
 }
 
 async function loadVscodeState() {
@@ -77,7 +93,7 @@ async function loadVscodeState() {
 async function persistVscodeState() {
   await mkdir(DATA_DIR, { recursive: true });
   const snapshot = { byKey: vscodeState.byKey };
-  await writeFile(VSCODE_STATE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
+  await enqueuePersist(() => atomicWriteJson(VSCODE_STATE_PATH, snapshot));
 }
 
 function sendJson(req, res, status, payload) {
@@ -1861,7 +1877,11 @@ async function start() {
     }
 
     const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
-    console.log(`[saul-daemon] ${req.method} ${parsedUrl.pathname}${parsedUrl.search ? parsedUrl.search : ''}`);
+    const logUrl = new URL(parsedUrl.toString());
+    if (logUrl.searchParams.has('key')) {
+      logUrl.searchParams.set('key', '***');
+    }
+    console.log(`[saul-daemon] ${req.method} ${logUrl.pathname}${logUrl.search ? logUrl.search : ''}`);
 
     if (req.method === 'OPTIONS') {
       handleOptions(req, res);

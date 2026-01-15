@@ -218,7 +218,12 @@
     items.slice(0, 8).forEach((item, idx) => {
       console.log(`[Saul Report] renderList item ${idx}:`, item);
       const li = document.createElement('li');
-      li.innerHTML = `<span>${item.name}</span><span>${formatSeconds(item.total_seconds)}</span>`;
+      const nameEl = document.createElement('span');
+      nameEl.textContent = String(item?.name ?? '');
+      const secondsEl = document.createElement('span');
+      secondsEl.textContent = formatSeconds(item?.total_seconds);
+      li.appendChild(nameEl);
+      li.appendChild(secondsEl);
       list.appendChild(li);
     });
     console.log('[Saul Report] renderList: finished rendering', list.children.length, 'items');
@@ -234,7 +239,12 @@
     }
     days.forEach((day) => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${day.date}</span><span>${formatSeconds(day.total_seconds)}</span>`;
+      const dateEl = document.createElement('span');
+      dateEl.textContent = String(day?.date ?? '');
+      const secondsEl = document.createElement('span');
+      secondsEl.textContent = formatSeconds(day?.total_seconds);
+      li.appendChild(dateEl);
+      li.appendChild(secondsEl);
       list.appendChild(li);
     });
   }
@@ -267,10 +277,15 @@
 
     items.forEach(item => {
       const li = document.createElement('li');
-      const valueSpan = item.color 
-        ? `<span style="color: ${item.color}">${item.value}</span>` 
-        : `<span>${item.value}</span>`;
-      li.innerHTML = `<span>${item.label}</span>${valueSpan}`;
+      const labelEl = document.createElement('span');
+      labelEl.textContent = String(item.label);
+      const valueEl = document.createElement('span');
+      valueEl.textContent = String(item.value);
+      if (item.color) {
+        valueEl.style.color = item.color;
+      }
+      li.appendChild(labelEl);
+      li.appendChild(valueEl);
       list.appendChild(li);
     });
   }
@@ -280,18 +295,30 @@
     if (!container) return;
 
     if (!editor) {
-      container.innerHTML = '<p>No editor metadata available</p>';
+      container.textContent = 'No editor metadata available';
       return;
     }
 
-    container.innerHTML = `
-      <ul class="data-list">
-        <li><span>VS Code Version</span><span>${editor.vscodeVersion || 'unknown'}</span></li>
-        <li><span>Extensions</span><span>${editor.extensionsCount || 0}</span></li>
-        <li><span>Theme</span><span>${editor.themeKind || 'unknown'}</span></li>
-        <li><span>Workspace Type</span><span>${editor.workspaceType || 'empty'}</span></li>
-      </ul>
-    `;
+    container.innerHTML = '';
+    const ul = document.createElement('ul');
+    ul.className = 'data-list';
+    const rows = [
+      ['VS Code Version', editor.vscodeVersion || 'unknown'],
+      ['Extensions', editor.extensionsCount || 0],
+      ['Theme', editor.themeKind || 'unknown'],
+      ['Workspace Type', editor.workspaceType || 'empty']
+    ];
+    rows.forEach(([label, value]) => {
+      const li = document.createElement('li');
+      const labelEl = document.createElement('span');
+      labelEl.textContent = String(label);
+      const valueEl = document.createElement('span');
+      valueEl.textContent = String(value);
+      li.appendChild(labelEl);
+      li.appendChild(valueEl);
+      ul.appendChild(li);
+    });
+    container.appendChild(ul);
   }
 
   function renderWorkspaces(workspaces) {
@@ -309,7 +336,12 @@
 
     workspaces.forEach(ws => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${ws.name}</span><span>${ws.totalFiles || 0} files</span>`;
+      const nameEl = document.createElement('span');
+      nameEl.textContent = String(ws?.name ?? '');
+      const countEl = document.createElement('span');
+      countEl.textContent = `${ws?.totalFiles || 0} files`;
+      li.appendChild(nameEl);
+      li.appendChild(countEl);
       list.appendChild(li);
     });
   }
@@ -993,7 +1025,12 @@
 
     extensions.slice(0, 5).forEach((ext) => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${ext.extensionId}</span><span>${ext.commandCount} cmds</span>`;
+      const idEl = document.createElement('span');
+      idEl.textContent = String(ext?.extensionId ?? '');
+      const countEl = document.createElement('span');
+      countEl.textContent = `${ext?.commandCount ?? 0} cmds`;
+      li.appendChild(idEl);
+      li.appendChild(countEl);
       list.appendChild(li);
     });
   }
@@ -1012,7 +1049,12 @@
 
     files.slice(0, 5).forEach((file) => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${file.fileId}</span><span>${file.breakpoints} BPs</span>`;
+      const idEl = document.createElement('span');
+      idEl.textContent = String(file?.fileId ?? '');
+      const countEl = document.createElement('span');
+      countEl.textContent = `${file?.breakpoints ?? 0} BPs`;
+      li.appendChild(idEl);
+      li.appendChild(countEl);
       list.appendChild(li);
     });
   }
@@ -1031,7 +1073,12 @@
 
     files.slice(0, 5).forEach((file) => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${file.fileId}</span><span>⚠️ ${file.errors} | ⚡ ${file.warnings}</span>`;
+      const idEl = document.createElement('span');
+      idEl.textContent = String(file?.fileId ?? '');
+      const statsEl = document.createElement('span');
+      statsEl.textContent = `⚠️ ${file?.errors ?? 0} | ⚡ ${file?.warnings ?? 0}`;
+      li.appendChild(idEl);
+      li.appendChild(statsEl);
       list.appendChild(li);
     });
   }
@@ -1040,20 +1087,25 @@
     const div = document.getElementById('refactoringStats');
     if (!div) return;
 
-    div.innerHTML = `
-      <div class="stat-item">
-        <span class="stat-label">Arquivos Renomeados</span>
-        <span class="stat-value">${refactoring.filesRenamed || 0}</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Edits Aplicados</span>
-        <span class="stat-value">${refactoring.editsApplied || 0}</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Code Actions Disponíveis</span>
-        <span class="stat-value">${refactoring.codeActionsAvailable || 0}</span>
-      </div>
-    `;
+    div.innerHTML = '';
+    const items = [
+      { label: 'Arquivos Renomeados', value: refactoring?.filesRenamed || 0 },
+      { label: 'Edits Aplicados', value: refactoring?.editsApplied || 0 },
+      { label: 'Code Actions Disponíveis', value: refactoring?.codeActionsAvailable || 0 }
+    ];
+    items.forEach((item) => {
+      const row = document.createElement('div');
+      row.className = 'stat-item';
+      const labelEl = document.createElement('span');
+      labelEl.className = 'stat-label';
+      labelEl.textContent = item.label;
+      const valueEl = document.createElement('span');
+      valueEl.className = 'stat-value';
+      valueEl.textContent = String(item.value);
+      row.appendChild(labelEl);
+      row.appendChild(valueEl);
+      div.appendChild(row);
+    });
   }
 
   function formatDurationMs(ms) {

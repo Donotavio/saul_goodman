@@ -458,7 +458,12 @@ function renderVscodeList(
   }
   items.slice(0, 8).forEach((item) => {
     const li = document.createElement('li');
-    li.innerHTML = `<span>${item.name}</span><span>${formatDuration(item.total_seconds * 1000)}</span>`;
+    const nameEl = document.createElement('span');
+    nameEl.textContent = item.name;
+    const durationEl = document.createElement('span');
+    durationEl.textContent = formatDuration(item.total_seconds * 1000);
+    li.appendChild(nameEl);
+    li.appendChild(durationEl);
     list.appendChild(li);
   });
 }
@@ -479,7 +484,12 @@ function renderVscodeSummaries(
   }
   days.forEach((day) => {
     const li = document.createElement('li');
-    li.innerHTML = `<span>${day.date}</span><span>${formatDuration(day.total_seconds * 1000)}</span>`;
+    const dateEl = document.createElement('span');
+    dateEl.textContent = day.date;
+    const durationEl = document.createElement('span');
+    durationEl.textContent = formatDuration(day.total_seconds * 1000);
+    li.appendChild(dateEl);
+    li.appendChild(durationEl);
     list.appendChild(li);
   });
 }

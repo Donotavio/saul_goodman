@@ -429,9 +429,15 @@ async function openExtensionPage(payload?: { path?: string }): Promise<void> {
   if (!rawPath) {
     return;
   }
-  const url = rawPath.startsWith('chrome-extension://')
-    ? rawPath
-    : chrome.runtime.getURL(rawPath);
+  if (rawPath.includes('://')) {
+    return;
+  }
+  const allowed = new Set(["src/popup/popup.html", "src/options/options.html", "src/report/report.html", "src/block/block.html"]);
+  const normalized = rawPath.replace(/^\//, '').split('?')[0].split('#')[0];
+  if (!allowed.has(normalized)) {
+    return;
+  }
+  const url = chrome.runtime.getURL(rawPath);
   await chrome.tabs.create({ url });
 }
 
@@ -613,6 +619,10 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResponse) => {
+  if (_sender?.id && _sender.id !== chrome.runtime.id) {
+    sendResponse({ ok: false, error: 'Unauthorized sender' });
+    return false;
+  }
   const handler = messageHandlers[message.type];
   if (!handler) {
     sendResponse({ ok: false, error: `No handler for message type ${message.type}` });

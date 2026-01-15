@@ -10,3 +10,6 @@ site/blog/_locales/
 tools/mcp_quality/artifacts/
 saul-daemon/data/
 *.vsix
+
+saul-daemon/daemon.log
+saul-daemon/**/*.tmp
