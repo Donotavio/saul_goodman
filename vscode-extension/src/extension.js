@@ -107,6 +107,11 @@ function formatMessage(message, params = {}) {
   });
 }
 
+function getTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
 function formatDurationSeconds(seconds) {
   if (!Number.isFinite(seconds)) {
     return '--';
@@ -251,6 +256,7 @@ class TrackingController {
   async init() {
     await this.queue.init();
     this.queue.start();
+    await this.checkDailyReset();
     await this.gitTracker.start();
     this.editorMetadataTracker.start();
     this.workspaceTracker.start();
@@ -291,6 +297,22 @@ class TrackingController {
       enabled: this.config.enableTracking
     });
     this.applyConfig();
+  }
+
+  async checkDailyReset() {
+    const storageKey = 'sg:vscode:lastActiveDate';
+    const today = getTodayKey();
+    try {
+      const stored = this.context.globalState.get(storageKey);
+      if (stored && stored !== today) {
+        console.log(`[Saul] Day changed from ${stored} to ${today}, clearing old data`);
+        await this.queue.clearOldEvents();
+        this.heartbeatTracker.lastSentByEntity.clear();
+      }
+      await this.context.globalState.update(storageKey, today);
+    } catch (error) {
+      console.error('[Saul] Failed to check daily reset:', error);
+    }
   }
 
   applyConfig() {

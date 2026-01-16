@@ -7,10 +7,12 @@ class FocusTracker {
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
     this.disposables = [];
+    this.isFocused = false;
     this.lastFocusTime = null;
     this.lastBlurTime = null;
-    this.isFocused = true;
-    this.pomodoroInterval = null; // VSCODE-001: Save interval reference
+    this.pomodoroInterval = null;
+    this.lastRealActivity = Date.now(); // BUG-FIX: Track real user activity
+    this.inactivityCheckInterval = null;
   }
 
   start() {
@@ -26,51 +28,75 @@ class FocusTracker {
 
         const now = Date.now();
         const hour = new Date(now).getHours();
+        this.lastRealActivity = now; // BUG-FIX: Update on real event
 
         if (state.focused && !this.isFocused) {
-          const blurDurationMs = this.lastBlurTime ? now - this.lastBlurTime : 0;
-
-          const heartbeat = this.buildHeartbeat({
-            entityType: 'window',
-            entity: 'focus',
-            category: 'focus',
-            isWrite: false,
-            metadata: {
-              hourOfDay: hour,
-              previousBlurDurationMs: blurDurationMs
-            }
-          });
-
-          this.queue.enqueue(heartbeat);
-          this.lastFocusTime = now;
           this.isFocused = true;
-          
-          console.log(`[Saul Focus] Window focused after ${blurDurationMs}ms blur`);
-        } 
-        else if (!state.focused && this.isFocused) {
-          const focusDurationMs = this.lastFocusTime ? now - this.lastFocusTime : 0;
+          this.lastFocusTime = now;
 
-          const heartbeat = this.buildHeartbeat({
-            entityType: 'window',
-            entity: 'blur',
-            category: 'focus',
-            isWrite: false,
-            metadata: {
-              hourOfDay: hour,
-              focusDurationMs
-            }
-          });
-
-          this.queue.enqueue(heartbeat);
-          this.lastBlurTime = now;
+          if (this.lastBlurTime) {
+            const previousBlurDurationMs = now - this.lastBlurTime;
+            const heartbeat = this.buildHeartbeat({
+              entityType: 'window',
+              entity: 'focus',
+              category: 'coding',
+              isWrite: false,
+              metadata: {
+                hourOfDay: hour,
+                previousBlurDurationMs
+              }
+            });
+            this.queue.enqueue(heartbeat);
+            console.log(`[Saul Focus] Window focused after ${Math.round(previousBlurDurationMs / 1000)}s blur`);
+          }
+        } else if (!state.focused && this.isFocused) {
           this.isFocused = false;
+          this.lastBlurTime = now;
 
-          console.log(`[Saul Focus] Window blurred after ${focusDurationMs}ms focus`);
+          if (this.lastFocusTime) {
+            const focusDurationMs = now - this.lastFocusTime;
+            const heartbeat = this.buildHeartbeat({
+              entityType: 'window',
+              entity: 'blur',
+              category: 'coding',
+              isWrite: false,
+              metadata: {
+                hourOfDay: hour,
+                focusDurationMs
+              }
+            });
+            this.queue.enqueue(heartbeat);
+            console.log(`[Saul Focus] Window blurred after ${Math.round(focusDurationMs / 1000)}s focus`);
+          }
         }
       })
     );
 
-    // VSCODE-001: Save interval reference directly for proper cleanup
+    this.inactivityCheckInterval = setInterval(() => {
+      const config = this.getConfig();
+      if (!config.enableTelemetry) return;
+
+      const now = Date.now();
+      const inactivityDurationMs = now - this.lastRealActivity;
+      if (inactivityDurationMs > config.inactivityTimeoutMs && this.isFocused) {
+        this.isFocused = false;
+        this.lastBlurTime = now;
+
+        const heartbeat = this.buildHeartbeat({
+          entityType: 'window',
+          entity: 'blur',
+          category: 'coding',
+          isWrite: false,
+          metadata: {
+            hourOfDay: new Date().getHours(),
+            focusDurationMs: inactivityDurationMs
+          }
+        });
+        this.queue.enqueue(heartbeat);
+        console.log(`[Saul Focus] Window blurred after ${Math.round(inactivityDurationMs / 1000)}s inactivity`);
+      }
+    }, 60000);
+
     this.pomodoroInterval = setInterval(() => {
       const config = this.getConfig();
       if (!config.enableTelemetry) return;
@@ -83,7 +109,7 @@ class FocusTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'window',
             entity: 'pomodoro_milestone',
-            category: 'focus',
+            category: 'coding',
             isWrite: false,
             metadata: {
               focusMinutes,
@@ -99,10 +125,15 @@ class FocusTracker {
   }
 
   dispose() {
-    // VSCODE-001: Clear interval directly
+    // VSCODE-001: Clear pomodoro interval
     if (this.pomodoroInterval) {
       clearInterval(this.pomodoroInterval);
       this.pomodoroInterval = null;
+    }
+    // BUG-FIX: Clear inactivity check interval
+    if (this.inactivityCheckInterval) {
+      clearInterval(this.inactivityCheckInterval);
+      this.inactivityCheckInterval = null;
     }
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];

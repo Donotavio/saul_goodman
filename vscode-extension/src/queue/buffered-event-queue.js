@@ -28,7 +28,17 @@ class BufferedEventQueue {
       const raw = await readFile(this.storagePath, 'utf8');
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.events)) {
-        this.buffer = parsed.events;
+        // BUG-FIX: Filter events to only keep current day
+        const todayKey = this.getTodayKey();
+        this.buffer = parsed.events.filter(event => {
+          if (!event || !event.time) return false;
+          const eventDate = new Date(event.time);
+          const eventKey = this.formatDateKey(eventDate);
+          return eventKey === todayKey;
+        });
+        if (this.buffer.length < parsed.events.length) {
+          console.log(`[Saul Queue] Filtered ${parsed.events.length - this.buffer.length} old events from previous days`);
+        }
       }
     } catch {
       this.buffer = [];
@@ -121,6 +131,32 @@ class BufferedEventQueue {
     } catch (error) {
       this.logger.warn('[saul-goodman-vscode] failed to persist queue', error);
     }
+  }
+
+  getTodayKey() {
+    const now = new Date();
+    return this.formatDateKey(now);
+  }
+
+  formatDateKey(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
+
+  async clearOldEvents() {
+    const todayKey = this.getTodayKey();
+    const before = this.buffer.length;
+    this.buffer = this.buffer.filter(event => {
+      if (!event || !event.time) return false;
+      const eventDate = new Date(event.time);
+      const eventKey = this.formatDateKey(eventDate);
+      return eventKey === todayKey;
+    });
+    const removed = before - this.buffer.length;
+    if (removed > 0) {
+      console.log(`[Saul Queue] Cleared ${removed} events from previous days`);
+      await this.persist();
+    }
+    return removed;
   }
 }
 

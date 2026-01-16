@@ -697,6 +697,21 @@ function handleSummary(req, res, url) {
       }
     }
     timeline.sort((a, b) => a.startTime - b.startTime);
+    
+    // BUG-FIX: Apply guardrails to prevent impossible metrics
+    const MAX_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
+    const MAX_SESSIONS_PER_DAY = 500; // Reasonable upper limit
+    
+    if (totalActiveMs > MAX_DAY_MS) {
+      console.warn(`[saul-daemon] WARNING: totalActiveMs (${totalActiveMs}ms = ${(totalActiveMs / 3600000).toFixed(1)}h) exceeds 24h for ${dateKey}, clamping to 24h`);
+      totalActiveMs = MAX_DAY_MS;
+    }
+    
+    if (sessions > MAX_SESSIONS_PER_DAY) {
+      console.warn(`[saul-daemon] WARNING: sessions (${sessions}) exceeds reasonable limit for ${dateKey}, clamping to ${MAX_SESSIONS_PER_DAY}`);
+      sessions = MAX_SESSIONS_PER_DAY;
+    }
+    
     sendJson(req, res, 200, {
       totalActiveMs,
       sessions,

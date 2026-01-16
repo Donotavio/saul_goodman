@@ -138,7 +138,7 @@ class RefactorTracker {
       }, 30000);
 
       this.disposables.push({
-        dispose: () => clearInterval(codeActionSampler)
+        dispose: () => clearInterval(this.codeActionSampler)
       });
     }
   }
