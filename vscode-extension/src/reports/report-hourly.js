@@ -39,8 +39,8 @@ function renderHourlyChart(hourlyData) {
         {
           label: 'Coding',
           data: codingMinutes,
-          backgroundColor: '#3b82f6',
-          borderColor: '#2563eb',
+          backgroundColor: '#ffc857',
+          borderColor: '#ffb347',
           borderWidth: 1
         },
         {
@@ -60,8 +60,8 @@ function renderHourlyChart(hourlyData) {
         {
           label: 'Testing',
           data: testingMinutes,
-          backgroundColor: '#8b5cf6',
-          borderColor: '#7c3aed',
+          backgroundColor: '#0a7e07',
+          borderColor: '#085d05',
           borderWidth: 1
         }
       ]

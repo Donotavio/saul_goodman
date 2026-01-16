@@ -479,8 +479,8 @@
           {
             label: 'Coding',
             data: codingMinutes,
-            backgroundColor: '#3b82f6',
-            borderColor: '#2563eb',
+            backgroundColor: '#ffc857',
+            borderColor: '#ffb347',
             borderWidth: 1
           },
           {
@@ -500,8 +500,8 @@
           {
             label: 'Testing',
             data: testingMinutes,
-            backgroundColor: '#8b5cf6',
-            borderColor: '#7c3aed',
+            backgroundColor: '#10b981',
+            borderColor: '#059669',
             borderWidth: 1
           }
         ]

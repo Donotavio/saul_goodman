@@ -564,7 +564,7 @@ p {
   font-size: 1.8rem;
   font-weight: 800;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #ffc857 0%, #ffb347 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -601,12 +601,43 @@ p {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #8b5cf6, #3b82f6, #10b981, #eab308);
+  background: linear-gradient(90deg, #ffe434, #ffc857, #ffb347, #ffd166);
 }
 
 .kpi-icon {
-  font-size: 2rem;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid #ffd166;
+  background: linear-gradient(135deg, #ffe434, #ffb347);
+  color: #1b120a;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.25);
+}
+
+.kpi-icon::before {
+  content: attr(data-label);
+}
+
+.kpi-icon--debug {
+  border-color: #c77b30;
+}
+
+.kpi-icon--tests {
+  border-color: #0a7e07;
+}
+
+.kpi-icon--builds {
+  border-color: #125d8d;
+}
+
+.kpi-icon--pomodoro {
+  border-color: #d00000;
 }
 
 .kpi-card--telemetry .kpi-label {
@@ -638,6 +669,51 @@ p {
   padding: 16px;
 }
 
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-heading-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid #ffd166;
+  background: #fffef6;
+  color: #1b120a;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  box-shadow: 2px 2px 0 rgba(17, 17, 17, 0.2);
+}
+
+.card-heading-icon::before {
+  content: attr(data-label);
+}
+
+.card-heading-icon--extensions {
+  border-color: #125d8d;
+}
+
+.card-heading-icon--debug {
+  border-color: #c77b30;
+}
+
+.card-heading-icon--errors {
+  border-color: #d00000;
+}
+
+.card-heading-icon--refactor {
+  border-color: #0a7e07;
+}
+
 .stat-item {
   display: flex;
   justify-content: space-between;
@@ -645,7 +721,7 @@ p {
   padding: 12px;
   background: #2a2a2a;
   border-radius: 8px;
-  border-left: 3px solid #8b5cf6;
+  border-left: 3px solid #ffc857;
 }
 
 .stat-label {

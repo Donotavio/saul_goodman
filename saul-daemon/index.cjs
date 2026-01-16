@@ -6,6 +6,14 @@ const { buildDurations, splitDurationByDay } = require('./src/vscode-aggregation
 const BIND_HOST = process.env.BIND_HOST || '127.0.0.1';
 const PORT = normalizePort(process.env.PORT);
 const PAIRING_KEY = (process.env.PAIRING_KEY ?? '').trim();
+
+// BUG-021: Ensure PAIRING_KEY is configured
+if (!PAIRING_KEY) {
+  console.error('[FATAL] PAIRING_KEY environment variable is required');
+  console.error('[FATAL] Set PAIRING_KEY=<your-key> before starting the daemon');
+  process.exit(1);
+}
+
 const LEGACY_DATA_DIR = path.join(__dirname, 'data');
 const DATA_ROOT = process.env.SAUL_DAEMON_DATA_DIR || resolveDefaultDataDir();
 const DATA_DIR = path.join(DATA_ROOT, 'data');
@@ -131,8 +139,17 @@ function sendError(req, res, status, message) {
 }
 
 function parseDateKey(input) {
+  // BUG-020: Strict validation to prevent path traversal
   if (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
-    return input;
+    // Validate that the date is actually valid
+    const d = new Date(input + 'T00:00:00Z');
+    if (!isNaN(d.getTime())) {
+      // Additional check: ensure year is reasonable (1900-2100)
+      const year = d.getUTCFullYear();
+      if (year >= 1900 && year <= 2100) {
+        return input;
+      }
+    }
   }
   const now = new Date();
   return formatDateKey(now);

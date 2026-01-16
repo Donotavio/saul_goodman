@@ -174,31 +174,31 @@
 
         <section id="telemetrySection" class="telemetry-section hidden">
           <div class="section-header">
-            <h2>📊 Produtividade & Telemetria</h2>
+            <h2>Produtividade & Telemetria</h2>
             <p class="section-subtitle">Métricas detalhadas de desenvolvimento (100% local)</p>
           </div>
 
           <section class="telemetry-kpis">
             <div class="kpi-card kpi-card--telemetry">
-              <span class="kpi-icon">🐛</span>
+              <span class="kpi-icon kpi-icon--debug" data-label="DBG" aria-hidden="true"></span>
               <span class="kpi-label">SESSÕES DEBUG</span>
               <span class="kpi-value" id="telDebugSessions">--</span>
               <span class="kpi-detail" id="telDebugTime">--</span>
             </div>
             <div class="kpi-card kpi-card--telemetry">
-              <span class="kpi-icon">✅</span>
+              <span class="kpi-icon kpi-icon--tests" data-label="TST" aria-hidden="true"></span>
               <span class="kpi-label">TAXA TESTES</span>
               <span class="kpi-value" id="telTestSuccess">--</span>
               <span class="kpi-detail" id="telTestRuns">--</span>
             </div>
             <div class="kpi-card kpi-card--telemetry">
-              <span class="kpi-icon">🔨</span>
+              <span class="kpi-icon kpi-icon--builds" data-label="BLD" aria-hidden="true"></span>
               <span class="kpi-label">BUILDS</span>
               <span class="kpi-value" id="telBuilds">--</span>
               <span class="kpi-detail" id="telBuildTime">--</span>
             </div>
             <div class="kpi-card kpi-card--telemetry">
-              <span class="kpi-icon">🍅</span>
+              <span class="kpi-icon kpi-icon--pomodoro" data-label="POM" aria-hidden="true"></span>
               <span class="kpi-label">POMODOROS</span>
               <span class="kpi-value" id="telPomodoros">--</span>
               <span class="kpi-detail" id="telFocusTime">--</span>
@@ -226,22 +226,34 @@
 
           <section class="grid-two">
             <div class="card">
-              <h3>🔧 Top Extensões Usadas</h3>
+              <h3>
+                <span class="card-heading-icon card-heading-icon--extensions" data-label="EXT" aria-hidden="true"></span>
+                Top Extensões Usadas
+              </h3>
               <ul id="topExtensionsList" class="data-list"></ul>
             </div>
             <div class="card">
-              <h3>🐛 Arquivos Mais Debugados</h3>
+              <h3>
+                <span class="card-heading-icon card-heading-icon--debug" data-label="DBG" aria-hidden="true"></span>
+                Arquivos Mais Debugados
+              </h3>
               <ul id="topDebuggedFilesList" class="data-list"></ul>
             </div>
           </section>
 
           <section class="grid-two">
             <div class="card">
-              <h3>⚠️ Arquivos com Mais Erros</h3>
+              <h3>
+                <span class="card-heading-icon card-heading-icon--errors" data-label="ERR" aria-hidden="true"></span>
+                Arquivos com Mais Erros
+              </h3>
               <ul id="topErrorFilesList" class="data-list"></ul>
             </div>
             <div class="card">
-              <h3>📝 Atividade de Refatoração</h3>
+              <h3>
+                <span class="card-heading-icon card-heading-icon--refactor" data-label="REF" aria-hidden="true"></span>
+                Atividade de Refatoração
+              </h3>
               <div id="refactoringStats" class="stats-grid-mini"></div>
             </div>
           </section>

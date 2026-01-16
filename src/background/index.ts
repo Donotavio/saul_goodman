@@ -155,6 +155,7 @@ const trackingState: TrackingState = {
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
 let lastVscodeSyncAt = 0;
+let vscodeSyncInProgress = false; // BUG-003: Prevent race condition
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
@@ -879,8 +880,9 @@ async function handleActivityPing(payload: ActivityPingPayload): Promise<void> {
 
 async function accumulateSlice(): Promise<void> {
   const now = Date.now();
-  const sliceStart = trackingState.lastTimestamp;
-  const elapsed = now - sliceStart;
+  const sliceStart = trackingState.lastTimestamp ?? now;
+  // BUG-005: Ensure elapsed is never negative (clock adjustment)
+  const elapsed = Math.max(0, now - sliceStart);
 
   if (elapsed <= 0) {
     return;
@@ -1282,70 +1284,86 @@ async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
  * Resposta: { totalActiveMs: number; sessions: number }
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
-  const settings = await getSettingsCache();
-  const metrics = await getMetricsCache();
-  const pairingKey = settings.vscodePairingKey;
-  const integrationDisabled =
-    !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
-
-  if (integrationDisabled) {
-    const cleared = clearVscodeMetrics(metrics);
-    if (cleared) {
-      await persistMetrics();
-    }
-    lastVscodeSyncAt = 0;
+  // BUG-003: Prevent race condition with parallel calls
+  if (vscodeSyncInProgress) {
     return;
   }
-
-  const now = Date.now();
-  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
-    return;
-  }
-
-  let url: URL;
-  try {
-    url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
-  } catch {
-    return;
-  }
-  url.searchParams.set('date', getTodayKey());
-  url.searchParams.set('key', pairingKey);
+  vscodeSyncInProgress = true;
 
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
-    const response = await fetch(url.toString(), { signal: controller.signal });
-    clearTimeout(timer);
-    if (!response.ok) {
-      await handleVscodeSyncFailure(metrics);
+    const settings = await getSettingsCache();
+    const metrics = await getMetricsCache();
+    const pairingKey = settings.vscodePairingKey;
+    const integrationDisabled =
+      !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
+
+    if (integrationDisabled) {
+      const cleared = clearVscodeMetrics(metrics);
+      if (cleared) {
+        await persistMetrics();
+      }
+      lastVscodeSyncAt = 0;
       return;
     }
 
-    const summary = (await response.json()) as VscodeSummaryResponse;
-    metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
-    metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
-    metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
-    metrics.vscodeSwitchHourly =
-      Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
-        ? summary.switchHourly
-        : Array.from({ length: 24 }, () => 0);
-    metrics.vscodeTimeline =
-      Array.isArray(summary.timeline) && summary.timeline.length
-        ? summary.timeline.map((entry) => ({
-            startTime: entry.startTime,
-            endTime: entry.endTime,
-            durationMs: entry.durationMs,
-            domain: 'VS Code (IDE)',
-            category: 'productive' as const
-          }))
-        : [];
+    const now = Date.now();
+    if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
+      return;
+    }
 
-    await persistMetrics();
+    let url: URL;
+    try {
+      url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
+    } catch {
+      return;
+    }
+    url.searchParams.set('date', getTodayKey());
+    url.searchParams.set('key', pairingKey);
 
-    lastVscodeSyncAt = now;
-  } catch (error) {
-    await handleVscodeSyncFailure(metrics);
-    console.warn('Falha ao sincronizar métricas do VS Code', error);
+    // BUG-007: Ensure timer is always cleaned up
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    try {
+      const controller = new AbortController();
+      timer = setTimeout(() => controller.abort(), 4000);
+      const response = await fetch(url.toString(), { signal: controller.signal });
+      clearTimeout(timer);
+      timer = null;
+      if (!response.ok) {
+        await handleVscodeSyncFailure(metrics);
+        return;
+      }
+
+      const summary = (await response.json()) as VscodeSummaryResponse;
+      metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+      metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+      metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
+      metrics.vscodeSwitchHourly =
+        Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
+          ? summary.switchHourly
+          : Array.from({ length: 24 }, () => 0);
+      metrics.vscodeTimeline =
+        Array.isArray(summary.timeline) && summary.timeline.length
+          ? summary.timeline.map((entry) => ({
+              startTime: entry.startTime,
+              endTime: entry.endTime,
+              durationMs: entry.durationMs,
+              domain: 'VS Code (IDE)',
+              category: 'productive' as const
+            }))
+          : [];
+
+      await persistMetrics();
+
+      lastVscodeSyncAt = now;
+    } catch (error) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      await handleVscodeSyncFailure(metrics);
+      console.warn('Falha ao sincronizar métricas do VS Code', error);
+    }
+  } finally {
+    vscodeSyncInProgress = false;
   }
 }
 
@@ -1359,6 +1377,10 @@ async function handleNavigationEvent(
   }
   try {
     const tab = await chrome.tabs.get(tabId);
+    // BUG-004: Explicit check for chrome.runtime.lastError
+    if (chrome.runtime.lastError || !tab) {
+      return;
+    }
     if (await maybeRedirectBlockedTab(tabId, tab)) {
       return;
     }
@@ -1372,7 +1394,8 @@ async function handleNavigationEvent(
     }
     await updateActiveTabContext(tabId, false, tab);
   } catch {
-    // ignore lookup errors
+    // Tab may have been closed
+    return;
   }
 }
 
