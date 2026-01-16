@@ -14,6 +14,7 @@ let statusBarItem = null;
 let statusPollTimer = null;
 let trackingController = null;
 let localesRootDir = null;
+let currentComboSuffix = '';
 
 const SUPPORTED_LOCALES = ['en_US', 'pt_BR', 'es_419'];
 const DEFAULT_LOCALE = 'en_US';
@@ -258,6 +259,8 @@ class TrackingController {
     this.comboTracker = new ComboTracker({
       context,
       getConfig: () => this.config,
+      queue: this.queue,
+      buildHeartbeat: this.buildHeartbeat,
       onComboChange: (comboData) => {
         // Exibir toast
         this.comboToast.show(comboData);
@@ -382,11 +385,19 @@ class TrackingController {
 
   async updateStatusBarWithCombo(comboData) {
     // Atualizar status bar com informação de combo
-    if (comboData.level > 0) {
-      const comboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboData.level })}`;
-      // A atualização real será feita no updateStatusBar
-      void updateStatusBar('ok', null, null, comboSuffix);
-    }
+    const comboSuffix = comboData && comboData.level > 0 
+      ? ` | ${localize('combo_status_bar_suffix', { level: comboData.level })}`
+      : '';
+    
+    // Forçar atualização do status bar
+    currentComboSuffix = comboSuffix;
+    
+    // Atualizar status bar imediatamente
+    void pollStatus();
+  }
+  
+  getComboStats() {
+    return this.comboTracker ? this.comboTracker.getStats() : null;
   }
 
   safeStart(startFn) {
@@ -786,53 +797,62 @@ async function updateStatusBar(state, port, stats, comboSuffix) {
   }
 }
 
-function startStatusPolling() {
-  const run = async () => {
-    const config = readConfig();
-    if (!config.enableTracking) {
-      await updateStatusBar('disabled');
-      return;
-    }
-    const key = config.pairingKey?.trim();
-    if (!key) {
-      await updateStatusBar('error');
-      return;
-    }
-    const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
-    let endpoint;
-    try {
-      endpoint = new URL('/v1/health', baseUrl);
-    } catch {
-      await updateStatusBar('error');
-      return;
-    }
+async function pollStatus() {
+  const config = readConfig();
+  if (!config.enableTracking) {
+    await updateStatusBar('disabled');
+    return;
+  }
+  const key = config.pairingKey?.trim();
+  if (!key) {
+    await updateStatusBar('error');
+    return;
+  }
+  const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
+  let endpoint;
+  try {
+    endpoint = new URL('/v1/health', baseUrl);
+  } catch {
+    await updateStatusBar('error');
+    return;
+  }
 
-    try {
-      const healthRes = await apiClient.getHealth(baseUrl);
-      if (!healthRes.ok) {
-        throw new Error(`HTTP ${healthRes.status}`);
+  try {
+    const healthRes = await apiClient.getHealth(baseUrl);
+    if (!healthRes.ok) {
+      throw new Error(`HTTP ${healthRes.status}`);
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    const [summary, indexData] = await Promise.all([
+      apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
+      apiClient.getIndex(baseUrl, key, today).catch(() => null)
+    ]);
+    const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
+    const index = indexData?.index ?? null;
+    
+    // Obter combo atual do tracker
+    if (!currentComboSuffix && trackingController) {
+      const comboStats = trackingController.getComboStats();
+      if (comboStats && comboStats.currentLevel > 0) {
+        currentComboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboStats.currentLevel })}`;
       }
-      const today = new Date().toISOString().slice(0, 10);
-      const [summary, indexData] = await Promise.all([
-        apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
-        apiClient.getIndex(baseUrl, key, today).catch(() => null)
-      ]);
-      const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
-      const index = indexData?.index ?? null;
-      await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
-        totalSeconds,
-        index
-      });
-    } catch {
-      await updateStatusBar('error');
     }
-  };
+    
+    await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
+      totalSeconds,
+      index
+    }, currentComboSuffix);
+  } catch {
+    await updateStatusBar('error');
+  }
+}
 
+function startStatusPolling() {
   if (statusPollTimer) {
     clearInterval(statusPollTimer);
   }
-  void run();
-  statusPollTimer = setInterval(run, 60000);
+  void pollStatus();
+  statusPollTimer = setInterval(pollStatus, 60000);
 }
 
 module.exports = {

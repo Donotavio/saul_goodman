@@ -1,5 +1,3 @@
-const vscode = require('vscode');
-
 /**
  * ComboTracker - Sistema de combo Pomodoro estilo Street Fighter
  * Gerencia níveis de combo, breaks, e notificações
@@ -8,6 +6,8 @@ class ComboTracker {
   constructor(options) {
     this.context = options.context;
     this.getConfig = options.getConfig;
+    this.queue = options.queue;
+    this.buildHeartbeat = options.buildHeartbeat;
     this.onComboChange = options.onComboChange || (() => {});
     
     // Estado do combo
@@ -79,6 +79,9 @@ class ComboTracker {
     
     await this.saveState();
     
+    // Enviar heartbeat para o daemon
+    await this.sendComboHeartbeat('combo_update');
+    
     // Notificar mudança
     const leveledUp = this.currentLevel > previousLevel;
     this.onComboChange({
@@ -107,6 +110,8 @@ class ComboTracker {
         this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
         console.log('[Saul Combo] Medium break - combo reduced by 1');
         
+        await this.sendComboHeartbeat('combo_reduced');
+        
         this.onComboChange({
           level: this.currentLevel,
           pomodoros: this.consecutivePomodoros,
@@ -124,6 +129,8 @@ class ComboTracker {
         
         this.consecutivePomodoros = 0;
         this.currentLevel = 0;
+        
+        await this.sendComboHeartbeat('combo_reset');
         
         this.onComboChange({
           level: 0,
@@ -238,6 +245,40 @@ class ComboTracker {
   }
 
   /**
+   * Envia heartbeat de combo para o daemon
+   */
+  async sendComboHeartbeat(eventType) {
+    if (!this.queue || !this.buildHeartbeat) {
+      console.warn('[Saul Combo] Queue or buildHeartbeat not available');
+      return;
+    }
+
+    const config = this.getConfig();
+    if (!config.enableTelemetry) {
+      return;
+    }
+
+    const heartbeat = this.buildHeartbeat({
+      entityType: 'combo',
+      entity: eventType,
+      category: 'telemetry',
+      isWrite: false,
+      metadata: {
+        currentLevel: this.currentLevel,
+        consecutivePomodoros: this.consecutivePomodoros,
+        maxComboToday: this.maxComboToday,
+        totalCombosToday: this.totalCombosToday,
+        lifetimeMaxCombo: this.lifetimeMaxCombo,
+        totalMinutes: this.consecutivePomodoros * 25,
+        eventType
+      }
+    });
+
+    this.queue.enqueue(heartbeat);
+    console.log(`[Saul Combo] Heartbeat sent: ${eventType}, level: ${this.currentLevel}, streak: ${this.consecutivePomodoros}`);
+  }
+
+  /**
    * Reset manual do combo
    */
   async resetCombo() {
@@ -246,6 +287,7 @@ class ComboTracker {
     this.lastPomodoroTime = null;
     this.breakStartTime = null;
     await this.saveState();
+    await this.sendComboHeartbeat('combo_manual_reset');
     
     this.onComboChange({
       level: 0,

@@ -122,6 +122,7 @@
     "Other"
   ],
   "scripts": {
+    "test": "node --test src/tests/**/*.test.js",
     "generate-nls": "node scripts/generate-nls.js",
     "prebuild:vsix": "npm run generate-nls && npm --prefix .. run i18n:copy-site",
     "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
