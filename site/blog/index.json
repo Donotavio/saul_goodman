@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Como Simples Semântica Pode Salvar Sua Carreira (ou Não)",
+      "url": "./posts/2026/2026-01-16-como-simples-semantica-pode-salvar-sua-carreira-ou-nao/",
+      "markdown": "2026/2026-01-16-como-simples-semantica-pode-salvar-sua-carreira-ou-nao.md",
+      "date": "2026-01-16",
+      "category": "marketing",
+      "tags": [
+        "semântica",
+        "marketing",
+        "produtividade",
+        "AI",
+        "sarcasmo"
+      ],
+      "excerpt": "Aprenda como a simplicidade na semântica pode aumentar suas citações em 642%. Sim, você leu certo, 642%. É isso mesmo que você precisa!",
+      "title_en": "How Simple Semantics Can Save Your Career (or Not)",
+      "title_es": "Cómo la Simple Semántica Puede Salvar Tu Carrera (o No)",
+      "tone": "incredulo",
+      "source_title": "How simple semantics increased our AI citations by 642% [New results]",
+      "source_url": "https://blog.hubspot.com/marketing/how-simple-semantics-increased-our-ai-citations-by-642-new-results",
+      "source_published_at": "Tue, 13 Jan 2026 10:00:04 GMT",
+      "excerpt_en": "Learn how simplicity in semantics can boost your citations by 642%. Yes, you read that right, 642%. That's exactly what you need!",
+      "excerpt_es": "Aprende cómo la simplicidad en la semántica puede aumentar tus citas en un 642%. Sí, leíste bien, 642%. ¡Eso es justo lo que necesitas!"
+    },
+    {
       "title": "Mudança: A Nova Palavra da Moda para 2026",
       "url": "./posts/2026/2026-01-14-mudanca-a-nova-palavra-da-moda-para-2026/",
       "markdown": "2026/2026-01-14-mudanca-a-nova-palavra-da-moda-para-2026.md",
