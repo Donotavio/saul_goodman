@@ -2836,7 +2836,7 @@ function buildTimelineBlocks(entries: TimelineEntry[]): TimelineHourBlock[] {
     .map(([hour, segments]) => ({
       hour,
       totalMs: segments.reduce((acc, segment) => acc + segment.durationMs, 0),
-      segments: segments.sort((a, b) => a.startTime - b.startTime)
+      segments: segments.sort((a, b) => b.startTime - a.startTime)
     }));
 }
 

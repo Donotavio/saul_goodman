@@ -2517,7 +2517,7 @@
     "message": "Relatorios do VS Code estao desativados."
   },
   "report_vscode_disabled_cta": {
-    "message": "Abrir options"
+    "message": "Abrir configurações"
   },
   "report_vscode_editor_info": {
     "message": "Info do Editor"
