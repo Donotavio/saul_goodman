@@ -2961,15 +2961,21 @@ interface EnrichedMetrics extends DailyMetrics {
 
 function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
   const allowVscode = Boolean(latestSettings?.vscodeIntegrationEnabled);
-  const vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
+  let vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
+
+  const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+  if (vscodeMs > MAX_DAY_MS) {
+    console.warn(`[Saul] VS Code time (${(vscodeMs / 3600000).toFixed(1)}h) exceeds 24h, clamping`);
+    vscodeMs = MAX_DAY_MS;
+  }
 
   const domains = { ...metrics.domains };
   if (vscodeMs > 0 && allowVscode) {
     domains['__vscode:ide'] = {
       domain: label,
       category: 'productive',
-      milliseconds: (domains['__vscode:ide']?.milliseconds ?? 0) + vscodeMs
+      milliseconds: vscodeMs
     };
   }
 
@@ -2992,6 +2998,11 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
         const bucket = hourly[segment.hour];
         if (bucket) {
           bucket.productiveMs += segment.milliseconds;
+          const total = bucket.productiveMs + bucket.procrastinationMs + bucket.inactiveMs + bucket.neutralMs;
+          const MAX_HOUR_MS = 60 * 60 * 1000;
+          if (total > MAX_HOUR_MS * 1.1) {
+            console.warn(`[Saul] Hour ${segment.hour} total (${(total / 60000).toFixed(1)}min) exceeds 60min - possible overlap`);
+          }
         }
       }
     }

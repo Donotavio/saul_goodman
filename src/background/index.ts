@@ -1334,7 +1334,16 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       }
 
       const summary = (await response.json()) as VscodeSummaryResponse;
-      metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+      
+      const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+      const rawVscodeMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+      if (rawVscodeMs > MAX_DAY_MS) {
+        console.warn(`[Saul] VS Code daemon returned ${(rawVscodeMs / 3600000).toFixed(1)}h, clamping to 24h`);
+        metrics.vscodeActiveMs = MAX_DAY_MS;
+      } else {
+        metrics.vscodeActiveMs = rawVscodeMs;
+      }
+      
       metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
       metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
       metrics.vscodeSwitchHourly =
