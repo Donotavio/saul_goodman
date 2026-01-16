@@ -8,6 +8,7 @@ let BufferedEventQueue, HeartbeatTracker, registerExtraEventCollectors, createHe
 let GitTracker, EditorMetadataTracker, WorkspaceTracker;
 let DebugTracker, TestTracker, TaskTracker, ExtensionTracker, TerminalTracker;
 let FocusTracker, DiagnosticTracker, RefactorTracker, showReports;
+let ComboTracker, ComboToast;
 
 let statusBarItem = null;
 let statusPollTimer = null;
@@ -166,6 +167,8 @@ function activate(context) {
         DiagnosticTracker = require('./tracking/diagnostic-tracker').DiagnosticTracker;
         RefactorTracker = require('./tracking/refactor-tracker').RefactorTracker;
         showReports = require('./reports/report-view').showReports;
+        ComboTracker = require('./tracking/combo-tracker').ComboTracker;
+        ComboToast = require('./ui/combo-toast').ComboToast;
         
         trackingController = new TrackingController(context);
         trackingController.init().catch(err => {
@@ -244,6 +247,25 @@ class TrackingController {
       enabled: this.config.enableTracking
     });
     this.buildHeartbeat = createHeartbeatFactory(context, () => this.config);
+    
+    // Inicializar ComboToast
+    this.comboToast = new ComboToast({
+      context,
+      localize
+    });
+    
+    // Inicializar ComboTracker
+    this.comboTracker = new ComboTracker({
+      context,
+      getConfig: () => this.config,
+      onComboChange: (comboData) => {
+        // Exibir toast
+        this.comboToast.show(comboData);
+        // Atualizar status bar
+        void this.updateStatusBarWithCombo(comboData);
+      }
+    });
+    
     this.heartbeatTracker = new HeartbeatTracker({
       context,
       queue: this.queue,
@@ -302,7 +324,8 @@ class TrackingController {
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      comboTracker: this.comboTracker
     });
     this.diagnosticTracker = new DiagnosticTracker({
       context,
@@ -331,6 +354,9 @@ class TrackingController {
       this.queue.start();
       await this.checkDailyReset();
       
+      // Start combo tracker
+      await this.comboTracker.start();
+      
       // Start core trackers with staggered delays to prevent blocking
       setTimeout(() => this.safeStart(() => this.gitTracker.start()), 100);
       setTimeout(() => this.safeStart(() => this.editorMetadataTracker.start()), 200);
@@ -351,6 +377,15 @@ class TrackingController {
       this.applyConfig();
     } catch (error) {
       console.error('[Saul] Failed to initialize tracking controller:', error);
+    }
+  }
+
+  async updateStatusBarWithCombo(comboData) {
+    // Atualizar status bar com informação de combo
+    if (comboData.level > 0) {
+      const comboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboData.level })}`;
+      // A atualização real será feita no updateStatusBar
+      void updateStatusBar('ok', null, null, comboSuffix);
     }
   }
 
@@ -385,6 +420,8 @@ class TrackingController {
     this.focusTracker.dispose();
     this.diagnosticTracker.dispose();
     this.refactorTracker.dispose();
+    this.comboTracker.dispose();
+    this.comboToast.dispose();
   }
 
   reloadConfig() {
@@ -713,22 +750,24 @@ function initStatusBar(context) {
   startStatusPolling();
 }
 
-async function updateStatusBar(state, port, stats) {
+async function updateStatusBar(state, port, stats, comboSuffix) {
   if (!statusBarItem) {
     return;
   }
   const portSuffix = port ? localize('status_port_suffix', { port }) : '';
+  const combo = comboSuffix || '';
+  
   if (state === 'ok') {
     if (stats && typeof stats.totalSeconds === 'number') {
       const timeLabel = formatDurationSeconds(stats.totalSeconds);
       const indexLabel = typeof stats.index === 'number' ? ` | ${stats.index}%` : '';
-      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}${indexLabel}`;
+      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}${indexLabel}${combo}`;
       statusBarItem.tooltip = localize('status_today_tooltip', {
         time: timeLabel,
         port: portSuffix
       });
     } else {
-      statusBarItem.text = `$(debug-start) ${localize('status_on_text', { port: portSuffix })}`;
+      statusBarItem.text = `$(debug-start) ${localize('status_on_text', { port: portSuffix })}${combo}`;
       statusBarItem.tooltip = localize('status_on_tooltip');
     }
     statusBarItem.color = undefined;

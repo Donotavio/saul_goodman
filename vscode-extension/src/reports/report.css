@@ -671,6 +671,32 @@ p {
   border-color: #d00000;
 }
 
+.kpi-icon--combo {
+  border-color: #FFD700;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  animation: comboGlow 2s ease-in-out infinite;
+}
+
+@keyframes comboGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.kpi-card--combo {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.kpi-card--combo .kpi-value {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .kpi-card--telemetry .kpi-label {
   font-size: 0.75rem;
   color: #999;

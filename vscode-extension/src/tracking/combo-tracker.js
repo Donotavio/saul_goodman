@@ -1,0 +1,262 @@
+const vscode = require('vscode');
+
+/**
+ * ComboTracker - Sistema de combo Pomodoro estilo Street Fighter
+ * Gerencia níveis de combo, breaks, e notificações
+ */
+class ComboTracker {
+  constructor(options) {
+    this.context = options.context;
+    this.getConfig = options.getConfig;
+    this.onComboChange = options.onComboChange || (() => {});
+    
+    // Estado do combo
+    this.currentLevel = 0;
+    this.consecutivePomodoros = 0;
+    this.lastPomodoroTime = null;
+    this.breakStartTime = null;
+    this.totalCombosToday = 0;
+    this.maxComboToday = 0;
+    this.lifetimeMaxCombo = 0;
+    
+    // Definição dos níveis de combo
+    this.comboLevels = [
+      { level: 0, pomodoros: 0, name: 'combo_none', multiplier: 1, color: '#6B7280' },
+      { level: 1, pomodoros: 1, name: 'combo_opening_statement', multiplier: 1.2, color: '#FFC857' },
+      { level: 2, pomodoros: 2, name: 'combo_building_case', multiplier: 1.5, color: '#F59E0B' },
+      { level: 3, pomodoros: 3, name: 'combo_objection', multiplier: 2, color: '#EF4444' },
+      { level: 4, pomodoros: 4, name: 'combo_closing', multiplier: 2.5, color: '#A855F7' },
+      { level: 5, pomodoros: 5, name: 'combo_ultra', multiplier: 3, color: '#FFD700' }
+    ];
+    
+    // Thresholds de break (em ms)
+    this.breakThresholds = {
+      short: 15 * 60 * 1000,   // 15min - mantém combo
+      medium: 30 * 60 * 1000,  // 30min - reduz 1 nível
+      long: 30 * 60 * 1000     // >30min - reset completo
+    };
+  }
+
+  async start() {
+    console.log('[Saul Combo] Combo tracker started');
+    await this.loadState();
+    await this.checkDailyReset();
+  }
+
+  /**
+   * Chamado quando um pomodoro é completado
+   */
+  async onPomodoroCompleted() {
+    const now = Date.now();
+    
+    // Verificar se houve um break
+    if (this.lastPomodoroTime) {
+      const timeSinceLastPomodoro = now - this.lastPomodoroTime;
+      await this.handleBreak(timeSinceLastPomodoro);
+    }
+    
+    // Incrementar combo
+    this.consecutivePomodoros++;
+    this.lastPomodoroTime = now;
+    this.breakStartTime = null;
+    
+    // Calcular nível atual
+    const previousLevel = this.currentLevel;
+    this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
+    
+    // Atualizar máximos
+    if (this.consecutivePomodoros > this.maxComboToday) {
+      this.maxComboToday = this.consecutivePomodoros;
+    }
+    if (this.consecutivePomodoros > this.lifetimeMaxCombo) {
+      this.lifetimeMaxCombo = this.consecutivePomodoros;
+    }
+    
+    // Incrementar total de combos
+    if (this.currentLevel > 0) {
+      this.totalCombosToday++;
+    }
+    
+    await this.saveState();
+    
+    // Notificar mudança
+    const leveledUp = this.currentLevel > previousLevel;
+    this.onComboChange({
+      level: this.currentLevel,
+      pomodoros: this.consecutivePomodoros,
+      leveledUp,
+      isUltra: this.currentLevel >= 5,
+      totalMinutes: this.consecutivePomodoros * 25
+    });
+    
+    console.log(`[Saul Combo] Pomodoro completed! Level: ${this.currentLevel}, Streak: ${this.consecutivePomodoros}`);
+  }
+
+  /**
+   * Gerencia breaks entre pomodoros
+   */
+  async handleBreak(breakDuration) {
+    if (breakDuration <= this.breakThresholds.short) {
+      // Break curto - mantém combo
+      console.log('[Saul Combo] Short break - combo maintained');
+      return;
+    } else if (breakDuration <= this.breakThresholds.medium) {
+      // Break médio - reduz 1 nível
+      if (this.consecutivePomodoros > 0) {
+        this.consecutivePomodoros = Math.max(0, this.consecutivePomodoros - 1);
+        this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
+        console.log('[Saul Combo] Medium break - combo reduced by 1');
+        
+        this.onComboChange({
+          level: this.currentLevel,
+          pomodoros: this.consecutivePomodoros,
+          comboReduced: true,
+          breakDuration
+        });
+      }
+    } else {
+      // Break longo - reset completo
+      if (this.consecutivePomodoros > 0) {
+        console.log('[Saul Combo] Long break - combo reset');
+        
+        const oldLevel = this.currentLevel;
+        const oldPomodoros = this.consecutivePomodoros;
+        
+        this.consecutivePomodoros = 0;
+        this.currentLevel = 0;
+        
+        this.onComboChange({
+          level: 0,
+          pomodoros: 0,
+          comboReset: true,
+          breakDuration,
+          previousLevel: oldLevel,
+          previousPomodoros: oldPomodoros
+        });
+      }
+    }
+    
+    await this.saveState();
+  }
+
+  /**
+   * Calcula o nível de combo baseado no número de pomodoros consecutivos
+   */
+  calculateComboLevel(pomodoros) {
+    if (pomodoros >= 5) return 5;
+    if (pomodoros >= 4) return 4;
+    if (pomodoros >= 3) return 3;
+    if (pomodoros >= 2) return 2;
+    if (pomodoros >= 1) return 1;
+    return 0;
+  }
+
+  /**
+   * Retorna informações do nível atual
+   */
+  getCurrentLevelInfo() {
+    const levelIndex = Math.min(this.currentLevel, this.comboLevels.length - 1);
+    const levelInfo = this.comboLevels[levelIndex];
+    
+    return {
+      ...levelInfo,
+      pomodoros: this.consecutivePomodoros,
+      totalMinutes: this.consecutivePomodoros * 25,
+      maxComboToday: this.maxComboToday,
+      totalCombosToday: this.totalCombosToday,
+      lifetimeMaxCombo: this.lifetimeMaxCombo
+    };
+  }
+
+  /**
+   * Retorna estatísticas para o relatório
+   */
+  getStats() {
+    return {
+      currentLevel: this.currentLevel,
+      consecutivePomodoros: this.consecutivePomodoros,
+      maxComboToday: this.maxComboToday,
+      totalCombosToday: this.totalCombosToday,
+      lifetimeMaxCombo: this.lifetimeMaxCombo,
+      currentLevelInfo: this.getCurrentLevelInfo()
+    };
+  }
+
+  /**
+   * Salva estado no globalState
+   */
+  async saveState() {
+    const state = {
+      currentLevel: this.currentLevel,
+      consecutivePomodoros: this.consecutivePomodoros,
+      lastPomodoroTime: this.lastPomodoroTime,
+      breakStartTime: this.breakStartTime,
+      totalCombosToday: this.totalCombosToday,
+      maxComboToday: this.maxComboToday,
+      lifetimeMaxCombo: this.lifetimeMaxCombo,
+      lastSaveDate: new Date().toISOString().slice(0, 10)
+    };
+    
+    await this.context.globalState.update('sg:combo:state', state);
+  }
+
+  /**
+   * Carrega estado do globalState
+   */
+  async loadState() {
+    const state = this.context.globalState.get('sg:combo:state');
+    if (state) {
+      this.currentLevel = state.currentLevel || 0;
+      this.consecutivePomodoros = state.consecutivePomodoros || 0;
+      this.lastPomodoroTime = state.lastPomodoroTime || null;
+      this.breakStartTime = state.breakStartTime || null;
+      this.totalCombosToday = state.totalCombosToday || 0;
+      this.maxComboToday = state.maxComboToday || 0;
+      this.lifetimeMaxCombo = state.lifetimeMaxCombo || 0;
+      
+      console.log('[Saul Combo] State loaded:', state);
+    }
+  }
+
+  /**
+   * Verifica se é um novo dia e reseta estatísticas diárias
+   */
+  async checkDailyReset() {
+    const state = this.context.globalState.get('sg:combo:state');
+    const today = new Date().toISOString().slice(0, 10);
+    
+    if (state && state.lastSaveDate !== today) {
+      console.log('[Saul Combo] New day detected - resetting daily stats');
+      this.consecutivePomodoros = 0;
+      this.currentLevel = 0;
+      this.lastPomodoroTime = null;
+      this.totalCombosToday = 0;
+      this.maxComboToday = 0;
+      // lifetimeMaxCombo persiste
+      await this.saveState();
+    }
+  }
+
+  /**
+   * Reset manual do combo
+   */
+  async resetCombo() {
+    this.consecutivePomodoros = 0;
+    this.currentLevel = 0;
+    this.lastPomodoroTime = null;
+    this.breakStartTime = null;
+    await this.saveState();
+    
+    this.onComboChange({
+      level: 0,
+      pomodoros: 0,
+      manualReset: true
+    });
+  }
+
+  dispose() {
+    // Cleanup if needed
+  }
+}
+
+module.exports = { ComboTracker };

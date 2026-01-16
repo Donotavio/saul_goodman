@@ -7,13 +7,15 @@ class FocusTracker {
     this.queue = options.queue;
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
+    this.comboTracker = options.comboTracker || null;
     this.disposables = [];
     this.isFocused = false;
     this.lastFocusTime = null;
     this.lastBlurTime = null;
     this.pomodoroInterval = null;
-    this.lastRealActivity = Date.now(); // BUG-FIX: Track real user activity
+    this.lastRealActivity = Date.now();
     this.inactivityCheckInterval = null;
+    this.lastPomodoroMinutes = 0; // Track last pomodoro check
   }
 
   start() {
@@ -113,7 +115,9 @@ class FocusTracker {
         const focusDurationMs = Date.now() - this.lastFocusTime;
         const focusMinutes = Math.floor(focusDurationMs / 60000);
 
-        if (focusMinutes > 0 && focusMinutes % 25 === 0) {
+        if (focusMinutes > 0 && focusMinutes % 25 === 0 && focusMinutes !== this.lastPomodoroMinutes) {
+          this.lastPomodoroMinutes = focusMinutes;
+          
           const heartbeat = this.buildHeartbeat({
             entityType: 'window',
             entity: 'pomodoro_milestone',
@@ -128,6 +132,13 @@ class FocusTracker {
 
           this.queue.enqueue(heartbeat);
           console.log(`[Saul Focus] Pomodoro milestone: ${focusMinutes} minutes`);
+          
+          // Notificar ComboTracker
+          if (this.comboTracker) {
+            this.comboTracker.onPomodoroCompleted().catch(err => {
+              console.error('[Saul Focus] Error updating combo:', err);
+            });
+          }
         }
       }
     }, 60000);

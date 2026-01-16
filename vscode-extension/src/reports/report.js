@@ -1026,6 +1026,11 @@
     document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
     document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
 
+    const maxCombo = tel.combo?.maxComboToday || 0;
+    const comboMinutes = maxCombo * 25;
+    document.getElementById('telMaxCombo').textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
+    document.getElementById('telComboMinutes').textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';
+
     renderTerminalCommandsChart(tel.terminal || {});
     renderFocusPatternsChart(tel.focus || {});
     renderTopExtensions(tel.extensions?.mostUsed || []);
