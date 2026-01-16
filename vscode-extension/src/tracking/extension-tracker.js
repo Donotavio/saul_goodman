@@ -93,7 +93,16 @@ class ExtensionTracker {
       }
     });
     
-    console.log(`[Saul Extension] Built command map with ${this.commandToExtensionMap.size} commands`);
+    console.log(`[Saul Extension] Built command map with ${this.commandToExtensionMap.size} commands from ${vscode.extensions.all.length} extensions`);
+    
+    try {
+      const saulOpenReports = this.commandToExtensionMap.get('saulGoodman.openReports');
+      const saulStartDaemon = this.commandToExtensionMap.get('saulGoodman.startDaemon');
+      const saulTestDaemon = this.commandToExtensionMap.get('saulGoodman.testDaemon');
+      console.log(`[Saul Extension] Saul commands → openReports: ${saulOpenReports || 'NOT FOUND'}, startDaemon: ${saulStartDaemon || 'NOT FOUND'}, testDaemon: ${saulTestDaemon || 'NOT FOUND'}`);
+    } catch (err) {
+      console.error('[Saul Extension] Error checking Saul commands:', err);
+    }
   }
 
   captureInitialState() {
@@ -156,10 +165,20 @@ class ExtensionTracker {
     const originalExecuteCommand = vscode.commands.executeCommand;
     
     vscode.commands.executeCommand = async (command, ...rest) => {
+      // Log ALL Saul commands unconditionally for debugging
+      if (typeof command === 'string' && command.startsWith('saulGoodman.')) {
+        console.log(`[Saul Extension] 🔍 Intercepted Saul command: "${command}"`);
+      }
+      
       const config = this.getConfig();
       
       if (config.enableTelemetry && typeof command === 'string') {
         const extensionId = this.inferExtensionFromCommand(command);
+        
+        // Log Saul commands for debugging
+        if (command.startsWith('saulGoodman.')) {
+          console.log(`[Saul Extension] 🔍 Saul command executed: "${command}" → Extension: "${extensionId}"`);
+        }
         
         if (extensionId) {
           if (!this.commandExecutions.has(extensionId)) {
@@ -169,6 +188,11 @@ class ExtensionTracker {
           const extCommands = this.commandExecutions.get(extensionId);
           const count = (extCommands.get(command) || 0) + 1;
           extCommands.set(command, count);
+          
+          // Log when Saul commands are stored
+          if (command.startsWith('saulGoodman.')) {
+            console.log(`[Saul Extension] ✓ Stored command count: ${count} for extension: ${extensionId}`);
+          }
         }
       }
 
@@ -182,37 +206,75 @@ class ExtensionTracker {
     });
   }
 
+  trackCommand(command, extensionId) {
+    if (!command || !extensionId) return;
+    
+    console.log(`[Saul Extension] 📝 Manually tracking command: "${command}" → "${extensionId}"`);
+    
+    if (!this.commandExecutions.has(extensionId)) {
+      this.commandExecutions.set(extensionId, new Map());
+    }
+    
+    const extCommands = this.commandExecutions.get(extensionId);
+    const count = (extCommands.get(command) || 0) + 1;
+    extCommands.set(command, count);
+    
+    console.log(`[Saul Extension] ✓ Command stored: ${count} executions`);
+  }
+
   inferExtensionFromCommand(command) {
     if (!command || typeof command !== 'string') return null;
     
+    // First check if we have an exact mapping from extension manifest
     if (this.commandToExtensionMap.has(command)) {
       return this.commandToExtensionMap.get(command);
     }
     
+    // If command starts with underscore or default:, it's internal
+    if (command.startsWith('_') || command.startsWith('default:')) {
+      return 'vscode.builtin';
+    }
+    
     const parts = command.split('.');
+    
+    // Commands with less than 2 parts are likely builtin
     if (parts.length < 2) {
       return 'vscode.builtin';
     }
 
-    if (command.startsWith('workbench.') || 
-        command.startsWith('editor.') ||
-        command.startsWith('vscode.') ||
-        command.startsWith('_') ||
-        command.startsWith('default:') ||
-        command.startsWith('list.') ||
-        command.startsWith('notebook.') ||
-        command.startsWith('search.') ||
-        command.startsWith('explorer.') ||
-        command.startsWith('git.')) {
+    // Only classify as builtin if it's a known VSCode core namespace
+    // Be more conservative here to catch extension commands
+    const builtinPrefixes = ['workbench.action', 'editor.action', 'vscode.', 'list.', 'notebook.cell'];
+    const isBuiltin = builtinPrefixes.some(prefix => command.startsWith(prefix));
+    
+    if (isBuiltin) {
       return 'vscode.builtin';
     }
 
-    return parts[0];
+    // For commands like "git.commit", check if git extension is installed
+    // Otherwise assume it's an extension command with prefix as extension ID
+    const possibleExtId = parts[0];
+    
+    // Check if this is a known extension
+    const ext = vscode.extensions.all.find(e => 
+      e.id === possibleExtId || 
+      e.id.endsWith('.' + possibleExtId) ||
+      e.id.startsWith(possibleExtId)
+    );
+    
+    if (ext) {
+      return ext.id;
+    }
+    
+    // Default to the prefix as extension ID
+    return possibleExtId;
   }
 
   flushCommandStats() {
     const config = this.getConfig();
     if (!config.enableTelemetry) return;
+
+    console.log(`[Saul Extension] Flushing stats for ${this.commandExecutions.size} extensions`);
 
     this.commandExecutions.forEach((commands, extensionId) => {
       let totalCount = 0;
@@ -242,7 +304,7 @@ class ExtensionTracker {
         });
 
         this.queue.enqueue(heartbeat);
-        console.log(`[Saul Extension] Commands: ${extensionId} - ${totalCount} total`);
+        console.log(`[Saul Extension] Flush → ${extensionId}: ${totalCount} cmds (top: ${top5[0]?.commandId})`);
       }
     });
 

@@ -1070,11 +1070,22 @@ function handleVscodeBranches(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const branch = dur.metadata?.branch || 'unknown';
+      const project = (dur.project ?? '').trim().toLowerCase();
+      const language = (dur.language ?? '').trim().toLowerCase();
+      
+      if (!project || project === 'unknown' || !language || language === 'unknown') {
+        return;
+      }
+      
+      const branch = (dur.metadata?.branch ?? '').trim().toLowerCase();
+      if (!branch || branch === 'unknown') {
+        return;
+      }
+      
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
-      incrementMap(branchMap, branch, overlapMs);
+      incrementMap(branchMap, dur.metadata?.branch || '', overlapMs);
     });
 
   const totalMs = Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0);
@@ -1326,6 +1337,14 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
     if (entityType === 'debug_session') {
       if (hb.entity === 'start') {
         telemetry.debugging.totalSessions++;
+        
+        const fileId = metadata.fileId;
+        if (fileId && fileId !== 'unknown') {
+          if (!telemetry.debugging.topFiles[fileId]) {
+            telemetry.debugging.topFiles[fileId] = { sessions: 0, breakpoints: 0 };
+          }
+          telemetry.debugging.topFiles[fileId].sessions++;
+        }
       } else if (hb.entity === 'stop' && metadata.durationMs) {
         telemetry.debugging.totalDurationMs += metadata.durationMs;
       }
@@ -1335,11 +1354,13 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
     }
 
     if (entityType === 'debug_breakpoint') {
-      const fileId = metadata.fileId || 'unknown';
-      if (!telemetry.debugging.topFiles[fileId]) {
-        telemetry.debugging.topFiles[fileId] = { sessions: 0, breakpoints: 0 };
+      const fileId = metadata.fileId;
+      if (fileId && fileId !== 'unknown') {
+        if (!telemetry.debugging.topFiles[fileId]) {
+          telemetry.debugging.topFiles[fileId] = { sessions: 0, breakpoints: 0 };
+        }
+        telemetry.debugging.topFiles[fileId].breakpoints++;
       }
-      telemetry.debugging.topFiles[fileId].breakpoints++;
     }
 
     if (entityType === 'test_run') {
@@ -1498,8 +1519,16 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
   telemetry.debugging.topDebuggers = topDebuggers;
 
   const topFiles = Object.entries(telemetry.debugging.topFiles)
-    .map(([fileId, data]) => ({ fileId, ...data }))
-    .sort((a, b) => b.breakpoints - a.breakpoints)
+    .map(([fileId, data]) => ({ 
+      fileId, 
+      sessions: data.sessions || 0,
+      breakpoints: data.breakpoints || 0
+    }))
+    .sort((a, b) => {
+      const scoreA = (a.sessions * 10) + a.breakpoints;
+      const scoreB = (b.sessions * 10) + b.breakpoints;
+      return scoreB - scoreA;
+    })
     .slice(0, 10);
   
   telemetry.debugging.topFiles = topFiles;
@@ -1581,11 +1610,22 @@ function handleVscodeDashboard(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const branch = dur.metadata?.branch || 'unknown';
+      const project = (dur.project ?? '').trim().toLowerCase();
+      const language = (dur.language ?? '').trim().toLowerCase();
+      
+      if (!project || project === 'unknown' || !language || language === 'unknown') {
+        return;
+      }
+      
+      const branch = (dur.metadata?.branch ?? '').trim().toLowerCase();
+      if (!branch || branch === 'unknown') {
+        return;
+      }
+      
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
-      incrementMap(branchMap, branch, overlapMs);
+      incrementMap(branchMap, dur.metadata?.branch || '', overlapMs);
     });
 
   const editorMetadata = entry.heartbeats
@@ -1597,10 +1637,16 @@ function handleVscodeDashboard(req, res, url) {
   entry.heartbeats
     .filter((hb) => hb.entityType === 'workspace' && hb.time >= startMs && hb.time < endMs)
     .forEach((hb) => {
-      const wsPath = hb.entity || 'unknown';
-      if (!workspaceMap.has(wsPath) || hb.time > workspaceMap.get(wsPath).time) {
-        workspaceMap.set(wsPath, {
-          name: hb.metadata?.workspaceName || 'unknown',
+      const wsPath = (hb.entity ?? '').trim().toLowerCase();
+      const wsName = (hb.metadata?.workspaceName ?? '').trim().toLowerCase();
+      
+      if (!wsPath || wsPath === 'unknown' || !wsName || wsName === 'unknown') {
+        return;
+      }
+      
+      if (!workspaceMap.has(hb.entity) || hb.time > workspaceMap.get(hb.entity).time) {
+        workspaceMap.set(hb.entity, {
+          name: hb.metadata?.workspaceName || '',
           totalFiles: hb.metadata?.totalFiles || 0,
           totalSizeMB: ((hb.metadata?.totalSizeBytes || 0) / (1024 * 1024)).toFixed(2),
           time: hb.time
@@ -1762,6 +1808,14 @@ function summarizeDurationsByDay(durations, startMs, endMs, filters) {
     if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
       continue;
     }
+    
+    const project = (duration.project ?? '').trim().toLowerCase();
+    const language = (duration.language ?? '').trim().toLowerCase();
+    
+    if (!project || project === 'unknown' || !language || language === 'unknown') {
+      continue;
+    }
+    
     const slices = splitDurationByDay(duration, startMs, endMs);
     for (const slice of slices) {
       const dateKey = slice.dateKey;
@@ -1807,6 +1861,14 @@ function summarizeDurations(durations, startMs, endMs, filters) {
     if (overlapMs <= 0) {
       continue;
     }
+    
+    const project = (duration.project ?? '').trim().toLowerCase();
+    const language = (duration.language ?? '').trim().toLowerCase();
+    
+    if (!project || project === 'unknown' || !language || language === 'unknown') {
+      continue;
+    }
+    
     summary.totalMs += overlapMs;
     incrementMap(summary.projects, duration.project ?? '', overlapMs);
     incrementMap(summary.languages, duration.language ?? '', overlapMs);
@@ -1837,6 +1899,13 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
 
     const project = duration.project ?? '';
     const language = duration.language ?? '';
+    
+    const projectLower = project.trim().toLowerCase();
+    const languageLower = language.trim().toLowerCase();
+    
+    if (!projectLower || projectLower === 'unknown' || !languageLower || languageLower === 'unknown') {
+      continue;
+    }
     
     if (sampleDurations.length < 3) {
       sampleDurations.push({ project, language, overlapMs });
@@ -1904,6 +1973,13 @@ function summarizeDurationsByHour(durations, startMs, endMs, filters) {
     const overlapEnd = Math.min(duration.endTime, endMs);
     const overlapMs = Math.max(0, overlapEnd - overlapStart);
     if (overlapMs <= 0) {
+      continue;
+    }
+
+    const project = (duration.project ?? '').trim().toLowerCase();
+    const language = (duration.language ?? '').trim().toLowerCase();
+    
+    if (!project || project === 'unknown' || !language || language === 'unknown') {
       continue;
     }
 

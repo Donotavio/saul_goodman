@@ -27,7 +27,14 @@ class DebugTracker {
             if (!config.enableTelemetry) return;
 
             const startTime = Date.now();
-            this.activeSessions.set(session.id, { startTime, type: session.type });
+            const activeEditor = vscode.window.activeTextEditor;
+            const activeFile = activeEditor?.document?.uri?.fsPath;
+            
+            this.activeSessions.set(session.id, { 
+              startTime, 
+              type: session.type,
+              activeFile 
+            });
 
             const heartbeat = this.buildHeartbeat({
               entityType: 'debug_session',
@@ -37,12 +44,13 @@ class DebugTracker {
               isWrite: false,
               metadata: {
                 debugType: session.type || 'unknown',
-                sessionId: session.id.substring(0, 8)
+                sessionId: session.id.substring(0, 8),
+                fileId: activeFile ? anonymizePath(activeFile, salt) : null
               }
             });
 
             this.queue.enqueue(heartbeat);
-            console.log(`[Saul Debug] Session started: ${session.type}`);
+            console.log(`[Saul Debug] Session started: ${session.type}, file: ${activeFile || 'none'}`);
           } catch (error) {
             console.error('[Saul Debug] Start session error:', error);
           }

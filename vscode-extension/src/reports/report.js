@@ -774,8 +774,15 @@
 
     const allLanguages = new Set();
     languagesByProject.forEach(proj => {
-      proj.languages.forEach(lang => allLanguages.add(lang.language));
+      proj.languages.forEach(lang => {
+        const langName = String(lang.language || '').trim().toLowerCase();
+        if (langName && langName !== 'unknown') {
+          allLanguages.add(lang.language);
+        }
+      });
     });
+    
+    console.log('[Saul Report] Filtered languages (removed unknown):', Array.from(allLanguages));
 
     const languageColors = {
       'javascript': '#f7df1e',
@@ -858,9 +865,21 @@
       return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
+    const filteredProjects = languagesByProject.filter(p => {
+      const projectName = String(p.project || '').trim().toLowerCase();
+      return projectName && projectName !== 'unknown';
+    });
+    
+    const projectLabels = filteredProjects.map(p => {
+      const name = p.project.split('/').pop() || p.project;
+      return name.length > 20 ? name.substring(0, 18) + '...' : name;
+    });
+    
+    console.log('[Saul Report] Filtered projects (removed unknown):', projectLabels);
+
     const unknownLanguages = [];
     const datasets = Array.from(allLanguages).map((language, index) => {
-      const data = languagesByProject.map(proj => {
+      const data = filteredProjects.map(proj => {
         const langData = proj.languages.find(l => l.language === language);
         return langData ? langData.minutes : 0;
       });
@@ -878,11 +897,6 @@
         borderColor: '#fff',
         borderWidth: 1
       };
-    });
-
-    const projectLabels = languagesByProject.map(p => {
-      const name = p.project.split('/').pop() || p.project;
-      return name.length > 20 ? name.substring(0, 18) + '...' : name;
     });
 
     console.log('[Saul Report] Project labels:', projectLabels);
@@ -1157,7 +1171,12 @@
       const idEl = document.createElement('span');
       idEl.textContent = String(file?.fileId ?? '');
       const countEl = document.createElement('span');
-      countEl.textContent = `${file?.breakpoints ?? 0} BPs`;
+      const sessions = file?.sessions ?? 0;
+      const breakpoints = file?.breakpoints ?? 0;
+      const parts = [];
+      if (sessions > 0) parts.push(`${sessions} sessões`);
+      if (breakpoints > 0) parts.push(`${breakpoints} BPs`);
+      countEl.textContent = parts.length > 0 ? parts.join(', ') : '0';
       li.appendChild(idEl);
       li.appendChild(countEl);
       list.appendChild(li);

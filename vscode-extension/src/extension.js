@@ -182,6 +182,7 @@ function activate(context) {
     // Register commands immediately
     context.subscriptions.push(
       vscode.commands.registerCommand('saulGoodman.startDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.startDaemon');
         if (!child_process) {
           vscode.window.showWarningMessage('Saul Goodman is still loading...');
           return;
@@ -189,6 +190,7 @@ function activate(context) {
         void prepareDaemonCommand();
       }),
       vscode.commands.registerCommand('saulGoodman.testDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.testDaemon');
         if (!apiClient) {
           vscode.window.showWarningMessage('Saul Goodman is still loading...');
           return;
@@ -196,6 +198,7 @@ function activate(context) {
         void testDaemonHealth();
       }),
       vscode.commands.registerCommand('saulGoodman.openReports', () => {
+        trackingController?.trackOwnCommand('saulGoodman.openReports');
         if (!showReports) {
           vscode.window.showWarningMessage('Saul Goodman is still loading...');
           return;
@@ -359,6 +362,12 @@ class TrackingController {
       }
     } catch (error) {
       console.error('[Saul] Tracker start error:', error);
+    }
+  }
+
+  trackOwnCommand(command) {
+    if (this.extensionTracker && this.config.enableTelemetry) {
+      this.extensionTracker.trackCommand(command, 'donotavio.saul-goodman-vscode');
     }
   }
 
