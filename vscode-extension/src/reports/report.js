@@ -5,6 +5,9 @@
   const disabledEl = document.getElementById('reportsDisabled');
   const contentEl = document.getElementById('reportContent');
 
+  let terminalChart = null;
+  let focusChart = null;
+
   const filterProject = document.getElementById('filterProject');
   const filterLanguage = document.getElementById('filterLanguage');
   const filterMachine = document.getElementById('filterMachine');
@@ -922,8 +925,13 @@
     document.getElementById('telTestRuns').textContent = `${tel.testing?.totalRuns || 0} runs`;
 
     const buildCount = tel.tasks?.byGroup?.build?.count || 0;
-    document.getElementById('telBuilds').textContent = buildCount;
-    document.getElementById('telBuildTime').textContent = formatDurationMs(tel.tasks?.byGroup?.build?.totalDurationMs || 0);
+    const testCount = tel.tasks?.byGroup?.test?.count || 0;
+    const totalTasks = tel.tasks?.totalTasks || 0;
+    document.getElementById('telBuilds').textContent = totalTasks > 0 ? totalTasks : buildCount;
+    const buildTime = tel.tasks?.byGroup?.build?.totalDurationMs || 0;
+    const testTime = tel.tasks?.byGroup?.test?.totalDurationMs || 0;
+    const totalTaskTime = buildTime + testTime;
+    document.getElementById('telBuildTime').textContent = formatDurationMs(totalTaskTime || buildTime);
 
     document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
     document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
@@ -941,6 +949,11 @@
     const emptyEl = document.getElementById('terminalEmpty');
     if (!canvas) return;
 
+    if (terminalChart) {
+      terminalChart.destroy();
+      terminalChart = null;
+    }
+
     const categories = terminal.byCategory || {};
     const labels = Object.keys(categories);
     const data = Object.values(categories);
@@ -954,7 +967,7 @@
     canvas.classList.remove('hidden');
     emptyEl.classList.add('hidden');
 
-    new Chart(canvas, {
+    terminalChart = new Chart(canvas, {
       type: 'bar',
       data: {
         labels,
@@ -983,6 +996,11 @@
     const emptyEl = document.getElementById('focusEmpty');
     if (!canvas) return;
 
+    if (focusChart) {
+      focusChart.destroy();
+      focusChart = null;
+    }
+
     const peakHours = focus.peakHours || [];
 
     if (peakHours.length === 0) {
@@ -999,7 +1017,7 @@
       hourData[hour] = peakHours.length - idx;
     });
 
-    new Chart(canvas, {
+    focusChart = new Chart(canvas, {
       type: 'bar',
       data: {
         labels: Array.from({ length: 24 }, (_, i) => `${i}h`),
@@ -1072,8 +1090,12 @@
 
   function renderTopErrorFiles(files) {
     const list = document.getElementById('topErrorFilesList');
-    if (!list) return;
+    if (!list) {
+      console.warn('[Report] topErrorFilesList element not found');
+      return;
+    }
 
+    console.log('[Report] renderTopErrorFiles called with:', files);
     list.innerHTML = '';
     if (!files || files.length === 0) {
       const li = document.createElement('li');

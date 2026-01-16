@@ -1365,13 +1365,13 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
     }
 
     if (entityType === 'window') {
-      if (hb.entity === 'focus' && metadata.focusDurationMs) {
+      if (hb.entity === 'blur' && metadata.focusDurationMs) {
         telemetry.focus.totalFocusMs += metadata.focusDurationMs;
         telemetry.focus.focusSessions.push({
           durationMs: metadata.focusDurationMs,
           hour: metadata.hourOfDay || 0
         });
-      } else if (hb.entity === 'blur' && metadata.previousBlurDurationMs) {
+      } else if (hb.entity === 'focus' && metadata.previousBlurDurationMs) {
         telemetry.focus.totalBlurMs += metadata.previousBlurDurationMs;
       } else if (hb.entity === 'pomodoro_milestone') {
         telemetry.focus.pomodorosCompleted++;

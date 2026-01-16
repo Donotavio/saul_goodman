@@ -15,40 +15,6 @@ class TestTracker {
     console.log('[Saul Test] Test tracker started');
     this.dispose();
 
-    const salt = getOrCreateHashSalt(this.context);
-
-    this.disposables.push(
-      vscode.tests.onDidChangeTestResults((event) => {
-        const config = this.getConfig();
-        if (!config.enableTelemetry) return;
-
-        event.results.forEach((result) => {
-          const runId = result.run?.id || 'unknown';
-          
-          if (!this.activeRuns.has(runId)) {
-            this.activeRuns.set(runId, {
-              startTime: Date.now(),
-              passed: 0,
-              failed: 0,
-              skipped: 0
-            });
-          }
-
-          const runData = this.activeRuns.get(runId);
-
-          result.results.forEach((testResult) => {
-            if (testResult.state === vscode.TestResultState.Passed) {
-              runData.passed++;
-            } else if (testResult.state === vscode.TestResultState.Failed) {
-              runData.failed++;
-            } else if (testResult.state === vscode.TestResultState.Skipped) {
-              runData.skipped++;
-            }
-          });
-        });
-      })
-    );
-
     if (vscode.window.onDidEndTerminalShellExecution) {
       this.disposables.push(
         vscode.window.onDidEndTerminalShellExecution((event) => {

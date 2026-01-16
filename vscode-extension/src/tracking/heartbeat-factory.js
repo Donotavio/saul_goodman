@@ -13,7 +13,8 @@ function createHeartbeatFactory(context, getConfig) {
   return function buildHeartbeat(payload) {
     const config = getConfig();
     const now = new Date();
-    const entity = sanitizeEntity(payload.entity, config, salt);
+    const entityType = payload.entityType || 'file';
+    const entity = sanitizeEntity(payload.entity, entityType, config, salt);
     const project = sanitizeProject(payload.project, config, salt);
     
     const metadata = {
@@ -28,7 +29,7 @@ function createHeartbeatFactory(context, getConfig) {
     return {
       id: payload.id || createUuid(),
       time: payload.time || now.toISOString(),
-      entityType: payload.entityType || 'file',
+      entityType,
       entity,
       project,
       language: payload.language || '',
@@ -42,12 +43,24 @@ function createHeartbeatFactory(context, getConfig) {
   };
 }
 
-function sanitizeEntity(value, config, salt) {
+function sanitizeEntity(value, entityType, config, salt) {
   const raw = typeof value === 'string' && value.trim().length > 0 ? value.trim() : 'unknown';
-  if (config.hashFilePaths !== false) {
+  if (shouldHashEntity(entityType, config)) {
     return hashValue(raw, salt);
   }
   return truncateLabel(raw);
+}
+
+function shouldHashEntity(entityType, config) {
+  if (config.hashFilePaths === false) {
+    return false;
+  }
+  return (
+    entityType === 'file' ||
+    entityType === 'workspace' ||
+    entityType === 'repository' ||
+    entityType === 'commit'
+  );
 }
 
 function sanitizeProject(value, config, salt) {

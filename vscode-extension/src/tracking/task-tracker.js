@@ -52,33 +52,44 @@ class TaskTracker {
         const execData = this.activeExecutions.get(event.execution);
         if (!execData) return;
 
-        const durationMs = Date.now() - execData.startTime;
-
-        const heartbeat = this.buildHeartbeat({
-          entityType: 'task',
-          entity: 'end',
-          category: 'building',
-          isWrite: false,
-          metadata: {
-            taskName: execData.taskName,
-            taskGroup: execData.taskGroup,
-            durationMs
-          }
-        });
-
-        this.queue.enqueue(heartbeat);
         this.activeExecutions.delete(event.execution);
-        console.log(`[Saul Task] Task ended: ${execData.taskName}, duration: ${durationMs}ms`);
       }),
 
       vscode.tasks.onDidStartTaskProcess((event) => {
         const config = this.getConfig();
         if (!config.enableTelemetry) return;
 
-        const execData = this.activeExecutions.get(event.execution);
-        if (execData) {
-          execData.processId = event.processId;
+        let execData = this.activeExecutions.get(event.execution);
+        if (!execData) {
+          const task = event.execution?.task;
+          const taskName = this.normalizeTaskName(task?.name);
+          const taskGroup = this.getTaskGroup(task ?? { name: taskName });
+
+          execData = {
+            startTime: Date.now(),
+            taskName,
+            taskGroup,
+            processId: event.processId
+          };
+          this.activeExecutions.set(event.execution, execData);
+
+          const startHeartbeat = this.buildHeartbeat({
+            entityType: 'task',
+            entity: 'start',
+            category: 'building',
+            isWrite: false,
+            metadata: {
+              taskName,
+              taskGroup,
+              source: task?.source
+            }
+          });
+          this.queue.enqueue(startHeartbeat);
+          console.log(`[Saul Task] Task started (process): ${taskName} (${taskGroup})`);
+          return;
         }
+
+        execData.processId = event.processId;
       }),
 
       vscode.tasks.onDidEndTaskProcess((event) => {
@@ -105,6 +116,8 @@ class TaskTracker {
 
         this.queue.enqueue(heartbeat);
         console.log(`[Saul Task] Task process ended: ${execData.taskName}, exitCode: ${event.exitCode}`);
+
+        this.activeExecutions.delete(event.execution);
       })
     );
   }
