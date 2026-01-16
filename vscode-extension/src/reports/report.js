@@ -228,8 +228,22 @@
       return;
     }
     
-    console.log('[Saul Report] renderList: rendering', items.length, 'items');
-    items.slice(0, 8).forEach((item, idx) => {
+    const filteredItems = items.filter(item => {
+      const name = String(item?.name ?? '').trim().toLowerCase();
+      return name && name !== 'unknown';
+    });
+    
+    console.log('[Saul Report] renderList: filtered', items.length, 'to', filteredItems.length, 'items (removed unknown/empty)');
+    
+    if (filteredItems.length === 0) {
+      console.log('[Saul Report] renderList: no valid items after filtering');
+      const li = document.createElement('li');
+      li.textContent = i18n.noData || 'No data.';
+      list.appendChild(li);
+      return;
+    }
+    
+    filteredItems.slice(0, 8).forEach((item, idx) => {
       console.log(`[Saul Report] renderList item ${idx}:`, item);
       const li = document.createElement('li');
       const nameEl = document.createElement('span');

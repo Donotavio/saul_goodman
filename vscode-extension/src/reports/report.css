@@ -138,18 +138,21 @@ body {
   align-items: center;
   gap: 4px;
   padding: 12px 20px;
-  background: var(--saul-black);
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 2px solid var(--saul-gold);
   border-radius: 8px;
   min-width: 80px;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .index-label {
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
-  color: #f6f6f6;
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .index-value {
@@ -157,6 +160,7 @@ body {
   font-weight: 800;
   color: #ffe434;
   transition: color 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .index-value.good {
