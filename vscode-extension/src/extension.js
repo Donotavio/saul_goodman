@@ -208,6 +208,26 @@ function activate(context) {
           return;
         }
         showReports(context, readConfig, getReportI18n);
+      }),
+      vscode.commands.registerCommand('saulGoodman.setupPomodoro', async () => {
+        await this.setupPomodoroHelper();
+      }),
+      vscode.commands.registerCommand('saulGoodman.resetCombo', async () => {
+        const answer = await vscode.window.showWarningMessage(
+          'Tem certeza que deseja resetar o combo? Esta ação não pode ser desfeita.',
+          { modal: true },
+          'Sim, Resetar',
+          'Cancelar'
+        );
+
+        if (answer === 'Sim, Resetar') {
+          if (trackingController && trackingController.comboTracker) {
+            await trackingController.comboTracker.resetCombo();
+            await context.globalState.update('sg:combo:state', undefined);
+            vscode.window.showInformationMessage('Combo resetado com sucesso!');
+            console.log('[Saul Combo] Manual reset completed');
+          }
+        }
       })
     );
 
@@ -262,9 +282,7 @@ class TrackingController {
       queue: this.queue,
       buildHeartbeat: this.buildHeartbeat,
       onComboChange: (comboData) => {
-        // Exibir toast
         this.comboToast.show(comboData);
-        // Atualizar status bar
         void this.updateStatusBarWithCombo(comboData);
       }
     });
@@ -360,6 +378,9 @@ class TrackingController {
       // Start combo tracker
       await this.comboTracker.start();
       
+      // Notify user if telemetry is disabled (pomodoro won't work)
+      this.checkPomodoroSetup();
+      
       // Start core trackers with staggered delays to prevent blocking
       setTimeout(() => this.safeStart(() => this.gitTracker.start()), 100);
       setTimeout(() => this.safeStart(() => this.editorMetadataTracker.start()), 200);
@@ -384,15 +405,11 @@ class TrackingController {
   }
 
   async updateStatusBarWithCombo(comboData) {
-    // Atualizar status bar com informação de combo
     const comboSuffix = comboData && comboData.level > 0 
       ? ` | ${localize('combo_status_bar_suffix', { level: comboData.level })}`
       : '';
     
-    // Forçar atualização do status bar
     currentComboSuffix = comboSuffix;
-    
-    // Atualizar status bar imediatamente
     void pollStatus();
   }
   
@@ -400,11 +417,82 @@ class TrackingController {
     return this.comboTracker ? this.comboTracker.getStats() : null;
   }
 
+  checkPomodoroSetup() {
+    if (!this.config.enableTelemetry) {
+      setTimeout(() => {
+        vscode.window.showWarningMessage(
+          '🎯 Pomodoro Combo System desabilitado. Para usar, ative a telemetria nas configurações.',
+          'Ativar Agora',
+          'Mais Tarde'
+        ).then(choice => {
+          if (choice === 'Ativar Agora') {
+            vscode.commands.executeCommand('saulGoodman.setupPomodoro');
+          }
+        });
+      }, 3000);
+    }
+  }
+
+  async setupPomodoroHelper() {
+    const config = vscode.workspace.getConfiguration('saulGoodman');
+    const telemetryEnabled = config.get('enableTelemetry', false);
+    const testModeEnabled = config.get('pomodoroTestMode', false);
+    
+    let message = '🎯 Configuração do Pomodoro Combo System\n\n';
+    
+    if (!telemetryEnabled) {
+      message += '❌ Telemetria: DESABILITADA (pomodoros não funcionarão)\n';
+    } else {
+      message += '✅ Telemetria: ATIVA\n';
+    }
+    
+    if (testModeEnabled) {
+      message += '✅ Test Mode: ATIVO (1 min por pomodoro)\n';
+    } else {
+      message += '⚪ Test Mode: DESATIVO (25 min por pomodoro)\n';
+    }
+    
+    message += '\nO que deseja fazer?';
+    
+    const choices = [];
+    if (!telemetryEnabled) {
+      choices.push('✅ Ativar Telemetria');
+    }
+    if (!testModeEnabled) {
+      choices.push('⚡ Ativar Test Mode (1 min)');
+    }
+    if (!telemetryEnabled || !testModeEnabled) {
+      choices.push('🚀 Ativar Tudo');
+    }
+    choices.push('⚙️ Abrir Settings', 'Cancelar');
+    
+    const choice = await vscode.window.showInformationMessage(message, { modal: true }, ...choices);
+    
+    if (choice === '✅ Ativar Telemetria') {
+      await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage('✅ Telemetria ativada! Recarregue a janela para aplicar.');
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === '⚡ Ativar Test Mode (1 min)') {
+      await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage('✅ Test Mode ativado! Recarregue a janela para aplicar.');
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === '🚀 Ativar Tudo') {
+      await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
+      await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage('✅ Todas as configurações ativadas! Recarregando...');
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === '⚙️ Abrir Settings') {
+      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman');
+    }
+  }
+
   safeStart(startFn) {
     try {
       const result = startFn();
       if (result && typeof result.catch === 'function') {
-        result.catch(err => console.error('[Saul] Tracker start error:', err));
+        result.catch(error => {
+          console.error('[Saul] Tracker start error:', error);
+        });
       }
     } catch (error) {
       console.error('[Saul] Tracker start error:', error);
@@ -591,6 +679,10 @@ function getReportI18n() {
     report_vscode_tel_test_rate: localize('report_vscode_tel_test_rate'),
     report_vscode_tel_builds: localize('report_vscode_tel_builds'),
     report_vscode_tel_pomodoros: localize('report_vscode_tel_pomodoros'),
+    report_vscode_tel_combo: localize('report_vscode_tel_combo'),
+    report_vscode_combo_timeline: localize('report_vscode_combo_timeline'),
+    report_vscode_combo_timeline_subtitle: localize('report_vscode_combo_timeline_subtitle'),
+    report_vscode_combo_timeline_empty: localize('report_vscode_combo_timeline_empty'),
     report_vscode_terminal_commands: localize('report_vscode_terminal_commands'),
     report_vscode_terminal_subtitle: localize('report_vscode_terminal_subtitle'),
     report_vscode_terminal_empty: localize('report_vscode_terminal_empty'),
@@ -632,6 +724,7 @@ function readConfig() {
     enableReportsInVscode: config.get('enableReportsInVscode', true),
     enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     enableTelemetry: config.get('enableTelemetry', false),
+    pomodoroTestMode: config.get('pomodoroTestMode', false),
     telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60),
     telemetryRetentionDays: config.get('telemetryRetentionDays', 30)
   };

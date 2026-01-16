@@ -19,6 +19,16 @@ class FocusTracker {
   }
 
   start() {
+    const config = this.getConfig();
+    console.log('[Saul Focus] Starting with config:', {
+      enableTelemetry: config.enableTelemetry,
+      pomodoroTestMode: config.pomodoroTestMode
+    });
+    
+    if (!config.enableTelemetry) {
+      console.log('[Saul Focus] ⚠️ TELEMETRY DISABLED - Pomodoro checks will NOT run');
+    }
+    
     console.log('[Saul Focus] Focus tracker started');
     this.dispose();
 
@@ -109,13 +119,21 @@ class FocusTracker {
 
     this.pomodoroInterval = setInterval(() => {
       const config = this.getConfig();
-      if (!config.enableTelemetry) return;
+      if (!config.enableTelemetry) {
+        console.log('[Saul Focus] ⚠️ Check skipped - telemetry disabled');
+        return;
+      }
 
       if (this.isFocused && this.lastFocusTime) {
         const focusDurationMs = Date.now() - this.lastFocusTime;
         const focusMinutes = Math.floor(focusDurationMs / 60000);
+        
+        // Modo de teste: 1 minuto | Produção: 25 minutos
+        const pomodoroInterval = config.pomodoroTestMode ? 1 : 25;
+        
+        console.log(`[Saul Focus] ✓ Check: ${focusMinutes} min | interval: ${pomodoroInterval} | testMode: ${config.pomodoroTestMode} | focused: ${this.isFocused}`);
 
-        if (focusMinutes > 0 && focusMinutes % 25 === 0 && focusMinutes !== this.lastPomodoroMinutes) {
+        if (focusMinutes > 0 && focusMinutes % pomodoroInterval === 0 && focusMinutes !== this.lastPomodoroMinutes) {
           this.lastPomodoroMinutes = focusMinutes;
           
           const heartbeat = this.buildHeartbeat({

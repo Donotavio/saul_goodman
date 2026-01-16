@@ -356,6 +356,9 @@
   "command_open_reports": {
     "message": "Saul Goodman: open reports"
   },
+  "command_setup_pomodoro": {
+    "message": "Saul Goodman: setup pomodoro system"
+  },
   "command_start_daemon": {
     "message": "Saul Goodman: prepare SaulDaemon command"
   },

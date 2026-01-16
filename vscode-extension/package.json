@@ -33,6 +33,16 @@
         "command": "saulGoodman.openReports",
         "title": "%command_open_reports%",
         "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.setupPomodoro",
+        "title": "%command_setup_pomodoro%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.resetCombo",
+        "title": "%command_reset_combo%",
+        "category": "Saul Goodman"
       }
     ],
     "configuration": {
@@ -104,6 +114,11 @@
           "type": "boolean",
           "default": false,
           "description": "%config_enable_telemetry_description%"
+        },
+        "saulGoodman.pomodoroTestMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config_pomodoro_test_mode_description%"
         },
         "saulGoodman.telemetrySampleDiagnosticsIntervalSec": {
           "type": "number",

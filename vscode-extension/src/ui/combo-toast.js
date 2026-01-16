@@ -35,7 +35,7 @@ class ComboToast {
       color = '#F59E0B';
       duration = 3500;
       emoji = '🔄';
-    } else if (leveledUp) {
+    } else if (leveledUp || level > 0) {
       // Selecionar mensagem aleatória baseada no nível
       const messageKey = this.selectRandomMessage(level);
       message = this.localize(messageKey);
@@ -44,7 +44,7 @@ class ComboToast {
       duration = this.getDisplayDuration(level);
       emoji = this.getComboEmoji(level);
     } else {
-      // Pomodoro completado mas mesmo nível
+      // Sem combo ativo
       return;
     }
 
@@ -81,8 +81,8 @@ class ComboToast {
   createPanel() {
     this.panel = vscode.window.createWebviewPanel(
       'saulComboToast',
-      'Combo',
-      { viewColumn: vscode.ViewColumn.Active, preserveFocus: true },
+      '🎯 Combo',
+      { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
       {
         enableScripts: true,
         retainContextWhenHidden: true,
@@ -130,8 +130,8 @@ class ComboToast {
       }
     });
 
-    // Revelar panel (mas sem dar foco)
-    this.panel.reveal(vscode.ViewColumn.Active, true);
+    // Revelar panel ao lado (mas sem dar foco)
+    this.panel.reveal(vscode.ViewColumn.Beside, true);
     this.isVisible = true;
   }
 

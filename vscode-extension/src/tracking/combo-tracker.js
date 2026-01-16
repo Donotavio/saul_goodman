@@ -18,6 +18,7 @@ class ComboTracker {
     this.totalCombosToday = 0;
     this.maxComboToday = 0;
     this.lifetimeMaxCombo = 0;
+    this.comboTimeline = []; // Timeline de eventos do combo
     
     // Definição dos níveis de combo
     this.comboLevels = [
@@ -59,6 +60,14 @@ class ComboTracker {
     this.consecutivePomodoros++;
     this.lastPomodoroTime = now;
     this.breakStartTime = null;
+    
+    // Registrar evento na timeline
+    this.comboTimeline.push({
+      timestamp: Date.now(),
+      eventType: 'combo_increase',
+      level: this.currentLevel,
+      pomodoros: this.consecutivePomodoros
+    });
     
     // Calcular nível atual
     const previousLevel = this.currentLevel;
@@ -110,6 +119,15 @@ class ComboTracker {
         this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
         console.log('[Saul Combo] Medium break - combo reduced by 1');
         
+        // Registrar evento na timeline
+        this.comboTimeline.push({
+          timestamp: Date.now(),
+          eventType: 'combo_reduced',
+          level: this.currentLevel,
+          pomodoros: this.consecutivePomodoros,
+          breakDuration
+        });
+        
         await this.sendComboHeartbeat('combo_reduced');
         
         this.onComboChange({
@@ -129,6 +147,16 @@ class ComboTracker {
         
         this.consecutivePomodoros = 0;
         this.currentLevel = 0;
+        
+        // Registrar evento na timeline
+        this.comboTimeline.push({
+          timestamp: Date.now(),
+          eventType: 'combo_reset',
+          level: 0,
+          pomodoros: 0,
+          breakDuration,
+          previousLevel: oldLevel
+        });
         
         await this.sendComboHeartbeat('combo_reset');
         
@@ -197,10 +225,10 @@ class ComboTracker {
       currentLevel: this.currentLevel,
       consecutivePomodoros: this.consecutivePomodoros,
       lastPomodoroTime: this.lastPomodoroTime,
-      breakStartTime: this.breakStartTime,
-      totalCombosToday: this.totalCombosToday,
       maxComboToday: this.maxComboToday,
+      totalCombosToday: this.totalCombosToday,
       lifetimeMaxCombo: this.lifetimeMaxCombo,
+      comboTimeline: this.comboTimeline.slice(-100), // Últimos 100 eventos
       lastSaveDate: new Date().toISOString().slice(0, 10)
     };
     
@@ -220,8 +248,17 @@ class ComboTracker {
       this.totalCombosToday = state.totalCombosToday || 0;
       this.maxComboToday = state.maxComboToday || 0;
       this.lifetimeMaxCombo = state.lifetimeMaxCombo || 0;
+      this.comboTimeline = state.comboTimeline || [];
       
-      console.log('[Saul Combo] State loaded:', state);
+      console.log('[Saul Combo] State loaded:', {
+        currentLevel: this.currentLevel,
+        consecutivePomodoros: this.consecutivePomodoros,
+        maxComboToday: this.maxComboToday,
+        totalCombosToday: this.totalCombosToday,
+        lifetimeMaxCombo: this.lifetimeMaxCombo,
+        timelineEvents: this.comboTimeline.length,
+        lastSaveDate: state.lastSaveDate
+      });
     }
   }
 
@@ -239,6 +276,7 @@ class ComboTracker {
       this.lastPomodoroTime = null;
       this.totalCombosToday = 0;
       this.maxComboToday = 0;
+      this.comboTimeline = []; // Resetar timeline
       // lifetimeMaxCombo persiste
       await this.saveState();
     }
@@ -270,7 +308,8 @@ class ComboTracker {
         totalCombosToday: this.totalCombosToday,
         lifetimeMaxCombo: this.lifetimeMaxCombo,
         totalMinutes: this.consecutivePomodoros * 25,
-        eventType
+        eventType,
+        comboTimeline: this.comboTimeline.slice(-100) // Últimos 100 eventos
       }
     });
 
