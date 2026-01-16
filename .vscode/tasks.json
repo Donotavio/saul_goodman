@@ -16,6 +16,15 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "npm run build && node --input-type=module -e \"import fs from 'fs/promises'; import path from 'path'; import { spawnSync } from 'child_process'; const root = path.join('dist', 'tests'); const exts = ['.test.js', '.spec.js']; const walk = async (dir) => { let out = []; try { for (const ent of await fs.readdir(dir, { withFileTypes: true })) { const p = path.join(dir, ent.name); if (ent.isDirectory()) out = out.concat(await walk(p)); else if (exts.some((ext) => ent.name.endsWith(ext))) out.push(p); } } catch {} return out; }; const files = await walk(root); if (!files.length) { console.log('No compiled tests found'); process.exit(0); } const res = spawnSync(process.execPath, ['--test', ...files], { stdio: 'inherit' }); process.exit(res.status ?? 1);\""
+		},
+		{
+			"type": "npm",
+			"script": "build:vsix",
+			"path": "vscode-extension",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build:vsix - vscode-extension",
+			"detail": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
 		}
 	]
 }

@@ -423,7 +423,7 @@
           <h2 data-i18n="report_vscode_heading">VS Code reports</h2>
           <p data-i18n="report_vscode_subtitle">Tempo e contexto do editor.</p>
         </div>
-        <div id="vscodeReportDisabled" class="empty-state">
+        <div id="vscodeReportDisabled" class="empty-state vscode-report-empty">
           <p data-i18n="report_vscode_disabled">Relatorios do VS Code desativados.</p>
           <button id="openVscodeOptions" class="ghost-button small" data-i18n="report_vscode_disabled_cta">
             Abrir options
@@ -431,19 +431,19 @@
         </div>
         <div id="vscodeReportContent" class="vscode-report-content hidden">
           <div class="vscode-report-filters">
-            <label>
+            <label class="vscode-filter-field">
               <span data-i18n="report_vscode_filter_project">Projeto</span>
               <select id="vscodeFilterProject">
                 <option value="">Todos</option>
               </select>
             </label>
-            <label>
+            <label class="vscode-filter-field">
               <span data-i18n="report_vscode_filter_language">Linguagem</span>
               <select id="vscodeFilterLanguage">
                 <option value="">Todas</option>
               </select>
             </label>
-            <label>
+            <label class="vscode-filter-field">
               <span data-i18n="report_vscode_filter_machine">Maquina</span>
               <select id="vscodeFilterMachine">
                 <option value="">Todas</option>
@@ -460,26 +460,26 @@
           </div>
 
           <div class="vscode-report-grid">
-            <article class="vscode-report-card">
-              <span data-i18n="report_vscode_stat_today">Hoje</span>
-              <strong id="vscodeStatToday">--</strong>
+            <article class="vscode-report-card vscode-report-card--summary">
+              <span class="vscode-card-label" data-i18n="report_vscode_stat_today">Hoje</span>
+              <strong id="vscodeStatToday" class="vscode-card-value">--</strong>
             </article>
           </div>
 
           <div class="vscode-report-grid two-columns">
             <div class="vscode-report-card">
               <h3 data-i18n="report_vscode_projects">Projetos</h3>
-              <ul id="vscodeProjectsList"></ul>
+              <ul id="vscodeProjectsList" class="vscode-report-list"></ul>
             </div>
             <div class="vscode-report-card">
               <h3 data-i18n="report_vscode_languages">Linguagens</h3>
-              <ul id="vscodeLanguagesList"></ul>
+              <ul id="vscodeLanguagesList" class="vscode-report-list"></ul>
             </div>
           </div>
 
           <div class="vscode-report-card">
             <h3 data-i18n="report_vscode_summaries">Summaries</h3>
-            <ul id="vscodeSummariesList"></ul>
+            <ul id="vscodeSummariesList" class="vscode-report-list"></ul>
           </div>
         </div>
         <p id="vscodeReportStatus" class="inline-status hidden"></p>
