@@ -1227,9 +1227,8 @@ function renderReport(metrics: DailyMetrics): void {
   const kpis = calculateKpis(enriched);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
   heroSwitchesEl.textContent = `${enriched.tabSwitches}`;
-  const totalProductive = (enriched.productiveMs ?? 0) + (enriched.vscodeActiveMs ?? 0);
   if (heroProductiveEl) {
-    heroProductiveEl.textContent = formatDuration(totalProductive);
+    heroProductiveEl.textContent = formatDuration(enriched.productiveMs ?? 0);
   }
   if (heroProcrastinationEl) {
     heroProcrastinationEl.textContent = formatDuration(enriched.procrastinationMs ?? 0);
@@ -2958,7 +2957,6 @@ function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void 
 interface EnrichedMetrics extends DailyMetrics {
   domains: Record<string, DomainStats>;
   timeline: TimelineEntry[];
-  productiveMs: number;
 }
 
 function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
@@ -3008,8 +3006,7 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
       : Array.from({ length: 24 }, () => 0),
     domains,
     timeline,
-    hourly,
-    productiveMs: metrics.productiveMs + vscodeMs
+    hourly
   };
 }
 
