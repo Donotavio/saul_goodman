@@ -114,7 +114,9 @@ function registerExtraEventCollectors(options) {
     commandFrequency.clear();
   }, 30 * 60 * 1000);
 
-  disposables.push({ dispose: () => clearInterval(periodicSummaryInterval) });
+  disposables.push({
+    dispose: () => clearInterval(periodicSummaryInterval)
+  });
 
   context.subscriptions.push({ dispose: () => disposables.forEach((item) => item.dispose()) });
   return disposables;

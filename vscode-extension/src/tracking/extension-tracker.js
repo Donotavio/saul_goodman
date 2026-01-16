@@ -26,12 +26,17 @@ class ExtensionTracker {
       })
     );
 
-    const commandSamplerInterval = setInterval(() => {
+    // VSCODE-013: Save interval reference for cleanup
+    this.commandSamplerInterval = setInterval(() => {
       this.flushCommandStats();
     }, 60000);
 
     this.disposables.push({
-      dispose: () => clearInterval(commandSamplerInterval)
+      dispose: () => {
+        if (this.commandSamplerInterval) {
+          clearInterval(this.commandSamplerInterval);
+        }
+      }
     });
 
     this.interceptCommands();
@@ -175,6 +180,11 @@ class ExtensionTracker {
   }
 
   dispose() {
+    // VSCODE-013: Clear command sampler interval
+    if (this.commandSamplerInterval) {
+      clearInterval(this.commandSamplerInterval);
+      this.commandSamplerInterval = null;
+    }
     this.flushCommandStats();
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];

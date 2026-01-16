@@ -12,6 +12,7 @@ class HeartbeatTracker {
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
     this.lastSentByEntity = new Map();
+    this.MAX_CACHE_SIZE = 500; // VSCODE-003: Limit cache size
     this.windowFocused = true;
     this.disposables = [];
   }
@@ -72,6 +73,22 @@ class HeartbeatTracker {
       lastRecord.focusAt = now;
     }
     this.lastSentByEntity.set(entity, lastRecord);
+
+    // VSCODE-003: Prune cache if too large
+    if (this.lastSentByEntity.size > this.MAX_CACHE_SIZE) {
+      const entries = Array.from(this.lastSentByEntity.entries());
+      // Remove oldest 25%
+      const toRemove = entries
+        .sort((a, b) => {
+          const aTime = Math.max(a[1].writeAt, a[1].focusAt);
+          const bTime = Math.max(b[1].writeAt, b[1].focusAt);
+          return aTime - bTime;
+        })
+        .slice(0, Math.floor(this.MAX_CACHE_SIZE * 0.25));
+      
+      toRemove.forEach(([key]) => this.lastSentByEntity.delete(key));
+      console.log(`[Saul Heartbeat] Pruned ${toRemove.length} old cache entries`);
+    }
 
     const workspaceId = getOrCreateWorkspaceId(this.context, workspaceFolder?.uri.fsPath);
     const metadata = {

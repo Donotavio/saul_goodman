@@ -69,6 +69,8 @@ function postWithNodeHttp(url, body, timeout = 5000) {
   return new Promise((resolve, reject) => {
     const isHttps = url.protocol === 'https:';
     const client = isHttps ? https : http;
+    let timer = null; // VSCODE-007: Track timer for cleanup
+    
     const req = client.request(
       {
         method: 'POST',
@@ -78,10 +80,10 @@ function postWithNodeHttp(url, body, timeout = 5000) {
         headers: {
           'content-type': 'application/json',
           'content-length': Buffer.byteLength(body)
-        },
-        timeout
+        }
       },
       (res) => {
+        if (timer) clearTimeout(timer); // VSCODE-007: Clear timer on response
         if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
           resolve();
         } else {
@@ -89,7 +91,16 @@ function postWithNodeHttp(url, body, timeout = 5000) {
         }
       }
     );
-    req.on('error', reject);
+    
+    // VSCODE-007: Manual timeout handling with cleanup
+    timer = setTimeout(() => {
+      req.destroy(new Error('Request timed out'));
+    }, timeout);
+    
+    req.on('error', (err) => {
+      if (timer) clearTimeout(timer); // VSCODE-007: Clear timer on error
+      reject(err);
+    });
     req.write(body);
     req.end();
   });

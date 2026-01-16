@@ -55,9 +55,22 @@ class GitTracker {
   dispose() {
     this.disposables.forEach((item) => item.dispose());
     this.disposables = [];
+    
+    // VSCODE-008: Dispose repository-specific listeners
+    this.repositories.forEach(({ disposables }) => {
+      if (disposables && Array.isArray(disposables)) {
+        disposables.forEach(d => {
+          if (d && typeof d.dispose === 'function') {
+            d.dispose();
+          }
+        });
+      }
+    });
     this.repositories.clear();
+    
     this.repoInitTimestamps.clear();
     this.lastDiffStatsCache.clear();
+    this.processedCommits.clear(); // VSCODE-015: Clear processed commits
   }
 
   getRepoKey(repo) {
@@ -229,9 +242,11 @@ class GitTracker {
     }
     
     this.processedCommits.add(commitKey);
-    if (this.processedCommits.size > 100) {
-      const oldestKeys = Array.from(this.processedCommits).slice(0, 50);
+    // VSCODE-015: More aggressive pruning - max 50 instead of 100
+    if (this.processedCommits.size > 50) {
+      const oldestKeys = Array.from(this.processedCommits).slice(0, 25);
       oldestKeys.forEach(key => this.processedCommits.delete(key));
+      console.log(`[Saul Git] Pruned ${oldestKeys.length} old commit records`);
     }
 
     const branch = repo.state?.HEAD?.name || 'unknown';

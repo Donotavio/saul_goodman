@@ -10,6 +10,7 @@ class FocusTracker {
     this.lastFocusTime = null;
     this.lastBlurTime = null;
     this.isFocused = true;
+    this.pomodoroInterval = null; // VSCODE-001: Save interval reference
   }
 
   start() {
@@ -69,7 +70,8 @@ class FocusTracker {
       })
     );
 
-    const pomodoroCheckInterval = setInterval(() => {
+    // VSCODE-001: Save interval reference directly for proper cleanup
+    this.pomodoroInterval = setInterval(() => {
       const config = this.getConfig();
       if (!config.enableTelemetry) return;
 
@@ -94,13 +96,14 @@ class FocusTracker {
         }
       }
     }, 60000);
-
-    this.disposables.push({
-      dispose: () => clearInterval(pomodoroCheckInterval)
-    });
   }
 
   dispose() {
+    // VSCODE-001: Clear interval directly
+    if (this.pomodoroInterval) {
+      clearInterval(this.pomodoroInterval);
+      this.pomodoroInterval = null;
+    }
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
   }

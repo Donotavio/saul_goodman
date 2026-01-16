@@ -14,20 +14,27 @@ class EditorMetadataTracker {
   start() {
     this.dispose();
     
+    console.log('[Saul Metadata] EditorMetadataTracker started');
+    
     console.log('[Saul Metadata] EditorMetadataTracker started, will send metadata in 2 seconds');
     
-    setTimeout(() => {
+    // VSCODE-010: Save timer references for cleanup
+    this.initialTimer = setTimeout(() => {
       console.log('[Saul Metadata] Sending initial editor metadata...');
       this.sendEditorMetadata();
     }, 2000);
     
-    const interval = setInterval(() => {
+    this.metadataInterval = setInterval(() => {
       console.log('[Saul Metadata] Sending periodic editor metadata...');
       this.sendEditorMetadata();
     }, this.METADATA_INTERVAL_MS);
 
     this.disposables.push({
-      dispose: () => clearInterval(interval)
+      dispose: () => clearInterval(this.metadataInterval)
+    });
+
+    this.disposables.push({
+      dispose: () => clearTimeout(this.initialTimer)
     });
 
     this.disposables.push(
@@ -38,11 +45,6 @@ class EditorMetadataTracker {
         this.sendEditorMetadata();
       })
     );
-  }
-
-  dispose() {
-    this.disposables.forEach((item) => item.dispose());
-    this.disposables = [];
   }
 
   sendEditorMetadata() {
@@ -178,6 +180,20 @@ class EditorMetadataTracker {
       type,
       name
     };
+  }
+
+  // VSCODE-010: Add dispose method
+  dispose() {
+    if (this.metadataInterval) {
+      clearInterval(this.metadataInterval);
+      this.metadataInterval = null;
+    }
+    if (this.initialTimer) {
+      clearTimeout(this.initialTimer);
+      this.initialTimer = null;
+    }
+    this.disposables.forEach((item) => item.dispose());
+    this.disposables = [];
   }
 }
 

@@ -111,6 +111,11 @@ class DiagnosticTracker {
   }
 
   dispose() {
+    // VSCODE-011: Clear sample timer
+    if (this.sampleTimer) {
+      clearInterval(this.sampleTimer);
+      this.sampleTimer = null;
+    }
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
     this.lastSnapshot.clear();

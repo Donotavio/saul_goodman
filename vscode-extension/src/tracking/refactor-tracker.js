@@ -97,7 +97,8 @@ class RefactorTracker {
     });
 
     if (vscode.languages.registerCodeActionsProvider) {
-      const codeActionSampler = setInterval(() => {
+      // VSCODE-012: Save interval reference for cleanup
+      this.codeActionSampler = setInterval(() => {
         const config = this.getConfig();
         if (!config.enableTelemetry) return;
 
@@ -143,6 +144,11 @@ class RefactorTracker {
   }
 
   dispose() {
+    // VSCODE-012: Clear code action sampler
+    if (this.codeActionSampler) {
+      clearInterval(this.codeActionSampler);
+      this.codeActionSampler = null;
+    }
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
   }

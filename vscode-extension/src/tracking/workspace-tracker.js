@@ -16,17 +16,14 @@ class WorkspaceTracker {
   start() {
     this.dispose();
     
-    setTimeout(() => {
+    // VSCODE-010: Save timer references for cleanup
+    this.initialScanTimer = setTimeout(() => {
       this.scanWorkspaces();
     }, 5000);
     
-    const interval = setInterval(() => {
+    this.scanInterval = setInterval(() => {
       this.scanWorkspaces();
     }, this.SCAN_INTERVAL_MS);
-
-    this.disposables.push({
-      dispose: () => clearInterval(interval)
-    });
 
     this.disposables.push(
       vscode.workspace.onDidChangeWorkspaceFolders((event) => {
@@ -37,7 +34,16 @@ class WorkspaceTracker {
   }
 
   dispose() {
-    this.disposables.forEach((item) => item.dispose());
+    // VSCODE-010: Clear timers
+    if (this.scanInterval) {
+      clearInterval(this.scanInterval);
+      this.scanInterval = null;
+    }
+    if (this.initialScanTimer) {
+      clearTimeout(this.initialScanTimer);
+      this.initialScanTimer = null;
+    }
+    this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
     this.workspaceSizes.clear();
   }
