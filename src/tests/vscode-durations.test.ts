@@ -68,15 +68,18 @@ test('buildDurations splits on gaps and group changes', async () => {
   });
 
   assert.equal(durations.length, 3);
+  
   assert.equal(durations[0].startTime, base);
   assert.equal(durations[0].endTime, base + 120_000);
   assert.equal(durations[0].durationMs, 120_000);
+  
   assert.equal(durations[1].startTime, base + 120_000);
-  assert.equal(durations[1].endTime, base + 180_000);
-  assert.equal(durations[1].durationMs, 60_000);
+  assert.equal(durations[1].endTime, base + 150_000);
+  assert.equal(durations[1].durationMs, 30_000);
+  
   assert.equal(durations[2].startTime, base + 8 * 60_000);
-  assert.equal(durations[2].endTime, base + 9 * 60_000);
-  assert.equal(durations[2].durationMs, 60_000);
+  assert.equal(durations[2].endTime, base + 8 * 60_000 + 30_000);
+  assert.equal(durations[2].durationMs, 30_000);
 });
 
 test('buildDurations aggregates metadata per segment', async () => {

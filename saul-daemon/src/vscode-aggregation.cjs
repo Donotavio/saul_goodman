@@ -49,17 +49,25 @@ function buildDurations(heartbeats, options = {}) {
     if (!active || active.groupKey !== groupKey) {
       pushActive();
       active = createDurationSeed(heartbeat, groupKey);
+      active.heartbeatCount = 0;
     } else {
       active.isWrite = active.isWrite || Boolean(heartbeat.isWrite);
       active.metadata = mergeMetadata(active.metadata, heartbeat.metadata);
     }
 
+    active.heartbeatCount++;
+
     const next = ordered[i + 1];
     const hasNext = next && getGroupKey(next) === groupKey;
     const delta = hasNext ? next.time - heartbeat.time : null;
     if (!hasNext || delta === null || delta > gapMs) {
-      const end = heartbeat.time + Math.min(graceMs, gapMs);
-      active.endTime = Math.max(active.endTime, end);
+      if (active.heartbeatCount > 1) {
+        const end = heartbeat.time + Math.min(graceMs, gapMs);
+        active.endTime = Math.max(active.endTime, end);
+      } else {
+        const minDuration = Math.min(30 * 1000, graceMs);
+        active.endTime = Math.max(active.endTime, heartbeat.time + minDuration);
+      }
       pushActive();
       continue;
     }
