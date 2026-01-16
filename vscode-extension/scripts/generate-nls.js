@@ -1,10 +1,7 @@
 #!/usr/bin/env node
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+const fs = require('node:fs/promises');
+const path = require('node:path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const VSCODE_ROOT = path.resolve(__dirname, '..');
 const LOCALES_DIR = path.join(VSCODE_ROOT, '_locales');
 

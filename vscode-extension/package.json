@@ -1,6 +1,5 @@
 {
   "name": "saul-goodman-vscode",
-  "type": "module",
   "displayName": "%vscode_ext_display_name%",
   "description": "%vscode_ext_description%",
   "version": "1.21.13",
