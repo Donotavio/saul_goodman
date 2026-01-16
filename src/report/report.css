@@ -1093,3 +1093,192 @@ main {
     transform: translateY(0);
   }
 }
+
+/* VS Code Telemetry Section */
+.vscode-telemetry-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 3px dashed #111;
+}
+
+.vscode-section-header {
+  margin-bottom: 20px;
+}
+
+.vscode-section-header h2 {
+  font-size: 1.8rem;
+  margin: 0 0 6px 0;
+  color: #1b120a;
+}
+
+.vscode-section-subtitle {
+  font-size: 0.95rem;
+  color: #4b3a21;
+  margin: 0;
+}
+
+.vscode-telemetry-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vscode-kpi-card--telemetry {
+  border: 2px solid #111;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff 0%, #fffdf5 100%);
+  padding: 16px;
+  box-shadow: 3px 3px 0 #e1c03a;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.vscode-kpi-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #111;
+  color: #ffc857;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.vscode-kpi-icon--debug {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.vscode-kpi-icon--tests {
+  background: #10b981;
+  color: #fff;
+}
+
+.vscode-kpi-icon--builds {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.vscode-kpi-icon--pomodoro {
+  background: #d00000;
+  color: #fff;
+}
+
+.vscode-kpi-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4b3a21;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.vscode-kpi-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1b120a;
+  line-height: 1;
+}
+
+.vscode-kpi-detail {
+  font-size: 0.85rem;
+  color: #6b5a3a;
+  font-weight: 600;
+}
+
+.vscode-chart-container {
+  position: relative;
+  min-height: 200px;
+  margin-top: 12px;
+}
+
+.vscode-chart-container--small {
+  min-height: 140px;
+  max-height: 200px;
+}
+
+.vscode-chart-container--small canvas {
+  max-height: 180px !important;
+}
+
+.vscode-chart-container--medium {
+  min-height: 250px;
+}
+
+.vscode-chart-subtitle {
+  font-size: 0.85rem;
+  color: #4b3a21;
+  margin: 4px 0 0 0;
+}
+
+.vscode-editor-info {
+  font-size: 0.9rem;
+}
+
+.vscode-editor-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vscode-editor-info li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.vscode-editor-info li:last-child {
+  border-bottom: none;
+}
+
+.vscode-editor-info span:first-child {
+  font-weight: 600;
+  color: #4b3a21;
+}
+
+.vscode-editor-info span:last-child {
+  font-weight: 700;
+  color: #1b120a;
+}
+
+.vscode-stats-grid-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.vscode-report-card .stat-item,
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 8px;
+}
+
+.vscode-report-card .stat-label,
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b3a21;
+}
+
+.vscode-report-card .stat-value,
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1b120a;
+}

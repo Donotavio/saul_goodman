@@ -1,0 +1,21 @@
+{
+  "vscode_ext_display_name": "索尔·古德曼 VS Code 桥接",
+  "vscode_ext_description": "将VS Code的活动时间发送到本地索尔守护进程，该守护进程由Chrome扩展使用。",
+  "command_start_daemon": "索尔·古德曼：准备索尔守护进程命令",
+  "command_test_daemon": "索尔·古德曼：测试与索尔守护进程的连接",
+  "command_open_reports": "索尔·古德曼：打开报告",
+  "config_enabled_description": "启用向本地索尔守护进程发送活动时间。",
+  "config_enable_tracking_description": "控制向索尔守护进程收集和发送心跳。",
+  "config_enable_reports_description": "在VS Code中显示索尔的报告。",
+  "config_enable_sensitive_telemetry_description": "授权敏感遥测（例如：终端命令）。",
+  "config_api_base_description": "本地索尔守护进程的基础URL。",
+  "config_pairing_key_description": "与Chrome扩展共享的配对密钥。",
+  "config_hash_file_paths_description": "对发送的心跳中的文件路径进行哈希处理。",
+  "config_hash_project_names_description": "在发送到守护进程之前对项目名称进行哈希处理。",
+  "config_heartbeat_interval_description": "发送到索尔守护进程的心跳之间的毫秒间隔。",
+  "config_idle_threshold_description": "在考虑会话不活动之前的最大无活动时间。",
+  "config_language_description": "VS Code扩展的语言（自动使用VS Code的语言）。",
+  "config_enable_telemetry_description": "启用本地生产力指标收集（调试、测试、任务、终端等）。数据不会离开机器。",
+  "config_telemetry_diagnostics_interval_description": "采样文件诊断（错误/警告）的秒数间隔。",
+  "config_telemetry_retention_description": "在自动删除之前保留本地遥测数据的天数。"
+}

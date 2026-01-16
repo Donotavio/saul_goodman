@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "کوڈ کon ہاک لاب سے لیپ جہاں ساؤل ایک بے روزگاری کی فضاء کے طور پر زندگی میں آیا۔"
   },
+  "command_open_reports": {
+    "message": "سول گڈمین: رپورٹس کھولیں"
+  },
+  "command_start_daemon": {
+    "message": "سول گڈمین: سول ڈیمون کے لئے کمانڈ تیار کریں"
+  },
+  "command_test_daemon": {
+    "message": "سول گڈمین: سول ڈیمون کے ساتھ کنکشن ٹیسٹ کریں"
+  },
+  "config_api_base_description": {
+    "message": "سول ڈیمون کی مقامی بیس URL."
+  },
+  "config_enable_reports_description": {
+    "message": "VS Code میں سول کی رپورٹ دکھاتا ہے."
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "حساس ٹیلی میٹری کی اجازت دیتا ہے (جیسے: ٹرمینل کے کمانڈ)."
+  },
+  "config_enable_telemetry_description": {
+    "message": "مقامی پیداوری کے میٹرکس جمع کرنے کی اجازت دیتا ہے (ڈیبگنگ، ٹیسٹ، ٹاسک، ٹرمینل، وغیرہ). ڈیٹا کبھی بھی مشین سے باہر نہیں جاتا."
+  },
+  "config_enable_tracking_description": {
+    "message": "سول ڈیمون کے لئے ہارٹ بیٹس جمع کرنے اور بھیجنے کو کنٹرول کرتا ہے."
+  },
+  "config_enabled_description": {
+    "message": "سول ڈیمون کے لئے فعال وقت بھیجنے کی اجازت دیتا ہے."
+  },
+  "config_hash_file_paths_description": {
+    "message": "ہارٹ بیٹس میں بھیجے گئے فائلوں کے راستوں کا ہیش بناتا ہے."
+  },
+  "config_hash_project_names_description": {
+    "message": "ڈیمون کو بھیجنے سے پہلے پروجیکٹ کے ناموں کا ہیش بناتا ہے."
+  },
+  "config_heartbeat_interval_description": {
+    "message": "سول ڈیمون کو بھیجے گئے ہارٹ بیٹس کے درمیان ملی سیکنڈز میں وقفہ."
+  },
+  "config_idle_threshold_description": {
+    "message": "غیر فعال سمجھے جانے سے پہلے زیادہ سے زیادہ غیر فعالیت کا وقت."
+  },
+  "config_language_description": {
+    "message": "VS Code کی توسیع کی زبان (خودکار طور پر VS Code کی زبان استعمال کرتا ہے)."
+  },
+  "config_pairing_key_description": {
+    "message": "کروم توسیع کے ساتھ مشترکہ پیئرنگ کی."
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ."
+  },
+  "config_telemetry_retention_description": {
+    "message": "مقامی ٹیلی میٹری کے ڈیٹا کو خود بخود حذف کرنے سے پہلے رکھنے کے دنوں کی تعداد."
+  },
   "demoCta": {
     "message": "مکمل جمہوریہ دیکھیں"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "بندکرو"
+  },
+  "log_heartbeat_failed": {
+    "message": "ہارٹ بیٹ بھیجنے میں ناکامی"
+  },
+  "log_publish_index_failed": {
+    "message": "سول ڈیمون کے لئے انڈیکس شائع کرنے میں ناکامی"
   },
   "manifesto1Body": {
     "message": "آپ کا دن براؤزر کے اندر فیصلہ کیا جاتا ہے۔ کوئی ڈیٹا کمپیوٹر چھوڑ دیتا ہے، عدالت کے حکم سے نہیں۔"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "پوسٹ نہیں ملا."
   },
+  "prepare_key_prompt": {
+    "message": "کروم توسیع میں ترتیب دی گئی ایک ہی کلید استعمال کریں."
+  },
+  "prepare_key_title": {
+    "message": "سول گڈمین: سول ڈیمون کی پیئرنگ کی"
+  },
+  "prepare_missing_daemon": {
+    "message": "پہلا سول-ڈیمون/index.cjs نہیں ملا. ڈیمون شروع کرنے سے پہلے بنیادی ریپوزٹری کھولیں."
+  },
+  "prepare_port_prompt": {
+    "message": "ڈیمون کی مقامی HTTP پورٹ."
+  },
+  "prepare_port_title": {
+    "message": "سول گڈمین: سول ڈیمون کی پورٹ"
+  },
+  "prepare_start_failed": {
+    "message": "سول ڈیمون شروع کرنے میں ناکامی: {error}"
+  },
+  "prepare_started": {
+    "message": "سول ڈیمون پس منظر میں شروع ہوا (پورٹ {port}, کی {key}). لاگ {logFile} میں."
+  },
   "previousPost": {
     "message": "پہلے"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "ساؤل نے تین قدم اُٹھائے ۔"
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "ترتیبات کھولیں"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "کروم توسیع میں ترتیب دی گئی ایک ہی کلید درج کریں."
+  },
+  "prompt_missing_key_title": {
+    "message": "سول گڈمین: ایک پیئرنگ کی ترتیب کریں"
+  },
+  "prompt_missing_key_warning": {
+    "message": "بغیر پیئرنگ کی ہم ہارٹ بیٹس نہیں بھیجیں گے. کیا آپ ابھی ترتیبات کھولنا چاہتے ہیں؟"
   },
   "quakeBody": {
     "message": "اِس سے ظاہر ہوتا ہے کہ اِن میں سے زیادہ‌تر تباہ‌کُن ٹی‌ٹی‌ٹی‌اے ہیں ۔ اِس سلسلے میں ایک مثال پر غور کریں ۔"
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}•{count}مصر"
   },
+  "report_vscode_activity": {
+    "message": "سرگرمی"
+  },
+  "report_vscode_branches": {
+    "message": "گٹ شاخیں"
+  },
+  "report_vscode_commit_activity": {
+    "message": "کمٹ کی سرگرمی"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "جب آپ نے دن بھر کوڈ کمٹ کیا"
+  },
+  "report_vscode_commits_empty": {
+    "message": "آج کوئی کمٹ درج نہیں ہوا."
+  },
+  "report_vscode_cross_empty": {
+    "message": "کراس ریفرنس کے لئے کوئی ڈیٹا نہیں."
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "کراس ریفرنس کے لئے کوئی ڈیٹا نہیں."
+  },
+  "report_vscode_disabled": {
+    "message": "VS Code کی رپورٹس غیر فعال ہیں."
+  },
+  "report_vscode_disabled_cta": {
+    "message": "آپشنز کھولیں"
+  },
+  "report_vscode_editor_info": {
+    "message": "ایڈیٹر کی معلومات"
+  },
+  "report_vscode_error": {
+    "message": "VS Code کی رپورٹس لوڈ کرنے میں ناکامی."
+  },
+  "report_vscode_filter_all": {
+    "message": "سب"
+  },
+  "report_vscode_filter_language": {
+    "message": "زبان"
+  },
+  "report_vscode_filter_machine": {
+    "message": "مشین"
+  },
+  "report_vscode_filter_project": {
+    "message": "پروجیکٹ"
+  },
+  "report_vscode_filters_title": {
+    "message": "فلٹر"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "فوکس کے پیٹرن"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "فوکس کا کوئی ڈیٹا نہیں."
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "دن کے وہ گھنٹے جب زیادہ توجہ مرکوز تھی"
+  },
+  "report_vscode_heading": {
+    "message": "VS Code کی رپورٹس"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "گھڑی کی تقسیم"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "دکھانے کے لئے ابھی کوئی گھڑی کا ڈیٹا نہیں ہے."
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "دن بھر کی سرگرمیوں کی تقسیم"
+  },
+  "report_vscode_index_label": {
+    "message": "انڈیکس"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "فعال توجہ"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "غیر فعال"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "ٹالنا"
+  },
+  "report_vscode_kpi_productive": {
+    "message": "پیداواری"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "ٹیب کی تبدیلیاں"
+  },
+  "report_vscode_languages": {
+    "message": "زبانیں"
+  },
+  "report_vscode_languages_projects": {
+    "message": "زبانیں × پروجیکٹس"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "کراس ریفرنس: آپ نے ہر پروجیکٹ میں کون سی زبانیں استعمال کیں"
+  },
+  "report_vscode_loaded": {
+    "message": "VS Code کے ڈیٹا ہم وقت ساز ہیں."
+  },
+  "report_vscode_loading": {
+    "message": "VS Code کے ڈیٹا لوڈ ہو رہے ہیں..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "ڈیجیٹل شاخ"
+  },
+  "report_vscode_missing_config": {
+    "message": "مقامی بیک اینڈ اور VS Code کی کلید ترتیب دیں."
+  },
+  "report_vscode_projects": {
+    "message": "پروجیکٹس"
+  },
+  "report_vscode_projects_empty": {
+    "message": "دکھانے کے لئے کوئی پروجیکٹ کا ڈیٹا نہیں ہے."
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "ری فیکٹرنگ کی سرگرمی"
+  },
+  "report_vscode_refresh_button": {
+    "message": "ڈیٹا کو تازہ کریں"
+  },
+  "report_vscode_stat_today": {
+    "message": "آج"
+  },
+  "report_vscode_status_loading": {
+    "message": "سول ڈیمون کے ڈیٹا لوڈ ہو رہے ہیں..."
+  },
+  "report_vscode_subtitle": {
+    "message": "ایڈیٹر میں پکڑے گئے وقت اور سیاق و سباق."
+  },
+  "report_vscode_summaries": {
+    "message": "خلاصے"
+  },
+  "report_vscode_tel_builds": {
+    "message": "بلڈز"
+  },
+  "report_vscode_tel_debug": {
+    "message": "ڈیبگ سیشن"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "ڈیبگ سیشن"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "سب سے زیادہ ڈیبگ کردہ فائلیں"
+  },
+  "report_vscode_tel_errors": {
+    "message": "سب سے زیادہ غلطیوں والی فائلیں"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "سب سے زیادہ استعمال ہونے والی توسیعات"
+  },
+  "report_vscode_tel_focus": {
+    "message": "فوکس کے پیٹرن"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "فوکس کا کوئی ڈیٹا نہیں."
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "دن کے وہ گھنٹے جب زیادہ توجہ مرکوز تھی"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "پومودوروس"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "ری فیکٹرنگ کی سرگرمی"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "ٹرمینل کمانڈ"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "کوئی کمانڈ درج نہیں ہوئی."
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "ٹرمینل میں چلائے گئے کمانڈز کی اقسام"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "ٹیسٹ کی شرح"
+  },
+  "report_vscode_tel_tests": {
+    "message": "ٹیسٹ کی شرح"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "ترقی کی تفصیلی میٹرکس (100% مقامی)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "پیداوری & ٹیلی میٹری"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "ٹرمینل کمانڈ"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "کوئی کمانڈ درج نہیں ہوئی."
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "ٹرمینل میں چلائے گئے کمانڈز کی اقسام"
+  },
+  "report_vscode_time_by_project": {
+    "message": "پروجیکٹ کے لحاظ سے وقت"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "آپ نے اپنے وقت کو پروجیکٹس کے درمیان کیسے تقسیم کیا"
+  },
+  "report_vscode_title": {
+    "message": "سول گڈمین · VS Code رپورٹس"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "سب سے زیادہ ڈیبگ کردہ فائلیں"
+  },
+  "report_vscode_top_error_files": {
+    "message": "سب سے زیادہ غلطیوں والی فائلیں"
+  },
+  "report_vscode_top_extensions": {
+    "message": "سب سے زیادہ استعمال ہونے والی توسیعات"
+  },
+  "report_vscode_workspaces": {
+    "message": "ورک اسپیس"
+  },
   "rssCta": {
     "message": "ایس ."
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "بلاگ ریڈار"
   },
+  "status_disabled_text": {
+    "message": "ٹریکنگ بند"
+  },
+  "status_disabled_tooltip": {
+    "message": "ہارٹ بیٹس بھیجنے کے لئے ٹریکنگ فعال کریں"
+  },
+  "status_loading_text": {
+    "message": "سول ڈیمون کی جانچ ہو رہی ہے..."
+  },
+  "status_loading_tooltip": {
+    "message": "سول ڈیمون کی جانچ ہو رہی ہے"
+  },
+  "status_off_text": {
+    "message": "سول ڈیمون بند"
+  },
+  "status_off_tooltip": {
+    "message": "سول ڈیمون دستیاب نہیں"
+  },
+  "status_on_text": {
+    "message": "سول ڈیمون آن{port}"
+  },
+  "status_on_tooltip": {
+    "message": "سول ڈیمون جڑا ہوا"
+  },
+  "status_port_suffix": {
+    "message": "(پورٹ {port})"
+  },
+  "status_today_text": {
+    "message": "آج سول: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "آج کا وقت {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "چورم پر انسٹال کریں"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "آگ پر توپیں"
+  },
+  "test_health_failure": {
+    "message": "سول ڈیمون نے {origin} پر جواب نہیں دیا: {error}"
+  },
+  "test_health_status": {
+    "message": "سول ڈیمون نے {origin} پر حالت {status} کے ساتھ جواب دیا"
+  },
+  "test_health_success": {
+    "message": "سول ڈیمون نے {origin} پر جواب دیا"
   },
   "testimonial1Cite": {
     "message": "— شناخت کنندہ"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "صارفین"
+  },
+  "vscode_ext_description": {
+    "message": "VS Code سے فعال وقت کو سول ڈیمون کے مقامی استعمال کے لئے کروم توسیع کے ذریعے بھیجتا ہے."
+  },
+  "vscode_ext_display_name": {
+    "message": "سول گڈمین VS Code پل"
+  },
+  "vscode_reports_configure": {
+    "message": "ڈیمون کی URL اور پیئرنگ کی ترتیب دیں."
+  },
+  "vscode_reports_disabled": {
+    "message": "رپورٹس غیر فعال ہیں"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "\"VS Code میں رپورٹس فعال کریں\" کی ترتیبات میں فعال کریں تاکہ ڈیٹا دیکھ سکیں."
+  },
+  "vscode_reports_error": {
+    "message": "سول ڈیمون کے ڈیٹا لوڈ کرنے میں غلطی."
+  },
+  "vscode_reports_filter_all": {
+    "message": "سب"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "لگائیں"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "صاف کریں"
+  },
+  "vscode_reports_filter_language": {
+    "message": "زبان"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "مشین"
+  },
+  "vscode_reports_filter_project": {
+    "message": "پروجیکٹ"
+  },
+  "vscode_reports_languages": {
+    "message": "زبانیں"
+  },
+  "vscode_reports_loading": {
+    "message": "سول ڈیمون کے ڈیٹا لوڈ ہو رہے ہیں..."
+  },
+  "vscode_reports_no_data": {
+    "message": "کوئی ڈیٹا نہیں."
+  },
+  "vscode_reports_no_records": {
+    "message": "کوئی ریکارڈ نہیں."
+  },
+  "vscode_reports_projects": {
+    "message": "پروجیکٹس"
+  },
+  "vscode_reports_summaries": {
+    "message": "خلاصے"
+  },
+  "vscode_reports_synced": {
+    "message": "ڈیٹا ہم وقت ساز ہیں."
+  },
+  "vscode_reports_today": {
+    "message": "آج"
   },
   "vscodeCard1Body": {
     "message": "مقامی ڈیمون توسیع کے ساتھ بات چیت کرتا ہے اور ایڈیٹر میں وقت کو پیداواری منٹ کے طور پر ریکارڈ کرتا ہے۔ کچھ بھی لوکل ہوسٹ سے باہر نہیں جاتا، لیکن ٹائمر کبھی نہیں سوتا۔"

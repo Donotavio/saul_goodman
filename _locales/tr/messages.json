@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "KodCon Hack Lab'dan gelen video, Saul'un dikkat çeken bir uzatma olarak hayata geldiği yerdir."
   },
+  "command_open_reports": {
+    "message": "Saul Goodman: raporları aç"
+  },
+  "command_start_daemon": {
+    "message": "Saul Goodman: SaulDaemon komutunu hazırlayın"
+  },
+  "command_test_daemon": {
+    "message": "Saul Goodman: SaulDaemon ile bağlantıyı test et"
+  },
+  "config_api_base_description": {
+    "message": "Yerel SaulDaemon için temel URL."
+  },
+  "config_enable_reports_description": {
+    "message": "VS Code içinde Saul raporunu gösterir."
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "Hassas telemetriyi yetkilendirir (örneğin: terminal komutları)."
+  },
+  "config_enable_telemetry_description": {
+    "message": "Yerel verimlilik ölçümlerinin toplanmasını etkinleştirir (hata ayıklama, testler, görevler, terminal, vb.). Veriler asla makineden çıkmaz."
+  },
+  "config_enable_tracking_description": {
+    "message": "SaulDaemon'a kalp atışlarını toplama ve gönderme kontrol eder."
+  },
+  "config_enabled_description": {
+    "message": "Yerel SaulDaemon'a aktif zaman göndermeyi etkinleştirir."
+  },
+  "config_hash_file_paths_description": {
+    "message": "Kalp atışlarında gönderilen dosya yollarını hashler."
+  },
+  "config_hash_project_names_description": {
+    "message": "Daemon'a göndermeden önce proje isimlerini hashler."
+  },
+  "config_heartbeat_interval_description": {
+    "message": "SaulDaemon'a gönderilen kalp atışları arasındaki milisaniye cinsinden aralık."
+  },
+  "config_idle_threshold_description": {
+    "message": "Oturumun inaktif olarak kabul edilmeden önceki maksimum etkinlik süresi."
+  },
+  "config_language_description": {
+    "message": "VS Code uzantısının dili (oto, VS Code'un dilini kullanır)."
+  },
+  "config_pairing_key_description": {
+    "message": "Chrome uzantısıyla paylaşılan eşleştirme anahtarı."
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden)."
+  },
+  "config_telemetry_retention_description": {
+    "message": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı."
+  },
   "demoCta": {
     "message": "Tam demoyu görüntüle"
   },
@@ -764,6 +815,12 @@
   "lightboxClose": {
     "message": "Close"
   },
+  "log_heartbeat_failed": {
+    "message": "Kalp atışı gönderme başarısız oldu"
+  },
+  "log_publish_index_failed": {
+    "message": "SaulDaemon için indeks yayınlama başarısız oldu"
+  },
   "manifesto1Body": {
     "message": "Güniniz tarayıcının içinde değerlendirilir. Hiçbir veri bilgisayarı terk etmez, mahkeme emriyle bile değil."
   },
@@ -954,7 +1011,7 @@
     "message": "Henüz domain yok."
   },
   "options_domain_filter_hint": {
-    "message": "{threshold} için alan adının bir kısmını aşağıdaki listelerde bulmak için yazın."
+    "message": "Aşağıdaki listelerde bulmak için alan adının bir kısmını yazın."
   },
   "options_domain_filter_label": {
     "message": "Alan adlarını filtrele"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "Post bulunamadı."
   },
+  "prepare_key_prompt": {
+    "message": "Chrome uzantısında ayarlanan aynı anahtarı kullanın."
+  },
+  "prepare_key_title": {
+    "message": "Saul Goodman: SaulDaemon eşleştirme anahtarı"
+  },
+  "prepare_missing_daemon": {
+    "message": "saul-daemon/index.cjs klasörü bulunamadı. Daemon'ı başlatmadan önce kök deposunu açın."
+  },
+  "prepare_port_prompt": {
+    "message": "Daemon'ın yerel HTTP portu."
+  },
+  "prepare_port_title": {
+    "message": "Saul Goodman: SaulDaemon portu"
+  },
+  "prepare_start_failed": {
+    "message": "SaulDaemon başlatılamadı: {error}"
+  },
+  "prepare_started": {
+    "message": "SaulDaemon arka planda başlatıldı (port {port}, anahtar {key}). Günlükler {logFile} içinde."
+  },
   "previousPost": {
     "message": "Önceki"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "Saul üç adımda procrastinasyon kilitler."
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "Ayarları aç"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "Chrome uzantısında ayarlanan aynı anahtarı girin."
+  },
+  "prompt_missing_key_title": {
+    "message": "Saul Goodman: bir eşleştirme anahtarı ayarlayın"
+  },
+  "prompt_missing_key_warning": {
+    "message": "Eşleştirme anahtarı olmadan kalp atışları göndermeyeceğiz. Şimdi ayarları açalım mı?"
   },
   "quakeBody": {
     "message": "Overlay blokları villanın sekmelerini gösterir, cesur bir CTA gösterir ve opsiyonel siren'i patlatabilir. görmezden gelmek imkansız - tam olarak planlandığı gibi."
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}• • •{count}Segmentler"
   },
+  "report_vscode_activity": {
+    "message": "Aktivite"
+  },
+  "report_vscode_branches": {
+    "message": "Git Dalları"
+  },
+  "report_vscode_commit_activity": {
+    "message": "Commit Aktivitesi"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "Gün boyunca kodu ne zaman commit ettiniz"
+  },
+  "report_vscode_commits_empty": {
+    "message": "Bugün kayıtlı hiçbir commit yok."
+  },
+  "report_vscode_cross_empty": {
+    "message": "Çapraz referans için veri yok."
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "Çapraz referans için veri yok."
+  },
+  "report_vscode_disabled": {
+    "message": "VS Code raporları devre dışı."
+  },
+  "report_vscode_disabled_cta": {
+    "message": "Ayarları aç"
+  },
+  "report_vscode_editor_info": {
+    "message": "Editör Bilgisi"
+  },
+  "report_vscode_error": {
+    "message": "VS Code raporları yüklenemedi."
+  },
+  "report_vscode_filter_all": {
+    "message": "Hepsi"
+  },
+  "report_vscode_filter_language": {
+    "message": "Dil"
+  },
+  "report_vscode_filter_machine": {
+    "message": "Makine"
+  },
+  "report_vscode_filter_project": {
+    "message": "Proje"
+  },
+  "report_vscode_filters_title": {
+    "message": "Filtreler"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "Odak Desenleri"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "Odak verisi yok."
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "Günün en yüksek konsantrasyon saatleri"
+  },
+  "report_vscode_heading": {
+    "message": "VS Code Raporları"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "Saatlik Dağılım"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "Gösterilecek saatlik veri yok."
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "Gün boyunca aktivitelerin dağılımı"
+  },
+  "report_vscode_index_label": {
+    "message": "İndeks"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "AKTİF ODAK"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "İNATİF"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "ERTELEME."
+  },
+  "report_vscode_kpi_productive": {
+    "message": "VERİMLİ"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "TAB DEĞİŞİMLERİ"
+  },
+  "report_vscode_languages": {
+    "message": "Diller"
+  },
+  "report_vscode_languages_projects": {
+    "message": "Diller × Projeler"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "Çapraz referans: Hangi dilleri her projede kullandınız"
+  },
+  "report_vscode_loaded": {
+    "message": "VS Code verileri senkronize edildi."
+  },
+  "report_vscode_loading": {
+    "message": "VS Code verileri yükleniyor..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "Dijital Şube"
+  },
+  "report_vscode_missing_config": {
+    "message": "Yerel arka ucu ve VS Code anahtarını yapılandırın."
+  },
+  "report_vscode_projects": {
+    "message": "Projeler"
+  },
+  "report_vscode_projects_empty": {
+    "message": "Gösterilecek proje verisi yok."
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "Refaktörleme Aktivitesi"
+  },
+  "report_vscode_refresh_button": {
+    "message": "Verileri Yenile"
+  },
+  "report_vscode_stat_today": {
+    "message": "Bugün"
+  },
+  "report_vscode_status_loading": {
+    "message": "SaulDaemon verileri yükleniyor..."
+  },
+  "report_vscode_subtitle": {
+    "message": "Editörde yakalanan zaman ve bağlam."
+  },
+  "report_vscode_summaries": {
+    "message": "Özetler"
+  },
+  "report_vscode_tel_builds": {
+    "message": "YAPILAR"
+  },
+  "report_vscode_tel_debug": {
+    "message": "HATA AYIKLAMA OTURUMLARI"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "HATA AYIKLAMA OTURUMLARI"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "En Çok Hata Ayıklanan Dosyalar"
+  },
+  "report_vscode_tel_errors": {
+    "message": "En Çok Hata İçeren Dosyalar"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "En Çok Kullanılan Uzantılar"
+  },
+  "report_vscode_tel_focus": {
+    "message": "Odak Desenleri"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "Odak verisi yok."
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "Günün en yüksek konsantrasyon saatleri"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "POMODOROLAR"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "Refaktörleme Aktivitesi"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "Terminal Komutları"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "Kayıtlı hiçbir komut yok."
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "Terminalde yürütülen komut kategorileri"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "TEST ORANI"
+  },
+  "report_vscode_tel_tests": {
+    "message": "TEST ORANI"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "Geliştirme için ayrıntılı ölçümler (100% yerel)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "Verimlilik & Telemetri"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "Terminal Komutları"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "Kayıtlı hiçbir komut yok."
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "Terminalde yürütülen komut kategorileri"
+  },
+  "report_vscode_time_by_project": {
+    "message": "Proje Başına Zaman"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "Zamanınızı projeler arasında nasıl dağıttınız"
+  },
+  "report_vscode_title": {
+    "message": "Saul Goodman · VS Code Raporları"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "En Çok Hata Ayıklanan Dosyalar"
+  },
+  "report_vscode_top_error_files": {
+    "message": "En Çok Hata İçeren Dosyalar"
+  },
+  "report_vscode_top_extensions": {
+    "message": "En Çok Kullanılan Uzantılar"
+  },
+  "report_vscode_workspaces": {
+    "message": "Çalışma Alanları"
+  },
   "rssCta": {
     "message": "RSS ile abone olun"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "Blog radarı"
   },
+  "status_disabled_text": {
+    "message": "Takip kapalı"
+  },
+  "status_disabled_tooltip": {
+    "message": "Kalp atışlarını göndermek için takibi etkinleştirin"
+  },
+  "status_loading_text": {
+    "message": "SaulDaemon kontrol ediliyor..."
+  },
+  "status_loading_tooltip": {
+    "message": "SaulDaemon kontrol ediliyor"
+  },
+  "status_off_text": {
+    "message": "SaulDaemon KAPALI"
+  },
+  "status_off_tooltip": {
+    "message": "SaulDaemon mevcut değil"
+  },
+  "status_on_text": {
+    "message": "SaulDaemon AÇIK{port}"
+  },
+  "status_on_tooltip": {
+    "message": "SaulDaemon bağlı"
+  },
+  "status_port_suffix": {
+    "message": "(port {port})"
+  },
+  "status_today_text": {
+    "message": "Saul bugün: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "Bugün süre {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "Chrome üzerinde yükleme"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "Topics on fire"
+  },
+  "test_health_failure": {
+    "message": "SaulDaemon {origin} adresinde yanıt vermedi: {error}"
+  },
+  "test_health_status": {
+    "message": "SaulDaemon {origin} adresinde {status} durumu ile yanıt verdi"
+  },
+  "test_health_success": {
+    "message": "SaulDaemon {origin} adresinde yanıt verdi"
   },
   "testimonial1Cite": {
     "message": "- Anonim müşteri"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "Kullanıcılar"
+  },
+  "vscode_ext_description": {
+    "message": "VS Code'un aktif zamanını Chrome uzantısı tarafından kullanılan yerel SaulDaemon'a gönderir."
+  },
+  "vscode_ext_display_name": {
+    "message": "Saul Goodman VS Code Köprüsü"
+  },
+  "vscode_reports_configure": {
+    "message": "Daemon URL'sini ve eşleştirme anahtarını yapılandırın."
+  },
+  "vscode_reports_disabled": {
+    "message": "Raporlar devre dışı"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Verileri görüntülemek için ayarlarda \"VS Code'da Raporları Etkinleştir\" seçeneğini etkinleştirin."
+  },
+  "vscode_reports_error": {
+    "message": "SaulDaemon verileri yüklenirken hata oluştu."
+  },
+  "vscode_reports_filter_all": {
+    "message": "Hepsi"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Uygula"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Temizle"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Dil"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Makine"
+  },
+  "vscode_reports_filter_project": {
+    "message": "Proje"
+  },
+  "vscode_reports_languages": {
+    "message": "Diller"
+  },
+  "vscode_reports_loading": {
+    "message": "SaulDaemon verileri yükleniyor..."
+  },
+  "vscode_reports_no_data": {
+    "message": "Veri yok."
+  },
+  "vscode_reports_no_records": {
+    "message": "Kayıt yok."
+  },
+  "vscode_reports_projects": {
+    "message": "Projeler"
+  },
+  "vscode_reports_summaries": {
+    "message": "Özetler"
+  },
+  "vscode_reports_synced": {
+    "message": "Veriler senkronize edildi."
+  },
+  "vscode_reports_today": {
+    "message": "Bugün"
   },
   "vscodeCard1Body": {
     "message": "O daemon yerel olarak uzantıyla iletişim kurar ve editördeki zamanı üretken dakikalar olarak kaydeder. Hiçbir şey localhost'tan çıkmaz, ama zamanlayıcı asla uyumaz."

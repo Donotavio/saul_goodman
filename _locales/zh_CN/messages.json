@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "从代码Con Hack实验室的剪辑 索尔作为干扰的扩展而复活"
   },
+  "command_open_reports": {
+    "message": "索尔·古德曼：打开报告"
+  },
+  "command_start_daemon": {
+    "message": "索尔·古德曼：准备索尔守护进程命令"
+  },
+  "command_test_daemon": {
+    "message": "索尔·古德曼：测试与索尔守护进程的连接"
+  },
+  "config_api_base_description": {
+    "message": "本地索尔守护进程的基础URL。"
+  },
+  "config_enable_reports_description": {
+    "message": "在VS Code中显示索尔的报告。"
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "授权敏感遥测（例如：终端命令）。"
+  },
+  "config_enable_telemetry_description": {
+    "message": "启用本地生产力指标收集（调试、测试、任务、终端等）。数据不会离开机器。"
+  },
+  "config_enable_tracking_description": {
+    "message": "控制向索尔守护进程收集和发送心跳。"
+  },
+  "config_enabled_description": {
+    "message": "启用向本地索尔守护进程发送活动时间。"
+  },
+  "config_hash_file_paths_description": {
+    "message": "对发送的心跳中的文件路径进行哈希处理。"
+  },
+  "config_hash_project_names_description": {
+    "message": "在发送到守护进程之前对项目名称进行哈希处理。"
+  },
+  "config_heartbeat_interval_description": {
+    "message": "发送到索尔守护进程的心跳之间的毫秒间隔。"
+  },
+  "config_idle_threshold_description": {
+    "message": "在考虑会话不活动之前的最大无活动时间。"
+  },
+  "config_language_description": {
+    "message": "VS Code扩展的语言（自动使用VS Code的语言）。"
+  },
+  "config_pairing_key_description": {
+    "message": "与Chrome扩展共享的配对密钥。"
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "采样文件诊断（错误/警告）的秒数间隔。"
+  },
+  "config_telemetry_retention_description": {
+    "message": "在自动删除之前保留本地遥测数据的天数。"
+  },
   "demoCta": {
     "message": "查看全部演示"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "关闭"
+  },
+  "log_heartbeat_failed": {
+    "message": "发送心跳失败"
+  },
+  "log_publish_index_failed": {
+    "message": "发布索引到索尔守护进程失败"
   },
   "manifesto1Body": {
     "message": "浏览器里会判断你的一天 没有数据离开计算机,甚至没有法院的命令。"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "未找到邮箱 。"
   },
+  "prepare_key_prompt": {
+    "message": "使用在Chrome扩展中配置的相同密钥。"
+  },
+  "prepare_key_title": {
+    "message": "索尔·古德曼：索尔守护进程的配对密钥"
+  },
+  "prepare_missing_daemon": {
+    "message": "未找到文件夹 saul-daemon/index.cjs。在启动守护进程之前打开根存储库。"
+  },
+  "prepare_port_prompt": {
+    "message": "守护进程的本地HTTP端口。"
+  },
+  "prepare_port_title": {
+    "message": "索尔·古德曼：索尔守护进程的端口"
+  },
+  "prepare_start_failed": {
+    "message": "启动索尔守护进程失败：{error}"
+  },
+  "prepare_started": {
+    "message": "索尔守护进程在后台启动（端口 {port}，密钥 {key}）。日志在 {logFile}。"
+  },
   "previousPost": {
     "message": "上一个"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "索尔三步锁延."
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "打开设置"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "输入在Chrome扩展中配置的相同密钥。"
+  },
+  "prompt_missing_key_title": {
+    "message": "索尔·古德曼：配置配对密钥"
+  },
+  "prompt_missing_key_warning": {
+    "message": "没有配对密钥我们将无法发送心跳。现在打开设置吗？"
   },
   "quakeBody": {
     "message": "覆盖的块反面标签, 显示一个粗体的 CTA, 可以爆出可选的警笛。 不可能忽视——完全按计划。"
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}• 支助{count}段数"
   },
+  "report_vscode_activity": {
+    "message": "活动"
+  },
+  "report_vscode_branches": {
+    "message": "Git 分支"
+  },
+  "report_vscode_commit_activity": {
+    "message": "提交活动"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "您在一天中提交代码的时间"
+  },
+  "report_vscode_commits_empty": {
+    "message": "今天没有记录提交。"
+  },
+  "report_vscode_cross_empty": {
+    "message": "没有交叉引用数据。"
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "没有交叉引用数据。"
+  },
+  "report_vscode_disabled": {
+    "message": "VS Code报告已禁用。"
+  },
+  "report_vscode_disabled_cta": {
+    "message": "打开选项"
+  },
+  "report_vscode_editor_info": {
+    "message": "编辑器信息"
+  },
+  "report_vscode_error": {
+    "message": "无法加载VS Code报告。"
+  },
+  "report_vscode_filter_all": {
+    "message": "所有"
+  },
+  "report_vscode_filter_language": {
+    "message": "语言"
+  },
+  "report_vscode_filter_machine": {
+    "message": "机器"
+  },
+  "report_vscode_filter_project": {
+    "message": "项目"
+  },
+  "report_vscode_filters_title": {
+    "message": "过滤器"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "专注模式"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "没有专注数据。"
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "一天中集中注意力的小时"
+  },
+  "report_vscode_heading": {
+    "message": "VS Code报告"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "小时分布"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "尚无可显示的小时数据。"
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "一天中活动的分布"
+  },
+  "report_vscode_index_label": {
+    "message": "索引"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "活跃专注"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "不活跃"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "拖延"
+  },
+  "report_vscode_kpi_productive": {
+    "message": "高效"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "标签切换"
+  },
+  "report_vscode_languages": {
+    "message": "语言"
+  },
+  "report_vscode_languages_projects": {
+    "message": "语言 × 项目"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "交叉引用：您在每个项目中使用的语言"
+  },
+  "report_vscode_loaded": {
+    "message": "VS Code数据已同步。"
+  },
+  "report_vscode_loading": {
+    "message": "正在加载VS Code数据..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "数字分支"
+  },
+  "report_vscode_missing_config": {
+    "message": "配置本地后端和VS Code密钥。"
+  },
+  "report_vscode_projects": {
+    "message": "项目"
+  },
+  "report_vscode_projects_empty": {
+    "message": "没有项目数据可显示。"
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "重构活动"
+  },
+  "report_vscode_refresh_button": {
+    "message": "刷新数据"
+  },
+  "report_vscode_stat_today": {
+    "message": "今天"
+  },
+  "report_vscode_status_loading": {
+    "message": "正在加载索尔守护进程数据..."
+  },
+  "report_vscode_subtitle": {
+    "message": "在编辑器中捕获的时间和上下文。"
+  },
+  "report_vscode_summaries": {
+    "message": "摘要"
+  },
+  "report_vscode_tel_builds": {
+    "message": "构建"
+  },
+  "report_vscode_tel_debug": {
+    "message": "调试会话"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "调试会话"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "调试最多的文件"
+  },
+  "report_vscode_tel_errors": {
+    "message": "错误最多的文件"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "使用最多的扩展"
+  },
+  "report_vscode_tel_focus": {
+    "message": "专注模式"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "没有专注数据。"
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "一天中集中注意力的小时"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "番茄钟"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "重构活动"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "终端命令"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "没有记录命令。"
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "在终端中执行的命令类别"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "测试率"
+  },
+  "report_vscode_tel_tests": {
+    "message": "测试率"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "详细的开发指标（100% 本地）"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "生产力与遥测"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "终端命令"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "没有记录命令。"
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "在终端中执行的命令类别"
+  },
+  "report_vscode_time_by_project": {
+    "message": "按项目分配的时间"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "您在项目之间分配的时间"
+  },
+  "report_vscode_title": {
+    "message": "索尔·古德曼 · VS Code 报告"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "调试最多的文件"
+  },
+  "report_vscode_top_error_files": {
+    "message": "错误最多的文件"
+  },
+  "report_vscode_top_extensions": {
+    "message": "使用最多的扩展"
+  },
+  "report_vscode_workspaces": {
+    "message": "工作区"
+  },
   "rssCta": {
     "message": "通过 RSS 订阅"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "博客雷达"
   },
+  "status_disabled_text": {
+    "message": "跟踪关闭"
+  },
+  "status_disabled_tooltip": {
+    "message": "启用跟踪以发送心跳"
+  },
+  "status_loading_text": {
+    "message": "检查索尔守护进程..."
+  },
+  "status_loading_tooltip": {
+    "message": "检查索尔守护进程"
+  },
+  "status_off_text": {
+    "message": "索尔守护进程关闭"
+  },
+  "status_off_tooltip": {
+    "message": "索尔守护进程不可用"
+  },
+  "status_on_text": {
+    "message": "索尔守护进程开启{port}"
+  },
+  "status_on_tooltip": {
+    "message": "索尔守护进程已连接"
+  },
+  "status_port_suffix": {
+    "message": "（端口 {port}）"
+  },
+  "status_today_text": {
+    "message": "今天的索尔：{time}"
+  },
+  "status_today_tooltip": {
+    "message": "今天的时间 {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "在 Chrome 上安装"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "题材着火"
+  },
+  "test_health_failure": {
+    "message": "索尔守护进程未在 {origin} 响应：{error}"
+  },
+  "test_health_status": {
+    "message": "索尔守护进程在 {origin} 的状态为 {status}"
+  },
+  "test_health_success": {
+    "message": "索尔守护进程在 {origin} 响应"
   },
   "testimonial1Cite": {
     "message": "—匿名客户端."
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "用户"
+  },
+  "vscode_ext_description": {
+    "message": "将VS Code的活动时间发送到本地索尔守护进程，该守护进程由Chrome扩展使用。"
+  },
+  "vscode_ext_display_name": {
+    "message": "索尔·古德曼 VS Code 桥接"
+  },
+  "vscode_reports_configure": {
+    "message": "配置守护进程的URL和配对密钥。"
+  },
+  "vscode_reports_disabled": {
+    "message": "报告已禁用"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "在设置中启用“在VS Code中启用报告”以查看数据。"
+  },
+  "vscode_reports_error": {
+    "message": "加载索尔守护进程数据时出错。"
+  },
+  "vscode_reports_filter_all": {
+    "message": "所有"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "应用"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "清除"
+  },
+  "vscode_reports_filter_language": {
+    "message": "语言"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "机器"
+  },
+  "vscode_reports_filter_project": {
+    "message": "项目"
+  },
+  "vscode_reports_languages": {
+    "message": "语言"
+  },
+  "vscode_reports_loading": {
+    "message": "正在加载索尔守护进程数据..."
+  },
+  "vscode_reports_no_data": {
+    "message": "没有数据。"
+  },
+  "vscode_reports_no_records": {
+    "message": "没有记录。"
+  },
+  "vscode_reports_projects": {
+    "message": "项目"
+  },
+  "vscode_reports_summaries": {
+    "message": "摘要"
+  },
+  "vscode_reports_synced": {
+    "message": "数据已同步。"
+  },
+  "vscode_reports_today": {
+    "message": "今天"
   },
   "vscodeCard1Body": {
     "message": "本地守护进程与扩展进行通信，并将时间记录为编辑器中的有效分钟。没有任何数据离开本地主机，但计时器从不休眠。"

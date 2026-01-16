@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "Клип из Лаборатории взлома CodeCon, где Сол ожил как отвлекающее расширение."
   },
+  "command_open_reports": {
+    "message": "Саул Гудман: открыть отчеты"
+  },
+  "command_start_daemon": {
+    "message": "Саул Гудман: подготовить команду SaulDaemon"
+  },
+  "command_test_daemon": {
+    "message": "Саул Гудман: протестировать соединение с SaulDaemon"
+  },
+  "config_api_base_description": {
+    "message": "Базовый URL локального SaulDaemon."
+  },
+  "config_enable_reports_description": {
+    "message": "Отображает отчет о Сауле внутри VS Code."
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "Разрешает чувствительную телеметрию (например, команды терминала)."
+  },
+  "config_enable_telemetry_description": {
+    "message": "Включает сбор локальных метрик производительности (отладка, тесты, задачи, терминал и т. д.). Данные никогда не покидают машину."
+  },
+  "config_enable_tracking_description": {
+    "message": "Контролирует сбор и отправку heartbeats в SaulDaemon."
+  },
+  "config_enabled_description": {
+    "message": "Включает отправку активного времени в локальный SaulDaemon."
+  },
+  "config_hash_file_paths_description": {
+    "message": "Создает хэш путей файлов, отправленных в heartbeats."
+  },
+  "config_hash_project_names_description": {
+    "message": "Создает хэш имен проектов перед отправкой в демон."
+  },
+  "config_heartbeat_interval_description": {
+    "message": "Интервал в миллисекундах между отправленными heartbeats в SaulDaemon."
+  },
+  "config_idle_threshold_description": {
+    "message": "Максимальное время без активности перед тем, как считать сессию неактивной."
+  },
+  "config_language_description": {
+    "message": "Язык расширения VS Code (авто использует язык VS Code)."
+  },
+  "config_pairing_key_description": {
+    "message": "Ключ сопряжения, общий с расширением Chrome."
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "Интервал в секундах для выборки диагностики (ошибки/предупреждения) файлов."
+  },
+  "config_telemetry_retention_description": {
+    "message": "Количество дней для хранения локальных данных телеметрии перед автоматическим удалением."
+  },
   "demoCta": {
     "message": "Смотреть полное демо"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "Закрыть"
+  },
+  "log_heartbeat_failed": {
+    "message": "Не удалось отправить heartbeat"
+  },
+  "log_publish_index_failed": {
+    "message": "Не удалось опубликовать индекс для SaulDaemon"
   },
   "manifesto1Body": {
     "message": "Ваш день оценивается внутри браузера. Никакие данные не покидают компьютер, даже по решению суда."
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "Пост не найден."
   },
+  "prepare_key_prompt": {
+    "message": "Используйте тот же ключ, который настроен в расширении Chrome."
+  },
+  "prepare_key_title": {
+    "message": "Саул Гудман: ключ сопряжения SaulDaemon"
+  },
+  "prepare_missing_daemon": {
+    "message": "Папка saul-daemon/index.cjs не найдена. Откройте корневой репозиторий перед запуском демона."
+  },
+  "prepare_port_prompt": {
+    "message": "Локальный HTTP порт демона."
+  },
+  "prepare_port_title": {
+    "message": "Саул Гудман: порт SaulDaemon"
+  },
+  "prepare_start_failed": {
+    "message": "Не удалось запустить SaulDaemon: {error}"
+  },
+  "prepare_started": {
+    "message": "SaulDaemon запущен в фоновом режиме (порт {port}, ключ {key}). Логи в {logFile}."
+  },
   "previousPost": {
     "message": "Предыдущий"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "Саул запирает прокрастинацию в три шага."
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "Открыть настройки"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "Введите тот же ключ, который настроен в расширении Chrome."
+  },
+  "prompt_missing_key_title": {
+    "message": "Саул Гудман: настройте ключ сопряжения"
+  },
+  "prompt_missing_key_warning": {
+    "message": "Без ключа сопряжения мы не будем отправлять heartbeats. Открыть настройки сейчас?"
   },
   "quakeBody": {
     "message": "Наложение блокирует вкладки злодея, показывает смелый CTA и может взорвать дополнительную сирену. Невозможно игнорировать — именно так, как планировалось."
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}•{count}сегменты"
   },
+  "report_vscode_activity": {
+    "message": "Активность"
+  },
+  "report_vscode_branches": {
+    "message": "Git ветки"
+  },
+  "report_vscode_commit_activity": {
+    "message": "Активность коммитов"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "Когда вы коммитили код в течение дня"
+  },
+  "report_vscode_commits_empty": {
+    "message": "Сегодня не зарегистрировано ни одного коммита."
+  },
+  "report_vscode_cross_empty": {
+    "message": "Нет данных для перекрестной ссылки."
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "Нет данных для перекрестной ссылки."
+  },
+  "report_vscode_disabled": {
+    "message": "Отчеты VS Code отключены."
+  },
+  "report_vscode_disabled_cta": {
+    "message": "Открыть настройки"
+  },
+  "report_vscode_editor_info": {
+    "message": "Информация об редакторе"
+  },
+  "report_vscode_error": {
+    "message": "Не удалось загрузить отчеты VS Code."
+  },
+  "report_vscode_filter_all": {
+    "message": "Все"
+  },
+  "report_vscode_filter_language": {
+    "message": "Язык"
+  },
+  "report_vscode_filter_machine": {
+    "message": "Машина"
+  },
+  "report_vscode_filter_project": {
+    "message": "Проект"
+  },
+  "report_vscode_filters_title": {
+    "message": "Фильтры"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "Шаблоны фокуса"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "Нет данных о фокусе."
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "Часы дня с наибольшей концентрацией"
+  },
+  "report_vscode_heading": {
+    "message": "Отчеты VS Code"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "Часовое распределение"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "Пока нет часовых данных для отображения."
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "Распределение активности в течение дня"
+  },
+  "report_vscode_index_label": {
+    "message": "Индекс"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "АКТИВНЫЙ ФОКУС"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "НЕАКТИВНЫЙ"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "ПРОКРАСТ."
+  },
+  "report_vscode_kpi_productive": {
+    "message": "ПРОДУКТИВНЫЙ"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК"
+  },
+  "report_vscode_languages": {
+    "message": "Языки"
+  },
+  "report_vscode_languages_projects": {
+    "message": "Языки × Проекты"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "Перекрестная ссылка: какие языки вы использовали в каждом проекте"
+  },
+  "report_vscode_loaded": {
+    "message": "Данные VS Code синхронизированы."
+  },
+  "report_vscode_loading": {
+    "message": "Загрузка данных из VS Code..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "Цифровая филиал"
+  },
+  "report_vscode_missing_config": {
+    "message": "Настройте локальный бэкенд и ключ VS Code."
+  },
+  "report_vscode_projects": {
+    "message": "Проекты"
+  },
+  "report_vscode_projects_empty": {
+    "message": "Нет данных о проекте для отображения."
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "Активность рефакторинга"
+  },
+  "report_vscode_refresh_button": {
+    "message": "Обновить данные"
+  },
+  "report_vscode_stat_today": {
+    "message": "Сегодня"
+  },
+  "report_vscode_status_loading": {
+    "message": "Загрузка данных из SaulDaemon..."
+  },
+  "report_vscode_subtitle": {
+    "message": "Время и контекст, зафиксированные в редакторе."
+  },
+  "report_vscode_summaries": {
+    "message": "Сводки"
+  },
+  "report_vscode_tel_builds": {
+    "message": "СБОРКИ"
+  },
+  "report_vscode_tel_debug": {
+    "message": "ОТЛАДОЧНЫЕ СЕССИИ"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "ОТЛАДОЧНЫЕ СЕССИИ"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "Наиболее отлаживаемые файлы"
+  },
+  "report_vscode_tel_errors": {
+    "message": "Файлы с наибольшим количеством ошибок"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "Топ используемых расширений"
+  },
+  "report_vscode_tel_focus": {
+    "message": "Шаблоны фокуса"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "Нет данных о фокусе."
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "Часы дня с наибольшей концентрацией"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "ПОМОДОРОС"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "Активность рефакторинга"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "Команды терминала"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "Не зарегистрировано ни одной команды."
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "Категории команд, выполненных в терминале"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "КУРС ТЕСТОВ"
+  },
+  "report_vscode_tel_tests": {
+    "message": "КУРС ТЕСТОВ"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "Подробные метрики разработки (100% локально)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "Производительность и телеметрия"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "Команды терминала"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "Не зарегистрировано ни одной команды."
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "Категории команд, выполненных в терминале"
+  },
+  "report_vscode_time_by_project": {
+    "message": "Время по проекту"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "Как вы распределили свое время между проектами"
+  },
+  "report_vscode_title": {
+    "message": "Саул Гудман · Отчеты VS Code"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "Наиболее отлаживаемые файлы"
+  },
+  "report_vscode_top_error_files": {
+    "message": "Файлы с наибольшим количеством ошибок"
+  },
+  "report_vscode_top_extensions": {
+    "message": "Топ используемых расширений"
+  },
+  "report_vscode_workspaces": {
+    "message": "Рабочие пространства"
+  },
   "rssCta": {
     "message": "Подписаться на RSS"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "Блог радар"
   },
+  "status_disabled_text": {
+    "message": "Отслеживание отключено"
+  },
+  "status_disabled_tooltip": {
+    "message": "Активируйте отслеживание, чтобы отправлять heartbeats"
+  },
+  "status_loading_text": {
+    "message": "Проверка SaulDaemon..."
+  },
+  "status_loading_tooltip": {
+    "message": "Проверка SaulDaemon"
+  },
+  "status_off_text": {
+    "message": "SaulDaemon ВЫКЛ."
+  },
+  "status_off_tooltip": {
+    "message": "SaulDaemon недоступен"
+  },
+  "status_on_text": {
+    "message": "SaulDaemon ВКЛ.{port}"
+  },
+  "status_on_tooltip": {
+    "message": "SaulDaemon подключен"
+  },
+  "status_port_suffix": {
+    "message": "(порт {port})"
+  },
+  "status_today_text": {
+    "message": "Саул сегодня: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "Время сегодня {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "Установить в Chrome"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "Темы в огне"
+  },
+  "test_health_failure": {
+    "message": "SaulDaemon не ответил на {origin}: {error}"
+  },
+  "test_health_status": {
+    "message": "SaulDaemon ответил со статусом {status} на {origin}"
+  },
+  "test_health_success": {
+    "message": "SaulDaemon ответил на {origin}"
   },
   "testimonial1Cite": {
     "message": "Анонимный клиент"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "Пользователи"
+  },
+  "vscode_ext_description": {
+    "message": "Отправляет активное время из VS Code в локальный SaulDaemon, используемый расширением Chrome."
+  },
+  "vscode_ext_display_name": {
+    "message": "Саул Гудман VS Code Bridge"
+  },
+  "vscode_reports_configure": {
+    "message": "Настройте URL демона и ключ сопряжения."
+  },
+  "vscode_reports_disabled": {
+    "message": "Отчеты отключены"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Активируйте \"Включить отчеты в VS Code\" в настройках, чтобы просмотреть данные."
+  },
+  "vscode_reports_error": {
+    "message": "Ошибка при загрузке данных из SaulDaemon."
+  },
+  "vscode_reports_filter_all": {
+    "message": "Все"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Применить"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Очистить"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Язык"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Машина"
+  },
+  "vscode_reports_filter_project": {
+    "message": "Проект"
+  },
+  "vscode_reports_languages": {
+    "message": "Языки"
+  },
+  "vscode_reports_loading": {
+    "message": "Загрузка данных из SaulDaemon..."
+  },
+  "vscode_reports_no_data": {
+    "message": "Нет данных."
+  },
+  "vscode_reports_no_records": {
+    "message": "Нет записей."
+  },
+  "vscode_reports_projects": {
+    "message": "Проекты"
+  },
+  "vscode_reports_summaries": {
+    "message": "Сводки"
+  },
+  "vscode_reports_synced": {
+    "message": "Данные синхронизированы."
+  },
+  "vscode_reports_today": {
+    "message": "Сегодня"
   },
   "vscodeCard1Body": {
     "message": "Локальный демон общается с расширением и регистрирует время в редакторе как продуктивные минуты. Ничего не выходит за пределы localhost, но таймер никогда не спит."

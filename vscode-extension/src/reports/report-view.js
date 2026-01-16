@@ -34,7 +34,7 @@ function buildHtml(webview, extensionUri, config, i18n) {
   const cssPath = path.join(extensionUri.fsPath, 'src', 'reports', 'report.css');
   const logoPath = path.join(extensionUri.fsPath, 'images', 'logotipo_saul_goodman.png');
   
-  const template = fs.readFileSync(templatePath, 'utf8');
+  let template = fs.readFileSync(templatePath, 'utf8');
   const cssContent = fs.readFileSync(cssPath, 'utf8');
   const logoBase64 = fs.readFileSync(logoPath).toString('base64');
   
@@ -45,6 +45,11 @@ function buildHtml(webview, extensionUri, config, i18n) {
 
   const inlineStyles = `<style nonce="${nonce}">${cssContent}</style>`;
   const logoDataUri = `data:image/png;base64,${logoBase64}`;
+
+  // Replace all i18n placeholders in the template
+  template = template.replace(/{i18n_([a-zA-Z0-9_]+)}/g, (match, key) => {
+    return i18n[key] || key;
+  });
 
   return template
     .replace(/{nonce}/g, nonce)

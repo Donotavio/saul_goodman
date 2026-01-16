@@ -1,7 +1,8 @@
 {
   "name": "saul-goodman-vscode",
-  "displayName": "Saul Goodman VS Code Bridge",
-  "description": "Envia tempo ativo do VS Code para o SaulDaemon local usado pela extensão Chrome.",
+  "type": "module",
+  "displayName": "%vscode_ext_display_name%",
+  "description": "%vscode_ext_description%",
   "version": "1.21.13",
   "publisher": "donotavio",
   "license": "MIT",
@@ -21,17 +22,17 @@
     "commands": [
       {
         "command": "saulGoodman.startDaemon",
-        "title": "Saul Goodman: preparar comando do SaulDaemon",
+        "title": "%command_start_daemon%",
         "category": "Saul Goodman"
       },
       {
         "command": "saulGoodman.testDaemon",
-        "title": "Saul Goodman: testar conexão com o SaulDaemon",
+        "title": "%command_test_daemon%",
         "category": "Saul Goodman"
       },
       {
         "command": "saulGoodman.openReports",
-        "title": "Saul Goodman: abrir relatórios",
+        "title": "%command_open_reports%",
         "category": "Saul Goodman"
       }
     ],
@@ -42,52 +43,52 @@
         "saulGoodman.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Habilita o envio de tempo ativo para o SaulDaemon local."
+          "description": "%config_enabled_description%"
         },
         "saulGoodman.enableTracking": {
           "type": "boolean",
           "default": true,
-          "description": "Controla a coleta e envio de heartbeats para o SaulDaemon."
+          "description": "%config_enable_tracking_description%"
         },
         "saulGoodman.enableReportsInVscode": {
           "type": "boolean",
           "default": true,
-          "description": "Exibe o relatório do Saul dentro do VS Code."
+          "description": "%config_enable_reports_description%"
         },
         "saulGoodman.enableSensitiveTelemetry": {
           "type": "boolean",
           "default": false,
-          "description": "Autoriza telemetria sensível (ex.: comandos do terminal)."
+          "description": "%config_enable_sensitive_telemetry_description%"
         },
         "saulGoodman.apiBase": {
           "type": "string",
           "default": "http://127.0.0.1:3123",
-          "description": "URL base do SaulDaemon local."
+          "description": "%config_api_base_description%"
         },
         "saulGoodman.pairingKey": {
           "type": "string",
           "default": "",
-          "description": "Chave de pareamento compartilhada com a extensão Chrome."
+          "description": "%config_pairing_key_description%"
         },
         "saulGoodman.hashFilePaths": {
           "type": "boolean",
           "default": true,
-          "description": "Faz hash dos caminhos de arquivos enviados nos heartbeats."
+          "description": "%config_hash_file_paths_description%"
         },
         "saulGoodman.hashProjectNames": {
           "type": "boolean",
           "default": false,
-          "description": "Faz hash dos nomes de projetos antes de enviar ao daemon."
+          "description": "%config_hash_project_names_description%"
         },
         "saulGoodman.heartbeatIntervalMs": {
           "type": "number",
           "default": 15000,
-          "description": "Intervalo em milissegundos entre heartbeats enviados ao SaulDaemon."
+          "description": "%config_heartbeat_interval_description%"
         },
         "saulGoodman.idleThresholdMs": {
           "type": "number",
           "default": 60000,
-          "description": "Tempo máximo sem atividade antes de considerar a sessão inativa."
+          "description": "%config_idle_threshold_description%"
         },
         "saulGoodman.language": {
           "type": "string",
@@ -98,22 +99,22 @@
             "pt-BR",
             "es-419"
           ],
-          "description": "Idioma da extensão VS Code (auto usa o idioma do VS Code)."
+          "description": "%config_language_description%"
         },
         "saulGoodman.enableTelemetry": {
           "type": "boolean",
           "default": false,
-          "description": "Habilita coleta de métricas de produtividade local (debugging, testes, tasks, terminal, etc). Dados nunca saem da máquina."
+          "description": "%config_enable_telemetry_description%"
         },
         "saulGoodman.telemetrySampleDiagnosticsIntervalSec": {
           "type": "number",
           "default": 60,
-          "description": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos."
+          "description": "%config_telemetry_diagnostics_interval_description%"
         },
         "saulGoodman.telemetryRetentionDays": {
           "type": "number",
           "default": 30,
-          "description": "Número de dias para reter dados de telemetria local antes de apagar automaticamente."
+          "description": "%config_telemetry_retention_description%"
         }
       }
     }
@@ -122,7 +123,8 @@
     "Other"
   ],
   "scripts": {
-    "prebuild:vsix": "npm --prefix .. run i18n:copy-site",
+    "generate-nls": "node scripts/generate-nls.js",
+    "prebuild:vsix": "npm run generate-nls && npm --prefix .. run i18n:copy-site",
     "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
   },
   "devDependencies": {

@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "Fragmento del Hack Lab de CodeCon donde Saul cobró vida como extensión anti-distracciones."
   },
+  "command_open_reports": {
+    "message": "Saul Goodman: abrir informes"
+  },
+  "command_start_daemon": {
+    "message": "Saul Goodman: preparar comando del SaulDaemon"
+  },
+  "command_test_daemon": {
+    "message": "Saul Goodman: probar conexión con el SaulDaemon"
+  },
+  "config_api_base_description": {
+    "message": "URL base del SaulDaemon local."
+  },
+  "config_enable_reports_description": {
+    "message": "Muestra el informe de Saul dentro de VS Code."
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "Autoriza telemetría sensible (ej.: comandos del terminal)."
+  },
+  "config_enable_telemetry_description": {
+    "message": "Habilita la recopilación de métricas de productividad local (depuración, pruebas, tareas, terminal, etc.). Los datos nunca salen de la máquina."
+  },
+  "config_enable_tracking_description": {
+    "message": "Controla la recopilación y envío de latidos al SaulDaemon."
+  },
+  "config_enabled_description": {
+    "message": "Habilita el envío de tiempo activo al SaulDaemon local."
+  },
+  "config_hash_file_paths_description": {
+    "message": "Realiza hash de las rutas de archivos enviadas en los latidos."
+  },
+  "config_hash_project_names_description": {
+    "message": "Realiza hash de los nombres de proyectos antes de enviarlos al daemon."
+  },
+  "config_heartbeat_interval_description": {
+    "message": "Intervalo en milisegundos entre latidos enviados al SaulDaemon."
+  },
+  "config_idle_threshold_description": {
+    "message": "Tiempo máximo sin actividad antes de considerar la sesión inactiva."
+  },
+  "config_language_description": {
+    "message": "Idioma de la extensión de VS Code (automático usa el idioma de VS Code)."
+  },
+  "config_pairing_key_description": {
+    "message": "Clave de emparejamiento compartida con la extensión de Chrome."
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos."
+  },
+  "config_telemetry_retention_description": {
+    "message": "Número de días para retener datos de telemetría local antes de eliminar automáticamente."
+  },
   "demoCta": {
     "message": "Ver demo completa"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "Cerrar"
+  },
+  "log_heartbeat_failed": {
+    "message": "Error al enviar el heartbeat"
+  },
+  "log_publish_index_failed": {
+    "message": "Error al publicar el indice en SaulDaemon"
   },
   "manifesto1Body": {
     "message": "Tu día se juzga dentro del navegador. Ningún dato sale de la computadora, ni con orden del juez."
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "Artículo no encontrado."
   },
+  "prepare_key_prompt": {
+    "message": "Usa la misma clave configurada en la extension de Chrome."
+  },
+  "prepare_key_title": {
+    "message": "Saul Goodman: clave de emparejamiento"
+  },
+  "prepare_missing_daemon": {
+    "message": "No se encontro saul-daemon/index.cjs. Abre la raiz del repositorio antes de iniciar el daemon."
+  },
+  "prepare_port_prompt": {
+    "message": "Puerto HTTP local del daemon."
+  },
+  "prepare_port_title": {
+    "message": "Saul Goodman: puerto del SaulDaemon"
+  },
+  "prepare_start_failed": {
+    "message": "Error al iniciar SaulDaemon: {error}"
+  },
+  "prepare_started": {
+    "message": "SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}."
+  },
   "previousPost": {
     "message": "Anterior"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "Saul encierra la procrastinación en tres pasos."
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "Abrir configuraciones"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "Ingresa la misma clave configurada en la extension de Chrome."
+  },
+  "prompt_missing_key_title": {
+    "message": "Saul Goodman: configura una clave"
+  },
+  "prompt_missing_key_warning": {
+    "message": "Sin clave no enviaremos heartbeats. Abrir configuraciones ahora?"
   },
   "quakeBody": {
     "message": "El overlay bloquea pestañas villanas, muestra un CTA firme y puede sonar la sirena. Es imposible ignorarlo."
@@ -2175,7 +2265,7 @@
     "message": "Sin registros."
   },
   "report_overtime_tag": {
-    "message": "Overtime"
+    "message": "Horas extras"
   },
   "report_pdf_ai_title": {
     "message": "Argumento de Saul"
@@ -2402,53 +2492,221 @@
   "report_timeline_summary": {
     "message": "{duration} • {count} segmentos"
   },
-  "report_vscode_heading": {
-    "message": "Reportes de VS Code"
+  "report_vscode_activity": {
+    "message": "Actividad"
   },
-  "report_vscode_subtitle": {
-    "message": "Tiempo y contexto capturados en el editor."
+  "report_vscode_branches": {
+    "message": "Ramas de Git"
+  },
+  "report_vscode_commit_activity": {
+    "message": "Actividad de Commits"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "Cuando hiciste commit de código a lo largo del día"
+  },
+  "report_vscode_commits_empty": {
+    "message": "Ningún commit registrado hoy."
+  },
+  "report_vscode_cross_empty": {
+    "message": "Sin datos para referencia cruzada."
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "Sin datos para referencia cruzada."
   },
   "report_vscode_disabled": {
     "message": "Los reportes de VS Code estan desactivados."
   },
   "report_vscode_disabled_cta": {
-    "message": "Abrir options"
+    "message": "Abrir opciones"
   },
-  "report_vscode_missing_config": {
-    "message": "Configura la URL local y la clave de VS Code."
-  },
-  "report_vscode_loading": {
-    "message": "Cargando datos de VS Code..."
-  },
-  "report_vscode_loaded": {
-    "message": "Datos de VS Code sincronizados."
+  "report_vscode_editor_info": {
+    "message": "Info del Editor"
   },
   "report_vscode_error": {
     "message": "No se pudieron cargar los reportes de VS Code."
   },
-  "report_vscode_filter_project": {
-    "message": "Proyecto"
+  "report_vscode_filter_all": {
+    "message": "Todos"
   },
   "report_vscode_filter_language": {
     "message": "Lenguaje"
   },
   "report_vscode_filter_machine": {
-    "message": "Maquina"
+    "message": "Máquina"
   },
-  "report_vscode_filter_all": {
-    "message": "Todos"
+  "report_vscode_filter_project": {
+    "message": "Proyecto"
   },
-  "report_vscode_stat_today": {
-    "message": "Hoy"
+  "report_vscode_filters_title": {
+    "message": "Filtros"
   },
-  "report_vscode_projects": {
-    "message": "Proyectos"
+  "report_vscode_focus_patterns": {
+    "message": "Patrones de Foco"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "Sin datos de foco."
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "Horas del día con mayor concentración"
+  },
+  "report_vscode_heading": {
+    "message": "Reportes de VS Code"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "Distribución Horaria"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "Aún no hay datos horarios para mostrar."
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "Distribución de actividades a lo largo del día"
+  },
+  "report_vscode_index_label": {
+    "message": "Índice"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "FOCO ACTIVO"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "INACTIVO"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "PROCRAST."
+  },
+  "report_vscode_kpi_productive": {
+    "message": "PRODUCTIVO"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "CAMBIOS DE PESTAÑAS"
   },
   "report_vscode_languages": {
     "message": "Lenguajes"
   },
+  "report_vscode_languages_projects": {
+    "message": "Lenguajes × Proyectos"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "Referencia cruzada: qué lenguajes usaste en cada proyecto"
+  },
+  "report_vscode_loaded": {
+    "message": "Datos de VS Code sincronizados."
+  },
+  "report_vscode_loading": {
+    "message": "Cargando datos de VS Code..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "Filial digital"
+  },
+  "report_vscode_missing_config": {
+    "message": "Configura la URL local y la clave de VS Code."
+  },
+  "report_vscode_projects": {
+    "message": "Proyectos"
+  },
+  "report_vscode_projects_empty": {
+    "message": "Ningún dato de proyecto para mostrar."
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "Actividad de Refactorización"
+  },
+  "report_vscode_refresh_button": {
+    "message": "Actualizar datos"
+  },
+  "report_vscode_stat_today": {
+    "message": "Hoy"
+  },
+  "report_vscode_status_loading": {
+    "message": "Cargando datos del SaulDaemon..."
+  },
+  "report_vscode_subtitle": {
+    "message": "Tiempo y contexto capturados en el editor."
+  },
   "report_vscode_summaries": {
-    "message": "Summaries"
+    "message": "Resúmenes"
+  },
+  "report_vscode_tel_builds": {
+    "message": "CONSTRUCCIONES"
+  },
+  "report_vscode_tel_debug": {
+    "message": "SESIONES DE DEPURACIÓN"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "SESIONES DE DEPURACIÓN"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "Archivos Más Depurados"
+  },
+  "report_vscode_tel_errors": {
+    "message": "Archivos con Más Errores"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "Principales Extensiones Usadas"
+  },
+  "report_vscode_tel_focus": {
+    "message": "Patrones de Foco"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "Sin datos de foco."
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "Horas del día con mayor concentración"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "POMODOROS"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "Actividad de Refactorización"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "Comandos Terminal"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "Ningún comando registrado."
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "Categorías de comandos ejecutados en el terminal"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "TASA DE PRUEBAS"
+  },
+  "report_vscode_tel_tests": {
+    "message": "TASA DE PRUEBAS"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "Métricas detalladas de desarrollo (100% local)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "Productividad & Telemetría"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "Comandos Terminal"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "Ningún comando registrado."
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "Categorías de comandos ejecutados en el terminal"
+  },
+  "report_vscode_time_by_project": {
+    "message": "Tiempo por Proyecto"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "Cómo distribuiste tu tiempo entre proyectos"
+  },
+  "report_vscode_title": {
+    "message": "Saul Goodman · Informes de VS Code"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "Archivos Más Depurados"
+  },
+  "report_vscode_top_error_files": {
+    "message": "Archivos con Más Errores"
+  },
+  "report_vscode_top_extensions": {
+    "message": "Principales Extensiones Usadas"
+  },
+  "report_vscode_workspaces": {
+    "message": "Workspaces"
   },
   "rssCta": {
     "message": "Suscribirse via RSS"
@@ -2467,87 +2725,6 @@
   },
   "seoTitle": {
     "message": "Saul Goodman - Extensión Anti-Procrastinación"
-  },
-  "status_today_text": {
-    "message": "Saul hoy: {time}"
-  },
-  "status_today_tooltip": {
-    "message": "Tiempo hoy {time}{port}"
-  },
-  "status_port_suffix": {
-    "message": " (puerto {port})"
-  },
-  "status_on_text": {
-    "message": "SaulDaemon ON{port}"
-  },
-  "status_on_tooltip": {
-    "message": "SaulDaemon conectado"
-  },
-  "status_off_text": {
-    "message": "SaulDaemon OFF"
-  },
-  "status_off_tooltip": {
-    "message": "SaulDaemon no disponible"
-  },
-  "status_disabled_text": {
-    "message": "Tracking off"
-  },
-  "status_disabled_tooltip": {
-    "message": "Activa el tracking para enviar heartbeats"
-  },
-  "status_loading_text": {
-    "message": "Verificando SaulDaemon..."
-  },
-  "status_loading_tooltip": {
-    "message": "Verificando SaulDaemon"
-  },
-  "prepare_key_title": {
-    "message": "Saul Goodman: clave de emparejamiento"
-  },
-  "prepare_key_prompt": {
-    "message": "Usa la misma clave configurada en la extension de Chrome."
-  },
-  "prepare_port_title": {
-    "message": "Saul Goodman: puerto del SaulDaemon"
-  },
-  "prepare_port_prompt": {
-    "message": "Puerto HTTP local del daemon."
-  },
-  "prepare_missing_daemon": {
-    "message": "No se encontro saul-daemon/index.cjs. Abre la raiz del repositorio antes de iniciar el daemon."
-  },
-  "prepare_started": {
-    "message": "SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}."
-  },
-  "prepare_start_failed": {
-    "message": "Error al iniciar SaulDaemon: {error}"
-  },
-  "prompt_missing_key_title": {
-    "message": "Saul Goodman: configura una clave"
-  },
-  "prompt_missing_key_prompt": {
-    "message": "Ingresa la misma clave configurada en la extension de Chrome."
-  },
-  "prompt_missing_key_warning": {
-    "message": "Sin clave no enviaremos heartbeats. Abrir configuraciones ahora?"
-  },
-  "prompt_missing_key_open_settings": {
-    "message": "Abrir configuraciones"
-  },
-  "test_health_success": {
-    "message": "SaulDaemon respondio en {origin}"
-  },
-  "test_health_status": {
-    "message": "SaulDaemon respondio con estado {status} en {origin}"
-  },
-  "test_health_failure": {
-    "message": "SaulDaemon no respondio en {origin}: {error}"
-  },
-  "log_heartbeat_failed": {
-    "message": "Error al enviar el heartbeat"
-  },
-  "log_publish_index_failed": {
-    "message": "Error al publicar el indice en SaulDaemon"
   },
   "shareCopied": {
     "message": "¡Enlace copiado!"
@@ -2639,6 +2816,39 @@
   "statsTitle": {
     "message": "Radar del blog"
   },
+  "status_disabled_text": {
+    "message": "Seguimiento desactivado"
+  },
+  "status_disabled_tooltip": {
+    "message": "Activa el tracking para enviar heartbeats"
+  },
+  "status_loading_text": {
+    "message": "Verificando SaulDaemon..."
+  },
+  "status_loading_tooltip": {
+    "message": "Verificando SaulDaemon"
+  },
+  "status_off_text": {
+    "message": "SaulDaemon APAGADO"
+  },
+  "status_off_tooltip": {
+    "message": "SaulDaemon no disponible"
+  },
+  "status_on_text": {
+    "message": "SaulDaemon ENCENDIDO{port}"
+  },
+  "status_on_tooltip": {
+    "message": "SaulDaemon conectado"
+  },
+  "status_port_suffix": {
+    "message": " (puerto {port})"
+  },
+  "status_today_text": {
+    "message": "Saul hoy: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "Tiempo hoy {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "Instalar en Chrome"
   },
@@ -2680,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "Temas en alta"
+  },
+  "test_health_failure": {
+    "message": "SaulDaemon no respondio en {origin}: {error}"
+  },
+  "test_health_status": {
+    "message": "SaulDaemon respondio con estado {status} en {origin}"
+  },
+  "test_health_success": {
+    "message": "SaulDaemon respondio en {origin}"
   },
   "testimonial1Cite": {
     "message": "— Cliente anónimo"
@@ -2783,6 +3002,66 @@
   "usersBadgeLabel": {
     "message": "Usuarios"
   },
+  "vscode_ext_description": {
+    "message": "Envía tiempo activo de VS Code al SaulDaemon local usado por la extensión de Chrome."
+  },
+  "vscode_ext_display_name": {
+    "message": "Puente Saul Goodman VS Code"
+  },
+  "vscode_reports_configure": {
+    "message": "Configura la URL del daemon y la clave de emparejamiento."
+  },
+  "vscode_reports_disabled": {
+    "message": "Informes deshabilitados"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "Activa \"Enable Reports in VS Code\" en la configuración para ver los datos."
+  },
+  "vscode_reports_error": {
+    "message": "Error al cargar datos de SaulDaemon."
+  },
+  "vscode_reports_filter_all": {
+    "message": "Todos"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "Aplicar"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "Limpiar"
+  },
+  "vscode_reports_filter_language": {
+    "message": "Lenguaje"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "Máquina"
+  },
+  "vscode_reports_filter_project": {
+    "message": "Proyecto"
+  },
+  "vscode_reports_languages": {
+    "message": "Lenguajes"
+  },
+  "vscode_reports_loading": {
+    "message": "Cargando datos de SaulDaemon..."
+  },
+  "vscode_reports_no_data": {
+    "message": "Sin datos."
+  },
+  "vscode_reports_no_records": {
+    "message": "Sin registros."
+  },
+  "vscode_reports_projects": {
+    "message": "Proyectos"
+  },
+  "vscode_reports_summaries": {
+    "message": "Resúmenes"
+  },
+  "vscode_reports_synced": {
+    "message": "Datos sincronizados."
+  },
+  "vscode_reports_today": {
+    "message": "Hoy"
+  },
   "vscodeCard1Body": {
     "message": "El daemon local se comunica con la extensión y registra tiempo en el editor como minutos productivos. Nada sale del localhost, pero el cronómetro nunca duerme."
   },
@@ -2857,59 +3136,5 @@
   },
   "vscodeTitle": {
     "message": "Convierte tu editor en un activo de productividad."
-  },
-  "vscode_reports_disabled": {
-    "message": "Informes deshabilitados"
-  },
-  "vscode_reports_disabled_detail": {
-    "message": "Activa \"Enable Reports in VS Code\" en la configuración para ver los datos."
-  },
-  "vscode_reports_loading": {
-    "message": "Cargando datos de SaulDaemon..."
-  },
-  "vscode_reports_error": {
-    "message": "Error al cargar datos de SaulDaemon."
-  },
-  "vscode_reports_synced": {
-    "message": "Datos sincronizados."
-  },
-  "vscode_reports_configure": {
-    "message": "Configura la URL del daemon y la clave de emparejamiento."
-  },
-  "vscode_reports_filter_project": {
-    "message": "Proyecto"
-  },
-  "vscode_reports_filter_language": {
-    "message": "Lenguaje"
-  },
-  "vscode_reports_filter_machine": {
-    "message": "Máquina"
-  },
-  "vscode_reports_filter_all": {
-    "message": "Todos"
-  },
-  "vscode_reports_filter_apply": {
-    "message": "Aplicar"
-  },
-  "vscode_reports_filter_clear": {
-    "message": "Limpiar"
-  },
-  "vscode_reports_today": {
-    "message": "Hoy"
-  },
-  "vscode_reports_projects": {
-    "message": "Proyectos"
-  },
-  "vscode_reports_languages": {
-    "message": "Lenguajes"
-  },
-  "vscode_reports_summaries": {
-    "message": "Resúmenes"
-  },
-  "vscode_reports_no_data": {
-    "message": "Sin datos."
-  },
-  "vscode_reports_no_records": {
-    "message": "Sin registros."
   }
 }

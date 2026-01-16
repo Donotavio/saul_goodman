@@ -1,0 +1,21 @@
+{
+  "vscode_ext_display_name": "সৌল গুডম্যান VS কোড ব্রিজ",
+  "vscode_ext_description": "VS কোডের সক্রিয় সময় সৌলডেমন এ প্রেরণ করে যা ক্রোম এক্সটেনশন দ্বারা ব্যবহৃত হয়।",
+  "command_start_daemon": "সৌল গুডম্যান: সৌলডেমন কমান্ড প্রস্তুত করুন",
+  "command_test_daemon": "সৌল গুডম্যান: সৌলডেমন এর সাথে সংযোগ পরীক্ষা করুন",
+  "command_open_reports": "সৌল গুডম্যান: রিপোর্ট খুলুন",
+  "config_enabled_description": "স্থানীয় সৌলডেমন এর জন্য সক্রিয় সময় প্রেরণ সক্ষম করে।",
+  "config_enable_tracking_description": "সৌলডেমন এর জন্য হার্টবিট সংগ্রহ এবং প্রেরণ নিয়ন্ত্রণ করে।",
+  "config_enable_reports_description": "VS কোডের মধ্যে সৌল এর রিপোর্ট প্রদর্শন করে।",
+  "config_enable_sensitive_telemetry_description": "সংবেদনশীল টেলিমেট্রি অনুমোদন করে (যেমন: টার্মিনাল কমান্ড)।",
+  "config_api_base_description": "স্থানীয় সৌলডেমন এর বেস URL।",
+  "config_pairing_key_description": "ক্রোম এক্সটেনশনের সাথে শেয়ার করা পেয়ারিং কী।",
+  "config_hash_file_paths_description": "হার্টবিটে প্রেরিত ফাইলের পথগুলোর হ্যাশ করে।",
+  "config_hash_project_names_description": "ডেমন এ পাঠানোর আগে প্রকল্পের নামগুলোর হ্যাশ করে।",
+  "config_heartbeat_interval_description": "সৌলডেমন এ প্রেরিত হার্টবিটের মধ্যে মিলিসেকেন্ডে ব্যবধান।",
+  "config_idle_threshold_description": "অ্যাক্টিভিটি ছাড়া সর্বাধিক সময় যা সেশনকে নিষ্ক্রিয় হিসাবে বিবেচনা করতে হবে।",
+  "config_language_description": "VS কোড এক্সটেনশনের ভাষা (অটো VS কোডের ভাষা ব্যবহার করে)।",
+  "config_enable_telemetry_description": "স্থানীয় উৎপাদনশীলতা পরিমাপ সংগ্রহ সক্ষম করে (ডিবাগিং, পরীক্ষা, কাজ, টার্মিনাল, ইত্যাদি)। ডেটা কখনও মেশিন থেকে বের হয় না।",
+  "config_telemetry_diagnostics_interval_description": "ফাইলের ডায়াগনস্টিক (ত্রুটি/সতর্কতা) নমুনা করার জন্য সেকেন্ডে ব্যবধান।",
+  "config_telemetry_retention_description": "স্বয়ংক্রিয়ভাবে মুছে ফেলার আগে স্থানীয় টেলিমেট্রি ডেটা ধরে রাখার জন্য দিনের সংখ্যা।"
+}

@@ -588,7 +588,7 @@
       window.projectsChartInstance.destroy();
     }
 
-    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ffc857', '#ffb347'];
     
     try {
       const ctx = canvas.getContext('2d');
@@ -974,7 +974,7 @@
         datasets: [{
           label: 'Comandos',
           data,
-          backgroundColor: '#8b5cf6'
+          backgroundColor: '#ffc857'
         }]
       },
       options: {

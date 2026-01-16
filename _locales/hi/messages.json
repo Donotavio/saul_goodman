@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "CodeCon हैक लैब से क्लिप जहां Saul एक विचलन-busting विस्तार के रूप में जीवन के लिए आया था।"
   },
+  "command_open_reports": {
+    "message": "सॉल गुडमैन: रिपोर्ट खोलें"
+  },
+  "command_start_daemon": {
+    "message": "सॉल गुडमैन: सॉलडेमन कमांड तैयार करें"
+  },
+  "command_test_daemon": {
+    "message": "सॉल गुडमैन: सॉलडेमन के साथ कनेक्शन का परीक्षण करें"
+  },
+  "config_api_base_description": {
+    "message": "स्थानीय सॉलडेमन का बेस URL।"
+  },
+  "config_enable_reports_description": {
+    "message": "VS कोड के भीतर सॉल की रिपोर्ट दिखाता है।"
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "संवेदनशील टेलीमेट्री की अनुमति देता है (जैसे: टर्मिनल कमांड)।"
+  },
+  "config_enable_telemetry_description": {
+    "message": "स्थानीय उत्पादकता मेट्रिक्स का संग्रह सक्षम करता है (डीबगिंग, परीक्षण, कार्य, टर्मिनल, आदि)। डेटा कभी भी मशीन से बाहर नहीं जाता।"
+  },
+  "config_enable_tracking_description": {
+    "message": "सॉलडेमन के लिए हार्टबीट संग्रह और भेजने को नियंत्रित करता है।"
+  },
+  "config_enabled_description": {
+    "message": "स्थानीय सॉलडेमन के लिए सक्रिय समय भेजने को सक्षम करता है।"
+  },
+  "config_hash_file_paths_description": {
+    "message": "हार्टबीट में भेजे गए फ़ाइल पथों का हैश बनाता है।"
+  },
+  "config_hash_project_names_description": {
+    "message": "डेमन को भेजने से पहले परियोजनाओं के नामों का हैश बनाता है।"
+  },
+  "config_heartbeat_interval_description": {
+    "message": "सॉलडेमन को भेजे गए हार्टबीट के बीच मिलीसेकंड में अंतराल।"
+  },
+  "config_idle_threshold_description": {
+    "message": "सत्र को निष्क्रिय मानने से पहले अधिकतम बिना गतिविधि का समय।"
+  },
+  "config_language_description": {
+    "message": "VS कोड एक्सटेंशन की भाषा (स्वतः VS कोड की भाषा का उपयोग करता है)।"
+  },
+  "config_pairing_key_description": {
+    "message": "क्रोम एक्सटेंशन के साथ साझा की गई पेयरिंग कुंजी।"
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "फाइलों के डायग्नोस्टिक्स (त्रुटियाँ/चेतावनियाँ) का नमूना लेने के लिए सेकंड में अंतराल।"
+  },
+  "config_telemetry_retention_description": {
+    "message": "स्वचालित रूप से हटाने से पहले स्थानीय टेलीमेट्री डेटा को बनाए रखने के लिए दिनों की संख्या।"
+  },
   "demoCta": {
     "message": "पूर्ण डेमो देखें"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "बंद"
+  },
+  "log_heartbeat_failed": {
+    "message": "हार्टबीट भेजने में विफल"
+  },
+  "log_publish_index_failed": {
+    "message": "सॉलडेमन के लिए अनुक्रमणिका प्रकाशित करने में विफल"
   },
   "manifesto1Body": {
     "message": "आपका दिन ब्राउज़र के अंदर है। कोई डेटा कंप्यूटर को छोड़ देता है, न कि अदालत के आदेश से।"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "पोस्ट नहीं मिला।"
   },
+  "prepare_key_prompt": {
+    "message": "क्रोम एक्सटेंशन में सेट की गई वही कुंजी का उपयोग करें।"
+  },
+  "prepare_key_title": {
+    "message": "सॉल गुडमैन: सॉलडेमन की पेयरिंग कुंजी"
+  },
+  "prepare_missing_daemon": {
+    "message": "फोल्डर saul-daemon/index.cjs नहीं मिला। डेमन शुरू करने से पहले मूल रिपॉजिटरी खोलें।"
+  },
+  "prepare_port_prompt": {
+    "message": "डेमन का स्थानीय HTTP पोर्ट।"
+  },
+  "prepare_port_title": {
+    "message": "सॉल गुडमैन: सॉलडेमन का पोर्ट"
+  },
+  "prepare_start_failed": {
+    "message": "सॉलडेमन शुरू करने में विफल: {error}"
+  },
+  "prepare_started": {
+    "message": "सॉलडेमन बैकग्राउंड में शुरू हुआ (पोर्ट {port}, कुंजी {key})। लॉग {logFile} में।"
+  },
   "previousPost": {
     "message": "पिछला"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "साउल तीन चरणों में प्रक्रिया को लॉक करता है।"
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "सेटिंग्स खोलें"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "क्रोम एक्सटेंशन में सेट की गई वही कुंजी दर्ज करें।"
+  },
+  "prompt_missing_key_title": {
+    "message": "सॉल गुडमैन: एक पेयरिंग कुंजी सेट करें"
+  },
+  "prompt_missing_key_warning": {
+    "message": "बिना पेयरिंग कुंजी के हम हार्टबीट नहीं भेजेंगे। क्या अभी सेटिंग्स खोलें?"
   },
   "quakeBody": {
     "message": "ओवरले ब्लॉक खलनायक टैब, एक बोल्ड सीटीए दिखाता है, और वैकल्पिक श्रेन को नष्ट कर सकता है। वास्तव में योजनाबद्ध के रूप में - को अनदेखा करने के लिए असंभव है।"
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}•{count}खंड"
   },
+  "report_vscode_activity": {
+    "message": "गतिविधि"
+  },
+  "report_vscode_branches": {
+    "message": "गिट शाखाएँ"
+  },
+  "report_vscode_commit_activity": {
+    "message": "कमिट गतिविधि"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "जब आपने दिन भर कोड कमिट किया"
+  },
+  "report_vscode_commits_empty": {
+    "message": "आज कोई कमिट दर्ज नहीं किया गया।"
+  },
+  "report_vscode_cross_empty": {
+    "message": "क्रॉस संदर्भ के लिए कोई डेटा नहीं।"
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "क्रॉस संदर्भ के लिए कोई डेटा नहीं।"
+  },
+  "report_vscode_disabled": {
+    "message": "VS कोड की रिपोर्टें अक्षम हैं।"
+  },
+  "report_vscode_disabled_cta": {
+    "message": "विकल्प खोलें"
+  },
+  "report_vscode_editor_info": {
+    "message": "संपादक की जानकारी"
+  },
+  "report_vscode_error": {
+    "message": "VS कोड की रिपोर्टें लोड करने में असमर्थ।"
+  },
+  "report_vscode_filter_all": {
+    "message": "सभी"
+  },
+  "report_vscode_filter_language": {
+    "message": "भाषा"
+  },
+  "report_vscode_filter_machine": {
+    "message": "मशीन"
+  },
+  "report_vscode_filter_project": {
+    "message": "परियोजना"
+  },
+  "report_vscode_filters_title": {
+    "message": "फिल्टर"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "फोकस पैटर्न"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "फोकस का कोई डेटा नहीं।"
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "दिन के घंटे जिनमें अधिक ध्यान केंद्रित किया गया"
+  },
+  "report_vscode_heading": {
+    "message": "VS कोड की रिपोर्टें"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "घंटे का वितरण"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "दिखाने के लिए अभी कोई घंटे का डेटा नहीं है।"
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "दिन भर गतिविधियों का वितरण"
+  },
+  "report_vscode_index_label": {
+    "message": "अनुक्रमणिका"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "सक्रिय फोकस"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "निष्क्रिय"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "टालमटोल।"
+  },
+  "report_vscode_kpi_productive": {
+    "message": "उत्पादक"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "टैब स्विच"
+  },
+  "report_vscode_languages": {
+    "message": "भाषाएँ"
+  },
+  "report_vscode_languages_projects": {
+    "message": "भाषाएँ × परियोजनाएँ"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "क्रॉस संदर्भ: आपने प्रत्येक परियोजना में कौन सी भाषाएँ उपयोग कीं"
+  },
+  "report_vscode_loaded": {
+    "message": "VS कोड का डेटा समन्वयित किया गया।"
+  },
+  "report_vscode_loading": {
+    "message": "VS कोड के डेटा लोड हो रहे हैं..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "डिजिटल शाखा"
+  },
+  "report_vscode_missing_config": {
+    "message": "स्थानीय बैकएंड और VS कोड की कुंजी सेट करें।"
+  },
+  "report_vscode_projects": {
+    "message": "परियोजनाएँ"
+  },
+  "report_vscode_projects_empty": {
+    "message": "दिखाने के लिए कोई परियोजना डेटा नहीं है।"
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "पुनर्गठन गतिविधि"
+  },
+  "report_vscode_refresh_button": {
+    "message": "डेटा ताज़ा करें"
+  },
+  "report_vscode_stat_today": {
+    "message": "आज"
+  },
+  "report_vscode_status_loading": {
+    "message": "सॉलडेमन के डेटा लोड हो रहे हैं..."
+  },
+  "report_vscode_subtitle": {
+    "message": "संपादक में कैप्चर किया गया समय और संदर्भ।"
+  },
+  "report_vscode_summaries": {
+    "message": "सारांश"
+  },
+  "report_vscode_tel_builds": {
+    "message": "बिल्ड"
+  },
+  "report_vscode_tel_debug": {
+    "message": "डीबग सत्र"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "डीबग सत्र"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "सबसे अधिक डीबग की गई फ़ाइलें"
+  },
+  "report_vscode_tel_errors": {
+    "message": "सबसे अधिक त्रुटियों वाली फ़ाइलें"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "उपयोग की गई शीर्ष एक्सटेंशन"
+  },
+  "report_vscode_tel_focus": {
+    "message": "फोकस पैटर्न"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "फोकस का कोई डेटा नहीं।"
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "दिन के घंटे जिनमें अधिक ध्यान केंद्रित किया गया"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "पॉमोडोरो"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "पुनर्गठन गतिविधि"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "टर्मिनल कमांड"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "कोई कमांड दर्ज नहीं किया गया।"
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "टर्मिनल में निष्पादित कमांड की श्रेणियाँ"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "परीक्षण दर"
+  },
+  "report_vscode_tel_tests": {
+    "message": "परीक्षण दर"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "विकास के विस्तृत मेट्रिक्स (100% स्थानीय)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "उत्पादकता और टेलीमेट्री"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "टर्मिनल कमांड"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "कोई कमांड दर्ज नहीं किया गया।"
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "टर्मिनल में निष्पादित कमांड की श्रेणियाँ"
+  },
+  "report_vscode_time_by_project": {
+    "message": "परियोजना के अनुसार समय"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "आपने परियोजनाओं के बीच अपना समय कैसे वितरित किया"
+  },
+  "report_vscode_title": {
+    "message": "सॉल गुडमैन · VS कोड रिपोर्ट"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "सबसे अधिक डीबग की गई फ़ाइलें"
+  },
+  "report_vscode_top_error_files": {
+    "message": "सबसे अधिक त्रुटियों वाली फ़ाइलें"
+  },
+  "report_vscode_top_extensions": {
+    "message": "उपयोग की गई शीर्ष एक्सटेंशन"
+  },
+  "report_vscode_workspaces": {
+    "message": "कार्यक्षेत्र"
+  },
   "rssCta": {
     "message": "आरएसएस"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "ब्लॉगर"
   },
+  "status_disabled_text": {
+    "message": "ट्रैकिंग बंद"
+  },
+  "status_disabled_tooltip": {
+    "message": "हार्टबीट भेजने के लिए ट्रैकिंग सक्रिय करें"
+  },
+  "status_loading_text": {
+    "message": "सॉलडेमन की जांच कर रहा है..."
+  },
+  "status_loading_tooltip": {
+    "message": "सॉलडेमन की जांच कर रहा है"
+  },
+  "status_off_text": {
+    "message": "सॉलडेमन बंद"
+  },
+  "status_off_tooltip": {
+    "message": "सॉलडेमन अनुपलब्ध"
+  },
+  "status_on_text": {
+    "message": "सॉलडेमन चालू{port}"
+  },
+  "status_on_tooltip": {
+    "message": "सॉलडेमन कनेक्टेड"
+  },
+  "status_port_suffix": {
+    "message": "(पोर्ट {port})"
+  },
+  "status_today_text": {
+    "message": "आज सॉल: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "आज का समय {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "क्रोम पर स्थापित करें"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "आग पर विषय"
+  },
+  "test_health_failure": {
+    "message": "सॉलडेमन ने {origin} पर प्रतिक्रिया नहीं दी: {error}"
+  },
+  "test_health_status": {
+    "message": "सॉलडेमन ने {origin} पर स्थिति {status} के साथ प्रतिक्रिया दी"
+  },
+  "test_health_success": {
+    "message": "सॉलडेमन ने {origin} पर प्रतिक्रिया दी"
   },
   "testimonial1Cite": {
     "message": "गुमनाम ग्राहक"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "उपयोगकर्ता"
+  },
+  "vscode_ext_description": {
+    "message": "VS कोड से सक्रिय समय को सॉलडेमन स्थानीय में भेजता है जिसका उपयोग क्रोम एक्सटेंशन द्वारा किया जाता है।"
+  },
+  "vscode_ext_display_name": {
+    "message": "सॉल गुडमैन VS कोड ब्रिज"
+  },
+  "vscode_reports_configure": {
+    "message": "डेमन का URL और पेयरिंग कुंजी सेट करें।"
+  },
+  "vscode_reports_disabled": {
+    "message": "रिपोर्टें अक्षम हैं"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "\"VS कोड में रिपोर्ट सक्षम करें\" सेटिंग्स में सक्रिय करें ताकि डेटा देख सकें।"
+  },
+  "vscode_reports_error": {
+    "message": "सॉलडेमन से डेटा लोड करने में त्रुटि।"
+  },
+  "vscode_reports_filter_all": {
+    "message": "सभी"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "लागू करें"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "स्पष्ट करें"
+  },
+  "vscode_reports_filter_language": {
+    "message": "भाषा"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "मशीन"
+  },
+  "vscode_reports_filter_project": {
+    "message": "परियोजना"
+  },
+  "vscode_reports_languages": {
+    "message": "भाषाएँ"
+  },
+  "vscode_reports_loading": {
+    "message": "सॉलडेमन के डेटा लोड हो रहे हैं..."
+  },
+  "vscode_reports_no_data": {
+    "message": "कोई डेटा नहीं।"
+  },
+  "vscode_reports_no_records": {
+    "message": "कोई रिकॉर्ड नहीं।"
+  },
+  "vscode_reports_projects": {
+    "message": "परियोजनाएँ"
+  },
+  "vscode_reports_summaries": {
+    "message": "सारांश"
+  },
+  "vscode_reports_synced": {
+    "message": "डेटा समन्वयित किया गया।"
+  },
+  "vscode_reports_today": {
+    "message": "आज"
   },
   "vscodeCard1Body": {
     "message": "स्थानीय डेमॉन एक्सटेंशन के साथ बातचीत करता है और संपादक में उत्पादक मिनटों के रूप में समय दर्ज करता है। कुछ भी लोकलहोस्ट से बाहर नहीं जाता, लेकिन टाइमर कभी नहीं सोता।"

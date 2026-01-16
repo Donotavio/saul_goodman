@@ -1,0 +1,21 @@
+{
+  "vscode_ext_display_name": "Saul Goodman VS Code Bridge",
+  "vscode_ext_description": "Invia tempo attivo di VS Code al SaulDaemon locale utilizzato dall'estensione Chrome.",
+  "command_start_daemon": "Saul Goodman: preparare comando del SaulDaemon",
+  "command_test_daemon": "Saul Goodman: testare connessione con il SaulDaemon",
+  "command_open_reports": "Saul Goodman: aprire rapporti",
+  "config_enabled_description": "Abilita l'invio di tempo attivo al SaulDaemon locale.",
+  "config_enable_tracking_description": "Controlla la raccolta e l'invio di heartbeat al SaulDaemon.",
+  "config_enable_reports_description": "Mostra il rapporto di Saul all'interno di VS Code.",
+  "config_enable_sensitive_telemetry_description": "Autorizza telemetria sensibile (es.: comandi del terminale).",
+  "config_api_base_description": "URL base del SaulDaemon locale.",
+  "config_pairing_key_description": "Chiave di accoppiamento condivisa con l'estensione Chrome.",
+  "config_hash_file_paths_description": "Fai hash dei percorsi dei file inviati negli heartbeat.",
+  "config_hash_project_names_description": "Fai hash dei nomi dei progetti prima di inviarli al daemon.",
+  "config_heartbeat_interval_description": "Intervallo in millisecondi tra heartbeat inviati al SaulDaemon.",
+  "config_idle_threshold_description": "Tempo massimo senza attività prima di considerare la sessione inattiva.",
+  "config_language_description": "Lingua dell'estensione VS Code (auto usa la lingua di VS Code).",
+  "config_enable_telemetry_description": "Abilita la raccolta di metriche di produttività locale (debugging, test, attività, terminale, ecc.). I dati non escono mai dalla macchina.",
+  "config_telemetry_diagnostics_interval_description": "Intervallo in secondi per campionare diagnosi (errori/warning) dai file.",
+  "config_telemetry_retention_description": "Numero di giorni per mantenere i dati di telemetria locale prima di eliminarli automaticamente."
+}

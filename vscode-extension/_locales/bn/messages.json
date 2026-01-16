@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "কোড CochD ল্যাব থেকে উদ্ধৃতি করা হয়েছে যেখানে শৌল একটি ধূমপায়ী এক্সটেনশন হিসাবে জীবন ফিরে পেয়েছিলেন।"
   },
+  "command_open_reports": {
+    "message": "সৌল গুডম্যান: রিপোর্ট খুলুন"
+  },
+  "command_start_daemon": {
+    "message": "সৌল গুডম্যান: সৌলডেমন কমান্ড প্রস্তুত করুন"
+  },
+  "command_test_daemon": {
+    "message": "সৌল গুডম্যান: সৌলডেমন এর সাথে সংযোগ পরীক্ষা করুন"
+  },
+  "config_api_base_description": {
+    "message": "স্থানীয় সৌলডেমন এর বেস URL।"
+  },
+  "config_enable_reports_description": {
+    "message": "VS কোডের মধ্যে সৌল এর রিপোর্ট প্রদর্শন করে।"
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "সংবেদনশীল টেলিমেট্রি অনুমোদন করে (যেমন: টার্মিনাল কমান্ড)।"
+  },
+  "config_enable_telemetry_description": {
+    "message": "স্থানীয় উৎপাদনশীলতা পরিমাপ সংগ্রহ সক্ষম করে (ডিবাগিং, পরীক্ষা, কাজ, টার্মিনাল, ইত্যাদি)। ডেটা কখনও মেশিন থেকে বের হয় না।"
+  },
+  "config_enable_tracking_description": {
+    "message": "সৌলডেমন এর জন্য হার্টবিট সংগ্রহ এবং প্রেরণ নিয়ন্ত্রণ করে।"
+  },
+  "config_enabled_description": {
+    "message": "স্থানীয় সৌলডেমন এর জন্য সক্রিয় সময় প্রেরণ সক্ষম করে।"
+  },
+  "config_hash_file_paths_description": {
+    "message": "হার্টবিটে প্রেরিত ফাইলের পথগুলোর হ্যাশ করে।"
+  },
+  "config_hash_project_names_description": {
+    "message": "ডেমন এ পাঠানোর আগে প্রকল্পের নামগুলোর হ্যাশ করে।"
+  },
+  "config_heartbeat_interval_description": {
+    "message": "সৌলডেমন এ প্রেরিত হার্টবিটের মধ্যে মিলিসেকেন্ডে ব্যবধান।"
+  },
+  "config_idle_threshold_description": {
+    "message": "অ্যাক্টিভিটি ছাড়া সর্বাধিক সময় যা সেশনকে নিষ্ক্রিয় হিসাবে বিবেচনা করতে হবে।"
+  },
+  "config_language_description": {
+    "message": "VS কোড এক্সটেনশনের ভাষা (অটো VS কোডের ভাষা ব্যবহার করে)।"
+  },
+  "config_pairing_key_description": {
+    "message": "ক্রোম এক্সটেনশনের সাথে শেয়ার করা পেয়ারিং কী।"
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "ফাইলের ডায়াগনস্টিক (ত্রুটি/সতর্কতা) নমুনা করার জন্য সেকেন্ডে ব্যবধান।"
+  },
+  "config_telemetry_retention_description": {
+    "message": "স্বয়ংক্রিয়ভাবে মুছে ফেলার আগে স্থানীয় টেলিমেট্রি ডেটা ধরে রাখার জন্য দিনের সংখ্যা।"
+  },
   "demoCta": {
     "message": "সম্পূর্ণ নমুনা প্রদর্শন"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "বন্ধ"
+  },
+  "log_heartbeat_failed": {
+    "message": "হার্টবিট প্রেরণে ব্যর্থ"
+  },
+  "log_publish_index_failed": {
+    "message": "সৌলডেমন এর জন্য সূচক প্রকাশে ব্যর্থ"
   },
   "manifesto1Body": {
     "message": "ব্রাউজারের মধ্যে আপনার দিন বিচার করা হবে। কোন তথ্যই কম্পিউটার ছেড়ে যায় নি, এমনকি আদালতের আদেশও না।"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "পোস্ট করা হয়নি।"
   },
+  "prepare_key_prompt": {
+    "message": "ক্রোম এক্সটেনশনে কনফিগার করা একই কী ব্যবহার করুন।"
+  },
+  "prepare_key_title": {
+    "message": "সৌল গুডম্যান: সৌলডেমন এর পেয়ারিং কী"
+  },
+  "prepare_missing_daemon": {
+    "message": "ফোল্ডার saul-daemon/index.cjs পাওয়া যায়নি। ডেমন শুরু করার আগে মূল রিপোজিটরি খুলুন।"
+  },
+  "prepare_port_prompt": {
+    "message": "ডেমন এর স্থানীয় HTTP পোর্ট।"
+  },
+  "prepare_port_title": {
+    "message": "সৌল গুডম্যান: সৌলডেমন এর পোর্ট"
+  },
+  "prepare_start_failed": {
+    "message": "সৌলডেমন শুরু করতে ব্যর্থ: {error}"
+  },
+  "prepare_started": {
+    "message": "সৌলডেমন ব্যাকগ্রাউন্ডে শুরু হয়েছে (পোর্ট {port}, কী {key})। লগ {logFile} এ।"
+  },
   "previousPost": {
     "message": "পূর্ববর্তী"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "সা. কা."
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "কনফিগারেশন খুলুন"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "ক্রোম এক্সটেনশনে কনফিগার করা একই কী লিখুন।"
+  },
+  "prompt_missing_key_title": {
+    "message": "সৌল গুডম্যান: একটি পেয়ারিং কী কনফিগার করুন"
+  },
+  "prompt_missing_key_warning": {
+    "message": "পেয়ারিং কী ছাড়া আমরা হার্টবিট প্রেরণ করব না। এখন কনফিগারেশন খুলবেন?"
   },
   "quakeBody": {
     "message": "ওভারলে ব্লক ভিলেন ট্যাব, একটি সাহসী সিতা দেখায় এবং ঐচ্ছিক সাইরেন বিস্ফোরণ করতে পারে। ( আদি."
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}•{count}রেখাংশ"
   },
+  "report_vscode_activity": {
+    "message": "অ্যাক্টিভিটি"
+  },
+  "report_vscode_branches": {
+    "message": "গিট শাখা"
+  },
+  "report_vscode_commit_activity": {
+    "message": "কমিটের অ্যাক্টিভিটি"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "আপনি দিনের মধ্যে কখন কোড কমিট করেছেন"
+  },
+  "report_vscode_commits_empty": {
+    "message": "আজ কোন কমিট রেকর্ড করা হয়নি।"
+  },
+  "report_vscode_cross_empty": {
+    "message": "ক্রস রেফারেন্সের জন্য কোন ডেটা নেই।"
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "ক্রস রেফারেন্সের জন্য কোন ডেটা নেই।"
+  },
+  "report_vscode_disabled": {
+    "message": "VS কোডের রিপোর্ট নিষ্ক্রিয়।"
+  },
+  "report_vscode_disabled_cta": {
+    "message": "অপশন খুলুন"
+  },
+  "report_vscode_editor_info": {
+    "message": "এডিটরের তথ্য"
+  },
+  "report_vscode_error": {
+    "message": "VS কোডের রিপোর্ট লোড করতে ব্যর্থ।"
+  },
+  "report_vscode_filter_all": {
+    "message": "সব"
+  },
+  "report_vscode_filter_language": {
+    "message": "ভাষা"
+  },
+  "report_vscode_filter_machine": {
+    "message": "মেশিন"
+  },
+  "report_vscode_filter_project": {
+    "message": "প্রকল্প"
+  },
+  "report_vscode_filters_title": {
+    "message": "ফিল্টার"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "ফোকাস প্যাটার্ন"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "ফোকাসের জন্য কোন ডেটা নেই।"
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "দিনের সবচেয়ে বেশি মনোযোগের সময়"
+  },
+  "report_vscode_heading": {
+    "message": "VS কোডের রিপোর্ট"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "ঘণ্টার ভিত্তিতে বিভাজন"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "প্রদর্শনের জন্য এখনও কোন ঘণ্টার ডেটা নেই।"
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "দিনের মধ্যে কার্যকলাপের বিভাজন"
+  },
+  "report_vscode_index_label": {
+    "message": "সূচক"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "সক্রিয় ফোকাস"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "নিষ্ক্রিয়"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "প্রকাস্টিনেশন"
+  },
+  "report_vscode_kpi_productive": {
+    "message": "উৎপাদনশীল"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "ট্যাব পরিবর্তন"
+  },
+  "report_vscode_languages": {
+    "message": "ভাষা"
+  },
+  "report_vscode_languages_projects": {
+    "message": "ভাষা × প্রকল্প"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "ক্রস রেফারেন্স: আপনি প্রতিটি প্রকল্পে কোন ভাষা ব্যবহার করেছেন"
+  },
+  "report_vscode_loaded": {
+    "message": "VS কোডের ডেটা সিঙ্ক্রোনাইজড।"
+  },
+  "report_vscode_loading": {
+    "message": "VS কোডের ডেটা লোড হচ্ছে..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "ডিজিটাল শাখা"
+  },
+  "report_vscode_missing_config": {
+    "message": "স্থানীয় ব্যাকএন্ড এবং VS কোডের কী কনফিগার করুন।"
+  },
+  "report_vscode_projects": {
+    "message": "প্রকল্প"
+  },
+  "report_vscode_projects_empty": {
+    "message": "প্রদর্শনের জন্য কোন প্রকল্পের ডেটা নেই।"
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "রিফ্যাক্টরিং এর অ্যাক্টিভিটি"
+  },
+  "report_vscode_refresh_button": {
+    "message": "ডেটা আপডেট করুন"
+  },
+  "report_vscode_stat_today": {
+    "message": "আজ"
+  },
+  "report_vscode_status_loading": {
+    "message": "সৌলডেমন এর ডেটা লোড হচ্ছে..."
+  },
+  "report_vscode_subtitle": {
+    "message": "এডিটরে ক্যাপচার করা সময় এবং প্রসঙ্গ।"
+  },
+  "report_vscode_summaries": {
+    "message": "সারাংশ"
+  },
+  "report_vscode_tel_builds": {
+    "message": "বিল্ড"
+  },
+  "report_vscode_tel_debug": {
+    "message": "ডিবাগ সেশন"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "ডিবাগ সেশন"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "সবচেয়ে বেশি ডিবাগ করা ফাইল"
+  },
+  "report_vscode_tel_errors": {
+    "message": "সবচেয়ে বেশি ত্রুটি সহ ফাইল"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "শীর্ষ ব্যবহৃত এক্সটেনশন"
+  },
+  "report_vscode_tel_focus": {
+    "message": "ফোকাস প্যাটার্ন"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "ফোকাসের জন্য কোন ডেটা নেই।"
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "দিনের সবচেয়ে বেশি মনোযোগের সময়"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "পোমোডোরোস"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "রিফ্যাক্টরিং এর অ্যাক্টিভিটি"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "টার্মিনাল কমান্ড"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "কোন কমান্ড রেকর্ড করা হয়নি।"
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "টার্মিনালে কার্যকরী কমান্ডের বিভাগ"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "পরীক্ষার হার"
+  },
+  "report_vscode_tel_tests": {
+    "message": "পরীক্ষার হার"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "বিকাশের বিস্তারিত পরিমাপ (100% স্থানীয়)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "উৎপাদনশীলতা ও টেলিমেট্রি"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "টার্মিনাল কমান্ড"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "কোন কমান্ড রেকর্ড করা হয়নি।"
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "টার্মিনালে কার্যকরী কমান্ডের বিভাগ"
+  },
+  "report_vscode_time_by_project": {
+    "message": "প্রকল্প অনুযায়ী সময়"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "আপনি প্রকল্পগুলির মধ্যে আপনার সময় কিভাবে বিতরণ করেছেন"
+  },
+  "report_vscode_title": {
+    "message": "সৌল গুডম্যান · VS কোড রিপোর্ট"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "সবচেয়ে বেশি ডিবাগ করা ফাইল"
+  },
+  "report_vscode_top_error_files": {
+    "message": "সবচেয়ে বেশি ত্রুটি সহ ফাইল"
+  },
+  "report_vscode_top_extensions": {
+    "message": "শীর্ষ ব্যবহৃত এক্সটেনশন"
+  },
+  "report_vscode_workspaces": {
+    "message": "কাজের স্থান"
+  },
   "rssCta": {
     "message": "RSS থেকে সাবস্ক্রাইব করুন"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "ব্লগ রেডার ম্যাপ"
   },
+  "status_disabled_text": {
+    "message": "ট্র্যাকিং বন্ধ"
+  },
+  "status_disabled_tooltip": {
+    "message": "হার্টবিট প্রেরণের জন্য ট্র্যাকিং সক্রিয় করুন"
+  },
+  "status_loading_text": {
+    "message": "সৌলডেমন যাচাই করা হচ্ছে..."
+  },
+  "status_loading_tooltip": {
+    "message": "সৌলডেমন যাচাই করা হচ্ছে"
+  },
+  "status_off_text": {
+    "message": "সৌলডেমন বন্ধ"
+  },
+  "status_off_tooltip": {
+    "message": "সৌলডেমন উপলব্ধ নয়"
+  },
+  "status_on_text": {
+    "message": "সৌলডেমন চালু{port}"
+  },
+  "status_on_tooltip": {
+    "message": "সৌলডেমন সংযুক্ত"
+  },
+  "status_port_suffix": {
+    "message": "(পোর্ট {port})"
+  },
+  "status_today_text": {
+    "message": "আজ সৌল: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "আজ সময় {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "ক্রোমের উপর ইনস্টল করুন"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "বিষয় অনুসারে"
+  },
+  "test_health_failure": {
+    "message": "সৌলডেমন {origin} এ প্রতিক্রিয়া জানায়নি: {error}"
+  },
+  "test_health_status": {
+    "message": "সৌলডেমন {origin} এ স্ট্যাটাস {status} সহ প্রতিক্রিয়া জানিয়েছে"
+  },
+  "test_health_success": {
+    "message": "সৌলডেমন {origin} এ প্রতিক্রিয়া জানিয়েছে"
   },
   "testimonial1Cite": {
     "message": "— নামবিহীন ক্লায়েন্ট"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "ব্যবহারকারী"
+  },
+  "vscode_ext_description": {
+    "message": "VS কোডের সক্রিয় সময় সৌলডেমন এ প্রেরণ করে যা ক্রোম এক্সটেনশন দ্বারা ব্যবহৃত হয়।"
+  },
+  "vscode_ext_display_name": {
+    "message": "সৌল গুডম্যান VS কোড ব্রিজ"
+  },
+  "vscode_reports_configure": {
+    "message": "ডেমন এর URL এবং পেয়ারিং কী কনফিগার করুন।"
+  },
+  "vscode_reports_disabled": {
+    "message": "রিপোর্ট নিষ্ক্রিয়"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "ডেটা দেখতে কনফিগারেশনে \"VS কোডে রিপোর্ট সক্ষম করুন\" সক্রিয় করুন।"
+  },
+  "vscode_reports_error": {
+    "message": "সৌলডেমন এর ডেটা লোড করতে ত্রুটি।"
+  },
+  "vscode_reports_filter_all": {
+    "message": "সব"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "প্রয়োগ করুন"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "পরিষ্কার করুন"
+  },
+  "vscode_reports_filter_language": {
+    "message": "ভাষা"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "মেশিন"
+  },
+  "vscode_reports_filter_project": {
+    "message": "প্রকল্প"
+  },
+  "vscode_reports_languages": {
+    "message": "ভাষা"
+  },
+  "vscode_reports_loading": {
+    "message": "সৌলডেমন এর ডেটা লোড হচ্ছে..."
+  },
+  "vscode_reports_no_data": {
+    "message": "কোন ডেটা নেই।"
+  },
+  "vscode_reports_no_records": {
+    "message": "কোন রেকর্ড নেই।"
+  },
+  "vscode_reports_projects": {
+    "message": "প্রকল্প"
+  },
+  "vscode_reports_summaries": {
+    "message": "সারাংশ"
+  },
+  "vscode_reports_synced": {
+    "message": "ডেটা সিঙ্ক্রোনাইজড।"
+  },
+  "vscode_reports_today": {
+    "message": "আজ"
   },
   "vscodeCard1Body": {
     "message": "স্থানীয় ডেমন এক্সটেনশনের সাথে কথা বলে এবং সম্পাদককে উৎপাদনশীল মিনিট হিসাবে সময় রেকর্ড করে। কিছুই লোকালহোস্ট থেকে বের হয় না, কিন্তু টাইমার কখনও ঘুমায় না।"

@@ -272,6 +272,57 @@
   "codeconVideoCaption": {
     "message": "كُلّمْ مِنْ مختبرِ الكود كون هاك حيث سول جاءَ إلى الحياةِ كa تمديد مُشَرَّد للإلهاءِ."
   },
+  "command_open_reports": {
+    "message": "سول غودمان: فتح التقارير"
+  },
+  "command_start_daemon": {
+    "message": "سول غودمان: إعداد أمر سول دايمون"
+  },
+  "command_test_daemon": {
+    "message": "سول غودمان: اختبار الاتصال بسول دايمون"
+  },
+  "config_api_base_description": {
+    "message": "عنوان URL الأساسي لسول دايمون المحلي."
+  },
+  "config_enable_reports_description": {
+    "message": "يعرض تقرير سول داخل VS Code."
+  },
+  "config_enable_sensitive_telemetry_description": {
+    "message": "يتيح جمع البيانات الحساسة (مثل: أوامر الطرفية)."
+  },
+  "config_enable_telemetry_description": {
+    "message": "يتيح جمع مقاييس الإنتاجية المحلية (تصحيح الأخطاء، الاختبارات، المهام، الطرفية، إلخ). البيانات لا تغادر الجهاز أبدًا."
+  },
+  "config_enable_tracking_description": {
+    "message": "يتحكم في جمع وإرسال نبضات القلب إلى سول دايمون."
+  },
+  "config_enabled_description": {
+    "message": "يتيح إرسال الوقت النشط إلى سول دايمون المحلي."
+  },
+  "config_hash_file_paths_description": {
+    "message": "يتم تجزئة مسارات الملفات المرسلة في نبضات القلب."
+  },
+  "config_hash_project_names_description": {
+    "message": "يتم تجزئة أسماء المشاريع قبل إرسالها إلى الدايمون."
+  },
+  "config_heartbeat_interval_description": {
+    "message": "الفترة الزمنية بالميلي ثانية بين نبضات القلب المرسلة إلى سول دايمون."
+  },
+  "config_idle_threshold_description": {
+    "message": "الحد الأقصى للوقت بدون نشاط قبل اعتبار الجلسة غير نشطة."
+  },
+  "config_language_description": {
+    "message": "لغة ملحق VS Code (تستخدم تلقائيًا لغة VS Code)."
+  },
+  "config_pairing_key_description": {
+    "message": "مفتاح الاقتران المشترك مع ملحق Chrome."
+  },
+  "config_telemetry_diagnostics_interval_description": {
+    "message": "الفترة الزمنية بالثواني لأخذ عينات من التشخيصات (الأخطاء/التحذيرات) من الملفات."
+  },
+  "config_telemetry_retention_description": {
+    "message": "عدد الأيام للاحتفاظ ببيانات القياس المحلية قبل الحذف التلقائي."
+  },
   "demoCta": {
     "message": "صورة كاملة"
   },
@@ -763,6 +814,12 @@
   },
   "lightboxClose": {
     "message": "اقترب"
+  },
+  "log_heartbeat_failed": {
+    "message": "فشل في إرسال نبض القلب"
+  },
+  "log_publish_index_failed": {
+    "message": "فشل في نشر الفهرس إلى سول دايمون"
   },
   "manifesto1Body": {
     "message": "يومك يُحكم عليه داخل المستنقع لا توجد بيانات تترك الحاسوب ولا حتى بأمر من المحكمة"
@@ -1718,6 +1775,27 @@
   "postNotFound": {
     "message": "لم يتم العثور على الوظيفة"
   },
+  "prepare_key_prompt": {
+    "message": "استخدم نفس المفتاح الذي تم تكوينه في ملحق Chrome."
+  },
+  "prepare_key_title": {
+    "message": "سول غودمان: مفتاح الاقتران لسول دايمون"
+  },
+  "prepare_missing_daemon": {
+    "message": "المجلد saul-daemon/index.cjs غير موجود. افتح المستودع الجذري قبل بدء الدايمون."
+  },
+  "prepare_port_prompt": {
+    "message": "منفذ HTTP المحلي للدايمون."
+  },
+  "prepare_port_title": {
+    "message": "سول غودمان: منفذ سول دايمون"
+  },
+  "prepare_start_failed": {
+    "message": "فشل في بدء سول دايمون: {error}"
+  },
+  "prepare_started": {
+    "message": "تم بدء سول دايمون في الخلفية (المنفذ {port}، المفتاح {key}). السجلات في {logFile}."
+  },
   "previousPost": {
     "message": "سابقا"
   },
@@ -1765,6 +1843,18 @@
   },
   "processTitle": {
     "message": "(سول) يغلق التشويش في ثلاث خطوات"
+  },
+  "prompt_missing_key_open_settings": {
+    "message": "فتح الإعدادات"
+  },
+  "prompt_missing_key_prompt": {
+    "message": "أدخل نفس المفتاح الذي تم تكوينه في ملحق Chrome."
+  },
+  "prompt_missing_key_title": {
+    "message": "سول غودمان: قم بتكوين مفتاح الاقتران"
+  },
+  "prompt_missing_key_warning": {
+    "message": "بدون مفتاح الاقتران لن نرسل نبضات القلب. هل تريد فتح الإعدادات الآن؟"
   },
   "quakeBody": {
     "message": "النفقة تحجب الشرائط الشريرة وتظهر حرف \"سي تي\" جريء ويمكنها أن تفجر صفارة الإنذار الاختيارية من المستحيل تجاهله بالضبط كما هو مخطط له"
@@ -2402,6 +2492,222 @@
   "report_timeline_summary": {
     "message": "{duration}•{count}الأجزاء"
   },
+  "report_vscode_activity": {
+    "message": "نشاط"
+  },
+  "report_vscode_branches": {
+    "message": "فروع Git"
+  },
+  "report_vscode_commit_activity": {
+    "message": "نشاط الالتزامات"
+  },
+  "report_vscode_commit_subtitle": {
+    "message": "متى قمت بالتزام الشيفرة على مدار اليوم"
+  },
+  "report_vscode_commits_empty": {
+    "message": "لا يوجد التزام مسجل اليوم."
+  },
+  "report_vscode_cross_empty": {
+    "message": "لا توجد بيانات للمرجعية المتقاطعة."
+  },
+  "report_vscode_cross_reference_empty": {
+    "message": "لا توجد بيانات للمرجعية المتقاطعة."
+  },
+  "report_vscode_disabled": {
+    "message": "تقارير VS Code معطلة."
+  },
+  "report_vscode_disabled_cta": {
+    "message": "فتح الخيارات"
+  },
+  "report_vscode_editor_info": {
+    "message": "معلومات المحرر"
+  },
+  "report_vscode_error": {
+    "message": "لم نتمكن من تحميل تقارير VS Code."
+  },
+  "report_vscode_filter_all": {
+    "message": "الكل"
+  },
+  "report_vscode_filter_language": {
+    "message": "اللغة"
+  },
+  "report_vscode_filter_machine": {
+    "message": "الآلة"
+  },
+  "report_vscode_filter_project": {
+    "message": "المشروع"
+  },
+  "report_vscode_filters_title": {
+    "message": "الفلاتر"
+  },
+  "report_vscode_focus_patterns": {
+    "message": "أنماط التركيز"
+  },
+  "report_vscode_focus_patterns_empty": {
+    "message": "لا توجد بيانات تركيز."
+  },
+  "report_vscode_focus_patterns_subtitle": {
+    "message": "ساعات اليوم ذات التركيز الأعلى"
+  },
+  "report_vscode_heading": {
+    "message": "تقارير VS Code"
+  },
+  "report_vscode_hourly_breakdown": {
+    "message": "التوزيع الساعي"
+  },
+  "report_vscode_hourly_empty": {
+    "message": "لا توجد بيانات ساعية لعرضها بعد."
+  },
+  "report_vscode_hourly_subtitle": {
+    "message": "توزيع الأنشطة على مدار اليوم"
+  },
+  "report_vscode_index_label": {
+    "message": "الفهرس"
+  },
+  "report_vscode_kpi_focus": {
+    "message": "التركيز النشط"
+  },
+  "report_vscode_kpi_inactive": {
+    "message": "غير نشط"
+  },
+  "report_vscode_kpi_procrast": {
+    "message": "تسويف"
+  },
+  "report_vscode_kpi_productive": {
+    "message": "منتج"
+  },
+  "report_vscode_kpi_switches": {
+    "message": "تبديلات التبويبات"
+  },
+  "report_vscode_languages": {
+    "message": "اللغات"
+  },
+  "report_vscode_languages_projects": {
+    "message": "اللغات × المشاريع"
+  },
+  "report_vscode_languages_projects_subtitle": {
+    "message": "مرجعية متقاطعة: ما هي اللغات التي استخدمتها في كل مشروع"
+  },
+  "report_vscode_loaded": {
+    "message": "تم مزامنة بيانات VS Code."
+  },
+  "report_vscode_loading": {
+    "message": "جارٍ تحميل بيانات VS Code..."
+  },
+  "report_vscode_logo_caption": {
+    "message": "فرع رقمي"
+  },
+  "report_vscode_missing_config": {
+    "message": "قم بتكوين الخلفية المحلية ومفتاح VS Code."
+  },
+  "report_vscode_projects": {
+    "message": "المشاريع"
+  },
+  "report_vscode_projects_empty": {
+    "message": "لا توجد بيانات مشروع لعرضها."
+  },
+  "report_vscode_refactoring_activity": {
+    "message": "نشاط إعادة الهيكلة"
+  },
+  "report_vscode_refresh_button": {
+    "message": "تحديث البيانات"
+  },
+  "report_vscode_stat_today": {
+    "message": "اليوم"
+  },
+  "report_vscode_status_loading": {
+    "message": "جارٍ تحميل بيانات سول دايمون..."
+  },
+  "report_vscode_subtitle": {
+    "message": "الوقت والسياق الملتقط في المحرر."
+  },
+  "report_vscode_summaries": {
+    "message": "ملخصات"
+  },
+  "report_vscode_tel_builds": {
+    "message": "البناءات"
+  },
+  "report_vscode_tel_debug": {
+    "message": "جلسات تصحيح الأخطاء"
+  },
+  "report_vscode_tel_debug_sessions": {
+    "message": "جلسات تصحيح الأخطاء"
+  },
+  "report_vscode_tel_debugged": {
+    "message": "الملفات الأكثر تصحيحًا"
+  },
+  "report_vscode_tel_errors": {
+    "message": "الملفات الأكثر أخطاءً"
+  },
+  "report_vscode_tel_extensions": {
+    "message": "أفضل الملحقات المستخدمة"
+  },
+  "report_vscode_tel_focus": {
+    "message": "أنماط التركيز"
+  },
+  "report_vscode_tel_focus_empty": {
+    "message": "لا توجد بيانات تركيز."
+  },
+  "report_vscode_tel_focus_subtitle": {
+    "message": "ساعات اليوم ذات التركيز الأعلى"
+  },
+  "report_vscode_tel_pomodoros": {
+    "message": "بومودورو"
+  },
+  "report_vscode_tel_refactoring": {
+    "message": "نشاط إعادة الهيكلة"
+  },
+  "report_vscode_tel_terminal": {
+    "message": "أوامر الطرفية"
+  },
+  "report_vscode_tel_terminal_empty": {
+    "message": "لا يوجد أمر مسجل."
+  },
+  "report_vscode_tel_terminal_subtitle": {
+    "message": "فئات الأوامر المنفذة في الطرفية"
+  },
+  "report_vscode_tel_test_rate": {
+    "message": "معدل الاختبارات"
+  },
+  "report_vscode_tel_tests": {
+    "message": "معدل الاختبارات"
+  },
+  "report_vscode_telemetry_subtitle": {
+    "message": "مقاييس مفصلة للتطوير (100% محلي)"
+  },
+  "report_vscode_telemetry_title": {
+    "message": "الإنتاجية والقياس"
+  },
+  "report_vscode_terminal_commands": {
+    "message": "أوامر الطرفية"
+  },
+  "report_vscode_terminal_empty": {
+    "message": "لا يوجد أمر مسجل."
+  },
+  "report_vscode_terminal_subtitle": {
+    "message": "فئات الأوامر المنفذة في الطرفية"
+  },
+  "report_vscode_time_by_project": {
+    "message": "الوقت حسب المشروع"
+  },
+  "report_vscode_time_by_project_subtitle": {
+    "message": "كيف وزعت وقتك بين المشاريع"
+  },
+  "report_vscode_title": {
+    "message": "سول غودمان · تقارير VS Code"
+  },
+  "report_vscode_top_debugged_files": {
+    "message": "الملفات الأكثر تصحيحًا"
+  },
+  "report_vscode_top_error_files": {
+    "message": "الملفات الأكثر أخطاءً"
+  },
+  "report_vscode_top_extensions": {
+    "message": "أفضل الملحقات المستخدمة"
+  },
+  "report_vscode_workspaces": {
+    "message": "مساحات العمل"
+  },
   "rssCta": {
     "message": "الاشتراك عبر RSS"
   },
@@ -2510,6 +2816,39 @@
   "statsTitle": {
     "message": "الرادار"
   },
+  "status_disabled_text": {
+    "message": "التتبع معطل"
+  },
+  "status_disabled_tooltip": {
+    "message": "قم بتمكين التتبع لإرسال نبضات القلب"
+  },
+  "status_loading_text": {
+    "message": "جارٍ التحقق من سول دايمون..."
+  },
+  "status_loading_tooltip": {
+    "message": "جارٍ التحقق من سول دايمون"
+  },
+  "status_off_text": {
+    "message": "سول دايمون مغلق"
+  },
+  "status_off_tooltip": {
+    "message": "سول دايمون غير متاح"
+  },
+  "status_on_text": {
+    "message": "سول دايمون مفتوح{port}"
+  },
+  "status_on_tooltip": {
+    "message": "سول دايمون متصل"
+  },
+  "status_port_suffix": {
+    "message": "(المنفذ {port})"
+  },
+  "status_today_text": {
+    "message": "سول اليوم: {time}"
+  },
+  "status_today_tooltip": {
+    "message": "الوقت اليوم {time}{port}"
+  },
   "stickyCtaButton": {
     "message": "تركيب على الكروم"
   },
@@ -2551,6 +2890,15 @@
   },
   "tagsTitle": {
     "message": "مواضيع النار"
+  },
+  "test_health_failure": {
+    "message": "سول دايمون لم يستجب في {origin}: {error}"
+  },
+  "test_health_status": {
+    "message": "سول دايمون استجاب بحالة {status} في {origin}"
+  },
+  "test_health_success": {
+    "message": "سول دايمون استجاب في {origin}"
   },
   "testimonial1Cite": {
     "message": "- زبون مجهول"
@@ -2653,6 +3001,66 @@
   },
   "usersBadgeLabel": {
     "message": "المستخدمون"
+  },
+  "vscode_ext_description": {
+    "message": "يرسل الوقت النشط من VS Code إلى سول دايمون المحلي المستخدم بواسطة ملحق Chrome."
+  },
+  "vscode_ext_display_name": {
+    "message": "جسر سول غودمان VS Code"
+  },
+  "vscode_reports_configure": {
+    "message": "قم بتكوين عنوان URL للدايمون ومفتاح الاقتران."
+  },
+  "vscode_reports_disabled": {
+    "message": "التقارير معطلة"
+  },
+  "vscode_reports_disabled_detail": {
+    "message": "قم بتمكين \"تمكين التقارير في VS Code\" في الإعدادات لعرض البيانات."
+  },
+  "vscode_reports_error": {
+    "message": "خطأ في تحميل بيانات سول دايمون."
+  },
+  "vscode_reports_filter_all": {
+    "message": "الكل"
+  },
+  "vscode_reports_filter_apply": {
+    "message": "تطبيق"
+  },
+  "vscode_reports_filter_clear": {
+    "message": "مسح"
+  },
+  "vscode_reports_filter_language": {
+    "message": "اللغة"
+  },
+  "vscode_reports_filter_machine": {
+    "message": "الآلة"
+  },
+  "vscode_reports_filter_project": {
+    "message": "المشروع"
+  },
+  "vscode_reports_languages": {
+    "message": "اللغات"
+  },
+  "vscode_reports_loading": {
+    "message": "جارٍ تحميل بيانات سول دايمون..."
+  },
+  "vscode_reports_no_data": {
+    "message": "لا توجد بيانات."
+  },
+  "vscode_reports_no_records": {
+    "message": "لا توجد سجلات."
+  },
+  "vscode_reports_projects": {
+    "message": "المشاريع"
+  },
+  "vscode_reports_summaries": {
+    "message": "ملخصات"
+  },
+  "vscode_reports_synced": {
+    "message": "تمت مزامنة البيانات."
+  },
+  "vscode_reports_today": {
+    "message": "اليوم"
   },
   "vscodeCard1Body": {
     "message": "يعمل الخادم المحلي مع الإضافة ويسجل الوقت في المحرر كدقائق منتجة. لا شيء يخرج من localhost، لكن المؤقت لا ينام أبداً."
