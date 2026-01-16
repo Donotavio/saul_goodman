@@ -272,6 +272,87 @@
   "codeconVideoCaption": {
     "message": "Clip from the CodeCon Hack Lab where Saul came to life as a distraction-busting extension."
   },
+  "combo_breaker_long": {
+    "message": "⚠️ Long break detected. Combo reset. Even a lawyer needs to rest."
+  },
+  "combo_breaker_medium": {
+    "message": "❌ Combo lost. But every great lawyer loses a case once in a while."
+  },
+  "combo_building_case": {
+    "message": "Building the Case"
+  },
+  "combo_closing": {
+    "message": "Closing Argument"
+  },
+  "combo_gauge_tooltip": {
+    "message": "🎯 Combo Streak: {level}x\nNext level: 25 minutes\nTotal focused time today: {time}\nClick to see details"
+  },
+  "combo_msg_1_1": {
+    "message": "Good start! But that was just the appetizer. Are we making history today?"
+  },
+  "combo_msg_1_2": {
+    "message": "25 minutes? Even my broken car can handle more than that."
+  },
+  "combo_msg_1_3": {
+    "message": "First round complete. Now comes the good part."
+  },
+  "combo_msg_2_1": {
+    "message": "50 minutes non-stop? Now you're speaking my language!"
+  },
+  "combo_msg_2_2": {
+    "message": "2x COMBO! The jury is starting to look at you with respect."
+  },
+  "combo_msg_2_3": {
+    "message": "Two in a row. Now that's building a solid case!"
+  },
+  "combo_msg_3_1": {
+    "message": "🔥 3x COMBO! OBJECTION ACCEPTED! The judge is on your side!"
+  },
+  "combo_msg_3_2": {
+    "message": "75 minutes straight?! Even Mike would be impressed."
+  },
+  "combo_msg_3_3": {
+    "message": "TRI-COMBO! Now you're not the defendant, you're the prosecutor!"
+  },
+  "combo_msg_4_1": {
+    "message": "⚡ 4x MEGA COMBO! Devastating closing argument!"
+  },
+  "combo_msg_4_2": {
+    "message": "100 minutes focused. This isn't work, it's ART!"
+  },
+  "combo_msg_4_3": {
+    "message": "QUAD-COMBO! The jury is already crying. Victory guaranteed!"
+  },
+  "combo_msg_5_1": {
+    "message": "💎 ULTRA COMBO! BETTER CALL SAUL! YOU'RE UNSTOPPABLE!"
+  },
+  "combo_msg_5_2": {
+    "message": "125+ MINUTES?! We need to frame this dedication!"
+  },
+  "combo_msg_5_3": {
+    "message": "🏆 LEGENDARY COMBO! Not even Slippin' Jimmy could do that!"
+  },
+  "combo_msg_5_4": {
+    "message": "PERFECT! Kim Wexler is taking notes!"
+  },
+  "combo_none": {
+    "message": "No combo"
+  },
+  "combo_objection": {
+    "message": "Objection Accepted!"
+  },
+  "combo_opening_statement": {
+    "message": "Opening Statement"
+  },
+  "combo_reduced": {
+    "message": "🔄 Combo reduced. Let's rebuild, that's what we do best!"
+  },
+  "combo_status_bar_suffix": {
+    "message": "{level}x COMBO"
+  },
+  "combo_ultra": {
+    "message": "BETTER CALL SAUL!"
+  },
   "command_open_reports": {
     "message": "Saul Goodman: open reports"
   },

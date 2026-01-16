@@ -272,6 +272,87 @@
   "codeconVideoCaption": {
     "message": "KodCon Hack Lab'dan gelen video, Saul'un dikkat çeken bir uzatma olarak hayata geldiği yerdir."
   },
+  "combo_breaker_long": {
+    "message": "⚠️ Uzun bir kesinti tespit edildi. Kombinasyon sıfırlandı. Avukat bile dinlenir."
+  },
+  "combo_breaker_medium": {
+    "message": "❌ Kombinasyon kaybedildi. Ama her büyük avukat bir davayı kaybeder."
+  },
+  "combo_building_case": {
+    "message": "Dava İnşası"
+  },
+  "combo_closing": {
+    "message": "Son Argüman"
+  },
+  "combo_gauge_tooltip": {
+    "message": "🎯 Kombinasyon Serisi: {level}x\nSonraki seviye: 25 dakika\nBugün toplam odaklanma süresi: {time}\nDetayları görmek için tıklayın"
+  },
+  "combo_msg_1_1": {
+    "message": "İyi başlangıç! Ama bu sadece aperatifti. Bugün tarih yazalım mı?"
+  },
+  "combo_msg_1_2": {
+    "message": "25 dakika mı? Hatta bozuk arabam bile bundan daha fazla dayanır."
+  },
+  "combo_msg_1_3": {
+    "message": "İlk tur tamamlandı. Şimdi iyi kısım geliyor."
+  },
+  "combo_msg_2_1": {
+    "message": "50 dakika durmaksızın mı? Şimdi benim dilimden konuşuyorsun!"
+  },
+  "combo_msg_2_2": {
+    "message": "2x KOMBO! Jüri artık sana saygıyla bakmaya başladı."
+  },
+  "combo_msg_2_3": {
+    "message": "İki ardışık. İşte bu, sağlam bir dava inşa etmek!"
+  },
+  "combo_msg_3_1": {
+    "message": "🔥 3x KOMBO! İTİRAZ KABUL EDİLDİ! Hakim senin yanında!"
+  },
+  "combo_msg_3_2": {
+    "message": "75 dakika kesintisiz?! Hatta Mike bile etkilenir."
+  },
+  "combo_msg_3_3": {
+    "message": "ÜÇLÜ KOMBO! Artık sanık değilsin, savcısın!"
+  },
+  "combo_msg_4_1": {
+    "message": "⚡ 4x MEGA KOMBO! Yıkıcı son argüman!"
+  },
+  "combo_msg_4_2": {
+    "message": "100 dakika odaklı. Bu iş değil, SANAT!"
+  },
+  "combo_msg_4_3": {
+    "message": "DÖRDÜLÜ KOMBO! Jüri ağlamaya başladı. Zafer garanti!"
+  },
+  "combo_msg_5_1": {
+    "message": "💎 ULTRA KOMBO! DAHA İYİ ARAYIN SAUL! SEN DURDURULAMAZSIN!"
+  },
+  "combo_msg_5_2": {
+    "message": "125+ DAKİKA?! Bu özveriyi çerçevelememiz lazım!"
+  },
+  "combo_msg_5_3": {
+    "message": "🏆 EFSANE KOMBO! Hatta Slippin' Jimmy bile bunu başaramazdı!"
+  },
+  "combo_msg_5_4": {
+    "message": "MÜKEMMEL! Kim Wexler not alıyor!"
+  },
+  "combo_none": {
+    "message": "Kombinasyon yok"
+  },
+  "combo_objection": {
+    "message": "İtiraz Kabul Edildi!"
+  },
+  "combo_opening_statement": {
+    "message": "Açılış Beyanı"
+  },
+  "combo_reduced": {
+    "message": "🔄 Kombinasyon azaltıldı. Yeniden inşa edelim, en iyi yaptığımız şey bu!"
+  },
+  "combo_status_bar_suffix": {
+    "message": "{level}x KOMBO"
+  },
+  "combo_ultra": {
+    "message": "DAHA İYİ ARAYIN SAUL!"
+  },
   "command_open_reports": {
     "message": "Saul Goodman: raporları aç"
   },

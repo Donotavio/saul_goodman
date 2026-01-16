@@ -272,6 +272,87 @@
   "codeconVideoCaption": {
     "message": "Clip du CodeCon Hack Lab où Saul est venu à la vie comme une extension distrayante."
   },
+  "combo_breaker_long": {
+    "message": "⚠️ Long break détecté. Combo réinitialisé. Même un avocat a besoin de repos."
+  },
+  "combo_breaker_medium": {
+    "message": "❌ Combo perdu. Mais tout grand avocat perd un cas de temps en temps."
+  },
+  "combo_building_case": {
+    "message": "Construire le dossier"
+  },
+  "combo_closing": {
+    "message": "Argument final"
+  },
+  "combo_gauge_tooltip": {
+    "message": "🎯 Combo Streak: {level}x\nNiveau suivant: 25 minutes\nTemps total concentré aujourd'hui: {time}\nCliquez pour voir les détails"
+  },
+  "combo_msg_1_1": {
+    "message": "Bon début ! Mais ce n'était que l'apéritif. Allons-nous faire l'histoire aujourd'hui ?"
+  },
+  "combo_msg_1_2": {
+    "message": "25 minutes ? Même ma voiture en panne tient plus que ça."
+  },
+  "combo_msg_1_3": {
+    "message": "Première manche terminée. Maintenant, la partie intéressante commence."
+  },
+  "combo_msg_2_1": {
+    "message": "50 minutes sans s'arrêter ? Là, tu parles ma langue !"
+  },
+  "combo_msg_2_2": {
+    "message": "2x COMBO ! Le jury commence à te regarder avec respect."
+  },
+  "combo_msg_2_3": {
+    "message": "Deux de suite. Ça, c'est construire un dossier solide !"
+  },
+  "combo_msg_3_1": {
+    "message": "🔥 3x COMBO ! OBJECTION ACCEPTÉE ! Le juge est de ton côté !"
+  },
+  "combo_msg_3_2": {
+    "message": "75 minutes d'affilée ? Même Mike serait impressionné."
+  },
+  "combo_msg_3_3": {
+    "message": "TRI-COMBO ! Maintenant, tu n'es plus accusé, tu es procureur !"
+  },
+  "combo_msg_4_1": {
+    "message": "⚡ 4x MEGA COMBO ! Argument final dévastateur !"
+  },
+  "combo_msg_4_2": {
+    "message": "100 minutes concentré. Ce n'est pas du travail, c'est de l'ART !"
+  },
+  "combo_msg_4_3": {
+    "message": "QUAD-COMBO ! Le jury est déjà en larmes. Victoire garantie !"
+  },
+  "combo_msg_5_1": {
+    "message": "💎 ULTRA COMBO ! MIEUX APPELER SAUL ! TU ES INARRÊTABLE !"
+  },
+  "combo_msg_5_2": {
+    "message": "125+ MINUTES ?! Nous devons encadrer cette dévotion !"
+  },
+  "combo_msg_5_3": {
+    "message": "🏆 COMBO LÉGENDAIRE ! Même Slippin' Jimmy ne pouvait pas faire ça !"
+  },
+  "combo_msg_5_4": {
+    "message": "PARFAIT ! Kim Wexler prend des notes !"
+  },
+  "combo_none": {
+    "message": "Pas de combo"
+  },
+  "combo_objection": {
+    "message": "Objection acceptée !"
+  },
+  "combo_opening_statement": {
+    "message": "Déclaration d'ouverture"
+  },
+  "combo_reduced": {
+    "message": "🔄 Combo réduit. Reconstruisons, c'est ce que nous faisons de mieux !"
+  },
+  "combo_status_bar_suffix": {
+    "message": "{level}x COMBO"
+  },
+  "combo_ultra": {
+    "message": "MIEUX APPELER SAUL !"
+  },
   "command_open_reports": {
     "message": "Saul Goodman: ouvrir les rapports"
   },

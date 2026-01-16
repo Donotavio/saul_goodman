@@ -272,6 +272,87 @@
   "codeconVideoCaption": {
     "message": "Clip aus dem CodeCon Hack Lab, wo Saul zum Leben kam als Ablenkungs-Blitz-Erweiterung."
   },
+  "combo_breaker_long": {
+    "message": "⚠️ Langer Break erkannt. Combo zurückgesetzt. Selbst ein Anwalt braucht eine Pause."
+  },
+  "combo_breaker_medium": {
+    "message": "❌ Combo verloren. Aber jeder große Anwalt verliert hin und wieder einen Fall."
+  },
+  "combo_building_case": {
+    "message": "Den Fall aufbauen"
+  },
+  "combo_closing": {
+    "message": "Schlussplädoyer"
+  },
+  "combo_gauge_tooltip": {
+    "message": "🎯 Combo Streak: {level}x\nNächstes Level: 25 Minuten\nGesamtfokuszeit heute: {time}\nKlicken Sie hier für Details"
+  },
+  "combo_msg_1_1": {
+    "message": "Guter Anfang! Aber das war nur der Appetizer. Machen wir heute Geschichte?"
+  },
+  "combo_msg_1_2": {
+    "message": "25 Minuten? Sogar mein kaputtes Auto hält länger durch."
+  },
+  "combo_msg_1_3": {
+    "message": "Erste Runde abgeschlossen. Jetzt kommt der gute Teil."
+  },
+  "combo_msg_2_1": {
+    "message": "50 Minuten ohne Pause? Jetzt sprichst du meine Sprache!"
+  },
+  "combo_msg_2_2": {
+    "message": "2x COMBO! Die Jury beginnt, dich mit Respekt anzusehen."
+  },
+  "combo_msg_2_3": {
+    "message": "Zwei hintereinander. Das ist es, was einen soliden Fall aufbaut!"
+  },
+  "combo_msg_3_1": {
+    "message": "🔥 3x COMBO! EINWAND AKZEPTIERT! Der Richter steht auf deiner Seite!"
+  },
+  "combo_msg_3_2": {
+    "message": "75 Minuten am Stück?! Sogar Mike wäre beeindruckt."
+  },
+  "combo_msg_3_3": {
+    "message": "TRI-COMBO! Jetzt bist du nicht mehr der Angeklagte, sondern der Staatsanwalt!"
+  },
+  "combo_msg_4_1": {
+    "message": "⚡ 4x MEGA COMBO! Verheerendes Schlussplädoyer!"
+  },
+  "combo_msg_4_2": {
+    "message": "100 Minuten fokussiert. Das ist keine Arbeit, das ist KUNST!"
+  },
+  "combo_msg_4_3": {
+    "message": "QUAD-COMBO! Die Jury weint bereits. Sieg garantiert!"
+  },
+  "combo_msg_5_1": {
+    "message": "💎 ULTRA COMBO! RUF SAUL AN! DU BIST UNSTOPPBARE!"
+  },
+  "combo_msg_5_2": {
+    "message": "125+ MINUTEN?! Wir müssen diese Hingabe festhalten!"
+  },
+  "combo_msg_5_3": {
+    "message": "🏆 LEGENDÄRES COMBO! Selbst Slippin' Jimmy konnte das nicht!"
+  },
+  "combo_msg_5_4": {
+    "message": "PERFEKT! Kim Wexler macht sich Notizen!"
+  },
+  "combo_none": {
+    "message": "Kein Combo"
+  },
+  "combo_objection": {
+    "message": "Einwand akzeptiert!"
+  },
+  "combo_opening_statement": {
+    "message": "Eröffnungsstatement"
+  },
+  "combo_reduced": {
+    "message": "🔄 Combo reduziert. Lass uns wieder aufbauen, das ist, was wir am besten können!"
+  },
+  "combo_status_bar_suffix": {
+    "message": "{level}x COMBO"
+  },
+  "combo_ultra": {
+    "message": "RUF SAUL AN!"
+  },
   "command_open_reports": {
     "message": "Saul Goodman: Berichte öffnen"
   },
@@ -2496,7 +2577,7 @@
     "message": "Aktivität"
   },
   "report_vscode_branches": {
-    "message": "Git Branches"
+    "message": "Git-Zweige"
   },
   "report_vscode_commit_activity": {
     "message": "Commit-Aktivität"
@@ -2706,7 +2787,7 @@
     "message": "Top verwendete Erweiterungen"
   },
   "report_vscode_workspaces": {
-    "message": "Workspaces"
+    "message": "Arbeitsbereiche"
   },
   "rssCta": {
     "message": "Abonnieren über RSS"
