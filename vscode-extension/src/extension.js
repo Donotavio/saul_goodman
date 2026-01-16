@@ -1,25 +1,13 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
-const child_process = require('child_process');
-const { fetchWithTimeout, parsePort } = require('./net-helpers');
-const apiClient = require('./apiClient');
-const { BufferedEventQueue } = require('./queue/buffered-event-queue');
-const { HeartbeatTracker } = require('./tracking/heartbeat-tracker');
-const { registerExtraEventCollectors } = require('./tracking/extra-events');
-const { createHeartbeatFactory } = require('./tracking/heartbeat-factory');
-const { GitTracker } = require('./tracking/git-tracker');
-const { EditorMetadataTracker } = require('./tracking/editor-metadata-tracker');
-const { WorkspaceTracker } = require('./tracking/workspace-tracker');
-const { DebugTracker } = require('./tracking/debug-tracker');
-const { TestTracker } = require('./tracking/test-tracker');
-const { TaskTracker } = require('./tracking/task-tracker');
-const { ExtensionTracker } = require('./tracking/extension-tracker');
-const { TerminalTracker } = require('./tracking/terminal-tracker');
-const { FocusTracker } = require('./tracking/focus-tracker');
-const { DiagnosticTracker } = require('./tracking/diagnostic-tracker');
-const { RefactorTracker } = require('./tracking/refactor-tracker');
-const { showReports } = require('./reports/report-view');
+
+// Lazy load these to avoid blocking activation
+let child_process, fetchWithTimeout, parsePort, apiClient;
+let BufferedEventQueue, HeartbeatTracker, registerExtraEventCollectors, createHeartbeatFactory;
+let GitTracker, EditorMetadataTracker, WorkspaceTracker;
+let DebugTracker, TestTracker, TaskTracker, ExtensionTracker, TerminalTracker;
+let FocusTracker, DiagnosticTracker, RefactorTracker, showReports;
 
 let statusBarItem = null;
 let statusPollTimer = null;
@@ -82,6 +70,11 @@ function loadMessages(locale) {
   const rootDir = localesRootDir || path.join(__dirname, '..', '..', '_locales');
   const filePath = path.join(rootDir, locale, 'messages.json');
   try {
+    if (!fs.existsSync(filePath)) {
+      console.warn(`[Saul i18n] Messages file not found: ${filePath}`);
+      messagesCache.set(locale, null);
+      return null;
+    }
     const raw = fs.readFileSync(filePath, 'utf8');
     const parsed = JSON.parse(raw);
     const mapped = {};
@@ -98,6 +91,23 @@ function loadMessages(locale) {
     messagesCache.set(locale, null);
     return null;
   }
+}
+
+async function warmLocaleCache() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      try {
+        const locale = getPreferredLocale();
+        loadMessages(locale);
+        if (locale !== DEFAULT_LOCALE) {
+          loadMessages(DEFAULT_LOCALE);
+        }
+      } catch (error) {
+        console.error('[Saul i18n] Failed to warm locale cache:', error);
+      }
+      resolve();
+    }, 500);
+  });
 }
 
 function formatMessage(message, params = {}) {
@@ -126,29 +136,88 @@ function formatDurationSeconds(seconds) {
 }
 
 function activate(context) {
-  localesRootDir = path.join(context.extensionPath, '_locales');
-  console.log(`[Saul i18n] Locales root dir: ${localesRootDir}`);
-  console.log(`[Saul i18n] Extension path: ${context.extensionPath}`);
-  console.log(`[Saul i18n] Preferred locale: ${getPreferredLocale()}`);
-  trackingController = new TrackingController(context);
-  void trackingController.init();
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand()),
-    vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth()),
-    vscode.commands.registerCommand('saulGoodman.openReports', () => showReports(context, readConfig, getReportI18n))
-  );
-
-  context.subscriptions.push(
-    vscode.workspace.onDidChangeConfiguration((event) => {
-      if (event.affectsConfiguration('saulGoodman')) {
-        trackingController?.reloadConfig();
-        void updateStatusBar('unknown');
+  console.log('[Saul] Activation starting...');
+  
+  try {
+    localesRootDir = path.join(context.extensionPath, '_locales');
+    
+    // Lazy load modules asynchronously to avoid blocking activation
+    setTimeout(() => {
+      try {
+        child_process = require('child_process');
+        const netHelpers = require('./net-helpers');
+        fetchWithTimeout = netHelpers.fetchWithTimeout;
+        parsePort = netHelpers.parsePort;
+        apiClient = require('./apiClient');
+        BufferedEventQueue = require('./queue/buffered-event-queue').BufferedEventQueue;
+        HeartbeatTracker = require('./tracking/heartbeat-tracker').HeartbeatTracker;
+        createHeartbeatFactory = require('./tracking/heartbeat-factory').createHeartbeatFactory;
+        registerExtraEventCollectors = require('./tracking/extra-events').registerExtraEventCollectors;
+        
+        GitTracker = require('./tracking/git-tracker').GitTracker;
+        EditorMetadataTracker = require('./tracking/editor-metadata-tracker').EditorMetadataTracker;
+        WorkspaceTracker = require('./tracking/workspace-tracker').WorkspaceTracker;
+        DebugTracker = require('./tracking/debug-tracker').DebugTracker;
+        TestTracker = require('./tracking/test-tracker').TestTracker;
+        TaskTracker = require('./tracking/task-tracker').TaskTracker;
+        ExtensionTracker = require('./tracking/extension-tracker').ExtensionTracker;
+        TerminalTracker = require('./tracking/terminal-tracker').TerminalTracker;
+        FocusTracker = require('./tracking/focus-tracker').FocusTracker;
+        DiagnosticTracker = require('./tracking/diagnostic-tracker').DiagnosticTracker;
+        RefactorTracker = require('./tracking/refactor-tracker').RefactorTracker;
+        showReports = require('./reports/report-view').showReports;
+        
+        trackingController = new TrackingController(context);
+        trackingController.init().catch(err => {
+          console.error('[Saul] Failed to initialize tracking:', err);
+        });
+      } catch (error) {
+        console.error('[Saul] Failed to load modules:', error);
       }
-    })
-  );
+    }, 100);
+    
+    // Warm locale cache
+    void warmLocaleCache();
 
-  initStatusBar(context);
+    // Register commands immediately
+    context.subscriptions.push(
+      vscode.commands.registerCommand('saulGoodman.startDaemon', () => {
+        if (!child_process) {
+          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          return;
+        }
+        void prepareDaemonCommand();
+      }),
+      vscode.commands.registerCommand('saulGoodman.testDaemon', () => {
+        if (!apiClient) {
+          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          return;
+        }
+        void testDaemonHealth();
+      }),
+      vscode.commands.registerCommand('saulGoodman.openReports', () => {
+        if (!showReports) {
+          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          return;
+        }
+        showReports(context, readConfig, getReportI18n);
+      })
+    );
+
+    context.subscriptions.push(
+      vscode.workspace.onDidChangeConfiguration((event) => {
+        if (event.affectsConfiguration('saulGoodman')) {
+          trackingController?.reloadConfig();
+          void updateStatusBar('unknown');
+        }
+      })
+    );
+
+    initStatusBar(context);
+    console.log('[Saul] Extension activated (modules loading in background)');
+  } catch (error) {
+    console.error('[Saul] Activation failed:', error);
+  }
 }
 
 function deactivate() {
@@ -254,23 +323,43 @@ class TrackingController {
   }
 
   async init() {
-    await this.queue.init();
-    this.queue.start();
-    await this.checkDailyReset();
-    await this.gitTracker.start();
-    this.editorMetadataTracker.start();
-    this.workspaceTracker.start();
-    if (this.config.enableTelemetry) {
-      this.debugTracker.start();
-      this.testTracker.start();
-      this.taskTracker.start();
-      this.extensionTracker.start();
-      this.terminalTracker.start();
-      this.focusTracker.start();
-      this.diagnosticTracker.start();
-      this.refactorTracker.start();
+    try {
+      await this.queue.init();
+      this.queue.start();
+      await this.checkDailyReset();
+      
+      // Start core trackers with staggered delays to prevent blocking
+      setTimeout(() => this.safeStart(() => this.gitTracker.start()), 100);
+      setTimeout(() => this.safeStart(() => this.editorMetadataTracker.start()), 200);
+      setTimeout(() => this.safeStart(() => this.workspaceTracker.start()), 300);
+      
+      // Start telemetry trackers with additional delays
+      if (this.config.enableTelemetry) {
+        setTimeout(() => this.safeStart(() => this.debugTracker.start()), 500);
+        setTimeout(() => this.safeStart(() => this.testTracker.start()), 600);
+        setTimeout(() => this.safeStart(() => this.taskTracker.start()), 700);
+        setTimeout(() => this.safeStart(() => this.extensionTracker.start()), 800);
+        setTimeout(() => this.safeStart(() => this.terminalTracker.start()), 900);
+        setTimeout(() => this.safeStart(() => this.focusTracker.start()), 1000);
+        setTimeout(() => this.safeStart(() => this.diagnosticTracker.start()), 1100);
+        setTimeout(() => this.safeStart(() => this.refactorTracker.start()), 1200);
+      }
+      
+      this.applyConfig();
+    } catch (error) {
+      console.error('[Saul] Failed to initialize tracking controller:', error);
     }
-    this.applyConfig();
+  }
+
+  safeStart(startFn) {
+    try {
+      const result = startFn();
+      if (result && typeof result.catch === 'function') {
+        result.catch(err => console.error('[Saul] Tracker start error:', err));
+      }
+    } catch (error) {
+      console.error('[Saul] Tracker start error:', error);
+    }
   }
 
   dispose() {

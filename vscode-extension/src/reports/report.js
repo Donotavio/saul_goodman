@@ -771,34 +771,96 @@
       'go': '#00add8',
       'rust': '#ce422b',
       'c++': '#00599c',
+      'c': '#555555',
+      'csharp': '#239120',
+      'c#': '#239120',
       'ruby': '#cc342d',
       'php': '#777bb4',
       'swift': '#fa7343',
+      'kotlin': '#7f52ff',
+      'scala': '#dc322f',
+      'elixir': '#4e2a8e',
+      'clojure': '#5881d8',
+      'haskell': '#5e5086',
+      'dart': '#0175c2',
+      'lua': '#000080',
+      'perl': '#39457e',
+      'r': '#276dc3',
+      'julia': '#9558b2',
+      'groovy': '#4298b8',
+      'objective-c': '#438eff',
       'html': '#e34c26',
       'css': '#563d7c',
+      'scss': '#c6538c',
+      'sass': '#cc6699',
+      'less': '#1d365d',
+      'vue': '#42b883',
+      'react': '#61dafb',
+      'svelte': '#ff3e00',
+      'angular': '#dd0031',
+      'jsx': '#61dafb',
+      'tsx': '#3178c6',
       'json': '#292929',
       'jsonc': '#292929',
       'markdown': '#083fa1',
       'sql': '#f29111',
+      'plsql': '#f80000',
+      'mysql': '#4479a1',
+      'postgresql': '#336791',
       'shell': '#89e051',
+      'bash': '#89e051',
+      'powershell': '#012456',
       'yaml': '#cb171e',
+      'yml': '#cb171e',
+      'toml': '#9c4221',
       'xml': '#0060ac',
+      'dockerfile': '#384d54',
+      'makefile': '#427819',
+      'cmake': '#064f8c',
+      'graphql': '#e10098',
+      'solidity': '#363636',
+      'vhdl': '#adb2cb',
+      'verilog': '#b2b7f8',
+      'coffeescript': '#244776',
+      'erlang': '#b83998',
+      'fsharp': '#b845fc',
+      'nim': '#ffe953',
+      'terraform': '#7b42bc',
+      'handlebars': '#f7931e',
       'plaintext': '#6b7280',
       'scminput': '#6b7280',
-      'log': '#6b7280',
-      'unknown': '#94a3b8'
+      'log': '#6b7280'
     };
 
-    const datasets = Array.from(allLanguages).map(language => {
+    function generateDistinctColor(index) {
+      const hues = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+      const saturations = [70, 85, 60];
+      const lightnesses = [50, 40, 60];
+      
+      const hue = hues[index % hues.length];
+      const sat = saturations[Math.floor(index / hues.length) % saturations.length];
+      const light = lightnesses[Math.floor(index / (hues.length * saturations.length)) % lightnesses.length];
+      
+      return `hsl(${hue}, ${sat}%, ${light}%)`;
+    }
+
+    const unknownLanguages = [];
+    const datasets = Array.from(allLanguages).map((language, index) => {
       const data = languagesByProject.map(proj => {
         const langData = proj.languages.find(l => l.language === language);
         return langData ? langData.minutes : 0;
       });
 
+      let color = languageColors[language.toLowerCase()];
+      if (!color) {
+        unknownLanguages.push(language);
+        color = generateDistinctColor(unknownLanguages.length - 1);
+      }
+
       return {
         label: language,
         data: data,
-        backgroundColor: languageColors[language] || '#94a3b8',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 1
       };

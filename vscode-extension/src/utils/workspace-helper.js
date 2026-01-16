@@ -1,17 +1,17 @@
-const vscode = require('vscode');
+const { window, workspace } = require('vscode');
 
 function getCurrentProjectName(documentUri = null) {
-  const activeEditor = vscode.window.activeTextEditor;
+  const activeEditor = window.activeTextEditor;
   const uri = documentUri || activeEditor?.document?.uri;
   
   if (uri) {
-    const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+    const workspaceFolder = workspace.getWorkspaceFolder(uri);
     if (workspaceFolder) {
       return workspaceFolder.name;
     }
   }
   
-  const folders = vscode.workspace.workspaceFolders || [];
+  const folders = workspace.workspaceFolders || [];
   if (folders.length > 0) {
     return folders[0].name;
   }
@@ -20,5 +20,8 @@ function getCurrentProjectName(documentUri = null) {
 }
 
 module.exports = {
+  default: {
+    getCurrentProjectName
+  },
   getCurrentProjectName
 };

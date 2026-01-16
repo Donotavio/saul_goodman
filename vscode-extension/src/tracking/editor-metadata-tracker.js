@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
 class EditorMetadataTracker {
   constructor(options) {
@@ -13,22 +13,32 @@ class EditorMetadataTracker {
   }
 
   start() {
-    this.dispose();
-    
-    console.log('[Saul Metadata] EditorMetadataTracker started');
-    
-    console.log('[Saul Metadata] EditorMetadataTracker started, will send metadata in 2 seconds');
-    
-    // VSCODE-010: Save timer references for cleanup
-    this.initialTimer = setTimeout(() => {
-      console.log('[Saul Metadata] Sending initial editor metadata...');
-      this.sendEditorMetadata();
-    }, 2000);
-    
-    this.metadataInterval = setInterval(() => {
-      console.log('[Saul Metadata] Sending periodic editor metadata...');
-      this.sendEditorMetadata();
-    }, this.METADATA_INTERVAL_MS);
+    try {
+      this.dispose();
+      console.log('[Saul Metadata] EditorMetadataTracker started, will send metadata in 5 seconds');
+      
+      // VSCODE-010: Save timer references for cleanup
+      // Increased delay to 5s to avoid blocking during startup
+      this.initialTimer = setTimeout(() => {
+        try {
+          console.log('[Saul Metadata] Sending initial editor metadata...');
+          this.sendEditorMetadata();
+        } catch (error) {
+          console.error('[Saul Metadata] Initial send error:', error);
+        }
+      }, 5000);
+      
+      this.metadataInterval = setInterval(() => {
+        try {
+          console.log('[Saul Metadata] Sending periodic editor metadata...');
+          this.sendEditorMetadata();
+        } catch (error) {
+          console.error('[Saul Metadata] Periodic send error:', error);
+        }
+      }, this.METADATA_INTERVAL_MS);
+    } catch (error) {
+      console.error('[Saul Metadata] Start failed:', error);
+    }
 
     this.disposables.push({
       dispose: () => clearInterval(this.metadataInterval)

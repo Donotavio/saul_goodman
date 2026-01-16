@@ -1,6 +1,6 @@
-const vscode = require('vscode');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
-const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
+const { window } = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
+const { getOrCreateHashSalt } = require('../utils/privacy');
 
 class TestTracker {
   constructor(options) {
@@ -13,43 +13,51 @@ class TestTracker {
   }
 
   start() {
-    console.log('[Saul Test] Test tracker started');
-    this.dispose();
+    try {
+      console.log('[Saul Test] Test tracker started');
+      this.dispose();
 
-    if (vscode.window.onDidEndTerminalShellExecution) {
-      this.disposables.push(
-        vscode.window.onDidEndTerminalShellExecution((event) => {
-          const config = this.getConfig();
-          if (!config.enableTelemetry) return;
+      if (window.onDidEndTerminalShellExecution) {
+        this.disposables.push(
+          window.onDidEndTerminalShellExecution((event) => {
+            try {
+              const config = this.getConfig();
+              if (!config.enableTelemetry) return;
 
-          const commandLine = event.execution?.commandLine?.value;
-          if (!commandLine) return;
+              const commandLine = event.execution?.commandLine?.value;
+              if (!commandLine) return;
 
-          const isTestCommand = this.isTestCommand(commandLine);
-          if (!isTestCommand) return;
+              const isTestCommand = this.isTestCommand(commandLine);
+              if (!isTestCommand) return;
 
-          const durationMs = Date.now() - (event.execution?.startTime || Date.now());
-          const exitCode = event.exitCode;
+              const durationMs = Date.now() - (event.execution?.startTime || Date.now());
+              const exitCode = event.exitCode;
 
-          const heartbeat = this.buildHeartbeat({
-            entityType: 'test_run',
-            entity: 'complete',
-            project: getCurrentProjectName(),
-            category: 'testing',
-            isWrite: false,
-            metadata: {
-              exitCode,
-              durationMs,
-              passed: exitCode === 0 ? 1 : 0,
-              failed: exitCode !== 0 ? 1 : 0,
-              skipped: 0
+              const heartbeat = this.buildHeartbeat({
+                entityType: 'test_run',
+                entity: 'complete',
+                project: getCurrentProjectName(),
+                category: 'testing',
+                isWrite: false,
+                metadata: {
+                  exitCode,
+                  durationMs,
+                  passed: exitCode === 0 ? 1 : 0,
+                  failed: exitCode !== 0 ? 1 : 0,
+                  skipped: 0
+                }
+              });
+
+              this.queue.enqueue(heartbeat);
+              console.log(`[Saul Test] Test command completed: exitCode=${exitCode}, duration=${durationMs}ms`);
+            } catch (error) {
+              console.error('[Saul Test] Shell execution error:', error);
             }
-          });
-
-          this.queue.enqueue(heartbeat);
-          console.log(`[Saul Test] Test command completed: exitCode=${exitCode}, duration=${durationMs}ms`);
-        })
-      );
+          })
+        );
+      }
+    } catch (error) {
+      console.error('[Saul Test] Start failed:', error);
     }
   }
 

@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { getOrCreateHashSalt } = require('../utils/identity');
 const { anonymizePath } = require('../utils/privacy');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
 const DEFAULT_SAMPLE_INTERVAL_SEC = 60;
 
@@ -17,26 +17,34 @@ class DiagnosticTracker {
   }
 
   start() {
-    console.log('[Saul Diagnostic] Diagnostic tracker started');
-    this.dispose();
+    try {
+      console.log('[Saul Diagnostic] Diagnostic tracker started');
+      this.dispose();
 
-    const config = this.getConfig();
-    const intervalSec = config.telemetrySampleDiagnosticsIntervalSec || DEFAULT_SAMPLE_INTERVAL_SEC;
+      const config = this.getConfig();
+      const intervalSec = config.telemetrySampleDiagnosticsIntervalSec || DEFAULT_SAMPLE_INTERVAL_SEC;
 
-    this.sampleTimer = setInterval(() => {
-      this.sampleDiagnostics();
-    }, intervalSec * 1000);
-
-    this.disposables.push({
-      dispose: () => {
-        if (this.sampleTimer) {
-          clearInterval(this.sampleTimer);
-          this.sampleTimer = null;
+      this.sampleTimer = setInterval(() => {
+        try {
+          this.sampleDiagnostics();
+        } catch (error) {
+          console.error('[Saul Diagnostic] Sample error:', error);
         }
-      }
-    });
+      }, intervalSec * 1000);
 
-    this.sampleDiagnostics();
+      this.disposables.push({
+        dispose: () => {
+          if (this.sampleTimer) {
+            clearInterval(this.sampleTimer);
+            this.sampleTimer = null;
+          }
+        }
+      });
+
+      this.sampleDiagnostics();
+    } catch (error) {
+      console.error('[Saul Diagnostic] Start failed:', error);
+    }
   }
 
   sampleDiagnostics() {

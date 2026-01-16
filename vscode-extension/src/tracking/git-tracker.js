@@ -34,18 +34,30 @@ class GitTracker {
 
       this.disposables.push(
         git.onDidOpenRepository((repo) => {
-          this.trackRepository(repo);
-          this.watchRepository(repo);
+          try {
+            this.trackRepository(repo);
+            this.watchRepository(repo);
+          } catch (error) {
+            console.error('[Saul Git] Open repository error:', error);
+          }
         }),
         git.onDidCloseRepository((repo) => {
-          const key = this.getRepoKey(repo);
-          this.repositories.delete(key);
+          try {
+            const key = this.getRepoKey(repo);
+            this.repositories.delete(key);
+          } catch (error) {
+            console.error('[Saul Git] Close repository error:', error);
+          }
         })
       );
 
       git.repositories.forEach((repo) => {
-        this.trackRepository(repo);
-        this.watchRepository(repo);
+        try {
+          this.trackRepository(repo);
+          this.watchRepository(repo);
+        } catch (error) {
+          console.error('[Saul Git] Repository iteration error:', error);
+        }
       });
     } catch (error) {
       console.error('[Saul Git] Failed to initialize:', error);
@@ -96,14 +108,14 @@ class GitTracker {
     }
 
     const repoPath = this.getRepoKey(repo);
-    const branch = repo.state?.HEAD?.name || 'unknown';
+    const branch = repo.state?.HEAD?.name || '';
     
     if (!this.repoInitTimestamps.has(repoPath)) {
       this.repoInitTimestamps.set(repoPath, Date.now());
     }
 
-    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
-      console.log('[Saul Git] Skipping heartbeat with unknown branch during init grace period');
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping heartbeat with invalid/unknown branch');
       return;
     }
 
@@ -187,10 +199,10 @@ class GitTracker {
     }
 
     const repoPath = this.getRepoKey(repo);
-    const branch = repo.state?.HEAD?.name || 'unknown';
+    const branch = repo.state?.HEAD?.name || '';
 
-    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
-      console.log('[Saul Git] Skipping state heartbeat with unknown branch during init grace period');
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping state heartbeat with invalid/unknown branch');
       return;
     }
 
@@ -249,10 +261,10 @@ class GitTracker {
       console.log(`[Saul Git] Pruned ${oldestKeys.length} old commit records`);
     }
 
-    const branch = repo.state?.HEAD?.name || 'unknown';
+    const branch = repo.state?.HEAD?.name || '';
 
-    if (this.shouldFilterUnknownBranch(repoPath, branch)) {
-      console.log('[Saul Git] Skipping commit heartbeat with unknown branch during init grace period');
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping commit heartbeat with invalid/unknown branch');
       return;
     }
 

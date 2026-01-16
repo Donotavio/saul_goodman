@@ -18,23 +18,43 @@ class HeartbeatTracker {
   }
 
   start() {
-    this.dispose();
-    this.disposables.push(
-      vscode.window.onDidChangeWindowState((state) => {
-        this.windowFocused = state.focused;
-      }),
-      vscode.window.onDidChangeActiveTextEditor((editor) => {
-        if (editor?.document) {
-          this.sendDocumentHeartbeat(editor.document, false);
-        }
-      }),
-      vscode.workspace.onDidChangeTextDocument((event) => {
-        this.sendDocumentHeartbeat(event.document, true, getLineDelta(event));
-      }),
-      vscode.workspace.onDidSaveTextDocument((document) => {
-        this.sendDocumentHeartbeat(document, true);
-      })
-    );
+    try {
+      this.dispose();
+      this.disposables.push(
+        vscode.window.onDidChangeWindowState((state) => {
+          try {
+            this.windowFocused = state.focused;
+          } catch (error) {
+            console.error('[Saul Heartbeat] Window state error:', error);
+          }
+        }),
+        vscode.window.onDidChangeActiveTextEditor((editor) => {
+          try {
+            if (editor?.document) {
+              this.sendDocumentHeartbeat(editor.document, false);
+            }
+          } catch (error) {
+            console.error('[Saul Heartbeat] Active editor error:', error);
+          }
+        }),
+        vscode.workspace.onDidChangeTextDocument((event) => {
+          try {
+            this.sendDocumentHeartbeat(event.document, true, getLineDelta(event));
+          } catch (error) {
+            console.error('[Saul Heartbeat] Text change error:', error);
+          }
+        }),
+        vscode.workspace.onDidSaveTextDocument((document) => {
+          try {
+            this.sendDocumentHeartbeat(document, true);
+          } catch (error) {
+            console.error('[Saul Heartbeat] Save document error:', error);
+          }
+        })
+      );
+    } catch (error) {
+      console.error('[Saul Heartbeat] Start failed:', error);
+    }
   }
 
   dispose() {
@@ -109,11 +129,12 @@ class HeartbeatTracker {
       metadata.branch = branch;
     }
 
+    const language = normalizeLanguageId(document.languageId);
     const heartbeat = this.buildHeartbeat({
       entityType: 'file',
       entity,
       project: projectName,
-      language: document.languageId,
+      language,
       category: 'coding',
       isWrite,
       metadata
@@ -155,6 +176,17 @@ function resolveEntity(document, workspaceFolder, config) {
     return relative || path.basename(document.uri.fsPath);
   }
   return document.uri.fsPath;
+}
+
+function normalizeLanguageId(languageId) {
+  if (!languageId || typeof languageId !== 'string') {
+    return '';
+  }
+  const normalized = languageId.trim().toLowerCase();
+  if (normalized === 'plaintext' || normalized === 'unknown' || normalized === '') {
+    return '';
+  }
+  return normalized;
 }
 
 function getLineDelta(event) {

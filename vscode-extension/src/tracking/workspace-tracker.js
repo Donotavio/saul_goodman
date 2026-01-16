@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
 class WorkspaceTracker {
   constructor(options) {
@@ -15,23 +15,40 @@ class WorkspaceTracker {
   }
 
   start() {
-    this.dispose();
-    
-    // VSCODE-010: Save timer references for cleanup
-    this.initialScanTimer = setTimeout(() => {
-      this.scanWorkspaces();
-    }, 5000);
-    
-    this.scanInterval = setInterval(() => {
-      this.scanWorkspaces();
-    }, this.SCAN_INTERVAL_MS);
+    try {
+      this.dispose();
+      
+      // VSCODE-010: Save timer references for cleanup
+      // Increased delay to 10s to avoid blocking during startup
+      this.initialScanTimer = setTimeout(() => {
+        try {
+          this.scanWorkspaces();
+        } catch (error) {
+          console.error('[Saul Workspace] Initial scan error:', error);
+        }
+      }, 10000);
+      
+      this.scanInterval = setInterval(() => {
+        try {
+          this.scanWorkspaces();
+        } catch (error) {
+          console.error('[Saul Workspace] Periodic scan error:', error);
+        }
+      }, this.SCAN_INTERVAL_MS);
 
-    this.disposables.push(
-      vscode.workspace.onDidChangeWorkspaceFolders((event) => {
-        this.trackWorkspaceChange(event);
-        this.scanWorkspaces();
-      })
-    );
+      this.disposables.push(
+        vscode.workspace.onDidChangeWorkspaceFolders((event) => {
+          try {
+            this.trackWorkspaceChange(event);
+            this.scanWorkspaces();
+          } catch (error) {
+            console.error('[Saul Workspace] Workspace change error:', error);
+          }
+        })
+      );
+    } catch (error) {
+      console.error('[Saul Workspace] Start failed:', error);
+    }
   }
 
   dispose() {

@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
 class FocusTracker {
   constructor(options) {
@@ -24,53 +24,57 @@ class FocusTracker {
 
     this.disposables.push(
       vscode.window.onDidChangeWindowState((state) => {
-        const config = this.getConfig();
-        if (!config.enableTelemetry) return;
+        try {
+          const config = this.getConfig();
+          if (!config.enableTelemetry) return;
 
-        const now = Date.now();
-        const hour = new Date(now).getHours();
-        this.lastRealActivity = now; // BUG-FIX: Update on real event
+          const now = Date.now();
+          const hour = new Date(now).getHours();
+          this.lastRealActivity = now;
 
-        if (state.focused && !this.isFocused) {
-          this.isFocused = true;
-          this.lastFocusTime = now;
+          if (state.focused && !this.isFocused) {
+            this.isFocused = true;
+            this.lastFocusTime = now;
 
-          if (this.lastBlurTime) {
-            const previousBlurDurationMs = now - this.lastBlurTime;
-            const heartbeat = this.buildHeartbeat({
-              entityType: 'window',
-              entity: 'focus',
-              project: getCurrentProjectName(),
-              category: 'coding',
-              isWrite: false,
-              metadata: {
-                hourOfDay: hour,
-                previousBlurDurationMs
-              }
-            });
-            this.queue.enqueue(heartbeat);
-            console.log(`[Saul Focus] Window focused after ${Math.round(previousBlurDurationMs / 1000)}s blur`);
+            if (this.lastBlurTime) {
+              const previousBlurDurationMs = now - this.lastBlurTime;
+              const heartbeat = this.buildHeartbeat({
+                entityType: 'window',
+                entity: 'focus',
+                project: getCurrentProjectName(),
+                category: 'coding',
+                isWrite: false,
+                metadata: {
+                  hourOfDay: hour,
+                  previousBlurDurationMs
+                }
+              });
+              this.queue.enqueue(heartbeat);
+              console.log(`[Saul Focus] Window focused after ${Math.round(previousBlurDurationMs / 1000)}s blur`);
+            }
+          } else if (!state.focused && this.isFocused) {
+            this.isFocused = false;
+            this.lastBlurTime = now;
+
+            if (this.lastFocusTime) {
+              const focusDurationMs = now - this.lastFocusTime;
+              const heartbeat = this.buildHeartbeat({
+                entityType: 'window',
+                entity: 'blur',
+                project: getCurrentProjectName(),
+                category: 'coding',
+                isWrite: false,
+                metadata: {
+                  hourOfDay: hour,
+                  focusDurationMs
+                }
+              });
+              this.queue.enqueue(heartbeat);
+              console.log(`[Saul Focus] Window blurred after ${Math.round(focusDurationMs / 1000)}s focus`);
+            }
           }
-        } else if (!state.focused && this.isFocused) {
-          this.isFocused = false;
-          this.lastBlurTime = now;
-
-          if (this.lastFocusTime) {
-            const focusDurationMs = now - this.lastFocusTime;
-            const heartbeat = this.buildHeartbeat({
-              entityType: 'window',
-              entity: 'blur',
-              project: getCurrentProjectName(),
-              category: 'coding',
-              isWrite: false,
-              metadata: {
-                hourOfDay: hour,
-                focusDurationMs
-              }
-            });
-            this.queue.enqueue(heartbeat);
-            console.log(`[Saul Focus] Window blurred after ${Math.round(focusDurationMs / 1000)}s focus`);
-          }
+        } catch (error) {
+          console.error('[Saul Focus] Window state error:', error);
         }
       })
     );

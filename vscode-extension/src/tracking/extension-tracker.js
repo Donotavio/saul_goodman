@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { getCurrentProjectName } = require('../utils/workspace-helper');
+const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
 class ExtensionTracker {
   constructor(options) {
@@ -14,36 +14,64 @@ class ExtensionTracker {
   }
 
   start() {
-    console.log('[Saul Extension] Extension tracker started');
-    this.dispose();
+    try {
+      console.log('[Saul Extension] Extension tracker started');
+      this.dispose();
 
-    this.buildCommandToExtensionMap();
-    this.captureInitialState();
-
-    this.disposables.push(
-      vscode.extensions.onDidChange(() => {
-        const config = this.getConfig();
-        if (!config.enableTelemetry) return;
-
-        this.buildCommandToExtensionMap();
-        this.checkExtensionChanges();
-      })
-    );
-
-    // VSCODE-013: Save interval reference for cleanup
-    this.commandSamplerInterval = setInterval(() => {
-      this.flushCommandStats();
-    }, 60000);
-
-    this.disposables.push({
-      dispose: () => {
-        if (this.commandSamplerInterval) {
-          clearInterval(this.commandSamplerInterval);
+      // Defer heavy initialization to avoid blocking activation
+      setTimeout(() => {
+        try {
+          this.buildCommandToExtensionMap();
+          this.captureInitialState();
+          console.log('[Saul Extension] Initial state captured');
+        } catch (error) {
+          console.error('[Saul Extension] Deferred init error:', error);
         }
-      }
-    });
+      }, 5000);
 
-    this.interceptCommands();
+      this.disposables.push(
+        vscode.extensions.onDidChange(() => {
+          try {
+            const config = this.getConfig();
+            if (!config.enableTelemetry) return;
+
+            this.buildCommandToExtensionMap();
+            this.checkExtensionChanges();
+          } catch (error) {
+            console.error('[Saul Extension] Extension change error:', error);
+          }
+        })
+      );
+
+      // VSCODE-013: Save interval reference for cleanup
+      this.commandSamplerInterval = setInterval(() => {
+        try {
+          this.flushCommandStats();
+        } catch (error) {
+          console.error('[Saul Extension] Flush stats error:', error);
+        }
+      }, 60000);
+
+      this.disposables.push({
+        dispose: () => {
+          if (this.commandSamplerInterval) {
+            clearInterval(this.commandSamplerInterval);
+          }
+        }
+      });
+
+      // Defer command interception to avoid blocking activation
+      setTimeout(() => {
+        try {
+          this.interceptCommands();
+          console.log('[Saul Extension] Command interception enabled');
+        } catch (error) {
+          console.error('[Saul Extension] Command interception error:', error);
+        }
+      }, 3000);
+    } catch (error) {
+      console.error('[Saul Extension] Start failed:', error);
+    }
   }
 
   buildCommandToExtensionMap() {

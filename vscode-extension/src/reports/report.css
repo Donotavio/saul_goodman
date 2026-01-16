@@ -411,8 +411,8 @@ button.ghost:hover {
   font-size: 2rem;
   font-weight: 800;
   margin: 10px 0 0;
-  color: var(--saul-black);
-  text-shadow: 2px 2px 0 rgba(255, 209, 102, 0.3);
+  color: #111;
+  text-shadow: none;
 }
 
 .grid-two {
