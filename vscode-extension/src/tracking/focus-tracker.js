@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class FocusTracker {
   constructor(options) {
@@ -39,6 +40,7 @@ class FocusTracker {
             const heartbeat = this.buildHeartbeat({
               entityType: 'window',
               entity: 'focus',
+              project: getCurrentProjectName(),
               category: 'coding',
               isWrite: false,
               metadata: {
@@ -58,6 +60,7 @@ class FocusTracker {
             const heartbeat = this.buildHeartbeat({
               entityType: 'window',
               entity: 'blur',
+              project: getCurrentProjectName(),
               category: 'coding',
               isWrite: false,
               metadata: {
@@ -85,6 +88,7 @@ class FocusTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'window',
           entity: 'blur',
+          project: getCurrentProjectName(),
           category: 'coding',
           isWrite: false,
           metadata: {
@@ -109,6 +113,7 @@ class FocusTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'window',
             entity: 'pomodoro_milestone',
+            project: getCurrentProjectName(),
             category: 'coding',
             isWrite: false,
             metadata: {

@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class TaskTracker {
   constructor(options) {
@@ -32,6 +33,7 @@ class TaskTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'task',
           entity: 'start',
+          project: getCurrentProjectName(),
           category: 'building',
           isWrite: false,
           metadata: {
@@ -76,6 +78,7 @@ class TaskTracker {
           const startHeartbeat = this.buildHeartbeat({
             entityType: 'task',
             entity: 'start',
+            project: getCurrentProjectName(),
             category: 'building',
             isWrite: false,
             metadata: {
@@ -104,6 +107,7 @@ class TaskTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'task',
           entity: 'process_end',
+          project: getCurrentProjectName(),
           category: 'building',
           isWrite: false,
           metadata: {

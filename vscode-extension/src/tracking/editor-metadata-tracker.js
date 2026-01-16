@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class EditorMetadataTracker {
   constructor(options) {
@@ -68,6 +69,7 @@ class EditorMetadataTracker {
     const heartbeat = this.buildHeartbeat({
       entityType: 'editor_metadata',
       entity: 'vscode',
+      project: getCurrentProjectName(),
       category: 'coding',
       isWrite: false,
       metadata

@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class ExtensionTracker {
   constructor(options) {
@@ -9,12 +10,14 @@ class ExtensionTracker {
     this.disposables = [];
     this.lastActiveExtensions = new Set();
     this.commandExecutions = new Map();
+    this.commandToExtensionMap = new Map();
   }
 
   start() {
     console.log('[Saul Extension] Extension tracker started');
     this.dispose();
 
+    this.buildCommandToExtensionMap();
     this.captureInitialState();
 
     this.disposables.push(
@@ -22,6 +25,7 @@ class ExtensionTracker {
         const config = this.getConfig();
         if (!config.enableTelemetry) return;
 
+        this.buildCommandToExtensionMap();
         this.checkExtensionChanges();
       })
     );
@@ -40,6 +44,28 @@ class ExtensionTracker {
     });
 
     this.interceptCommands();
+  }
+
+  buildCommandToExtensionMap() {
+    this.commandToExtensionMap.clear();
+    
+    vscode.extensions.all.forEach((ext) => {
+      const packageJSON = ext.packageJSON;
+      
+      if (packageJSON && packageJSON.contributes && packageJSON.contributes.commands) {
+        const commands = packageJSON.contributes.commands;
+        
+        if (Array.isArray(commands)) {
+          commands.forEach((cmd) => {
+            if (cmd.command) {
+              this.commandToExtensionMap.set(cmd.command, ext.id);
+            }
+          });
+        }
+      }
+    });
+    
+    console.log(`[Saul Extension] Built command map with ${this.commandToExtensionMap.size} commands`);
   }
 
   captureInitialState() {
@@ -64,6 +90,7 @@ class ExtensionTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'extension',
           entity: 'enable',
+          project: getCurrentProjectName(),
           category: 'extensions',
           isWrite: false,
           metadata: {
@@ -81,6 +108,7 @@ class ExtensionTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'extension',
           entity: 'disable',
+          project: getCurrentProjectName(),
           category: 'extensions',
           isWrite: false,
           metadata: {
@@ -129,16 +157,29 @@ class ExtensionTracker {
   inferExtensionFromCommand(command) {
     if (!command || typeof command !== 'string') return null;
     
+    if (this.commandToExtensionMap.has(command)) {
+      return this.commandToExtensionMap.get(command);
+    }
+    
     const parts = command.split('.');
-    if (parts.length < 2) return null;
-
-    if (command.startsWith('workbench.') || 
-        command.startsWith('editor.') ||
-        command.startsWith('vscode.')) {
+    if (parts.length < 2) {
       return 'vscode.builtin';
     }
 
-    return parts.slice(0, 2).join('.');
+    if (command.startsWith('workbench.') || 
+        command.startsWith('editor.') ||
+        command.startsWith('vscode.') ||
+        command.startsWith('_') ||
+        command.startsWith('default:') ||
+        command.startsWith('list.') ||
+        command.startsWith('notebook.') ||
+        command.startsWith('search.') ||
+        command.startsWith('explorer.') ||
+        command.startsWith('git.')) {
+      return 'vscode.builtin';
+    }
+
+    return parts[0];
   }
 
   flushCommandStats() {
@@ -161,6 +202,7 @@ class ExtensionTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'extension',
           entity: 'command_usage',
+          project: getCurrentProjectName(),
           category: 'extensions',
           isWrite: false,
           metadata: {

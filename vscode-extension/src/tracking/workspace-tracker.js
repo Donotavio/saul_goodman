@@ -1,6 +1,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class WorkspaceTracker {
   constructor(options) {
@@ -75,6 +76,7 @@ class WorkspaceTracker {
       const heartbeat = this.buildHeartbeat({
         entityType: 'workspace',
         entity: folder.uri.fsPath,
+        project: folder.name,
         category: 'coding',
         isWrite: false,
         metadata: {
@@ -186,6 +188,7 @@ class WorkspaceTracker {
     const heartbeat = this.buildHeartbeat({
       entityType: 'workspace_change',
       entity: 'workspace',
+      project: getCurrentProjectName(),
       category: 'workspace',
       isWrite: true,
       metadata: {

@@ -1,5 +1,6 @@
 const vscode = require('vscode');
 const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class RefactorTracker {
   constructor(options) {
@@ -27,6 +28,7 @@ class RefactorTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'refactor',
           entity: 'rename_files',
+          project: getCurrentProjectName(),
           category: 'refactoring',
           isWrite: false,
           metadata: {
@@ -48,6 +50,7 @@ class RefactorTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'refactor',
           entity: 'rename_files_complete',
+          project: getCurrentProjectName(),
           category: 'refactoring',
           isWrite: false,
           metadata: {
@@ -74,6 +77,7 @@ class RefactorTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'refactor',
             entity: 'apply_edit',
+            project: getCurrentProjectName(),
             category: 'refactoring',
             isWrite: false,
             metadata: {
@@ -123,6 +127,7 @@ class RefactorTracker {
               const heartbeat = this.buildHeartbeat({
                 entityType: 'refactor',
                 entity: 'code_action_available',
+                project: getCurrentProjectName(),
                 category: 'refactoring',
                 isWrite: false,
                 metadata: {

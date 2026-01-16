@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
 
 class TestTracker {
@@ -33,6 +34,7 @@ class TestTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'test_run',
             entity: 'complete',
+            project: getCurrentProjectName(),
             category: 'testing',
             isWrite: false,
             metadata: {
@@ -71,6 +73,7 @@ class TestTracker {
       const heartbeat = this.buildHeartbeat({
         entityType: 'test_run',
         entity: 'complete',
+        project: getCurrentProjectName(),
         category: 'testing',
         isWrite: false,
         metadata: {

@@ -1778,11 +1778,11 @@ function summarizeDurationsByDay(durations, startMs, endMs, filters) {
       }
       const entry = daily.get(dateKey);
       entry.totalMs += slice.durationMs;
-      incrementMap(entry.projects, duration.project || 'unknown', slice.durationMs);
-      incrementMap(entry.languages, duration.language || 'unknown', slice.durationMs);
-      incrementMap(entry.editors, duration.editor || 'vscode', slice.durationMs);
-      incrementMap(entry.categories, duration.category || 'coding', slice.durationMs);
-      incrementMap(entry.machines, duration.machineId || 'unknown', slice.durationMs);
+      incrementMap(entry.projects, duration.project ?? '', slice.durationMs);
+      incrementMap(entry.languages, duration.language ?? '', slice.durationMs);
+      incrementMap(entry.editors, duration.editor ?? 'vscode', slice.durationMs);
+      incrementMap(entry.categories, duration.category ?? 'coding', slice.durationMs);
+      incrementMap(entry.machines, duration.machineId ?? 'unknown', slice.durationMs);
     }
   }
   return daily;
@@ -1808,11 +1808,11 @@ function summarizeDurations(durations, startMs, endMs, filters) {
       continue;
     }
     summary.totalMs += overlapMs;
-    incrementMap(summary.projects, duration.project || 'unknown', overlapMs);
-    incrementMap(summary.languages, duration.language || 'unknown', overlapMs);
-    incrementMap(summary.editors, duration.editor || 'vscode', overlapMs);
-    incrementMap(summary.categories, duration.category || 'coding', overlapMs);
-    incrementMap(summary.machines, duration.machineId || 'unknown', overlapMs);
+    incrementMap(summary.projects, duration.project ?? '', overlapMs);
+    incrementMap(summary.languages, duration.language ?? '', overlapMs);
+    incrementMap(summary.editors, duration.editor ?? 'vscode', overlapMs);
+    incrementMap(summary.categories, duration.category ?? 'coding', overlapMs);
+    incrementMap(summary.machines, duration.machineId ?? 'unknown', overlapMs);
   }
   return summary;
 }
@@ -1835,8 +1835,8 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
       continue;
     }
 
-    const project = duration.project || 'unknown';
-    const language = duration.language || 'unknown';
+    const project = duration.project ?? '';
+    const language = duration.language ?? '';
     
     if (sampleDurations.length < 3) {
       sampleDurations.push({ project, language, overlapMs });

@@ -1,5 +1,7 @@
 const vscode = require('vscode');
-const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
+const { getOrCreateHashSalt } = require('../utils/identity');
+const { anonymizePath } = require('../utils/privacy');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 const DEFAULT_SAMPLE_INTERVAL_SEC = 60;
 
@@ -89,6 +91,7 @@ class DiagnosticTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'diagnostic',
           entity: 'snapshot',
+          project: getCurrentProjectName(),
           category: 'quality',
           isWrite: false,
           metadata: {

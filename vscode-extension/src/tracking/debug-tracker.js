@@ -1,5 +1,7 @@
 const vscode = require('vscode');
-const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
+const { getOrCreateHashSalt } = require('../utils/identity');
+const { anonymizePath } = require('../utils/privacy');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 
 class DebugTracker {
   constructor(options) {
@@ -28,6 +30,7 @@ class DebugTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'debug_session',
           entity: 'start',
+          project: getCurrentProjectName(),
           category: 'debugging',
           isWrite: false,
           metadata: {
@@ -50,6 +53,7 @@ class DebugTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'debug_session',
           entity: 'stop',
+          project: getCurrentProjectName(),
           category: 'debugging',
           isWrite: false,
           metadata: {
@@ -75,6 +79,7 @@ class DebugTracker {
             const heartbeat = this.buildHeartbeat({
               entityType: 'debug_breakpoint',
               entity: 'add',
+              project: getCurrentProjectName(),
               category: 'debugging',
               isWrite: false,
               metadata: {
@@ -95,6 +100,7 @@ class DebugTracker {
             const heartbeat = this.buildHeartbeat({
               entityType: 'debug_breakpoint',
               entity: 'remove',
+              project: getCurrentProjectName(),
               category: 'debugging',
               isWrite: false,
               metadata: {

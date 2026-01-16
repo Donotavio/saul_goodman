@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getCurrentProjectName } = require('../utils/workspace-helper');
 const { categorizeCommand } = require('../utils/privacy');
 
 class TerminalTracker {
@@ -28,6 +29,7 @@ class TerminalTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'terminal',
           entity: 'open',
+          project: getCurrentProjectName(),
           category: 'terminal',
           isWrite: false,
           metadata: {
@@ -49,6 +51,7 @@ class TerminalTracker {
         const heartbeat = this.buildHeartbeat({
           entityType: 'terminal',
           entity: 'close',
+          project: getCurrentProjectName(),
           category: 'terminal',
           isWrite: false,
           metadata: {
@@ -77,6 +80,7 @@ class TerminalTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'terminal',
             entity: 'command_start',
+            project: getCurrentProjectName(),
             category: 'terminal',
             isWrite: false,
             metadata: {
@@ -104,6 +108,7 @@ class TerminalTracker {
           const heartbeat = this.buildHeartbeat({
             entityType: 'terminal',
             entity: 'command_end',
+            project: getCurrentProjectName(),
             category: 'terminal',
             isWrite: false,
             metadata: {
