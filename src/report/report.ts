@@ -441,11 +441,12 @@ async function refreshVscodeReport(): Promise<void> {
   } catch (error) {
     console.error('Falha ao buscar dados do VS Code:', error);
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
-    console.error('Detalhes:', {
+    const details = {
       baseUrl: latestSettings?.vscodeLocalApiUrl,
       hasPairingKey: !!latestSettings?.vscodePairingKey,
       error: errorMessage
-    });
+    };
+    console.error('Detalhes:', JSON.stringify(details, null, 2));
     
     if (errorMessage.includes('Failed to fetch') || errorMessage.includes('fetch')) {
       setVscodeReportStatus(
@@ -3211,11 +3212,24 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
       for (const segment of splitDurationByHour(startTime, duration)) {
         const bucket = hourly[segment.hour];
         if (bucket) {
-          bucket.productiveMs += segment.milliseconds;
-          const total = bucket.productiveMs + bucket.procrastinationMs + bucket.inactiveMs + bucket.neutralMs;
           const MAX_HOUR_MS = 60 * 60 * 1000;
-          if (total > MAX_HOUR_MS * 1.1 && !warnedHours.has(segment.hour)) {
-            console.warn(`[Saul] Hour ${segment.hour} total (${(total / 60000).toFixed(1)}min) exceeds 60min - possible overlap`);
+          const currentTotal = bucket.productiveMs + bucket.procrastinationMs + bucket.inactiveMs + bucket.neutralMs;
+          const remaining = Math.max(0, MAX_HOUR_MS - currentTotal);
+          
+          // Clamp VS Code time to prevent exceeding 60min per hour
+          const vsCodeContribution = Math.min(segment.milliseconds, remaining);
+          
+          if (vsCodeContribution > 0) {
+            bucket.productiveMs += vsCodeContribution;
+          }
+          
+          // Warn if daemon returned overlapping data
+          if (segment.milliseconds > remaining && !warnedHours.has(segment.hour)) {
+            console.warn(
+              `[Saul] Hour ${segment.hour}: daemon returned ${(segment.milliseconds / 60000).toFixed(1)}min VS Code time, ` +
+              `but only ${(remaining / 60000).toFixed(1)}min available. Clamping to prevent overlap. ` +
+              `This indicates duplicate heartbeats in daemon - delete vscode-tracking.json and restart.`
+            );
             warnedHours.add(segment.hour);
           }
         }

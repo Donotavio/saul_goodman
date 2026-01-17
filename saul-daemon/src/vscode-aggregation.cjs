@@ -166,6 +166,10 @@ function mergeMetadata(target, source) {
 }
 
 function getGroupKey(heartbeat) {
+  // Use sessionId from metadata as additional differentiator when language is empty
+  const sessionId = heartbeat.metadata?.sessionId || '';
+  const workspaceId = heartbeat.metadata?.workspaceId || '';
+  
   return [
     heartbeat.machineId || '',
     heartbeat.project || '',
@@ -173,7 +177,10 @@ function getGroupKey(heartbeat) {
     heartbeat.entity || '',
     heartbeat.language || '',
     heartbeat.category || '',
-    heartbeat.editor || ''
+    heartbeat.editor || '',
+    // Add sessionId and workspaceId to prevent over-grouping when language is empty
+    sessionId,
+    workspaceId
   ].join('|');
 }
 
