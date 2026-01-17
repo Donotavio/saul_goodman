@@ -519,6 +519,33 @@ function normalizeMetadata(metadata) {
   if (typeof metadata.commitMessage === 'string') {
     normalized.commitMessage = metadata.commitMessage;
   }
+  
+  // Combo fields
+  if (Number.isFinite(Number(metadata.currentLevel))) {
+    normalized.currentLevel = Number(metadata.currentLevel);
+  }
+  if (Number.isFinite(Number(metadata.consecutivePomodoros))) {
+    normalized.consecutivePomodoros = Number(metadata.consecutivePomodoros);
+  }
+  if (Number.isFinite(Number(metadata.maxComboToday))) {
+    normalized.maxComboToday = Number(metadata.maxComboToday);
+  }
+  if (Number.isFinite(Number(metadata.totalCombosToday))) {
+    normalized.totalCombosToday = Number(metadata.totalCombosToday);
+  }
+  if (Number.isFinite(Number(metadata.lifetimeMaxCombo))) {
+    normalized.lifetimeMaxCombo = Number(metadata.lifetimeMaxCombo);
+  }
+  if (Number.isFinite(Number(metadata.totalMinutes))) {
+    normalized.totalMinutes = Number(metadata.totalMinutes);
+  }
+  if (Array.isArray(metadata.comboTimeline)) {
+    normalized.comboTimeline = metadata.comboTimeline;
+  }
+  if (typeof metadata.eventType === 'string') {
+    normalized.eventType = metadata.eventType;
+  }
+  
   return normalized;
 }
 
