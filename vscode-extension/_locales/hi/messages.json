@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "क्रॉस संदर्भ के लिए कोई डेटा नहीं।"
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code डेमॉन सक्रिय नहीं है। VS Code एक्सटेंशन में डेमॉन सक्षम करें और पुनः प्रयास करें।"
+  },
   "report_vscode_disabled": {
     "message": "VS कोड की रिपोर्टें अक्षम हैं।"
   },

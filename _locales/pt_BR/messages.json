@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "Sem dados para referência cruzada."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "Daemon do VS Code nao esta ativo. Ative o daemon na extensao VS Code e tente novamente."
+  },
   "report_vscode_disabled": {
     "message": "Relatorios do VS Code estao desativados."
   },

@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "没有交叉引用数据。"
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code守护进程未激活。请在VS Code扩展中启用守护进程，然后重试。"
+  },
   "report_vscode_disabled": {
     "message": "VS Code报告已禁用。"
   },

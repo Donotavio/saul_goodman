@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "Çapraz referans için veri yok."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code daemon'u aktif değil. VS Code uzantısında daemon'u etkinleştirin ve tekrar deneyin."
+  },
   "report_vscode_disabled": {
     "message": "VS Code raporları devre dışı."
   },

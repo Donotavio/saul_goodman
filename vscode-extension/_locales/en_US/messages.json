@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "No data to cross-reference."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code daemon is not active. Enable the daemon in the VS Code extension and try again."
+  },
   "report_vscode_disabled": {
     "message": "VS Code reports are disabled."
   },

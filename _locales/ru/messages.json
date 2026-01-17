@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "Нет данных для перекрестной ссылки."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "Демон VS Code не активен. Включите демон в расширении VS Code и попробуйте снова."
+  },
   "report_vscode_disabled": {
     "message": "Отчеты VS Code отключены."
   },

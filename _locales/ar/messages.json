@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "لا توجد بيانات للمرجعية المتقاطعة."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "خدمة VS Code غير نشطة. قم بتنشيط الخدمة في ملحق VS Code وحاول مرة أخرى."
+  },
   "report_vscode_disabled": {
     "message": "تقارير VS Code معطلة."
   },

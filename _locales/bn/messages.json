@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "ক্রস রেফারেন্সের জন্য কোন ডেটা নেই।"
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code ডেমন সক্রিয় নয়। VS Code এক্সটেনশনে ডেমন সক্ষম করুন এবং আবার চেষ্টা করুন।"
+  },
   "report_vscode_disabled": {
     "message": "VS কোডের রিপোর্ট নিষ্ক্রিয়।"
   },

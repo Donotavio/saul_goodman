@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "کراس ریفرنس کے لئے کوئی ڈیٹا نہیں."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code ڈیمن فعال نہیں ہے۔ VS Code ایکسٹینشن میں ڈیمن کو فعال کریں اور دوبارہ کوشش کریں۔"
+  },
   "report_vscode_disabled": {
     "message": "VS Code کی رپورٹس غیر فعال ہیں."
   },

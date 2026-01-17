@@ -2615,6 +2615,9 @@
   "report_vscode_cross_reference_empty": {
     "message": "Keine Daten für die Kreuzreferenz."
   },
+  "report_vscode_daemon_inactive": {
+    "message": "VS Code Daemon ist nicht aktiv. Aktivieren Sie den Daemon in der VS Code-Erweiterung und versuchen Sie es erneut."
+  },
   "report_vscode_disabled": {
     "message": "Berichte von VS Code sind deaktiviert."
   },
