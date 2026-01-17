@@ -1364,10 +1364,6 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
   const filteredHeartbeats = heartbeats.filter(hb => hb.time >= startMs && hb.time < endMs);
   
   const comboHeartbeats = filteredHeartbeats.filter(hb => hb.entityType === 'combo');
-  console.log(`[Daemon Combo] Found ${comboHeartbeats.length} combo heartbeats in date range`);
-  if (comboHeartbeats.length > 0) {
-    console.log('[Daemon Combo] Sample combo heartbeat:', comboHeartbeats[0]);
-  }
 
   filteredHeartbeats.forEach(hb => {
     const entityType = hb.entityType;
@@ -1500,15 +1496,6 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
     }
 
     if (entityType === 'combo') {
-      console.log('[Daemon Combo] Processing combo heartbeat:', {
-        entity: hb.entity,
-        time: new Date(hb.time).toISOString(),
-        metadata: {
-          maxComboToday: metadata.maxComboToday,
-          totalCombosToday: metadata.totalCombosToday,
-          consecutivePomodoros: metadata.consecutivePomodoros
-        }
-      });
       
       // Processar TODOS os tipos de eventos de combo
       const maxComboToday = metadata.maxComboToday || 0;
@@ -1650,7 +1637,6 @@ function handleVscodeDashboard(req, res, url) {
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
   const hourly = summarizeDurationsByHour(entry.durations, startMs, endMs, filters);
   const languagesByProject = summarizeLanguagesByProject(entry.durations, startMs, endMs, filters);
-  console.log('[saul-daemon] Hourly data:', hourly ? `${hourly.length} hours` : 'null/undefined');
 
   let totalCommits = 0;
   let totalFilesChanged = 0;
@@ -1659,30 +1645,15 @@ function handleVscodeDashboard(req, res, url) {
 
   const commitHeartbeats = entry.heartbeats.filter((hb) => hb.entityType === 'commit' && hb.time >= startMs && hb.time < endMs);
   
-  console.log(`[saul-daemon] Processing ${commitHeartbeats.length} commit heartbeats`);
-  
-  commitHeartbeats.forEach((hb, idx) => {
+  commitHeartbeats.forEach((hb) => {
     totalCommits++;
     const files = hb.metadata?.filesChanged || 0;
     const added = hb.metadata?.linesAdded || 0;
     const deleted = hb.metadata?.linesDeleted || 0;
     
-    if (idx < 5) {
-      console.log(`[saul-daemon] Commit ${idx + 1} full metadata:`, JSON.stringify(hb.metadata, null, 2));
-      console.log(`[saul-daemon] Commit ${idx + 1} extracted:`, { files, added, deleted });
-    }
-    
     totalFilesChanged += files;
     totalLinesAdded += added;
     totalLinesDeleted += deleted;
-  });
-
-  console.log(`[saul-daemon] Git totals: commits=${totalCommits}, files=${totalFilesChanged}, +${totalLinesAdded}, -${totalLinesDeleted}`);
-  console.log(`[saul-daemon] Response git object:`, {
-    totalCommits,
-    totalFilesChanged,
-    totalLinesAdded,
-    totalLinesDeleted
   });
 
   const branchMap = new Map();
@@ -1961,10 +1932,6 @@ function summarizeDurations(durations, startMs, endMs, filters) {
 function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
   const projectMap = new Map();
   
-  console.log(`[saul-daemon] summarizeLanguagesByProject: Processing ${durations.length} durations`);
-  let validCount = 0;
-  let sampleDurations = [];
-  
   for (const duration of durations) {
     if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
       continue;
@@ -1999,10 +1966,6 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
     langMap.set(language, (langMap.get(language) || 0) + overlapMs);
   }
 
-  console.log(`[saul-daemon] Valid durations: ${validCount}`);
-  console.log(`[saul-daemon] Sample durations:`, sampleDurations);
-  console.log(`[saul-daemon] Projects found: ${projectMap.size}`);
-
   const result = [];
   for (const [project, langMap] of projectMap.entries()) {
     const languages = [];
@@ -2027,11 +1990,7 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
   }
   
   result.sort((a, b) => b.totalSeconds - a.totalSeconds);
-  const finalResult = result.slice(0, 5);
-  
-  console.log(`[saul-daemon] languagesByProject result:`, JSON.stringify(finalResult, null, 2));
-  
-  return finalResult;
+  return result.slice(0, 5);
 }
 
 function summarizeDurationsByHour(durations, startMs, endMs, filters) {

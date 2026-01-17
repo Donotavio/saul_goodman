@@ -39,7 +39,6 @@ class ComboTracker {
   }
 
   async start() {
-    console.log('[Saul Combo] Combo tracker started');
     await this.loadState();
     await this.checkDailyReset();
   }
@@ -100,8 +99,6 @@ class ComboTracker {
       isUltra: this.currentLevel >= 5,
       totalMinutes: this.consecutivePomodoros * 25
     });
-    
-    console.log(`[Saul Combo] Pomodoro completed! Level: ${this.currentLevel}, Streak: ${this.consecutivePomodoros}`);
   }
 
   /**
@@ -110,14 +107,12 @@ class ComboTracker {
   async handleBreak(breakDuration) {
     if (breakDuration <= this.breakThresholds.short) {
       // Break curto - mantém combo
-      console.log('[Saul Combo] Short break - combo maintained');
       return;
     } else if (breakDuration <= this.breakThresholds.medium) {
       // Break médio - reduz 1 nível
       if (this.consecutivePomodoros > 0) {
         this.consecutivePomodoros = Math.max(0, this.consecutivePomodoros - 1);
         this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
-        console.log('[Saul Combo] Medium break - combo reduced by 1');
         
         // Registrar evento na timeline
         this.comboTimeline.push({
@@ -140,7 +135,6 @@ class ComboTracker {
     } else {
       // Break longo - reset completo
       if (this.consecutivePomodoros > 0) {
-        console.log('[Saul Combo] Long break - combo reset');
         
         const oldLevel = this.currentLevel;
         const oldPomodoros = this.consecutivePomodoros;
@@ -249,16 +243,6 @@ class ComboTracker {
       this.maxComboToday = state.maxComboToday || 0;
       this.lifetimeMaxCombo = state.lifetimeMaxCombo || 0;
       this.comboTimeline = state.comboTimeline || [];
-      
-      console.log('[Saul Combo] State loaded:', {
-        currentLevel: this.currentLevel,
-        consecutivePomodoros: this.consecutivePomodoros,
-        maxComboToday: this.maxComboToday,
-        totalCombosToday: this.totalCombosToday,
-        lifetimeMaxCombo: this.lifetimeMaxCombo,
-        timelineEvents: this.comboTimeline.length,
-        lastSaveDate: state.lastSaveDate
-      });
     }
   }
 
@@ -270,7 +254,6 @@ class ComboTracker {
     const today = new Date().toISOString().slice(0, 10);
     
     if (state && state.lastSaveDate !== today) {
-      console.log('[Saul Combo] New day detected - resetting daily stats');
       this.consecutivePomodoros = 0;
       this.currentLevel = 0;
       this.lastPomodoroTime = null;
@@ -314,15 +297,6 @@ class ComboTracker {
     });
 
     this.queue.enqueue(heartbeat);
-    console.log(`[Saul Combo] ✓ Heartbeat enqueued: ${eventType}`);
-    console.log(`[Saul Combo] Heartbeat details:`, {
-      entityType: 'combo',
-      entity: eventType,
-      level: this.currentLevel,
-      streak: this.consecutivePomodoros,
-      maxToday: this.maxComboToday,
-      timelineEvents: this.comboTimeline.length
-    });
   }
 
   /**

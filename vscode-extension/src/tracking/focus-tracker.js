@@ -20,17 +20,6 @@ class FocusTracker {
   }
 
   start() {
-    const config = this.getConfig();
-    console.log('[Saul Focus] Starting with config:', {
-      enableTelemetry: config.enableTelemetry,
-      pomodoroTestMode: config.pomodoroTestMode
-    });
-    
-    if (!config.enableTelemetry) {
-      console.log('[Saul Focus] ⚠️ TELEMETRY DISABLED - Pomodoro checks will NOT run');
-    }
-    
-    console.log('[Saul Focus] Focus tracker started');
     this.dispose();
 
     this.lastFocusTime = Date.now();
@@ -63,7 +52,6 @@ class FocusTracker {
                 }
               });
               this.queue.enqueue(heartbeat);
-              console.log(`[Saul Focus] Window focused after ${Math.round(previousBlurDurationMs / 1000)}s blur`);
             }
           } else if (!state.focused && this.isFocused) {
             this.isFocused = false;
@@ -83,7 +71,6 @@ class FocusTracker {
                 }
               });
               this.queue.enqueue(heartbeat);
-              console.log(`[Saul Focus] Window blurred after ${Math.round(focusDurationMs / 1000)}s focus`);
             }
           }
         } catch (error) {
@@ -99,7 +86,6 @@ class FocusTracker {
         this.lastRealActivity = Date.now();
         return originalQueueHeartbeat(document, isWrite, delta);
       };
-      console.log('[Saul Focus] Connected to HeartbeatTracker for real activity detection');
     }
 
     this.inactivityCheckInterval = setInterval(() => {
@@ -124,16 +110,12 @@ class FocusTracker {
           }
         });
         this.queue.enqueue(heartbeat);
-        console.log(`[Saul Focus] Window blurred after ${Math.round(inactivityDurationMs / 1000)}s inactivity`);
       }
     }, 60000);
 
     this.pomodoroInterval = setInterval(() => {
       const config = this.getConfig();
-      if (!config.enableTelemetry) {
-        console.log('[Saul Focus] ⚠️ Check skipped - telemetry disabled');
-        return;
-      }
+      if (!config.enableTelemetry) return;
 
       if (this.isFocused && this.lastFocusTime) {
         const focusDurationMs = Date.now() - this.lastFocusTime;
@@ -141,8 +123,6 @@ class FocusTracker {
         
         // Modo de teste: 1 minuto | Produção: 25 minutos
         const pomodoroInterval = config.pomodoroTestMode ? 1 : 25;
-        
-        console.log(`[Saul Focus] ✓ Check: ${focusMinutes} min | interval: ${pomodoroInterval} | testMode: ${config.pomodoroTestMode} | focused: ${this.isFocused}`);
 
         if (focusMinutes > 0 && focusMinutes % pomodoroInterval === 0 && focusMinutes !== this.lastPomodoroMinutes) {
           this.lastPomodoroMinutes = focusMinutes;
@@ -160,7 +140,6 @@ class FocusTracker {
           });
 
           this.queue.enqueue(heartbeat);
-          console.log(`[Saul Focus] Pomodoro milestone: ${focusMinutes} minutes`);
           
           // Notificar ComboTracker
           if (this.comboTracker) {
