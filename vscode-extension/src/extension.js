@@ -188,7 +188,7 @@ function activate(context) {
       vscode.commands.registerCommand('saulGoodman.startDaemon', () => {
         trackingController?.trackOwnCommand('saulGoodman.startDaemon');
         if (!child_process) {
-          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
           return;
         }
         void prepareDaemonCommand();
@@ -196,7 +196,7 @@ function activate(context) {
       vscode.commands.registerCommand('saulGoodman.testDaemon', () => {
         trackingController?.trackOwnCommand('saulGoodman.testDaemon');
         if (!apiClient) {
-          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
           return;
         }
         void testDaemonHealth();
@@ -204,7 +204,7 @@ function activate(context) {
       vscode.commands.registerCommand('saulGoodman.openReports', () => {
         trackingController?.trackOwnCommand('saulGoodman.openReports');
         if (!showReports) {
-          vscode.window.showWarningMessage('Saul Goodman is still loading...');
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
           return;
         }
         showReports(context, readConfig, getReportI18n);
@@ -214,17 +214,17 @@ function activate(context) {
       }),
       vscode.commands.registerCommand('saulGoodman.resetCombo', async () => {
         const answer = await vscode.window.showWarningMessage(
-          'Tem certeza que deseja resetar o combo? Esta ação não pode ser desfeita.',
+          localize('vscode_combo_reset_confirm'),
           { modal: true },
-          'Sim, Resetar',
-          'Cancelar'
+          localize('vscode_combo_reset_yes'),
+          localize('vscode_combo_reset_cancel')
         );
 
-        if (answer === 'Sim, Resetar') {
+        if (answer === localize('vscode_combo_reset_yes')) {
           if (trackingController && trackingController.comboTracker) {
             await trackingController.comboTracker.resetCombo();
             await context.globalState.update('sg:combo:state', undefined);
-            vscode.window.showInformationMessage('Combo resetado com sucesso!');
+            vscode.window.showInformationMessage(localize('vscode_combo_reset_success'));
             console.log('[Saul Combo] Manual reset completed');
           }
         }
@@ -437,11 +437,11 @@ class TrackingController {
     if (!this.config.enableTelemetry) {
       setTimeout(() => {
         vscode.window.showWarningMessage(
-          '🎯 Pomodoro Combo System desabilitado. Para usar, ative a telemetria nas configurações.',
-          'Ativar Agora',
-          'Mais Tarde'
+          localize('vscode_pomodoro_disabled_warning'),
+          localize('vscode_pomodoro_enable_now'),
+          localize('vscode_pomodoro_enable_later')
         ).then(choice => {
-          if (choice === 'Ativar Agora') {
+          if (choice === localize('vscode_pomodoro_enable_now')) {
             vscode.commands.executeCommand('saulGoodman.setupPomodoro');
           }
         });
@@ -454,50 +454,50 @@ class TrackingController {
     const telemetryEnabled = config.get('enableTelemetry', false);
     const testModeEnabled = config.get('pomodoroTestMode', false);
     
-    let message = '🎯 Configuração do Pomodoro Combo System\n\n';
+    let message = localize('vscode_pomodoro_setup_title');
     
     if (!telemetryEnabled) {
-      message += '❌ Telemetria: DESABILITADA (pomodoros não funcionarão)\n';
+      message += localize('vscode_pomodoro_telemetry_disabled');
     } else {
-      message += '✅ Telemetria: ATIVA\n';
+      message += localize('vscode_pomodoro_telemetry_enabled');
     }
     
     if (testModeEnabled) {
-      message += '✅ Test Mode: ATIVO (1 min por pomodoro)\n';
+      message += localize('vscode_pomodoro_testmode_enabled');
     } else {
-      message += '⚪ Test Mode: DESATIVO (25 min por pomodoro)\n';
+      message += localize('vscode_pomodoro_testmode_disabled');
     }
     
-    message += '\nO que deseja fazer?';
+    message += localize('vscode_pomodoro_what_to_do');
     
     const choices = [];
     if (!telemetryEnabled) {
-      choices.push('✅ Ativar Telemetria');
+      choices.push(localize('vscode_pomodoro_enable_telemetry'));
     }
     if (!testModeEnabled) {
-      choices.push('⚡ Ativar Test Mode (1 min)');
+      choices.push(localize('vscode_pomodoro_enable_testmode'));
     }
     if (!telemetryEnabled || !testModeEnabled) {
-      choices.push('🚀 Ativar Tudo');
+      choices.push(localize('vscode_pomodoro_enable_all'));
     }
-    choices.push('⚙️ Abrir Settings', 'Cancelar');
+    choices.push(localize('vscode_pomodoro_open_settings'), localize('vscode_combo_reset_cancel'));
     
     const choice = await vscode.window.showInformationMessage(message, { modal: true }, ...choices);
     
-    if (choice === '✅ Ativar Telemetria') {
+    if (choice === localize('vscode_pomodoro_enable_telemetry')) {
       await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage('✅ Telemetria ativada! Recarregue a janela para aplicar.');
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_telemetry_activated'));
       await vscode.commands.executeCommand('workbench.action.reloadWindow');
-    } else if (choice === '⚡ Ativar Test Mode (1 min)') {
+    } else if (choice === localize('vscode_pomodoro_enable_testmode')) {
       await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage('✅ Test Mode ativado! Recarregue a janela para aplicar.');
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_testmode_activated'));
       await vscode.commands.executeCommand('workbench.action.reloadWindow');
-    } else if (choice === '🚀 Ativar Tudo') {
+    } else if (choice === localize('vscode_pomodoro_enable_all')) {
       await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
       await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage('✅ Todas as configurações ativadas! Recarregando...');
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_all_activated'));
       await vscode.commands.executeCommand('workbench.action.reloadWindow');
-    } else if (choice === '⚙️ Abrir Settings') {
+    } else if (choice === localize('vscode_pomodoro_open_settings')) {
       await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman');
     }
   }
@@ -774,7 +774,7 @@ async function prepareDaemonCommand() {
   }
   const parsedPort = parsePort(portInput.trim() || '3123');
   if (!parsedPort) {
-    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: 'Porta invalida (1-65535)' }));
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: localize('prepare_port_invalid') }));
     return;
   }
   const port = String(parsedPort);

@@ -17,5 +17,9 @@
   "config_language_description": "VS Code uzantısının dili (oto, VS Code'un dilini kullanır).",
   "config_enable_telemetry_description": "Yerel verimlilik ölçümlerinin toplanmasını etkinleştirir (hata ayıklama, testler, görevler, terminal, vb.). Veriler asla makineden çıkmaz.",
   "config_telemetry_diagnostics_interval_description": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden).",
-  "config_telemetry_retention_description": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı."
+  "config_telemetry_retention_description": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı.",
+  "config_pomodoro_test_mode_description": "Pomodoro için test modunu etkinleştirir (25 yerine döngü başına 1 dakika).",
+  "config_inactivity_timeout_description": "Etkin olmayan olarak işaretlemeden önce milisaniye cinsinden etkinlik olmadan maksimum süre.",
+  "command_setup_pomodoro": "Saul Goodman: Pomodoro sistemini yapılandır",
+  "command_reset_combo": "Saul Goodman: komboyu sıfırla"
 }

@@ -17,5 +17,9 @@
   "config_language_description": "لغة ملحق VS Code (تستخدم تلقائيًا لغة VS Code).",
   "config_enable_telemetry_description": "يتيح جمع مقاييس الإنتاجية المحلية (تصحيح الأخطاء، الاختبارات، المهام، الطرفية، إلخ). البيانات لا تغادر الجهاز أبدًا.",
   "config_telemetry_diagnostics_interval_description": "الفترة الزمنية بالثواني لأخذ عينات من التشخيصات (الأخطاء/التحذيرات) من الملفات.",
-  "config_telemetry_retention_description": "عدد الأيام للاحتفاظ ببيانات القياس المحلية قبل الحذف التلقائي."
+  "config_telemetry_retention_description": "عدد الأيام للاحتفاظ ببيانات القياس المحلية قبل الحذف التلقائي.",
+  "config_pomodoro_test_mode_description": "يتيح وضع الاختبار لبومودورو (دقيقة واحدة لكل دورة بدلاً من 25).",
+  "config_inactivity_timeout_description": "الحد الأقصى للوقت بالميلي ثانية بدون نشاط قبل وضع علامة غير نشط.",
+  "command_setup_pomodoro": "سول غودمان: تكوين نظام بومودورو",
+  "command_reset_combo": "سول غودمان: إعادة تعيين الكومبو"
 }

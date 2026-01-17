@@ -17,5 +17,9 @@
   "config_language_description": "VS Code扩展的语言（自动使用VS Code的语言）。",
   "config_enable_telemetry_description": "启用本地生产力指标收集（调试、测试、任务、终端等）。数据不会离开机器。",
   "config_telemetry_diagnostics_interval_description": "采样文件诊断（错误/警告）的秒数间隔。",
-  "config_telemetry_retention_description": "在自动删除之前保留本地遥测数据的天数。"
+  "config_telemetry_retention_description": "在自动删除之前保留本地遥测数据的天数。",
+  "config_pomodoro_test_mode_description": "启用番茄工作法测试模式（每个周期1分钟而不是25分钟）。",
+  "config_inactivity_timeout_description": "标记为不活动之前无活动的最长时间（以毫秒为单位）。",
+  "command_setup_pomodoro": "索尔·古德曼：配置番茄工作法系统",
+  "command_reset_combo": "索尔·古德曼：重置连击"
 }

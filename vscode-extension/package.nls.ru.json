@@ -17,5 +17,9 @@
   "config_language_description": "Язык расширения VS Code (авто использует язык VS Code).",
   "config_enable_telemetry_description": "Включает сбор локальных метрик производительности (отладка, тесты, задачи, терминал и т. д.). Данные никогда не покидают машину.",
   "config_telemetry_diagnostics_interval_description": "Интервал в секундах для выборки диагностики (ошибки/предупреждения) файлов.",
-  "config_telemetry_retention_description": "Количество дней для хранения локальных данных телеметрии перед автоматическим удалением."
+  "config_telemetry_retention_description": "Количество дней для хранения локальных данных телеметрии перед автоматическим удалением.",
+  "config_pomodoro_test_mode_description": "Включает тестовый режим для Pomodoro (1 минута на цикл вместо 25).",
+  "config_inactivity_timeout_description": "Максимальное время в миллисекундах без активности перед отметкой как неактивный.",
+  "command_setup_pomodoro": "Саул Гудман: настроить систему Pomodoro",
+  "command_reset_combo": "Саул Гудман: сбросить комбо"
 }

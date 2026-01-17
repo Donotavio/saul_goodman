@@ -1625,12 +1625,13 @@ function handleVscodeTelemetry(req, res, url) {
 }
 
 function handleVscodeDashboard(req, res, url) {
-  const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  try {
+    const key = url.searchParams.get('key') ?? '';
+    if (!validateKey(key)) {
+      sendError(req, res, 401, 'Invalid key');
+      return;
+    }
+    const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
 
@@ -1758,6 +1759,10 @@ function handleVscodeDashboard(req, res, url) {
       }
     }
   });
+  } catch (error) {
+    console.error('[saul-daemon] Error in handleVscodeDashboard:', error);
+    sendError(req, res, 500, 'Internal server error');
+  }
 }
 
 
@@ -1952,11 +1957,6 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
     if (!projectLower || projectLower === 'unknown' || !languageLower || languageLower === 'unknown') {
       continue;
     }
-    
-    if (sampleDurations.length < 3) {
-      sampleDurations.push({ project, language, overlapMs });
-    }
-    validCount++;
 
     if (!projectMap.has(project)) {
       projectMap.set(project, new Map());
