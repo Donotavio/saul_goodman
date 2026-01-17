@@ -2592,13 +2592,13 @@
     "message": "Branches Git"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "Chronologie des Combos"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "Aucun combo enregistré aujourd'hui."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "Progression des pomodoros au cours de la journée"
   },
   "report_vscode_commit_activity": {
     "message": "Activité de Commits"
@@ -2730,7 +2730,7 @@
     "message": "CONSTRUCTIONS"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "COMBO MAXIMUM"
   },
   "report_vscode_tel_debug": {
     "message": "SESSIONS DE DÉBOGAGE"

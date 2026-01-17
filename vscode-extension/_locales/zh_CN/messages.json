@@ -2592,13 +2592,13 @@
     "message": "Git 分支"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "组合时间线"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "今天没有记录组合。"
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "全天番茄钟的进展"
   },
   "report_vscode_commit_activity": {
     "message": "提交活动"
@@ -2730,7 +2730,7 @@
     "message": "构建"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "最大组合"
   },
   "report_vscode_tel_debug": {
     "message": "调试会话"

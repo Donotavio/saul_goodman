@@ -4,6 +4,8 @@
   "command_start_daemon": "سول گڈمین: سول ڈیمون کے لئے کمانڈ تیار کریں",
   "command_test_daemon": "سول گڈمین: سول ڈیمون کے ساتھ کنکشن ٹیسٹ کریں",
   "command_open_reports": "سول گڈمین: رپورٹس کھولیں",
+  "command_setup_pomodoro": "سول گڈمین: پومودورو سسٹم ترتیب دیں",
+  "command_reset_combo": "سول گڈمین: کمبو کو ری سیٹ کریں",
   "config_enabled_description": "سول ڈیمون کے لئے فعال وقت بھیجنے کی اجازت دیتا ہے.",
   "config_enable_tracking_description": "سول ڈیمون کے لئے ہارٹ بیٹس جمع کرنے اور بھیجنے کو کنٹرول کرتا ہے.",
   "config_enable_reports_description": "VS Code میں سول کی رپورٹ دکھاتا ہے.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "غیر فعال سمجھے جانے سے پہلے زیادہ سے زیادہ غیر فعالیت کا وقت.",
   "config_language_description": "VS Code کی توسیع کی زبان (خودکار طور پر VS Code کی زبان استعمال کرتا ہے).",
   "config_enable_telemetry_description": "مقامی پیداوری کے میٹرکس جمع کرنے کی اجازت دیتا ہے (ڈیبگنگ، ٹیسٹ، ٹاسک، ٹرمینل، وغیرہ). ڈیٹا کبھی بھی مشین سے باہر نہیں جاتا.",
+  "config_pomodoro_test_mode_description": "پومودورو کے لیے ٹیسٹ موڈ کو فعال کریں (25 کے بجائے ہر سائیکل کے لیے 1 منٹ)۔",
+  "config_inactivity_timeout_description": "غیر فعالیت سے پہلے کی زیادہ سے زیادہ مدت ملی سیکنڈز میں غیر فعال کے طور پر نشان زد کرنے کے لیے۔",
   "config_telemetry_diagnostics_interval_description": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ.",
-  "config_telemetry_retention_description": "مقامی ٹیلی میٹری کے ڈیٹا کو خود بخود حذف کرنے سے پہلے رکھنے کے دنوں کی تعداد.",
-  "config_pomodoro_test_mode_description": "پومودورو کے لیے ٹیسٹ موڈ کو فعال کرتا ہے (25 کی بجائے فی سائیکل 1 منٹ).",
-  "config_inactivity_timeout_description": "غیر فعال کے طور پر نشان زد کرنے سے پہلے ملی سیکنڈز میں کوئی سرگرمی کے بغیر زیادہ سے زیادہ وقت.",
-  "command_setup_pomodoro": "سول گڈمین: پومودورو سسٹم کو ترتیب دیں",
-  "command_reset_combo": "سول گڈمین: کومبو کو ری سیٹ کریں"
+  "config_telemetry_retention_description": "مقامی ٹیلی میٹری کے ڈیٹا کو خود بخود حذف کرنے سے پہلے رکھنے کے دنوں کی تعداد."
 }

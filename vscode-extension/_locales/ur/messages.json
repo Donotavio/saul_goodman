@@ -2592,13 +2592,13 @@
     "message": "گٹ شاخیں"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "کمبو کی ٹائم لائن"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "آج کوئی کمبو درج نہیں کیا گیا۔"
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "دن بھر میں پومودورو کی ترقی"
   },
   "report_vscode_commit_activity": {
     "message": "کمٹ کی سرگرمی"
@@ -2730,7 +2730,7 @@
     "message": "بلڈز"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "زیادہ سے زیادہ کمبو"
   },
   "report_vscode_tel_debug": {
     "message": "ڈیبگ سیشن"

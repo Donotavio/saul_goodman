@@ -2592,13 +2592,13 @@
     "message": "Git-Zweige"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "Kombinationszeitlinie"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "Heute wurden keine Kombinationen registriert."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "Fortschritt der Pomodoros im Laufe des Tages"
   },
   "report_vscode_commit_activity": {
     "message": "Commit-Aktivität"
@@ -2730,7 +2730,7 @@
     "message": "BAUEN"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "MAXIMALE KOMBO"
   },
   "report_vscode_tel_debug": {
     "message": "DEBUG-SITZUNGEN"

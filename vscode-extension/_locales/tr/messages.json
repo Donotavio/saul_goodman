@@ -2592,13 +2592,13 @@
     "message": "Git Dalları"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "Kombinasyon Zaman Çizelgesi"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "Bugün kayıtlı hiçbir kombinasyon yok."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "Günün pomodoro ilerlemesi"
   },
   "report_vscode_commit_activity": {
     "message": "Commit Aktivitesi"
@@ -2730,7 +2730,7 @@
     "message": "YAPILAR"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "MAKSİMUM KOMBO"
   },
   "report_vscode_tel_debug": {
     "message": "HATA AYIKLAMA OTURUMLARI"

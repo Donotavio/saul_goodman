@@ -2592,13 +2592,13 @@
     "message": "गिट शाखाएँ"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "कॉम्बो टाइमलाइन"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "आज कोई कॉम्बो दर्ज नहीं किया गया।"
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "दिन भर में पमोडोरो की प्रगति"
   },
   "report_vscode_commit_activity": {
     "message": "कमिट गतिविधि"
@@ -2730,7 +2730,7 @@
     "message": "बिल्ड"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "अधिकतम कॉम्बो"
   },
   "report_vscode_tel_debug": {
     "message": "डीबग सत्र"

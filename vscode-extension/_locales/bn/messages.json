@@ -2592,13 +2592,13 @@
     "message": "গিট শাখা"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "কম্বোর টাইমলাইন"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "আজ কোনো কম্বো নিবন্ধিত হয়নি।"
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "দিনের মধ্যে পমোডোরোর অগ্রগতি"
   },
   "report_vscode_commit_activity": {
     "message": "কমিটের অ্যাক্টিভিটি"
@@ -2730,7 +2730,7 @@
     "message": "বিল্ড"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "সর্বাধিক কম্বো"
   },
   "report_vscode_tel_debug": {
     "message": "ডিবাগ সেশন"

@@ -2592,13 +2592,13 @@
     "message": "Rami Git"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "Linea del Tempo dei Combo"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "Nessun combo registrato oggi."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "Progressione dei pomodoros durante il giorno"
   },
   "report_vscode_commit_activity": {
     "message": "Attività di Commit"
@@ -2730,7 +2730,7 @@
     "message": "BUILD"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "COMBO MASSIMO"
   },
   "report_vscode_tel_debug": {
     "message": "SESSIONI DEBUG"

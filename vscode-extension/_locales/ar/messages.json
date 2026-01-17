@@ -2592,13 +2592,13 @@
     "message": "فروع Git"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "خط الزمن للتركيبات"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "لا توجد تركيبات مسجلة اليوم."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "تقدم البومودوروز على مدار اليوم"
   },
   "report_vscode_commit_activity": {
     "message": "نشاط الالتزامات"
@@ -2730,7 +2730,7 @@
     "message": "البناءات"
   },
   "report_vscode_tel_combo": {
-    "message": "COMBO MÁXIMO"
+    "message": "التركيبة القصوى"
   },
   "report_vscode_tel_debug": {
     "message": "جلسات تصحيح الأخطاء"

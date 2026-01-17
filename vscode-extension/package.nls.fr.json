@@ -4,6 +4,8 @@
   "command_start_daemon": "Saul Goodman: préparer la commande du SaulDaemon",
   "command_test_daemon": "Saul Goodman: tester la connexion au SaulDaemon",
   "command_open_reports": "Saul Goodman: ouvrir les rapports",
+  "command_setup_pomodoro": "Saul Goodman : configurer le système Pomodoro",
+  "command_reset_combo": "Saul Goodman : réinitialiser le combo",
   "config_enabled_description": "Active l'envoi de temps actif au SaulDaemon local.",
   "config_enable_tracking_description": "Contrôle la collecte et l'envoi de signaux de vie au SaulDaemon.",
   "config_enable_reports_description": "Affiche le rapport de Saul dans VS Code.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "Temps maximum sans activité avant de considérer la session comme inactive.",
   "config_language_description": "Langue de l'extension VS Code (auto utilise la langue de VS Code).",
   "config_enable_telemetry_description": "Active la collecte de métriques de productivité locale (débogage, tests, tâches, terminal, etc). Les données ne quittent jamais la machine.",
-  "config_telemetry_diagnostics_interval_description": "Intervalle en secondes pour échantillonner les diagnostics (erreurs/avertissements) des fichiers.",
-  "config_telemetry_retention_description": "Nombre de jours pour conserver les données de télémétrie locale avant de les supprimer automatiquement.",
   "config_pomodoro_test_mode_description": "Active le mode test pour Pomodoro (1 minute par cycle au lieu de 25).",
   "config_inactivity_timeout_description": "Temps maximum en millisecondes sans activité avant de marquer comme inactif.",
-  "command_setup_pomodoro": "Saul Goodman: configurer le système Pomodoro",
-  "command_reset_combo": "Saul Goodman: réinitialiser le combo"
+  "config_telemetry_diagnostics_interval_description": "Intervalle en secondes pour échantillonner les diagnostics (erreurs/avertissements) des fichiers.",
+  "config_telemetry_retention_description": "Nombre de jours pour conserver les données de télémétrie locale avant de les supprimer automatiquement."
 }

@@ -4,6 +4,8 @@
   "command_start_daemon": "Saul Goodman: SaulDaemon komutunu hazırlayın",
   "command_test_daemon": "Saul Goodman: SaulDaemon ile bağlantıyı test et",
   "command_open_reports": "Saul Goodman: raporları aç",
+  "command_setup_pomodoro": "Saul Goodman: Pomodoro sistemini ayarla",
+  "command_reset_combo": "Saul Goodman: kombinasyonu sıfırla",
   "config_enabled_description": "Yerel SaulDaemon'a aktif zaman göndermeyi etkinleştirir.",
   "config_enable_tracking_description": "SaulDaemon'a kalp atışlarını toplama ve gönderme kontrol eder.",
   "config_enable_reports_description": "VS Code içinde Saul raporunu gösterir.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "Oturumun inaktif olarak kabul edilmeden önceki maksimum etkinlik süresi.",
   "config_language_description": "VS Code uzantısının dili (oto, VS Code'un dilini kullanır).",
   "config_enable_telemetry_description": "Yerel verimlilik ölçümlerinin toplanmasını etkinleştirir (hata ayıklama, testler, görevler, terminal, vb.). Veriler asla makineden çıkmaz.",
+  "config_pomodoro_test_mode_description": "Pomodoro için test modunu etkinleştirir (her döngüde 1 dakika yerine 25 dakika).",
+  "config_inactivity_timeout_description": "İnaktif olarak işaretlenmeden önceki maksimum milisaniye süresi.",
   "config_telemetry_diagnostics_interval_description": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden).",
-  "config_telemetry_retention_description": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı.",
-  "config_pomodoro_test_mode_description": "Pomodoro için test modunu etkinleştirir (25 yerine döngü başına 1 dakika).",
-  "config_inactivity_timeout_description": "Etkin olmayan olarak işaretlemeden önce milisaniye cinsinden etkinlik olmadan maksimum süre.",
-  "command_setup_pomodoro": "Saul Goodman: Pomodoro sistemini yapılandır",
-  "command_reset_combo": "Saul Goodman: komboyu sıfırla"
+  "config_telemetry_retention_description": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı."
 }

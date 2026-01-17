@@ -4,6 +4,8 @@
   "command_start_daemon": "Saul Goodman: preparar comando do SaulDaemon",
   "command_test_daemon": "Saul Goodman: testar conexão com o SaulDaemon",
   "command_open_reports": "Saul Goodman: abrir relatórios",
+  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
+  "command_reset_combo": "Saul Goodman: resetar combo",
   "config_enabled_description": "Habilita o envio de tempo ativo para o SaulDaemon local.",
   "config_enable_tracking_description": "Controla a coleta e envio de heartbeats para o SaulDaemon.",
   "config_enable_reports_description": "Exibe o relatório do Saul dentro do VS Code.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "Tempo máximo sem atividade antes de considerar a sessão inativa.",
   "config_language_description": "Idioma da extensão VS Code (auto usa o idioma do VS Code).",
   "config_enable_telemetry_description": "Habilita coleta de métricas de produtividade local (debugging, testes, tasks, terminal, etc). Dados nunca saem da máquina.",
-  "config_telemetry_diagnostics_interval_description": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos.",
-  "config_telemetry_retention_description": "Número de dias para reter dados de telemetria local antes de apagar automaticamente.",
   "config_pomodoro_test_mode_description": "Ativa modo de teste para Pomodoro (1 minuto por ciclo ao invés de 25).",
   "config_inactivity_timeout_description": "Tempo máximo em milissegundos sem atividade antes de marcar como inativo.",
-  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
-  "command_reset_combo": "Saul Goodman: resetar combo"
+  "config_telemetry_diagnostics_interval_description": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos.",
+  "config_telemetry_retention_description": "Número de dias para reter dados de telemetria local antes de apagar automaticamente."
 }

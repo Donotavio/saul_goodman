@@ -4,6 +4,8 @@
   "command_start_daemon": "Саул Гудман: подготовить команду SaulDaemon",
   "command_test_daemon": "Саул Гудман: протестировать соединение с SaulDaemon",
   "command_open_reports": "Саул Гудман: открыть отчеты",
+  "command_setup_pomodoro": "Сол Гудман: настроить систему Помодоро",
+  "command_reset_combo": "Сол Гудман: сбросить комбо",
   "config_enabled_description": "Включает отправку активного времени в локальный SaulDaemon.",
   "config_enable_tracking_description": "Контролирует сбор и отправку heartbeats в SaulDaemon.",
   "config_enable_reports_description": "Отображает отчет о Сауле внутри VS Code.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "Максимальное время без активности перед тем, как считать сессию неактивной.",
   "config_language_description": "Язык расширения VS Code (авто использует язык VS Code).",
   "config_enable_telemetry_description": "Включает сбор локальных метрик производительности (отладка, тесты, задачи, терминал и т. д.). Данные никогда не покидают машину.",
+  "config_pomodoro_test_mode_description": "Включает тестовый режим для Помодоро (1 минута за цикл вместо 25).",
+  "config_inactivity_timeout_description": "Максимальное время в миллисекундах без активности перед пометкой как неактивный.",
   "config_telemetry_diagnostics_interval_description": "Интервал в секундах для выборки диагностики (ошибки/предупреждения) файлов.",
-  "config_telemetry_retention_description": "Количество дней для хранения локальных данных телеметрии перед автоматическим удалением.",
-  "config_pomodoro_test_mode_description": "Включает тестовый режим для Pomodoro (1 минута на цикл вместо 25).",
-  "config_inactivity_timeout_description": "Максимальное время в миллисекундах без активности перед отметкой как неактивный.",
-  "command_setup_pomodoro": "Саул Гудман: настроить систему Pomodoro",
-  "command_reset_combo": "Саул Гудман: сбросить комбо"
+  "config_telemetry_retention_description": "Количество дней для хранения локальных данных телеметрии перед автоматическим удалением."
 }

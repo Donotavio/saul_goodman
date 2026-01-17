@@ -4,6 +4,8 @@
   "command_start_daemon": "Saul Goodman: preparar comando del SaulDaemon",
   "command_test_daemon": "Saul Goodman: probar conexión con el SaulDaemon",
   "command_open_reports": "Saul Goodman: abrir informes",
+  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
+  "command_reset_combo": "Saul Goodman: reiniciar combo",
   "config_enabled_description": "Habilita el envío de tiempo activo al SaulDaemon local.",
   "config_enable_tracking_description": "Controla la recopilación y envío de latidos al SaulDaemon.",
   "config_enable_reports_description": "Muestra el informe de Saul dentro de VS Code.",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "Tiempo máximo sin actividad antes de considerar la sesión inactiva.",
   "config_language_description": "Idioma de la extensión de VS Code (automático usa el idioma de VS Code).",
   "config_enable_telemetry_description": "Habilita la recopilación de métricas de productividad local (depuración, pruebas, tareas, terminal, etc.). Los datos nunca salen de la máquina.",
-  "config_telemetry_diagnostics_interval_description": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos.",
-  "config_telemetry_retention_description": "Número de días para retener datos de telemetría local antes de eliminar automáticamente.",
-  "config_pomodoro_test_mode_description": "Habilita el modo de prueba para Pomodoro (1 minuto por ciclo en lugar de 25).",
+  "config_pomodoro_test_mode_description": "Activa modo de prueba para Pomodoro (1 minuto por ciclo en lugar de 25).",
   "config_inactivity_timeout_description": "Tiempo máximo en milisegundos sin actividad antes de marcar como inactivo.",
-  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
-  "command_reset_combo": "Saul Goodman: reiniciar combo"
+  "config_telemetry_diagnostics_interval_description": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos.",
+  "config_telemetry_retention_description": "Número de días para retener datos de telemetría local antes de eliminar automáticamente."
 }

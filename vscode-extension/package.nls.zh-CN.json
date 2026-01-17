@@ -4,6 +4,8 @@
   "command_start_daemon": "索尔·古德曼：准备索尔守护进程命令",
   "command_test_daemon": "索尔·古德曼：测试与索尔守护进程的连接",
   "command_open_reports": "索尔·古德曼：打开报告",
+  "command_setup_pomodoro": "索尔·古德曼：设置番茄钟系统",
+  "command_reset_combo": "索尔·古德曼：重置组合",
   "config_enabled_description": "启用向本地索尔守护进程发送活动时间。",
   "config_enable_tracking_description": "控制向索尔守护进程收集和发送心跳。",
   "config_enable_reports_description": "在VS Code中显示索尔的报告。",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "在考虑会话不活动之前的最大无活动时间。",
   "config_language_description": "VS Code扩展的语言（自动使用VS Code的语言）。",
   "config_enable_telemetry_description": "启用本地生产力指标收集（调试、测试、任务、终端等）。数据不会离开机器。",
+  "config_pomodoro_test_mode_description": "启用番茄钟测试模式（每个周期1分钟而不是25分钟）。",
+  "config_inactivity_timeout_description": "在标记为不活动之前，最大无活动时间（以毫秒为单位）。",
   "config_telemetry_diagnostics_interval_description": "采样文件诊断（错误/警告）的秒数间隔。",
-  "config_telemetry_retention_description": "在自动删除之前保留本地遥测数据的天数。",
-  "config_pomodoro_test_mode_description": "启用番茄工作法测试模式（每个周期1分钟而不是25分钟）。",
-  "config_inactivity_timeout_description": "标记为不活动之前无活动的最长时间（以毫秒为单位）。",
-  "command_setup_pomodoro": "索尔·古德曼：配置番茄工作法系统",
-  "command_reset_combo": "索尔·古德曼：重置连击"
+  "config_telemetry_retention_description": "在自动删除之前保留本地遥测数据的天数。"
 }

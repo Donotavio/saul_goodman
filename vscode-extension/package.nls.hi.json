@@ -4,6 +4,8 @@
   "command_start_daemon": "सॉल गुडमैन: सॉलडेमन कमांड तैयार करें",
   "command_test_daemon": "सॉल गुडमैन: सॉलडेमन के साथ कनेक्शन का परीक्षण करें",
   "command_open_reports": "सॉल गुडमैन: रिपोर्ट खोलें",
+  "command_setup_pomodoro": "सौल गुडमैन: पोमोडोरो सिस्टम सेट करें",
+  "command_reset_combo": "सौल गुडमैन: कॉम्बो रीसेट करें",
   "config_enabled_description": "स्थानीय सॉलडेमन के लिए सक्रिय समय भेजने को सक्षम करता है।",
   "config_enable_tracking_description": "सॉलडेमन के लिए हार्टबीट संग्रह और भेजने को नियंत्रित करता है।",
   "config_enable_reports_description": "VS कोड के भीतर सॉल की रिपोर्ट दिखाता है।",
@@ -16,10 +18,8 @@
   "config_idle_threshold_description": "सत्र को निष्क्रिय मानने से पहले अधिकतम बिना गतिविधि का समय।",
   "config_language_description": "VS कोड एक्सटेंशन की भाषा (स्वतः VS कोड की भाषा का उपयोग करता है)।",
   "config_enable_telemetry_description": "स्थानीय उत्पादकता मेट्रिक्स का संग्रह सक्षम करता है (डीबगिंग, परीक्षण, कार्य, टर्मिनल, आदि)। डेटा कभी भी मशीन से बाहर नहीं जाता।",
+  "config_pomodoro_test_mode_description": "पोमोडोरो के लिए परीक्षण मोड सक्रिय करें (25 के बजाय प्रति चक्र 1 मिनट)।",
+  "config_inactivity_timeout_description": "गतिहीनता के बिना अधिकतम समय मिलीसेकंड में पहले निष्क्रिय के रूप में चिह्नित करने के लिए।",
   "config_telemetry_diagnostics_interval_description": "फाइलों के डायग्नोस्टिक्स (त्रुटियाँ/चेतावनियाँ) का नमूना लेने के लिए सेकंड में अंतराल।",
-  "config_telemetry_retention_description": "स्वचालित रूप से हटाने से पहले स्थानीय टेलीमेट्री डेटा को बनाए रखने के लिए दिनों की संख्या।",
-  "config_pomodoro_test_mode_description": "पोमोडोरो के लिए परीक्षण मोड सक्षम करता है (25 के बजाय प्रति चक्र 1 मिनट)।",
-  "config_inactivity_timeout_description": "निष्क्रिय के रूप में चिह्नित करने से पहले कोई गतिविधि नहीं होने पर मिलीसेकंड में अधिकतम समय।",
-  "command_setup_pomodoro": "सॉल गुडमैन: पोमोडोरो सिस्टम कॉन्फ़िगर करें",
-  "command_reset_combo": "सॉल गुडमैन: कॉम्बो रीसेट करें"
+  "config_telemetry_retention_description": "स्वचालित रूप से हटाने से पहले स्थानीय टेलीमेट्री डेटा को बनाए रखने के लिए दिनों की संख्या।"
 }
