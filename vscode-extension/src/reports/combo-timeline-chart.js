@@ -27,7 +27,7 @@ function renderComboTimelineChart(comboData) {
     x: new Date(event.timestamp),
     y: event.pomodoros || 0,
     level: event.level || 0,
-    eventType: event.eventType
+    type: event.type
   }));
 
   // Adicionar ponto no início do dia se necessário
@@ -70,8 +70,8 @@ function renderComboTimelineChart(comboData) {
       backgroundColor: levelColors[level] || levelColors[0],
       pointBackgroundColor: levelColors[level] || levelColors[0],
       pointBorderColor: '#fff',
-      pointRadius: current.eventType === 'combo_reset' ? 8 : 5,
-      pointStyle: current.eventType === 'combo_reset' ? 'crossRot' : 'circle',
+      pointRadius: current.type === 'combo_reset' ? 8 : 5,
+      pointStyle: current.type === 'combo_reset' ? 'crossRot' : 'circle',
       fill: false,
       stepped: true,
       tension: 0

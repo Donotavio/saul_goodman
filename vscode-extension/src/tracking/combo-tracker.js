@@ -64,7 +64,7 @@ class ComboTracker {
     // Registrar evento na timeline
     this.comboTimeline.push({
       timestamp: Date.now(),
-      eventType: 'combo_increase',
+      type: 'combo_increase',
       level: this.currentLevel,
       pomodoros: this.consecutivePomodoros
     });
@@ -122,7 +122,7 @@ class ComboTracker {
         // Registrar evento na timeline
         this.comboTimeline.push({
           timestamp: Date.now(),
-          eventType: 'combo_reduced',
+          type: 'combo_reduced',
           level: this.currentLevel,
           pomodoros: this.consecutivePomodoros,
           breakDuration
@@ -151,7 +151,7 @@ class ComboTracker {
         // Registrar evento na timeline
         this.comboTimeline.push({
           timestamp: Date.now(),
-          eventType: 'combo_reset',
+          type: 'combo_reset',
           level: 0,
           pomodoros: 0,
           breakDuration,

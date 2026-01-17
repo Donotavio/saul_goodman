@@ -75,7 +75,7 @@
       x: new Date(event.timestamp),
       y: event.pomodoros || 0,
       level: event.level || 0,
-      eventType: event.eventType
+      type: event.type
     }));
 
     // Adicionar ponto no início do dia se necessário
@@ -109,8 +109,8 @@
       backgroundColor: '#FFD700',
       pointBackgroundColor: dataPoints.map(p => levelColors[p.level] || levelColors[0]),
       pointBorderColor: '#fff',
-      pointRadius: dataPoints.map(p => p.eventType === 'combo_reset' ? 8 : 5),
-      pointStyle: dataPoints.map(p => p.eventType === 'combo_reset' ? 'crossRot' : 'circle'),
+      pointRadius: dataPoints.map(p => p.type === 'combo_reset' ? 8 : 5),
+      pointStyle: dataPoints.map(p => p.type === 'combo_reset' ? 'crossRot' : 'circle'),
       fill: false,
       stepped: 'before',
       tension: 0,

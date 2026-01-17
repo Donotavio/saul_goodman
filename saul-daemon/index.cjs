@@ -1483,30 +1483,29 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
         }
       });
       
-      if (hb.entity === 'combo_update' || hb.entity === 'pomodoro_completed') {
-        const maxComboToday = metadata.maxComboToday || 0;
-        const totalCombosToday = metadata.totalCombosToday || 0;
-        const lifetimeMaxCombo = metadata.lifetimeMaxCombo || 0;
+      // Processar TODOS os tipos de eventos de combo
+      const maxComboToday = metadata.maxComboToday || 0;
+      const totalCombosToday = metadata.totalCombosToday || 0;
+      const lifetimeMaxCombo = metadata.lifetimeMaxCombo || 0;
 
-        telemetry.combo.maxComboToday = Math.max(telemetry.combo.maxComboToday, maxComboToday);
-        telemetry.combo.totalCombosToday = Math.max(telemetry.combo.totalCombosToday, totalCombosToday);
-        telemetry.combo.lifetimeMaxCombo = Math.max(telemetry.combo.lifetimeMaxCombo, lifetimeMaxCombo);
+      telemetry.combo.maxComboToday = Math.max(telemetry.combo.maxComboToday, maxComboToday);
+      telemetry.combo.totalCombosToday = Math.max(telemetry.combo.totalCombosToday, totalCombosToday);
+      telemetry.combo.lifetimeMaxCombo = Math.max(telemetry.combo.lifetimeMaxCombo, lifetimeMaxCombo);
 
-        if (metadata.comboTimeline && Array.isArray(metadata.comboTimeline)) {
-          metadata.comboTimeline.forEach(event => {
-            const exists = telemetry.combo.comboTimeline.some(e => 
-              e.timestamp === event.timestamp && e.type === event.type
-            );
-            if (!exists) {
-              telemetry.combo.comboTimeline.push({
-                timestamp: event.timestamp,
-                type: event.type,
-                level: event.level || 0,
-                pomodoros: event.pomodoros || 0
-              });
-            }
-          });
-        }
+      if (metadata.comboTimeline && Array.isArray(metadata.comboTimeline)) {
+        metadata.comboTimeline.forEach(event => {
+          const exists = telemetry.combo.comboTimeline.some(e => 
+            e.timestamp === event.timestamp && e.type === event.type
+          );
+          if (!exists) {
+            telemetry.combo.comboTimeline.push({
+              timestamp: event.timestamp,
+              type: event.type,
+              level: event.level || 0,
+              pomodoros: event.pomodoros || 0
+            });
+          }
+        });
       }
     }
   });
