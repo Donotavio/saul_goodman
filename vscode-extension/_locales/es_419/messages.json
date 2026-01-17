@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "Usuarios"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "Cancelar"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "¿Está seguro de que desea reiniciar su combo actual?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "¡Combo reiniciado con éxito!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "Sí, reiniciar combo"
+  },
   "vscode_ext_description": {
     "message": "Envía tiempo activo de VS Code al SaulDaemon local usado por la extensión de Chrome."
   },
   "vscode_ext_display_name": {
     "message": "Puente Saul Goodman VS Code"
+  },
+  "vscode_loading_message": {
+    "message": "Espere, cargando módulos..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "¡Telemetría y modo de prueba activados! VS Code se recargará."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "El sistema Pomodoro requiere telemetría activada para funcionar."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "Activar todo"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "Más tarde"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "Activar ahora"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "Activar telemetría"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "Activar modo de prueba (1 min)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "Abrir configuraciones"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Configuración del Sistema Pomodoro"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "¡Telemetría activada! VS Code se recargará."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ Telemetría: DESACTIVADA"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ Telemetría: ACTIVADA"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "¡Modo de prueba activado! VS Code se recargará."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ Modo de prueba: DESACTIVADO (ciclos de 25 min)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ Modo de prueba: ACTIVADO (ciclos de 1 min)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "¿Qué deseas hacer?"
   },
   "vscode_reports_configure": {
     "message": "Configura la URL del daemon y la clave de emparejamiento."

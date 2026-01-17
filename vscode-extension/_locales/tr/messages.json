@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "Kullanıcılar"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "İptal"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "Mevcut kombinasyonunuzu sıfırlamak istediğinizden emin misiniz?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "Kombinasyon başarıyla sıfırlandı!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "Evet, kombinasyonu sıfırla"
+  },
   "vscode_ext_description": {
     "message": "VS Code'un aktif zamanını Chrome uzantısı tarafından kullanılan yerel SaulDaemon'a gönderir."
   },
   "vscode_ext_display_name": {
     "message": "Saul Goodman VS Code Köprüsü"
+  },
+  "vscode_loading_message": {
+    "message": "Lütfen bekleyin, modüller yükleniyor..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "Telemetri ve test modu etkinleştirildi! VS Code yeniden yüklenecek."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "Pomodoro sistemi çalışmak için telemetriyi etkinleştirir."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "Hepsini etkinleştir"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "Daha sonra"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "Şimdi etkinleştir"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "Telemetriyi etkinleştir"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "Test modunu etkinleştir (1 dk)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "Ayarları aç"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Pomodoro Sistemi Ayarı"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "Telemetri etkinleştirildi! VS Code yeniden yüklenecek."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ Telemetri: DEVRE DIŞI"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ Telemetri: ETKİN"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "Test modu etkinleştirildi! VS Code yeniden yüklenecek."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ Test modu: DEVRE DIŞI (25 dk döngüleri)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ Test modu: ETKİN (1 dk döngüleri)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "Ne yapmak istersiniz?"
   },
   "vscode_reports_configure": {
     "message": "Daemon URL'sini ve eşleştirme anahtarını yapılandırın."

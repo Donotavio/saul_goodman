@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "صارفین"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "منسوخ کریں"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "کیا آپ واقعی اپنے موجودہ کامبو کو ری سیٹ کرنا چاہتے ہیں؟"
+  },
+  "vscode_combo_reset_success": {
+    "message": "کامبو کامیابی کے ساتھ ری سیٹ ہو گیا!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "جی ہاں، کامبو ری سیٹ کریں"
+  },
   "vscode_ext_description": {
     "message": "VS Code سے فعال وقت کو سول ڈیمون کے مقامی استعمال کے لئے کروم توسیع کے ذریعے بھیجتا ہے."
   },
   "vscode_ext_display_name": {
     "message": "سول گڈمین VS Code پل"
+  },
+  "vscode_loading_message": {
+    "message": "براہ کرم انتظار کریں، ماڈیولز لوڈ ہو رہے ہیں..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "ٹیلی میٹری اور ٹیسٹ موڈ فعال ہو چکے ہیں! VS Code دوبارہ لوڈ ہوگا۔"
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "پومودورو سسٹم کے کام کرنے کے لیے ٹیلی میٹری فعال ہونا ضروری ہے۔"
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "سب فعال کریں"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "بعد میں"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "اب فعال کریں"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "ٹیلی میٹری فعال کریں"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "ٹیسٹ موڈ فعال کریں (1 منٹ)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "ترتیبات کھولیں"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "پومودورو سسٹم کی ترتیب"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "ٹیلی میٹری فعال ہو گئی! VS Code دوبارہ لوڈ ہوگا۔"
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ ٹیلی میٹری: غیر فعال"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ ٹیلی میٹری: فعال"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "ٹیسٹ موڈ فعال ہو گیا! VS Code دوبارہ لوڈ ہوگا۔"
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ ٹیسٹ موڈ: غیر فعال (25 منٹ کے چکر)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ ٹیسٹ موڈ: فعال (1 منٹ کے چکر)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "آپ کیا کرنا چاہتے ہیں؟"
   },
   "vscode_reports_configure": {
     "message": "ڈیمون کی URL اور پیئرنگ کی ترتیب دیں."

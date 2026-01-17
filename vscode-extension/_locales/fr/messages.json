@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "Utilisateurs"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "Annuler"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "Êtes-vous sûr de vouloir réinitialiser votre combo actuel ?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "Combo réinitialisé avec succès !"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "Oui, réinitialiser le combo"
+  },
   "vscode_ext_description": {
     "message": "Envoie le temps actif de VS Code au SaulDaemon local utilisé par l'extension Chrome."
   },
   "vscode_ext_display_name": {
     "message": "Saul Goodman Pont VS Code"
+  },
+  "vscode_loading_message": {
+    "message": "Veuillez patienter, chargement des modules..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "Télémetrie et mode test activés ! VS Code va être rechargé."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "Le système Pomodoro nécessite la télémetrie activée pour fonctionner."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "Tout activer"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "Plus tard"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "Activer maintenant"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "Activer la télémetrie"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "Activer le mode test (1 min)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "Ouvrir les paramètres"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Configuration du Système Pomodoro"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "Télémetrie activée ! VS Code va être rechargé."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ Télémetrie : DÉSACTIVÉE"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ Télémetrie : ACTIVÉE"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "Mode test activé ! VS Code va être rechargé."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ Mode test : DÉSACTIVÉ (cycles de 25 min)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ Mode test : ACTIVÉ (cycles de 1 min)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "Que souhaitez-vous faire ?"
   },
   "vscode_reports_configure": {
     "message": "Configurez l'URL du daemon et la clé de couplage."

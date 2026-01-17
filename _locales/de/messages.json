@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "Nutzer"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "Abbrechen"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "Sind Sie sicher, dass Sie Ihr aktuelles Combo zurücksetzen möchten?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "Combo erfolgreich zurückgesetzt!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "Ja, Combo zurücksetzen"
+  },
   "vscode_ext_description": {
     "message": "Sendet aktive Zeit von VS Code an den lokalen SaulDaemon, der von der Chrome-Erweiterung verwendet wird."
   },
   "vscode_ext_display_name": {
     "message": "Saul Goodman VS Code Bridge"
+  },
+  "vscode_loading_message": {
+    "message": "Bitte warten, Module werden geladen..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "Telemetrie und Testmodus aktiviert! VS Code wird neu geladen."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "Das Pomodoro-System erfordert aktivierte Telemetrie, um zu funktionieren."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "Alles aktivieren"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "Später"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "Jetzt aktivieren"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "Telemetrie aktivieren"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "Testmodus aktivieren (1 min)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "Einstellungen öffnen"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Einrichtung des Pomodoro-Systems"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "Telemetrie aktiviert! VS Code wird neu geladen."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ Telemetrie: DEAKTIVIERT"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ Telemetrie: AKTIVIERT"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "Testmodus aktiviert! VS Code wird neu geladen."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ Testmodus: DEAKTIVIERT (25-min-Zyklen)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ Testmodus: AKTIVIERT (1-min-Zyklen)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "Was möchten Sie tun?"
   },
   "vscode_reports_configure": {
     "message": "Konfigurieren Sie die URL des Daemons und den Pairing-Schlüssel."

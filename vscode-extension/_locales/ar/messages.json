@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "المستخدمون"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "إلغاء"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "هل أنت متأكد أنك تريد إعادة تعيين مجموعة الحالية؟"
+  },
+  "vscode_combo_reset_success": {
+    "message": "تم إعادة تعيين المجموعة بنجاح!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "نعم، إعادة تعيين المجموعة"
+  },
   "vscode_ext_description": {
     "message": "يرسل الوقت النشط من VS Code إلى سول دايمون المحلي المستخدم بواسطة ملحق Chrome."
   },
   "vscode_ext_display_name": {
     "message": "جسر سول غودمان VS Code"
+  },
+  "vscode_loading_message": {
+    "message": "يرجى الانتظار، جارٍ تحميل الوحدات..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "تم تفعيل التتبع ووضع الاختبار! سيتم إعادة تحميل VS Code."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "يتطلب نظام بومودورو تفعيل التتبع للعمل."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "تفعيل الكل"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "لاحقًا"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "تفعيل الآن"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "تفعيل التتبع"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "تفعيل وضع الاختبار (1 دقيقة)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "فتح الإعدادات"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "إعداد نظام بومودورو"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "تم تفعيل التتبع! سيتم إعادة تحميل VS Code."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ التتبع: مُعطّل"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ التتبع: مُفعل"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "تم تفعيل وضع الاختبار! سيتم إعادة تحميل VS Code."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ وضع الاختبار: مُعطّل (دورات 25 دقيقة)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ وضع الاختبار: مُفعل (دورات 1 دقيقة)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "ماذا تريد أن تفعل؟"
   },
   "vscode_reports_configure": {
     "message": "قم بتكوين عنوان URL للدايمون ومفتاح الاقتران."

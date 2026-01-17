@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "Пользователи"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "Отмена"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "Вы уверены, что хотите сбросить текущий комбо?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "Комбо успешно сброшено!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "Да, сбросить комбо"
+  },
   "vscode_ext_description": {
     "message": "Отправляет активное время из VS Code в локальный SaulDaemon, используемый расширением Chrome."
   },
   "vscode_ext_display_name": {
     "message": "Саул Гудман VS Code Bridge"
+  },
+  "vscode_loading_message": {
+    "message": "Пожалуйста, подождите, загружаем модули..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "Телеметрия и тестовый режим активированы! VS Code будет перезагружен."
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "Система Помодоро требует активированной телеметрии для работы."
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "Активировать все"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "Позже"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "Активировать сейчас"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "Активировать телеметрию"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "Активировать тестовый режим (1 мин)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "Открыть настройки"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Настройка системы Помодоро"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "Телеметрия активирована! VS Code будет перезагружен."
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ Телеметрия: ОТКЛЮЧЕНА"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ Телеметрия: АКТИВИРОВАНА"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "Тестовый режим активирован! VS Code будет перезагружен."
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ Тестовый режим: ОТКЛЮЧЕН (циклы по 25 мин)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ Тестовый режим: АКТИВИРОВАН (циклы по 1 мин)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "Что вы хотите сделать?"
   },
   "vscode_reports_configure": {
     "message": "Настройте URL демона и ключ сопряжения."

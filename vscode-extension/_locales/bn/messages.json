@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "ব্যবহারকারী"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "বাতিল করুন"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "আপনি কি নিশ্চিত যে আপনি আপনার বর্তমান কম্বো রিসেট করতে চান?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "কম্বো সফলভাবে রিসেট করা হয়েছে!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "হ্যাঁ, কম্বো রিসেট করুন"
+  },
   "vscode_ext_description": {
     "message": "VS কোডের সক্রিয় সময় সৌলডেমন এ প্রেরণ করে যা ক্রোম এক্সটেনশন দ্বারা ব্যবহৃত হয়।"
   },
   "vscode_ext_display_name": {
     "message": "সৌল গুডম্যান VS কোড ব্রিজ"
+  },
+  "vscode_loading_message": {
+    "message": "অপেক্ষা করুন, মডিউল লোড হচ্ছে..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "টেলিমেট্রি এবং পরীক্ষামূলক মোড সক্রিয় করা হয়েছে! VS Code পুনরায় লোড হবে।"
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "পোমোডোরো সিস্টেম কাজ করার জন্য টেলিমেট্রি সক্রিয় করা প্রয়োজন।"
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "সবকিছু সক্রিয় করুন"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "পরে"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "এখন সক্রিয় করুন"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "টেলিমেট্রি সক্রিয় করুন"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "পরীক্ষামূলক মোড সক্রিয় করুন (1 মিনিট)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "সেটিংস খুলুন"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "পোমোডোরো সিস্টেমের কনফিগারেশন"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "টেলিমেট্রি সক্রিয় করা হয়েছে! VS Code পুনরায় লোড হবে।"
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ টেলিমেট্রি: নিষ্ক্রিয়"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ টেলিমেট্রি: সক্রিয়"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "পরীক্ষামূলক মোড সক্রিয় করা হয়েছে! VS Code পুনরায় লোড হবে।"
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ পরীক্ষামূলক মোড: নিষ্ক্রিয় (২৫ মিনিটের চক্র)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ পরীক্ষামূলক মোড: সক্রিয় (১ মিনিটের চক্র)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "আপনি কী করতে চান?"
   },
   "vscode_reports_configure": {
     "message": "ডেমন এর URL এবং পেয়ারিং কী কনফিগার করুন।"

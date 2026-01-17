@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "उपयोगकर्ता"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "रद्द करें"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "क्या आप वास्तव में अपना वर्तमान कॉम्बो रीसेट करना चाहते हैं?"
+  },
+  "vscode_combo_reset_success": {
+    "message": "कॉम्बो सफलतापूर्वक रीसेट किया गया!"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "हाँ, कॉम्बो रीसेट करें"
+  },
   "vscode_ext_description": {
     "message": "VS कोड से सक्रिय समय को सॉलडेमन स्थानीय में भेजता है जिसका उपयोग क्रोम एक्सटेंशन द्वारा किया जाता है।"
   },
   "vscode_ext_display_name": {
     "message": "सॉल गुडमैन VS कोड ब्रिज"
+  },
+  "vscode_loading_message": {
+    "message": "कृपया प्रतीक्षा करें, मॉड्यूल लोड हो रहे हैं..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "टेलीमेट्री और परीक्षण मोड सक्रिय हैं! VS Code फिर से लोड होगा।"
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "पॉमोडोरो सिस्टम को काम करने के लिए टेलीमेट्री सक्रिय करने की आवश्यकता है।"
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "सब कुछ सक्रिय करें"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "बाद में"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "अब सक्रिय करें"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "टेलीमेट्री सक्रिय करें"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "परीक्षण मोड सक्रिय करें (1 मिनट)"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "सेटिंग्स खोलें"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "पॉमोडोरो सिस्टम सेटअप"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "टेलीमेट्री सक्रिय है! VS Code फिर से लोड होगा।"
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ टेलीमेट्री: निष्क्रिय"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ टेलीमेट्री: सक्रिय"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "परीक्षण मोड सक्रिय है! VS Code फिर से लोड होगा।"
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ परीक्षण मोड: निष्क्रिय (25 मिनट के चक्र)"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ परीक्षण मोड: सक्रिय (1 मिनट के चक्र)"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "आप क्या करना चाहते हैं?"
   },
   "vscode_reports_configure": {
     "message": "डेमन का URL और पेयरिंग कुंजी सेट करें।"

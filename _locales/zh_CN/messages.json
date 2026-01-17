@@ -3110,11 +3110,74 @@
   "usersBadgeLabel": {
     "message": "用户"
   },
+  "vscode_combo_reset_cancel": {
+    "message": "取消"
+  },
+  "vscode_combo_reset_confirm": {
+    "message": "您确定要重置当前组合吗？"
+  },
+  "vscode_combo_reset_success": {
+    "message": "组合成功重置！"
+  },
+  "vscode_combo_reset_yes": {
+    "message": "是的，重置组合"
+  },
   "vscode_ext_description": {
     "message": "将VS Code的活动时间发送到本地索尔守护进程，该守护进程由Chrome扩展使用。"
   },
   "vscode_ext_display_name": {
     "message": "索尔·古德曼 VS Code 桥接"
+  },
+  "vscode_loading_message": {
+    "message": "请稍候，正在加载模块..."
+  },
+  "vscode_pomodoro_all_activated": {
+    "message": "遥测和测试模式已激活！VS Code 将重新加载。"
+  },
+  "vscode_pomodoro_disabled_warning": {
+    "message": "Pomodoro 系统需要激活遥测才能工作。"
+  },
+  "vscode_pomodoro_enable_all": {
+    "message": "全部启用"
+  },
+  "vscode_pomodoro_enable_later": {
+    "message": "稍后"
+  },
+  "vscode_pomodoro_enable_now": {
+    "message": "立即启用"
+  },
+  "vscode_pomodoro_enable_telemetry": {
+    "message": "启用遥测"
+  },
+  "vscode_pomodoro_enable_testmode": {
+    "message": "启用测试模式（1分钟）"
+  },
+  "vscode_pomodoro_open_settings": {
+    "message": "打开设置"
+  },
+  "vscode_pomodoro_setup_title": {
+    "message": "Pomodoro 系统设置"
+  },
+  "vscode_pomodoro_telemetry_activated": {
+    "message": "遥测已激活！VS Code 将重新加载。"
+  },
+  "vscode_pomodoro_telemetry_disabled": {
+    "message": "⚠️ 遥测：已禁用"
+  },
+  "vscode_pomodoro_telemetry_enabled": {
+    "message": "✅ 遥测：已启用"
+  },
+  "vscode_pomodoro_testmode_activated": {
+    "message": "测试模式已激活！VS Code 将重新加载。"
+  },
+  "vscode_pomodoro_testmode_disabled": {
+    "message": "⚠️ 测试模式：已禁用（25分钟周期）"
+  },
+  "vscode_pomodoro_testmode_enabled": {
+    "message": "✅ 测试模式：已启用（1分钟周期）"
+  },
+  "vscode_pomodoro_what_to_do": {
+    "message": "您想做什么？"
   },
   "vscode_reports_configure": {
     "message": "配置守护进程的URL和配对密钥。"
