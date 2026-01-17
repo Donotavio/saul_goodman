@@ -273,6 +273,7 @@ class TrackingController {
       enabled: this.config.enableTracking
     });
     this.buildHeartbeat = createHeartbeatFactory(context, () => this.config);
+    this.resetIdleTimer = this.resetIdleTimer.bind(this);
     
     // Inicializar ComboToast
     this.comboToast = new ComboToast({
@@ -302,7 +303,8 @@ class TrackingController {
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.editorMetadataTracker = new EditorMetadataTracker({
       context,
@@ -320,19 +322,22 @@ class TrackingController {
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.testTracker = new TestTracker({
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.taskTracker = new TaskTracker({
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.extensionTracker = new ExtensionTracker({
       context,
@@ -344,7 +349,8 @@ class TrackingController {
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.focusTracker = new FocusTracker({
       context,
@@ -370,7 +376,8 @@ class TrackingController {
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
     });
     this.promptedMissingKey = false;
   }
@@ -436,6 +443,12 @@ class TrackingController {
   
   async getComboStats() {
     return this.comboTracker ? await this.comboTracker.getStats() : null;
+  }
+
+  resetIdleTimer() {
+    if (this.heartbeatTracker && typeof this.heartbeatTracker.resetIdleTimer === 'function') {
+      this.heartbeatTracker.resetIdleTimer();
+    }
   }
 
   checkPomodoroSetup() {

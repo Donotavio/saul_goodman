@@ -2,7 +2,7 @@ const vscode = require('vscode');
 const path = require('path');
 
 function registerExtraEventCollectors(options) {
-  const { queue, getConfig, buildHeartbeat, context } = options;
+  const { queue, getConfig, buildHeartbeat, context, resetIdleTimer } = options;
   const disposables = [];
   
   let lastActiveTab = null;
@@ -23,6 +23,7 @@ function registerExtraEventCollectors(options) {
       const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
       
       if (activeTab && activeTab !== lastActiveTab) {
+        if (resetIdleTimer) resetIdleTimer();
         tabSwitchCount++;
         lastActiveTab = activeTab;
 
@@ -49,6 +50,7 @@ function registerExtraEventCollectors(options) {
 
   disposables.push(
     vscode.commands.registerCommand('saul.trackCommand', (commandId) => {
+      if (resetIdleTimer) resetIdleTimer();
       commandExecutionCount++;
       const count = commandFrequency.get(commandId) || 0;
       commandFrequency.set(commandId, count + 1);
@@ -70,6 +72,7 @@ function registerExtraEventCollectors(options) {
   );
 
   const commandInterceptor = vscode.commands.registerCommand('workbench.action.quickOpen', async () => {
+    if (resetIdleTimer) resetIdleTimer();
     enqueue({
       entityType: 'command_palette',
       entity: 'command_palette',

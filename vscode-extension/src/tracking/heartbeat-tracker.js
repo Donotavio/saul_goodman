@@ -14,16 +14,23 @@ class HeartbeatTracker {
     this.lastSentByEntity = new Map();
     this.MAX_CACHE_SIZE = 500; // VSCODE-003: Limit cache size
     this.windowFocused = true;
+    this.isIdle = false;
+    this.lastActivityTime = Date.now();
+    this.idleCheckTimer = null;
     this.disposables = [];
   }
 
   start() {
     try {
       this.dispose();
+      this.startIdleDetection();
       this.disposables.push(
         vscode.window.onDidChangeWindowState((state) => {
           try {
             this.windowFocused = state.focused;
+            if (state.focused) {
+              this.resetIdleTimer();
+            }
           } catch (error) {
             console.error('[Saul Heartbeat] Window state error:', error);
           }
@@ -31,6 +38,7 @@ class HeartbeatTracker {
         vscode.window.onDidChangeActiveTextEditor((editor) => {
           try {
             if (editor?.document) {
+              this.resetIdleTimer();
               this.sendDocumentHeartbeat(editor.document, false);
             }
           } catch (error) {
@@ -39,6 +47,7 @@ class HeartbeatTracker {
         }),
         vscode.workspace.onDidChangeTextDocument((event) => {
           try {
+            this.resetIdleTimer();
             this.sendDocumentHeartbeat(event.document, true, getLineDelta(event));
           } catch (error) {
             console.error('[Saul Heartbeat] Text change error:', error);
@@ -46,6 +55,7 @@ class HeartbeatTracker {
         }),
         vscode.workspace.onDidSaveTextDocument((document) => {
           try {
+            this.resetIdleTimer();
             this.sendDocumentHeartbeat(document, true);
           } catch (error) {
             console.error('[Saul Heartbeat] Save document error:', error);
@@ -58,8 +68,40 @@ class HeartbeatTracker {
   }
 
   dispose() {
+    this.stopIdleDetection();
     this.disposables.forEach((item) => item.dispose());
     this.disposables = [];
+  }
+
+  startIdleDetection() {
+    this.stopIdleDetection();
+    const config = this.getConfig();
+    const idleThresholdMs = config.idleThresholdMs || 60000;
+    
+    this.idleCheckTimer = setInterval(() => {
+      const now = Date.now();
+      const timeSinceActivity = now - this.lastActivityTime;
+      
+      if (!this.isIdle && timeSinceActivity >= idleThresholdMs) {
+        this.isIdle = true;
+        console.log('[Saul Heartbeat] Idle state detected after', Math.round(timeSinceActivity / 1000), 'seconds');
+      }
+    }, 5000);
+  }
+
+  stopIdleDetection() {
+    if (this.idleCheckTimer) {
+      clearInterval(this.idleCheckTimer);
+      this.idleCheckTimer = null;
+    }
+  }
+
+  resetIdleTimer() {
+    this.lastActivityTime = Date.now();
+    if (this.isIdle) {
+      this.isIdle = false;
+      console.log('[Saul Heartbeat] Activity detected, exiting idle state');
+    }
   }
 
   sendDocumentHeartbeat(document, isWrite = false, delta = null) {
@@ -72,6 +114,9 @@ class HeartbeatTracker {
       return;
     }
     if (!this.windowFocused) {
+      return;
+    }
+    if (this.isIdle) {
       return;
     }
     if (!document || document.isUntitled) {

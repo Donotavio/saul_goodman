@@ -14,9 +14,8 @@ class FocusTracker {
     this.lastFocusTime = null;
     this.lastBlurTime = null;
     this.pomodoroInterval = null;
-    this.lastRealActivity = Date.now();
-    this.inactivityCheckInterval = null;
-    this.lastPomodoroMinutes = 0; // Track last pomodoro check
+    this.lastPomodoroMinutes = 0;
+    this.lastIdleCheck = false;
   }
 
   start() {
@@ -32,7 +31,6 @@ class FocusTracker {
 
           const now = Date.now();
           const hour = new Date(now).getHours();
-          this.lastRealActivity = now;
 
           if (state.focused && !this.isFocused) {
             this.isFocused = true;
@@ -79,25 +77,17 @@ class FocusTracker {
       })
     );
 
-    // Conectar com HeartbeatTracker para detectar atividade real de edição
-    if (this.heartbeatTracker) {
-      const originalQueueHeartbeat = this.heartbeatTracker.queueHeartbeat.bind(this.heartbeatTracker);
-      this.heartbeatTracker.queueHeartbeat = async (document, isWrite, delta) => {
-        this.lastRealActivity = Date.now();
-        return originalQueueHeartbeat(document, isWrite, delta);
-      };
-    }
-
-    this.inactivityCheckInterval = setInterval(() => {
+    this.pomodoroInterval = setInterval(() => {
       const config = this.getConfig();
       if (!config.enableTelemetry) return;
 
-      const now = Date.now();
-      const inactivityDurationMs = now - this.lastRealActivity;
-      if (inactivityDurationMs > config.inactivityTimeoutMs && this.isFocused) {
+      // Verificar se HeartbeatTracker detectou idle
+      const isCurrentlyIdle = this.heartbeatTracker && this.heartbeatTracker.isIdle;
+      
+      // Enviar blur event quando entrar em idle
+      if (isCurrentlyIdle && !this.lastIdleCheck && this.isFocused) {
         this.isFocused = false;
-        this.lastBlurTime = now;
-
+        this.lastBlurTime = Date.now();
         const heartbeat = this.buildHeartbeat({
           entityType: 'window',
           entity: 'blur',
@@ -106,18 +96,33 @@ class FocusTracker {
           isWrite: false,
           metadata: {
             hourOfDay: new Date().getHours(),
-            focusDurationMs: inactivityDurationMs
+            reason: 'idle_detected'
           }
         });
         this.queue.enqueue(heartbeat);
       }
-    }, 60000);
+      
+      // Restaurar focus quando sair de idle
+      if (!isCurrentlyIdle && this.lastIdleCheck && !this.isFocused && vscode.window.state.focused) {
+        this.isFocused = true;
+        this.lastFocusTime = Date.now();
+        const heartbeat = this.buildHeartbeat({
+          entityType: 'window',
+          entity: 'focus',
+          project: getCurrentProjectName(),
+          category: 'coding',
+          isWrite: false,
+          metadata: {
+            hourOfDay: new Date().getHours(),
+            reason: 'idle_exit'
+          }
+        });
+        this.queue.enqueue(heartbeat);
+      }
+      
+      this.lastIdleCheck = isCurrentlyIdle;
 
-    this.pomodoroInterval = setInterval(() => {
-      const config = this.getConfig();
-      if (!config.enableTelemetry) return;
-
-      if (this.isFocused && this.lastFocusTime) {
+      if (this.isFocused && this.lastFocusTime && !isCurrentlyIdle) {
         const focusDurationMs = Date.now() - this.lastFocusTime;
         const focusMinutes = Math.floor(focusDurationMs / 60000);
         
@@ -153,15 +158,9 @@ class FocusTracker {
   }
 
   dispose() {
-    // VSCODE-001: Clear pomodoro interval
     if (this.pomodoroInterval) {
       clearInterval(this.pomodoroInterval);
       this.pomodoroInterval = null;
-    }
-    // BUG-FIX: Clear inactivity check interval
-    if (this.inactivityCheckInterval) {
-      clearInterval(this.inactivityCheckInterval);
-      this.inactivityCheckInterval = null;
     }
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
