@@ -108,6 +108,106 @@ body.earthquake {
   box-shadow: 5px 5px 0 #ffd166;
 }
 
+.vscode-today-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.vscode-today-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.vscode-index-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(27, 18, 10, 0.2);
+  border-radius: 12px;
+  min-width: 80px;
+}
+
+.vscode-index-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.vscode-index-value {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.vscode-index-value.good {
+  color: #059669;
+}
+
+.vscode-index-value.warn {
+  color: #d97706;
+}
+
+.vscode-index-value.alert {
+  color: #dc2626;
+}
+
+.vscode-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.vscode-kpi-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border: 2px solid #111;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 3px 3px 0 #f1d884;
+}
+
+.vscode-kpi-card--productive {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: #059669;
+  box-shadow: 3px 3px 0 #6ee7b7;
+}
+
+.vscode-kpi-card--procrast {
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+  border-color: #dc2626;
+  box-shadow: 3px 3px 0 #f87171;
+}
+
+.vscode-kpi-card--inactive {
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  border-color: #6b7280;
+  box-shadow: 3px 3px 0 #9ca3af;
+}
+
+.vscode-kpi-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.vscode-kpi-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .vscode-card-label {
   font-size: 0.85rem;
   letter-spacing: 0.08em;
@@ -1171,6 +1271,26 @@ main {
 .vscode-kpi-icon--pomodoro {
   background: #d00000;
   color: #fff;
+}
+
+.vscode-kpi-icon--combo {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #1b120a;
+  animation: comboGlow 2s ease-in-out infinite;
+}
+
+@keyframes comboGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.vscode-kpi-card--combo {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, #fffbea 0%, #fff4cc 100%);
 }
 
 .vscode-kpi-label {

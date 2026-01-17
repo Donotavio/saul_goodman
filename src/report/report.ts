@@ -11,19 +11,8 @@ import {
   ContextModeValue,
   ExtensionSettings
 } from '../shared/types.js';
-import {
-  formatDuration,
-  formatTimeRange,
-  isWithinWorkSchedule,
-  splitDurationByHour
-} from '../shared/utils/time.js';
-import {
-  calculateKpis,
-  CalculatedKpis,
-  formatPercentage,
-  formatRate,
-  formatProductivityRatio
-} from '../shared/metrics.js';
+import { formatDuration, formatTimeRange, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { calculateKpis, formatPercentage, CalculatedKpis } from '../shared/metrics.js';
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
@@ -450,8 +439,14 @@ async function refreshVscodeReport(): Promise<void> {
 
     setVscodeReportStatus('report_vscode_loaded', 'Dados sincronizados.');
   } catch (error) {
-    console.warn('Falha ao buscar dados do VS Code', error);
-    setVscodeReportStatus('report_vscode_error', 'Nao foi possivel carregar os relatorios.', 'error');
+    console.error('Falha ao buscar dados do VS Code:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+    console.error('Detalhes:', {
+      baseUrl: latestSettings?.vscodeLocalApiUrl,
+      hasPairingKey: !!latestSettings?.vscodePairingKey,
+      error: errorMessage
+    });
+    setVscodeReportStatus('report_vscode_error', `Erro: ${errorMessage}`, 'error');
   }
 }
 
@@ -3166,7 +3161,10 @@ interface EnrichedMetrics extends DailyMetrics {
   timeline: TimelineEntry[];
 }
 
-function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
+const warnedHours = new Set<number>();
+
+function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
+  warnedHours.clear();
   const allowVscode = Boolean(latestSettings?.vscodeIntegrationEnabled);
   let vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
@@ -3207,8 +3205,9 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
           bucket.productiveMs += segment.milliseconds;
           const total = bucket.productiveMs + bucket.procrastinationMs + bucket.inactiveMs + bucket.neutralMs;
           const MAX_HOUR_MS = 60 * 60 * 1000;
-          if (total > MAX_HOUR_MS * 1.1) {
+          if (total > MAX_HOUR_MS * 1.1 && !warnedHours.has(segment.hour)) {
             console.warn(`[Saul] Hour ${segment.hour} total (${(total / 60000).toFixed(1)}min) exceeds 60min - possible overlap`);
+            warnedHours.add(segment.hour);
           }
         }
       }

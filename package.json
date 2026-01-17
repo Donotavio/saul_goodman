@@ -7,6 +7,7 @@
     "clean": "node --input-type=module -e \"import fs from 'fs/promises'; await fs.rm('dist', { recursive: true, force: true });\"",
     "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.json",
+    "postbuild": "mkdir -p dist/vendor && cp src/vendor/*.js dist/vendor/",
     "watch": "tsc -w -p tsconfig.json",
     "test": "npm run build && node --input-type=module -e \"import fs from 'fs/promises'; import path from 'path'; import { spawnSync } from 'child_process'; const root = path.join('dist', 'tests'); const exts = ['.test.js', '.spec.js']; const walk = async (dir) => { let out = []; try { for (const ent of await fs.readdir(dir, { withFileTypes: true })) { const p = path.join(dir, ent.name); if (ent.isDirectory()) out = out.concat(await walk(p)); else if (exts.some((ext) => ent.name.endsWith(ext))) out.push(p); } } catch {} return out; }; const files = await walk(root); if (!files.length) { console.log('No compiled tests found'); process.exit(0); } const res = spawnSync(process.execPath, ['--test', ...files], { stdio: 'inherit' }); process.exit(res.status ?? 1);\"",
     "package:webstore": "node tools/package-webstore.js",
@@ -32,6 +33,8 @@
   },
   "dependencies": {
     "chart.js": "^4.5.1",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
     "jspdf": "^4.0.0"
   }
 }
