@@ -376,7 +376,7 @@
     canvas.style.display = 'block';
     if (emptyEl) emptyEl.classList.add('hidden');
 
-    if (window.projectsChartInstance) {
+    if (window.projectsChartInstance && typeof window.projectsChartInstance.destroy === 'function') {
       window.projectsChartInstance.destroy();
     }
 
@@ -449,7 +449,7 @@
     canvas.style.display = 'block';
     if (emptyEl) emptyEl.classList.add('hidden');
 
-    if (window.commitsChartInstance) {
+    if (window.commitsChartInstance && typeof window.commitsChartInstance.destroy === 'function') {
       window.commitsChartInstance.destroy();
     }
 
@@ -546,7 +546,7 @@
     canvas.style.display = 'block';
     if (emptyEl) emptyEl.classList.add('hidden');
 
-    if (window.crossReferenceChartInstance) {
+    if (window.crossReferenceChartInstance && typeof window.crossReferenceChartInstance.destroy === 'function') {
       window.crossReferenceChartInstance.destroy();
     }
 
@@ -824,7 +824,7 @@
     const emptyEl = document.getElementById('terminalEmpty');
     if (!canvas) return;
 
-    if (terminalChart) {
+    if (terminalChart && typeof terminalChart.destroy === 'function') {
       terminalChart.destroy();
       terminalChart = null;
     }
@@ -871,7 +871,7 @@
     const emptyEl = document.getElementById('focusEmpty');
     if (!canvas) return;
 
-    if (focusChart) {
+    if (focusChart && typeof focusChart.destroy === 'function') {
       focusChart.destroy();
       focusChart = null;
     }

@@ -4,7 +4,7 @@ function renderComboTimelineChart(comboData) {
   const emptyEl = document.getElementById('comboTimelineEmpty');
   if (!canvas) return;
 
-  if (window.comboTimelineChart) {
+  if (window.comboTimelineChart && typeof window.comboTimelineChart.destroy === 'function') {
     window.comboTimelineChart.destroy();
     window.comboTimelineChart = null;
   }

@@ -26,7 +26,7 @@ function renderHourlyChart(hourlyData) {
 
   let hourlyChart = null;
   
-  if (window.hourlyChartInstance) {
+  if (window.hourlyChartInstance && typeof window.hourlyChartInstance.destroy === 'function') {
     window.hourlyChartInstance.destroy();
   }
 
