@@ -441,27 +441,17 @@ function normalizeMetadata(metadata) {
   if (typeof metadata.commandId === 'string') {
     normalized.commandId = metadata.commandId;
   }
-  
   if (typeof metadata.vscodeVersion === 'string') {
     normalized.vscodeVersion = metadata.vscodeVersion;
   }
   if (typeof metadata.vscodeLanguage === 'string') {
     normalized.vscodeLanguage = metadata.vscodeLanguage;
   }
-  if (Number.isFinite(Number(metadata.extensionsCount))) {
-    normalized.extensionsCount = Number(metadata.extensionsCount);
-  }
   if (Number.isFinite(Number(metadata.extensionsEnabled))) {
     normalized.extensionsEnabled = Number(metadata.extensionsEnabled);
   }
   if (Number.isFinite(Number(metadata.extensionsDisabled))) {
     normalized.extensionsDisabled = Number(metadata.extensionsDisabled);
-  }
-  if (Array.isArray(metadata.topExtensions)) {
-    normalized.topExtensions = metadata.topExtensions;
-  }
-  if (typeof metadata.themeKind === 'string') {
-    normalized.themeKind = metadata.themeKind;
   }
   if (typeof metadata.themeName === 'string') {
     normalized.themeName = metadata.themeName;
@@ -472,55 +462,12 @@ function normalizeMetadata(metadata) {
   if (typeof metadata.settingsFormatOnSave === 'boolean') {
     normalized.settingsFormatOnSave = metadata.settingsFormatOnSave;
   }
-  if (Number.isFinite(Number(metadata.workspaceFolders))) {
-    normalized.workspaceFolders = Number(metadata.workspaceFolders);
-  }
-  if (typeof metadata.workspaceType === 'string') {
-    normalized.workspaceType = metadata.workspaceType;
-  }
-  if (typeof metadata.workspaceName === 'string') {
-    normalized.workspaceName = metadata.workspaceName;
-  }
-  
-  if (Number.isFinite(Number(metadata.totalFiles))) {
-    normalized.totalFiles = Number(metadata.totalFiles);
-  }
   if (Number.isFinite(Number(metadata.totalDirectories))) {
     normalized.totalDirectories = Number(metadata.totalDirectories);
-  }
-  if (Number.isFinite(Number(metadata.totalSizeBytes))) {
-    normalized.totalSizeBytes = Number(metadata.totalSizeBytes);
   }
   if (Array.isArray(metadata.largestFiles)) {
     normalized.largestFiles = metadata.largestFiles;
   }
-  if (Array.isArray(metadata.topExtensions)) {
-    normalized.topExtensions = metadata.topExtensions;
-  }
-  
-  if (typeof metadata.eventType === 'string') {
-    normalized.eventType = metadata.eventType;
-  }
-  if (typeof metadata.remote === 'string') {
-    normalized.remote = metadata.remote;
-  }
-  if (Number.isFinite(Number(metadata.ahead))) {
-    normalized.ahead = Number(metadata.ahead);
-  }
-  if (Number.isFinite(Number(metadata.behind))) {
-    normalized.behind = Number(metadata.behind);
-  }
-  if (Number.isFinite(Number(metadata.workingTreeChanges))) {
-    normalized.workingTreeChanges = Number(metadata.workingTreeChanges);
-  }
-  if (Number.isFinite(Number(metadata.indexChanges))) {
-    normalized.indexChanges = Number(metadata.indexChanges);
-  }
-  if (typeof metadata.commitMessage === 'string') {
-    normalized.commitMessage = metadata.commitMessage;
-  }
-  
-  // Combo fields
   if (Number.isFinite(Number(metadata.currentLevel))) {
     normalized.currentLevel = Number(metadata.currentLevel);
   }
@@ -541,9 +488,6 @@ function normalizeMetadata(metadata) {
   }
   if (Array.isArray(metadata.comboTimeline)) {
     normalized.comboTimeline = metadata.comboTimeline;
-  }
-  if (typeof metadata.eventType === 'string') {
-    normalized.eventType = metadata.eventType;
   }
   
   return normalized;
@@ -1097,22 +1041,22 @@ function handleVscodeBranches(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const project = (dur.project ?? '').trim().toLowerCase();
-      const language = (dur.language ?? '').trim().toLowerCase();
+      const project = (dur.project ?? '').trim();
+      const language = (dur.language ?? '').trim();
       
-      if (!project || project === 'unknown' || !language || language === 'unknown') {
+      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
         return;
       }
       
-      const branch = (dur.metadata?.branch ?? '').trim().toLowerCase();
-      if (!branch || branch === 'unknown') {
+      const branch = (dur.metadata?.branch ?? '').trim();
+      if (!branch || branch.toLowerCase() === 'unknown') {
         return;
       }
       
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
-      incrementMap(branchMap, dur.metadata?.branch || '', overlapMs);
+      incrementMap(branchMap, branch, overlapMs);
     });
 
   const totalMs = Array.from(branchMap.values()).reduce((sum, ms) => sum + ms, 0);
@@ -1661,43 +1605,42 @@ function handleVscodeDashboard(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const project = (dur.project ?? '').trim().toLowerCase();
-      const language = (dur.language ?? '').trim().toLowerCase();
+      const project = (dur.project ?? '').trim();
+      const language = (dur.language ?? '').trim();
       
-      if (!project || project === 'unknown' || !language || language === 'unknown') {
+      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
         return;
       }
       
-      const branch = (dur.metadata?.branch ?? '').trim().toLowerCase();
-      if (!branch || branch === 'unknown') {
+      const branch = (dur.metadata?.branch ?? '').trim();
+      if (!branch || branch.toLowerCase() === 'unknown') {
         return;
       }
       
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
-      incrementMap(branchMap, dur.metadata?.branch || '', overlapMs);
+      incrementMap(branchMap, branch, overlapMs);
     });
 
   const editorMetadata = entry.heartbeats
     .filter((hb) => hb.entityType === 'editor_metadata' && hb.time >= startMs && hb.time < endMs)
     .sort((a, b) => b.time - a.time)[0];
 
-  const workspaces = [];
   const workspaceMap = new Map();
   entry.heartbeats
     .filter((hb) => hb.entityType === 'workspace' && hb.time >= startMs && hb.time < endMs)
     .forEach((hb) => {
-      const wsPath = (hb.entity ?? '').trim().toLowerCase();
-      const wsName = (hb.metadata?.workspaceName ?? '').trim().toLowerCase();
+      const wsPath = (hb.entity ?? '').trim();
+      const wsName = (hb.metadata?.workspaceName ?? '').trim();
       
-      if (!wsPath || wsPath === 'unknown' || !wsName || wsName === 'unknown') {
+      if (!wsPath || wsPath.toLowerCase() === 'unknown' || !wsName || wsName.toLowerCase() === 'unknown') {
         return;
       }
       
       if (!workspaceMap.has(hb.entity) || hb.time > workspaceMap.get(hb.entity).time) {
         workspaceMap.set(hb.entity, {
-          name: hb.metadata?.workspaceName || '',
+          name: wsName,
           totalFiles: hb.metadata?.totalFiles || 0,
           totalSizeMB: ((hb.metadata?.totalSizeBytes || 0) / (1024 * 1024)).toFixed(2),
           time: hb.time
@@ -1864,10 +1807,10 @@ function summarizeDurationsByDay(durations, startMs, endMs, filters) {
       continue;
     }
     
-    const project = (duration.project ?? '').trim().toLowerCase();
-    const language = (duration.language ?? '').trim().toLowerCase();
+    const project = (duration.project ?? '').trim();
+    const language = (duration.language ?? '').trim();
     
-    if (!project || project === 'unknown' || !language || language === 'unknown') {
+    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
       continue;
     }
     
@@ -1887,8 +1830,8 @@ function summarizeDurationsByDay(durations, startMs, endMs, filters) {
       }
       const entry = daily.get(dateKey);
       entry.totalMs += slice.durationMs;
-      incrementMap(entry.projects, duration.project ?? '', slice.durationMs);
-      incrementMap(entry.languages, duration.language ?? '', slice.durationMs);
+      incrementMap(entry.projects, project, slice.durationMs);
+      incrementMap(entry.languages, language, slice.durationMs);
       incrementMap(entry.editors, duration.editor ?? 'vscode', slice.durationMs);
       incrementMap(entry.categories, duration.category ?? 'coding', slice.durationMs);
       incrementMap(entry.machines, duration.machineId ?? 'unknown', slice.durationMs);
@@ -1917,16 +1860,16 @@ function summarizeDurations(durations, startMs, endMs, filters) {
       continue;
     }
     
-    const project = (duration.project ?? '').trim().toLowerCase();
-    const language = (duration.language ?? '').trim().toLowerCase();
+    const project = (duration.project ?? '').trim();
+    const language = (duration.language ?? '').trim();
     
-    if (!project || project === 'unknown' || !language || language === 'unknown') {
+    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
       continue;
     }
     
     summary.totalMs += overlapMs;
-    incrementMap(summary.projects, duration.project ?? '', overlapMs);
-    incrementMap(summary.languages, duration.language ?? '', overlapMs);
+    incrementMap(summary.projects, project, overlapMs);
+    incrementMap(summary.languages, language, overlapMs);
     incrementMap(summary.editors, duration.editor ?? 'vscode', overlapMs);
     incrementMap(summary.categories, duration.category ?? 'coding', overlapMs);
     incrementMap(summary.machines, duration.machineId ?? 'unknown', overlapMs);
@@ -1948,13 +1891,10 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
       continue;
     }
 
-    const project = duration.project ?? '';
-    const language = duration.language ?? '';
+    const project = (duration.project ?? '').trim();
+    const language = (duration.language ?? '').trim();
     
-    const projectLower = project.trim().toLowerCase();
-    const languageLower = language.trim().toLowerCase();
-    
-    if (!projectLower || projectLower === 'unknown' || !languageLower || languageLower === 'unknown') {
+    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
       continue;
     }
 
@@ -2014,10 +1954,10 @@ function summarizeDurationsByHour(durations, startMs, endMs, filters) {
       continue;
     }
 
-    const project = (duration.project ?? '').trim().toLowerCase();
-    const language = (duration.language ?? '').trim().toLowerCase();
+    const project = (duration.project ?? '').trim();
+    const language = (duration.language ?? '').trim();
     
-    if (!project || project === 'unknown' || !language || language === 'unknown') {
+    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
       continue;
     }
 

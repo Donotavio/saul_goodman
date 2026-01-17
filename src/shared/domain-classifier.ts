@@ -48,7 +48,7 @@ type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'la
 type LearningSide = 'productive' | 'procrastination';
 
 const LEARNING_LOG_MULTIPLIER = 20;
-const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000; // default 30 days
+export const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000; // default 30 days
 const LEARNING_HALF_LIFE_BY_TYPE: Record<string, number> = {
   host: LEARNING_HALF_LIFE_MS,
   root: LEARNING_HALF_LIFE_MS,
@@ -59,7 +59,7 @@ const LEARNING_HALF_LIFE_BY_TYPE: Record<string, number> = {
   lang: 45 * 24 * 60 * 60 * 1000,
   flag: 25 * 24 * 60 * 60 * 1000
 };
-const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
+export const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
   host: 3,
   root: 2,
   kw: 1,

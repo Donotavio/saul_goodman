@@ -42,6 +42,12 @@ function buildHtml(webview, extensionUri, config, i18n) {
   const scriptUri = webview.asWebviewUri(
     vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'report.js')
   );
+  const reportHourlyUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'report-hourly.js')
+  );
+  const comboTimelineUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'combo-timeline-chart.js')
+  );
 
   const inlineStyles = `<style nonce="${nonce}">${cssContent}</style>`;
   const logoDataUri = `data:image/png;base64,${logoBase64}`;
@@ -55,6 +61,8 @@ function buildHtml(webview, extensionUri, config, i18n) {
     .replace(/{nonce}/g, nonce)
     .replace('{cspSource}', webview.cspSource)
     .replace('{scriptUri}', scriptUri.toString())
+    .replace('{reportHourlyUri}', reportHourlyUri.toString())
+    .replace('{comboTimelineUri}', comboTimelineUri.toString())
     .replace('<link rel="stylesheet" href="{styleUri}" />', inlineStyles)
     .replace('{logoUri}', logoDataUri)
     .replace('{config}', JSON.stringify(config))

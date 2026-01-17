@@ -12,6 +12,7 @@ import { normalizeDomain } from '../shared/utils/domain.js';
 import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../shared/i18n.js';
 import { buildLearningTokens } from '../shared/domain-classifier.js';
 import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
+import { getTodayKey } from '../shared/utils/time.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -303,14 +304,6 @@ function setVscodeTestStatus(
   if (variant !== 'idle') {
     vscodeTestStatusEl.classList.add(variant);
   }
-}
-
-function getTodayKey(): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
 }
 
 async function testVscodeConnection(): Promise<void> {

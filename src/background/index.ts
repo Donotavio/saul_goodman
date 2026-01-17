@@ -37,7 +37,12 @@ import {
   HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
-import { classifyDomain as classifyWithMetadata, buildLearningTokens } from '../shared/domain-classifier.js';
+import {
+  classifyDomain as classifyWithMetadata,
+  buildLearningTokens,
+  DEFAULT_LEARNING_WEIGHTS,
+  LEARNING_HALF_LIFE_MS
+} from '../shared/domain-classifier.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -75,21 +80,10 @@ const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_LEARNING_TOKENS = 5000;
-const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000;
 const LOW_CONFIDENCE_THRESHOLD = 55;
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
 const WEIGHT_STEP = 0.1;
 type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'lang' | 'flag';
-const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
-  host: 3,
-  root: 2,
-  kw: 1,
-  og: 1.5,
-  path: 1.25,
-  schema: 1.25,
-  lang: 0.5,
-  flag: 1
-};
 const WEIGHT_MIN_MAX: Record<LearningWeightKey, { min: number; max: number }> = {
   host: { min: 1.5, max: 5 },
   root: { min: 1, max: 4 },
