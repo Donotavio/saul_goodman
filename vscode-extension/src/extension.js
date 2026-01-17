@@ -346,7 +346,8 @@ class TrackingController {
       queue: this.queue,
       getConfig: () => this.config,
       buildHeartbeat: this.buildHeartbeat,
-      comboTracker: this.comboTracker
+      comboTracker: this.comboTracker,
+      heartbeatTracker: this.heartbeatTracker
     });
     this.diagnosticTracker = new DiagnosticTracker({
       context,
@@ -740,6 +741,7 @@ function readConfig() {
     enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     enableTelemetry: config.get('enableTelemetry', false),
     pomodoroTestMode: config.get('pomodoroTestMode', false),
+    inactivityTimeoutMs: config.get('inactivityTimeoutMs', 300000),
     telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60),
     telemetryRetentionDays: config.get('telemetryRetentionDays', 30)
   };

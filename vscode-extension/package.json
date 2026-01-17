@@ -120,6 +120,11 @@
           "default": false,
           "description": "%config_pomodoro_test_mode_description%"
         },
+        "saulGoodman.inactivityTimeoutMs": {
+          "type": "number",
+          "default": 300000,
+          "description": "%config_inactivity_timeout_description%"
+        },
         "saulGoodman.telemetrySampleDiagnosticsIntervalSec": {
           "type": "number",
           "default": 60,

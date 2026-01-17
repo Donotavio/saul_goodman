@@ -8,6 +8,7 @@ class FocusTracker {
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
     this.comboTracker = options.comboTracker || null;
+    this.heartbeatTracker = options.heartbeatTracker || null;
     this.disposables = [];
     this.isFocused = false;
     this.lastFocusTime = null;
@@ -90,6 +91,16 @@ class FocusTracker {
         }
       })
     );
+
+    // Conectar com HeartbeatTracker para detectar atividade real de edição
+    if (this.heartbeatTracker) {
+      const originalQueueHeartbeat = this.heartbeatTracker.queueHeartbeat.bind(this.heartbeatTracker);
+      this.heartbeatTracker.queueHeartbeat = async (document, isWrite, delta) => {
+        this.lastRealActivity = Date.now();
+        return originalQueueHeartbeat(document, isWrite, delta);
+      };
+      console.log('[Saul Focus] Connected to HeartbeatTracker for real activity detection');
+    }
 
     this.inactivityCheckInterval = setInterval(() => {
       const config = this.getConfig();
