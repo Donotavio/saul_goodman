@@ -19,7 +19,7 @@
     "i18n:stubs": "node tools/i18n/generate-locale-stubs.js",
     "i18n:copy-site": "node tools/i18n/copy-locales-to-site.js",
     "i18n:repair-locale": "node tools/i18n/repair-locale-with-llm.js",
-    "i18n:full-lang-update": "npm run i18n:sync && npm run i18n:check && npm run i18n:stubs && npm run i18n:copy-site && for lang in ar bn de en_US es_419 fr hi it ru tr ur zh_CN; do  npm run i18n:repair-locale -- --locale \"$lang\" --mode suspicious --limit 200; done",
+    "i18n:full-lang-update": "npm run i18n:sync && for lang in ar bn de en_US es_419 fr hi it ru tr ur zh_CN; do  npm run i18n:repair-locale -- --locale \"$lang\" --mode suspicious --limit 200; done && npm run i18n:check && npm run i18n:stubs && npm run i18n:copy-site",
     "mcp:sync-harness": "tsx tools/mcp_quality/sync-harness.ts",
     "mcp:quality": "npm run build && tsx tools/mcp_quality/run.ts",
     "mcp:quality:update-baseline": "npm run mcp:quality -- --update-baseline"
