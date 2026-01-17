@@ -356,6 +356,12 @@
   "command_open_reports": {
     "message": "Саул Гудман: открыть отчеты"
   },
+  "command_reset_combo": {
+    "message": "Сол Гудман: сбросить комбо"
+  },
+  "command_setup_pomodoro": {
+    "message": "Сол Гудман: настроить систему Помодоро"
+  },
   "command_start_daemon": {
     "message": "Саул Гудман: подготовить команду SaulDaemon"
   },
@@ -392,11 +398,17 @@
   "config_idle_threshold_description": {
     "message": "Максимальное время без активности перед тем, как считать сессию неактивной."
   },
+  "config_inactivity_timeout_description": {
+    "message": "Максимальное время в миллисекундах без активности перед пометкой как неактивный."
+  },
   "config_language_description": {
     "message": "Язык расширения VS Code (авто использует язык VS Code)."
   },
   "config_pairing_key_description": {
     "message": "Ключ сопряжения, общий с расширением Chrome."
+  },
+  "config_pomodoro_test_mode_description": {
+    "message": "Включает тестовый режим для Помодоро (1 минута за цикл вместо 25)."
   },
   "config_telemetry_diagnostics_interval_description": {
     "message": "Интервал в секундах для выборки диагностики (ошибки/предупреждения) файлов."
@@ -2579,6 +2591,15 @@
   "report_vscode_branches": {
     "message": "Git ветки"
   },
+  "report_vscode_combo_timeline": {
+    "message": "Linha do Tempo de Combos"
+  },
+  "report_vscode_combo_timeline_empty": {
+    "message": "Nenhum combo registrado hoje."
+  },
+  "report_vscode_combo_timeline_subtitle": {
+    "message": "Progressão de pomodoros ao longo do dia"
+  },
   "report_vscode_commit_activity": {
     "message": "Активность коммитов"
   },
@@ -2707,6 +2728,9 @@
   },
   "report_vscode_tel_builds": {
     "message": "СБОРКИ"
+  },
+  "report_vscode_tel_combo": {
+    "message": "COMBO MÁXIMO"
   },
   "report_vscode_tel_debug": {
     "message": "ОТЛАДОЧНЫЕ СЕССИИ"

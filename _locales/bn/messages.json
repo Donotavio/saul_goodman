@@ -356,6 +356,12 @@
   "command_open_reports": {
     "message": "সৌল গুডম্যান: রিপোর্ট খুলুন"
   },
+  "command_reset_combo": {
+    "message": "সৌল গুডম্যান: কম্বো রিসেট করুন"
+  },
+  "command_setup_pomodoro": {
+    "message": "সৌল গুডম্যান: পোমোডোরো সিস্টেম সেট আপ করুন"
+  },
   "command_start_daemon": {
     "message": "সৌল গুডম্যান: সৌলডেমন কমান্ড প্রস্তুত করুন"
   },
@@ -392,11 +398,17 @@
   "config_idle_threshold_description": {
     "message": "অ্যাক্টিভিটি ছাড়া সর্বাধিক সময় যা সেশনকে নিষ্ক্রিয় হিসাবে বিবেচনা করতে হবে।"
   },
+  "config_inactivity_timeout_description": {
+    "message": "অক্রিয়তার আগে সর্বাধিক সময় মিলিসেকেন্ডে অক্ষম হিসাবে চিহ্নিত করতে।"
+  },
   "config_language_description": {
     "message": "VS কোড এক্সটেনশনের ভাষা (অটো VS কোডের ভাষা ব্যবহার করে)।"
   },
   "config_pairing_key_description": {
     "message": "ক্রোম এক্সটেনশনের সাথে শেয়ার করা পেয়ারিং কী।"
+  },
+  "config_pomodoro_test_mode_description": {
+    "message": "পোমোডোরোর জন্য পরীক্ষামূলক মোড সক্রিয় করুন (২৫ মিনিটের পরিবর্তে প্রতি চক্রে ১ মিনিট)।"
   },
   "config_telemetry_diagnostics_interval_description": {
     "message": "ফাইলের ডায়াগনস্টিক (ত্রুটি/সতর্কতা) নমুনা করার জন্য সেকেন্ডে ব্যবধান।"
@@ -2579,6 +2591,15 @@
   "report_vscode_branches": {
     "message": "গিট শাখা"
   },
+  "report_vscode_combo_timeline": {
+    "message": "কম্বোর টাইমলাইন"
+  },
+  "report_vscode_combo_timeline_empty": {
+    "message": "আজ কোনো কম্বো নিবন্ধিত হয়নি।"
+  },
+  "report_vscode_combo_timeline_subtitle": {
+    "message": "দিনের মধ্যে পমোডোরোর অগ্রগতি"
+  },
   "report_vscode_commit_activity": {
     "message": "কমিটের অ্যাক্টিভিটি"
   },
@@ -2707,6 +2728,9 @@
   },
   "report_vscode_tel_builds": {
     "message": "বিল্ড"
+  },
+  "report_vscode_tel_combo": {
+    "message": "সর্বাধিক কম্বো"
   },
   "report_vscode_tel_debug": {
     "message": "ডিবাগ সেশন"

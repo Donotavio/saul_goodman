@@ -11,6 +11,8 @@ const VSCODE_KEYS = [
   'command_start_daemon',
   'command_test_daemon',
   'command_open_reports',
+  'command_setup_pomodoro',
+  'command_reset_combo',
   'config_enabled_description',
   'config_enable_tracking_description',
   'config_enable_reports_description',
@@ -23,6 +25,8 @@ const VSCODE_KEYS = [
   'config_idle_threshold_description',
   'config_language_description',
   'config_enable_telemetry_description',
+  'config_pomodoro_test_mode_description',
+  'config_inactivity_timeout_description',
   'config_telemetry_diagnostics_interval_description',
   'config_telemetry_retention_description',
 ];

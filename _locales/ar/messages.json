@@ -356,6 +356,12 @@
   "command_open_reports": {
     "message": "سول غودمان: فتح التقارير"
   },
+  "command_reset_combo": {
+    "message": "سول غودمان: إعادة تعيين المجموعة"
+  },
+  "command_setup_pomodoro": {
+    "message": "سول غودمان: إعداد نظام بومودورو"
+  },
   "command_start_daemon": {
     "message": "سول غودمان: إعداد أمر سول دايمون"
   },
@@ -392,11 +398,17 @@
   "config_idle_threshold_description": {
     "message": "الحد الأقصى للوقت بدون نشاط قبل اعتبار الجلسة غير نشطة."
   },
+  "config_inactivity_timeout_description": {
+    "message": "الحد الأقصى للوقت بالمللي ثانية بدون نشاط قبل اعتبارها غير نشطة."
+  },
   "config_language_description": {
     "message": "لغة ملحق VS Code (تستخدم تلقائيًا لغة VS Code)."
   },
   "config_pairing_key_description": {
     "message": "مفتاح الاقتران المشترك مع ملحق Chrome."
+  },
+  "config_pomodoro_test_mode_description": {
+    "message": "تفعيل وضع الاختبار لبومودورو (دقيقة واحدة لكل دورة بدلاً من 25)."
   },
   "config_telemetry_diagnostics_interval_description": {
     "message": "الفترة الزمنية بالثواني لأخذ عينات من التشخيصات (الأخطاء/التحذيرات) من الملفات."
@@ -2579,6 +2591,15 @@
   "report_vscode_branches": {
     "message": "فروع Git"
   },
+  "report_vscode_combo_timeline": {
+    "message": "خط الزمن للتركيبات"
+  },
+  "report_vscode_combo_timeline_empty": {
+    "message": "لا توجد تركيبات مسجلة اليوم."
+  },
+  "report_vscode_combo_timeline_subtitle": {
+    "message": "تقدم البومودوروز على مدار اليوم"
+  },
   "report_vscode_commit_activity": {
     "message": "نشاط الالتزامات"
   },
@@ -2707,6 +2728,9 @@
   },
   "report_vscode_tel_builds": {
     "message": "البناءات"
+  },
+  "report_vscode_tel_combo": {
+    "message": "التركيبة القصوى"
   },
   "report_vscode_tel_debug": {
     "message": "جلسات تصحيح الأخطاء"

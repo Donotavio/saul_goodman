@@ -356,6 +356,12 @@
   "command_open_reports": {
     "message": "Saul Goodman: abrir relatórios"
   },
+  "command_reset_combo": {
+    "message": "Saul Goodman: resetar combo"
+  },
+  "command_setup_pomodoro": {
+    "message": "Saul Goodman: configurar sistema Pomodoro"
+  },
   "command_start_daemon": {
     "message": "Saul Goodman: preparar comando do SaulDaemon"
   },
@@ -392,11 +398,17 @@
   "config_idle_threshold_description": {
     "message": "Tempo máximo sem atividade antes de considerar a sessão inativa."
   },
+  "config_inactivity_timeout_description": {
+    "message": "Tempo máximo em milissegundos sem atividade antes de marcar como inativo."
+  },
   "config_language_description": {
     "message": "Idioma da extensão VS Code (auto usa o idioma do VS Code)."
   },
   "config_pairing_key_description": {
     "message": "Chave de pareamento compartilhada com a extensão Chrome."
+  },
+  "config_pomodoro_test_mode_description": {
+    "message": "Ativa modo de teste para Pomodoro (1 minuto por ciclo ao invés de 25)."
   },
   "config_telemetry_diagnostics_interval_description": {
     "message": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos."
@@ -2579,6 +2591,15 @@
   "report_vscode_branches": {
     "message": "Git Branches"
   },
+  "report_vscode_combo_timeline": {
+    "message": "Linha do Tempo de Combos"
+  },
+  "report_vscode_combo_timeline_empty": {
+    "message": "Nenhum combo registrado hoje."
+  },
+  "report_vscode_combo_timeline_subtitle": {
+    "message": "Progressão de pomodoros ao longo do dia"
+  },
   "report_vscode_commit_activity": {
     "message": "Atividade de Commits"
   },
@@ -2707,6 +2728,9 @@
   },
   "report_vscode_tel_builds": {
     "message": "BUILDS"
+  },
+  "report_vscode_tel_combo": {
+    "message": "COMBO MÁXIMO"
   },
   "report_vscode_tel_debug": {
     "message": "SESSÕES DEBUG"

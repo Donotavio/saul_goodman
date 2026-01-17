@@ -356,6 +356,12 @@
   "command_open_reports": {
     "message": "سول گڈمین: رپورٹس کھولیں"
   },
+  "command_reset_combo": {
+    "message": "سول گڈمین: کمبو کو ری سیٹ کریں"
+  },
+  "command_setup_pomodoro": {
+    "message": "سول گڈمین: پومودورو سسٹم ترتیب دیں"
+  },
   "command_start_daemon": {
     "message": "سول گڈمین: سول ڈیمون کے لئے کمانڈ تیار کریں"
   },
@@ -392,11 +398,17 @@
   "config_idle_threshold_description": {
     "message": "غیر فعال سمجھے جانے سے پہلے زیادہ سے زیادہ غیر فعالیت کا وقت."
   },
+  "config_inactivity_timeout_description": {
+    "message": "غیر فعالیت سے پہلے کی زیادہ سے زیادہ مدت ملی سیکنڈز میں غیر فعال کے طور پر نشان زد کرنے کے لیے۔"
+  },
   "config_language_description": {
     "message": "VS Code کی توسیع کی زبان (خودکار طور پر VS Code کی زبان استعمال کرتا ہے)."
   },
   "config_pairing_key_description": {
     "message": "کروم توسیع کے ساتھ مشترکہ پیئرنگ کی."
+  },
+  "config_pomodoro_test_mode_description": {
+    "message": "پومودورو کے لیے ٹیسٹ موڈ کو فعال کریں (25 کے بجائے ہر سائیکل کے لیے 1 منٹ)۔"
   },
   "config_telemetry_diagnostics_interval_description": {
     "message": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ."
@@ -2579,6 +2591,15 @@
   "report_vscode_branches": {
     "message": "گٹ شاخیں"
   },
+  "report_vscode_combo_timeline": {
+    "message": "Linha do Tempo de Combos"
+  },
+  "report_vscode_combo_timeline_empty": {
+    "message": "Nenhum combo registrado hoje."
+  },
+  "report_vscode_combo_timeline_subtitle": {
+    "message": "Progressão de pomodoros ao longo do dia"
+  },
   "report_vscode_commit_activity": {
     "message": "کمٹ کی سرگرمی"
   },
@@ -2707,6 +2728,9 @@
   },
   "report_vscode_tel_builds": {
     "message": "بلڈز"
+  },
+  "report_vscode_tel_combo": {
+    "message": "COMBO MÁXIMO"
   },
   "report_vscode_tel_debug": {
     "message": "ڈیبگ سیشن"
