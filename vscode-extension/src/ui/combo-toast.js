@@ -15,68 +15,52 @@ class ComboToast {
   }
 
   /**
-   * Exibe toast de combo level up
+   * Exibe notificação APENAS em level ups importantes
+   * Status bar sempre mostra o combo atual de forma rica
    */
   show(comboData) {
     const { level, pomodoros, leveledUp, isUltra, totalMinutes, comboReset, comboReduced } = comboData;
 
-    // Determinar tipo de mensagem
-    let message, title, color, duration, emoji;
+    // Notificar apenas em eventos importantes (level ups, breaks)
+    let shouldNotify = false;
+    let message, title, emoji, color, duration;
     
     if (comboReset) {
+      shouldNotify = true;
       title = this.localize('combo_breaker_long');
       message = this.localize('combo_reduced');
       color = '#6B7280';
       duration = 4000;
       emoji = '⚠️';
     } else if (comboReduced) {
+      shouldNotify = true;
       title = this.localize('combo_breaker_medium');
       message = this.localize('combo_reduced');
       color = '#F59E0B';
       duration = 3500;
       emoji = '🔄';
-    } else if (leveledUp || level > 0) {
-      // Selecionar mensagem aleatória baseada no nível
+    } else if (leveledUp && level > 0) {
+      // APENAS em level ups, não em todo pomodoro
+      shouldNotify = true;
       const messageKey = this.selectRandomMessage(level);
       message = this.localize(messageKey);
       title = this.getComboTitle(level, pomodoros);
       color = this.getComboColor(level);
       duration = this.getDisplayDuration(level);
       emoji = this.getComboEmoji(level);
-    } else {
-      // Sem combo ativo
-      return;
     }
 
-    // Criar webview panel se não existir
-    if (!this.panel) {
-      this.createPanel();
-    }
-
-    // Atualizar conteúdo do toast
-    this.updateToastContent({
-      title,
-      message,
-      color,
-      emoji,
-      level,
-      pomodoros,
-      totalMinutes,
-      isUltra
-    });
-
-    // Auto-hide após duração
-    if (this.currentTimeout) {
-      clearTimeout(this.currentTimeout);
+    // Notificação nativa apenas quando importante
+    if (shouldNotify) {
+      const fullMessage = `${emoji} ${title} • ${message} (${totalMinutes || pomodoros * 25} min)`;
+      vscode.window.showInformationMessage(fullMessage);
     }
     
-    this.currentTimeout = setTimeout(() => {
-      this.hide();
-    }, duration);
+    // Status bar sempre atualiza (implementado em extension.js)
   }
 
   /**
-   * Cria o webview panel
+   * Método legado - mantido para compatibilidade (não usado mais)
    */
   createPanel() {
     this.panel = vscode.window.createWebviewPanel(
@@ -136,13 +120,27 @@ class ComboToast {
   }
 
   /**
-   * Oculta o toast
+   * Oculta o toast (método legado - não usado mais)
    */
   hide() {
     if (this.panel) {
       this.panel.webview.postMessage({ command: 'hideToast' });
     }
     this.isVisible = false;
+  }
+
+  /**
+   * Dispose - limpar recursos
+   */
+  dispose() {
+    if (this.panel) {
+      this.panel.dispose();
+      this.panel = null;
+    }
+    if (this.currentTimeout) {
+      clearTimeout(this.currentTimeout);
+      this.currentTimeout = null;
+    }
   }
 
   /**

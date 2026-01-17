@@ -314,7 +314,15 @@ class ComboTracker {
     });
 
     this.queue.enqueue(heartbeat);
-    console.log(`[Saul Combo] Heartbeat sent: ${eventType}, level: ${this.currentLevel}, streak: ${this.consecutivePomodoros}`);
+    console.log(`[Saul Combo] ✓ Heartbeat enqueued: ${eventType}`);
+    console.log(`[Saul Combo] Heartbeat details:`, {
+      entityType: 'combo',
+      entity: eventType,
+      level: this.currentLevel,
+      streak: this.consecutivePomodoros,
+      maxToday: this.maxComboToday,
+      timelineEvents: this.comboTimeline.length
+    });
   }
 
   /**

@@ -1325,10 +1325,22 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
       filesRenamed: 0,
       editsApplied: 0,
       codeActionsAvailable: 0
+    },
+    combo: {
+      maxComboToday: 0,
+      totalCombosToday: 0,
+      lifetimeMaxCombo: 0,
+      comboTimeline: []
     }
   };
 
   const filteredHeartbeats = heartbeats.filter(hb => hb.time >= startMs && hb.time < endMs);
+  
+  const comboHeartbeats = filteredHeartbeats.filter(hb => hb.entityType === 'combo');
+  console.log(`[Daemon Combo] Found ${comboHeartbeats.length} combo heartbeats in date range`);
+  if (comboHeartbeats.length > 0) {
+    console.log('[Daemon Combo] Sample combo heartbeat:', comboHeartbeats[0]);
+  }
 
   filteredHeartbeats.forEach(hb => {
     const entityType = hb.entityType;
@@ -1459,6 +1471,44 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
         telemetry.refactoring.codeActionsAvailable += metadata.count || 0;
       }
     }
+
+    if (entityType === 'combo') {
+      console.log('[Daemon Combo] Processing combo heartbeat:', {
+        entity: hb.entity,
+        time: new Date(hb.time).toISOString(),
+        metadata: {
+          maxComboToday: metadata.maxComboToday,
+          totalCombosToday: metadata.totalCombosToday,
+          consecutivePomodoros: metadata.consecutivePomodoros
+        }
+      });
+      
+      if (hb.entity === 'combo_update' || hb.entity === 'pomodoro_completed') {
+        const maxComboToday = metadata.maxComboToday || 0;
+        const totalCombosToday = metadata.totalCombosToday || 0;
+        const lifetimeMaxCombo = metadata.lifetimeMaxCombo || 0;
+
+        telemetry.combo.maxComboToday = Math.max(telemetry.combo.maxComboToday, maxComboToday);
+        telemetry.combo.totalCombosToday = Math.max(telemetry.combo.totalCombosToday, totalCombosToday);
+        telemetry.combo.lifetimeMaxCombo = Math.max(telemetry.combo.lifetimeMaxCombo, lifetimeMaxCombo);
+
+        if (metadata.comboTimeline && Array.isArray(metadata.comboTimeline)) {
+          metadata.comboTimeline.forEach(event => {
+            const exists = telemetry.combo.comboTimeline.some(e => 
+              e.timestamp === event.timestamp && e.type === event.type
+            );
+            if (!exists) {
+              telemetry.combo.comboTimeline.push({
+                timestamp: event.timestamp,
+                type: event.type,
+                level: event.level || 0,
+                pomodoros: event.pomodoros || 0
+              });
+            }
+          });
+        }
+      }
+    }
   });
 
   if (telemetry.debugging.totalSessions > 0) {
@@ -1535,6 +1585,9 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
 
   delete telemetry.focus.focusSessions;
   delete telemetry.diagnostics.fileSnapshots;
+
+  telemetry.combo.comboTimeline.sort((a, b) => a.timestamp - b.timestamp);
+  telemetry.combo.comboTimeline = telemetry.combo.comboTimeline.slice(-100);
 
   return telemetry;
 }

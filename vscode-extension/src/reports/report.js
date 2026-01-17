@@ -1162,14 +1162,29 @@
     document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
     document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
 
-    console.log('[Saul Report] Telemetry data:', tel);
-    console.log('[Saul Report] Combo data:', tel.combo);
+    console.log('[Saul Report] ===== TELEMETRY DEBUG =====');
+    console.log('[Saul Report] Full telemetry object:', JSON.stringify(tel, null, 2));
     console.log('[Saul Report] All telemetry keys:', Object.keys(tel));
+    console.log('[Saul Report] Combo data exists?', tel.combo !== undefined);
+    console.log('[Saul Report] Combo data:', tel.combo);
+    
+    if (tel.combo) {
+      console.log('[Saul Report] ✓ Combo data FOUND:', {
+        maxComboToday: tel.combo.maxComboToday,
+        totalCombosToday: tel.combo.totalCombosToday,
+        lifetimeMaxCombo: tel.combo.lifetimeMaxCombo,
+        comboTimeline: tel.combo.comboTimeline?.length || 0
+      });
+    } else {
+      console.log('[Saul Report] ❌ NO COMBO DATA - Daemon não retornou campo "combo"');
+      console.log('[Saul Report] Isso significa que o daemon ainda não processa heartbeats de combo');
+    }
     
     const maxCombo = tel.combo?.maxComboToday || 0;
     const comboMinutes = maxCombo * 25;
     
     console.log('[Saul Report] Max combo:', maxCombo, 'minutes:', comboMinutes);
+    console.log('[Saul Report] ===========================');
     
     document.getElementById('telMaxCombo').textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
     document.getElementById('telComboMinutes').textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';

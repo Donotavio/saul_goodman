@@ -405,11 +405,26 @@ class TrackingController {
   }
 
   async updateStatusBarWithCombo(comboData) {
-    const comboSuffix = comboData && comboData.level > 0 
-      ? ` | ${localize('combo_status_bar_suffix', { level: comboData.level })}`
-      : '';
+    if (!comboData) {
+      currentComboSuffix = '';
+      void pollStatus();
+      return;
+    }
     
-    currentComboSuffix = comboSuffix;
+    const { level, pomodoros, maxComboToday, totalMinutes } = comboData;
+    
+    if (level === 0) {
+      currentComboSuffix = '';
+    } else {
+      // Emoji dinâmico por nível
+      const emoji = level >= 5 ? '💎' : level >= 4 ? '💥' : level >= 3 ? '⚡' : level >= 2 ? '🔥' : '🎯';
+      
+      // Informações ricas: emoji + streak + tempo + max hoje
+      const minutes = totalMinutes || pomodoros * 25;
+      const maxIndicator = maxComboToday > pomodoros ? ` | ⭐ ${maxComboToday}x` : '';
+      currentComboSuffix = ` | ${emoji} ${pomodoros}x COMBO (${minutes}min)${maxIndicator}`;
+    }
+    
     void pollStatus();
   }
   
