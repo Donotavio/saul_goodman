@@ -434,8 +434,8 @@ class TrackingController {
     void pollStatus();
   }
   
-  getComboStats() {
-    return this.comboTracker ? this.comboTracker.getStats() : null;
+  async getComboStats() {
+    return this.comboTracker ? await this.comboTracker.getStats() : null;
   }
 
   checkPomodoroSetup() {
@@ -947,7 +947,7 @@ async function pollStatus() {
     
     // Obter combo atual do tracker
     if (!currentComboSuffix && trackingController) {
-      const comboStats = trackingController.getComboStats();
+      const comboStats = await trackingController.getComboStats();
       if (comboStats && comboStats.currentLevel > 0) {
         currentComboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboStats.currentLevel })}`;
       }

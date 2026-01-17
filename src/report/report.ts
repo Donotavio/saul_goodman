@@ -446,7 +446,16 @@ async function refreshVscodeReport(): Promise<void> {
       hasPairingKey: !!latestSettings?.vscodePairingKey,
       error: errorMessage
     });
-    setVscodeReportStatus('report_vscode_error', `Erro: ${errorMessage}`, 'error');
+    
+    if (errorMessage.includes('Failed to fetch') || errorMessage.includes('fetch')) {
+      setVscodeReportStatus(
+        'report_vscode_daemon_inactive',
+        'Daemon do VS Code não está ativo. Ative o daemon na extensão VS Code e tente novamente.',
+        'error'
+      );
+    } else {
+      setVscodeReportStatus('report_vscode_error', `Erro: ${errorMessage}`, 'error');
+    }
   }
 }
 

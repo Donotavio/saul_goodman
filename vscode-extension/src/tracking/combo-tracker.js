@@ -47,6 +47,9 @@ class ComboTracker {
    * Chamado quando um pomodoro é completado
    */
   async onPomodoroCompleted() {
+    // Verificar mudança de dia antes de processar
+    await this.checkDailyReset();
+    
     const now = Date.now();
     
     // Verificar se houve um break
@@ -200,7 +203,8 @@ class ComboTracker {
   /**
    * Retorna estatísticas para o relatório
    */
-  getStats() {
+  async getStats() {
+    await this.checkDailyReset();
     return {
       currentLevel: this.currentLevel,
       consecutivePomodoros: this.consecutivePomodoros,

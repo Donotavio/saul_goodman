@@ -260,7 +260,7 @@ describe('ComboTracker', () => {
       await tracker.onPomodoroCompleted();
       await tracker.onPomodoroCompleted();
 
-      const stats = tracker.getStats();
+      const stats = await tracker.getStats();
       assert.strictEqual(stats.currentLevel, 3);
       assert.strictEqual(stats.consecutivePomodoros, 3);
       assert.strictEqual(stats.maxComboToday, 3);
