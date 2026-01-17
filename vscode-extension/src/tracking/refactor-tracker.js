@@ -71,19 +71,20 @@ class RefactorTracker {
         })
       );
 
-      const originalApplyEdit = vscode.workspace.applyEdit;
-      let applyEditCount = 0;
+      if (!this.originalApplyEdit) {
+        this.originalApplyEdit = vscode.workspace.applyEdit.bind(vscode.workspace);
+      }
 
       vscode.workspace.applyEdit = async (edit, metadata) => {
+        let result;
         try {
-          const config = this.getConfig();
+          result = await this.originalApplyEdit(edit, metadata);
           
+          const config = this.getConfig();
           if (config.enableTelemetry) {
             const entryCount = edit.entries().length;
             
             if (entryCount > 0) {
-              applyEditCount++;
-
               const heartbeat = this.buildHeartbeat({
                 entityType: 'refactor',
                 entity: 'apply_edit',
@@ -101,15 +102,18 @@ class RefactorTracker {
             }
           }
         } catch (error) {
-          console.error('[Saul Refactor] Apply edit error:', error);
+          console.error('[Saul Refactor] Apply edit tracking error:', error);
+          result = await this.originalApplyEdit(edit, metadata);
         }
-
-        return originalApplyEdit.call(vscode.workspace, edit, metadata);
+        
+        return result;
       };
 
       this.disposables.push({
         dispose: () => {
-          vscode.workspace.applyEdit = originalApplyEdit;
+          if (this.originalApplyEdit) {
+            vscode.workspace.applyEdit = this.originalApplyEdit;
+          }
         }
       });
 

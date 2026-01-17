@@ -124,6 +124,12 @@ const vscodeCrossReferenceChartCanvas = document.getElementById('vscodeCrossRefe
 const vscodeCrossReferenceEmptyEl = document.getElementById('vscodeCrossReferenceEmpty') as HTMLElement | null;
 const vscodeWorkspacesListEl = document.getElementById('vscodeWorkspacesList') as HTMLUListElement | null;
 const vscodeEditorInfoEl = document.getElementById('vscodeEditorInfo') as HTMLElement | null;
+const vscodeIndexValueEl = document.getElementById('vscodeIndexValue') as HTMLElement | null;
+const vscodeKpiFocusEl = document.getElementById('vscodeKpiFocus') as HTMLElement | null;
+const vscodeKpiSwitchesEl = document.getElementById('vscodeKpiSwitches') as HTMLElement | null;
+const vscodeKpiProductiveEl = document.getElementById('vscodeKpiProductive') as HTMLElement | null;
+const vscodeKpiProcrastEl = document.getElementById('vscodeKpiProcrast') as HTMLElement | null;
+const vscodeKpiInactiveEl = document.getElementById('vscodeKpiInactive') as HTMLElement | null;
 const vscodeTelemetrySectionEl = document.getElementById('vscodeTelemetrySection') as HTMLElement | null;
 const vscodeTelDebugSessionsEl = document.getElementById('vscodeTelDebugSessions') as HTMLElement | null;
 const vscodeTelDebugTimeEl = document.getElementById('vscodeTelDebugTime') as HTMLElement | null;
@@ -133,10 +139,14 @@ const vscodeTelBuildsEl = document.getElementById('vscodeTelBuilds') as HTMLElem
 const vscodeTelBuildTimeEl = document.getElementById('vscodeTelBuildTime') as HTMLElement | null;
 const vscodeTelPomodorosEl = document.getElementById('vscodeTelPomodoros') as HTMLElement | null;
 const vscodeTelFocusTimeEl = document.getElementById('vscodeTelFocusTime') as HTMLElement | null;
+const vscodeTelMaxComboEl = document.getElementById('vscodeTelMaxCombo') as HTMLElement | null;
+const vscodeTelComboMinutesEl = document.getElementById('vscodeTelComboMinutes') as HTMLElement | null;
 const vscodeTerminalChartCanvas = document.getElementById('vscodeTerminalCommandsChart') as HTMLCanvasElement | null;
 const vscodeTerminalEmptyEl = document.getElementById('vscodeTerminalEmpty') as HTMLElement | null;
 const vscodeFocusPatternsChartCanvas = document.getElementById('vscodeFocusPatternsChart') as HTMLCanvasElement | null;
 const vscodeFocusEmptyEl = document.getElementById('vscodeFocusEmpty') as HTMLElement | null;
+const vscodeComboTimelineChartCanvas = document.getElementById('vscodeComboTimelineChart') as HTMLCanvasElement | null;
+const vscodeComboTimelineEmptyEl = document.getElementById('vscodeComboTimelineEmpty') as HTMLElement | null;
 const vscodeTopExtensionsListEl = document.getElementById('vscodeTopExtensionsList') as HTMLUListElement | null;
 const vscodeTopDebuggedFilesListEl = document.getElementById('vscodeTopDebuggedFilesList') as HTMLUListElement | null;
 const vscodeTopErrorFilesListEl = document.getElementById('vscodeTopErrorFilesList') as HTMLUListElement | null;
@@ -218,6 +228,7 @@ let vscodeCommitsChart: ChartInstance = null;
 let vscodeCrossReferenceChart: ChartInstance = null;
 let vscodeTerminalChart: ChartInstance = null;
 let vscodeFocusChart: ChartInstance = null;
+let vscodeComboTimelineChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let latestVscodeDashboard: any = null;
 let locale = 'pt-BR';
@@ -418,6 +429,9 @@ async function refreshVscodeReport(): Promise<void> {
       vscodeStatTodayEl.textContent = latestVscodeDashboard.overview?.humanReadableTotal ?? '--';
     }
 
+    renderVscodeIndex(latestVscodeDashboard.overview?.index);
+    renderVscodeKpis(latestVscodeDashboard.overview || {}, latestVscodeDashboard.activity || {});
+
     renderVscodeList(vscodeProjectsListEl, latestVscodeDashboard.projects || []);
     renderVscodeList(vscodeLanguagesListEl, latestVscodeDashboard.languages || []);
     renderVscodeSummaries(vscodeSummariesListEl, summaries?.data?.days);
@@ -609,6 +623,56 @@ function renderVscodeEditorInfo(editor: any): void {
     ul.appendChild(li);
   });
   vscodeEditorInfoEl.appendChild(ul);
+}
+
+function renderVscodeIndex(index: number | undefined): void {
+  if (!vscodeIndexValueEl) {
+    return;
+  }
+  
+  if (typeof index !== 'number') {
+    vscodeIndexValueEl.textContent = '--';
+    vscodeIndexValueEl.className = 'vscode-index-value';
+    return;
+  }
+
+  vscodeIndexValueEl.textContent = index.toString();
+  vscodeIndexValueEl.classList.remove('good', 'warn', 'alert');
+  
+  if (index <= 25) {
+    vscodeIndexValueEl.classList.add('good');
+  } else if (index <= 50) {
+    vscodeIndexValueEl.classList.add('warn');
+  } else if (index >= 70) {
+    vscodeIndexValueEl.classList.add('alert');
+  }
+}
+
+function renderVscodeKpis(overview: any, activity: any): void {
+  const totalSeconds = overview.totalSeconds || 0;
+  const totalSwitches = activity.totalTabSwitches || 0;
+
+  const productiveSeconds = Math.round(totalSeconds * 0.8);
+  const procrastSeconds = Math.round(totalSeconds * 0.05);
+  const inactiveSeconds = totalSeconds - productiveSeconds - procrastSeconds;
+
+  const focusRate = totalSeconds > 0 ? Math.round((productiveSeconds / totalSeconds) * 100) : 0;
+
+  if (vscodeKpiFocusEl) {
+    vscodeKpiFocusEl.textContent = `${focusRate}%`;
+  }
+  if (vscodeKpiSwitchesEl) {
+    vscodeKpiSwitchesEl.textContent = totalSwitches.toString();
+  }
+  if (vscodeKpiProductiveEl) {
+    vscodeKpiProductiveEl.textContent = formatDuration(productiveSeconds * 1000);
+  }
+  if (vscodeKpiProcrastEl) {
+    vscodeKpiProcrastEl.textContent = formatDuration(procrastSeconds * 1000);
+  }
+  if (vscodeKpiInactiveEl) {
+    vscodeKpiInactiveEl.textContent = formatDuration(inactiveSeconds * 1000);
+  }
 }
 
 function renderVscodeWorkspaces(workspaces: any[]): void {
@@ -990,8 +1054,18 @@ function renderVscodeTelemetry(telemetry: any): void {
     vscodeTelFocusTimeEl.textContent = formatDurationMs(telemetry.focus?.totalFocusMs || 0);
   }
 
+  const maxCombo = telemetry.combo?.maxComboToday || 0;
+  const comboMinutes = maxCombo * 25;
+  if (vscodeTelMaxComboEl) {
+    vscodeTelMaxComboEl.textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
+  }
+  if (vscodeTelComboMinutesEl) {
+    vscodeTelComboMinutesEl.textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';
+  }
+
   renderVscodeTerminalCommandsChart(telemetry.terminal || {});
   renderVscodeFocusPatternsChart(telemetry.focus || {});
+  renderVscodeComboTimelineChart(telemetry.combo || {});
   renderVscodeTopExtensions(telemetry.extensions?.mostUsed || []);
   renderVscodeTopDebuggedFiles(telemetry.debugging?.topFiles || []);
   renderVscodeTopErrorFiles(telemetry.diagnostics?.topErrorFiles || []);
@@ -1090,6 +1164,139 @@ function renderVscodeFocusPatternsChart(focus: any): void {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: { y: { beginAtZero: true, display: false } }
+    }
+  });
+}
+
+function renderVscodeComboTimelineChart(comboData: any): void {
+  if (!vscodeComboTimelineChartCanvas) {
+    return;
+  }
+
+  if (vscodeComboTimelineChart) {
+    vscodeComboTimelineChart.destroy();
+  }
+
+  const timeline = comboData.comboTimeline || [];
+
+  if (timeline.length === 0) {
+    vscodeComboTimelineChartCanvas.style.display = 'none';
+    if (vscodeComboTimelineEmptyEl) {
+      vscodeComboTimelineEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeComboTimelineChartCanvas.style.display = 'block';
+  if (vscodeComboTimelineEmptyEl) {
+    vscodeComboTimelineEmptyEl.classList.add('hidden');
+  }
+
+  const dataPoints = timeline.map((event: any) => ({
+    x: new Date(event.timestamp),
+    y: event.pomodoros || 0,
+    level: event.level || 0,
+    type: event.type
+  }));
+
+  if (dataPoints.length > 0) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (dataPoints[0].x > today) {
+      dataPoints.unshift({
+        x: today,
+        y: 0,
+        level: 0,
+        type: 'day_start'
+      });
+    }
+  }
+
+  const levelColors: Record<number, string> = {
+    0: '#6B7280',
+    1: '#FFC857',
+    2: '#F59E0B',
+    3: '#EF4444',
+    4: '#A855F7',
+    5: '#FFD700'
+  };
+
+  const dataset = {
+    data: dataPoints,
+    borderColor: '#FFD700',
+    backgroundColor: '#FFD700',
+    pointBackgroundColor: dataPoints.map((p: any) => levelColors[p.level] || levelColors[0]),
+    pointBorderColor: '#fff',
+    pointRadius: dataPoints.map((p: any) => p.type === 'combo_reset' ? 8 : 5),
+    pointStyle: dataPoints.map((p: any) => p.type === 'combo_reset' ? 'crossRot' : 'circle'),
+    fill: false,
+    stepped: 'before' as const,
+    tension: 0,
+    segment: {
+      borderColor: (ctx: any) => {
+        const fromIndex = ctx.p0DataIndex;
+        const point = dataPoints[fromIndex];
+        return levelColors[point?.level || 0];
+      }
+    }
+  };
+
+  const ctx = vscodeComboTimelineChartCanvas.getContext('2d');
+  vscodeComboTimelineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [dataset]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (context: any) => {
+              if (!context || context.length === 0) return '';
+              const date = new Date(context[0].parsed.x);
+              return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            },
+            label: (context: any) => {
+              const pomodoros = context.parsed.y;
+              const minutes = pomodoros * 25;
+              return `${pomodoros}x combo (${minutes} min)`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'hour',
+            displayFormats: {
+              hour: 'HH:mm'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Hora do Dia'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            callback: (value: any) => `${value}x`
+          },
+          title: {
+            display: true,
+            text: 'Combo Level'
+          }
+        }
+      }
     }
   });
 }

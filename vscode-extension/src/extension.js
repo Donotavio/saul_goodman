@@ -210,7 +210,12 @@ function activate(context) {
         showReports(context, readConfig, getReportI18n);
       }),
       vscode.commands.registerCommand('saulGoodman.setupPomodoro', async () => {
-        await this.setupPomodoroHelper();
+        trackingController?.trackOwnCommand('saulGoodman.setupPomodoro');
+        if (!trackingController) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        await trackingController.setupPomodoroHelper();
       }),
       vscode.commands.registerCommand('saulGoodman.resetCombo', async () => {
         const answer = await vscode.window.showWarningMessage(

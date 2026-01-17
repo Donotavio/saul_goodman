@@ -469,9 +469,40 @@
 
           <div class="vscode-report-grid">
             <article class="vscode-report-card vscode-report-card--summary">
-              <span class="vscode-card-label" data-i18n="report_vscode_stat_today">Hoje</span>
-              <strong id="vscodeStatToday" class="vscode-card-value">--</strong>
+              <div class="vscode-today-content">
+                <div class="vscode-today-left">
+                  <span class="vscode-card-label" data-i18n="report_vscode_stat_today">Hoje</span>
+                  <strong id="vscodeStatToday" class="vscode-card-value">--</strong>
+                </div>
+                <div class="vscode-index-badge">
+                  <span class="vscode-index-label" data-i18n="report_metric_index_label">Índice</span>
+                  <span class="vscode-index-value" id="vscodeIndexValue">--</span>
+                </div>
+              </div>
             </article>
+          </div>
+
+          <div class="vscode-kpi-grid">
+            <div class="vscode-kpi-card">
+              <span class="vscode-kpi-label" data-i18n="popup_kpi_focus_label">Foco</span>
+              <span class="vscode-kpi-value" id="vscodeKpiFocus">--</span>
+            </div>
+            <div class="vscode-kpi-card">
+              <span class="vscode-kpi-label" data-i18n="report_metric_switches_label">Trocas</span>
+              <span class="vscode-kpi-value" id="vscodeKpiSwitches">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--productive">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_productive_label">Produtivo</span>
+              <span class="vscode-kpi-value" id="vscodeKpiProductive">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--procrast">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_procrastination_label">Procrast.</span>
+              <span class="vscode-kpi-value" id="vscodeKpiProcrast">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--inactive">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_idle_label">Inativo</span>
+              <span class="vscode-kpi-value" id="vscodeKpiInactive">--</span>
+            </div>
           </div>
 
           <div class="vscode-report-grid two-columns">
@@ -580,6 +611,12 @@
                 <span class="vscode-kpi-value" id="vscodeTelPomodoros">--</span>
                 <span class="vscode-kpi-detail" id="vscodeTelFocusTime">--</span>
               </div>
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry vscode-kpi-card--combo">
+                <span class="vscode-kpi-icon vscode-kpi-icon--combo" data-label="CMB" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_combo">COMBO</span>
+                <span class="vscode-kpi-value" id="vscodeTelMaxCombo">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelComboMinutes">--</span>
+              </div>
             </div>
 
             <div class="vscode-report-grid two-columns">
@@ -598,6 +635,15 @@
                   <canvas id="vscodeFocusPatternsChart"></canvas>
                   <p id="vscodeFocusEmpty" class="empty-state hidden" data-i18n="report_vscode_tel_focus_empty">Sem dados de foco.</p>
                 </div>
+              </div>
+            </div>
+
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_combo_timeline">Combo Timeline</h3>
+              <p class="vscode-chart-subtitle" data-i18n="report_vscode_combo_timeline_subtitle">Evolução dos combos ao longo do dia</p>
+              <div class="vscode-chart-container">
+                <canvas id="vscodeComboTimelineChart"></canvas>
+                <p id="vscodeComboTimelineEmpty" class="empty-state hidden" data-i18n="report_vscode_combo_timeline_empty">Nenhum combo registrado hoje.</p>
               </div>
             </div>
 

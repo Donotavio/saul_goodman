@@ -168,12 +168,12 @@ class HeartbeatTracker {
 }
 
 function resolveEntity(document, workspaceFolder, config) {
-  if (config.hashFilePaths !== false) {
-    return document.uri.fsPath;
-  }
-  if (workspaceFolder) {
-    const relative = path.relative(workspaceFolder.uri.fsPath, document.uri.fsPath);
-    return relative || path.basename(document.uri.fsPath);
+  if (config.hashFilePaths === false) {
+    if (workspaceFolder) {
+      const relative = path.relative(workspaceFolder.uri.fsPath, document.uri.fsPath);
+      return relative || path.basename(document.uri.fsPath);
+    }
+    return path.basename(document.uri.fsPath);
   }
   return document.uri.fsPath;
 }
