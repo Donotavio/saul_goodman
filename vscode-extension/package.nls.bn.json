@@ -19,7 +19,5 @@
   "config_language_description": "VS কোড এক্সটেনশনের ভাষা (অটো VS কোডের ভাষা ব্যবহার করে)।",
   "config_enable_telemetry_description": "স্থানীয় উৎপাদনশীলতা পরিমাপ সংগ্রহ সক্ষম করে (ডিবাগিং, পরীক্ষা, কাজ, টার্মিনাল, ইত্যাদি)। ডেটা কখনও মেশিন থেকে বের হয় না।",
   "config_pomodoro_test_mode_description": "পোমোডোরোর জন্য পরীক্ষামূলক মোড সক্রিয় করুন (২৫ মিনিটের পরিবর্তে প্রতি চক্রে ১ মিনিট)।",
-  "config_inactivity_timeout_description": "অক্রিয়তার আগে সর্বাধিক সময় মিলিসেকেন্ডে অক্ষম হিসাবে চিহ্নিত করতে।",
-  "config_telemetry_diagnostics_interval_description": "ফাইলের ডায়াগনস্টিক (ত্রুটি/সতর্কতা) নমুনা করার জন্য সেকেন্ডে ব্যবধান।",
-  "config_telemetry_retention_description": "স্বয়ংক্রিয়ভাবে মুছে ফেলার আগে স্থানীয় টেলিমেট্রি ডেটা ধরে রাখার জন্য দিনের সংখ্যা।"
+  "config_telemetry_diagnostics_interval_description": "ফাইলের ডায়াগনস্টিক (ত্রুটি/সতর্কতা) নমুনা করার জন্য সেকেন্ডে ব্যবধান।"
 }

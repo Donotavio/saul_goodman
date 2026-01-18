@@ -19,7 +19,5 @@
   "config_language_description": "VS Code کی توسیع کی زبان (خودکار طور پر VS Code کی زبان استعمال کرتا ہے).",
   "config_enable_telemetry_description": "مقامی پیداوری کے میٹرکس جمع کرنے کی اجازت دیتا ہے (ڈیبگنگ، ٹیسٹ، ٹاسک، ٹرمینل، وغیرہ). ڈیٹا کبھی بھی مشین سے باہر نہیں جاتا.",
   "config_pomodoro_test_mode_description": "پومودورو کے لیے ٹیسٹ موڈ کو فعال کریں (25 کے بجائے ہر سائیکل کے لیے 1 منٹ)۔",
-  "config_inactivity_timeout_description": "غیر فعالیت سے پہلے کی زیادہ سے زیادہ مدت ملی سیکنڈز میں غیر فعال کے طور پر نشان زد کرنے کے لیے۔",
-  "config_telemetry_diagnostics_interval_description": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ.",
-  "config_telemetry_retention_description": "مقامی ٹیلی میٹری کے ڈیٹا کو خود بخود حذف کرنے سے پہلے رکھنے کے دنوں کی تعداد."
+  "config_telemetry_diagnostics_interval_description": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ."
 }

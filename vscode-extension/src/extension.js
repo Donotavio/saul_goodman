@@ -759,9 +759,7 @@ function readConfig() {
     enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     enableTelemetry: config.get('enableTelemetry', false),
     pomodoroTestMode: config.get('pomodoroTestMode', false),
-    inactivityTimeoutMs: config.get('inactivityTimeoutMs', 300000),
-    telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60),
-    telemetryRetentionDays: config.get('telemetryRetentionDays', 30)
+    telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60)
   };
 }
 

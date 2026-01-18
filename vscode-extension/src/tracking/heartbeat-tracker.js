@@ -2,8 +2,8 @@ const vscode = require('vscode');
 const path = require('path');
 const { getOrCreateWorkspaceId } = require('../utils/identity');
 
-const WRITE_THROTTLE_MS = 30 * 1000;
-const FOCUS_THROTTLE_MS = 2 * 60 * 1000;
+const DEFAULT_WRITE_THROTTLE_MS = 30 * 1000;
+const DEFAULT_FOCUS_THROTTLE_MS = 2 * 60 * 1000;
 
 class HeartbeatTracker {
   constructor(options) {
@@ -127,7 +127,13 @@ class HeartbeatTracker {
     const projectName = workspaceFolder?.name || '';
     const entity = resolveEntity(document, workspaceFolder, config);
     const lastRecord = this.lastSentByEntity.get(entity) || { writeAt: 0, focusAt: 0 };
-    const threshold = isWrite ? WRITE_THROTTLE_MS : FOCUS_THROTTLE_MS;
+    
+    // Use configured heartbeatIntervalMs or defaults
+    const configuredInterval = config.heartbeatIntervalMs || 15000;
+    const writeThrottle = Math.min(configuredInterval * 2, DEFAULT_WRITE_THROTTLE_MS);
+    const focusThrottle = Math.max(configuredInterval * 8, DEFAULT_FOCUS_THROTTLE_MS);
+    
+    const threshold = isWrite ? writeThrottle : focusThrottle;
     const lastTime = isWrite ? lastRecord.writeAt : lastRecord.focusAt;
     if (now - lastTime < threshold) {
       return;

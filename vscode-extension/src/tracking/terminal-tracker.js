@@ -86,6 +86,16 @@ class TerminalTracker {
               if (!commandLine) return;
 
               const category = categorizeCommand(commandLine);
+              
+              // Filter sensitive data if not authorized
+              const metadata = {
+                commandCategory: category,
+                shellType: this.getShellType(event.terminal)
+              };
+              
+              if (config.enableSensitiveTelemetry) {
+                metadata.commandLine = commandLine;
+              }
 
               const heartbeat = this.buildHeartbeat({
                 entityType: 'terminal',
@@ -93,10 +103,7 @@ class TerminalTracker {
                 project: getCurrentProjectName(),
                 category: 'terminal',
                 isWrite: false,
-                metadata: {
-                  commandCategory: category,
-                  shellType: this.getShellType(event.terminal)
-                }
+                metadata
               });
 
               this.queue.enqueue(heartbeat);
@@ -118,6 +125,18 @@ class TerminalTracker {
 
               const category = categorizeCommand(commandLine);
               const durationMs = Date.now() - (event.execution?.startTime || Date.now());
+              
+              // Filter sensitive data if not authorized
+              const metadata = {
+                commandCategory: category,
+                exitCode: event.exitCode,
+                durationMs,
+                shellType: this.getShellType(event.terminal)
+              };
+              
+              if (config.enableSensitiveTelemetry) {
+                metadata.commandLine = commandLine;
+              }
 
               const heartbeat = this.buildHeartbeat({
                 entityType: 'terminal',
@@ -125,12 +144,7 @@ class TerminalTracker {
                 project: getCurrentProjectName(),
                 category: 'terminal',
                 isWrite: false,
-                metadata: {
-                  commandCategory: category,
-                  exitCode: event.exitCode,
-                  durationMs,
-                  shellType: this.getShellType(event.terminal)
-                }
+                metadata
               });
 
               this.queue.enqueue(heartbeat);

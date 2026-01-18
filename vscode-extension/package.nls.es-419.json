@@ -19,7 +19,5 @@
   "config_language_description": "Idioma de la extensión de VS Code (automático usa el idioma de VS Code).",
   "config_enable_telemetry_description": "Habilita la recopilación de métricas de productividad local (depuración, pruebas, tareas, terminal, etc.). Los datos nunca salen de la máquina.",
   "config_pomodoro_test_mode_description": "Activa modo de prueba para Pomodoro (1 minuto por ciclo en lugar de 25).",
-  "config_inactivity_timeout_description": "Tiempo máximo en milisegundos sin actividad antes de marcar como inactivo.",
-  "config_telemetry_diagnostics_interval_description": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos.",
-  "config_telemetry_retention_description": "Número de días para retener datos de telemetría local antes de eliminar automáticamente."
+  "config_telemetry_diagnostics_interval_description": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos."
 }
