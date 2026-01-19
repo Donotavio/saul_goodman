@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "O que um dev sênior, UX e analytics têm em comum? A habilidade de fazer café!",
+      "url": "./posts/2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe/",
+      "markdown": "2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe.md",
+      "date": "2026-01-19",
+      "category": "ux-design",
+      "tags": [
+        "dev",
+        "ux",
+        "remoto",
+        "produtividade",
+        "sarcasmo"
+      ],
+      "excerpt": "Um dev sênior que sabe tudo sobre UX e analytics? Ah, sim, e também faz malabarismos com pinguins!",
+      "title_en": "What do a senior dev, UX, and analytics have in common? The ability to make coffee!",
+      "title_es": "¿Qué tienen en común un desarrollador senior, UX y analytics? ¡La habilidad de hacer café!",
+      "tone": "incredulo",
+      "source_title": "Senior Front-End Developer- Analytics & UX Focused (Remote)",
+      "source_url": "https://remotive.com/remote-jobs/software-development/senior-front-end-developer-analytics-ux-focused-remote-2088537",
+      "source_published_at": "Tue, 13 Jan 2026 18:29:39 GMT",
+      "excerpt_en": "A senior dev who knows everything about UX and analytics? Oh, sure, and they also juggle penguins!",
+      "excerpt_es": "¿Un desarrollador senior que sabe todo sobre UX y analytics? Ah, sí, ¡y también hace malabares con pingüinos!"
+    },
+    {
       "title": "Como Simples Semântica Pode Salvar Sua Carreira (ou Não)",
       "url": "./posts/2026/2026-01-16-como-simples-semantica-pode-salvar-sua-carreira-ou-nao/",
       "markdown": "2026/2026-01-16-como-simples-semantica-pode-salvar-sua-carreira-ou-nao.md",

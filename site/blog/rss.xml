@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Tue, 13 Jan 2026 10:00:04 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 18:29:39 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>O que um dev sênior, UX e analytics têm em comum? A habilidade de fazer café!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe/</guid>
+      <pubDate>Tue, 13 Jan 2026 18:29:39 GMT</pubDate>
+      <description><![CDATA[Um dev sênior que sabe tudo sobre UX e analytics? Ah, sim, e também faz malabarismos com pinguins!]]></description>
+    </item>
+
     <item>
       <title>Como Simples Semântica Pode Salvar Sua Carreira (ou Não)</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-16-como-simples-semantica-pode-salvar-sua-carreira-ou-nao/</link>
