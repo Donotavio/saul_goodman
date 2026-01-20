@@ -9,7 +9,11 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '../..');
 const SOURCE = path.join(ROOT, '_locales');
 
-const TARGETS = [path.join(ROOT, 'site', '_locales'), path.join(ROOT, 'site', 'blog', '_locales')];
+const TARGETS = [
+  path.join(ROOT, 'site', '_locales'),
+  path.join(ROOT, 'site', 'blog', '_locales'),
+  path.join(ROOT, 'vscode-extension', '_locales')
+];
 
 async function exists(p) {
   try {

@@ -1,0 +1,412 @@
+const vscode = require('vscode');
+
+class GitTracker {
+  constructor(options) {
+    this.context = options.context;
+    this.queue = options.queue;
+    this.getConfig = options.getConfig;
+    this.buildHeartbeat = options.buildHeartbeat;
+    this.disposables = [];
+    this.gitExtension = null;
+    this.repositories = new Map();
+    this.repoInitTimestamps = new Map();
+    this.lastDiffStatsCache = new Map();
+    this.processedCommits = new Set();
+    this.GIT_INIT_GRACE_PERIOD_MS = 30000;
+  }
+
+  async start() {
+    this.dispose();
+    
+    try {
+      const gitExtension = vscode.extensions.getExtension('vscode.git');
+      if (!gitExtension) {
+        console.log('[Saul Git] Git extension not found');
+        return;
+      }
+
+      if (!gitExtension.isActive) {
+        await gitExtension.activate();
+      }
+
+      this.gitExtension = gitExtension.exports;
+      const git = this.gitExtension.getAPI(1);
+
+      this.disposables.push(
+        git.onDidOpenRepository((repo) => {
+          try {
+            this.trackRepository(repo);
+            this.watchRepository(repo);
+          } catch (error) {
+            console.error('[Saul Git] Open repository error:', error);
+          }
+        }),
+        git.onDidCloseRepository((repo) => {
+          try {
+            const key = this.getRepoKey(repo);
+            this.repositories.delete(key);
+          } catch (error) {
+            console.error('[Saul Git] Close repository error:', error);
+          }
+        })
+      );
+
+      git.repositories.forEach((repo) => {
+        try {
+          this.trackRepository(repo);
+          this.watchRepository(repo);
+        } catch (error) {
+          console.error('[Saul Git] Repository iteration error:', error);
+        }
+      });
+    } catch (error) {
+      console.error('[Saul Git] Failed to initialize:', error);
+    }
+  }
+
+  dispose() {
+    this.disposables.forEach((item) => item.dispose());
+    this.disposables = [];
+    
+    // VSCODE-008: Dispose repository-specific listeners
+    this.repositories.forEach(({ disposables }) => {
+      if (disposables && Array.isArray(disposables)) {
+        disposables.forEach(d => {
+          if (d && typeof d.dispose === 'function') {
+            d.dispose();
+          }
+        });
+      }
+    });
+    this.repositories.clear();
+    
+    this.repoInitTimestamps.clear();
+    this.lastDiffStatsCache.clear();
+    this.processedCommits.clear(); // VSCODE-015: Clear processed commits
+  }
+
+  getRepoKey(repo) {
+    return repo.rootUri?.fsPath || 'unknown';
+  }
+
+  shouldFilterUnknownBranch(repoKey, branch) {
+    if (branch !== 'unknown') {
+      return false;
+    }
+    const initTime = this.repoInitTimestamps.get(repoKey);
+    if (!initTime) {
+      return false;
+    }
+    const elapsed = Date.now() - initTime;
+    return elapsed < this.GIT_INIT_GRACE_PERIOD_MS;
+  }
+
+  trackRepository(repo) {
+    const config = this.getConfig();
+    if (!config.enableTracking) {
+      return;
+    }
+
+    const repoPath = this.getRepoKey(repo);
+    const branch = repo.state?.HEAD?.name || '';
+    
+    if (!this.repoInitTimestamps.has(repoPath)) {
+      this.repoInitTimestamps.set(repoPath, Date.now());
+    }
+
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping heartbeat with invalid/unknown branch');
+      return;
+    }
+
+    const remote = repo.state?.HEAD?.upstream?.remote || '';
+    const ahead = repo.state?.HEAD?.ahead || 0;
+    const behind = repo.state?.HEAD?.behind || 0;
+
+    const heartbeat = this.buildHeartbeat({
+      entityType: 'repository',
+      entity: repoPath,
+      category: 'coding',
+      isWrite: false,
+      metadata: {
+        branch,
+        remote,
+        ahead,
+        behind,
+        eventType: 'repository_opened'
+      }
+    });
+
+    this.queue.enqueue(heartbeat);
+  }
+
+  watchRepository(repo) {
+    const repoKey = this.getRepoKey(repo);
+    
+    if (this.repositories.has(repoKey)) {
+      return;
+    }
+
+    const disposables = [];
+    let lastCommit = repo.state?.HEAD?.commit || null;
+
+    disposables.push(
+      repo.state.onDidChange(async () => {
+        const currentCommit = repo.state?.HEAD?.commit || null;
+        const isNewCommit = currentCommit && currentCommit !== lastCommit;
+        
+        if (isNewCommit) {
+          const repoPath = this.getRepoKey(repo);
+          const indexChanges = repo.state?.indexChanges?.length || 0;
+          
+          if (indexChanges === 0 && !this.lastDiffStatsCache.has(repoPath)) {
+            console.log('[Saul Git] Commit detected but no cached stats, attempting to get diff from HEAD~1');
+            try {
+              const diffStats = await this.getDiffStatsFromLastCommit(repo);
+              if (diffStats && diffStats.filesChanged > 0) {
+                this.lastDiffStatsCache.set(repoPath, diffStats);
+                console.log('[Saul Git] Successfully retrieved diff from HEAD~1:', diffStats);
+              } else {
+                console.warn('[Saul Git] getDiffStatsFromLastCommit returned empty stats, skipping commit tracking');
+                lastCommit = currentCommit;
+                this.trackRepositoryState(repo);
+                return;
+              }
+            } catch (err) {
+              console.warn('[Saul Git] Failed to get diff stats from last commit:', err);
+              lastCommit = currentCommit;
+              this.trackRepositoryState(repo);
+              return;
+            }
+          }
+          
+          const message = repo.state?.HEAD?.commit || '';
+          this.trackCommit(repo, message);
+          lastCommit = currentCommit;
+        }
+        
+        this.trackRepositoryState(repo);
+      })
+    );
+
+    this.repositories.set(repoKey, { repo, disposables, lastCommit });
+  }
+
+  async trackRepositoryState(repo) {
+    const config = this.getConfig();
+    if (!config.enableTracking) {
+      return;
+    }
+
+    const repoPath = this.getRepoKey(repo);
+    const branch = repo.state?.HEAD?.name || '';
+
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping state heartbeat with invalid/unknown branch');
+      return;
+    }
+
+    const remote = repo.state?.HEAD?.upstream?.remote || '';
+    const ahead = repo.state?.HEAD?.ahead || 0;
+    const behind = repo.state?.HEAD?.behind || 0;
+    const workingTreeChanges = repo.state?.workingTreeChanges?.length || 0;
+    const indexChanges = repo.state?.indexChanges?.length || 0;
+
+    if (indexChanges > 0) {
+      const diffStats = await this.getDiffStats(repo);
+      this.lastDiffStatsCache.set(repoPath, diffStats);
+      console.log(`[Saul Git] Cached diff stats for repo "${repoPath}":`, diffStats);
+      console.log('[Saul Git] Cache now contains:', Array.from(this.lastDiffStatsCache.keys()));
+    }
+
+    const heartbeat = this.buildHeartbeat({
+      entityType: 'repository',
+      entity: repoPath,
+      category: 'coding',
+      isWrite: workingTreeChanges > 0 || indexChanges > 0,
+      metadata: {
+        branch,
+        remote,
+        ahead,
+        behind,
+        workingTreeChanges,
+        indexChanges,
+        eventType: 'repository_state_changed'
+      }
+    });
+
+    this.queue.enqueue(heartbeat);
+  }
+
+  async trackCommit(repo, message) {
+    const config = this.getConfig();
+    if (!config.enableTracking) {
+      return;
+    }
+
+    const repoPath = this.getRepoKey(repo);
+    const commitHash = repo.state?.HEAD?.commit || '';
+    const commitKey = `${repoPath}:${commitHash}`;
+    
+    if (this.processedCommits.has(commitKey)) {
+      console.log(`[Saul Git] Skipping duplicate commit tracking for ${commitHash.substring(0, 7)}`);
+      return;
+    }
+    
+    this.processedCommits.add(commitKey);
+    // VSCODE-015: More aggressive pruning - max 50 instead of 100
+    if (this.processedCommits.size > 50) {
+      const oldestKeys = Array.from(this.processedCommits).slice(0, 25);
+      oldestKeys.forEach(key => this.processedCommits.delete(key));
+      console.log(`[Saul Git] Pruned ${oldestKeys.length} old commit records`);
+    }
+
+    const branch = repo.state?.HEAD?.name || '';
+
+    if (!branch || branch === 'unknown') {
+      console.log('[Saul Git] Skipping commit heartbeat with invalid/unknown branch');
+      return;
+    }
+
+    const remote = repo.state?.HEAD?.upstream?.remote || '';
+    
+    console.log(`[Saul Git] trackCommit for repo "${repoPath}" (${commitHash.substring(0, 7)})`);
+    console.log('[Saul Git] Available caches:', Array.from(this.lastDiffStatsCache.keys()));
+    
+    const cachedStats = this.lastDiffStatsCache.get(repoPath);
+    const diffStats = cachedStats || { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    
+    if (cachedStats) {
+      this.lastDiffStatsCache.delete(repoPath);
+      console.log(`[Saul Git] Using cached diff stats for commit in "${repoPath}":`, diffStats);
+    } else {
+      console.warn(`[Saul Git] No cached diff stats found for "${repoPath}", using zeros`);
+      console.warn('[Saul Git] This usually means trackRepositoryState was not called or indexChanges was 0');
+    }
+
+    const heartbeat = this.buildHeartbeat({
+      entityType: 'commit',
+      entity: repoPath,
+      category: 'coding',
+      isWrite: true,
+      metadata: {
+        branch,
+        remote,
+        commitMessage: message?.substring(0, 100) || '',
+        eventType: 'commit_created',
+        filesChanged: diffStats.filesChanged,
+        linesAdded: diffStats.linesAdded,
+        linesDeleted: diffStats.linesDeleted
+      }
+    });
+
+    console.log('[Saul Git] Commit heartbeat metadata:', {
+      filesChanged: heartbeat.metadata.filesChanged,
+      linesAdded: heartbeat.metadata.linesAdded,
+      linesDeleted: heartbeat.metadata.linesDeleted
+    });
+
+    this.queue.enqueue(heartbeat);
+  }
+
+  async getDiffStats(repo) {
+    try {
+      const indexChanges = repo.state?.indexChanges || [];
+      const workingTreeChanges = repo.state?.workingTreeChanges || [];
+      
+      const allChanges = [...new Set([...indexChanges, ...workingTreeChanges])];
+      const filesChanged = allChanges.length;
+
+      let linesAdded = 0;
+      let linesDeleted = 0;
+
+      if (filesChanged > 0) {
+        console.log(`[Saul Git] Processing ${indexChanges.length} staged files for diff stats`);
+        
+        for (const change of indexChanges) {
+          try {
+            const filePath = change.uri?.fsPath || change.uri;
+            console.log(`[Saul Git] Getting patch for: ${filePath}`);
+            
+            const patch = await repo.diffIndexWithHEAD(filePath);
+            
+            if (!patch) {
+              console.log(`[Saul Git] No patch returned for ${filePath}`);
+              continue;
+            }
+            
+            console.log(`[Saul Git] Patch length: ${patch.length} chars`);
+            console.log(`[Saul Git] Patch preview: ${patch.substring(0, 200)}`);
+            
+            const lines = patch.split(/\r?\n/);
+            let fileAdded = 0;
+            let fileDeleted = 0;
+            
+            for (const line of lines) {
+              if (line.startsWith('+') && !line.startsWith('+++')) {
+                linesAdded++;
+                fileAdded++;
+              } else if (line.startsWith('-') && !line.startsWith('---')) {
+                linesDeleted++;
+                fileDeleted++;
+              }
+            }
+            
+            console.log(`[Saul Git] File ${filePath}: +${fileAdded} -${fileDeleted}`);
+          } catch (err) {
+            console.warn('[Saul Git] Could not get patch for file:', change.uri?.fsPath || 'unknown', err);
+          }
+        }
+      }
+
+      console.log('[Saul Git] Final diff stats:', { filesChanged, linesAdded, linesDeleted });
+      return { filesChanged, linesAdded, linesDeleted };
+    } catch (error) {
+      console.warn('[Saul Git] Could not get diff stats:', error.message);
+      return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    }
+  }
+
+  async getDiffStatsFromLastCommit(repo) {
+    try {
+      console.log('[Saul Git] Calling repo.diffWith(HEAD~1, HEAD)...');
+      const patch = await repo.diffWith('HEAD~1', 'HEAD');
+      
+      console.log('[Saul Git] Patch received:', patch ? `${patch.length} chars` : 'null/empty');
+      if (patch) {
+        console.log('[Saul Git] Patch preview:', patch.substring(0, 300));
+      }
+      
+      if (!patch) {
+        console.warn('[Saul Git] Patch is null/empty, returning zeros');
+        return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+      }
+
+      const lines = patch.split(/\r?\n/);
+      let linesAdded = 0;
+      let linesDeleted = 0;
+      let filesChanged = 0;
+
+      for (const line of lines) {
+        if (line.startsWith('diff --git')) {
+          filesChanged++;
+        } else if (line.startsWith('+') && !line.startsWith('+++')) {
+          linesAdded++;
+        } else if (line.startsWith('-') && !line.startsWith('---')) {
+          linesDeleted++;
+        }
+      }
+
+      console.log('[Saul Git] Retrieved diff stats from HEAD~1:', { filesChanged, linesAdded, linesDeleted });
+      return { filesChanged, linesAdded, linesDeleted };
+    } catch (error) {
+      console.error('[Saul Git] Error in getDiffStatsFromLastCommit:', error);
+      console.warn('[Saul Git] Could not get diff from HEAD~1:', error.message);
+      return { filesChanged: 0, linesAdded: 0, linesDeleted: 0 };
+    }
+  }
+}
+
+module.exports = {
+  GitTracker
+};

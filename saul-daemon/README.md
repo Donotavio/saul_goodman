@@ -1,34 +1,46 @@
 # SaulDaemon (local backend)
 
-Backend HTTP leve para servir de ponte entre o VS Code e a extensão Chrome. Nada sai da máquina: leitura e escrita acontecem apenas em `saul-daemon/data/vscode-usage.json`. A versão acompanha a extensão Chrome (1.1.2 neste pacote).
+Backend HTTP leve para servir de ponte entre o VS Code e a extensao Chrome.
+Nada sai da maquina: leitura e escrita acontecem em `saul-daemon/data/`.
 
-## Endpoints
+Os endpoints de VS Code retornam apenas o dia atual.
 
-- `GET /health` — resposta básica `{ ok: true }`.
-- `POST /v1/tracking/vscode/heartbeat` — agrega tempo ativo.
-  - Body JSON: `{ key: "PAIRING_KEY", sessionId: "unique-session-id", durationMs: 15000, timestamp?: number }`
-  - `sessionId` deve ser único por sessão de foco; `durationMs` em ms para o período reportado.
-- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY` — devolve `{ totalActiveMs, sessions }` para o dia.
+## Endpoints principais (VS Code reports)
 
-Chaves vazias são rejeitadas; defina `PAIRING_KEY` para restringir acesso.
+- `POST /v1/vscode/heartbeats` — ingestao em batch de heartbeats.
+- `GET /v1/vscode/heartbeats`
+- `GET /v1/vscode/durations`
+- `GET /v1/vscode/summaries?start=YYYY-MM-DD&end=YYYY-MM-DD`
+- `GET /v1/vscode/stats/today`
+- `GET /v1/vscode/projects?start=...&end=...`
+- `GET /v1/vscode/languages?start=...&end=...`
+- `GET /v1/vscode/editors?start=...&end=...`
+- `GET /v1/vscode/machines?start=...&end=...`
+- `GET /v1/vscode/meta`
+
+## Endpoints legados (compatibilidade)
+
+- `POST /v1/tracking/vscode/heartbeat`
+- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY`
+- `GET/POST /v1/tracking/index`
 
 ## Rodando
-
 ```bash
 cd saul-daemon
 PAIRING_KEY=meu-segredo PORT=3123 node index.cjs
 ```
 
-Configurações:
+Configuracoes:
 
-- `PORT` (padrão: `3123`)
-- `PAIRING_KEY` (padrão: vazio; recomenda-se definir)
+- `PORT` (padrao: `3123`)
+- `PAIRING_KEY` (obrigatorio)
+- `SAUL_VSCODE_GAP_MINUTES` (padrao: `5`)
+- `SAUL_VSCODE_GRACE_MINUTES` (padrao: `2`)
+- `SAUL_DAEMON_RETENTION_DAYS` (padrao: `1`, legado)
 
-Dados são mantidos por 14 dias e salvos em `data/vscode-usage.json`. O daemon aceita requisições apenas em localhost e retorna CORS liberado para facilitar desenvolvimento.
+## Persistencia
 
-## Fluxo recomendado
+- VS Code reports: `data/vscode-tracking.json`
+- Legacy summary: `data/vscode-usage.json`
 
-1. Inicie o daemon local com a chave desejada.
-2. Na Options da extensão Chrome, ative a integração VS Code e configure a mesma `vscodeLocalApiUrl` e `vscodePairingKey`.
-3. A extensão VS Code envia heartbeats para `/v1/tracking/vscode/heartbeat`.
-4. A extensão Chrome lê `/v1/tracking/vscode/summary` ao carregar métricas e soma o tempo produtivo do VS Code ao índice.
+O daemon aceita requisoes apenas em localhost (CORS liberado para extensoes locais).

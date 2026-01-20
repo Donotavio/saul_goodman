@@ -209,6 +209,11 @@ function setupActivityTracking(): void {
     listenersBound = true;
   }
 
+  // Clear existing interval before creating new one (BUG-002)
+  if (intervalId) {
+    window.clearInterval(intervalId);
+  }
+
   intervalId = window.setInterval(() => {
     void sendPing();
   }, INACTIVITY_PING_MS);
@@ -259,6 +264,24 @@ async function sendPing(): Promise<void> {
     console.warn('Saul Goodman content ping falhou:', error);
   }
 }
+
+// BUG-001: Auto-cleanup on page unload
+window.addEventListener('beforeunload', cleanup, { once: true });
+
+// BUG-001: Periodic heartbeat to detect extension context invalidation
+let heartbeatCheckId: number | null = null;
+
+function heartbeatCheck(): void {
+  if (!chrome?.runtime?.id) {
+    cleanup();
+    if (heartbeatCheckId) {
+      window.clearInterval(heartbeatCheckId);
+      heartbeatCheckId = null;
+    }
+  }
+}
+
+heartbeatCheckId = window.setInterval(heartbeatCheck, 5000);
 
 setupActivityTracking();
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "جسر سول غودمان VS Code",
+  "vscode_ext_description": "يرسل الوقت النشط من VS Code إلى سول دايمون المحلي المستخدم بواسطة ملحق Chrome.",
+  "command_start_daemon": "سول غودمان: إعداد أمر سول دايمون",
+  "command_test_daemon": "سول غودمان: اختبار الاتصال بسول دايمون",
+  "command_open_reports": "سول غودمان: فتح التقارير",
+  "command_setup_pomodoro": "سول غودمان: إعداد نظام بومودورو",
+  "command_reset_combo": "سول غودمان: إعادة تعيين المجموعة",
+  "config_enabled_description": "يتيح إرسال الوقت النشط إلى سول دايمون المحلي.",
+  "config_enable_tracking_description": "يتحكم في جمع وإرسال نبضات القلب إلى سول دايمون.",
+  "config_enable_reports_description": "يعرض تقرير سول داخل VS Code.",
+  "config_enable_sensitive_telemetry_description": "يتيح جمع البيانات الحساسة (مثل: أوامر الطرفية).",
+  "config_api_base_description": "عنوان URL الأساسي لسول دايمون المحلي.",
+  "config_pairing_key_description": "مفتاح الاقتران المشترك مع ملحق Chrome.",
+  "config_hash_file_paths_description": "يتم تجزئة مسارات الملفات المرسلة في نبضات القلب.",
+  "config_hash_project_names_description": "يتم تجزئة أسماء المشاريع قبل إرسالها إلى الدايمون.",
+  "config_heartbeat_interval_description": "الفترة الزمنية بالميلي ثانية بين نبضات القلب المرسلة إلى سول دايمون.",
+  "config_idle_threshold_description": "الحد الأقصى للوقت بدون نشاط قبل اعتبار الجلسة غير نشطة.",
+  "config_language_description": "لغة ملحق VS Code (تستخدم تلقائيًا لغة VS Code).",
+  "config_enable_telemetry_description": "يتيح جمع مقاييس الإنتاجية المحلية (تصحيح الأخطاء، الاختبارات، المهام، الطرفية، إلخ). البيانات لا تغادر الجهاز أبدًا.",
+  "config_pomodoro_test_mode_description": "تفعيل وضع الاختبار لبومودورو (دقيقة واحدة لكل دورة بدلاً من 25).",
+  "config_telemetry_diagnostics_interval_description": "الفترة الزمنية بالثواني لأخذ عينات من التشخيصات (الأخطاء/التحذيرات) من الملفات."
+}

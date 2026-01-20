@@ -234,6 +234,21 @@ const FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
   popup_fairness_holiday_detected: 'Feriado detectado — sem penalizar este dia.'
 };
 
+// BUG-011: Cleanup timers when popup closes
+window.addEventListener('pagehide', () => {
+  if (criticalCountdownTimer) {
+    window.clearInterval(criticalCountdownTimer);
+    criticalCountdownTimer = null;
+  }
+  if (badgeConfettiTimer) {
+    window.clearTimeout(badgeConfettiTimer);
+    badgeConfettiTimer = null;
+  }
+  if (sirenPlayer) {
+    sirenPlayer.stop();
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
   void hydrate();

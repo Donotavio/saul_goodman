@@ -6,7 +6,8 @@
     <title data-i18n="report_head_title">Saul Goodman - Relatório do dia</title>
     <link rel="icon" type="image/png" href="../img/logotipo_saul_goodman.png" />
     <link rel="stylesheet" href="report.css" />
-    <script src="../vendor/chart.umd.js" defer></script>
+    <script src="../vendor/chart.umd.js"></script>
+    <script src="../vendor/chartjs-adapter-date-fns.bundle.min.js"></script>
     <script src="../vendor/jspdf.umd.min.js" defer></script>
     <script type="module" src="../../dist/report/report.js" defer></script>
   </head>
@@ -424,6 +425,253 @@
           <p data-i18n="report_domain_subtitle">Principais campeões e vilões agregados no dia.</p>
         </div>
         <canvas id="domainBreakdownChart" height="220"></canvas>
+      </section>
+
+      <section id="vscodeReportSection" class="panel vscode-report-panel hidden">
+        <div class="panel-header">
+          <h2 data-i18n="report_vscode_heading">VS Code reports</h2>
+          <p data-i18n="report_vscode_subtitle">Tempo e contexto do editor.</p>
+        </div>
+        <div id="vscodeReportDisabled" class="empty-state vscode-report-empty">
+          <p data-i18n="report_vscode_disabled">Relatorios do VS Code desativados.</p>
+          <button id="openVscodeOptions" class="ghost-button small" data-i18n="report_vscode_disabled_cta">
+            Abrir options
+          </button>
+        </div>
+        <div id="vscodeReportContent" class="vscode-report-content hidden">
+          <div class="vscode-report-filters">
+            <label class="vscode-filter-field">
+              <span data-i18n="report_vscode_filter_project">Projeto</span>
+              <select id="vscodeFilterProject">
+                <option value="">Todos</option>
+              </select>
+            </label>
+            <label class="vscode-filter-field">
+              <span data-i18n="report_vscode_filter_language">Linguagem</span>
+              <select id="vscodeFilterLanguage">
+                <option value="">Todas</option>
+              </select>
+            </label>
+            <label class="vscode-filter-field">
+              <span data-i18n="report_vscode_filter_machine">Maquina</span>
+              <select id="vscodeFilterMachine">
+                <option value="">Todas</option>
+              </select>
+            </label>
+            <div class="vscode-report-actions">
+              <button type="button" id="vscodeApplyFilters" class="ghost-button small" data-i18n="report_filter_apply">
+                Filtrar
+              </button>
+              <button type="button" id="vscodeResetFilters" class="ghost-button small" data-i18n="report_filter_reset">
+                Resetar
+              </button>
+            </div>
+          </div>
+
+          <div class="vscode-report-grid">
+            <article class="vscode-report-card vscode-report-card--summary">
+              <div class="vscode-today-content">
+                <div class="vscode-today-left">
+                  <span class="vscode-card-label" data-i18n="report_vscode_stat_today">Hoje</span>
+                  <strong id="vscodeStatToday" class="vscode-card-value">--</strong>
+                </div>
+                <div class="vscode-index-badge">
+                  <span class="vscode-index-label" data-i18n="report_metric_index_label">Índice</span>
+                  <span class="vscode-index-value" id="vscodeIndexValue">--</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="vscode-kpi-grid">
+            <div class="vscode-kpi-card">
+              <span class="vscode-kpi-label" data-i18n="popup_kpi_focus_label">Foco</span>
+              <span class="vscode-kpi-value" id="vscodeKpiFocus">--</span>
+            </div>
+            <div class="vscode-kpi-card">
+              <span class="vscode-kpi-label" data-i18n="report_metric_switches_label">Trocas</span>
+              <span class="vscode-kpi-value" id="vscodeKpiSwitches">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--productive">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_productive_label">Produtivo</span>
+              <span class="vscode-kpi-value" id="vscodeKpiProductive">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--procrast">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_procrastination_label">Procrast.</span>
+              <span class="vscode-kpi-value" id="vscodeKpiProcrast">--</span>
+            </div>
+            <div class="vscode-kpi-card vscode-kpi-card--inactive">
+              <span class="vscode-kpi-label" data-i18n="popup_summary_idle_label">Inativo</span>
+              <span class="vscode-kpi-value" id="vscodeKpiInactive">--</span>
+            </div>
+          </div>
+
+          <div class="vscode-report-grid two-columns">
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_projects">Projetos</h3>
+              <ul id="vscodeProjectsList" class="vscode-report-list"></ul>
+            </div>
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_languages">Linguagens</h3>
+              <ul id="vscodeLanguagesList" class="vscode-report-list"></ul>
+            </div>
+          </div>
+
+          <div class="vscode-report-card">
+            <h3 data-i18n="report_vscode_summaries">Summaries</h3>
+            <ul id="vscodeSummariesList" class="vscode-report-list"></ul>
+          </div>
+
+          <div class="vscode-report-grid two-columns">
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_branches">Git Branches</h3>
+              <ul id="vscodeBranchesList" class="vscode-report-list"></ul>
+            </div>
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_activity">Activity</h3>
+              <ul id="vscodeActivityList" class="vscode-report-list"></ul>
+            </div>
+          </div>
+
+          <div class="vscode-report-card">
+            <h3 data-i18n="report_vscode_hourly_breakdown">Hourly Breakdown</h3>
+            <p class="vscode-chart-subtitle" data-i18n="report_vscode_hourly_subtitle">Activity distribution throughout the day</p>
+            <div class="vscode-chart-container">
+              <canvas id="vscodeHourlyChart" height="200"></canvas>
+              <p id="vscodeHourlyEmpty" class="empty-state hidden" data-i18n="report_vscode_hourly_empty">No hourly data to display yet.</p>
+            </div>
+          </div>
+
+          <div class="vscode-report-grid two-columns">
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_time_by_project">Time by Project</h3>
+              <p class="vscode-chart-subtitle" data-i18n="report_vscode_time_by_project_subtitle">How you distributed your time across projects</p>
+              <div class="vscode-chart-container vscode-chart-container--small">
+                <canvas id="vscodeProjectsChart"></canvas>
+                <p id="vscodeProjectsEmpty" class="empty-state hidden" data-i18n="report_vscode_projects_empty">No project data to display.</p>
+              </div>
+            </div>
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_commit_activity">Commit Activity</h3>
+              <p class="vscode-chart-subtitle" data-i18n="report_vscode_commit_subtitle">When you committed code throughout the day</p>
+              <div class="vscode-chart-container vscode-chart-container--small">
+                <canvas id="vscodeCommitsChart"></canvas>
+                <p id="vscodeCommitsEmpty" class="empty-state hidden" data-i18n="report_vscode_commits_empty">No commits recorded today.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="vscode-report-card">
+            <h3 data-i18n="report_vscode_languages_projects">Languages × Projects</h3>
+            <p class="vscode-chart-subtitle" data-i18n="report_vscode_languages_projects_subtitle">Cross-reference: which languages you used in each project</p>
+            <div class="vscode-chart-container vscode-chart-container--medium">
+              <canvas id="vscodeCrossReferenceChart"></canvas>
+              <p id="vscodeCrossReferenceEmpty" class="empty-state hidden" data-i18n="report_vscode_cross_empty">No data to cross-reference.</p>
+            </div>
+          </div>
+
+          <div class="vscode-report-grid two-columns">
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_workspaces">Workspaces</h3>
+              <ul id="vscodeWorkspacesList" class="vscode-report-list"></ul>
+            </div>
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_editor_info">Editor Info</h3>
+              <div id="vscodeEditorInfo" class="vscode-editor-info"></div>
+            </div>
+          </div>
+
+          <div id="vscodeTelemetrySection" class="vscode-telemetry-section hidden">
+            <div class="vscode-section-header">
+              <h2 data-i18n="report_vscode_telemetry_title">Produtividade & Telemetria</h2>
+              <p class="vscode-section-subtitle" data-i18n="report_vscode_telemetry_subtitle">Métricas detalhadas de desenvolvimento (100% local)</p>
+            </div>
+
+            <div class="vscode-telemetry-kpis">
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry">
+                <span class="vscode-kpi-icon vscode-kpi-icon--debug" data-label="DBG" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_debug">SESSÕES DEBUG</span>
+                <span class="vscode-kpi-value" id="vscodeTelDebugSessions">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelDebugTime">--</span>
+              </div>
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry">
+                <span class="vscode-kpi-icon vscode-kpi-icon--tests" data-label="TST" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_tests">TAXA TESTES</span>
+                <span class="vscode-kpi-value" id="vscodeTelTestSuccess">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelTestRuns">--</span>
+              </div>
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry">
+                <span class="vscode-kpi-icon vscode-kpi-icon--builds" data-label="BLD" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_builds">BUILDS</span>
+                <span class="vscode-kpi-value" id="vscodeTelBuilds">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelBuildTime">--</span>
+              </div>
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry">
+                <span class="vscode-kpi-icon vscode-kpi-icon--pomodoro" data-label="POM" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_pomodoros">POMODOROS</span>
+                <span class="vscode-kpi-value" id="vscodeTelPomodoros">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelFocusTime">--</span>
+              </div>
+              <div class="vscode-kpi-card vscode-kpi-card--telemetry vscode-kpi-card--combo">
+                <span class="vscode-kpi-icon vscode-kpi-icon--combo" data-label="CMB" aria-hidden="true"></span>
+                <span class="vscode-kpi-label" data-i18n="report_vscode_tel_combo">COMBO</span>
+                <span class="vscode-kpi-value" id="vscodeTelMaxCombo">--</span>
+                <span class="vscode-kpi-detail" id="vscodeTelComboMinutes">--</span>
+              </div>
+            </div>
+
+            <div class="vscode-report-grid two-columns">
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_terminal">Comandos Terminal</h3>
+                <p class="vscode-chart-subtitle" data-i18n="report_vscode_tel_terminal_subtitle">Categorias de comandos executados no terminal</p>
+                <div class="vscode-chart-container vscode-chart-container--small">
+                  <canvas id="vscodeTerminalCommandsChart"></canvas>
+                  <p id="vscodeTerminalEmpty" class="empty-state hidden" data-i18n="report_vscode_tel_terminal_empty">Nenhum comando registrado.</p>
+                </div>
+              </div>
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_focus">Padrões de Foco</h3>
+                <p class="vscode-chart-subtitle" data-i18n="report_vscode_tel_focus_subtitle">Horas do dia com maior concentração</p>
+                <div class="vscode-chart-container vscode-chart-container--small">
+                  <canvas id="vscodeFocusPatternsChart"></canvas>
+                  <p id="vscodeFocusEmpty" class="empty-state hidden" data-i18n="report_vscode_tel_focus_empty">Sem dados de foco.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="vscode-report-card">
+              <h3 data-i18n="report_vscode_combo_timeline">Combo Timeline</h3>
+              <p class="vscode-chart-subtitle" data-i18n="report_vscode_combo_timeline_subtitle">Evolução dos combos ao longo do dia</p>
+              <div class="vscode-chart-container">
+                <canvas id="vscodeComboTimelineChart"></canvas>
+                <p id="vscodeComboTimelineEmpty" class="empty-state hidden" data-i18n="report_vscode_combo_timeline_empty">Nenhum combo registrado hoje.</p>
+              </div>
+            </div>
+
+            <div class="vscode-report-grid two-columns">
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_extensions">Top Extensões Usadas</h3>
+                <ul id="vscodeTopExtensionsList" class="vscode-report-list"></ul>
+              </div>
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_debugged">Arquivos Mais Debugados</h3>
+                <ul id="vscodeTopDebuggedFilesList" class="vscode-report-list"></ul>
+              </div>
+            </div>
+
+            <div class="vscode-report-grid two-columns">
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_errors">Arquivos com Mais Erros</h3>
+                <ul id="vscodeTopErrorFilesList" class="vscode-report-list"></ul>
+              </div>
+              <div class="vscode-report-card">
+                <h3 data-i18n="report_vscode_tel_refactoring">Atividade de Refatoração</h3>
+                <div id="vscodeRefactoringStats" class="vscode-stats-grid-mini"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="vscodeReportStatus" class="inline-status hidden"></p>
       </section>
 
       <section class="panel">

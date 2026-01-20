@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "Puente Saul Goodman VS Code",
+  "vscode_ext_description": "Envía tiempo activo de VS Code al SaulDaemon local usado por la extensión de Chrome.",
+  "command_start_daemon": "Saul Goodman: preparar comando del SaulDaemon",
+  "command_test_daemon": "Saul Goodman: probar conexión con el SaulDaemon",
+  "command_open_reports": "Saul Goodman: abrir informes",
+  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
+  "command_reset_combo": "Saul Goodman: reiniciar combo",
+  "config_enabled_description": "Habilita el envío de tiempo activo al SaulDaemon local.",
+  "config_enable_tracking_description": "Controla la recopilación y envío de latidos al SaulDaemon.",
+  "config_enable_reports_description": "Muestra el informe de Saul dentro de VS Code.",
+  "config_enable_sensitive_telemetry_description": "Autoriza telemetría sensible (ej.: comandos del terminal).",
+  "config_api_base_description": "URL base del SaulDaemon local.",
+  "config_pairing_key_description": "Clave de emparejamiento compartida con la extensión de Chrome.",
+  "config_hash_file_paths_description": "Realiza hash de las rutas de archivos enviadas en los latidos.",
+  "config_hash_project_names_description": "Realiza hash de los nombres de proyectos antes de enviarlos al daemon.",
+  "config_heartbeat_interval_description": "Intervalo en milisegundos entre latidos enviados al SaulDaemon.",
+  "config_idle_threshold_description": "Tiempo máximo sin actividad antes de considerar la sesión inactiva.",
+  "config_language_description": "Idioma de la extensión de VS Code (automático usa el idioma de VS Code).",
+  "config_enable_telemetry_description": "Habilita la recopilación de métricas de productividad local (depuración, pruebas, tareas, terminal, etc.). Los datos nunca salen de la máquina.",
+  "config_pomodoro_test_mode_description": "Activa modo de prueba para Pomodoro (1 minuto por ciclo en lugar de 25).",
+  "config_telemetry_diagnostics_interval_description": "Intervalo en segundos para muestrear diagnósticos (errores/advertencias) de los archivos."
+}

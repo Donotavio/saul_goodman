@@ -128,19 +128,45 @@ export function buildContextBreakdown(params: ContextBreakdownParams): ContextBr
     return acc;
   }, {} as Record<ContextModeValue, number>);
 
+  const totalDuration = Object.values(durations).reduce((sum, ms) => sum + ms, 0);
+
   for (const value of CONTEXT_VALUES) {
     const impact = resolveContextImpact(value);
     if (impact.neutralize) {
       indices[value] = 0;
       continue;
     }
+    
+    const contextDuration = durations[value] ?? 0;
+    if (contextDuration === 0) {
+      indices[value] = 0;
+      continue;
+    }
+
     const guards: ScoreGuards = {
       contextMode: { value, updatedAt: now },
       manualOverride: undefined,
       holidayNeutral: false
     };
-    indices[value] = calculateProcrastinationIndex(params.metrics, params.settings, guards).score;
+    const baseIndex = calculateProcrastinationIndex(params.metrics, params.settings, guards).score;
+    
+    const timeWeight = totalDuration > 0 ? contextDuration / totalDuration : 0;
+    const weightedIndex = baseIndex * timeWeight;
+    
+    const tieBreaker = hashContextForTieBreak(value, now) * 0.01;
+    indices[value] = Math.min(100, Math.max(0, Math.round(weightedIndex + tieBreaker)));
   }
 
   return { durations, indices };
+}
+
+function hashContextForTieBreak(context: ContextModeValue, timestamp: number): number {
+  const dayKey = new Date(timestamp).toISOString().split('T')[0];
+  const str = `${context}_${dayKey}`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash % 100) / 100;
 }

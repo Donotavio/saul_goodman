@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "Saul Goodman VS Code Köprüsü",
+  "vscode_ext_description": "VS Code'un aktif zamanını Chrome uzantısı tarafından kullanılan yerel SaulDaemon'a gönderir.",
+  "command_start_daemon": "Saul Goodman: SaulDaemon komutunu hazırlayın",
+  "command_test_daemon": "Saul Goodman: SaulDaemon ile bağlantıyı test et",
+  "command_open_reports": "Saul Goodman: raporları aç",
+  "command_setup_pomodoro": "Saul Goodman: Pomodoro sistemini ayarla",
+  "command_reset_combo": "Saul Goodman: kombinasyonu sıfırla",
+  "config_enabled_description": "Yerel SaulDaemon'a aktif zaman göndermeyi etkinleştirir.",
+  "config_enable_tracking_description": "SaulDaemon'a kalp atışlarını toplama ve gönderme kontrol eder.",
+  "config_enable_reports_description": "VS Code içinde Saul raporunu gösterir.",
+  "config_enable_sensitive_telemetry_description": "Hassas telemetriyi yetkilendirir (örneğin: terminal komutları).",
+  "config_api_base_description": "Yerel SaulDaemon için temel URL.",
+  "config_pairing_key_description": "Chrome uzantısıyla paylaşılan eşleştirme anahtarı.",
+  "config_hash_file_paths_description": "Kalp atışlarında gönderilen dosya yollarını hashler.",
+  "config_hash_project_names_description": "Daemon'a göndermeden önce proje isimlerini hashler.",
+  "config_heartbeat_interval_description": "SaulDaemon'a gönderilen kalp atışları arasındaki milisaniye cinsinden aralık.",
+  "config_idle_threshold_description": "Oturumun inaktif olarak kabul edilmeden önceki maksimum etkinlik süresi.",
+  "config_language_description": "VS Code uzantısının dili (oto, VS Code'un dilini kullanır).",
+  "config_enable_telemetry_description": "Yerel verimlilik ölçümlerinin toplanmasını etkinleştirir (hata ayıklama, testler, görevler, terminal, vb.). Veriler asla makineden çıkmaz.",
+  "config_pomodoro_test_mode_description": "Pomodoro için test modunu etkinleştirir (her döngüde 1 dakika yerine 25 dakika).",
+  "config_telemetry_diagnostics_interval_description": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden)."
+}

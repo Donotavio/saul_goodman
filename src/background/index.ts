@@ -37,7 +37,12 @@ import {
   HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
-import { classifyDomain as classifyWithMetadata, buildLearningTokens } from '../shared/domain-classifier.js';
+import {
+  classifyDomain as classifyWithMetadata,
+  buildLearningTokens,
+  DEFAULT_LEARNING_WEIGHTS,
+  LEARNING_HALF_LIFE_MS
+} from '../shared/domain-classifier.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -75,21 +80,10 @@ const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_LEARNING_TOKENS = 5000;
-const LEARNING_HALF_LIFE_MS = 30 * 24 * 60 * 60 * 1000;
 const LOW_CONFIDENCE_THRESHOLD = 55;
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
 const WEIGHT_STEP = 0.1;
 type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'lang' | 'flag';
-const DEFAULT_LEARNING_WEIGHTS: Record<LearningWeightKey, number> = {
-  host: 3,
-  root: 2,
-  kw: 1,
-  og: 1.5,
-  path: 1.25,
-  schema: 1.25,
-  lang: 0.5,
-  flag: 1
-};
 const WEIGHT_MIN_MAX: Record<LearningWeightKey, { min: number; max: number }> = {
   host: { min: 1.5, max: 5 },
   root: { min: 1, max: 4 },
@@ -155,6 +149,7 @@ const trackingState: TrackingState = {
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
 let lastVscodeSyncAt = 0;
+let vscodeSyncInProgress = false; // BUG-003: Prevent race condition
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
@@ -429,9 +424,15 @@ async function openExtensionPage(payload?: { path?: string }): Promise<void> {
   if (!rawPath) {
     return;
   }
-  const url = rawPath.startsWith('chrome-extension://')
-    ? rawPath
-    : chrome.runtime.getURL(rawPath);
+  if (rawPath.includes('://')) {
+    return;
+  }
+  const allowed = new Set(["src/popup/popup.html", "src/options/options.html", "src/report/report.html", "src/block/block.html"]);
+  const normalized = rawPath.replace(/^\//, '').split('?')[0].split('#')[0];
+  if (!allowed.has(normalized)) {
+    return;
+  }
+  const url = chrome.runtime.getURL(rawPath);
   await chrome.tabs.create({ url });
 }
 
@@ -613,6 +614,10 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResponse) => {
+  if (_sender?.id && _sender.id !== chrome.runtime.id) {
+    sendResponse({ ok: false, error: 'Unauthorized sender' });
+    return false;
+  }
   const handler = messageHandlers[message.type];
   if (!handler) {
     sendResponse({ ok: false, error: `No handler for message type ${message.type}` });
@@ -869,8 +874,9 @@ async function handleActivityPing(payload: ActivityPingPayload): Promise<void> {
 
 async function accumulateSlice(): Promise<void> {
   const now = Date.now();
-  const sliceStart = trackingState.lastTimestamp;
-  const elapsed = now - sliceStart;
+  const sliceStart = trackingState.lastTimestamp ?? now;
+  // BUG-005: Ensure elapsed is never negative (clock adjustment)
+  const elapsed = Math.max(0, now - sliceStart);
 
   if (elapsed <= 0) {
     return;
@@ -1272,70 +1278,114 @@ async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
  * Resposta: { totalActiveMs: number; sessions: number }
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
-  const settings = await getSettingsCache();
-  const metrics = await getMetricsCache();
-  const pairingKey = settings.vscodePairingKey;
-  const integrationDisabled =
-    !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
-
-  if (integrationDisabled) {
-    const cleared = clearVscodeMetrics(metrics);
-    if (cleared) {
-      await persistMetrics();
-    }
-    lastVscodeSyncAt = 0;
+  // BUG-003: Prevent race condition with parallel calls
+  if (vscodeSyncInProgress) {
     return;
   }
-
-  const now = Date.now();
-  if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
-    return;
-  }
-
-  let url: URL;
-  try {
-    url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
-  } catch {
-    return;
-  }
-  url.searchParams.set('date', getTodayKey());
-  url.searchParams.set('key', pairingKey);
+  vscodeSyncInProgress = true;
 
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
-    const response = await fetch(url.toString(), { signal: controller.signal });
-    clearTimeout(timer);
-    if (!response.ok) {
-      await handleVscodeSyncFailure(metrics);
+    const settings = await getSettingsCache();
+    const metrics = await getMetricsCache();
+    const pairingKey = settings.vscodePairingKey;
+    const integrationDisabled =
+      !settings.vscodeIntegrationEnabled || !settings.vscodeLocalApiUrl || !pairingKey;
+
+    if (integrationDisabled) {
+      const cleared = clearVscodeMetrics(metrics);
+      if (cleared) {
+        await persistMetrics();
+      }
+      lastVscodeSyncAt = 0;
       return;
     }
 
-    const summary = (await response.json()) as VscodeSummaryResponse;
-    metrics.vscodeActiveMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
-    metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
-    metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
-    metrics.vscodeSwitchHourly =
-      Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
-        ? summary.switchHourly
-        : Array.from({ length: 24 }, () => 0);
-    metrics.vscodeTimeline =
-      Array.isArray(summary.timeline) && summary.timeline.length
-        ? summary.timeline.map((entry) => ({
-            startTime: entry.startTime,
-            endTime: entry.endTime,
-            durationMs: entry.durationMs,
-            domain: 'VS Code (IDE)',
-            category: 'productive' as const
-          }))
+    const now = Date.now();
+    if (!force && now - lastVscodeSyncAt < VSCODE_SYNC_MIN_INTERVAL_MS) {
+      return;
+    }
+
+    let url: URL;
+    try {
+      url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
+    } catch {
+      return;
+    }
+    url.searchParams.set('date', getTodayKey());
+    url.searchParams.set('key', pairingKey);
+
+    // BUG-007: Ensure timer is always cleaned up
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    try {
+      const controller = new AbortController();
+      timer = setTimeout(() => controller.abort(), 4000);
+      const response = await fetch(url.toString(), { signal: controller.signal });
+      clearTimeout(timer);
+      timer = null;
+      if (!response.ok) {
+        await handleVscodeSyncFailure(metrics);
+        return;
+      }
+
+      const summary = (await response.json()) as VscodeSummaryResponse;
+      
+      const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+      
+      // BUG-FIX: Filter timeline to only today's entries before trusting totalActiveMs
+      const todayKey = getTodayKey();
+      const filteredTimeline = Array.isArray(summary.timeline) && summary.timeline.length
+        ? summary.timeline
+            .filter((entry) => {
+              const entryDateKey = formatDateKey(new Date(entry.startTime));
+              return entryDateKey === todayKey;
+            })
+            .map((entry) => ({
+              startTime: entry.startTime,
+              endTime: entry.endTime,
+              durationMs: entry.durationMs,
+              domain: 'VS Code (IDE)',
+              category: 'productive' as const
+            }))
         : [];
+      
+      // Recalculate totalActiveMs from filtered timeline instead of trusting daemon
+      const recalculatedVscodeMs = filteredTimeline.reduce((acc, entry) => acc + entry.durationMs, 0);
+      const rawVscodeMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
+      
+      if (recalculatedVscodeMs !== rawVscodeMs && rawVscodeMs > 0) {
+        console.warn(
+          `[Saul] Daemon returned ${(rawVscodeMs / 3600000).toFixed(2)}h but filtered timeline sums to ${(recalculatedVscodeMs / 3600000).toFixed(2)}h. ` +
+          `Using filtered value. Check daemon's vscode-tracking.json for duplicate/old entries.`
+        );
+      }
+      
+      if (recalculatedVscodeMs > MAX_DAY_MS) {
+        console.warn(`[Saul] Recalculated VS Code time ${(recalculatedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`);
+        metrics.vscodeActiveMs = MAX_DAY_MS;
+      } else {
+        metrics.vscodeActiveMs = recalculatedVscodeMs;
+      }
+      
+      metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
+      metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
+      metrics.vscodeSwitchHourly =
+        Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
+          ? summary.switchHourly
+          : Array.from({ length: 24 }, () => 0);
+      metrics.vscodeTimeline = filteredTimeline;
 
-    await persistMetrics();
+      await persistMetrics();
 
-    lastVscodeSyncAt = now;
-  } catch (error) {
-    await handleVscodeSyncFailure(metrics);
-    console.warn('Falha ao sincronizar métricas do VS Code', error);
+      lastVscodeSyncAt = now;
+    } catch (error) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      await handleVscodeSyncFailure(metrics);
+      console.warn('Falha ao sincronizar métricas do VS Code', error);
+    }
+  } finally {
+    vscodeSyncInProgress = false;
   }
 }
 
@@ -1349,6 +1399,10 @@ async function handleNavigationEvent(
   }
   try {
     const tab = await chrome.tabs.get(tabId);
+    // BUG-004: Explicit check for chrome.runtime.lastError
+    if (chrome.runtime.lastError || !tab) {
+      return;
+    }
     if (await maybeRedirectBlockedTab(tabId, tab)) {
       return;
     }
@@ -1362,7 +1416,8 @@ async function handleNavigationEvent(
     }
     await updateActiveTabContext(tabId, false, tab);
   } catch {
-    // ignore lookup errors
+    // Tab may have been closed
+    return;
   }
 }
 
@@ -1580,6 +1635,27 @@ function recordHourlyContribution(
     neutral: 'neutralMs',
     inactive: 'inactiveMs'
   };
+
+  // BUG-FIX: Prevent accumulating future time
+  // Ensure sliceStart + duration never exceeds current time
+  const now = Date.now();
+  const projectedEnd = sliceStart + durationMs;
+  
+  if (projectedEnd > now) {
+    const clippedDuration = Math.max(0, now - sliceStart);
+    if (clippedDuration !== durationMs) {
+      console.warn(
+        `[Saul] BUG-FIX: Clipped future time. Projected end: ${new Date(projectedEnd).toLocaleTimeString()}, ` +
+        `Now: ${new Date(now).toLocaleTimeString()}. ` +
+        `Reduced duration from ${(durationMs / 60000).toFixed(1)}min to ${(clippedDuration / 60000).toFixed(1)}min`
+      );
+    }
+    durationMs = clippedDuration;
+  }
+  
+  if (durationMs <= 0) {
+    return;
+  }
 
   const segments = splitDurationByHour(sliceStart, durationMs);
   for (const segment of segments) {
