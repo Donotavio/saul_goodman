@@ -16,6 +16,10 @@ type DomainMetadata = {
   headings?: string[];
   pathTokens?: string[];
   language?: string;
+  externalLinksCount?: number;
+  scrollDepth?: number;
+  interactionCount?: number;
+  activeMs?: number;
 };
 
 type DomainSuggestion = {
@@ -161,6 +165,9 @@ let overlayElement: HTMLDivElement | null = null;
 let earthquakeActive = false;
 let infiniteScrollDetected = false;
 let lastScrollHeight = document.documentElement.scrollHeight;
+const pageLoadedAt = Date.now();
+let interactionCount = 0;
+let maxScrollDepth = 0;
 let suggestionToastEl: HTMLDivElement | null = null;
 let suggestionToastTimer: number | null = null;
 const suggestionToastImage = typeof chrome !== 'undefined' && chrome.runtime?.getURL
@@ -191,12 +198,18 @@ window.addEventListener(
     if (currentHeight > lastScrollHeight) {
       lastScrollHeight = currentHeight;
     }
+    const scrollable = Math.max(0, currentHeight - window.innerHeight);
+    if (scrollable > 0) {
+      const depth = Math.min(1, Math.max(0, window.scrollY / scrollable));
+      maxScrollDepth = Math.max(maxScrollDepth, depth);
+    }
   },
   { passive: true }
 );
 
 const activityHandler = () => {
   lastEventTimestamp = Date.now();
+  interactionCount = Math.min(interactionCount + 1, 1000000);
   void sendPing();
 };
 
@@ -339,6 +352,10 @@ function collectPageMetadata(): DomainMetadata {
   const headings = collectHeadings();
   const pathTokens = collectPathTokens();
   const language = (document.documentElement.lang || '').trim() || undefined;
+  const externalLinksCount = countExternalLinks();
+  const scrollDepth = maxScrollDepth;
+  const interactionCountSnapshot = interactionCount;
+  const activeMs = Math.max(0, Date.now() - pageLoadedAt);
 
   return {
     hostname: window.location.hostname,
@@ -357,7 +374,11 @@ function collectPageMetadata(): DomainMetadata {
     schemaTypes,
     headings,
     pathTokens,
-    language
+    language,
+    externalLinksCount,
+    scrollDepth,
+    interactionCount: interactionCountSnapshot,
+    activeMs
   };
 }
 
@@ -435,6 +456,27 @@ function collectPathTokens(): string[] {
     .split('/')
     .map((part) => part.trim().toLowerCase())
     .filter((part) => part.length >= 3 && part.length <= 40);
+}
+
+function countExternalLinks(): number {
+  const anchors = Array.from(document.querySelectorAll('a[href]')).slice(0, 200);
+  const host = window.location.hostname;
+  let count = 0;
+  anchors.forEach((anchor) => {
+    const href = anchor.getAttribute('href')?.trim();
+    if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) {
+      return;
+    }
+    try {
+      const url = new URL(href, window.location.href);
+      if (url.hostname && url.hostname !== host) {
+        count += 1;
+      }
+    } catch {
+      return;
+    }
+  });
+  return count;
 }
 
 function showSuggestionToast(suggestion: DomainSuggestion): void {

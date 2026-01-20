@@ -24,7 +24,6 @@ import {
   DomainSuggestion,
   SuggestionHistoryEntry,
   ExtensionSettings,
-  LearningSignals,
   FairnessSummary,
   HourlyBucket,
   RuntimeMessage,
@@ -37,12 +36,6 @@ import {
   HolidaysCache
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
-import {
-  classifyDomain as classifyWithMetadata,
-  buildLearningTokens,
-  DEFAULT_LEARNING_WEIGHTS,
-  LEARNING_HALF_LIFE_MS
-} from '../shared/domain-classifier.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
@@ -61,6 +54,10 @@ import {
 } from '../shared/utils/context-history.js';
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
+import { FeatureExtractor } from '../shared/ml/featureExtractor.js';
+import { FeatureVectorizer, type SparseVector, type FeatureContribution } from '../shared/ml/vectorizer.js';
+import { OnlineLogisticRegression } from '../shared/ml/onlineLogisticRegression.js';
+import { ModelStore, type StoredModelState } from '../shared/ml/modelStore.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -78,22 +75,15 @@ const BLOCK_PAGE_PATH = 'src/block/block.html';
 const VS_CODE_DOMAIN_ID = '__vscode:ide';
 const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
+const MODEL_META_KEY = 'sg:ml-model-meta';
 const MAX_SUGGESTIONS = 10;
-const MAX_LEARNING_TOKENS = 5000;
-const LOW_CONFIDENCE_THRESHOLD = 55;
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
-const WEIGHT_STEP = 0.1;
-type LearningWeightKey = 'host' | 'root' | 'kw' | 'og' | 'path' | 'schema' | 'lang' | 'flag';
-const WEIGHT_MIN_MAX: Record<LearningWeightKey, { min: number; max: number }> = {
-  host: { min: 1.5, max: 5 },
-  root: { min: 1, max: 4 },
-  kw: { min: 0.5, max: 2 },
-  og: { min: 0.5, max: 3 },
-  path: { min: 0.5, max: 2 },
-  schema: { min: 0.5, max: 2 },
-  lang: { min: 0.25, max: 1 },
-  flag: { min: 0.5, max: 2 }
-};
+const ACTIVE_LEARNING_MIN_PROB = 0.4;
+const ACTIVE_LEARNING_MAX_PROB = 0.6;
+const MODEL_DIMENSIONS = 1 << 16;
+const MODEL_LEARNING_RATE = 0.05;
+const MODEL_L2 = 0.0005;
+const MODEL_MIN_FEATURE_COUNT = 3;
 
 function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
   chrome.tabs.sendMessage(
@@ -177,79 +167,172 @@ let holidaysCache: HolidaysCache = {};
 let holidayNeutralToday = false;
 let fairnessSnapshot: FairnessSummary | null = null;
 let lastScoreComputation: ScoreComputation | null = null;
-const suggestionCache: Map<string, DomainSuggestion> = new Map();
+const suggestionCache: Map<string, CachedSuggestion> = new Map();
 let lastPruneTimestamp = 0;
 const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
 
-function ensureLearningSignals(settings: ExtensionSettings): LearningSignals {
-  const base: LearningSignals = {
-    version: settings.learningSignals?.version ?? 1,
-    tokens: settings.learningSignals?.tokens ?? {},
-    weights: { ...DEFAULT_LEARNING_WEIGHTS, ...(settings.learningSignals?.weights ?? {}) }
-  };
-  settings.learningSignals = base;
-  return base;
+interface CachedSuggestion {
+  suggestion: DomainSuggestion;
+  vector: SparseVector;
+  probability: number;
 }
 
-function updateLearningSignals(
-  settings: ExtensionSettings,
-  tokens: string[],
-  classification: DomainCategory,
-  suggested?: DomainCategory
-): void {
-  const learning = ensureLearningSignals(settings);
-  if (!learning.weights) {
-    learning.weights = { ...DEFAULT_LEARNING_WEIGHTS };
-  }
-  const now = Date.now();
-  const uniqueTokens = Array.from(new Set(tokens));
+interface ModelContext {
+  model: OnlineLogisticRegression;
+  vectorizer: FeatureVectorizer;
+  extractor: FeatureExtractor;
+  store: ModelStore;
+  totalUpdates: number;
+  lastUpdated: number;
+}
 
-  for (const token of uniqueTokens) {
-    const current = learning.tokens[token] ?? {
-      productive: 0,
-      procrastination: 0,
-      lastUpdated: now
+let modelContext: ModelContext | null = null;
+let modelContextPromise: Promise<ModelContext> | null = null;
+
+async function getModelContext(): Promise<ModelContext> {
+  if (modelContext) {
+    return modelContext;
+  }
+  if (modelContextPromise) {
+    return modelContextPromise;
+  }
+
+  modelContextPromise = (async () => {
+    const store = new ModelStore();
+    let stored: StoredModelState | null = null;
+    try {
+      stored = await store.load();
+    } catch (error) {
+      console.warn('Falha ao carregar modelo ML', error);
+    }
+
+    const storedWeights = stored?.dimensions === MODEL_DIMENSIONS ? stored.weights : null;
+    const weights = storedWeights && storedWeights.length === MODEL_DIMENSIONS
+      ? Float32Array.from(storedWeights)
+      : new Float32Array(MODEL_DIMENSIONS);
+    const bias = stored?.bias ?? 0;
+
+    const storedCounts = stored?.dimensions === MODEL_DIMENSIONS ? stored.featureCounts : null;
+    const counts = storedCounts && storedCounts.length === MODEL_DIMENSIONS
+      ? Uint32Array.from(storedCounts)
+      : new Uint32Array(MODEL_DIMENSIONS);
+
+    const model = new OnlineLogisticRegression({
+      dimensions: MODEL_DIMENSIONS,
+      learningRate: MODEL_LEARNING_RATE,
+      l2: MODEL_L2
+    }, weights, bias);
+    const vectorizer = new FeatureVectorizer(
+      { dimensions: MODEL_DIMENSIONS, minFeatureCount: MODEL_MIN_FEATURE_COUNT },
+      counts
+    );
+    const extractor = new FeatureExtractor();
+
+    const context: ModelContext = {
+      model,
+      vectorizer,
+      extractor,
+      store,
+      totalUpdates: stored?.totalUpdates ?? 0,
+      lastUpdated: stored?.lastUpdated ?? 0
     };
-    if (classification === 'productive') {
-      current.productive += 1;
-    } else if (classification === 'procrastination') {
-      current.procrastination += 1;
-    }
-    current.lastUpdated = now;
-    learning.tokens[token] = current;
-  }
+    modelContext = context;
+    return context;
+  })();
 
-  if (suggested && suggested !== classification) {
-    adjustWeights(learning, uniqueTokens, -WEIGHT_STEP);
-  } else {
-    adjustWeights(learning, uniqueTokens, WEIGHT_STEP);
-  }
-
-  pruneLearningSignals(learning);
+  return modelContextPromise;
 }
 
-function pruneLearningSignals(learning: LearningSignals): void {
-  const entries = Object.entries(learning.tokens ?? {});
+async function persistModel(context: ModelContext): Promise<void> {
+  const state: StoredModelState = {
+    version: 1,
+    dimensions: MODEL_DIMENSIONS,
+    weights: Array.from(context.model.getWeights()),
+    bias: context.model.getBias(),
+    featureCounts: Array.from(context.vectorizer.getCounts()),
+    totalUpdates: context.totalUpdates,
+    lastUpdated: context.lastUpdated
+  };
 
-  const now = Date.now();
-  for (const [token, stat] of entries) {
-    const total = stat.productive + stat.procrastination;
-    if (total <= 1 && now - stat.lastUpdated > LEARNING_HALF_LIFE_MS) {
-      delete learning.tokens[token];
-    }
+  try {
+    await context.store.save(state);
+  } catch (error) {
+    console.warn('Falha ao persistir modelo ML', error);
   }
 
-  const remaining = Object.entries(learning.tokens ?? {});
-  if (remaining.length <= MAX_LEARNING_TOKENS) {
-    return;
-  }
-
-  remaining
-    .sort(([, a], [, b]) => (a.lastUpdated ?? 0) - (b.lastUpdated ?? 0))
-    .slice(0, Math.max(0, remaining.length - MAX_LEARNING_TOKENS))
-    .forEach(([token]) => {
-      delete learning.tokens[token];
+  try {
+    await chrome.storage.local.set({
+      [MODEL_META_KEY]: {
+        version: state.version,
+        lastUpdated: state.lastUpdated,
+        totalUpdates: state.totalUpdates
+      }
     });
+  } catch (error) {
+    console.warn('Falha ao atualizar metadados do modelo ML', error);
+  }
+}
+
+function buildMlReasons(contributions: FeatureContribution[]): string[] {
+  if (!contributions.length) {
+    return ['Sinais insuficientes para explicar a decisão.'];
+  }
+
+  return contributions.map((entry) => {
+    const direction = entry.score >= 0 ? 'produtivo' : 'procrastinação';
+    const magnitude = Math.abs(entry.weight).toFixed(2);
+    return `Sinal: ${entry.feature} favorece ${direction} (peso ${magnitude})`;
+  });
+}
+
+async function buildMlSuggestion(metadata: DomainMetadata): Promise<CachedSuggestion> {
+  const context = await getModelContext();
+  const features = context.extractor.extract(metadata);
+  const vector = context.vectorizer.vectorize(features, true);
+  const probability = context.model.predictProbability(vector);
+  const classification: DomainCategory = probability >= ACTIVE_LEARNING_MAX_PROB
+    ? 'productive'
+    : probability <= ACTIVE_LEARNING_MIN_PROB
+      ? 'procrastination'
+      : 'neutral';
+  const confidence = Math.round(Math.max(probability, 1 - probability) * 100);
+  const contributions = context.vectorizer.explain(features, context.model.getWeights(), 3);
+  const reasons = buildMlReasons(contributions);
+
+  return {
+    suggestion: {
+      domain: normalizeDomain(metadata.hostname),
+      classification,
+      confidence,
+      reasons,
+      timestamp: Date.now()
+    },
+    vector,
+    probability
+  };
+}
+
+async function updateModelFromFeedback(
+  domain: string,
+  classification: DomainCategory,
+  vector?: SparseVector
+): Promise<void> {
+  try {
+    const context = await getModelContext();
+    const label: 0 | 1 = classification === 'productive' ? 1 : 0;
+    const trainingVector = vector
+      ?? context.vectorizer.vectorize(
+        context.extractor.extract({ hostname: domain }),
+        true
+      );
+
+    context.model.update(trainingVector, label);
+    context.totalUpdates += 1;
+    context.lastUpdated = Date.now();
+    await persistModel(context);
+  } catch (error) {
+    console.warn('Falha ao atualizar modelo ML com feedback', error);
+  }
 }
 
 function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
@@ -296,21 +379,21 @@ function pruneSuggestionCache(settings: ExtensionSettings, force = false): void 
   }
   lastPruneTimestamp = now;
   
-  for (const [domain, suggestion] of suggestionCache.entries()) {
+  for (const [domain, cached] of suggestionCache.entries()) {
     if (isDomainClassified(domain, settings) || isDomainInCooldown(domain, settings)) {
       suggestionCache.delete(domain);
       continue;
     }
     const maxAge = getSuggestionCooldownMs(settings) * 2;
-    if (maxAge > 0 && suggestion.timestamp + maxAge < now) {
+    if (maxAge > 0 && cached.suggestion.timestamp + maxAge < now) {
       suggestionCache.delete(domain);
     }
   }
   if (suggestionCache.size > MAX_SUGGESTIONS) {
     const sorted = Array.from(suggestionCache.values()).sort(
-      (a, b) => b.timestamp - a.timestamp
+      (a, b) => b.suggestion.timestamp - a.suggestion.timestamp
     );
-    const keep = new Set(sorted.slice(0, MAX_SUGGESTIONS).map((entry) => entry.domain));
+    const keep = new Set(sorted.slice(0, MAX_SUGGESTIONS).map((entry) => entry.suggestion.domain));
     for (const key of suggestionCache.keys()) {
       if (!keep.has(key)) {
         suggestionCache.delete(key);
@@ -324,7 +407,7 @@ function getActiveSuggestion(): DomainSuggestion | null {
   if (!domain) {
     return null;
   }
-  return suggestionCache.get(domain) ?? null;
+  return suggestionCache.get(domain)?.suggestion ?? null;
 }
 
 const messageHandlers: Record<
@@ -341,7 +424,7 @@ const messageHandlers: Record<
       metrics,
       settings,
       fairness: getFairnessSummary(),
-      suggestions: Array.from(suggestionCache.values()),
+      suggestions: Array.from(suggestionCache.values(), (entry) => entry.suggestion),
       activeSuggestion: getActiveSuggestion()
     };
   },
@@ -396,14 +479,7 @@ async function handleApplySuggestion(payload: {
   };
   settings.suggestionsHistory = history;
   const cached = suggestionCache.get(domain);
-  const tokens =
-    (cached?.learningTokens ?? null) ??
-    buildLearningTokens({
-      hostname: domain,
-      hasInfiniteScroll: false,
-      hasVideoPlayer: false
-    });
-  updateLearningSignals(settings, tokens, classification, cached?.classification);
+  await updateModelFromFeedback(domain, classification, cached?.vector);
   settingsCache = settings;
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
@@ -472,7 +548,7 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
   const cached = suggestionCache.get(normalizedDomain);
   if (cached) {
     if (tab.id) {
-      sendSuggestionToast(tab.id, cached);
+      sendSuggestionToast(tab.id, cached.suggestion);
     }
     return;
   }
@@ -482,9 +558,16 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     return;
   }
 
-  const tokens = buildLearningTokens(metadata);
-  const result = classifyWithMetadata(metadata, settings.learningSignals);
-  const lowConfidence = result.confidence <= LOW_CONFIDENCE_THRESHOLD;
+  let cachedSuggestion: CachedSuggestion;
+  try {
+    cachedSuggestion = await buildMlSuggestion(metadata);
+  } catch (error) {
+    console.warn('Falha ao gerar sugestão ML', error);
+    return;
+  }
+  const lowConfidence =
+    cachedSuggestion.probability > ACTIVE_LEARNING_MIN_PROB &&
+    cachedSuggestion.probability < ACTIVE_LEARNING_MAX_PROB;
   if (!lowConfidence && isDomainInCooldown(normalizedDomain, settings)) {
     suggestionCache.delete(normalizedDomain);
     return;
@@ -499,25 +582,16 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
     }
   }
 
-  const suggestion: DomainSuggestion = {
-    domain: normalizedDomain,
-    classification: result.classification,
-    confidence: result.confidence,
-    reasons: result.reasons,
-    timestamp: Date.now(),
-    learningTokens: tokens
-  };
-
-  suggestionCache.set(normalizedDomain, suggestion);
+  suggestionCache.set(normalizedDomain, cachedSuggestion);
   await recordSuggestionHistory(normalizedDomain, {
-    lastSuggestedAt: suggestion.timestamp,
+    lastSuggestedAt: cachedSuggestion.suggestion.timestamp,
     decidedAs: undefined,
     decidedAt: undefined,
     ignoredUntil: undefined
   });
   pruneSuggestionCache(settings);
   if (tab.id) {
-    sendSuggestionToast(tab.id, suggestion);
+    sendSuggestionToast(tab.id, cachedSuggestion.suggestion);
   }
 }
 
@@ -587,6 +661,22 @@ async function collectDomainMetadata(
           language:
             typeof meta.language === 'string' && meta.language.trim().length > 0
               ? meta.language.trim()
+              : undefined,
+          externalLinksCount:
+            typeof meta.externalLinksCount === 'number' && Number.isFinite(meta.externalLinksCount)
+              ? meta.externalLinksCount
+              : undefined,
+          scrollDepth:
+            typeof meta.scrollDepth === 'number' && Number.isFinite(meta.scrollDepth)
+              ? meta.scrollDepth
+              : undefined,
+          interactionCount:
+            typeof meta.interactionCount === 'number' && Number.isFinite(meta.interactionCount)
+              ? meta.interactionCount
+              : undefined,
+          activeMs:
+            typeof meta.activeMs === 'number' && Number.isFinite(meta.activeMs)
+              ? meta.activeMs
               : undefined
         });
       });
@@ -2088,31 +2178,4 @@ async function handleVscodeSyncFailure(metrics: DailyMetrics): Promise<void> {
     await persistMetrics();
   }
   lastVscodeSyncAt = 0;
-}
-function adjustWeights(
-  learning: LearningSignals,
-  tokens: string[],
-  delta: number
-): void {
-  const weights = { ...DEFAULT_LEARNING_WEIGHTS, ...(learning.weights ?? {}) };
-  const tokenTypes = new Set<string>();
-  tokens.forEach((token) => {
-    if (token.startsWith('host:')) tokenTypes.add('host');
-    else if (token.startsWith('root:')) tokenTypes.add('root');
-    else if (token.startsWith('kw:')) tokenTypes.add('kw');
-    else if (token.startsWith('og:')) tokenTypes.add('og');
-    else if (token.startsWith('path:')) tokenTypes.add('path');
-    else if (token.startsWith('schema:')) tokenTypes.add('schema');
-    else if (token.startsWith('lang:')) tokenTypes.add('lang');
-    else if (token.startsWith('flag:')) tokenTypes.add('flag');
-  });
-
-  for (const type of tokenTypes) {
-    const bounds = WEIGHT_MIN_MAX[type as LearningWeightKey];
-    const current = (weights as Record<string, number>)[type] ?? 1;
-    const next = Math.min(bounds.max, Math.max(bounds.min, current + delta));
-    (weights as Record<string, number>)[type] = next;
-  }
-
-  learning.weights = weights;
 }

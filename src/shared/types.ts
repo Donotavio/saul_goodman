@@ -275,6 +275,10 @@ export interface DomainMetadata {
   headings?: string[];
   pathTokens?: string[];
   language?: string;
+  externalLinksCount?: number;
+  scrollDepth?: number;
+  interactionCount?: number;
+  activeMs?: number;
 }
 
 export interface LearningTokenStat {

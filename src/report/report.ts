@@ -1421,7 +1421,10 @@ function formatDurationMs(ms: number): string {
 
 function renderReport(metrics: DailyMetrics): void {
   const enriched = enrichMetricsWithVscode(metrics);
-  const reportDate = parseDateKey(enriched.dateKey);
+  const fallbackDate = Number.isFinite(enriched.lastUpdated)
+    ? new Date(enriched.lastUpdated)
+    : new Date();
+  const reportDate = parseDateKey(enriched.dateKey, fallbackDate);
   reportDateEl.textContent = reportDate.toLocaleDateString(locale, {
     weekday: 'long',
     month: 'long',
@@ -3443,7 +3446,7 @@ function stopBannerCountdown(): void {
   }
 }
 
-function parseDateKey(dateKey: string): Date {
+function parseDateKey(dateKey: string, fallback: Date = new Date()): Date {
   const [yearStr, monthStr, dayStr] = dateKey.split('-');
   const year = Number(yearStr);
   const month = Number(monthStr);
@@ -3462,7 +3465,16 @@ function parseDateKey(dateKey: string): Date {
   }
 
   // fallback to native parsing when the formato foge do esperado
-  return new Date(dateKey);
+  const parsed = new Date(dateKey);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed;
+  }
+
+  if (!Number.isNaN(fallback.getTime())) {
+    return fallback;
+  }
+
+  return new Date();
 }
 
 function closeReportTab(): void {
