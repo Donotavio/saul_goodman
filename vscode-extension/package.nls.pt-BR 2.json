@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "Saul Goodman VS Code Bridge",
+  "vscode_ext_description": "Envia tempo ativo do VS Code para o SaulDaemon local usado pela extensão Chrome.",
+  "command_start_daemon": "Saul Goodman: preparar comando do SaulDaemon",
+  "command_test_daemon": "Saul Goodman: testar conexão com o SaulDaemon",
+  "command_open_reports": "Saul Goodman: abrir relatórios",
+  "command_setup_pomodoro": "Saul Goodman: configurar sistema Pomodoro",
+  "command_reset_combo": "Saul Goodman: resetar combo",
+  "config_enabled_description": "Habilita o envio de tempo ativo para o SaulDaemon local.",
+  "config_enable_tracking_description": "Controla a coleta e envio de heartbeats para o SaulDaemon.",
+  "config_enable_reports_description": "Exibe o relatório do Saul dentro do VS Code.",
+  "config_enable_sensitive_telemetry_description": "Autoriza telemetria sensível (ex.: comandos do terminal).",
+  "config_api_base_description": "URL base do SaulDaemon local.",
+  "config_pairing_key_description": "Chave de pareamento compartilhada com a extensão Chrome.",
+  "config_hash_file_paths_description": "Faz hash dos caminhos de arquivos enviados nos heartbeats.",
+  "config_hash_project_names_description": "Faz hash dos nomes de projetos antes de enviar ao daemon.",
+  "config_heartbeat_interval_description": "Intervalo em milissegundos entre heartbeats enviados ao SaulDaemon.",
+  "config_idle_threshold_description": "Tempo máximo sem atividade antes de considerar a sessão inativa.",
+  "config_language_description": "Idioma da extensão VS Code (auto usa o idioma do VS Code).",
+  "config_enable_telemetry_description": "Habilita coleta de métricas de produtividade local (debugging, testes, tasks, terminal, etc). Dados nunca saem da máquina.",
+  "config_pomodoro_test_mode_description": "Ativa modo de teste para Pomodoro (1 minuto por ciclo ao invés de 25).",
+  "config_telemetry_diagnostics_interval_description": "Intervalo em segundos para amostrar diagnósticos (erros/warnings) dos arquivos."
+}

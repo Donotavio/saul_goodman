@@ -1,0 +1,30 @@
+# Build artifacts
+*.vsix
+
+# Development files
+.vscode/
+.vscode-test/
+.gitignore
+
+# Source control
+.git/
+
+# Tests
+src/tests/
+
+# Scripts
+scripts/
+
+# Documentation
+*.md
+!README.md
+
+# Node modules (extension doesn't need them at runtime)
+node_modules/
+
+# Lock files
+package-lock.json
+
+# Daemon build artifacts (we keep source)
+daemon/daemon.log
+daemon/data/
