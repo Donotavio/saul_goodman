@@ -652,6 +652,16 @@ function handleSummary(req, res, url) {
       if (duration.endTime <= startMs || duration.startTime >= endMs) {
         continue;
       }
+      
+      // BUG-FIX: Filter out focus/blur events without valid project/language
+      // Must match the filtering logic used in summarizeDurationsByDay/summarizeDurations
+      const project = (duration.project ?? '').trim();
+      const language = (duration.language ?? '').trim();
+      
+      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
+        continue;
+      }
+      
       sessions += 1;
       const hour = new Date(duration.startTime).getHours();
       if (switchHourly[hour] !== undefined) {

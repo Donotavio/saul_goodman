@@ -121,16 +121,31 @@ interface TrackingState {
   pendingSwitchFromDomain: string | null;
 }
 
-interface VscodeSummaryResponse {
-  totalActiveMs: number;
-  sessions: number;
-  switches?: number;
-  switchHourly?: number[];
-  timeline?: Array<{
-    startTime: number;
-    endTime: number;
-    durationMs: number;
-  }>;
+interface VscodeSummariesResponse {
+  data?: {
+    total_seconds?: number;
+    days?: Array<{
+      date: string;
+      total_seconds?: number;
+    }>;
+  };
+}
+
+interface VscodeDurationEntry {
+  startTime: number;
+  endTime: number;
+  durationMs: number;
+  project?: string;
+  language?: string;
+}
+
+interface VscodeDurationsResponse {
+  data?: VscodeDurationEntry[];
+  pagination?: {
+    page?: number;
+    perPage?: number;
+    total?: number;
+  };
 }
 
 const trackingState: TrackingState = {
@@ -1272,10 +1287,90 @@ async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
   await chrome.storage.local.set({ [LAST_NOTIFIED_VERSION_KEY]: version });
 }
 
+function getDayStartMs(dateKey: string): number {
+  const [year, month, day] = dateKey.split('-').map((value) => Number(value));
+  return new Date(year, month - 1, day).getTime();
+}
+
+function getDayEndMsExclusive(dateKey: string): number {
+  return getDayStartMs(dateKey) + 24 * 60 * 60 * 1000;
+}
+
+function resolveSummaryTotalMs(summary: VscodeSummariesResponse, dateKey: string): number {
+  const days = summary?.data?.days ?? [];
+  const day = days.find((entry) => entry.date === dateKey) ?? days[0];
+  const seconds =
+    (typeof day?.total_seconds === 'number' ? day.total_seconds : undefined) ??
+    summary?.data?.total_seconds ??
+    0;
+  return Math.max(0, seconds) * 1000;
+}
+
+function isValidVscodeDuration(duration: VscodeDurationEntry): boolean {
+  const project = (duration.project ?? '').trim();
+  const language = (duration.language ?? '').trim();
+  if (!project || project.toLowerCase() === 'unknown') {
+    return false;
+  }
+  if (!language || language.toLowerCase() === 'unknown') {
+    return false;
+  }
+  return true;
+}
+
+async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchVscodeDurations(
+  baseUrl: string,
+  pairingKey: string
+): Promise<VscodeDurationEntry[]> {
+  const perPage = 200;
+  let page = 1;
+  let total = Infinity;
+  const entries: VscodeDurationEntry[] = [];
+
+  while (entries.length < total) {
+    const url = new URL('/v1/vscode/durations', baseUrl);
+    url.searchParams.set('key', pairingKey);
+    url.searchParams.set('page', String(page));
+    url.searchParams.set('per_page', String(perPage));
+
+    const response = await fetchWithTimeout(url.toString(), 4000);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const payload = (await response.json()) as VscodeDurationsResponse;
+    const data = Array.isArray(payload.data) ? payload.data : [];
+    const reportedTotal = payload.pagination?.total;
+    if (Number.isFinite(reportedTotal)) {
+      total = Number(reportedTotal);
+    }
+    entries.push(...data);
+
+    if (data.length < perPage) {
+      break;
+    }
+    page += 1;
+    if (page > 50) {
+      break;
+    }
+  }
+
+  return entries;
+}
+
 /**
  * Consulta o SaulDaemon local para trazer o resumo diário de uso do VS Code.
- * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
- * Resposta: { totalActiveMs: number; sessions: number }
+ * Endpoint esperado: GET {base}/v1/vscode/summaries?start=YYYY-MM-DD&end=YYYY-MM-DD&key=PAIRING_KEY
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
   // BUG-003: Prevent race condition with parallel calls
@@ -1305,82 +1400,93 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       return;
     }
 
-    let url: URL;
+    const baseUrl = settings.vscodeLocalApiUrl?.trim();
+    if (!baseUrl) {
+      return;
+    }
+    let summaryUrl: URL;
     try {
-      url = new URL('/v1/tracking/vscode/summary', settings.vscodeLocalApiUrl);
+      summaryUrl = new URL('/v1/vscode/summaries', baseUrl);
     } catch {
       return;
     }
-    url.searchParams.set('date', getTodayKey());
-    url.searchParams.set('key', pairingKey);
+    const todayKey = getTodayKey();
+    summaryUrl.searchParams.set('start', todayKey);
+    summaryUrl.searchParams.set('end', todayKey);
+    summaryUrl.searchParams.set('key', pairingKey);
 
-    // BUG-007: Ensure timer is always cleaned up
-    let timer: ReturnType<typeof setTimeout> | null = null;
     try {
-      const controller = new AbortController();
-      timer = setTimeout(() => controller.abort(), 4000);
-      const response = await fetch(url.toString(), { signal: controller.signal });
-      clearTimeout(timer);
-      timer = null;
+      const response = await fetchWithTimeout(summaryUrl.toString(), 4000);
       if (!response.ok) {
         await handleVscodeSyncFailure(metrics);
         return;
       }
 
-      const summary = (await response.json()) as VscodeSummaryResponse;
-      
-      const MAX_DAY_MS = 24 * 60 * 60 * 1000;
-      
-      // BUG-FIX: Filter timeline to only today's entries before trusting totalActiveMs
-      const todayKey = getTodayKey();
-      const filteredTimeline = Array.isArray(summary.timeline) && summary.timeline.length
-        ? summary.timeline
-            .filter((entry) => {
-              const entryDateKey = formatDateKey(new Date(entry.startTime));
-              return entryDateKey === todayKey;
-            })
-            .map((entry) => ({
-              startTime: entry.startTime,
-              endTime: entry.endTime,
-              durationMs: entry.durationMs,
-              domain: 'VS Code (IDE)',
-              category: 'productive' as const
-            }))
-        : [];
-      
-      // Recalculate totalActiveMs from filtered timeline instead of trusting daemon
-      const recalculatedVscodeMs = filteredTimeline.reduce((acc, entry) => acc + entry.durationMs, 0);
-      const rawVscodeMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
-      
-      if (recalculatedVscodeMs !== rawVscodeMs && rawVscodeMs > 0) {
+      const summary = (await response.json()) as VscodeSummariesResponse;
+      const summaryTotalMs = resolveSummaryTotalMs(summary, todayKey);
+      const durations = await fetchVscodeDurations(baseUrl, pairingKey);
+
+      const startMs = getDayStartMs(todayKey);
+      const endMs = getDayEndMsExclusive(todayKey);
+      const filteredTimeline: TimelineEntry[] = [];
+      const switchHourly = Array.from({ length: 24 }, () => 0);
+      let recalculatedVscodeMs = 0;
+      let sessions = 0;
+      for (const duration of durations) {
+        if (!isValidVscodeDuration(duration)) {
+          continue;
+        }
+        if (duration.endTime <= startMs || duration.startTime >= endMs) {
+          continue;
+        }
+        sessions += 1;
+        const hour = new Date(duration.startTime).getHours();
+        if (switchHourly[hour] !== undefined) {
+          switchHourly[hour] += 1;
+        }
+        const sliceStart = Math.max(duration.startTime, startMs);
+        const sliceEnd = Math.min(duration.endTime, endMs);
+        if (sliceEnd <= sliceStart) {
+          continue;
+        }
+        const sliceDuration = sliceEnd - sliceStart;
+        recalculatedVscodeMs += sliceDuration;
+        filteredTimeline.push({
+          startTime: sliceStart,
+          endTime: sliceEnd,
+          durationMs: sliceDuration,
+          domain: VS_CODE_DOMAIN_LABEL,
+          category: 'productive'
+        });
+      }
+      filteredTimeline.sort((a, b) => a.startTime - b.startTime);
+
+      if (summaryTotalMs > 0 && Math.abs(summaryTotalMs - recalculatedVscodeMs) > 1000) {
         console.warn(
-          `[Saul] Daemon returned ${(rawVscodeMs / 3600000).toFixed(2)}h but filtered timeline sums to ${(recalculatedVscodeMs / 3600000).toFixed(2)}h. ` +
-          `Using filtered value. Check daemon's vscode-tracking.json for duplicate/old entries.`
+          `[Saul] VS Code summary reported ${(summaryTotalMs / 3600000).toFixed(2)}h, ` +
+            `but durations sum to ${(recalculatedVscodeMs / 3600000).toFixed(2)}h. ` +
+            `Using summary value.`
         );
       }
-      
-      if (recalculatedVscodeMs > MAX_DAY_MS) {
-        console.warn(`[Saul] Recalculated VS Code time ${(recalculatedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`);
+
+      const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+      const resolvedVscodeMs = summaryTotalMs > 0 ? summaryTotalMs : recalculatedVscodeMs;
+      if (resolvedVscodeMs > MAX_DAY_MS) {
+        console.warn(`[Saul] VS Code time ${(resolvedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`);
         metrics.vscodeActiveMs = MAX_DAY_MS;
       } else {
-        metrics.vscodeActiveMs = recalculatedVscodeMs;
+        metrics.vscodeActiveMs = resolvedVscodeMs;
       }
-      
-      metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
-      metrics.vscodeSwitches = typeof summary.switches === 'number' ? summary.switches : 0;
-      metrics.vscodeSwitchHourly =
-        Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
-          ? summary.switchHourly
-          : Array.from({ length: 24 }, () => 0);
+
+      metrics.vscodeSessions = sessions;
+      metrics.vscodeSwitches = sessions;
+      metrics.vscodeSwitchHourly = switchHourly;
       metrics.vscodeTimeline = filteredTimeline;
 
       await persistMetrics();
 
       lastVscodeSyncAt = now;
     } catch (error) {
-      if (timer) {
-        clearTimeout(timer);
-      }
       await handleVscodeSyncFailure(metrics);
       console.warn('Falha ao sincronizar métricas do VS Code', error);
     }
