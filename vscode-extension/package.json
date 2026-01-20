@@ -79,6 +79,11 @@
           "default": "",
           "description": "%config_pairing_key_description%"
         },
+        "saulGoodman.daemonPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "%config_daemon_path_description%"
+        },
         "saulGoodman.hashFilePaths": {
           "type": "boolean",
           "default": true,
@@ -134,7 +139,8 @@
   "scripts": {
     "test": "node --test src/tests/**/*.test.js",
     "generate-nls": "node scripts/generate-nls.js",
-    "prebuild:vsix": "npm run generate-nls && npm --prefix .. run i18n:copy-site",
+    "copy-daemon": "rm -rf daemon && mkdir -p daemon/src && cp ../saul-daemon/index.cjs ../saul-daemon/package.json daemon/ && cp ../saul-daemon/src/vscode-aggregation.cjs daemon/src/",
+    "prebuild:vsix": "npm run copy-daemon && npm run generate-nls && npm --prefix .. run i18n:copy-site",
     "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
   },
   "devDependencies": {

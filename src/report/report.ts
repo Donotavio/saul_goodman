@@ -11,7 +11,7 @@ import {
   ContextModeValue,
   ExtensionSettings
 } from '../shared/types.js';
-import { formatDuration, formatTimeRange, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { formatDuration, formatTimeRange, isWithinWorkSchedule, splitDurationByHour, getTodayKey, formatDateKey } from '../shared/utils/time.js';
 import { calculateKpis, formatPercentage, CalculatedKpis } from '../shared/metrics.js';
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
@@ -3198,6 +3198,7 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
 
   const hourly = metrics.hourly.map((bucket) => ({ ...bucket }));
   if (allowVscode && metrics.vscodeTimeline?.length) {
+    const todayKey = getTodayKey();
     for (const entry of metrics.vscodeTimeline) {
       const duration = typeof entry.durationMs === 'number'
         ? entry.durationMs
@@ -3209,7 +3210,33 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
         typeof entry.startTime === 'number'
           ? entry.startTime
           : Math.max(0, (entry.endTime ?? Date.now()) - duration);
-      for (const segment of splitDurationByHour(startTime, duration)) {
+      
+      // BUG-FIX: Only process timeline entries from today
+      const entryDateKey = formatDateKey(new Date(startTime));
+      if (entryDateKey !== todayKey) {
+        continue;
+      }
+      
+      // BUG-FIX: Prevent accumulating future time in hourly buckets
+      const now = Date.now();
+      const projectedEnd = startTime + duration;
+      let clippedDuration = duration;
+      
+      if (projectedEnd > now) {
+        clippedDuration = Math.max(0, now - startTime);
+        if (clippedDuration !== duration) {
+          console.warn(
+            `[Saul Report] Clipped VS Code future time: ${new Date(projectedEnd).toLocaleTimeString()} > now ${new Date(now).toLocaleTimeString()}. ` +
+            `Reduced from ${(duration / 60000).toFixed(1)}min to ${(clippedDuration / 60000).toFixed(1)}min`
+          );
+        }
+      }
+      
+      if (clippedDuration <= 0) {
+        continue;
+      }
+      
+      for (const segment of splitDurationByHour(startTime, clippedDuration)) {
         const bucket = hourly[segment.hour];
         if (bucket) {
           const MAX_HOUR_MS = 60 * 60 * 1000;

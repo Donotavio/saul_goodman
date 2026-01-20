@@ -1330,12 +1330,40 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       const summary = (await response.json()) as VscodeSummaryResponse;
       
       const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+      
+      // BUG-FIX: Filter timeline to only today's entries before trusting totalActiveMs
+      const todayKey = getTodayKey();
+      const filteredTimeline = Array.isArray(summary.timeline) && summary.timeline.length
+        ? summary.timeline
+            .filter((entry) => {
+              const entryDateKey = formatDateKey(new Date(entry.startTime));
+              return entryDateKey === todayKey;
+            })
+            .map((entry) => ({
+              startTime: entry.startTime,
+              endTime: entry.endTime,
+              durationMs: entry.durationMs,
+              domain: 'VS Code (IDE)',
+              category: 'productive' as const
+            }))
+        : [];
+      
+      // Recalculate totalActiveMs from filtered timeline instead of trusting daemon
+      const recalculatedVscodeMs = filteredTimeline.reduce((acc, entry) => acc + entry.durationMs, 0);
       const rawVscodeMs = typeof summary.totalActiveMs === 'number' ? summary.totalActiveMs : 0;
-      if (rawVscodeMs > MAX_DAY_MS) {
-        console.warn(`[Saul] VS Code daemon returned ${(rawVscodeMs / 3600000).toFixed(1)}h, clamping to 24h`);
+      
+      if (recalculatedVscodeMs !== rawVscodeMs && rawVscodeMs > 0) {
+        console.warn(
+          `[Saul] Daemon returned ${(rawVscodeMs / 3600000).toFixed(2)}h but filtered timeline sums to ${(recalculatedVscodeMs / 3600000).toFixed(2)}h. ` +
+          `Using filtered value. Check daemon's vscode-tracking.json for duplicate/old entries.`
+        );
+      }
+      
+      if (recalculatedVscodeMs > MAX_DAY_MS) {
+        console.warn(`[Saul] Recalculated VS Code time ${(recalculatedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`);
         metrics.vscodeActiveMs = MAX_DAY_MS;
       } else {
-        metrics.vscodeActiveMs = rawVscodeMs;
+        metrics.vscodeActiveMs = recalculatedVscodeMs;
       }
       
       metrics.vscodeSessions = typeof summary.sessions === 'number' ? summary.sessions : 0;
@@ -1344,16 +1372,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
         Array.isArray(summary.switchHourly) && summary.switchHourly.length === 24
           ? summary.switchHourly
           : Array.from({ length: 24 }, () => 0);
-      metrics.vscodeTimeline =
-        Array.isArray(summary.timeline) && summary.timeline.length
-          ? summary.timeline.map((entry) => ({
-              startTime: entry.startTime,
-              endTime: entry.endTime,
-              durationMs: entry.durationMs,
-              domain: 'VS Code (IDE)',
-              category: 'productive' as const
-            }))
-          : [];
+      metrics.vscodeTimeline = filteredTimeline;
 
       await persistMetrics();
 
@@ -1616,6 +1635,27 @@ function recordHourlyContribution(
     neutral: 'neutralMs',
     inactive: 'inactiveMs'
   };
+
+  // BUG-FIX: Prevent accumulating future time
+  // Ensure sliceStart + duration never exceeds current time
+  const now = Date.now();
+  const projectedEnd = sliceStart + durationMs;
+  
+  if (projectedEnd > now) {
+    const clippedDuration = Math.max(0, now - sliceStart);
+    if (clippedDuration !== durationMs) {
+      console.warn(
+        `[Saul] BUG-FIX: Clipped future time. Projected end: ${new Date(projectedEnd).toLocaleTimeString()}, ` +
+        `Now: ${new Date(now).toLocaleTimeString()}. ` +
+        `Reduced duration from ${(durationMs / 60000).toFixed(1)}min to ${(clippedDuration / 60000).toFixed(1)}min`
+      );
+    }
+    durationMs = clippedDuration;
+  }
+  
+  if (durationMs <= 0) {
+    return;
+  }
 
   const segments = splitDurationByHour(sliceStart, durationMs);
   for (const segment of segments) {

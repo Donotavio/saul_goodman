@@ -191,7 +191,7 @@ function activate(context) {
           vscode.window.showWarningMessage(localize('vscode_loading_message'));
           return;
         }
-        void prepareDaemonCommand();
+        void prepareDaemonCommand(context);
       }),
       vscode.commands.registerCommand('saulGoodman.testDaemon', () => {
         trackingController?.trackOwnCommand('saulGoodman.testDaemon');
@@ -241,6 +241,18 @@ function activate(context) {
         if (event.affectsConfiguration('saulGoodman')) {
           trackingController?.reloadConfig();
           void updateStatusBar('unknown');
+        }
+      })
+    );
+
+    // BUG-FIX: Re-check daemon health when workspace changes
+    context.subscriptions.push(
+      vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        if (trackingController) {
+          console.log('[Saul] Workspace changed, re-checking daemon health');
+          setTimeout(() => {
+            void trackingController.checkDaemonHealthAndNotify();
+          }, 1000);
         }
       })
     );
@@ -387,6 +399,11 @@ class TrackingController {
       await this.queue.init();
       this.queue.start();
       await this.checkDailyReset();
+      
+      // BUG-FIX: Check daemon health on init to prevent silent failures
+      setTimeout(() => {
+        void this.checkDaemonHealthAndNotify();
+      }, 2000); // Wait 2s for modules to load
       
       // Start combo tracker
       await this.comboTracker.start();
@@ -583,6 +600,37 @@ class TrackingController {
     }
   }
 
+  async checkDaemonHealthAndNotify() {
+    if (!this.config.pairingKey || !apiClient || !fetchWithTimeout) {
+      return; // Skip if not configured or modules not loaded
+    }
+
+    try {
+      const port = parsePort(this.config.apiBase);
+      const healthUrl = `http://127.0.0.1:${port}/health`;
+      const response = await fetchWithTimeout(healthUrl, 3000);
+      
+      if (response.ok) {
+        console.log('[Saul] Daemon is healthy');
+        return; // Daemon is running fine
+      }
+    } catch (error) {
+      // Daemon not responding - notify user
+      console.warn('[Saul] Daemon not responding:', error.message);
+      
+      const choice = await vscode.window.showWarningMessage(
+        localize('daemon_not_running_warning') || 
+        'Saul Goodman daemon is not running. Time tracking will not work until you start it.',
+        localize('daemon_start_now') || 'Start Daemon Now',
+        localize('daemon_ignore') || 'Ignore'
+      );
+
+      if (choice === (localize('daemon_start_now') || 'Start Daemon Now')) {
+        await vscode.commands.executeCommand('saulGoodman.startDaemon');
+      }
+    }
+  }
+
   applyConfig() {
     if (this.config.enableTracking) {
       this.heartbeatTracker.start();
@@ -751,6 +799,7 @@ function readConfig() {
     enableTracking,
     apiBase: config.get('apiBase', 'http://127.0.0.1:3123'),
     pairingKey: config.get('pairingKey', ''),
+    daemonPath: config.get('daemonPath', ''),
     hashFilePaths: config.get('hashFilePaths', true),
     hashProjectNames: config.get('hashProjectNames', false),
     heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
@@ -763,7 +812,7 @@ function readConfig() {
   };
 }
 
-async function prepareDaemonCommand() {
+async function prepareDaemonCommand(context) {
   const config = readConfig();
   const keyInput = await vscode.window.showInputBox({
     title: localize('prepare_key_title'),
@@ -795,13 +844,60 @@ async function prepareDaemonCommand() {
   }
   const port = String(parsedPort);
 
+  // Daemon search strategy (priority order):
+  // 1. Bundled daemon (vscode-extension/daemon/) - DEFAULT
+  // 2. Custom daemonPath config (advanced users)
+  // 3. Workspace saul-daemon/ (dev mode)
+  
+  const configuredPath = config.daemonPath?.trim();
   const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-  const daemonDir = workspace ? path.join(workspace, 'saul-daemon') : null;
-  const daemonIndex = daemonDir ? path.join(daemonDir, 'index.cjs') : null;
-  const daemonExists = Boolean(daemonIndex && fs.existsSync(daemonIndex));
-
-  if (!daemonExists) {
-    vscode.window.showErrorMessage(localize('prepare_missing_daemon'));
+  const extensionPath = context.extensionPath;
+  
+  let daemonDir = null;
+  let daemonIndex = null;
+  let daemonSource = 'unknown';
+  
+  // 1. Try bundled daemon first (DEFAULT)
+  const bundledDaemonDir = path.join(extensionPath, 'daemon');
+  const bundledDaemonIndex = path.join(bundledDaemonDir, 'index.cjs');
+  if (fs.existsSync(bundledDaemonIndex)) {
+    daemonDir = bundledDaemonDir;
+    daemonIndex = bundledDaemonIndex;
+    daemonSource = 'bundled';
+  }
+  
+  // 2. Override with custom path if configured
+  if (configuredPath) {
+    const customDir = path.resolve(configuredPath);
+    const customIndex = path.join(customDir, 'index.cjs');
+    if (fs.existsSync(customIndex)) {
+      daemonDir = customDir;
+      daemonIndex = customIndex;
+      daemonSource = 'custom';
+    }
+  }
+  
+  // 3. Fallback to workspace/saul-daemon (dev mode)
+  if (!daemonIndex && workspace) {
+    const workspaceDir = path.join(workspace, 'saul-daemon');
+    const workspaceIndex = path.join(workspaceDir, 'index.cjs');
+    if (fs.existsSync(workspaceIndex)) {
+      daemonDir = workspaceDir;
+      daemonIndex = workspaceIndex;
+      daemonSource = 'workspace';
+    }
+  }
+  
+  if (!daemonIndex) {
+    const choice = await vscode.window.showErrorMessage(
+      localize('prepare_missing_daemon_improved') || 
+      `Cannot find daemon.\n\nTried:\n- Bundled: ${bundledDaemonIndex}\n- Custom: ${configuredPath || 'not configured'}\n- Workspace: ${workspace ? path.join(workspace, 'saul-daemon') : 'no workspace'}`,
+      localize('prepare_open_settings') || 'Open Settings'
+    );
+    
+    if (choice === (localize('prepare_open_settings') || 'Open Settings')) {
+      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.daemonPath');
+    }
     return;
   }
 
@@ -830,8 +926,11 @@ async function prepareDaemonCommand() {
     if (stderrFd) {
       fs.closeSync(stderrFd);
     }
+    const sourceInfo = daemonSource === 'bundled' ? '(bundled)' : 
+                       daemonSource === 'custom' ? '(custom path)' : 
+                       daemonSource === 'workspace' ? '(workspace)' : '';
     vscode.window.showInformationMessage(
-      localize('prepare_started', { port, key, logFile })
+      `${localize('prepare_started', { port, key, logFile })} ${sourceInfo}`
     );
     void updateStatusBar('ok', port);
     trackingController?.reloadConfig?.();
