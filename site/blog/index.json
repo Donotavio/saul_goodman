@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "A Revolução do Molho de Tomate: Como a IA Pode Salvar Sua Criatividade",
+      "url": "./posts/2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade/",
+      "markdown": "2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade.md",
+      "date": "2026-01-21",
+      "category": "negocios",
+      "tags": [
+        "IA",
+        "criatividade",
+        "produtividade",
+        "marketing",
+        "negócios"
+      ],
+      "excerpt": "Aprenda a usar IA para criar coisas incríveis, ou apenas mais molho de tomate na sua vida.",
+      "title_en": "The Tomato Sauce Revolution: How AI Can Save Your Creativity",
+      "title_es": "La Revolución de la Salsa de Tomate: Cómo la IA Puede Salvar Tu Creatividad",
+      "tone": "incredulo",
+      "source_title": "Here’s how to use AI to fuel creativity instead of destroy it",
+      "source_url": "https://www.fastcompany.com/91473539/how-to-use-ai-to-power-creativity-instead-of-destroy-it",
+      "source_published_at": "2026-01-21T07:00:00",
+      "excerpt_en": "Learn how to use AI to create amazing things, or just add more tomato sauce to your life.",
+      "excerpt_es": "Aprende a usar la IA para crear cosas increíbles, o simplemente más salsa de tomate en tu vida."
+    },
+    {
       "title": "O que um dev sênior, UX e analytics têm em comum? A habilidade de fazer café!",
       "url": "./posts/2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe/",
       "markdown": "2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe.md",

@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Tue, 13 Jan 2026 18:29:39 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 07:00:00 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Revolução do Molho de Tomate: Como a IA Pode Salvar Sua Criatividade</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade/</guid>
+      <pubDate>Wed, 21 Jan 2026 07:00:00 GMT</pubDate>
+      <description><![CDATA[Aprenda a usar IA para criar coisas incríveis, ou apenas mais molho de tomate na sua vida.]]></description>
+    </item>
+
     <item>
       <title>O que um dev sênior, UX e analytics têm em comum? A habilidade de fazer café!</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-19-o-que-um-dev-senior-ux-e-analytics-tem-em-comum-a-habilidade-de-fazer-cafe/</link>
