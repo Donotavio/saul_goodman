@@ -6,6 +6,7 @@ import {
   FairnessSummary,
   HourlyBucket,
   LocalePreference,
+  MlModelStatus,
   TimelineEntry,
   WorkInterval,
   ContextModeValue,
@@ -35,6 +36,12 @@ const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HT
 const suggestionSectionEl = document.getElementById('suggestionSection') as HTMLElement | null;
 const suggestionReportTitleEl = document.getElementById('suggestionReportTitle') as HTMLElement | null;
 const suggestionReportReasonsEl = document.getElementById('suggestionReportReasons') as HTMLUListElement | null;
+const mlSummarySectionEl = document.getElementById('mlSummarySection') as HTMLElement | null;
+const mlStatusBadgeEl = document.getElementById('mlStatusBadge') as HTMLSpanElement | null;
+const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
+const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
+const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
+const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -236,6 +243,7 @@ let toastTimer: number | null = null;
 let latestFairness: FairnessSummary | null = null;
 let vscodeReportReady = false;
 let latestSuggestion: DomainSuggestion | null = null;
+let latestMlModel: MlModelStatus | null = null;
 const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -309,6 +317,7 @@ async function hydrate(): Promise<void> {
     openAiKey = latestSettings?.openAiKey ?? '';
     latestFairness = response.fairness ?? null;
     latestSuggestion = response.activeSuggestion ?? null;
+    latestMlModel = response.mlModel ?? null;
     renderReport(latestMetrics);
     void hydrateVscodeReport();
   } catch (error) {
@@ -1469,6 +1478,7 @@ function renderReport(metrics: DailyMetrics): void {
 
   renderFairnessSummary(latestFairness);
   renderSuggestionSection(latestSuggestion, latestSettings);
+  renderMlSummary(latestMlModel, locale);
   renderContextBreakdown(enriched.contextDurations, enriched.contextIndices);
 
   renderHourlyChart(enriched);
@@ -1550,6 +1560,40 @@ function renderSuggestionSection(
     li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReportReasonsEl.appendChild(li);
   });
+}
+
+function renderMlSummary(status: MlModelStatus | null, localeValue: string): void {
+  if (!mlSummarySectionEl || !mlStatusBadgeEl || !mlUpdatesEl || !mlActiveFeaturesEl || !mlLastUpdatedEl || !mlBiasEl) {
+    return;
+  }
+
+  const formatNumber = (value: number): string => value.toLocaleString(localeValue || 'pt-BR');
+  mlStatusBadgeEl.classList.remove('training', 'cold', 'unavailable');
+
+  if (!status) {
+    mlStatusBadgeEl.textContent = i18n?.t('popup_ml_status_unavailable') ?? 'Unavailable';
+    mlStatusBadgeEl.classList.add('unavailable');
+    mlUpdatesEl.textContent = '--';
+    mlActiveFeaturesEl.textContent = '--';
+    mlLastUpdatedEl.textContent = '--';
+    mlBiasEl.textContent = '--';
+    return;
+  }
+
+  const hasUpdates = status.totalUpdates > 0;
+  mlStatusBadgeEl.textContent = hasUpdates
+    ? i18n?.t('popup_ml_status_training') ?? 'Training'
+    : i18n?.t('popup_ml_status_cold_start') ?? 'Cold start';
+  mlStatusBadgeEl.classList.add(hasUpdates ? 'training' : 'cold');
+
+  mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
+  mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
+  mlBiasEl.textContent = status.bias.toFixed(3);
+  if (status.lastUpdated > 0) {
+    mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
+  } else {
+    mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
+  }
 }
 
 /**
@@ -2923,6 +2967,7 @@ interface MetricsResponse {
   fairness?: FairnessSummary;
   activeSuggestion?: DomainSuggestion | null;
   suggestions?: DomainSuggestion[];
+  mlModel?: MlModelStatus | null;
 }
 
 function formatAiNarrative(text: string): string {

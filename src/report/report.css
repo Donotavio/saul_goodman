@@ -807,6 +807,76 @@ main {
   color: #4c3e32;
 }
 
+.ml-panel {
+  background: #f6f8ff;
+  border-color: #2b2b2b;
+}
+
+.ml-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ml-subtitle {
+  margin: 4px 0 0;
+  color: #3b4760;
+  font-size: 0.9rem;
+}
+
+.ml-status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #e6edff;
+  border: 1px solid #c4d5ff;
+  color: #36507a;
+}
+
+.ml-status.training {
+  background: #e7f7ed;
+  border-color: #7dd68b;
+  color: #1f7a3d;
+}
+
+.ml-status.cold {
+  background: #fff3cd;
+  border-color: #f0d378;
+  color: #a06200;
+}
+
+.ml-status.unavailable {
+  background: #ffeaea;
+  border-color: #ff9d9d;
+  color: #a80000;
+}
+
+.ml-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.ml-grid article {
+  background: #ffffff;
+  border: 1px solid #dbe4ff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ml-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: #5a6a85;
+}
+
 .duo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
