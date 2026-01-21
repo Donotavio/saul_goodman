@@ -1596,11 +1596,9 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     return;
   }
 
-  const hasUpdates = status.totalUpdates > 0;
-  mlStatusBadgeEl.textContent = hasUpdates
-    ? i18n?.t('popup_ml_status_training') ?? 'Training'
-    : i18n?.t('popup_ml_status_cold_start') ?? 'Cold start';
-  mlStatusBadgeEl.classList.add(hasUpdates ? 'training' : 'cold');
+  const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
+  mlStatusBadgeEl.textContent = maturity.label;
+  mlStatusBadgeEl.classList.add(maturity.className);
 
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
   mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
@@ -1613,6 +1611,28 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
   } else {
     mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
   }
+}
+
+function resolveModelMaturity(
+  totalUpdates: number,
+  activeFeatures: number
+): { label: string; className: string } {
+  if (totalUpdates < 5 || activeFeatures < 20) {
+    return {
+      label: i18n?.t('popup_ml_status_cold_start') ?? 'Cold start',
+      className: 'cold'
+    };
+  }
+  if (totalUpdates < 30 || activeFeatures < 100) {
+    return {
+      label: i18n?.t('popup_ml_status_warming') ?? 'Warming',
+      className: 'training'
+    };
+  }
+  return {
+    label: i18n?.t('popup_ml_status_ready') ?? 'Ready',
+    className: 'training'
+  };
 }
 
 /**

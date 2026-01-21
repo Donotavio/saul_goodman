@@ -3344,6 +3344,12 @@
   "popup_ml_status_unavailable": {
     "message": "Indisponível"
   },
+  "popup_ml_status_warming": {
+    "message": "Aquecendo"
+  },
+  "popup_ml_status_ready": {
+    "message": "Pronto"
+  },
   "popup_ml_never": {
     "message": "Nunca"
   }
