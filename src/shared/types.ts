@@ -181,6 +181,7 @@ export interface RuntimeMessageResponse {
   fairness?: FairnessSummary;
   suggestions?: DomainSuggestion[];
   activeSuggestion?: DomainSuggestion | null;
+  mlModel?: MlModelStatus | null;
 }
 
 export type RuntimeMessageType =
@@ -199,6 +200,7 @@ export interface PopupData {
   fairness?: FairnessSummary;
   suggestions?: DomainSuggestion[];
   activeSuggestion?: DomainSuggestion | null;
+  mlModel?: MlModelStatus | null;
 }
 
 export interface ManualOverrideState {
@@ -279,6 +281,18 @@ export interface DomainMetadata {
   scrollDepth?: number;
   interactionCount?: number;
   activeMs?: number;
+}
+
+export interface MlModelStatus {
+  version: number;
+  dimensions: number;
+  totalUpdates: number;
+  lastUpdated: number;
+  activeFeatures: number;
+  learningRate: number;
+  l2: number;
+  minFeatureCount: number;
+  bias: number;
 }
 
 export interface LearningTokenStat {

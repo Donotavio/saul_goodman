@@ -33,7 +33,8 @@ import {
   ContextModeState,
   ContextHistory,
   ManualOverrideState,
-  HolidaysCache
+  HolidaysCache,
+  MlModelStatus
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
@@ -335,6 +336,34 @@ async function updateModelFromFeedback(
   }
 }
 
+async function getMlStatus(): Promise<MlModelStatus | null> {
+  try {
+    const context = await getModelContext();
+    const counts = context.vectorizer.getCounts();
+    let activeFeatures = 0;
+    for (let i = 0; i < counts.length; i += 1) {
+      if (counts[i] >= context.vectorizer.minFeatureCount) {
+        activeFeatures += 1;
+      }
+    }
+
+    return {
+      version: 1,
+      dimensions: MODEL_DIMENSIONS,
+      totalUpdates: context.totalUpdates,
+      lastUpdated: context.lastUpdated,
+      activeFeatures,
+      learningRate: MODEL_LEARNING_RATE,
+      l2: MODEL_L2,
+      minFeatureCount: context.vectorizer.minFeatureCount,
+      bias: context.model.getBias()
+    };
+  } catch (error) {
+    console.warn('Falha ao obter status do modelo ML', error);
+    return null;
+  }
+}
+
 function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
   const host = normalizeDomain(domain);
   if (!host) {
@@ -418,14 +447,19 @@ const messageHandlers: Record<
   'metrics-request': async () => {
     await updateRestoredItems();
     await syncVscodeMetrics(true);
-    const [metrics, settings] = await Promise.all([getMetricsCache(), getSettingsCache()]);
+    const [metrics, settings, mlModel] = await Promise.all([
+      getMetricsCache(),
+      getSettingsCache(),
+      getMlStatus()
+    ]);
     pruneSuggestionCache(settings);
     return {
       metrics,
       settings,
       fairness: getFairnessSummary(),
       suggestions: Array.from(suggestionCache.values(), (entry) => entry.suggestion),
-      activeSuggestion: getActiveSuggestion()
+      activeSuggestion: getActiveSuggestion(),
+      mlModel
     };
   },
   'clear-data': async () => clearTodayData(),

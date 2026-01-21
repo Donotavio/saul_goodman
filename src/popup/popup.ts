@@ -4,6 +4,7 @@ import {
   DomainSuggestion,
   FairnessSummary,
   LocalePreference,
+  MlModelStatus,
   PopupData,
   RuntimeMessageType,
   SupportedLocale,
@@ -80,6 +81,12 @@ const suggestionIgnoreButton = document.getElementById(
 const suggestionManualButton = document.getElementById(
   'suggestionManualButton'
 ) as HTMLButtonElement | null;
+const mlCardEl = document.getElementById('mlCard') as HTMLDivElement | null;
+const mlStatusBadgeEl = document.getElementById('mlStatusBadge') as HTMLSpanElement | null;
+const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
+const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
+const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
+const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -379,6 +386,7 @@ async function hydrate(): Promise<void> {
     renderChart(data.metrics);
     renderFairness(latestFairness);
     renderSuggestionCard(currentSuggestion, data.settings, suggestionList.length, suggestionIndex);
+    renderMlStatus(data.mlModel ?? null, data.settings?.locale ?? 'en-US');
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -499,6 +507,40 @@ function renderSuggestionCard(
     li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReasonsEl.appendChild(li);
   });
+}
+
+function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): void {
+  if (!mlCardEl || !mlStatusBadgeEl || !mlUpdatesEl || !mlActiveFeaturesEl || !mlLastUpdatedEl || !mlBiasEl) {
+    return;
+  }
+
+  const formatNumber = (value: number): string => value.toLocaleString(locale ?? 'en-US');
+  mlStatusBadgeEl.classList.remove('training', 'cold', 'unavailable');
+
+  if (!status) {
+    mlStatusBadgeEl.textContent = i18n?.t('popup_ml_status_unavailable') ?? 'Unavailable';
+    mlStatusBadgeEl.classList.add('unavailable');
+    mlUpdatesEl.textContent = '--';
+    mlActiveFeaturesEl.textContent = '--';
+    mlLastUpdatedEl.textContent = '--';
+    mlBiasEl.textContent = '--';
+    return;
+  }
+
+  const hasUpdates = status.totalUpdates > 0;
+  mlStatusBadgeEl.textContent = hasUpdates
+    ? i18n?.t('popup_ml_status_training') ?? 'Training'
+    : i18n?.t('popup_ml_status_cold_start') ?? 'Cold start';
+  mlStatusBadgeEl.classList.add(hasUpdates ? 'training' : 'cold');
+
+  mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
+  mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
+  mlBiasEl.textContent = status.bias.toFixed(3);
+  if (status.lastUpdated > 0) {
+    mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(locale ?? 'en-US');
+  } else {
+    mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
+  }
 }
 
 async function handleSuggestionDecision(target: 'productive' | 'procrastination'): Promise<void> {
