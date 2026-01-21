@@ -42,6 +42,9 @@ const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
 const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
 const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
 const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
+const mlLearningRateEl = document.getElementById('mlLearningRate') as HTMLElement | null;
+const mlL2El = document.getElementById('mlL2') as HTMLElement | null;
+const mlMinFeatureEl = document.getElementById('mlMinFeature') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -1563,7 +1566,17 @@ function renderSuggestionSection(
 }
 
 function renderMlSummary(status: MlModelStatus | null, localeValue: string): void {
-  if (!mlSummarySectionEl || !mlStatusBadgeEl || !mlUpdatesEl || !mlActiveFeaturesEl || !mlLastUpdatedEl || !mlBiasEl) {
+  if (
+    !mlSummarySectionEl ||
+    !mlStatusBadgeEl ||
+    !mlUpdatesEl ||
+    !mlActiveFeaturesEl ||
+    !mlLastUpdatedEl ||
+    !mlBiasEl ||
+    !mlLearningRateEl ||
+    !mlL2El ||
+    !mlMinFeatureEl
+  ) {
     return;
   }
 
@@ -1577,6 +1590,9 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     mlActiveFeaturesEl.textContent = '--';
     mlLastUpdatedEl.textContent = '--';
     mlBiasEl.textContent = '--';
+    mlLearningRateEl.textContent = '--';
+    mlL2El.textContent = '--';
+    mlMinFeatureEl.textContent = '--';
     return;
   }
 
@@ -1589,6 +1605,9 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
   mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
   mlBiasEl.textContent = status.bias.toFixed(3);
+  mlLearningRateEl.textContent = status.learningRate.toFixed(4);
+  mlL2El.textContent = status.l2.toFixed(6);
+  mlMinFeatureEl.textContent = formatNumber(status.minFeatureCount);
   if (status.lastUpdated > 0) {
     mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
   } else {

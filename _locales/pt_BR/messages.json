@@ -3326,6 +3326,15 @@
   "popup_ml_bias_label": {
     "message": "Viés"
   },
+  "popup_ml_learning_rate_label": {
+    "message": "Learning rate"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Frequência mínima"
+  },
   "popup_ml_status_training": {
     "message": "Treinando"
   },
