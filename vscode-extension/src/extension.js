@@ -606,14 +606,14 @@ class TrackingController {
     }
 
     try {
-      const port = parsePort(this.config.apiBase);
-      const healthUrl = `http://127.0.0.1:${port}/health`;
-      const response = await fetchWithTimeout(healthUrl, 3000);
-      
+      const apiBase = normalizeApiBase(this.config.apiBase?.trim(), inferPortFromApiBase(this.config.apiBase));
+      const response = await fetchWithTimeout(getHealthUrl(apiBase), 3000);
+
       if (response.ok) {
         console.log('[Saul] Daemon is healthy');
         return; // Daemon is running fine
       }
+      throw new Error(`HTTP ${response.status}`);
     } catch (error) {
       // Daemon not responding - notify user
       console.warn('[Saul] Daemon not responding:', error.message);
@@ -843,6 +843,20 @@ async function prepareDaemonCommand(context) {
     return;
   }
   const port = String(parsedPort);
+  const normalizedApiBase = normalizeApiBase(config.apiBase?.trim(), port);
+  if (normalizedApiBase !== (config.apiBase?.trim() || '')) {
+    await vscode.workspace
+      .getConfiguration('saulGoodman')
+      .update('apiBase', normalizedApiBase, vscode.ConfigurationTarget.Global);
+  }
+  if (await isDaemonHealthy(normalizedApiBase, 1200)) {
+    vscode.window.showInformationMessage(
+      localize('prepare_already_running', { origin: normalizedApiBase })
+    );
+    void updateStatusBar('ok', port);
+    trackingController?.reloadConfig?.();
+    return;
+  }
 
   // Daemon search strategy (priority order):
   // 1. Bundled daemon (vscode-extension/daemon/) - DEFAULT
@@ -919,12 +933,46 @@ async function prepareDaemonCommand(context) {
       detached: true,
       stdio: ['ignore', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
     });
+    const spawnError = await new Promise((resolve) => {
+      let settled = false;
+      child.once('error', (error) => {
+        settled = true;
+        resolve(error);
+      });
+      setTimeout(() => {
+        if (!settled) {
+          resolve(null);
+        }
+      }, 250);
+    });
+    if (spawnError) {
+      if (stdoutFd) {
+        fs.closeSync(stdoutFd);
+      }
+      if (stderrFd) {
+        fs.closeSync(stderrFd);
+      }
+      throw spawnError;
+    }
     child.unref();
     if (stdoutFd) {
       fs.closeSync(stdoutFd);
     }
     if (stderrFd) {
       fs.closeSync(stderrFd);
+    }
+    const healthy = await waitForDaemonHealthy(normalizedApiBase, 8, 300);
+    if (!healthy) {
+      vscode.window.showErrorMessage(
+        localize('prepare_start_failed', {
+          error: localize('prepare_start_failed_health', {
+            origin: normalizedApiBase,
+            logFile
+          })
+        })
+      );
+      void updateStatusBar('error');
+      return;
     }
     const sourceInfo = daemonSource === 'bundled' ? '(bundled)' : 
                        daemonSource === 'custom' ? '(custom path)' : 
@@ -950,6 +998,52 @@ function inferPortFromApiBase(apiBase) {
   } catch {
     return '3123';
   }
+}
+
+function normalizeApiBase(apiBase, port) {
+  const fallback = `http://127.0.0.1:${port || 3123}`;
+  try {
+    const url = new URL(apiBase || fallback);
+    if (port) {
+      url.port = String(port);
+    }
+    return url.origin;
+  } catch {
+    return fallback;
+  }
+}
+
+function getHealthUrl(apiBase) {
+  try {
+    return new URL('/health', apiBase).toString();
+  } catch {
+    return 'http://127.0.0.1:3123/health';
+  }
+}
+
+async function isDaemonHealthy(apiBase, timeoutMs) {
+  if (!fetchWithTimeout) {
+    return false;
+  }
+  try {
+    const res = await fetchWithTimeout(getHealthUrl(apiBase), timeoutMs);
+    return Boolean(res?.ok);
+  } catch {
+    return false;
+  }
+}
+
+async function waitForDaemonHealthy(apiBase, attempts, delayMs) {
+  if (!fetchWithTimeout) {
+    return true;
+  }
+  for (let i = 0; i < attempts; i += 1) {
+    if (await isDaemonHealthy(apiBase, 1200)) {
+      return true;
+    }
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+  return false;
 }
 
 async function testDaemonHealth() {
