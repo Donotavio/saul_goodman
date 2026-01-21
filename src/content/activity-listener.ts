@@ -144,6 +144,7 @@ function translateSuggestionReason(reason: string, translator?: TranslatorFn | n
 }
 
 const INACTIVITY_PING_MS = 15000;
+const ACTIVITY_PING_MIN_INTERVAL_MS = 1000;
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const SUGGESTION_TOAST_MESSAGE = 'sg:auto-classification-toast';
@@ -159,6 +160,7 @@ const CRITICAL_QUOTES = [
 const LOGO_URL = chrome.runtime.getURL('src/img/logotipo_saul_goodman.png');
 
 let lastEventTimestamp = Date.now();
+let lastPingSentAt = 0;
 let intervalId: number | null = null;
 let listenersBound = false;
 let overlayElement: HTMLDivElement | null = null;
@@ -210,8 +212,17 @@ window.addEventListener(
 const activityHandler = () => {
   lastEventTimestamp = Date.now();
   interactionCount = Math.min(interactionCount + 1, 1000000);
-  void sendPing();
+  maybeSendPing();
 };
+
+function maybeSendPing(): void {
+  const now = Date.now();
+  if (now - lastPingSentAt < ACTIVITY_PING_MIN_INTERVAL_MS) {
+    return;
+  }
+  lastPingSentAt = now;
+  void sendPing();
+}
 
 function setupActivityTracking(): void {
   if (!listenersBound) {
@@ -228,7 +239,7 @@ function setupActivityTracking(): void {
   }
 
   intervalId = window.setInterval(() => {
-    void sendPing();
+    maybeSendPing();
   }, INACTIVITY_PING_MS);
 }
 

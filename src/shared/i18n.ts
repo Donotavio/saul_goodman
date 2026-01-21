@@ -121,7 +121,7 @@ class I18nImpl implements I18nService {
       // WARNING: Only use data-i18n-html with trusted locale strings from messages.json
       // This uses innerHTML and can execute scripts if content is not sanitized.
       // Never use this attribute with user-provided or external content.
-      el.innerHTML = i18n.t(key);
+      el.innerHTML = sanitizeI18nHtml(i18n.t(key));
     });
     applyDataset(target, this, 'i18nPlaceholder', (el, key, i18n) => {
       (el as HTMLElement).setAttribute('placeholder', i18n.t(key));
@@ -136,6 +136,80 @@ class I18nImpl implements I18nService {
       (el as HTMLElement).setAttribute('data-tooltip', i18n.t(key));
     });
   }
+}
+
+function sanitizeI18nHtml(value: string): string {
+  if (!value) {
+    return '';
+  }
+  if (typeof DOMParser === 'undefined') {
+    return escapeHtml(value);
+  }
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(`<div>${value}</div>`, 'text/html');
+  const container = doc.body.firstElementChild as HTMLElement | null;
+  if (!container) {
+    return '';
+  }
+
+  const allowedTags = new Set(['A', 'B', 'STRONG', 'I', 'EM', 'BR', 'P', 'UL', 'OL', 'LI', 'SPAN']);
+
+  const sanitizeHref = (href: string): string | null => {
+    try {
+      const url = new URL(href, 'https://example.com');
+      if (url.protocol === 'http:' || url.protocol === 'https:' || url.protocol === 'mailto:') {
+        return href;
+      }
+    } catch {
+      // ignore invalid URLs
+    }
+    return null;
+  };
+
+  const sanitizeNode = (node: Node): void => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as Element;
+      const tag = element.tagName.toUpperCase();
+      if (!allowedTags.has(tag)) {
+        const text = doc.createTextNode(element.textContent ?? '');
+        element.replaceWith(text);
+        return;
+      }
+
+      const attrs = Array.from(element.attributes);
+      for (const attr of attrs) {
+        if (tag === 'A' && (attr.name === 'href' || attr.name === 'target' || attr.name === 'rel')) {
+          continue;
+        }
+        element.removeAttribute(attr.name);
+      }
+
+      if (tag === 'A') {
+        const href = element.getAttribute('href') ?? '';
+        const sanitized = sanitizeHref(href);
+        if (sanitized) {
+          element.setAttribute('href', sanitized);
+          const target = element.getAttribute('target');
+          if (target === '_blank') {
+            element.setAttribute('rel', 'noopener noreferrer');
+          } else {
+            element.setAttribute('rel', 'noreferrer');
+          }
+        } else {
+          element.removeAttribute('href');
+        }
+      }
+    }
+
+    Array.from(node.childNodes).forEach((child) => sanitizeNode(child));
+  };
+
+  sanitizeNode(container);
+  return container.innerHTML;
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function applyDataset(

@@ -17,12 +17,14 @@ import { calculateKpis, formatPercentage, CalculatedKpis } from '../shared/metri
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
+import { ensureHostPermission } from '../shared/utils/permissions.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
 
 type ChartInstance = any;
 
+const OPENAI_HOST_PERMISSION = 'https://api.openai.com/*';
 const reportDateEl = document.getElementById('reportDate') as HTMLElement;
 const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
 const heroIndexEl = document.getElementById('heroIndex') as HTMLElement;
@@ -2834,6 +2836,14 @@ async function generateNarrative(): Promise<void> {
     aiNarrativeEl.textContent =
       i18n?.t('report_ai_missing_key') ??
       'Configure your OpenAI key in the options before generating the narrative.';
+    aiRetryButton.classList.remove('hidden');
+    hasAiNarrative = false;
+    return;
+  }
+
+  if (!(await ensureHostPermission(OPENAI_HOST_PERMISSION))) {
+    aiNarrativeEl.textContent =
+      'Permission to access OpenAI was denied. Enable it in the extension permissions.';
     aiRetryButton.classList.remove('hidden');
     hasAiNarrative = false;
     return;

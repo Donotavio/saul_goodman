@@ -1,6 +1,6 @@
 {
   "name": "saul-goodman-extension",
-  "version": "1.21.10",
+  "version": "1.21.25",
   "private": true,
   "type": "module",
   "scripts": {

@@ -390,13 +390,24 @@
               <span data-i18n="options_procrastination_block_toggle_label">
                 Bloquear acesso aos domínios desta lista
               </span>
-              <input type="checkbox" id="blockProcrastination" aria-describedby="blockProcrastinationHint" />
+              <input
+                type="checkbox"
+                id="blockProcrastination"
+                aria-describedby="blockProcrastinationHint blockProcrastinationLimitHint"
+              />
               <small
                 id="blockProcrastinationHint"
                 class="hint"
                 data-i18n="options_procrastination_block_toggle_hint"
               >
                 Ativando, Saul bloqueia a navegação para estes domínios via regras locais do Chrome.
+              </small>
+              <small
+                id="blockProcrastinationLimitHint"
+                class="hint"
+                data-i18n="options_procrastination_block_limit_hint"
+              >
+                Limite técnico: até 500 domínios podem ser bloqueados por vez.
               </small>
             </label>
             <form id="procrastinationForm" class="domain-form">

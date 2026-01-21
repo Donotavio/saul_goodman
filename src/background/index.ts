@@ -55,6 +55,7 @@ import {
 } from '../shared/utils/context-history.js';
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
+import { hasHostPermission, hasLocalhostPermission, isLocalhostUrl } from '../shared/utils/permissions.js';
 import { FeatureExtractor } from '../shared/ml/featureExtractor.js';
 import { FeatureVectorizer, type SparseVector, type FeatureContribution } from '../shared/ml/vectorizer.js';
 import { OnlineLogisticRegression } from '../shared/ml/onlineLogisticRegression.js';
@@ -62,7 +63,7 @@ import { ModelStore, type StoredModelState } from '../shared/ml/modelStore.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
-const TRACKING_PERIOD_MINUTES = 0.25; // 15 seconds
+const TRACKING_PERIOD_MINUTES = 1; // 1 minute (alarms are clamped to >= 1 minute)
 const MAX_TIMELINE_SEGMENTS = 2000;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
@@ -1322,6 +1323,10 @@ async function publishIndexToDaemon(
       return;
     }
     const baseUrl = (settings.vscodeLocalApiUrl?.trim() || 'http://127.0.0.1:3123').trim();
+    if (!isLocalhostUrl(baseUrl) || !(await hasLocalhostPermission())) {
+      await handleVscodeSyncFailure(metrics);
+      return;
+    }
     let endpoint: URL;
     try {
       endpoint = new URL('/v1/tracking/index', baseUrl);
@@ -1526,6 +1531,9 @@ async function syncVscodeMetrics(force = false): Promise<void> {
 
     const baseUrl = settings.vscodeLocalApiUrl?.trim();
     if (!baseUrl) {
+      return;
+    }
+    if (!isLocalhostUrl(baseUrl) || !(await hasLocalhostPermission())) {
       return;
     }
     let summaryUrl: URL;
@@ -2063,10 +2071,13 @@ async function hydrateFairnessState(): Promise<void> {
 
 async function refreshHolidayNeutralState(): Promise<void> {
   const settings = await getSettingsCache();
+  const hasHolidayPermission = settings.holidayAutoEnabled
+    ? await hasHostPermission('https://date.nager.at/*')
+    : false;
   const resolution = await resolveHolidayNeutralState({
     dateKey: getTodayKey(),
     countryCode: settings.holidayCountryCode,
-    enabled: settings.holidayAutoEnabled,
+    enabled: settings.holidayAutoEnabled && hasHolidayPermission,
     cache: holidaysCache
   });
   holidayNeutralToday = resolution.isHoliday;

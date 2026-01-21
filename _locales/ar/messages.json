@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "وعندما أمكن ذلك، يحجب سول الملاحة إلى هذه المواقع باستخدام قواعد الكروم المحلية."
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "حد تقني: يمكن حظر ما يصل إلى 500 نطاق في المرة الواحدة."
+  },
   "options_procrastination_block_toggle_label": {
     "message": "الوصول إلى هذه القائمة"
   },

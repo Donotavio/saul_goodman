@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "जब सक्षम हो गया तो सेल स्थानीय क्रोम नियमों का उपयोग करके इन साइटों को नेविगेशन ब्लॉक करता है।"
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "तकनीकी सीमा: एक बार में अधिकतम 500 डोमेन ब्लॉक किए जा सकते हैं।"
+  },
   "options_procrastination_block_toggle_label": {
     "message": "इस सूची में ब्लॉक एक्सेस"
   },

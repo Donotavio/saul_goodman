@@ -13,6 +13,11 @@ import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../sh
 import { buildLearningTokens } from '../shared/domain-classifier.js';
 import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 import { getTodayKey } from '../shared/utils/time.js';
+import {
+  ensureHostPermission,
+  ensureLocalhostPermission,
+  isLocalhostUrl
+} from '../shared/utils/permissions.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -74,6 +79,7 @@ const installVscodeExtensionButton = document.getElementById(
 const DEFAULT_VSCODE_URL = 'http://127.0.0.1:3123';
 const VSCODE_MARKETPLACE_URL =
   'https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode';
+const NAGER_HOST_PERMISSION = 'https://date.nager.at/*';
 const LOCALE_LABELS: Record<SupportedLocale, string> = {
   'pt-BR': 'Português (Brasil)',
   'en-US': 'English (US)',
@@ -270,11 +276,7 @@ function attachListeners(): void {
     void handleCriticalSettingsChange();
   });
   holidayAutoEnabledEl?.addEventListener('change', () => {
-    if (!currentSettings) {
-      return;
-    }
-    currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
-    void persistSettings('options_status_holiday_saved');
+    void handleHolidayToggle();
   });
   holidayCountryCodeEl?.addEventListener('change', () => {
     handleHolidayCountryChange();
@@ -291,7 +293,8 @@ function setVscodeTestStatus(
     return;
   }
 
-  const message = i18n?.t(messageKey, substitutions) ?? fallback;
+  const translated = i18n?.t(messageKey, substitutions);
+  const message = translated && translated !== messageKey ? translated : fallback;
   vscodeTestStatusEl.textContent = message;
   vscodeTestStatusEl.classList.remove('pending', 'success', 'error');
 
@@ -322,6 +325,24 @@ async function testVscodeConnection(): Promise<void> {
 
   const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || DEFAULT_VSCODE_URL).trim();
   const pairingKey = vscodePairingKeyEl?.value.trim() ?? '';
+
+  if (!isLocalhostUrl(baseUrl)) {
+    setVscodeTestStatus(
+      'options_vscode_test_invalid_url',
+      'URL inválida. Use algo como http://127.0.0.1:3123.',
+      'error'
+    );
+    return;
+  }
+
+  if (!(await ensureLocalhostPermission())) {
+    setVscodeTestStatus(
+      'options_vscode_permission_denied',
+      'Permissão para acessar o SaulDaemon negada.',
+      'error'
+    );
+    return;
+  }
 
   let summaryUrl: URL;
   let healthUrl: URL;
@@ -978,6 +999,23 @@ async function handleLocaleChange(): Promise<void> {
   renderForms();
 }
 
+async function handleHolidayToggle(): Promise<void> {
+  if (!currentSettings || !holidayAutoEnabledEl) {
+    return;
+  }
+  if (holidayAutoEnabledEl.checked) {
+    const granted = await ensureHostPermission(NAGER_HOST_PERMISSION);
+    if (!granted) {
+      holidayAutoEnabledEl.checked = false;
+      currentSettings.holidayAutoEnabled = false;
+      showStatus('Permissão para consultar feriados negada.', true);
+      return;
+    }
+  }
+  currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
+  await persistSettings('options_status_holiday_saved');
+}
+
 function handleHolidayCountryChange(): void {
   if (!currentSettings || !holidayCountryCodeEl) {
     return;
@@ -1032,7 +1070,32 @@ async function handleVscodeSettingsChange(): Promise<void> {
   if (!currentSettings) {
     return;
   }
+  const previousUrl = currentSettings.vscodeLocalApiUrl;
   updateVscodeSettingsFromInputs();
+  const baseUrl = currentSettings.vscodeLocalApiUrl?.trim() ?? '';
+  if (baseUrl && !isLocalhostUrl(baseUrl)) {
+    showStatus(
+      i18n?.t('options_vscode_test_invalid_url') ??
+        'URL inválida. Use algo como http://127.0.0.1:3123.',
+      true
+    );
+    currentSettings.vscodeLocalApiUrl = previousUrl ?? DEFAULT_VSCODE_URL;
+    if (vscodeLocalApiUrlEl) {
+      vscodeLocalApiUrlEl.value = currentSettings.vscodeLocalApiUrl ?? DEFAULT_VSCODE_URL;
+    }
+    currentSettings.vscodeIntegrationEnabled = false;
+    if (vscodeIntegrationEnabledEl) {
+      vscodeIntegrationEnabledEl.checked = false;
+    }
+  } else if (currentSettings.vscodeIntegrationEnabled) {
+    if (!(await ensureLocalhostPermission())) {
+      showStatus('Permissão para acessar o SaulDaemon negada.', true);
+      currentSettings.vscodeIntegrationEnabled = false;
+      if (vscodeIntegrationEnabledEl) {
+        vscodeIntegrationEnabledEl.checked = false;
+      }
+    }
+  }
   await persistSettings('options_status_vscode_saved');
 }
 

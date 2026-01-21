@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "Al activarlo, Saul bloquea la navegación a estos sitios usando reglas locales de Chrome."
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "Límite técnico: se pueden bloquear hasta 500 dominios a la vez."
+  },
   "options_procrastination_block_toggle_label": {
     "message": "Bloquear acceso a esta lista"
   },

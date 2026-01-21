@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
-  "version": "1.21.10",
+  "version": "1.21.25",
   "homepage_url": "https://donotavio.github.io/saul_goodman/",
   "default_locale": "en_US",
   "icons": {
@@ -34,9 +34,10 @@
     "webNavigation",
     "sessions",
     "declarativeNetRequest",
-    "notifications"
+    "notifications",
+    "permissions"
   ],
-  "host_permissions": [
+  "optional_host_permissions": [
     "https://date.nager.at/*",
     "https://api.openai.com/*",
     "http://127.0.0.1/*",

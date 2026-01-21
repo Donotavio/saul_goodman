@@ -95,6 +95,7 @@ saul_goodman/
 ### Integração VS Code + SaulDaemon (opcional)
 
 - Gere a **chave de pareamento** na página de opções (botão “Gerar chave”); ela fica em `ExtensionSettings.vscodePairingKey`.
+- **Aviso:** a chave de pareamento também é armazenada nas configurações do VS Code (`saulGoodman.pairingKey`) e pode ser sincronizada pelo Settings Sync. Trate como segredo local.
 - Suba o **daemon local** (Node puro, CJS):
 
   ```bash

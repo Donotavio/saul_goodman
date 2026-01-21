@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "Ne zaman etkinleştirilirse, Saul bu siteye yerel Chrome kuralları kullanıyor."
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "Teknik limit: aynı anda en fazla 500 alan adı engellenebilir."
+  },
   "options_procrastination_block_toggle_label": {
     "message": "Bu listeye blok erişim"
   },
