@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "جب ساؤل کو یہ سہولت ملی تو اُس نے وہاں کے مقامی نظام کو استعمال کِیا ۔"
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "تکنیکی حد: ایک وقت میں زیادہ سے زیادہ 500 ڈومین بلاک کیے جا سکتے ہیں۔"
+  },
   "options_procrastination_block_toggle_label": {
     "message": "اس فہرست میں بلاک تک رسائی"
   },

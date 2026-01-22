@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "এর ফলে, শৌল ও শৌলের মধ্যে বন্ধুত্ব আরও দৃঢ় হয়েছিল ।"
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "প্রযুক্তিগত সীমা: একবারে সর্বোচ্চ 500টি ডোমেইন ব্লক করা যাবে।"
+  },
   "options_procrastination_block_toggle_label": {
     "message": "এই তালিকা থেকে প্রতিরোধ করা হবে"
   },

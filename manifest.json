@@ -34,8 +34,7 @@
     "webNavigation",
     "sessions",
     "declarativeNetRequest",
-    "notifications",
-    "permissions"
+    "notifications"
   ],
   "optional_host_permissions": [
     "https://date.nager.at/*",

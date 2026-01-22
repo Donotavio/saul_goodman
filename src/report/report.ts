@@ -433,7 +433,11 @@ async function refreshVscodeReport(): Promise<void> {
     }
 
     renderVscodeIndex(latestVscodeDashboard.overview?.index);
-    renderVscodeKpis(latestVscodeDashboard.overview || {}, latestVscodeDashboard.activity || {});
+    renderVscodeKpis(
+      latestVscodeDashboard.overview || {},
+      latestVscodeDashboard.activity || {},
+      telemetry?.data?.focus?.totalFocusMs
+    );
 
     renderVscodeList(vscodeProjectsListEl, latestVscodeDashboard.projects || []);
     renderVscodeList(vscodeLanguagesListEl, latestVscodeDashboard.languages || []);
@@ -667,15 +671,21 @@ function renderVscodeIndex(index: number | undefined): void {
   }
 }
 
-function renderVscodeKpis(overview: any, activity: any): void {
+function renderVscodeKpis(overview: any, activity: any, focusTotalMs?: number): void {
   const totalSeconds = overview.totalSeconds || 0;
+  const totalMs = totalSeconds * 1000;
   const totalSwitches = activity.totalTabSwitches || 0;
 
   const productiveSeconds = Math.round(totalSeconds * 0.8);
   const procrastSeconds = Math.round(totalSeconds * 0.05);
   const inactiveSeconds = totalSeconds - productiveSeconds - procrastSeconds;
 
-  const focusRate = totalSeconds > 0 ? Math.round((productiveSeconds / totalSeconds) * 100) : 0;
+  const hasTelemetryFocus = typeof focusTotalMs === 'number' && totalMs > 0;
+  const telemetryFocusRate = hasTelemetryFocus
+    ? Math.min(100, Math.max(0, Math.round((focusTotalMs / totalMs) * 100)))
+    : null;
+  const focusRate =
+    telemetryFocusRate ?? (totalSeconds > 0 ? Math.round((productiveSeconds / totalSeconds) * 100) : 0);
 
   if (vscodeKpiFocusEl) {
     vscodeKpiFocusEl.textContent = `${focusRate}%`;
@@ -3274,6 +3284,7 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
   warnedHours.clear();
   const allowVscode = Boolean(latestSettings?.vscodeIntegrationEnabled);
   let vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
+  const vscodeSwitches = allowVscode ? metrics.vscodeSwitches ?? 0 : 0;
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
 
   const MAX_DAY_MS = 24 * 60 * 60 * 1000;
@@ -3363,6 +3374,7 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
 
   return {
     ...metrics,
+    tabSwitches: metrics.tabSwitches + vscodeSwitches,
     vscodeActiveMs: vscodeMs,
     vscodeTimeline: allowVscode ? metrics.vscodeTimeline ?? [] : [],
     vscodeSwitchHourly: allowVscode

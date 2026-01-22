@@ -1,7 +1,11 @@
 const LOCALHOST_ORIGINS = ['http://127.0.0.1/*', 'http://localhost/*'];
 
 function canUsePermissionsApi(): boolean {
-  return Boolean(chrome?.permissions?.contains && chrome?.permissions?.request);
+  return (
+    typeof chrome !== 'undefined' &&
+    typeof chrome.permissions?.contains === 'function' &&
+    typeof chrome.permissions?.request === 'function'
+  );
 }
 
 function normalizeOrigins(origins: string | string[]): string[] {

@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "При включении Saul блокирует навигацию на эти сайты, используя локальные правила Chrome."
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "Технический лимит: одновременно можно блокировать до 500 доменов."
+  },
   "options_procrastination_block_toggle_label": {
     "message": "Блокировать доступ к этому списку"
   },

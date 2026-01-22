@@ -1187,6 +1187,9 @@
   "options_procrastination_block_toggle_hint": {
     "message": "一旦启用,索尔会使用当地Chrome规则阻断通往这些网站的导航."
   },
+  "options_procrastination_block_limit_hint": {
+    "message": "技术限制：一次最多可阻止 500 个域名。"
+  },
   "options_procrastination_block_toggle_label": {
     "message": "封锁访问此列表"
   },
