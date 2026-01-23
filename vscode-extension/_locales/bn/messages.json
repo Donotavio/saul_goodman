@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "শ..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "এর ফলে, শৌল ও শৌলের মধ্যে বন্ধুত্ব আরও দৃঢ় হয়েছিল ।"
-  },
   "options_procrastination_block_limit_hint": {
     "message": "প্রযুক্তিগত সীমা: একবারে সর্বোচ্চ 500টি ডোমেইন ব্লক করা যাবে।"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "এর ফলে, শৌল ও শৌলের মধ্যে বন্ধুত্ব আরও দৃঢ় হয়েছিল ।"
   },
   "options_procrastination_block_toggle_label": {
     "message": "এই তালিকা থেকে প্রতিরোধ করা হবে"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "লোড করা হচ্ছে..."
+  },
+  "popup_ml_bias_label": {
+    "message": "বায়াস"
+  },
+  "popup_ml_features_label": {
+    "message": "সক্রিয় বৈশিষ্ট্য"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "শেষ প্রশিক্ষণ"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "শিক্ষার হার"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "ন্যূনতম ফ্রিকোয়েন্সি"
+  },
+  "popup_ml_never": {
+    "message": "কখনোই না"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "গরম হচ্ছে"
+  },
+  "popup_ml_status_ready": {
+    "message": "প্রস্তুত"
+  },
+  "popup_ml_status_training": {
+    "message": "প্রশিক্ষণ চলছে"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "অপ্রাপ্য"
+  },
+  "popup_ml_status_warming": {
+    "message": "গরম হচ্ছে"
+  },
+  "popup_ml_subtitle": {
+    "message": "স্থানীয় প্রশিক্ষণ"
+  },
+  "popup_ml_title": {
+    "message": "এমএল মডেল"
+  },
+  "popup_ml_updates_label": {
+    "message": "আপডেট"
   },
   "popup_options_button": {
     "message": "কনফিগার"

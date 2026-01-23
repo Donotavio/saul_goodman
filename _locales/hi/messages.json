@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "जब सक्षम हो गया तो सेल स्थानीय क्रोम नियमों का उपयोग करके इन साइटों को नेविगेशन ब्लॉक करता है।"
-  },
   "options_procrastination_block_limit_hint": {
     "message": "तकनीकी सीमा: एक बार में अधिकतम 500 डोमेन ब्लॉक किए जा सकते हैं।"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "जब सक्षम हो गया तो सेल स्थानीय क्रोम नियमों का उपयोग करके इन साइटों को नेविगेशन ब्लॉक करता है।"
   },
   "options_procrastination_block_toggle_label": {
     "message": "इस सूची में ब्लॉक एक्सेस"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "लोड ..."
+  },
+  "popup_ml_bias_label": {
+    "message": "पूर्वाग्रह"
+  },
+  "popup_ml_features_label": {
+    "message": "सक्रिय विशेषताएँ"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "अंतिम प्रशिक्षण"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "सीखने की दर"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "न्यूनतम आवृत्ति"
+  },
+  "popup_ml_never": {
+    "message": "कभी नहीं"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "गर्म करना"
+  },
+  "popup_ml_status_ready": {
+    "message": "तैयार"
+  },
+  "popup_ml_status_training": {
+    "message": "प्रशिक्षण"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "अवस्थित नहीं"
+  },
+  "popup_ml_status_warming": {
+    "message": "गर्म करना"
+  },
+  "popup_ml_subtitle": {
+    "message": "स्थानीय प्रशिक्षण"
+  },
+  "popup_ml_title": {
+    "message": "एमएल मॉडल"
+  },
+  "popup_ml_updates_label": {
+    "message": "अद्यतन"
   },
   "popup_options_button": {
     "message": "कॉन्फ़िगर करना"

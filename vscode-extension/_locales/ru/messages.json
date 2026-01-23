@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "Ск-"
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "При включении Saul блокирует навигацию на эти сайты, используя локальные правила Chrome."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Технический лимит: одновременно можно блокировать до 500 доменов."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "При включении Saul блокирует навигацию на эти сайты, используя локальные правила Chrome."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Блокировать доступ к этому списку"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Загрузка..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Предвзятость"
+  },
+  "popup_ml_features_label": {
+    "message": "Активные функции"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Последнее обучение"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Скорость обучения"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Минимальная частота"
+  },
+  "popup_ml_never": {
+    "message": "Никогда"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Разогрев"
+  },
+  "popup_ml_status_ready": {
+    "message": "Готово"
+  },
+  "popup_ml_status_training": {
+    "message": "Обучение"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Недоступно"
+  },
+  "popup_ml_status_warming": {
+    "message": "Разогрев"
+  },
+  "popup_ml_subtitle": {
+    "message": "Локальное обучение"
+  },
+  "popup_ml_title": {
+    "message": "Модель ML"
+  },
+  "popup_ml_updates_label": {
+    "message": "Обновления"
   },
   "popup_options_button": {
     "message": "конфигурировать"

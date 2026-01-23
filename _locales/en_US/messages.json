@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "When enabled, Saul blocks navigation to these sites using local Chrome rules."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Technical limit: up to 500 domains can be blocked at a time."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "When enabled, Saul blocks navigation to these sites using local Chrome rules."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Block access to this list"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Loading..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Bias"
+  },
+  "popup_ml_features_label": {
+    "message": "Active features"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Last training"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Learning rate"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Min frequency"
+  },
+  "popup_ml_never": {
+    "message": "Never"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Cold start"
+  },
+  "popup_ml_status_ready": {
+    "message": "Ready"
+  },
+  "popup_ml_status_training": {
+    "message": "Training"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Unavailable"
+  },
+  "popup_ml_status_warming": {
+    "message": "Warming"
+  },
+  "popup_ml_subtitle": {
+    "message": "Local training"
+  },
+  "popup_ml_title": {
+    "message": "ML Model"
+  },
+  "popup_ml_updates_label": {
+    "message": "Updates"
   },
   "popup_options_button": {
     "message": "Configure"
@@ -3310,50 +3355,5 @@
   },
   "vscodeTitle": {
     "message": "Turn your editor into a productivity asset."
-  },
-  "popup_ml_title": {
-    "message": "ML Model"
-  },
-  "popup_ml_subtitle": {
-    "message": "Local training"
-  },
-  "popup_ml_updates_label": {
-    "message": "Updates"
-  },
-  "popup_ml_features_label": {
-    "message": "Active features"
-  },
-  "popup_ml_last_updated_label": {
-    "message": "Last training"
-  },
-  "popup_ml_bias_label": {
-    "message": "Bias"
-  },
-  "popup_ml_learning_rate_label": {
-    "message": "Learning rate"
-  },
-  "popup_ml_l2_label": {
-    "message": "L2"
-  },
-  "popup_ml_min_feature_label": {
-    "message": "Min frequency"
-  },
-  "popup_ml_status_training": {
-    "message": "Training"
-  },
-  "popup_ml_status_cold_start": {
-    "message": "Cold start"
-  },
-  "popup_ml_status_unavailable": {
-    "message": "Unavailable"
-  },
-  "popup_ml_status_warming": {
-    "message": "Warming"
-  },
-  "popup_ml_status_ready": {
-    "message": "Ready"
-  },
-  "popup_ml_never": {
-    "message": "Never"
   }
 }

@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "Al activarlo, Saul bloquea la navegación a estos sitios usando reglas locales de Chrome."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Límite técnico: se pueden bloquear hasta 500 dominios a la vez."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Al activarlo, Saul bloquea la navegación a estos sitios usando reglas locales de Chrome."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Bloquear acceso a esta lista"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Cargando..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Sesgo"
+  },
+  "popup_ml_features_label": {
+    "message": "Características activas"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Última capacitación"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Tasa de aprendizaje"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Frecuencia mínima"
+  },
+  "popup_ml_never": {
+    "message": "Nunca"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Calentando"
+  },
+  "popup_ml_status_ready": {
+    "message": "Listo"
+  },
+  "popup_ml_status_training": {
+    "message": "Entrenando"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "No disponible"
+  },
+  "popup_ml_status_warming": {
+    "message": "Calentando"
+  },
+  "popup_ml_subtitle": {
+    "message": "Entrenamiento local"
+  },
+  "popup_ml_title": {
+    "message": "Modelo ML"
+  },
+  "popup_ml_updates_label": {
+    "message": "Actualizaciones"
   },
   "popup_options_button": {
     "message": "Configurar"
@@ -2595,13 +2640,13 @@
     "message": "Ramas de Git"
   },
   "report_vscode_combo_timeline": {
-    "message": "Linha do Tempo de Combos"
+    "message": "Línea de Tiempo de Combos"
   },
   "report_vscode_combo_timeline_empty": {
-    "message": "Nenhum combo registrado hoje."
+    "message": "Ningún combo registrado hoy."
   },
   "report_vscode_combo_timeline_subtitle": {
-    "message": "Progressão de pomodoros ao longo do dia"
+    "message": "Progresión de pomodoros a lo largo del día"
   },
   "report_vscode_commit_activity": {
     "message": "Actividad de Commits"

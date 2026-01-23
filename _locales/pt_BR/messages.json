@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "Quando ativo, o Saul bloqueia as navegações para esses sites usando regras locais do Chrome."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Limite técnico: até 500 domínios podem ser bloqueados por vez."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Quando ativo, o Saul bloqueia as navegações para esses sites usando regras locais do Chrome."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Bloquear acesso aos domínios desta lista"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Carregando..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Viés"
+  },
+  "popup_ml_features_label": {
+    "message": "Features ativas"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Último treino"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Learning rate"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Frequência mínima"
+  },
+  "popup_ml_never": {
+    "message": "Nunca"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Aquecendo"
+  },
+  "popup_ml_status_ready": {
+    "message": "Pronto"
+  },
+  "popup_ml_status_training": {
+    "message": "Treinando"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Indisponível"
+  },
+  "popup_ml_status_warming": {
+    "message": "Aquecendo"
+  },
+  "popup_ml_subtitle": {
+    "message": "Treinamento local"
+  },
+  "popup_ml_title": {
+    "message": "Modelo ML"
+  },
+  "popup_ml_updates_label": {
+    "message": "Atualizações"
   },
   "popup_options_button": {
     "message": "Configurar"
@@ -3310,50 +3355,5 @@
   },
   "vscodeTitle": {
     "message": "Transforme seu editor em ativo de produtividade."
-  },
-  "popup_ml_title": {
-    "message": "Modelo ML"
-  },
-  "popup_ml_subtitle": {
-    "message": "Treinamento local"
-  },
-  "popup_ml_updates_label": {
-    "message": "Atualizações"
-  },
-  "popup_ml_features_label": {
-    "message": "Features ativas"
-  },
-  "popup_ml_last_updated_label": {
-    "message": "Último treino"
-  },
-  "popup_ml_bias_label": {
-    "message": "Viés"
-  },
-  "popup_ml_learning_rate_label": {
-    "message": "Learning rate"
-  },
-  "popup_ml_l2_label": {
-    "message": "L2"
-  },
-  "popup_ml_min_feature_label": {
-    "message": "Frequência mínima"
-  },
-  "popup_ml_status_training": {
-    "message": "Treinando"
-  },
-  "popup_ml_status_cold_start": {
-    "message": "Aquecendo"
-  },
-  "popup_ml_status_unavailable": {
-    "message": "Indisponível"
-  },
-  "popup_ml_status_warming": {
-    "message": "Aquecendo"
-  },
-  "popup_ml_status_ready": {
-    "message": "Pronto"
-  },
-  "popup_ml_never": {
-    "message": "Nunca"
   }
 }
