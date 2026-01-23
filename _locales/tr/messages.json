@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "Yerel SaulDaemon için temel URL."
   },
+  "config_daemon_path_description": {
+    "message": "Yerel SaulDaemon'ın mutlak yolu (isteğe bağlı)."
+  },
   "config_enable_reports_description": {
     "message": "VS Code içinde Saul raporunu gösterir."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "Verilerin otomatik olarak silinmeden önce yerel telemetri verilerini saklayacağı gün sayısı."
+  },
+  "daemon_ignore": {
+    "message": "Yoksay"
+  },
+  "daemon_not_running_warning": {
+    "message": "SaulDaemon çalışmıyor. Zaman takibi, onu başlatana kadar çalışmayacak."
+  },
+  "daemon_start_now": {
+    "message": "Daemon'ı şimdi başlat"
   },
   "demoCta": {
     "message": "Tam demoyu görüntüle"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "Portekiz (Brazil)"
   },
+  "options_logo_alt": {
+    "message": "Saul Goodman Logosu"
+  },
   "options_openai_hint": {
     "message": "Raporda anlatılar oluşturmak için yerel olarak mağaza açtı."
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "Manuel olarak sınıflandır"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "Tavsiyeleri gez"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "Sonraki tavsiye"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "Önceki tavsiye"
+  },
   "popup_suggestion_title": {
     "message": "Otomatik Öneri"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "Post bulunamadı."
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon zaten {origin} üzerinde aktif."
+  },
   "prepare_key_prompt": {
     "message": "Chrome uzantısında ayarlanan aynı anahtarı kullanın."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "saul-daemon/index.cjs klasörü bulunamadı. Daemon'ı başlatmadan önce kök deposunu açın."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "SaulDaemon bulunamadı. Ayarlanan yolu kontrol edin veya yerleşik daemon'ı kullanın."
+  },
+  "prepare_open_settings": {
+    "message": "Ayarları aç"
+  },
+  "prepare_port_invalid": {
+    "message": "Geçersiz port."
+  },
   "prepare_port_prompt": {
     "message": "Daemon'ın yerel HTTP portu."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "SaulDaemon başlatılamadı: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "Daemon {origin} üzerinde yanıt vermedi. {logFile} dosyasını kontrol edin."
   },
   "prepare_started": {
     "message": "SaulDaemon arka planda başlatıldı (port {port}, anahtar {key}). Günlükler {logFile} içinde."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "Aktivite"
   },
+  "report_vscode_activity_commits": {
+    "message": "Commitler"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "Değiştirilen dosyalar"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "Eklenen satırlar"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "Silinen satırlar"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "Sekme geçişleri"
+  },
   "report_vscode_branches": {
     "message": "Git Dalları"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "Kombinasyon seviyesi"
   },
   "report_vscode_combo_timeline": {
     "message": "Kombinasyon Zaman Çizelgesi"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "Ayarları aç"
   },
+  "report_vscode_editor_empty": {
+    "message": "Mevcut editör verisi yok."
+  },
   "report_vscode_editor_info": {
     "message": "Editör Bilgisi"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "Uzantılar"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "Tema"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "VS Code sürümü"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "Workspace türü"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "boş"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "bilinmiyor"
   },
   "report_vscode_error": {
     "message": "VS Code raporları yüklenemedi."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "Filtreler"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "Odak yoğunluğu"
   },
   "report_vscode_focus_patterns": {
     "message": "Odak Desenleri"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "Gösterilecek proje verisi yok."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "Mevcut kod eylemleri"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "Uygulanan düzenlemeler"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "Yeniden adlandırılan dosyalar"
   },
   "report_vscode_refactoring_activity": {
     "message": "Refaktörleme Aktivitesi"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "En Çok Hata Ayıklanan Dosyalar"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BP"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "Hata ayıklanan dosya yok."
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} oturum"
+  },
   "report_vscode_top_error_files": {
     "message": "En Çok Hata İçeren Dosyalar"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "Kayıtlı hata yok. 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "En Çok Kullanılan Uzantılar"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} komut"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "Kayıtlı uzantı yok."
+  },
   "report_vscode_workspaces": {
     "message": "Çalışma Alanları"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "İzlenen workspace yok."
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} dosya"
   },
   "rssCta": {
     "message": "RSS ile abone olun"

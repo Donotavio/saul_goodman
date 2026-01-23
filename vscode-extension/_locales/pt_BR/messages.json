@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "URL base do SaulDaemon local."
   },
+  "config_daemon_path_description": {
+    "message": "Caminho absoluto do SaulDaemon local (opcional)."
+  },
   "config_enable_reports_description": {
     "message": "Exibe o relatório do Saul dentro do VS Code."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "Número de dias para reter dados de telemetria local antes de apagar automaticamente."
+  },
+  "daemon_ignore": {
+    "message": "Ignorar"
+  },
+  "daemon_not_running_warning": {
+    "message": "O SaulDaemon não está rodando. O rastreamento de tempo não vai funcionar até você iniciá-lo."
+  },
+  "daemon_start_now": {
+    "message": "Iniciar daemon agora"
   },
   "demoCta": {
     "message": "View full demo"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "Português (Brasil)"
   },
+  "options_logo_alt": {
+    "message": "Logotipo Saul Goodman"
+  },
   "options_openai_hint": {
     "message": "Armazenada localmente para gerar narrativas no relatório."
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "Classificar manualmente"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "Navegar recomendações"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "Próxima recomendação"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "Recomendação anterior"
+  },
   "popup_suggestion_title": {
     "message": "Sugestão automática"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "Post não encontrado."
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon já está ativo em {origin}."
+  },
   "prepare_key_prompt": {
     "message": "Use a mesma chave configurada na extensao Chrome."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "Pasta saul-daemon/index.cjs nao encontrada. Abra o repositorio raiz antes de iniciar o daemon."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "Não foi possível localizar o SaulDaemon. Verifique o caminho configurado ou use o daemon embutido."
+  },
+  "prepare_open_settings": {
+    "message": "Abrir configurações"
+  },
+  "prepare_port_invalid": {
+    "message": "Porta inválida."
+  },
   "prepare_port_prompt": {
     "message": "Porta HTTP local do daemon."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "Falha ao iniciar SaulDaemon: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "Daemon não respondeu em {origin}. Verifique o log em {logFile}."
   },
   "prepare_started": {
     "message": "SaulDaemon iniciado em background (porta {port}, key {key}). Logs em {logFile}."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "Atividade"
   },
+  "report_vscode_activity_commits": {
+    "message": "Commits"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "Arquivos alterados"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "Linhas adicionadas"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "Linhas removidas"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "Trocas de abas"
+  },
   "report_vscode_branches": {
     "message": "Git Branches"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "Nível do combo"
   },
   "report_vscode_combo_timeline": {
     "message": "Linha do Tempo de Combos"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "Abrir configurações"
   },
+  "report_vscode_editor_empty": {
+    "message": "Nenhum dado do editor disponível."
+  },
   "report_vscode_editor_info": {
     "message": "Info do Editor"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "Extensões"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "Tema"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "Versão do VS Code"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "Tipo de workspace"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "vazio"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "desconhecido"
   },
   "report_vscode_error": {
     "message": "Nao foi possivel carregar os relatorios do VS Code."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "Filtros"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "Intensidade de foco"
   },
   "report_vscode_focus_patterns": {
     "message": "Padrões de Foco"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "Nenhum dado de projeto para exibir."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "Ações de código disponíveis"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "Edições aplicadas"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "Arquivos renomeados"
   },
   "report_vscode_refactoring_activity": {
     "message": "Atividade de Refatoração"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "Arquivos Mais Debugados"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "Nenhum arquivo debugado."
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} sessões"
+  },
   "report_vscode_top_error_files": {
     "message": "Arquivos com Mais Erros"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "Nenhum erro registrado. 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "Top Extensões Usadas"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} comandos"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "Nenhuma extensão registrada."
+  },
   "report_vscode_workspaces": {
     "message": "Workspaces"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "Nenhum workspace monitorado."
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} arquivos"
   },
   "rssCta": {
     "message": "Assinar RSS"

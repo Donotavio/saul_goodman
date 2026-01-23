@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "Base URL of the local SaulDaemon."
   },
+  "config_daemon_path_description": {
+    "message": "Absolute path of the local SaulDaemon (optional)."
+  },
   "config_enable_reports_description": {
     "message": "Displays Saul's report inside VS Code."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "Number of days to retain local telemetry data before automatically deleting."
+  },
+  "daemon_ignore": {
+    "message": "Ignore"
+  },
+  "daemon_not_running_warning": {
+    "message": "The SaulDaemon is not running. Time tracking will not work until you start it."
+  },
+  "daemon_start_now": {
+    "message": "Start daemon now"
   },
   "demoCta": {
     "message": "View full demo"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "Portuguese (Brazil)"
   },
+  "options_logo_alt": {
+    "message": "Saul Goodman Logo"
+  },
   "options_openai_hint": {
     "message": "Stored locally to generate narratives in the report."
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "Classify manually"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "Navigate recommendations"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "Next recommendation"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "Previous recommendation"
+  },
   "popup_suggestion_title": {
     "message": "Auto suggestion"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "Post not found."
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon is already active at {origin}."
+  },
   "prepare_key_prompt": {
     "message": "Enter the same key configured in the Chrome extension."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "Cannot find saul-daemon/index.cjs. Open the repository root before starting the daemon."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "Could not locate the SaulDaemon. Check the configured path or use the embedded daemon."
+  },
+  "prepare_open_settings": {
+    "message": "Open settings"
+  },
+  "prepare_port_invalid": {
+    "message": "Invalid port."
+  },
   "prepare_port_prompt": {
     "message": "Local HTTP port of the daemon."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "Failed to start SaulDaemon: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "Daemon did not respond at {origin}. Check the log at {logFile}."
   },
   "prepare_started": {
     "message": "SaulDaemon started in background (port {port}, key {key}). Logs saved at {logFile}."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "Activity"
   },
+  "report_vscode_activity_commits": {
+    "message": "Commits"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "Files changed"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "Lines added"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "Lines removed"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "Tab switches"
+  },
   "report_vscode_branches": {
     "message": "Git Branches"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "Combo level"
   },
   "report_vscode_combo_timeline": {
     "message": "Combo Timeline"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "Open options"
   },
+  "report_vscode_editor_empty": {
+    "message": "No editor data available."
+  },
   "report_vscode_editor_info": {
     "message": "Editor Info"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "Extensions"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "Theme"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "VS Code version"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "Workspace type"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "empty"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "unknown"
   },
   "report_vscode_error": {
     "message": "Unable to load VS Code reports."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "Filters"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "Focus intensity"
   },
   "report_vscode_focus_patterns": {
     "message": "Focus Patterns"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "No project data to display."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "Available code actions"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "Edits applied"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "Files renamed"
   },
   "report_vscode_refactoring_activity": {
     "message": "Refactoring Activity"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "Most Debugged Files"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "No debugged files."
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} sessions"
+  },
   "report_vscode_top_error_files": {
     "message": "Files with Most Errors"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "No errors recorded. 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "Top Extensions Used"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} commands"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "No extensions recorded."
+  },
   "report_vscode_workspaces": {
     "message": "Workspaces"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "No workspaces monitored."
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} files"
   },
   "rssCta": {
     "message": "Subscribe via RSS"

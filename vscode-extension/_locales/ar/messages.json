@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "عنوان URL الأساسي لسول دايمون المحلي."
   },
+  "config_daemon_path_description": {
+    "message": "المسار المطلق لـ SaulDaemon المحلي (اختياري)."
+  },
   "config_enable_reports_description": {
     "message": "يعرض تقرير سول داخل VS Code."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "عدد الأيام للاحتفاظ ببيانات القياس المحلية قبل الحذف التلقائي."
+  },
+  "daemon_ignore": {
+    "message": "تجاهل"
+  },
+  "daemon_not_running_warning": {
+    "message": "لا يعمل SaulDaemon. تتبع الوقت لن يعمل حتى تقوم بتشغيله."
+  },
+  "daemon_start_now": {
+    "message": "تشغيل daemon الآن"
   },
   "demoCta": {
     "message": "صورة كاملة"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "البرتغال (البرازيل)"
   },
+  "options_logo_alt": {
+    "message": "شعار Saul Goodman"
+  },
   "options_openai_hint": {
     "message": "مخزن محليا لتوليد سرد في التقرير."
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "تصنيف يدوي"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "تصفح التوصيات"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "التوصية التالية"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "التوصية السابقة"
+  },
   "popup_suggestion_title": {
     "message": "اقتراح تلقائي"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "لم يتم العثور على الوظيفة"
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon نشط بالفعل في {origin}."
+  },
   "prepare_key_prompt": {
     "message": "استخدم نفس المفتاح الذي تم تكوينه في ملحق Chrome."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "المجلد saul-daemon/index.cjs غير موجود. افتح المستودع الجذري قبل بدء الدايمون."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "تعذر العثور على SaulDaemon. تحقق من المسار المكون أو استخدم daemon المدمج."
+  },
+  "prepare_open_settings": {
+    "message": "فتح الإعدادات"
+  },
+  "prepare_port_invalid": {
+    "message": "منفذ غير صالح."
+  },
   "prepare_port_prompt": {
     "message": "منفذ HTTP المحلي للدايمون."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "فشل في بدء سول دايمون: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "لم يستجب daemon في {origin}. تحقق من السجل في {logFile}."
   },
   "prepare_started": {
     "message": "تم بدء سول دايمون في الخلفية (المنفذ {port}، المفتاح {key}). السجلات في {logFile}."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "نشاط"
   },
+  "report_vscode_activity_commits": {
+    "message": "التعديلات"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "الملفات المعدلة"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "الأسطر المضافة"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "الأسطر المحذوفة"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "تبديلات التبويبات"
+  },
   "report_vscode_branches": {
     "message": "فروع Git"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "مستوى الكومبو"
   },
   "report_vscode_combo_timeline": {
     "message": "خط الزمن للتركيبات"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "فتح الخيارات"
   },
+  "report_vscode_editor_empty": {
+    "message": "لا توجد بيانات محرر متاحة."
+  },
   "report_vscode_editor_info": {
     "message": "معلومات المحرر"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "الإضافات"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "الثيم"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "إصدار VS Code"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "نوع مساحة العمل"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "فارغ"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "غير معروف"
   },
   "report_vscode_error": {
     "message": "لم نتمكن من تحميل تقارير VS Code."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "الفلاتر"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "شدة التركيز"
   },
   "report_vscode_focus_patterns": {
     "message": "أنماط التركيز"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "لا توجد بيانات مشروع لعرضها."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "إجراءات الكود المتاحة"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "التعديلات المطبقة"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "الملفات المعاد تسميتها"
   },
   "report_vscode_refactoring_activity": {
     "message": "نشاط إعادة الهيكلة"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "الملفات الأكثر تصحيحًا"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "لا توجد ملفات تم تصحيحها."
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} جلسات"
+  },
   "report_vscode_top_error_files": {
     "message": "الملفات الأكثر أخطاءً"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "لا توجد أخطاء مسجلة. 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "أفضل الملحقات المستخدمة"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} أوامر"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "لا توجد إضافات مسجلة."
+  },
   "report_vscode_workspaces": {
     "message": "مساحات العمل"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "لا توجد مساحة عمل مراقبة."
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} ملفات"
   },
   "rssCta": {
     "message": "الاشتراك عبر RSS"

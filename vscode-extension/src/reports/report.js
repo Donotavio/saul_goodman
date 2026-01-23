@@ -35,7 +35,9 @@
 
     if (disabledTitle) disabledTitle.textContent = i18n.disabled || 'Reports disabled';
     if (disabledDetail) disabledDetail.textContent = i18n.disabledDetail || 'Enable settings to view data.';
-    if (filtersTitle) filtersTitle.textContent = 'Filters';
+    if (filtersTitle) {
+      filtersTitle.textContent = i18n.report_vscode_filters_title || 'Filters';
+    }
     if (labelProject) labelProject.textContent = i18n.filterProject || 'Project';
     if (labelLanguage) labelLanguage.textContent = i18n.filterLanguage || 'Language';
     if (labelMachine) labelMachine.textContent = i18n.filterMachine || 'Machine';
@@ -245,6 +247,16 @@
     return `${minutes}m`;
   }
 
+  function formatWithParams(template, params) {
+    if (!template) return '';
+    return template.replace(/\{(\w+)\}/g, (match, key) => {
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
+        return String(params[key]);
+      }
+      return match;
+    });
+  }
+
   function renderActivity(activity, git) {
     const list = document.getElementById('activityList');
     if (!list) return;
@@ -252,17 +264,39 @@
     list.innerHTML = '';
     
     const items = [
-      { label: 'Tab Switches', value: activity.totalTabSwitches || 0 },
-      { label: 'Commits', value: git.totalCommits || 0 },
-      { label: 'Files Changed', value: git.totalFilesChanged || 0 },
-      { label: 'Lines Added', value: git.totalLinesAdded || 0, color: '#22c55e' },
-      { label: 'Lines Deleted', value: git.totalLinesDeleted || 0, color: '#ef4444' }
+      {
+        key: 'report_vscode_activity_tab_switches',
+        fallback: 'Tab Switches',
+        value: activity.totalTabSwitches || 0
+      },
+      {
+        key: 'report_vscode_activity_commits',
+        fallback: 'Commits',
+        value: git.totalCommits || 0
+      },
+      {
+        key: 'report_vscode_activity_files_changed',
+        fallback: 'Files Changed',
+        value: git.totalFilesChanged || 0
+      },
+      {
+        key: 'report_vscode_activity_lines_added',
+        fallback: 'Lines Added',
+        value: git.totalLinesAdded || 0,
+        color: '#22c55e'
+      },
+      {
+        key: 'report_vscode_activity_lines_deleted',
+        fallback: 'Lines Deleted',
+        value: git.totalLinesDeleted || 0,
+        color: '#ef4444'
+      }
     ];
 
     items.forEach(item => {
       const li = document.createElement('li');
       const labelEl = document.createElement('span');
-      labelEl.textContent = String(item.label);
+      labelEl.textContent = i18n[item.key] || item.fallback;
       const valueEl = document.createElement('span');
       valueEl.textContent = String(item.value);
       if (item.color) {
@@ -279,18 +313,20 @@
     if (!container) return;
 
     if (!editor) {
-      container.textContent = 'No editor metadata available';
+      container.textContent = i18n.report_vscode_editor_empty || 'No editor metadata available';
       return;
     }
 
     container.innerHTML = '';
+    const unknownLabel = i18n.report_vscode_editor_value_unknown || 'unknown';
+    const emptyLabel = i18n.report_vscode_editor_value_empty || 'empty';
     const ul = document.createElement('ul');
     ul.className = 'data-list';
     const rows = [
-      ['VS Code Version', editor.vscodeVersion || 'unknown'],
-      ['Extensions', editor.extensionsCount || 0],
-      ['Theme', editor.themeKind || 'unknown'],
-      ['Workspace Type', editor.workspaceType || 'empty']
+      [i18n.report_vscode_editor_label_version || 'VS Code Version', editor.vscodeVersion || unknownLabel],
+      [i18n.report_vscode_editor_label_extensions || 'Extensions', editor.extensionsCount ?? 0],
+      [i18n.report_vscode_editor_label_theme || 'Theme', editor.themeKind || unknownLabel],
+      [i18n.report_vscode_editor_label_workspace || 'Workspace Type', editor.workspaceType || emptyLabel]
     ];
     rows.forEach(([label, value]) => {
       const li = document.createElement('li');
@@ -313,7 +349,7 @@
     
     if (!workspaces.length) {
       const li = document.createElement('li');
-      li.textContent = 'No workspaces tracked';
+      li.textContent = i18n.report_vscode_workspaces_empty || 'No workspaces tracked';
       list.appendChild(li);
       return;
     }
@@ -323,7 +359,10 @@
       const nameEl = document.createElement('span');
       nameEl.textContent = String(ws?.name ?? '');
       const countEl = document.createElement('span');
-      countEl.textContent = `${ws?.totalFiles || 0} files`;
+      const fileCount = ws?.totalFiles || 0;
+      countEl.textContent =
+        (i18n.report_vscode_workspaces_files && formatWithParams(i18n.report_vscode_workspaces_files, { count: fileCount })) ||
+        `${fileCount} files`;
       li.appendChild(nameEl);
       li.appendChild(countEl);
       list.appendChild(li);
@@ -474,7 +513,7 @@
         data: {
           labels: hours.map(h => `${String(h).padStart(2, '0')}h`),
           datasets: [{
-            label: 'Commits',
+            label: i18n.report_vscode_activity_commits || 'Commits',
             data: commitsByHour,
             borderColor: '#10b981',
             backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -903,7 +942,7 @@
       data: {
         labels: Array.from({ length: 24 }, (_, i) => `${i}h`),
         datasets: [{
-          label: 'Intensidade de Foco',
+          label: i18n.report_vscode_focus_intensity || 'Intensidade de Foco',
           data: hourData,
           backgroundColor: '#10b981'
         }]
@@ -928,7 +967,7 @@
     list.innerHTML = '';
     if (!extensions || extensions.length === 0) {
       const li = document.createElement('li');
-      li.textContent = 'Nenhuma extensão registrada.';
+      li.textContent = i18n.report_vscode_top_extensions_empty || 'Nenhuma extensão registrada.';
       list.appendChild(li);
       return;
     }
@@ -938,7 +977,11 @@
       const idEl = document.createElement('span');
       idEl.textContent = String(ext?.extensionId ?? '');
       const countEl = document.createElement('span');
-      countEl.textContent = `${ext?.commandCount ?? 0} cmds`;
+      const cmdCount = ext?.commandCount ?? 0;
+      countEl.textContent =
+        (i18n.report_vscode_top_extensions_cmds &&
+          formatWithParams(i18n.report_vscode_top_extensions_cmds, { count: cmdCount })) ||
+        `${cmdCount} cmds`;
       li.appendChild(idEl);
       li.appendChild(countEl);
       list.appendChild(li);
@@ -952,7 +995,8 @@
     list.innerHTML = '';
     if (!files || files.length === 0) {
       const li = document.createElement('li');
-      li.textContent = 'Nenhum arquivo debugado.';
+      li.textContent =
+        i18n.report_vscode_top_debugged_files_empty || 'Nenhum arquivo debugado.';
       list.appendChild(li);
       return;
     }
@@ -965,8 +1009,20 @@
       const sessions = file?.sessions ?? 0;
       const breakpoints = file?.breakpoints ?? 0;
       const parts = [];
-      if (sessions > 0) parts.push(`${sessions} sessões`);
-      if (breakpoints > 0) parts.push(`${breakpoints} BPs`);
+      if (sessions > 0) {
+        const sessionText =
+          (i18n.report_vscode_top_debugged_files_sessions &&
+            formatWithParams(i18n.report_vscode_top_debugged_files_sessions, { count: sessions })) ||
+          `${sessions} sessões`;
+        parts.push(sessionText);
+      }
+      if (breakpoints > 0) {
+        const bpText =
+          (i18n.report_vscode_top_debugged_files_bps &&
+            formatWithParams(i18n.report_vscode_top_debugged_files_bps, { count: breakpoints })) ||
+          `${breakpoints} BPs`;
+        parts.push(bpText);
+      }
       countEl.textContent = parts.length > 0 ? parts.join(', ') : '0';
       li.appendChild(idEl);
       li.appendChild(countEl);
@@ -985,7 +1041,8 @@
     list.innerHTML = '';
     if (!files || files.length === 0) {
       const li = document.createElement('li');
-      li.textContent = 'Nenhum erro registrado. 🎉';
+      li.textContent =
+        i18n.report_vscode_top_error_files_empty || 'Nenhum erro registrado. 🎉';
       list.appendChild(li);
       return;
     }
@@ -995,7 +1052,12 @@
       const idEl = document.createElement('span');
       idEl.textContent = String(file?.fileId ?? '');
       const statsEl = document.createElement('span');
-      statsEl.textContent = `⚠️ ${file?.errors ?? 0} | ⚡ ${file?.warnings ?? 0}`;
+      const errors = file?.errors ?? 0;
+      const warnings = file?.warnings ?? 0;
+      statsEl.textContent =
+        (i18n.report_vscode_top_error_files_stats &&
+          formatWithParams(i18n.report_vscode_top_error_files_stats, { errors, warnings })) ||
+        `⚠️ ${errors} | ⚡ ${warnings}`;
       li.appendChild(idEl);
       li.appendChild(statsEl);
       list.appendChild(li);
@@ -1008,16 +1070,28 @@
 
     div.innerHTML = '';
     const items = [
-      { label: 'Arquivos Renomeados', value: refactoring?.filesRenamed || 0 },
-      { label: 'Edits Aplicados', value: refactoring?.editsApplied || 0 },
-      { label: 'Code Actions Disponíveis', value: refactoring?.codeActionsAvailable || 0 }
+      {
+        key: 'report_vscode_refactor_files_renamed',
+        fallback: 'Arquivos Renomeados',
+        value: refactoring?.filesRenamed || 0
+      },
+      {
+        key: 'report_vscode_refactor_edits_applied',
+        fallback: 'Edits Aplicados',
+        value: refactoring?.editsApplied || 0
+      },
+      {
+        key: 'report_vscode_refactor_code_actions',
+        fallback: 'Code Actions Disponíveis',
+        value: refactoring?.codeActionsAvailable || 0
+      }
     ];
     items.forEach((item) => {
       const row = document.createElement('div');
       row.className = 'stat-item';
       const labelEl = document.createElement('span');
       labelEl.className = 'stat-label';
-      labelEl.textContent = item.label;
+      labelEl.textContent = i18n[item.key] || item.fallback;
       const valueEl = document.createElement('span');
       valueEl.className = 'stat-value';
       valueEl.textContent = String(item.value);

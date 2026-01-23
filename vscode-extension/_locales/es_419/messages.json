@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "URL base del SaulDaemon local."
   },
+  "config_daemon_path_description": {
+    "message": "Ruta absoluta del SaulDaemon local (opcional)."
+  },
   "config_enable_reports_description": {
     "message": "Muestra el informe de Saul dentro de VS Code."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "Número de días para retener datos de telemetría local antes de eliminar automáticamente."
+  },
+  "daemon_ignore": {
+    "message": "Ignorar"
+  },
+  "daemon_not_running_warning": {
+    "message": "El SaulDaemon no está en ejecución. El seguimiento del tiempo no funcionará hasta que lo inicies."
+  },
+  "daemon_start_now": {
+    "message": "Iniciar daemon ahora"
   },
   "demoCta": {
     "message": "Ver demo completa"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "Portugués (Brasil)"
   },
+  "options_logo_alt": {
+    "message": "Logotipo Saul Goodman"
+  },
   "options_openai_hint": {
     "message": "Se guarda localmente para generar narrativas en el informe."
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "Clasificar manualmente"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "Navegar recomendaciones"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "Próxima recomendación"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "Recomendación anterior"
+  },
   "popup_suggestion_title": {
     "message": "Sugerencia automática"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "Artículo no encontrado."
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon ya está activo en {origin}."
+  },
   "prepare_key_prompt": {
     "message": "Usa la misma clave configurada en la extension de Chrome."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "No se encontro saul-daemon/index.cjs. Abre la raiz del repositorio antes de iniciar el daemon."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "No se pudo localizar el SaulDaemon. Verifica la ruta configurada o usa el daemon integrado."
+  },
+  "prepare_open_settings": {
+    "message": "Abrir configuraciones"
+  },
+  "prepare_port_invalid": {
+    "message": "Puerto inválido."
+  },
   "prepare_port_prompt": {
     "message": "Puerto HTTP local del daemon."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "Error al iniciar SaulDaemon: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "El daemon no respondió en {origin}. Verifica el log en {logFile}."
   },
   "prepare_started": {
     "message": "SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "Actividad"
   },
+  "report_vscode_activity_commits": {
+    "message": "Commits"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "Archivos alterados"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "Líneas añadidas"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "Líneas eliminadas"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "Cambios de pestañas"
+  },
   "report_vscode_branches": {
     "message": "Ramas de Git"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "Nivel del combo"
   },
   "report_vscode_combo_timeline": {
     "message": "Línea de Tiempo de Combos"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "Abrir opciones"
   },
+  "report_vscode_editor_empty": {
+    "message": "No hay datos del editor disponibles."
+  },
   "report_vscode_editor_info": {
     "message": "Info del Editor"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "Extensiones"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "Tema"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "Versión de VS Code"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "Tipo de workspace"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "vacío"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "desconocido"
   },
   "report_vscode_error": {
     "message": "No se pudieron cargar los reportes de VS Code."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "Filtros"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "Intensidad de foco"
   },
   "report_vscode_focus_patterns": {
     "message": "Patrones de Foco"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "Ningún dato de proyecto para mostrar."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "Acciones de código disponibles"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "Ediciones aplicadas"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "Archivos renombrados"
   },
   "report_vscode_refactoring_activity": {
     "message": "Actividad de Refactorización"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "Archivos Más Depurados"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "Ningún archivo depurado."
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} sesiones"
+  },
   "report_vscode_top_error_files": {
     "message": "Archivos con Más Errores"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "Ningún error registrado. 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "Principales Extensiones Usadas"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} comandos"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "Ninguna extensión registrada."
+  },
   "report_vscode_workspaces": {
     "message": "Workspaces"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "Ningún workspace monitoreado."
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} archivos"
   },
   "rssCta": {
     "message": "Suscribirse via RSS"

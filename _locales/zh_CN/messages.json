@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "本地索尔守护进程的基础URL。"
   },
+  "config_daemon_path_description": {
+    "message": "本地 SaulDaemon 的绝对路径（可选）。"
+  },
   "config_enable_reports_description": {
     "message": "在VS Code中显示索尔的报告。"
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "在自动删除之前保留本地遥测数据的天数。"
+  },
+  "daemon_ignore": {
+    "message": "忽略"
+  },
+  "daemon_not_running_warning": {
+    "message": "SaulDaemon 未运行。时间跟踪在您启动它之前将无法工作。"
+  },
+  "daemon_start_now": {
+    "message": "立即启动守护进程"
   },
   "demoCta": {
     "message": "查看全部演示"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "葡萄牙语( 巴西 )"
   },
+  "options_logo_alt": {
+    "message": "Saul Goodman 标志"
+  },
   "options_openai_hint": {
     "message": "在当地储存,以便在报告中产生叙述。"
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "手动分类"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "浏览推荐"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "下一个推荐"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "上一个推荐"
+  },
   "popup_suggestion_title": {
     "message": "自动建议"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "未找到邮箱 。"
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon 已在 {origin} 中运行。"
+  },
   "prepare_key_prompt": {
     "message": "使用在Chrome扩展中配置的相同密钥。"
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "未找到文件夹 saul-daemon/index.cjs。在启动守护进程之前打开根存储库。"
   },
+  "prepare_missing_daemon_improved": {
+    "message": "无法找到 SaulDaemon。请检查配置的路径或使用内置守护进程。"
+  },
+  "prepare_open_settings": {
+    "message": "打开设置"
+  },
+  "prepare_port_invalid": {
+    "message": "无效的端口。"
+  },
   "prepare_port_prompt": {
     "message": "守护进程的本地HTTP端口。"
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "启动索尔守护进程失败：{error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "守护进程在 {origin} 中没有响应。请检查 {logFile} 中的日志。"
   },
   "prepare_started": {
     "message": "索尔守护进程在后台启动（端口 {port}，密钥 {key}）。日志在 {logFile}。"
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "活动"
   },
+  "report_vscode_activity_commits": {
+    "message": "提交"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "已更改的文件"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "添加的行"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "删除的行"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "标签切换"
+  },
   "report_vscode_branches": {
     "message": "Git 分支"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "组合级别"
   },
   "report_vscode_combo_timeline": {
     "message": "组合时间线"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "打开选项"
   },
+  "report_vscode_editor_empty": {
+    "message": "没有可用的编辑器数据。"
+  },
   "report_vscode_editor_info": {
     "message": "编辑器信息"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "扩展"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "主题"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "VS Code 版本"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "工作区类型"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "空"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "未知"
   },
   "report_vscode_error": {
     "message": "无法加载VS Code报告。"
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "过滤器"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "专注强度"
   },
   "report_vscode_focus_patterns": {
     "message": "专注模式"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "没有项目数据可显示。"
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "可用的代码操作"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "已应用的编辑"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "已重命名的文件"
   },
   "report_vscode_refactoring_activity": {
     "message": "重构活动"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "调试最多的文件"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} 个 BP"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "没有调试文件。"
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} 个会话"
+  },
   "report_vscode_top_error_files": {
     "message": "错误最多的文件"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "没有记录错误。🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "使用最多的扩展"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} 个命令"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "没有注册扩展。"
+  },
   "report_vscode_workspaces": {
     "message": "工作区"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "没有监控的工作区。"
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} 个文件"
   },
   "rssCta": {
     "message": "通过 RSS 订阅"

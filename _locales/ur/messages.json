@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "سول ڈیمون کی مقامی بیس URL."
   },
+  "config_daemon_path_description": {
+    "message": "SaulDaemon مقامی کا مکمل راستہ (اختیاری)۔"
+  },
   "config_enable_reports_description": {
     "message": "VS Code میں سول کی رپورٹ دکھاتا ہے."
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "مقامی ٹیلی میٹری کے ڈیٹا کو خود بخود حذف کرنے سے پہلے رکھنے کے دنوں کی تعداد."
+  },
+  "daemon_ignore": {
+    "message": "نظرانداز کریں"
+  },
+  "daemon_not_running_warning": {
+    "message": "SaulDaemon نہیں چل رہا ہے۔ وقت کی نگرانی اس وقت تک کام نہیں کرے گی جب تک کہ آپ اسے شروع نہ کریں۔"
+  },
+  "daemon_start_now": {
+    "message": "اب daemon شروع کریں"
   },
   "demoCta": {
     "message": "مکمل جمہوریہ دیکھیں"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "پرتگالی (Brazil)"
   },
+  "options_logo_alt": {
+    "message": "Saul Goodman کا لوگو"
+  },
   "options_openai_hint": {
     "message": "اس رپورٹ میں معلومات پیدا کرنے کے لیے مقامی طور پر ذخیرہ کیا گیا۔"
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "ہاتھ سے درجہ بندی کریں"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "تجویزات میں نیویگیٹ کریں"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "اگلی تجویز"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "پچھلی تجویز"
+  },
   "popup_suggestion_title": {
     "message": "خودکار تجویز"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "پوسٹ نہیں ملا."
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon پہلے ہی {origin} میں فعال ہے۔"
+  },
   "prepare_key_prompt": {
     "message": "کروم توسیع میں ترتیب دی گئی ایک ہی کلید استعمال کریں."
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "پہلا سول-ڈیمون/index.cjs نہیں ملا. ڈیمون شروع کرنے سے پہلے بنیادی ریپوزٹری کھولیں."
   },
+  "prepare_missing_daemon_improved": {
+    "message": "SaulDaemon کو تلاش نہیں کیا جا سکا۔ ترتیب دیے گئے راستے کی جانچ کریں یا اندرونی daemon کا استعمال کریں۔"
+  },
+  "prepare_open_settings": {
+    "message": "ترتیبات کھولیں"
+  },
+  "prepare_port_invalid": {
+    "message": "غلط پورٹ۔"
+  },
   "prepare_port_prompt": {
     "message": "ڈیمون کی مقامی HTTP پورٹ."
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "سول ڈیمون شروع کرنے میں ناکامی: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "Daemon نے {origin} میں جواب نہیں دیا۔ {logFile} میں لاگ کی جانچ کریں۔"
   },
   "prepare_started": {
     "message": "سول ڈیمون پس منظر میں شروع ہوا (پورٹ {port}, کی {key}). لاگ {logFile} میں."
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "سرگرمی"
   },
+  "report_vscode_activity_commits": {
+    "message": "کمٹ"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "تبدیل شدہ فائلیں"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "شامل کردہ لائنیں"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "حذف کردہ لائنیں"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "ٹیب کی تبدیلیاں"
+  },
   "report_vscode_branches": {
     "message": "گٹ شاخیں"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "کمبو کی سطح"
   },
   "report_vscode_combo_timeline": {
     "message": "کمبو کی ٹائم لائن"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "آپشنز کھولیں"
   },
+  "report_vscode_editor_empty": {
+    "message": "ایڈیٹر کا کوئی ڈیٹا دستیاب نہیں ہے۔"
+  },
   "report_vscode_editor_info": {
     "message": "ایڈیٹر کی معلومات"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "توسیعات"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "تھیم"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "VS Code کا ورژن"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "ورک اسپیس کی قسم"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "خالی"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "نامعلوم"
   },
   "report_vscode_error": {
     "message": "VS Code کی رپورٹس لوڈ کرنے میں ناکامی."
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "فلٹر"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "فوکس کی شدت"
   },
   "report_vscode_focus_patterns": {
     "message": "فوکس کے پیٹرن"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "دکھانے کے لئے کوئی پروجیکٹ کا ڈیٹا نہیں ہے."
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "دستیاب کوڈ کی کارروائیاں"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "ترمیمات لاگو کی گئیں"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "فائلیں دوبارہ نامزد کی گئیں"
   },
   "report_vscode_refactoring_activity": {
     "message": "ری فیکٹرنگ کی سرگرمی"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "سب سے زیادہ ڈیبگ کردہ فائلیں"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "کوئی ڈیبگ کی گئی فائل نہیں۔"
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} سیشن"
+  },
   "report_vscode_top_error_files": {
     "message": "سب سے زیادہ غلطیوں والی فائلیں"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "کوئی غلطی درج نہیں کی گئی۔ 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "سب سے زیادہ استعمال ہونے والی توسیعات"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} کمانڈز"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "کوئی توسیع درج نہیں کی گئی۔"
+  },
   "report_vscode_workspaces": {
     "message": "ورک اسپیس"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "کوئی ورک اسپیس مانیٹر نہیں کی گئی۔"
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} فائلیں"
   },
   "rssCta": {
     "message": "ایس ."

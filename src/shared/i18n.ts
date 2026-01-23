@@ -135,6 +135,9 @@ class I18nImpl implements I18nService {
     applyDataset(target, this, 'i18nTooltip', (el, key, i18n) => {
       (el as HTMLElement).setAttribute('data-tooltip', i18n.t(key));
     });
+    applyDataset(target, this, 'i18nAlt', (el, key, i18n) => {
+      (el as HTMLElement).setAttribute('alt', i18n.t(key));
+    });
   }
 }
 
@@ -215,7 +218,7 @@ function escapeHtml(value: string): string {
 function applyDataset(
   root: Document | HTMLElement,
   i18n: I18nImpl,
-  attr: 'i18nHtml' | 'i18nPlaceholder' | 'i18nTitle' | 'i18nAriaLabel' | 'i18nTooltip',
+  attr: 'i18nHtml' | 'i18nPlaceholder' | 'i18nTitle' | 'i18nAriaLabel' | 'i18nTooltip' | 'i18nAlt',
   setter: (el: HTMLElement, key: string, i18n: I18nImpl) => void
 ): void {
   const selector = `[data-${attr.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}]`;

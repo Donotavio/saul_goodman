@@ -371,6 +371,9 @@
   "config_api_base_description": {
     "message": "स्थानीय सॉलडेमन का बेस URL।"
   },
+  "config_daemon_path_description": {
+    "message": "स्थानीय SaulDaemon का पूर्ण पथ (वैकल्पिक)।"
+  },
   "config_enable_reports_description": {
     "message": "VS कोड के भीतर सॉल की रिपोर्ट दिखाता है।"
   },
@@ -415,6 +418,15 @@
   },
   "config_telemetry_retention_description": {
     "message": "स्वचालित रूप से हटाने से पहले स्थानीय टेलीमेट्री डेटा को बनाए रखने के लिए दिनों की संख्या।"
+  },
+  "daemon_ignore": {
+    "message": "अनदेखा करें"
+  },
+  "daemon_not_running_warning": {
+    "message": "SaulDaemon चल नहीं रहा है। समय ट्रैकिंग तब तक काम नहीं करेगी जब तक आप इसे शुरू नहीं करते।"
+  },
+  "daemon_start_now": {
+    "message": "अब डेमॉन शुरू करें"
   },
   "demoCta": {
     "message": "पूर्ण डेमो देखें"
@@ -1175,6 +1187,9 @@
   "options_language_pt": {
     "message": "पुर्तगाली (ब्राज़ील)"
   },
+  "options_logo_alt": {
+    "message": "Saul Goodman का लोगो"
+  },
   "options_openai_hint": {
     "message": "रिपोर्ट में कथाओं को उत्पन्न करने के लिए स्थानीय रूप से संग्रहीत किया गया।"
   },
@@ -1865,6 +1880,15 @@
   "popup_suggestion_manual": {
     "message": "हाथ से वर्गीकृत करें"
   },
+  "popup_suggestion_nav_aria": {
+    "message": "सुझावों को नेविगेट करें"
+  },
+  "popup_suggestion_next_aria": {
+    "message": "अगला सुझाव"
+  },
+  "popup_suggestion_prev_aria": {
+    "message": "पिछला सुझाव"
+  },
   "popup_suggestion_title": {
     "message": "स्वचालित सुझाव"
   },
@@ -1916,6 +1940,9 @@
   "postNotFound": {
     "message": "पोस्ट नहीं मिला।"
   },
+  "prepare_already_running": {
+    "message": "SaulDaemon पहले से {origin} में सक्रिय है।"
+  },
   "prepare_key_prompt": {
     "message": "क्रोम एक्सटेंशन में सेट की गई वही कुंजी का उपयोग करें।"
   },
@@ -1925,6 +1952,15 @@
   "prepare_missing_daemon": {
     "message": "फोल्डर saul-daemon/index.cjs नहीं मिला। डेमन शुरू करने से पहले मूल रिपॉजिटरी खोलें।"
   },
+  "prepare_missing_daemon_improved": {
+    "message": "SaulDaemon नहीं मिला। कृपया सेट किया गया पथ जांचें या अंतर्निहित डेमॉन का उपयोग करें।"
+  },
+  "prepare_open_settings": {
+    "message": "सेटिंग्स खोलें"
+  },
+  "prepare_port_invalid": {
+    "message": "अमान्य पोर्ट।"
+  },
   "prepare_port_prompt": {
     "message": "डेमन का स्थानीय HTTP पोर्ट।"
   },
@@ -1933,6 +1969,9 @@
   },
   "prepare_start_failed": {
     "message": "सॉलडेमन शुरू करने में विफल: {error}"
+  },
+  "prepare_start_failed_health": {
+    "message": "डेमॉन {origin} में प्रतिक्रिया नहीं दे रहा है। कृपया {logFile} में लॉग जांचें।"
   },
   "prepare_started": {
     "message": "सॉलडेमन बैकग्राउंड में शुरू हुआ (पोर्ट {port}, कुंजी {key})। लॉग {logFile} में।"
@@ -2636,8 +2675,26 @@
   "report_vscode_activity": {
     "message": "गतिविधि"
   },
+  "report_vscode_activity_commits": {
+    "message": "कमिट"
+  },
+  "report_vscode_activity_files_changed": {
+    "message": "बदले हुए फ़ाइलें"
+  },
+  "report_vscode_activity_lines_added": {
+    "message": "जोड़े गए पंक्तियाँ"
+  },
+  "report_vscode_activity_lines_deleted": {
+    "message": "हटाई गई पंक्तियाँ"
+  },
+  "report_vscode_activity_tab_switches": {
+    "message": "टैब स्विच"
+  },
   "report_vscode_branches": {
     "message": "गिट शाखाएँ"
+  },
+  "report_vscode_combo_level_label": {
+    "message": "कॉम्बो स्तर"
   },
   "report_vscode_combo_timeline": {
     "message": "कॉम्बो टाइमलाइन"
@@ -2672,8 +2729,29 @@
   "report_vscode_disabled_cta": {
     "message": "विकल्प खोलें"
   },
+  "report_vscode_editor_empty": {
+    "message": "संपादक का कोई डेटा उपलब्ध नहीं है।"
+  },
   "report_vscode_editor_info": {
     "message": "संपादक की जानकारी"
+  },
+  "report_vscode_editor_label_extensions": {
+    "message": "एक्सटेंशन"
+  },
+  "report_vscode_editor_label_theme": {
+    "message": "थीम"
+  },
+  "report_vscode_editor_label_version": {
+    "message": "VS कोड का संस्करण"
+  },
+  "report_vscode_editor_label_workspace": {
+    "message": "कार्यस्थान का प्रकार"
+  },
+  "report_vscode_editor_value_empty": {
+    "message": "खाली"
+  },
+  "report_vscode_editor_value_unknown": {
+    "message": "अज्ञात"
   },
   "report_vscode_error": {
     "message": "VS कोड की रिपोर्टें लोड करने में असमर्थ।"
@@ -2692,6 +2770,9 @@
   },
   "report_vscode_filters_title": {
     "message": "फिल्टर"
+  },
+  "report_vscode_focus_intensity": {
+    "message": "फोकस की तीव्रता"
   },
   "report_vscode_focus_patterns": {
     "message": "फोकस पैटर्न"
@@ -2758,6 +2839,15 @@
   },
   "report_vscode_projects_empty": {
     "message": "दिखाने के लिए कोई परियोजना डेटा नहीं है।"
+  },
+  "report_vscode_refactor_code_actions": {
+    "message": "उपलब्ध कोड क्रियाएँ"
+  },
+  "report_vscode_refactor_edits_applied": {
+    "message": "संशोधन लागू किए गए"
+  },
+  "report_vscode_refactor_files_renamed": {
+    "message": "फाइलें नामित की गईं"
   },
   "report_vscode_refactoring_activity": {
     "message": "पुनर्गठन गतिविधि"
@@ -2855,14 +2945,41 @@
   "report_vscode_top_debugged_files": {
     "message": "सबसे अधिक डीबग की गई फ़ाइलें"
   },
+  "report_vscode_top_debugged_files_bps": {
+    "message": "{count} BPs"
+  },
+  "report_vscode_top_debugged_files_empty": {
+    "message": "कोई डिबग की गई फ़ाइल नहीं।"
+  },
+  "report_vscode_top_debugged_files_sessions": {
+    "message": "{count} सत्र"
+  },
   "report_vscode_top_error_files": {
     "message": "सबसे अधिक त्रुटियों वाली फ़ाइलें"
+  },
+  "report_vscode_top_error_files_empty": {
+    "message": "कोई त्रुटि दर्ज नहीं की गई। 🎉"
+  },
+  "report_vscode_top_error_files_stats": {
+    "message": "⚠️ {errors} | ⚡ {warnings}"
   },
   "report_vscode_top_extensions": {
     "message": "उपयोग की गई शीर्ष एक्सटेंशन"
   },
+  "report_vscode_top_extensions_cmds": {
+    "message": "{count} कमांड"
+  },
+  "report_vscode_top_extensions_empty": {
+    "message": "कोई एक्सटेंशन दर्ज नहीं किया गया।"
+  },
   "report_vscode_workspaces": {
     "message": "कार्यक्षेत्र"
+  },
+  "report_vscode_workspaces_empty": {
+    "message": "कोई कार्यस्थान मॉनिटर नहीं किया गया।"
+  },
+  "report_vscode_workspaces_files": {
+    "message": "{count} फ़ाइलें"
   },
   "rssCta": {
     "message": "आरएसएस"

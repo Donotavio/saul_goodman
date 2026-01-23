@@ -599,17 +599,37 @@ function renderVscodeActivity(activity: any, git: any): void {
   vscodeActivityListEl.innerHTML = '';
   
   const items = [
-    { label: 'Tab Switches', value: activity.totalTabSwitches || 0 },
-    { label: 'Commits', value: git.totalCommits || 0 },
-    { label: 'Files Changed', value: git.totalFilesChanged || 0 },
-    { label: 'Lines Added', value: git.totalLinesAdded || 0 },
-    { label: 'Lines Deleted', value: git.totalLinesDeleted || 0 }
+    {
+      key: 'report_vscode_activity_tab_switches',
+      fallback: 'Tab Switches',
+      value: activity.totalTabSwitches || 0
+    },
+    {
+      key: 'report_vscode_activity_commits',
+      fallback: 'Commits',
+      value: git.totalCommits || 0
+    },
+    {
+      key: 'report_vscode_activity_files_changed',
+      fallback: 'Files Changed',
+      value: git.totalFilesChanged || 0
+    },
+    {
+      key: 'report_vscode_activity_lines_added',
+      fallback: 'Lines Added',
+      value: git.totalLinesAdded || 0
+    },
+    {
+      key: 'report_vscode_activity_lines_deleted',
+      fallback: 'Lines Deleted',
+      value: git.totalLinesDeleted || 0
+    }
   ];
 
   items.forEach(item => {
     const li = document.createElement('li');
     const labelEl = document.createElement('span');
-    labelEl.textContent = item.label;
+    labelEl.textContent = i18n?.t(item.key) ?? item.fallback;
     const valueEl = document.createElement('span');
     valueEl.textContent = String(item.value);
     li.appendChild(labelEl);
@@ -623,18 +643,21 @@ function renderVscodeEditorInfo(editor: any): void {
     return;
   }
   if (!editor) {
-    vscodeEditorInfoEl.textContent = 'No editor metadata available';
+    vscodeEditorInfoEl.textContent =
+      i18n?.t('report_vscode_editor_empty') ?? 'No editor metadata available';
     return;
   }
 
   vscodeEditorInfoEl.innerHTML = '';
+  const unknownLabel = i18n?.t('report_vscode_editor_value_unknown') ?? 'unknown';
+  const emptyLabel = i18n?.t('report_vscode_editor_value_empty') ?? 'empty';
   const ul = document.createElement('ul');
   ul.className = 'vscode-report-list';
   const rows = [
-    ['VS Code Version', editor.vscodeVersion || 'unknown'],
-    ['Extensions', editor.extensionsCount || 0],
-    ['Theme', editor.themeKind || 'unknown'],
-    ['Workspace Type', editor.workspaceType || 'empty']
+    [i18n?.t('report_vscode_editor_label_version') ?? 'VS Code Version', editor.vscodeVersion || unknownLabel],
+    [i18n?.t('report_vscode_editor_label_extensions') ?? 'Extensions', editor.extensionsCount ?? 0],
+    [i18n?.t('report_vscode_editor_label_theme') ?? 'Theme', editor.themeKind || unknownLabel],
+    [i18n?.t('report_vscode_editor_label_workspace') ?? 'Workspace Type', editor.workspaceType || emptyLabel]
   ];
   rows.forEach(([label, value]) => {
     const li = document.createElement('li');
@@ -713,7 +736,7 @@ function renderVscodeWorkspaces(workspaces: any[]): void {
   
   if (!workspaces.length) {
     const li = document.createElement('li');
-    li.textContent = 'No workspaces tracked';
+    li.textContent = i18n?.t('report_vscode_workspaces_empty') ?? 'No workspaces tracked';
     vscodeWorkspacesListEl.appendChild(li);
     return;
   }
@@ -723,7 +746,9 @@ function renderVscodeWorkspaces(workspaces: any[]): void {
     const nameEl = document.createElement('span');
     nameEl.textContent = String(ws?.name ?? '');
     const countEl = document.createElement('span');
-    countEl.textContent = `${ws?.totalFiles || 0} files`;
+    const fileCount = ws?.totalFiles || 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_workspaces_files', { count: fileCount }) ?? `${fileCount} files`;
     li.appendChild(nameEl);
     li.appendChild(countEl);
     vscodeWorkspacesListEl.appendChild(li);
@@ -925,7 +950,7 @@ function renderVscodeCommitsChart(gitData: any): void {
     data: {
       labels: hours.map(h => `${String(h).padStart(2, '0')}h`),
       datasets: [{
-        label: 'Commits',
+        label: i18n?.t('report_vscode_activity_commits') ?? 'Commits',
         data: commitsByHour,
         borderColor: '#10b981',
         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -1323,7 +1348,7 @@ function renderVscodeComboTimelineChart(comboData: any): void {
           },
           title: {
             display: true,
-            text: 'Combo Level'
+            text: i18n?.t('report_vscode_combo_level_label') ?? 'Combo Level'
           }
         }
       }
@@ -1338,7 +1363,8 @@ function renderVscodeTopExtensions(extensions: any[]): void {
   vscodeTopExtensionsListEl.innerHTML = '';
   if (!extensions || extensions.length === 0) {
     const li = document.createElement('li');
-    li.textContent = 'Nenhuma extensão registrada.';
+    li.textContent =
+      i18n?.t('report_vscode_top_extensions_empty') ?? 'Nenhuma extensão registrada.';
     vscodeTopExtensionsListEl.appendChild(li);
     return;
   }
@@ -1348,7 +1374,10 @@ function renderVscodeTopExtensions(extensions: any[]): void {
     const idEl = document.createElement('span');
     idEl.textContent = String(ext?.extensionId ?? '');
     const countEl = document.createElement('span');
-    countEl.textContent = `${ext?.commandCount ?? 0} cmds`;
+    const cmdCount = ext?.commandCount ?? 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_top_extensions_cmds', { count: cmdCount }) ??
+      `${cmdCount} cmds`;
     li.appendChild(idEl);
     li.appendChild(countEl);
     vscodeTopExtensionsListEl.appendChild(li);
@@ -1362,7 +1391,8 @@ function renderVscodeTopDebuggedFiles(files: any[]): void {
   vscodeTopDebuggedFilesListEl.innerHTML = '';
   if (!files || files.length === 0) {
     const li = document.createElement('li');
-    li.textContent = 'Nenhum arquivo debugado.';
+    li.textContent =
+      i18n?.t('report_vscode_top_debugged_files_empty') ?? 'Nenhum arquivo debugado.';
     vscodeTopDebuggedFilesListEl.appendChild(li);
     return;
   }
@@ -1372,7 +1402,10 @@ function renderVscodeTopDebuggedFiles(files: any[]): void {
     const idEl = document.createElement('span');
     idEl.textContent = String(file?.fileId ?? '');
     const countEl = document.createElement('span');
-    countEl.textContent = `${file?.breakpoints ?? 0} BPs`;
+    const breakpoints = file?.breakpoints ?? 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_top_debugged_files_bps', { count: breakpoints }) ??
+      `${breakpoints} BPs`;
     li.appendChild(idEl);
     li.appendChild(countEl);
     vscodeTopDebuggedFilesListEl.appendChild(li);
@@ -1386,7 +1419,8 @@ function renderVscodeTopErrorFiles(files: any[]): void {
   vscodeTopErrorFilesListEl.innerHTML = '';
   if (!files || files.length === 0) {
     const li = document.createElement('li');
-    li.textContent = 'Nenhum erro registrado. 🎉';
+    li.textContent =
+      i18n?.t('report_vscode_top_error_files_empty') ?? 'Nenhum erro registrado. 🎉';
     vscodeTopErrorFilesListEl.appendChild(li);
     return;
   }
@@ -1396,7 +1430,11 @@ function renderVscodeTopErrorFiles(files: any[]): void {
     const idEl = document.createElement('span');
     idEl.textContent = String(file?.fileId ?? '');
     const statsEl = document.createElement('span');
-    statsEl.textContent = `⚠️ ${file?.errors ?? 0} | ⚡ ${file?.warnings ?? 0}`;
+    const errors = file?.errors ?? 0;
+    const warnings = file?.warnings ?? 0;
+    statsEl.textContent =
+      i18n?.t('report_vscode_top_error_files_stats', { errors, warnings }) ??
+      `⚠️ ${errors} | ⚡ ${warnings}`;
     li.appendChild(idEl);
     li.appendChild(statsEl);
     vscodeTopErrorFilesListEl.appendChild(li);
@@ -1409,16 +1447,28 @@ function renderVscodeRefactoringStats(refactoring: any): void {
   }
   vscodeRefactoringStatsEl.innerHTML = '';
   const items = [
-    { label: 'Arquivos Renomeados', value: refactoring?.filesRenamed || 0 },
-    { label: 'Edits Aplicados', value: refactoring?.editsApplied || 0 },
-    { label: 'Code Actions Disponíveis', value: refactoring?.codeActionsAvailable || 0 }
+    {
+      key: 'report_vscode_refactor_files_renamed',
+      fallback: 'Arquivos Renomeados',
+      value: refactoring?.filesRenamed || 0
+    },
+    {
+      key: 'report_vscode_refactor_edits_applied',
+      fallback: 'Edits Aplicados',
+      value: refactoring?.editsApplied || 0
+    },
+    {
+      key: 'report_vscode_refactor_code_actions',
+      fallback: 'Code Actions Disponíveis',
+      value: refactoring?.codeActionsAvailable || 0
+    }
   ];
   items.forEach((item) => {
     const row = document.createElement('div');
     row.className = 'stat-item';
     const labelEl = document.createElement('span');
     labelEl.className = 'stat-label';
-    labelEl.textContent = item.label;
+    labelEl.textContent = i18n?.t(item.key) ?? item.fallback;
     const valueEl = document.createElement('span');
     valueEl.className = 'stat-value';
     valueEl.textContent = String(item.value);
