@@ -1,7 +1,11 @@
 const http = require('http');
 const path = require('path');
 const { mkdir, readFile, writeFile, rename, stat } = require('fs/promises');
-const { buildDurations, splitDurationByDay } = require('./src/vscode-aggregation.cjs');
+const {
+  buildDurations,
+  splitDurationByDay,
+  mergeOverlappingSlices
+} = require('./src/vscode-aggregation.cjs');
 
 const BIND_HOST = process.env.BIND_HOST || '127.0.0.1';
 const PORT = normalizePort(process.env.PORT);
@@ -87,11 +91,16 @@ async function loadVscodeState() {
         if (!entry.durations || !Array.isArray(entry.durations)) {
           entry.durations = [];
         }
+        const removed = dedupeVscodeHeartbeats(entry);
+        if (removed) {
+          entry.durations = buildDurations(entry.heartbeats, {
+            gapMs: VSCODE_GAP_MS,
+            graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
+          });
+        }
         const idSet = new Set();
         for (const heartbeat of entry.heartbeats) {
-          if (heartbeat && typeof heartbeat.id === 'string') {
-            idSet.add(heartbeat.id);
-          }
+          addHeartbeatToIndex(idSet, heartbeat);
         }
         vscodeIdIndex.set(key, idSet);
       }
@@ -244,6 +253,33 @@ function getVscodeIdSet(key) {
   return vscodeIdIndex.get(key);
 }
 
+function dedupeVscodeHeartbeats(entry) {
+  if (!entry || !Array.isArray(entry.heartbeats)) {
+    return false;
+  }
+  const seen = new Set();
+  const deduped = [];
+  let removed = false;
+  for (const heartbeat of entry.heartbeats) {
+    if (!heartbeat) {
+      removed = true;
+      continue;
+    }
+    const fingerprintKey = getHeartbeatFingerprintKey(heartbeat);
+    const dedupeKey = fingerprintKey ?? (typeof heartbeat.id === 'string' ? heartbeat.id : null);
+    if (dedupeKey) {
+      if (seen.has(dedupeKey)) {
+        removed = true;
+        continue;
+      }
+      seen.add(dedupeKey);
+    }
+    deduped.push(heartbeat);
+  }
+  entry.heartbeats = deduped;
+  return removed;
+}
+
 function pruneOldEntries() {
   const now = Date.now();
   const cutoffPast = now - RETENTION_DAYS * 24 * 60 * 60 * 1000;
@@ -278,16 +314,21 @@ function pruneVscodeEntries(key) {
   entry.heartbeats = entry.heartbeats.filter((heartbeat) => {
     return isKept(heartbeat?.time);
   });
+  const removed = dedupeVscodeHeartbeats(entry);
   entry.durations = entry.durations.filter((duration) => {
     const ts = duration?.endTime ?? duration?.startTime;
     return isKept(ts);
   });
+  if (removed) {
+    entry.durations = buildDurations(entry.heartbeats, {
+      gapMs: VSCODE_GAP_MS,
+      graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
+    });
+  }
   const idSet = getVscodeIdSet(key);
   idSet.clear();
   for (const heartbeat of entry.heartbeats) {
-    if (heartbeat && typeof heartbeat.id === 'string') {
-      idSet.add(heartbeat.id);
-    }
+    addHeartbeatToIndex(idSet, heartbeat);
   }
 }
 
@@ -309,8 +350,8 @@ function normalizeHeartbeat(raw) {
   }
   const entityType = coerceString(raw.entityType, 'file');
   const category = coerceString(raw.category, 'coding');
-  return {
-    id: coerceString(raw.id, createHeartbeatId(time)),
+  const metadata = normalizeMetadata(raw.metadata);
+  const heartbeat = {
     time,
     entityType,
     entity: coerceString(raw.entity, 'unknown'),
@@ -321,7 +362,13 @@ function normalizeHeartbeat(raw) {
     editor: coerceString(raw.editor, 'vscode'),
     pluginVersion: coerceString(raw.pluginVersion, ''),
     machineId: coerceString(raw.machineId, 'unknown'),
-    metadata: normalizeMetadata(raw.metadata)
+    metadata
+  };
+  const fingerprint = getHeartbeatFingerprint(heartbeat);
+  const fallbackId = fingerprint ? `hb-${fingerprint}` : createHeartbeatId(time);
+  return {
+    id: coerceString(raw.id, fallbackId),
+    ...heartbeat
   };
 }
 
@@ -377,6 +424,12 @@ function normalizeMetadata(metadata) {
   }
   if (Number.isFinite(Number(metadata.exitCode))) {
     normalized.exitCode = Number(metadata.exitCode);
+  }
+  if (typeof metadata.sessionId === 'string') {
+    normalized.sessionId = metadata.sessionId;
+  }
+  if (typeof metadata.workspaceId === 'string') {
+    normalized.workspaceId = metadata.workspaceId;
   }
   if (Number.isFinite(Number(metadata.extensionsCount))) {
     normalized.extensionsCount = Number(metadata.extensionsCount);
@@ -520,8 +573,57 @@ function coerceString(value, fallback) {
   return fallback;
 }
 
+function hashString(value) {
+  const input = typeof value === 'string' ? value : String(value ?? '');
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16);
+}
+
 function createHeartbeatId(seed) {
-  return `hb-${seed}-${Math.random().toString(16).slice(2, 8)}`;
+  const value = typeof seed === 'string' ? seed : String(seed ?? '');
+  if (!value) {
+    return `hb-${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 8)}`;
+  }
+  return `hb-${hashString(value)}`;
+}
+
+function getHeartbeatFingerprint(heartbeat) {
+  if (!heartbeat || !Number.isFinite(heartbeat.time)) {
+    return null;
+  }
+  const metadata = heartbeat.metadata ?? {};
+  const key = [
+    heartbeat.time,
+    heartbeat.machineId || '',
+    heartbeat.project || '',
+    heartbeat.entityType || '',
+    heartbeat.entity || '',
+    heartbeat.language || '',
+    heartbeat.category || '',
+    heartbeat.editor || '',
+    metadata.sessionId || '',
+    metadata.workspaceId || ''
+  ].join('|');
+  return hashString(key);
+}
+
+function getHeartbeatFingerprintKey(heartbeat) {
+  const fingerprint = getHeartbeatFingerprint(heartbeat);
+  return fingerprint ? `fp-${fingerprint}` : null;
+}
+
+function addHeartbeatToIndex(idSet, heartbeat) {
+  if (heartbeat && typeof heartbeat.id === 'string') {
+    idSet.add(heartbeat.id);
+  }
+  const fingerprintKey = getHeartbeatFingerprintKey(heartbeat);
+  if (fingerprintKey) {
+    idSet.add(fingerprintKey);
+  }
 }
 
 async function readJsonBody(req) {
@@ -644,9 +746,8 @@ function handleSummary(req, res, url) {
   if (vscodeEntry && Array.isArray(vscodeEntry.durations) && vscodeEntry.durations.length > 0) {
     const startMs = getDayStartMs(dateKey);
     const endMs = getDayEndMsExclusive(dateKey);
-    const timeline = [];
+    const timelineSlices = [];
     const switchHourly = Array.from({ length: 24 }, () => 0);
-    let totalActiveMs = 0;
     let sessions = 0;
     for (const duration of vscodeEntry.durations) {
       if (duration.endTime <= startMs || duration.startTime >= endMs) {
@@ -669,15 +770,15 @@ function handleSummary(req, res, url) {
       }
       const slices = splitDurationByDay(duration, startMs, endMs);
       for (const slice of slices) {
-        totalActiveMs += slice.durationMs;
-        timeline.push({
+        timelineSlices.push({
           startTime: slice.startTime,
           endTime: slice.endTime,
           durationMs: slice.durationMs
         });
       }
     }
-    timeline.sort((a, b) => a.startTime - b.startTime);
+    const timeline = mergeOverlappingSlices(timelineSlices);
+    let totalActiveMs = timeline.reduce((acc, slice) => acc + slice.durationMs, 0);
     
     // BUG-FIX: Apply guardrails to prevent impossible metrics
     const MAX_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -817,10 +918,14 @@ async function handleVscodeHeartbeats(req, res, url) {
       .filter(Boolean);
     const accepted = [];
     for (const heartbeat of normalized) {
-      if (idSet.has(heartbeat.id)) {
+      const fingerprintKey = getHeartbeatFingerprintKey(heartbeat);
+      if (idSet.has(heartbeat.id) || (fingerprintKey && idSet.has(fingerprintKey))) {
         continue;
       }
       idSet.add(heartbeat.id);
+      if (fingerprintKey) {
+        idSet.add(fingerprintKey);
+      }
       accepted.push(heartbeat);
     }
     if (accepted.length) {

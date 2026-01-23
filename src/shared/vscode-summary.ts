@@ -27,6 +27,24 @@ export interface VscodeSummaryNormalizeOptions {
 
 const DEFAULT_SWITCH_HOURLY = () => Array.from({ length: 24 }, () => 0);
 
+function mergeOverlappingTimelineEntries(entries: TimelineEntry[]): TimelineEntry[] {
+  if (!entries.length) {
+    return [];
+  }
+  const ordered = entries.slice().sort((a, b) => a.startTime - b.startTime);
+  const merged: TimelineEntry[] = [];
+  for (const entry of ordered) {
+    const last = merged[merged.length - 1];
+    if (!last || entry.startTime > last.endTime) {
+      merged.push({ ...entry });
+      continue;
+    }
+    last.endTime = Math.max(last.endTime, entry.endTime);
+    last.durationMs = Math.max(0, last.endTime - last.startTime);
+  }
+  return merged;
+}
+
 export function normalizeVscodeTrackingSummary(
   payload: VscodeTrackingSummaryPayload,
   options: VscodeSummaryNormalizeOptions = {}
@@ -59,14 +77,18 @@ export function normalizeVscodeTrackingSummary(
     });
   }
 
-  timeline.sort((a, b) => a.startTime - b.startTime);
+  const mergedTimeline = mergeOverlappingTimelineEntries(timeline);
+  const mergedTotalMs = mergedTimeline.reduce((acc, slice) => acc + slice.durationMs, 0);
 
-  const totalActiveMs = Number.isFinite(payload.totalActiveMs)
+  let totalActiveMs = Number.isFinite(payload.totalActiveMs)
     ? Math.max(0, Number(payload.totalActiveMs))
     : timelineTotalMs;
+  if (mergedTotalMs > 0 && mergedTotalMs < totalActiveMs) {
+    totalActiveMs = mergedTotalMs;
+  }
   const sessions = Number.isFinite(payload.sessions)
     ? Math.max(0, Number(payload.sessions))
-    : timeline.length;
+    : mergedTimeline.length;
   const switches = Number.isFinite(payload.switches)
     ? Math.max(0, Number(payload.switches))
     : sessions;
@@ -80,6 +102,6 @@ export function normalizeVscodeTrackingSummary(
     sessions,
     switches,
     switchHourly,
-    timeline
+    timeline: mergedTimeline
   };
 }

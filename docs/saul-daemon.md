@@ -36,6 +36,12 @@ O diretório default segue esta ordem:
 4. `~/.local/share/saul-daemon`
 5. `saul-daemon/data` (legado)
 
+## Guardrails de tracking VS Code
+
+- Heartbeats são deduplicados por fingerprint (tempo + metadados essenciais) para evitar dupla contagem.
+- O resumo diário une intervalos sobrepostos antes de somar o tempo ativo.
+- Se houver sobreposição persistente em dados antigos, apague `data/vscode-tracking.json` e reinicie o daemon.
+
 ## Autenticação e CORS
 
 - Quase todos os endpoints exigem `key=<PAIRING_KEY>`.

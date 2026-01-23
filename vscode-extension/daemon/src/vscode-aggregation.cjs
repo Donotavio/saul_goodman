@@ -217,6 +217,37 @@ function splitDurationByDay(duration, rangeStart, rangeEnd) {
   return slices;
 }
 
+function mergeOverlappingSlices(slices) {
+  if (!Array.isArray(slices) || slices.length === 0) {
+    return [];
+  }
+  const ordered = slices
+    .filter((slice) => Number.isFinite(slice?.startTime) && Number.isFinite(slice?.endTime))
+    .map((slice) => ({
+      startTime: slice.startTime,
+      endTime: slice.endTime
+    }))
+    .filter((slice) => slice.endTime > slice.startTime)
+    .sort((a, b) => a.startTime - b.startTime);
+  if (ordered.length === 0) {
+    return [];
+  }
+  const merged = [];
+  for (const slice of ordered) {
+    const last = merged[merged.length - 1];
+    if (!last || slice.startTime > last.endTime) {
+      merged.push({ ...slice });
+      continue;
+    }
+    last.endTime = Math.max(last.endTime, slice.endTime);
+  }
+  return merged.map((slice) => ({
+    startTime: slice.startTime,
+    endTime: slice.endTime,
+    durationMs: Math.max(0, slice.endTime - slice.startTime)
+  }));
+}
+
 function formatDateKey(date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
     date.getDate()
@@ -226,5 +257,6 @@ function formatDateKey(date) {
 module.exports = {
   buildDurations,
   splitDurationByDay,
+  mergeOverlappingSlices,
   formatDateKey
 };

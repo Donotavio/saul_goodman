@@ -41,3 +41,20 @@ test('normalizeVscodeTrackingSummary defaults missing fields safely', () => {
   assert.equal(normalized.switches, 1);
   assert.equal(normalized.switchHourly.length, 24);
 });
+
+test('normalizeVscodeTrackingSummary merges overlapping slices and clamps totals', () => {
+  const payload = {
+    totalActiveMs: 120000,
+    timeline: [
+      { startTime: 0, endTime: 60000, durationMs: 60000 },
+      { startTime: 30000, endTime: 90000, durationMs: 60000 }
+    ]
+  };
+
+  const normalized = normalizeVscodeTrackingSummary(payload);
+
+  assert.equal(normalized.timeline.length, 1);
+  assert.equal(normalized.timeline[0]?.durationMs, 90000);
+  assert.equal(normalized.totalActiveMs, 90000);
+  assert.equal(normalized.sessions, 1);
+});
