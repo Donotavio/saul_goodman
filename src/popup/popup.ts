@@ -19,7 +19,7 @@ import {
   formatRate,
   formatProductivityRatio
 } from '../shared/metrics.js';
-import { pickScoreMessageKey } from '../shared/score.js';
+import { getScoreBand, pickScoreMessageKey } from '../shared/score.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { setManualOverride } from '../shared/utils/manual-override.js';
 import { setContextMode } from '../shared/utils/context.js';
@@ -230,8 +230,8 @@ const FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   popup_fairness_status_personal: 'Modo pessoal ativo, sem pontuação.',
   popup_fairness_status_leisure: 'Modo lazer reduz a pressão.',
   popup_fairness_status_study: 'Modo estudo suaviza o índice.',
-  popup_fairness_status_day_off: 'Folga cadastrada — índice pausado.',
-  popup_fairness_status_vacation: 'Modo férias neutraliza o dia.',
+  popup_fairness_status_day_off: 'Folga cadastrada — índice suavizado.',
+  popup_fairness_status_vacation: 'Modo férias suaviza o índice.',
   popup_fairness_status_holiday: 'Feriado nacional neutralizando o dia.',
   popup_fairness_status_default: 'Dia útil normal.'
 };
@@ -718,19 +718,6 @@ function renderScore(score: number): void {
   }
   toggleCriticalMode(score >= threshold);
   lastCriticalScoreNotified = score >= threshold ? score : -Infinity;
-}
-
-function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
-  if (score <= 25) {
-    return 'good';
-  }
-  if (score <= 50) {
-    return 'warn';
-  }
-  if (score >= 70) {
-    return 'alert';
-  }
-  return 'neutral';
 }
 
 function triggerBadgeConfetti(): void {

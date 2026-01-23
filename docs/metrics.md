@@ -30,7 +30,7 @@ Este documento descreve os dados persistidos no dia (`DailyMetrics`), os KPIs de
 | `vscodeSwitchHourly` | number[] | 24 buckets de switches do VS Code. |
 | `vscodeTimeline` | array | Timeline do VS Code, inserida no relatório e CSV. |
 | `contextDurations` | record | Duração total por contexto (work/personal/etc.). |
-| `contextIndices` | record | Índice hipotético por contexto. |
+| `contextIndices` | record | Índice hipotético por contexto (ponderado pelo tempo). |
 
 ## KPIs derivados
 
@@ -72,4 +72,4 @@ O índice pode ser neutralizado por regras de justiça:
 - **Contextos**: `personal` neutraliza; `leisure`, `study`, `dayOff`, `vacation` aplicam multiplicadores (ver `src/shared/utils/context.ts`).
 - **Feriado**: se habilitado e detectado, zera o score.
 
-O relatório também calcula **contextIndices** para simular o índice completo em cada contexto.
+O relatório também calcula **contextIndices** ponderados pelo tempo para simular o índice completo em cada contexto.

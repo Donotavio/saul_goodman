@@ -48,6 +48,9 @@ function buildHtml(webview, extensionUri, config, i18n) {
   const comboTimelineUri = webview.asWebviewUri(
     vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'combo-timeline-chart.js')
   );
+  const commitsDistributionUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'commit-distribution.js')
+  );
 
   const inlineStyles = `<style nonce="${nonce}">${cssContent}</style>`;
   const logoDataUri = `data:image/png;base64,${logoBase64}`;
@@ -63,6 +66,7 @@ function buildHtml(webview, extensionUri, config, i18n) {
     .replace('{scriptUri}', scriptUri.toString())
     .replace('{reportHourlyUri}', reportHourlyUri.toString())
     .replace('{comboTimelineUri}', comboTimelineUri.toString())
+    .replace('{commitsDistributionUri}', commitsDistributionUri.toString())
     .replace('<link rel="stylesheet" href="{styleUri}" />', inlineStyles)
     .replace('{logoUri}', logoDataUri)
     .replace('{config}', JSON.stringify(config))

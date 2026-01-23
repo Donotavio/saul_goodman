@@ -454,12 +454,18 @@
     }
 
     const hours = Array.from({length: 24}, (_, i) => i);
-    const commitsByHour = Array(24).fill(0);
-    commitsByHour[9] = Math.ceil(totalCommits * 0.2);
-    commitsByHour[11] = Math.ceil(totalCommits * 0.3);
-    commitsByHour[14] = Math.ceil(totalCommits * 0.25);
-    commitsByHour[16] = Math.ceil(totalCommits * 0.15);
-    commitsByHour[19] = totalCommits - (commitsByHour[9] + commitsByHour[11] + commitsByHour[14] + commitsByHour[16]);
+    const buildCommitsByHour = window.buildSyntheticCommitsByHour;
+    const commitsByHour = typeof buildCommitsByHour === 'function'
+      ? buildCommitsByHour(totalCommits)
+      : (() => {
+          const fallback = Array(24).fill(0);
+          fallback[9] = Math.ceil(totalCommits * 0.2);
+          fallback[11] = Math.ceil(totalCommits * 0.3);
+          fallback[14] = Math.ceil(totalCommits * 0.25);
+          fallback[16] = Math.ceil(totalCommits * 0.15);
+          fallback[19] = totalCommits - (fallback[9] + fallback[11] + fallback[14] + fallback[16]);
+          return fallback;
+        })();
 
     try {
       const ctx = canvas.getContext('2d');

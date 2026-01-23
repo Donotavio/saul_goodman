@@ -70,7 +70,7 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 3. **Integração VS Code (opcional)**
    - Extensão VS Code envia heartbeats para o daemon.
    - Daemon agrega durações e retorna resumo diário.
-   - Background sincroniza `/v1/vscode/summaries` + `/v1/vscode/durations` e soma ao tempo produtivo.
+   - Background sincroniza `/v1/tracking/vscode/summary` (fallback para endpoints legados) e soma ao tempo produtivo.
 
 4. **Rede opt‑in**
    - **OpenAI**: relatório gera narrativa somente com chave configurada.

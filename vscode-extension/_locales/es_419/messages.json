@@ -1626,13 +1626,13 @@
     "message": "Ignorar hoy"
   },
   "popup_fairness_note": {
-    "message": "Saul recalibra el índice según el contexto que eliges en el popup. Ignorar hoy congela el puntaje en cero y silencia alertas. Contextos: Trabajo mantiene 100 %, Personal neutraliza todo, Ocio toma 30 % del foco e ignora villanos, Estudios reduce las penalizaciones a la mitad, Día libre y Vacaciones ponen el día en cero sin depender de feriados."
+    "message": "Saul recalibra el índice según el contexto que eliges en el popup. Ignorar hoy pone el score en cero y silencia alertas. Contextos: Trabajo mantiene 100%. Personal neutraliza todo. Ocio aplica 55% al productivo y 10% a la procrastinación. Estudios aplica 75% al productivo y 50% a la procrastinación. Día libre aplica 85% al productivo y 15% a la procrastinación. Vacaciones aplica 95% al productivo y 20% a la procrastinación."
   },
   "popup_fairness_note_label": {
     "message": "Saul te lo cuenta"
   },
   "popup_fairness_status_day_off": {
-    "message": "Día libre registrado — puntaje en pausa."
+    "message": "Día libre registrado — índice suavizado."
   },
   "popup_fairness_status_default": {
     "message": "Día laboral normal."
@@ -1653,7 +1653,7 @@
     "message": "Modo estudio aplica pesos medianos."
   },
   "popup_fairness_status_vacation": {
-    "message": "Modo vacaciones neutraliza el día."
+    "message": "Modo vacaciones suaviza el índice."
   },
   "popup_fairness_title": {
     "message": "Modo de equidad"
@@ -2172,19 +2172,19 @@
     "message": "Desglose por contexto"
   },
   "report_context_effect_dayOff": {
-    "message": "Deja el día en cero: sin crédito ni deuda. Sirve como día libre."
+    "message": "Productivo cuenta 85% y procrastinación 15%. Día libre oficial sin poner el día en cero."
   },
   "report_context_effect_leisure": {
-    "message": "Solo 30% de foco contado e ignora villanos. Contexto más flexible."
+    "message": "Productivo cuenta 55% y procrastinación 10%. Contexto más flexible."
   },
   "report_context_effect_personal": {
     "message": "Neutraliza todo: sin crédito ni deuda. Saul se queda en asuntos personales."
   },
   "report_context_effect_study": {
-    "message": "El foco vale 75% y las penalidades bajan a la mitad. Flexible pero con disciplina."
+    "message": "Productivo cuenta 75% y procrastinación 50%. Flexible pero con disciplina."
   },
   "report_context_effect_vacation": {
-    "message": "Neutraliza índice y villanos: el día queda 0/0. Trátalo como vacaciones declaradas."
+    "message": "Productivo cuenta 95% y procrastinación 20%. Vacaciones declaradas sin poner el día en cero."
   },
   "report_context_effect_work": {
     "message": "Cuenta 100% del foco y de las penalidades."
@@ -2217,7 +2217,7 @@
     "message": "Feriado detectado — sin penalidades."
   },
   "report_fairness_status_day_off": {
-    "message": "El día libre neutralizó el índice."
+    "message": "El día libre suavizó el índice."
   },
   "report_fairness_status_default": {
     "message": "Día laboral normal."
@@ -2238,13 +2238,13 @@
     "message": "Modo estudio reduce las penalizaciones."
   },
   "report_fairness_status_vacation": {
-    "message": "Modo vacaciones dejó el índice en cero."
+    "message": "Modo vacaciones suavizó el índice."
   },
   "report_fairness_title": {
     "message": "Justicia del día"
   },
   "report_fairness_tooltip": {
-    "message": "El override manual, los modos de contexto o los feriados detectados pueden neutralizar el índice. Este banner avisa cuando sucede."
+    "message": "El override manual y los feriados pueden neutralizar el índice; los contextos ajustan los pesos. Este banner avisa cuando sucede."
   },
   "report_filter_apply": {
     "message": "Filtrar"

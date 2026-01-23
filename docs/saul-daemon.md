@@ -48,9 +48,9 @@ O diretório default segue esta ordem:
 - `GET /health`
 - `GET /v1/health`
 
-### Legado (Chrome)
+### Chrome (tracking)
 
-- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=...`
+- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=...` (resumo agregado usado pelo background)
 - `POST /v1/tracking/vscode/heartbeat`
 - `GET/POST /v1/tracking/index`
 

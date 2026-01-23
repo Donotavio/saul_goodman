@@ -22,6 +22,7 @@ npm test
 - `docs/architecture.md` — visão geral da arquitetura e fluxos.
 - `docs/chrome-extension.md` — detalhes da extensão Chrome.
 - `docs/metrics.md` — métricas, KPIs e cálculo do índice.
+- `docs/behavior-guardrails.md` — comportamentos atuais e riscos conhecidos.
 - `docs/auto-classification.md` — sugestão automática e aprendizado local.
 - `docs/vscode-extension.md` — extensão VS Code e configurações.
 - `docs/saul-daemon.md` — serviço local, endpoints e armazenamento.
