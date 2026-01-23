@@ -87,6 +87,8 @@ const MODEL_LEARNING_RATE = 0.05;
 const MODEL_L2 = 0.0005;
 const MODEL_MIN_FEATURE_COUNT = 3;
 
+console.info('[Saul] Background worker started', { at: new Date().toISOString() });
+
 function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
   chrome.tabs.sendMessage(
     tabId,
@@ -152,6 +154,34 @@ const trackingState: TrackingState = {
   awaitingVscodeReturn: false,
   pendingSwitchFromDomain: null
 };
+
+function logCurrentDomainNull(reason: string, details?: Record<string, unknown>): void {
+  const previousDomain = trackingState.currentDomain;
+  const previousTabId = trackingState.currentTabId;
+  if (!previousDomain && previousTabId === null) {
+    return;
+  }
+  console.info('[Saul] currentDomain -> null', {
+    reason,
+    previousDomain,
+    previousTabId,
+    browserFocused: trackingState.browserFocused,
+    isIdle: trackingState.isIdle,
+    at: new Date().toISOString(),
+    ...(details ?? {})
+  });
+}
+
+function getUrlScheme(url?: string | null): string | null {
+  if (!url) {
+    return null;
+  }
+  try {
+    return new URL(url).protocol;
+  } catch {
+    return null;
+  }
+}
 
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
@@ -791,6 +821,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
       trackingState.pendingSwitchFromDomain = trackingState.currentDomain;
       trackingState.awaitingVscodeReturn = true;
       await finalizeCurrentDomainSlice();
+      logCurrentDomainNull('window_focus_lost', { windowId });
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
       trackingState.currentTabAudible = false;
@@ -896,6 +927,7 @@ async function initialize(): Promise<void> {
   }
 
   initializing = true;
+  console.info('[Saul] Background initialize:start', { at: new Date().toISOString() });
 
   await Promise.all([getSettingsCache(), getMetricsCache()]);
   await hydrateFairnessState();
@@ -912,6 +944,7 @@ async function initialize(): Promise<void> {
   await syncVscodeMetrics(true);
   await notifyReleaseNotesIfNeeded();
 
+  console.info('[Saul] Background initialize:complete', { at: new Date().toISOString() });
   initializing = false;
 }
 
@@ -941,6 +974,7 @@ async function hydrateActiveTab(): Promise<void> {
       await updateActiveTabContext(activeTab.id, true, activeTab);
       void syncCriticalStateToTab(activeTab.id);
     } else {
+      logCurrentDomainNull('hydrate_active_tab_missing');
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
     }
@@ -967,6 +1001,11 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
     if (previousDomain) {
       await finalizeCurrentDomainSlice();
     }
+    logCurrentDomainNull('active_tab_without_domain', {
+      tabId,
+      tabUrlPresent: Boolean(tab.url),
+      tabUrlScheme: getUrlScheme(tab.url)
+    });
     trackingState.currentDomain = null;
     trackingState.currentTabId = null;
     trackingState.currentTabAudible = false;
@@ -1820,6 +1859,7 @@ async function refreshWindowFocusState(): Promise<void> {
 
     if (!isFocused && wasFocused) {
       await finalizeCurrentDomainSlice();
+      logCurrentDomainNull('refresh_window_focus_state');
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
       trackingState.currentTabAudible = false;

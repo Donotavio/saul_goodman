@@ -1,58 +1,55 @@
-# Classificação automática e aprendizado local
+# Sugestões automáticas e aprendizado local
 
-Este documento explica como a extensão sugere categorias (Produtivo, Procrastinação, Neutro) e como o modelo local aprende com as suas escolhas, sempre sem sair do navegador.
+Este recurso sugere como classificar domínios não listados pelo usuário. Ele **não** altera listas automaticamente — apenas recomenda e aprende com o feedback.
 
-## O que coletamos para sugerir
+## Quando uma sugestão é criada
 
-- Hostname da aba atual.
-- Metadados leves da página: `<title>`, `meta description`, `meta keywords`, `meta property="og:type"`.
-- Flags estruturais: presença de player de vídeo, autoplay, feed/shorts/reels, formulário, editor rico, tabela grande e indícios de scroll infinito.
-- Esquemas leves: `schema.org` (`itemtype`) para detectar `Article/TechArticle/VideoObject/...`.
-- Cabeçalhos (h1–h3) e tokens de caminho da URL (ex.: `/watch`, `/dashboard`, `/issues/...`).
-- Idioma da página (via `lang`).
-- Nunca coletamos conteúdo completo, texto da página ou interações; nada é enviado para a rede.
+- `enableAutoClassification` deve estar ativo nas opções.
+- O domínio visitado não pode estar nas listas produtivo/procrastinação.
+- A aba precisa ser `http(s)` (páginas internas do Chrome não são analisadas).
+- O content script responde com metadados dentro do timeout (2s).
 
-## Heurística base (determinística)
+As sugestões aparecem como **toast na página** e no **card de sugestões do popup**.
 
-1) **Hosts conhecidos**: lista embutida de domínios produtivos e de procrastinação (com match em subdomínios) gera um sinal forte.  
-2) **Palavras‑chave**: termos produtivos/procrastinação em hostname, título, description ou keywords somam pontos médios (proteção contra duplicidade por fonte).  
-3) **Estrutura da página**: player de vídeo (+), scroll infinito (+), autoplay, layout de feed/shorts, formulários, editor rico, tabela grande e `og:type` produtivo ou de vídeo ajustam a pontuação.  
-4) **Caminho/schema**: tokens de URL (`/watch`, `/shorts`, `/feed`, `/dashboard`, `/issues`, `/editor`) e `schema.org` (`VideoObject`, `Article`, etc.) contribuem com pesos médios.  
-5) **Threshold**: diferença de ≥15 pontos classifica em Produtivo; ≤ ‑15 em Procrastinação; caso contrário fica Neutro.  
-6) **Confiança**: derivada de sinais fortes/médios, limitada a 100 e reduzida se o resultado for Neutro.
+## Sinais coletados (localmente)
 
-## Aprendizado local (reforço das suas decisões)
+O content script envia apenas metadados e sinais leves:
 
-- Armazenamos contadores por “tokens” em `chrome.storage.local`:
-  - `host:<domínio completo>`
-  - `root:<domínio base>`
-  - `kw:<palavra normalizada>`
-- `og:<valor>`
-- `path:<token>` (partes do caminho da URL)
-- `schema:<valor>`
-- `lang:<lang>`
-- Flags: `flag:video`, `flag:scroll`, `flag:autoplay`, `flag:feed`, `flag:form`, `flag:editor`, `flag:table`, `flag:shorts`
-- Quando você aceita ou recusa uma sugestão, ou adiciona domínios manualmente na Options, incrementamos apenas os contadores locais desses tokens.
-- Em cada sugestão, os tokens presentes geram um “learnedScore” (Naïve Bayes leve): `score += log((prod+1)/(proc+1)) * peso`. Pesos priorizam host/root; palavras e flags valem menos.
-- **Pesos adaptativos**: pesos por tipo de token se ajustam conforme o feedback (aumentam quando o usuário confirma, reduzem quando discorda), respeitando limites mínimos/máximos.
-- **Decaimento por tipo**: contadores antigos perdem força com meia‑vida diferente por tipo (hosts/roots mais lentos; path/schema/flags mais rápidos) para evitar overfitting a hábitos velhos.
-- **Limite**: mantemos até ~5k tokens; os mais antigos são descartados primeiro.
-- **Transparência**: razões exibem “Sinal aprendido” quando o aprendizado influenciar a sugestão.
+- `hostname`, `title`, `description`, `keywords`, headings (`h1–h3`).
+- `og:type`, `schema.org` (itemtype), tokens de path (`/watch`, `/docs`, etc.).
+- Flags de layout: vídeo, scroll infinito, autoplay, feed, formulário, editor rico, tabela grande, shorts/reels.
+- Contadores: links externos, profundidade de scroll, interações, tempo ativo na página.
+- `language` do documento.
 
-## Estado e privacidade
+Nada é enviado para a rede.
 
-- Tudo vive em `chrome.storage.local` (sem sync, sem servidor).
-- Nenhuma requisição de rede é feita para classificar.
-- Você pode limpar dados removendo a extensão ou limpando o storage do Chrome.
+## Modelo de sugestões
 
-## Controles e cooldown
+- **Modelo**: regressão logística online (`OnlineLogisticRegression`).
+- **Vetorização**: `FeatureVectorizer` com 65.536 dimensões e `minFeatureCount=3`.
+- **Persistência**: IndexedDB `sg-ml-models` + metadados em `chrome.storage.local` (`sg:ml-model-meta`).
+- **Confiança**: baseada na probabilidade do modelo.
 
-- A auto‑classificação vem ativada por padrão (`enableAutoClassification` na Options) e pode ser desativada.
-- Há cooldown configurável entre sugestões para o mesmo domínio; domínios de baixa confiança podem ser perguntados com um cooldown mais curto.
-- Ignorar uma sugestão registra um prazo de silêncio para aquele domínio.
+Classificação por probabilidade:
 
-## Quando atualizar esta página
+- `>= 0.60` → **produtivo**
+- `<= 0.40` → **procrastinação**
+- entre 0.40 e 0.60 → **neutro**
 
-- Ao adicionar novos sinais (ex.: novos OG types, novos flags de detecção).
-- Ao mudar pesos/thresholds do classificador.
-- Ao alterar a política de decaimento ou o limite de tokens aprendidos.
+## Cooldown e histórico
+
+- Cooldown padrão: **24h** (`suggestionCooldownMs`).
+- Sugestões de baixa confiança respeitam um cooldown mínimo de **15 min**.
+- Histórico por domínio fica em `settings.suggestionsHistory`.
+- Cache limitado a 10 sugestões ativas por vez.
+
+## Feedback do usuário
+
+- **Aceitar**: adiciona domínio à lista correspondente e treina o modelo.
+- **Ignorar**: registra cooldown e não treina.
+- **Classificar manualmente**: direciona para opções.
+
+## Observações importantes
+
+- O toggle **“Sugestões por IA”** está desabilitado na UI (placeholder).
+- O aprendizado é totalmente local; não há chamadas externas.
