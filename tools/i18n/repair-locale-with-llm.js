@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, '../..');
 const LOCALES_DIR = path.join(ROOT, '_locales');
 
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'openai';
-const TIMEOUT_MS = 15000;
+const TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS) || 120000;
 const MAX_RETRIES = 2;
 
 const LOCALE_META = {
@@ -193,6 +193,12 @@ async function repairLocale(localeFolder, mode, limit) {
   for (const key of keys) {
     const baseMsg = base[key]?.message;
     const msg = target[key]?.message;
+    if (mode === 'missing') {
+      if (typeof msg !== 'string' || !msg.trim()) {
+        toFix.push(key);
+      }
+      continue;
+    }
     if (mode === 'all') {
       if (typeof baseMsg === 'string' && baseMsg.trim()) {
         toFix.push(key);

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <title>Loading…</title>
+    <meta http-equiv="refresh" content="0;url=/" />
+    <script>
+      (function() {
+        var locale = 'it';
+        try {
+          document.cookie = 'saul_lang=' + encodeURIComponent(locale) + '; path=/; max-age=' + 60 * 60 * 24 * 365 + '; SameSite=Lax';
+        } catch (error) {
+          // ignore
+        }
+        var parts = (location.pathname || '').split('/').filter(Boolean);
+        var idx = parts.indexOf(locale);
+        if (idx !== -1) {
+          parts.splice(idx, 1);
+        }
+        var targetPath = '/' + parts.join('/') + (location.pathname.endsWith('/') ? '/' : '');
+        var target = targetPath + (location.search || '') + (location.hash || '');
+        window.location.replace(target || '/');
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

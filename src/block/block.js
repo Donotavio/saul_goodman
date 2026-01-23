@@ -1,4 +1,4 @@
-import { resolveLocale, localeToDir } from '../shared/i18n.js';
+import { resolveLocale, localeToDir } from '../../dist/shared/i18n.js';
 
 const DEFAULT_LOCALE = 'en-US';
 const SETTINGS_KEY = 'sg:settings';

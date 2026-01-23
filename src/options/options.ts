@@ -1,7 +1,23 @@
-import { ExtensionSettings, LocalePreference, SupportedLocale, WorkInterval } from '../shared/types.js';
+import {
+  DomainCategory,
+  DomainSuggestion,
+  ExtensionSettings,
+  LocalePreference,
+  RuntimeMessageResponse,
+  SupportedLocale,
+  WorkInterval
+} from '../shared/types.js';
 import { getDefaultSettings, getDefaultWorkSchedule, getSettings, saveSettings } from '../shared/storage.js';
 import { normalizeDomain } from '../shared/utils/domain.js';
 import { createI18n, I18nService, resolveLocale, SUPPORTED_LOCALES } from '../shared/i18n.js';
+import { buildLearningTokens } from '../shared/domain-classifier.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
+import { getTodayKey } from '../shared/utils/time.js';
+import {
+  ensureHostPermission,
+  ensureLocalhostPermission,
+  isLocalhostUrl
+} from '../shared/utils/permissions.js';
 
 type DomainListKey = 'productiveDomains' | 'procrastinationDomains';
 
@@ -12,6 +28,19 @@ const productiveInput = document.getElementById('productiveInput') as HTMLInputE
 const procrastinationInput = document.getElementById('procrastinationInput') as HTMLInputElement;
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
+const domainFilterInput = document.getElementById('domainFilterInput') as HTMLInputElement | null;
+const recommendationsProductiveListEl = document.getElementById(
+  'recommendationsProductiveList'
+) as HTMLUListElement | null;
+const recommendationsProcrastinationListEl = document.getElementById(
+  'recommendationsProcrastinationList'
+) as HTMLUListElement | null;
+const recommendationsNeutralListEl = document.getElementById(
+  'recommendationsNeutralList'
+) as HTMLUListElement | null;
+const recommendationsEmptyEl = document.getElementById(
+  'recommendationsEmpty'
+) as HTMLParagraphElement | null;
 const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
 const tabSwitchWeightEl = document.getElementById('tabSwitchWeight') as HTMLInputElement;
@@ -34,6 +63,11 @@ const criticalThresholdEl = document.getElementById('criticalThreshold') as HTML
 const criticalSoundEnabledEl = document.getElementById('criticalSoundEnabled') as HTMLInputElement;
 const holidayAutoEnabledEl = document.getElementById('holidayAutoEnabled') as HTMLInputElement;
 const holidayCountryCodeEl = document.getElementById('holidayCountryCode') as HTMLInputElement;
+const enableAutoClassificationEl = document.getElementById(
+  'enableAutoClassification'
+) as HTMLInputElement;
+const enableAISuggestionsEl = document.getElementById('enableAISuggestions') as HTMLInputElement;
+const suggestionCooldownEl = document.getElementById('suggestionCooldownHours') as HTMLInputElement;
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 const statusMessageEl = document.getElementById('statusMessage') as HTMLParagraphElement;
 const backToPopupButton = document.getElementById('backToPopupButton') as HTMLButtonElement | null;
@@ -45,6 +79,7 @@ const installVscodeExtensionButton = document.getElementById(
 const DEFAULT_VSCODE_URL = 'http://127.0.0.1:3123';
 const VSCODE_MARKETPLACE_URL =
   'https://marketplace.visualstudio.com/items?itemName=Donotavio.saul-goodman-vscode';
+const NAGER_HOST_PERMISSION = 'https://date.nager.at/*';
 const LOCALE_LABELS: Record<SupportedLocale, string> = {
   'pt-BR': 'Português (Brasil)',
   'en-US': 'English (US)',
@@ -65,6 +100,7 @@ let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
 let procrastinationHighlightDone = false;
 let i18n: I18nService | null = null;
+let suggestionList: DomainSuggestion[] = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -126,12 +162,41 @@ function attachListeners(): void {
     }
   });
 
+  domainFilterInput?.addEventListener('input', () => {
+    renderDomainList('productiveDomains', productiveListEl);
+    renderDomainList('procrastinationDomains', procrastinationListEl);
+    renderRecommendations();
+  });
+
   blockProcrastinationEl?.addEventListener('change', () => {
     if (!currentSettings) {
       return;
     }
     currentSettings.blockProcrastination = blockProcrastinationEl.checked;
     void persistSettings('options_status_blocklist_saved');
+  });
+  enableAutoClassificationEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.enableAutoClassification = enableAutoClassificationEl.checked;
+    void persistSettings('options_status_auto_classification_saved');
+  });
+  enableAISuggestionsEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    currentSettings.enableAISuggestions = enableAISuggestionsEl.checked;
+    void persistSettings('options_status_auto_classification_saved');
+  });
+  suggestionCooldownEl?.addEventListener('change', () => {
+    if (!currentSettings) {
+      return;
+    }
+    const hours = Math.max(1, Number.parseInt(suggestionCooldownEl.value, 10) || 24);
+    currentSettings.suggestionCooldownMs = hours * 3600000;
+    suggestionCooldownEl.value = hours.toString();
+    void persistSettings('options_status_auto_classification_saved');
   });
 
   resetButton.addEventListener('click', () => {
@@ -211,11 +276,7 @@ function attachListeners(): void {
     void handleCriticalSettingsChange();
   });
   holidayAutoEnabledEl?.addEventListener('change', () => {
-    if (!currentSettings) {
-      return;
-    }
-    currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
-    void persistSettings('options_status_holiday_saved');
+    void handleHolidayToggle();
   });
   holidayCountryCodeEl?.addEventListener('change', () => {
     handleHolidayCountryChange();
@@ -232,7 +293,8 @@ function setVscodeTestStatus(
     return;
   }
 
-  const message = i18n?.t(messageKey, substitutions) ?? fallback;
+  const translated = i18n?.t(messageKey, substitutions);
+  const message = translated && translated !== messageKey ? translated : fallback;
   vscodeTestStatusEl.textContent = message;
   vscodeTestStatusEl.classList.remove('pending', 'success', 'error');
 
@@ -245,14 +307,6 @@ function setVscodeTestStatus(
   if (variant !== 'idle') {
     vscodeTestStatusEl.classList.add(variant);
   }
-}
-
-function getTodayKey(): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
 }
 
 async function testVscodeConnection(): Promise<void> {
@@ -271,6 +325,24 @@ async function testVscodeConnection(): Promise<void> {
 
   const baseUrl = (vscodeLocalApiUrlEl?.value.trim() || DEFAULT_VSCODE_URL).trim();
   const pairingKey = vscodePairingKeyEl?.value.trim() ?? '';
+
+  if (!isLocalhostUrl(baseUrl)) {
+    setVscodeTestStatus(
+      'options_vscode_test_invalid_url',
+      'URL inválida. Use algo como http://127.0.0.1:3123.',
+      'error'
+    );
+    return;
+  }
+
+  if (!(await ensureLocalhostPermission())) {
+    setVscodeTestStatus(
+      'options_vscode_permission_denied',
+      'Permissão para acessar o SaulDaemon negada.',
+      'error'
+    );
+    return;
+  }
 
   let summaryUrl: URL;
   let healthUrl: URL;
@@ -419,6 +491,7 @@ async function hydrate(): Promise<void> {
   await refreshTranslations();
   populateLocaleSelect();
   renderForms();
+  await loadSuggestions();
   if (window.location.hash === '#vilains' && !procrastinationHighlightDone) {
     focusProcrastinationSection();
     procrastinationHighlightDone = true;
@@ -463,10 +536,22 @@ function renderForms(): void {
   if (blockProcrastinationEl) {
     blockProcrastinationEl.checked = Boolean(currentSettings.blockProcrastination);
   }
+  if (enableAutoClassificationEl) {
+    enableAutoClassificationEl.checked = Boolean(currentSettings.enableAutoClassification);
+  }
+  if (enableAISuggestionsEl) {
+    enableAISuggestionsEl.checked = Boolean(currentSettings.enableAISuggestions);
+    enableAISuggestionsEl.disabled = true;
+  }
+  if (suggestionCooldownEl) {
+    const hours = Math.round((currentSettings.suggestionCooldownMs ?? 86_400_000) / 3600000);
+    suggestionCooldownEl.value = hours.toString();
+  }
   renderWorkSchedule();
 
   renderDomainList('productiveDomains', productiveListEl);
   renderDomainList('procrastinationDomains', procrastinationListEl);
+  renderRecommendations();
 }
 
 function translateOrFallback(key: string, fallback: string): string {
@@ -477,6 +562,10 @@ function translateOrFallback(key: string, fallback: string): string {
   return translated;
 }
 
+function getDomainFilter(): string {
+  return (domainFilterInput?.value ?? '').trim().toLowerCase();
+}
+
 function renderDomainList(key: DomainListKey, container: HTMLUListElement): void {
   if (!currentSettings) {
     return;
@@ -484,15 +573,21 @@ function renderDomainList(key: DomainListKey, container: HTMLUListElement): void
 
   container.innerHTML = '';
   const domains = currentSettings[key];
+  const filter = getDomainFilter();
+  const visibleDomains = filter
+    ? domains.filter((domain) => domain.toLowerCase().includes(filter))
+    : domains;
 
-  if (!domains.length) {
-    const li = document.createElement('li');
-    li.textContent = translateOrFallback('options_domain_empty', 'No domains yet.');
-    container.appendChild(li);
+  if (!visibleDomains.length) {
+    if (!filter) {
+      const li = document.createElement('li');
+      li.textContent = translateOrFallback('options_domain_empty', 'No domains yet.');
+      container.appendChild(li);
+    }
     return;
   }
 
-  for (const domain of domains) {
+  for (const domain of visibleDomains) {
     const li = document.createElement('li');
     li.textContent = domain;
     const button = document.createElement('button');
@@ -533,6 +628,41 @@ async function handleWeightsSubmit(): Promise<void> {
   await persistSettings('options_status_weights_saved');
 }
 
+function bumpLearningFromDomain(domain: string, category: DomainCategory): void {
+  if (!currentSettings) {
+    return;
+  }
+  const learning = currentSettings.learningSignals ?? { version: 1, tokens: {} };
+  const now = Date.now();
+  const tokens = buildLearningTokens({
+    hostname: domain,
+    hasInfiniteScroll: false,
+    hasVideoPlayer: false
+  });
+
+  for (const token of tokens) {
+    const stat = learning.tokens[token] ?? { productive: 0, procrastination: 0, lastUpdated: now };
+    if (category === 'productive') {
+      stat.productive += 1;
+    } else if (category === 'procrastination') {
+      stat.procrastination += 1;
+    }
+    stat.lastUpdated = now;
+    learning.tokens[token] = stat;
+  }
+
+  const entries = Object.entries(learning.tokens);
+  const MAX_LEARNING_TOKENS = 5000;
+  if (entries.length > MAX_LEARNING_TOKENS) {
+    entries
+      .sort(([, a], [, b]) => (a.lastUpdated ?? 0) - (b.lastUpdated ?? 0))
+      .slice(0, entries.length - MAX_LEARNING_TOKENS)
+      .forEach(([token]) => delete learning.tokens[token]);
+  }
+
+  currentSettings.learningSignals = learning;
+}
+
 async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): Promise<void> {
   if (!currentSettings) {
     return;
@@ -558,8 +688,11 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
 
   domains.push(normalized);
   domains.sort();
+  const category: DomainCategory = key === 'productiveDomains' ? 'productive' : 'procrastination';
+  bumpLearningFromDomain(normalized, category);
   input.value = '';
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
+  renderRecommendations();
   await persistSettings('options_status_list_updated');
 }
 
@@ -570,7 +703,153 @@ async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
 
   currentSettings[key] = currentSettings[key].filter((item) => item !== domain);
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
+  renderRecommendations();
   await persistSettings('options_status_domain_removed');
+}
+
+async function loadSuggestions(): Promise<void> {
+  try {
+    const response = (await chrome.runtime.sendMessage({
+      type: 'metrics-request'
+    })) as { ok?: boolean; data?: RuntimeMessageResponse; error?: string } | undefined;
+    if (!response?.ok || !response.data) {
+      suggestionList = [];
+      renderRecommendations();
+      return;
+    }
+    suggestionList = buildSuggestionList(response.data);
+    renderRecommendations();
+  } catch (error) {
+    console.warn('[options] Falha ao carregar sugestões:', error);
+  }
+}
+
+function buildSuggestionList(data: RuntimeMessageResponse): DomainSuggestion[] {
+  const combined: DomainSuggestion[] = [
+    ...(data.activeSuggestion ? [data.activeSuggestion] : []),
+    ...(data.suggestions ?? [])
+  ].filter((item): item is DomainSuggestion => Boolean(item));
+
+  const seen = new Set<string>();
+  const sorted = combined.sort((a, b) => b.timestamp - a.timestamp);
+  const deduped: DomainSuggestion[] = [];
+  for (const entry of sorted) {
+    const key = entry.domain;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(entry);
+  }
+  return deduped;
+}
+
+function renderRecommendations(): void {
+  if (
+    !recommendationsProductiveListEl ||
+    !recommendationsProcrastinationListEl ||
+    !recommendationsNeutralListEl
+  ) {
+    return;
+  }
+
+  recommendationsProductiveListEl.innerHTML = '';
+  recommendationsProcrastinationListEl.innerHTML = '';
+  recommendationsNeutralListEl.innerHTML = '';
+
+  const filter = getDomainFilter();
+  const classified = new Set<string>([
+    ...(currentSettings?.productiveDomains ?? []),
+    ...(currentSettings?.procrastinationDomains ?? [])
+  ]);
+
+  const productiveSuggestions: DomainSuggestion[] = [];
+  const procrastinationSuggestions: DomainSuggestion[] = [];
+  const neutralSuggestions: DomainSuggestion[] = [];
+
+  suggestionList.forEach((suggestion) => {
+    if (classified.has(suggestion.domain)) {
+      return;
+    }
+    if (filter && !suggestion.domain.toLowerCase().includes(filter)) {
+      return;
+    }
+    if (suggestion.classification === 'productive') {
+      productiveSuggestions.push(suggestion);
+    }
+    if (suggestion.classification === 'procrastination') {
+      procrastinationSuggestions.push(suggestion);
+    }
+    if (suggestion.classification === 'neutral') {
+      neutralSuggestions.push(suggestion);
+    }
+  });
+
+  productiveSuggestions.forEach((suggestion) => {
+    recommendationsProductiveListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+  procrastinationSuggestions.forEach((suggestion) => {
+    recommendationsProcrastinationListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+  neutralSuggestions.forEach((suggestion) => {
+    recommendationsNeutralListEl.appendChild(buildRecommendationItem(suggestion));
+  });
+
+  if (recommendationsEmptyEl) {
+    const isEmpty =
+      recommendationsProductiveListEl.childElementCount === 0 &&
+      recommendationsProcrastinationListEl.childElementCount === 0 &&
+      recommendationsNeutralListEl.childElementCount === 0;
+    recommendationsEmptyEl.classList.toggle('visible', isEmpty);
+  }
+}
+
+function buildRecommendationItem(suggestion: DomainSuggestion): HTMLLIElement {
+  const item = document.createElement('li');
+  const header = document.createElement('div');
+  header.className = 'recommendation-header';
+
+  const headerLeft = document.createElement('div');
+  headerLeft.className = 'recommendation-header-left';
+
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'PRODUTIVO',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'PROCRASTINADOR',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'NEUTRO'
+  };
+
+  const classificationEl = document.createElement('span');
+  classificationEl.className = `recommendation-classification ${suggestion.classification}`;
+  classificationEl.textContent = labelMap[suggestion.classification];
+
+  const domainEl = document.createElement('span');
+  domainEl.className = 'recommendation-domain';
+  domainEl.textContent = suggestion.domain;
+
+  headerLeft.appendChild(classificationEl);
+  headerLeft.appendChild(domainEl);
+
+  const confidenceEl = document.createElement('span');
+  confidenceEl.className = 'recommendation-confidence';
+  const confidenceText =
+    i18n?.t('popup_suggestion_confidence_filled', {
+      confidence: Math.round(suggestion.confidence)
+    }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
+  confidenceEl.textContent = confidenceText;
+
+  header.appendChild(headerLeft);
+  header.appendChild(confidenceEl);
+  item.appendChild(header);
+
+  const reasonsList = document.createElement('ul');
+  reasonsList.className = 'recommendation-reasons';
+  suggestion.reasons.slice(0, 3).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = translateSuggestionReason(reason, i18n);
+    reasonsList.appendChild(li);
+  });
+  item.appendChild(reasonsList);
+  return item;
 }
 
 async function persistSettings(messageKey: string): Promise<void> {
@@ -720,6 +999,23 @@ async function handleLocaleChange(): Promise<void> {
   renderForms();
 }
 
+async function handleHolidayToggle(): Promise<void> {
+  if (!currentSettings || !holidayAutoEnabledEl) {
+    return;
+  }
+  if (holidayAutoEnabledEl.checked) {
+    const granted = await ensureHostPermission(NAGER_HOST_PERMISSION);
+    if (!granted) {
+      holidayAutoEnabledEl.checked = false;
+      currentSettings.holidayAutoEnabled = false;
+      showStatus('Permissão para consultar feriados negada.', true);
+      return;
+    }
+  }
+  currentSettings.holidayAutoEnabled = holidayAutoEnabledEl.checked;
+  await persistSettings('options_status_holiday_saved');
+}
+
 function handleHolidayCountryChange(): void {
   if (!currentSettings || !holidayCountryCodeEl) {
     return;
@@ -738,18 +1034,8 @@ function handleHolidayCountryChange(): void {
 }
 
 function returnToPopup(): void {
-  const popupUrl = chrome.runtime.getURL('src/popup/popup.html');
-  if (!chrome?.tabs?.create) {
-    window.location.href = popupUrl;
-    return;
-  }
-  chrome.tabs.create({ url: popupUrl }, () => {
-    if (chrome.runtime.lastError) {
-      window.location.href = popupUrl;
-      return;
-    }
-    closeCurrentTab();
-  });
+  // Mirror report behavior: simplesmente fecha a aba atual.
+  closeCurrentTab();
 }
 
 function generatePairingKey(): string {
@@ -784,7 +1070,32 @@ async function handleVscodeSettingsChange(): Promise<void> {
   if (!currentSettings) {
     return;
   }
+  const previousUrl = currentSettings.vscodeLocalApiUrl;
   updateVscodeSettingsFromInputs();
+  const baseUrl = currentSettings.vscodeLocalApiUrl?.trim() ?? '';
+  if (baseUrl && !isLocalhostUrl(baseUrl)) {
+    showStatus(
+      i18n?.t('options_vscode_test_invalid_url') ??
+        'URL inválida. Use algo como http://127.0.0.1:3123.',
+      true
+    );
+    currentSettings.vscodeLocalApiUrl = previousUrl ?? DEFAULT_VSCODE_URL;
+    if (vscodeLocalApiUrlEl) {
+      vscodeLocalApiUrlEl.value = currentSettings.vscodeLocalApiUrl ?? DEFAULT_VSCODE_URL;
+    }
+    currentSettings.vscodeIntegrationEnabled = false;
+    if (vscodeIntegrationEnabledEl) {
+      vscodeIntegrationEnabledEl.checked = false;
+    }
+  } else if (currentSettings.vscodeIntegrationEnabled) {
+    if (!(await ensureLocalhostPermission())) {
+      showStatus('Permissão para acessar o SaulDaemon negada.', true);
+      currentSettings.vscodeIntegrationEnabled = false;
+      if (vscodeIntegrationEnabledEl) {
+        vscodeIntegrationEnabledEl.checked = false;
+      }
+    }
+  }
   await persistSettings('options_status_vscode_saved');
 }
 

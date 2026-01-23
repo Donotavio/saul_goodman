@@ -1,75 +1,48 @@
-# Guia de UX, tom de voz e microcopy
+# UX, tom de voz e microcopy
+
+Este guia garante consistência de linguagem e experiência entre popup, options e relatório.
 
 ## Identidade
 
-- Inspiração em Saul Goodman como advogado-vendedor carismático.
-- Humor sarcástico, persuasivo, sem referências protegidas (nomes de episódios, imagens da série etc.).
-- Idiomas suportados: **pt-BR** (padrão), **en-US** e **es-419** via `_locales/`. `localePreference = auto` segue o idioma do Chrome; todos os textos devem ter chave i18n correspondente. Tom permanece informal e claro sobre o que está sendo rastreado.
+- **Saul Goodman** como advogado-vendedor carismático, tom sarcástico e persuasivo.
+- Evite referências diretas a episódios, imagens ou marcas protegidas.
+- Mensagens curtas, claras e sempre informando o que é rastreado.
+
+## Idiomas e i18n
+
+- Idiomas suportados seguem `src/shared/i18n.ts`.
+- Toda string visível deve usar chaves i18n.
+- RTL automático para `ar` e `ur`.
 
 ## Popup
 
-- **Badge**: `ÍNDICE` + número atual (cálculo descrito em `docs/indicators.md`). Quando ≥ 70, valor fica em vermelho.
-- **Mensagem**: textos curtos que mudam conforme faixas de score (0–25, 26–50, 51–75, 76–100). Destaque o usuário como cliente e incentive/alerta com humor.
-- **Resumo**: cards "Produtivo / Procrastinação / Inatividade" exibem duração formatada com `formatDuration`.
-- **Disclaimers**: cada card/resumo e KPI possui ícone `i` para explicar a métrica; tooltips devem aparecer sem extrapolar o popup incluso quando alinhados à direita.
-- **Gráfico**: barras Produtivo x Procrastinação, sempre no mesmo tamanho — não deve fazer a tela rolar.
-- **Indicadores extras**: seis cartões ("Foco ativo", "Trocas por hora", "Tempo ocioso", "Prod x Proc", "Imersão campeã", "Vilão do dia"). Cada um exibe valores derivados e copy curta explicando o significado.
-- **Exportações**: seção “Defenda seu foco” com texto breve e botões para baixar CSV, gerar PDF rápido e abrir o relatório completo.
-- **Top 5 domínios**: lista ordenada desc, mostrando tempo formatado e cor por categoria.
-- **Justiça do dia**: card fixo logo abaixo do cabeçalho exibe o estado atual (normal, override manual, contexto pessoal/lazer/estudo ou feriado). Inclui:
-  - toggle “Ignorar hoje” que congela o índice, silencia alertas e mostra feedback imediato no `statusMessage`;
-  - seletor “Contexto atual” com opções Trabalho (default), Pessoal (neutraliza score), Lazer (aplica 30% das penalidades) e Estudos (reduz penalidades pela metade);
-  - mensagem auxiliar (`holidayStatus`) visível quando um feriado é detectado automaticamente;
-  - tooltip “Como funciona?” explicando os impactos e funcionando como âncora para screen readers (`aria-describedby=fairnessImpactHint`).
-- As mudanças do contexto precisam ser otimistas: desabilitar o select enquanto salva, restaurar o último valor em caso de erro e refletir o texto do banner imediatamente. O banner também precisa informar quando um feriado está neutralizando o dia para manter consistência com o relatório/exportações.
-- **Modo terremoto (limiar configurável, padrão 90)**: body treme, overlay toma a tela com mensagem do Saul, contador regressivo (45s) e CTAs (“Abrir relatório”, “Revisar domínios”, “Tocar sirene”). A sirene só toca se o usuário consentir e a escolha fica persistida; o overlay aparece em qualquer aba que não esteja marcada como produtiva (procrastinação ou neutro), reforçando na copy que mudar para uma aba produtiva libera o usuário para recuperar o score. Ao fechar o overlay ele só volta quando o score continua crítico.
-- **CTA**:
-  - `Atualizar`: força `metrics-request`.
-  - `Configurar`: abre options.
-  - Exportações ficam agrupadas no card “Defenda seu foco” (CSV, PDF e relatório).
-- **Disclaimer**: “Todos os dados ficam no navegador. Saul honra o sigilo profissional.”
+Elementos-chave que devem manter consistência de copy:
 
-## Options page
+- **Badge do índice**: score + mensagem contextual (faixas 0–25, 26–50, 51–75, 76–100).
+- **Sugestões automáticas**: domínio, classificação, confiança e botões de ação.
+- **Justiça do dia**: toggle “Ignorar hoje” + seletor de contexto.
+- **Resumo diário**: produtivo, procrastinação e inatividade.
+- **KPIs**: foco ativo, trocas/h, tempo ocioso, Prod x Proc, campeões/vilões.
+- **Exportações**: CSV, PDF e relatório detalhado.
+- **Modo crítico**: overlay e sirene quando o score ultrapassa o limiar configurado.
+- **Blog**: recomendação de artigo baseada no contexto do dia.
 
-- Texto guia lembra que tudo é local e incentiva o usuário a registrar sites produtivos/vilões.
-- Formulário de pesos exige soma ≈ 1.0; exibir feedback em `statusMessage` por 4s.
-- Botões "Adicionar"/"Remover" sempre confirmam visualmente (mensagem de status).
-- "Restaurar padrões" pergunta antes de aplicar defaults e envia `settings-updated`.
-- Campo "Chave OpenAI" opcional: explique que o valor fica salvo localmente e habilita o storytelling na página de relatório.
-- Toggle **“Bloquear acesso aos domínios desta lista”** na seção de procrastinação: quando ligado, a extensão aplica regras locais (declarativeNetRequest) que redirecionam o usuário para a página de bloqueio do Saul ao acessar qualquer domínio vilão. Copy deve reforçar que é um bloqueio local e reversível nas opções.
-- Hash `#vilains`: quando aberto a partir do modo crítico/relatório, rolar suavemente até o bloco de domínios procrastinatórios e destacá-lo (animação pulsante) por alguns segundos para guiar a ação. O formulário inclui campo para ajustar o limiar do modo terremoto (0–100).
-- Seção “Horários de trabalho”: permitir adicionar/remover intervalos (`input type="time"`) que representam o expediente oficial. Copy reforça que minutos produtivos fora desses blocos contam em dobro. Manter ao menos um intervalo cadastrado.
+## Options
 
-## Relatório detalhado (`src/report/report.html`)
+- Mensagens devem reforçar que tudo é local.
+- Pesos precisam somar 1; feedback imediato ao usuário.
+- Domínios produtivos/procrastinatórios têm confirmação visual de alterações.
+- Bloqueio local deve deixar claro que é reversível e não envia dados.
+- Seções: pesos/limiares, domínios, modo crítico, auto‑classificação, horário de trabalho, feriados, integração VS Code.
 
-- Header com tagline, índice, botão PDF e link de volta. Mantém gradiente + moldura como nos outros toques visuais.
-- Gráfico principal: barras empilhadas por hora (produtivo, procrastinação, inatividade) e doughnut com composição do dia.
-- Gráfico secundário: “Trocas de abas por hora” com barras empilhadas para cada tipo de transição (Prod↔Proc↔Neutro). Exibir legenda abaixo e mensagem de empty-state quando não houver trocas.
-- Lista “Campeões e vilões” resume top domínios e maior período ocioso.
-- Ranking mostra top produtivos e procrastinação com barras de progresso.
-- Narrativa minuto a minuto mostra trechos >5 min com horário formatado.
-- Bloco “Argumento do Saul” chama a OpenAI (quando chave configurada) para gerar texto sarcástico.
-- Botão “Exportar PDF” gera documento paisagem com gráficos e narrativa.
-- Banner crítico (score ≥ 90) reaproveita as mensagens do modo terremoto, exibe contador e CTA “Revisar vilões” que abre `options.html#vilains`.
+## Relatório
 
-## Conteúdo e mensagens
+- Mostra índice, gráficos por hora, trocas de abas, ranking de domínios e narrativa.
+- Contexto e justiça do dia aparecem no banner superior.
+- Painel VS Code aparece apenas quando integração está ativa.
 
-- **Sucesso**: “Cliente de ouro! Continue assim…”
-- **Alerta moderado**: “Vejo sinais de fuga de responsabilidade…”
-- **Alerta severo**: “Você está brincando com fogo…”
-- **Erro genérico**: “Ops! Não consegui falar com o escritório.”
-- **Confirm dialogs**: diretos e sem exageros ("Tem certeza? Isso zera apenas o dia atual.").
+## Acessibilidade e UI
 
-## Acessibilidade & responsividade
-
-- Layout pensado para 360×600 px.
-- Contraste forte (preto/amarelo/branco) e textos ≥ 0.9rem.
-- Botões com `cursor: pointer` e foco visual (border).
-- Canvas dentro de `.chart-wrapper` com altura fixa para evitar scroll.
-
-## Boas práticas futuras
-
-- Se adicionar novas mensagens, mantenha o tom vendedor-irônico.
-- Caso suporte inglês, mantenha ambos os idiomas no storage (ex.: `locale`), mas não misture no mesmo texto.
-- Sempre informe o usuário ao alterar dados sensíveis (limpar métricas, resetar listas).
-- No PDF inclua texto introdutório alinhado ao tom do popup e mantenha o gráfico e KPIs na mesma ordem do painel.
+- Texto mínimo de 0.9rem.
+- Tooltips com `data-tooltip` e `aria-label`.
+- Botões com estados de foco e contraste adequado.

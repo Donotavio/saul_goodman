@@ -64,15 +64,34 @@ test('buildContextBreakdown matches score calculation per context', () => {
   ];
 
   const breakdown = buildContextBreakdown({ history, metrics, settings, now });
-  const expectedWork = calculateProcrastinationIndex(metrics, settings, {
+  
+  const baseWorkIndex = calculateProcrastinationIndex(metrics, settings, {
     contextMode: { value: 'work', updatedAt: now },
     manualOverride: undefined,
     holidayNeutral: false
   }).score;
+  const baseStudyIndex = calculateProcrastinationIndex(metrics, settings, {
+    contextMode: { value: 'study', updatedAt: now },
+    manualOverride: undefined,
+    holidayNeutral: false
+  }).score;
 
-  assert.equal(breakdown.indices.work, expectedWork);
+  const workDuration = 45 * 60 * 1000;
+  const studyDuration = 30 * 60 * 1000;
+  const personalDuration = 15 * 60 * 1000;
+  const totalDuration = workDuration + studyDuration + personalDuration;
+
+  const expectedWorkWeighted = Math.round(baseWorkIndex * (workDuration / totalDuration));
+  const expectedStudyWeighted = Math.round(baseStudyIndex * (studyDuration / totalDuration));
+
+  assert.ok(Math.abs(breakdown.indices.work - expectedWorkWeighted) <= 1);
+  assert.ok(Math.abs(breakdown.indices.study - expectedStudyWeighted) <= 1);
   assert.equal(breakdown.indices.personal, 0);
+  assert.equal(breakdown.indices.leisure, 0);
   assert.equal(breakdown.indices.dayOff, 0);
   assert.equal(breakdown.indices.vacation, 0);
+  assert.ok(breakdown.indices.work > 0);
+  assert.ok(breakdown.indices.study > 0);
+  assert.ok(breakdown.indices.work > breakdown.indices.study);
   assert.equal(Object.values(breakdown.durations).reduce((acc, value) => acc + value, 0) > 0, true);
 });

@@ -61,8 +61,16 @@ export function splitDurationByHour(
 }
 
 export function formatTimeRange(start: number, end: number, locale = 'pt-BR'): string {
+  if (!Number.isFinite(start) || !Number.isFinite(end)) {
+    return '--';
+  }
+
   const startDate = new Date(start);
   const endDate = new Date(end);
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+    return '--';
+  }
+
   const formatter = new Intl.DateTimeFormat(locale, {
     hour: '2-digit',
     minute: '2-digit'

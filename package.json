@@ -1,14 +1,15 @@
 {
   "name": "saul-goodman-extension",
-  "version": "1.21.10",
+  "version": "1.21.25",
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node --input-type=module -e \"import fs from 'fs/promises'; await fs.rm('dist', { recursive: true, force: true });\"",
     "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.json",
+    "postbuild": "mkdir -p dist/vendor && cp src/vendor/*.js dist/vendor/",
     "watch": "tsc -w -p tsconfig.json",
-    "test": "npm run build && TEST_FILES=$(find dist/tests -name '*.test.js' -o -name '*.spec.js') && if [ -z \"$TEST_FILES\" ]; then echo 'No compiled tests found'; exit 0; fi && node --test $TEST_FILES",
+    "test": "npm run build && node --input-type=module -e \"import fs from 'fs/promises'; import path from 'path'; import { spawnSync } from 'child_process'; const root = path.join('dist', 'tests'); const exts = ['.test.js', '.spec.js']; const walk = async (dir) => { let out = []; try { for (const ent of await fs.readdir(dir, { withFileTypes: true })) { const p = path.join(dir, ent.name); if (ent.isDirectory()) out = out.concat(await walk(p)); else if (exts.some((ext) => ent.name.endsWith(ext))) out.push(p); } } catch {} return out; }; const files = await walk(root); if (!files.length) { console.log('No compiled tests found'); process.exit(0); } const res = spawnSync(process.execPath, ['--test', ...files], { stdio: 'inherit' }); process.exit(res.status ?? 1);\"",
     "package:webstore": "node tools/package-webstore.js",
     "blog:index": "node tools/content_engine/build-index.js",
     "content:engine": "node tools/content_engine/main.js",
@@ -17,15 +18,23 @@
     "i18n:check": "node tools/i18n/check-missing-keys.js",
     "i18n:stubs": "node tools/i18n/generate-locale-stubs.js",
     "i18n:copy-site": "node tools/i18n/copy-locales-to-site.js",
-    "i18n:repair-locale": "node tools/i18n/repair-locale-with-llm.js"
+    "i18n:repair-locale": "node tools/i18n/repair-locale-with-llm.js",
+    "i18n:full-lang-update": "npm run i18n:sync && for lang in ar bn de en_US es_419 fr hi it ru tr ur zh_CN; do  npm run i18n:repair-locale -- --locale \"$lang\" --mode suspicious --limit 200; done && npm run i18n:check && npm run i18n:stubs && npm run i18n:copy-site",
+    "mcp:sync-harness": "tsx tools/mcp_quality/sync-harness.ts",
+    "mcp:quality": "npm run build && tsx tools/mcp_quality/run.ts",
+    "mcp:quality:update-baseline": "npm run mcp:quality -- --update-baseline"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.2",
     "@types/chrome": "^0.0.246",
     "@types/node": "^20.11.30",
+    "tsx": "^4.21.0",
     "typescript": "^5.4.0"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
     "jspdf": "^4.0.0"
   }
 }

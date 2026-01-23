@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "Saul Goodman VS Code Bridge",
+  "vscode_ext_description": "Sendet aktive Zeit von VS Code an den lokalen SaulDaemon, der von der Chrome-Erweiterung verwendet wird.",
+  "command_start_daemon": "Saul Goodman: SaulDaemon-Befehl vorbereiten",
+  "command_test_daemon": "Saul Goodman: Verbindung zum SaulDaemon testen",
+  "command_open_reports": "Saul Goodman: Berichte öffnen",
+  "command_setup_pomodoro": "Saul Goodman: Pomodoro-System einrichten",
+  "command_reset_combo": "Saul Goodman: Combo zurücksetzen",
+  "config_enabled_description": "Aktiviert den Versand aktiver Zeit an den lokalen SaulDaemon.",
+  "config_enable_tracking_description": "Steuert die Erfassung und den Versand von Heartbeats an den SaulDaemon.",
+  "config_enable_reports_description": "Zeigt den Bericht von Saul innerhalb von VS Code an.",
+  "config_enable_sensitive_telemetry_description": "Erlaubt sensible Telemetrie (z. B.: Terminalbefehle).",
+  "config_api_base_description": "Basis-URL des lokalen SaulDaemon.",
+  "config_pairing_key_description": "Pairing-Schlüssel, der mit der Chrome-Erweiterung geteilt wird.",
+  "config_hash_file_paths_description": "Erstellt Hashes der in den Heartbeats gesendeten Dateipfade.",
+  "config_hash_project_names_description": "Erstellt Hashes der Projektnamen, bevor sie an den Daemon gesendet werden.",
+  "config_heartbeat_interval_description": "Intervall in Millisekunden zwischen den an den SaulDaemon gesendeten Heartbeats.",
+  "config_idle_threshold_description": "Maximale Zeit ohne Aktivität, bevor die Sitzung als inaktiv betrachtet wird.",
+  "config_language_description": "Sprache der VS Code-Erweiterung (auto verwendet die Sprache von VS Code).",
+  "config_enable_telemetry_description": "Aktiviert die Erfassung lokaler Produktivitätsmetriken (Debugging, Tests, Aufgaben, Terminal usw.). Daten verlassen niemals die Maschine.",
+  "config_pomodoro_test_mode_description": "Aktiviert den Testmodus für Pomodoro (1 Minute pro Zyklus anstelle von 25).",
+  "config_telemetry_diagnostics_interval_description": "Intervall in Sekunden zur Abtastung von Diagnosen (Fehler/Warnungen) der Dateien."
+}
