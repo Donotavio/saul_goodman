@@ -38,6 +38,7 @@ import {
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
+import { normalizeVscodeTrackingSummary, type VscodeTrackingSummaryPayload } from '../shared/vscode-summary.js';
 import { recordTabSwitchCounts } from '../shared/tab-switch.js';
 import { shouldTriggerCriticalForUrl } from '../shared/critical.js';
 import { getManualOverrideState, isManualOverrideActive } from '../shared/utils/manual-override.js';
@@ -86,6 +87,8 @@ const MODEL_DIMENSIONS = 1 << 16;
 const MODEL_LEARNING_RATE = 0.05;
 const MODEL_L2 = 0.0005;
 const MODEL_MIN_FEATURE_COUNT = 3;
+
+console.info('[Saul] Background worker started', { at: new Date().toISOString() });
 
 function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void {
   chrome.tabs.sendMessage(
@@ -153,9 +156,38 @@ const trackingState: TrackingState = {
   pendingSwitchFromDomain: null
 };
 
+function logCurrentDomainNull(reason: string, details?: Record<string, unknown>): void {
+  const previousDomain = trackingState.currentDomain;
+  const previousTabId = trackingState.currentTabId;
+  if (!previousDomain && previousTabId === null) {
+    return;
+  }
+  console.info('[Saul] currentDomain -> null', {
+    reason,
+    previousDomain,
+    previousTabId,
+    browserFocused: trackingState.browserFocused,
+    isIdle: trackingState.isIdle,
+    at: new Date().toISOString(),
+    ...(details ?? {})
+  });
+}
+
+function getUrlScheme(url?: string | null): string | null {
+  if (!url) {
+    return null;
+  }
+  try {
+    return new URL(url).protocol;
+  } catch {
+    return null;
+  }
+}
+
 let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
 let lastVscodeSyncAt = 0;
+let lastVscodeSummaryFallbackAt = 0;
 let vscodeSyncInProgress = false; // BUG-003: Prevent race condition
 let initializing = false;
 let globalCriticalState = false;
@@ -791,6 +823,7 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
       trackingState.pendingSwitchFromDomain = trackingState.currentDomain;
       trackingState.awaitingVscodeReturn = true;
       await finalizeCurrentDomainSlice();
+      logCurrentDomainNull('window_focus_lost', { windowId });
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
       trackingState.currentTabAudible = false;
@@ -896,6 +929,7 @@ async function initialize(): Promise<void> {
   }
 
   initializing = true;
+  console.info('[Saul] Background initialize:start', { at: new Date().toISOString() });
 
   await Promise.all([getSettingsCache(), getMetricsCache()]);
   await hydrateFairnessState();
@@ -912,6 +946,7 @@ async function initialize(): Promise<void> {
   await syncVscodeMetrics(true);
   await notifyReleaseNotesIfNeeded();
 
+  console.info('[Saul] Background initialize:complete', { at: new Date().toISOString() });
   initializing = false;
 }
 
@@ -941,6 +976,7 @@ async function hydrateActiveTab(): Promise<void> {
       await updateActiveTabContext(activeTab.id, true, activeTab);
       void syncCriticalStateToTab(activeTab.id);
     } else {
+      logCurrentDomainNull('hydrate_active_tab_missing');
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
     }
@@ -967,6 +1003,11 @@ async function updateActiveTabContext(tabId: number, countSwitch: boolean, provi
     if (previousDomain) {
       await finalizeCurrentDomainSlice();
     }
+    logCurrentDomainNull('active_tab_without_domain', {
+      tabId,
+      tabUrlPresent: Boolean(tab.url),
+      tabUrlScheme: getUrlScheme(tab.url)
+    });
     trackingState.currentDomain = null;
     trackingState.currentTabId = null;
     trackingState.currentTabAudible = false;
@@ -1457,6 +1498,28 @@ async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Respons
   }
 }
 
+async function fetchVscodeTrackingSummary(
+  baseUrl: string,
+  pairingKey: string,
+  dateKey: string
+): Promise<VscodeTrackingSummaryPayload | null> {
+  let url: URL;
+  try {
+    url = new URL('/v1/tracking/vscode/summary', baseUrl);
+  } catch {
+    return null;
+  }
+  url.searchParams.set('key', pairingKey);
+  url.searchParams.set('date', dateKey);
+
+  const response = await fetchWithTimeout(url.toString(), 4000);
+  if (!response.ok) {
+    return null;
+  }
+  return (await response.json()) as VscodeTrackingSummaryPayload;
+}
+
+// Legacy fallback for older daemon builds without /v1/tracking/vscode/summary.
 async function fetchVscodeDurations(
   baseUrl: string,
   pairingKey: string
@@ -1499,7 +1562,7 @@ async function fetchVscodeDurations(
 
 /**
  * Consulta o SaulDaemon local para trazer o resumo diário de uso do VS Code.
- * Endpoint esperado: GET {base}/v1/vscode/summaries?start=YYYY-MM-DD&end=YYYY-MM-DD&key=PAIRING_KEY
+ * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
   // BUG-003: Prevent race condition with parallel calls
@@ -1536,13 +1599,44 @@ async function syncVscodeMetrics(force = false): Promise<void> {
     if (!isLocalhostUrl(baseUrl) || !(await hasLocalhostPermission())) {
       return;
     }
+    const todayKey = getTodayKey();
+    const trackingSummary = await fetchVscodeTrackingSummary(baseUrl, pairingKey, todayKey);
+    if (trackingSummary) {
+      const normalized = normalizeVscodeTrackingSummary(trackingSummary, {
+        domainLabel: VS_CODE_DOMAIN_LABEL,
+        category: 'productive'
+      });
+      const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+      let resolvedVscodeMs = normalized.totalActiveMs;
+      if (resolvedVscodeMs > MAX_DAY_MS) {
+        console.warn(
+          `[Saul] VS Code time ${(resolvedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`
+        );
+        resolvedVscodeMs = MAX_DAY_MS;
+      }
+
+      metrics.vscodeActiveMs = resolvedVscodeMs;
+      metrics.vscodeSessions = normalized.sessions;
+      metrics.vscodeSwitches = normalized.switches;
+      metrics.vscodeSwitchHourly = normalized.switchHourly;
+      metrics.vscodeTimeline = normalized.timeline;
+
+      await persistMetrics();
+      lastVscodeSyncAt = now;
+      return;
+    }
+
+    if (now - lastVscodeSummaryFallbackAt > 10 * 60 * 1000) {
+      console.warn('[Saul] VS Code tracking summary unavailable, falling back to legacy endpoints.');
+      lastVscodeSummaryFallbackAt = now;
+    }
+
     let summaryUrl: URL;
     try {
       summaryUrl = new URL('/v1/vscode/summaries', baseUrl);
     } catch {
       return;
     }
-    const todayKey = getTodayKey();
     summaryUrl.searchParams.set('start', todayKey);
     summaryUrl.searchParams.set('end', todayKey);
     summaryUrl.searchParams.set('key', pairingKey);
@@ -1604,7 +1698,9 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       const MAX_DAY_MS = 24 * 60 * 60 * 1000;
       const resolvedVscodeMs = summaryTotalMs > 0 ? summaryTotalMs : recalculatedVscodeMs;
       if (resolvedVscodeMs > MAX_DAY_MS) {
-        console.warn(`[Saul] VS Code time ${(resolvedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`);
+        console.warn(
+          `[Saul] VS Code time ${(resolvedVscodeMs / 3600000).toFixed(1)}h exceeds 24h, clamping`
+        );
         metrics.vscodeActiveMs = MAX_DAY_MS;
       } else {
         metrics.vscodeActiveMs = resolvedVscodeMs;
@@ -1820,6 +1916,7 @@ async function refreshWindowFocusState(): Promise<void> {
 
     if (!isFocused && wasFocused) {
       await finalizeCurrentDomainSlice();
+      logCurrentDomainNull('refresh_window_focus_state');
       trackingState.currentDomain = null;
       trackingState.currentTabId = null;
       trackingState.currentTabAudible = false;

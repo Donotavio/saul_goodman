@@ -11,6 +11,15 @@ import { isManualOverrideActive } from './utils/manual-override.js';
 const MAX_TAB_SWITCHES = 50;
 const MAX_INACTIVE_MS = 3 * 60 * 60 * 1000; // 3h baseline
 
+export const SCORE_MESSAGE_THRESHOLDS = {
+  excellentMax: 25,
+  okMax: 50,
+  warningMax: 75
+} as const;
+
+export type ScoreMessageBand = 'excellent' | 'ok' | 'warning' | 'alert';
+export type ScoreBand = 'good' | 'warn' | 'alert' | 'neutral';
+
 export interface ScoreGuards {
   manualOverride?: ManualOverrideState;
   contextMode?: ContextModeState;
@@ -98,14 +107,42 @@ export function calculateProcrastinationIndex(
 }
 
 export function pickScoreMessageKey(score: number): string {
-  if (score <= 25) {
-    return 'popup_score_message_excellent';
+  const band = getScoreMessageBand(score);
+  switch (band) {
+    case 'excellent':
+      return 'popup_score_message_excellent';
+    case 'ok':
+      return 'popup_score_message_ok';
+    case 'warning':
+      return 'popup_score_message_warning';
+    case 'alert':
+    default:
+      return 'popup_score_message_alert';
   }
-  if (score <= 50) {
-    return 'popup_score_message_ok';
+}
+
+export function getScoreMessageBand(score: number): ScoreMessageBand {
+  if (score <= SCORE_MESSAGE_THRESHOLDS.excellentMax) {
+    return 'excellent';
   }
-  if (score <= 75) {
-    return 'popup_score_message_warning';
+  if (score <= SCORE_MESSAGE_THRESHOLDS.okMax) {
+    return 'ok';
   }
-  return 'popup_score_message_alert';
+  if (score <= SCORE_MESSAGE_THRESHOLDS.warningMax) {
+    return 'warning';
+  }
+  return 'alert';
+}
+
+export function getScoreBand(score: number): ScoreBand {
+  if (!Number.isFinite(score)) {
+    return 'neutral';
+  }
+  if (score <= SCORE_MESSAGE_THRESHOLDS.excellentMax) {
+    return 'good';
+  }
+  if (score <= SCORE_MESSAGE_THRESHOLDS.warningMax) {
+    return 'warn';
+  }
+  return 'alert';
 }

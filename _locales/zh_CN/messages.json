@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "嘘..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "一旦启用,索尔会使用当地Chrome规则阻断通往这些网站的导航."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "技术限制：一次最多可阻止 500 个域名。"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "一旦启用,索尔会使用当地Chrome规则阻断通往这些网站的导航."
   },
   "options_procrastination_block_toggle_label": {
     "message": "封锁访问此列表"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "正在装入..."
+  },
+  "popup_ml_bias_label": {
+    "message": "偏差"
+  },
+  "popup_ml_features_label": {
+    "message": "活跃特征"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "最后训练"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "学习率"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "最小频率"
+  },
+  "popup_ml_never": {
+    "message": "从不"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "预热中"
+  },
+  "popup_ml_status_ready": {
+    "message": "准备就绪"
+  },
+  "popup_ml_status_training": {
+    "message": "训练中"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "不可用"
+  },
+  "popup_ml_status_warming": {
+    "message": "预热中"
+  },
+  "popup_ml_subtitle": {
+    "message": "本地训练"
+  },
+  "popup_ml_title": {
+    "message": "机器学习模型"
+  },
+  "popup_ml_updates_label": {
+    "message": "更新"
   },
   "popup_options_button": {
     "message": "配置"

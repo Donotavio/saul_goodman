@@ -18,6 +18,7 @@ import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 import { ensureHostPermission } from '../shared/utils/permissions.js';
+import { getScoreBand, getScoreMessageBand, type ScoreMessageBand } from '../shared/score.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
@@ -153,12 +154,12 @@ const vscodeTopDebuggedFilesListEl = document.getElementById('vscodeTopDebuggedF
 const vscodeTopErrorFilesListEl = document.getElementById('vscodeTopErrorFilesList') as HTMLUListElement | null;
 const vscodeRefactoringStatsEl = document.getElementById('vscodeRefactoringStats') as HTMLElement | null;
 
-const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
-  { max: 25, key: 'report_hero_message_excellent' },
-  { max: 50, key: 'report_hero_message_ok' },
-  { max: 75, key: 'report_hero_message_warning' },
-  { max: 100, key: 'report_hero_message_alert' }
-];
+const HERO_MESSAGE_KEY_BY_BAND: Record<ScoreMessageBand, string> = {
+  excellent: 'report_hero_message_excellent',
+  ok: 'report_hero_message_ok',
+  warning: 'report_hero_message_warning',
+  alert: 'report_hero_message_alert'
+};
 
 const REPORT_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'report_banner_message_1', needsThreshold: true },
@@ -183,8 +184,8 @@ const REPORT_FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   report_fairness_status_personal: 'Modo pessoal — sem pontuação.',
   report_fairness_status_leisure: 'Modo lazer reduziu as cobranças.',
   report_fairness_status_study: 'Modo estudo suavizou as penalidades.',
-  report_fairness_status_day_off: 'Folga cadastrada neutralizou o índice.',
-  report_fairness_status_vacation: 'Modo férias zerou o dia.',
+  report_fairness_status_day_off: 'Folga cadastrada suavizou o índice.',
+  report_fairness_status_vacation: 'Modo férias suavizou o índice.',
   report_fairness_status_holiday: 'Feriado nacional neutralizou o índice.',
   report_fairness_status_default: 'Dia útil normal.'
 };
@@ -2789,12 +2790,8 @@ function findLongestSegment(
 }
 
 function pickHeroMessageKey(score: number): string {
-  for (const template of HERO_MESSAGE_KEYS) {
-    if (score <= template.max) {
-      return template.key;
-    }
-  }
-  return HERO_MESSAGE_KEYS[HERO_MESSAGE_KEYS.length - 1].key;
+  const band = getScoreMessageBand(score);
+  return HERO_MESSAGE_KEY_BY_BAND[band];
 }
 
 function describeCategory(category: TimelineEntry['category']): string {
@@ -3469,19 +3466,6 @@ function updateHeroLogo(isCritical: boolean): void {
   heroLogoEl.alt = isCritical
     ? i18n?.t('report_logo_alt_critical') ?? 'Saul Goodman unimpressed with your focus'
     : i18n?.t('report_logo_alt_default') ?? 'Saul Goodman logo';
-}
-
-function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
-  if (score <= 25) {
-    return 'good';
-  }
-  if (score <= 50) {
-    return 'warn';
-  }
-  if (score >= 70) {
-    return 'alert';
-  }
-  return 'neutral';
 }
 
 function triggerHeroConfetti(): void {

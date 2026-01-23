@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "Quando abilitato, Saul blocca la navigazione in questi siti utilizzando le regole locali Chrome."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Limite tecnico: è possibile bloccare fino a 500 domini alla volta."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Quando abilitato, Saul blocca la navigazione in questi siti utilizzando le regole locali Chrome."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Bloccare l'accesso a questa lista"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Caricamento..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Bias"
+  },
+  "popup_ml_features_label": {
+    "message": "Caratteristiche attive"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Ultimo allenamento"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Tasso di apprendimento"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Frequenza minima"
+  },
+  "popup_ml_never": {
+    "message": "Mai"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Riscaldamento"
+  },
+  "popup_ml_status_ready": {
+    "message": "Pronto"
+  },
+  "popup_ml_status_training": {
+    "message": "In allenamento"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Non disponibile"
+  },
+  "popup_ml_status_warming": {
+    "message": "Riscaldamento"
+  },
+  "popup_ml_subtitle": {
+    "message": "Allenamento locale"
+  },
+  "popup_ml_title": {
+    "message": "Modello ML"
+  },
+  "popup_ml_updates_label": {
+    "message": "Aggiornamenti"
   },
   "popup_options_button": {
     "message": "Configurazione"

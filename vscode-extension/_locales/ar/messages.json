@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "Sk..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "وعندما أمكن ذلك، يحجب سول الملاحة إلى هذه المواقع باستخدام قواعد الكروم المحلية."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "حد تقني: يمكن حظر ما يصل إلى 500 نطاق في المرة الواحدة."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "وعندما أمكن ذلك، يحجب سول الملاحة إلى هذه المواقع باستخدام قواعد الكروم المحلية."
   },
   "options_procrastination_block_toggle_label": {
     "message": "الوصول إلى هذه القائمة"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "التعبئة..."
+  },
+  "popup_ml_bias_label": {
+    "message": "تحيز"
+  },
+  "popup_ml_features_label": {
+    "message": "الميزات النشطة"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "آخر تدريب"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "معدل التعلم"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "التردد الأدنى"
+  },
+  "popup_ml_never": {
+    "message": "أبداً"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "يتم التسخين"
+  },
+  "popup_ml_status_ready": {
+    "message": "جاهز"
+  },
+  "popup_ml_status_training": {
+    "message": "تدريب"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "غير متوفر"
+  },
+  "popup_ml_status_warming": {
+    "message": "يتم التسخين"
+  },
+  "popup_ml_subtitle": {
+    "message": "التدريب المحلي"
+  },
+  "popup_ml_title": {
+    "message": "نموذج ML"
+  },
+  "popup_ml_updates_label": {
+    "message": "التحديثات"
   },
   "popup_options_button": {
     "message": "الثقة"

@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "When enabled, Saul blocks navigation to these sites using local Chrome rules."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Technical limit: up to 500 domains can be blocked at a time."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "When enabled, Saul blocks navigation to these sites using local Chrome rules."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Block access to this list"
@@ -1626,13 +1626,13 @@
     "message": "Skip today"
   },
   "popup_fairness_note": {
-    "message": "Saul recalibrates the score based on the context you choose in the popup. Skipping today zeros the score and mutes alerts. Contexts: Work keeps 100%, Personal neutralizes everything, Leisure counts 30% of focus and ignores villains, Study halves penalties, Day off and Vacation zero the day regardless of holidays."
+    "message": "Saul recalibrates the score based on the context you choose in the popup. Skipping today zeros the score and mutes alerts. Contexts: Work keeps 100%. Personal neutralizes everything. Leisure applies 55% to productive time and 10% to procrastination. Study applies 75% to productive time and 50% to procrastination. Day off applies 85% to productive time and 15% to procrastination. Vacation applies 95% to productive time and 20% to procrastination."
   },
   "popup_fairness_note_label": {
     "message": "Saul explains"
   },
   "popup_fairness_status_day_off": {
-    "message": "Day off recorded — score paused."
+    "message": "Day off logged — index softened."
   },
   "popup_fairness_status_default": {
     "message": "Normal business day."
@@ -1653,7 +1653,7 @@
     "message": "Study mode softens the score."
   },
   "popup_fairness_status_vacation": {
-    "message": "Vacation mode neutralizes the day."
+    "message": "Vacation mode softens the index."
   },
   "popup_fairness_title": {
     "message": "Day fairness"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Loading..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Bias"
+  },
+  "popup_ml_features_label": {
+    "message": "Active features"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Last training"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Learning rate"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Min frequency"
+  },
+  "popup_ml_never": {
+    "message": "Never"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Cold start"
+  },
+  "popup_ml_status_ready": {
+    "message": "Ready"
+  },
+  "popup_ml_status_training": {
+    "message": "Training"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Unavailable"
+  },
+  "popup_ml_status_warming": {
+    "message": "Warming"
+  },
+  "popup_ml_subtitle": {
+    "message": "Local training"
+  },
+  "popup_ml_title": {
+    "message": "ML Model"
+  },
+  "popup_ml_updates_label": {
+    "message": "Updates"
   },
   "popup_options_button": {
     "message": "Configure"
@@ -2172,19 +2217,19 @@
     "message": "Time by context"
   },
   "report_context_effect_dayOff": {
-    "message": "Zeros the day—no credit, no debt. Official day off."
+    "message": "Productive counts 85% and procrastination 15%. Official day off without zeroing the day."
   },
   "report_context_effect_leisure": {
-    "message": "Only 30% focus counted and villains ignored. Most flexible context."
+    "message": "Productive counts 55% and procrastination 10%. Most flexible context."
   },
   "report_context_effect_personal": {
     "message": "Neutralizes everything: no credit, no debt. Saul takes the day for personal matters."
   },
   "report_context_effect_study": {
-    "message": "Focus counts 75% and penalties drop by half. Flexible but still disciplined."
+    "message": "Productive counts 75% and procrastination 50%. Flexible but still disciplined."
   },
   "report_context_effect_vacation": {
-    "message": "Neutralizes index and villains: day stays 0/0. Treats declared vacations."
+    "message": "Productive counts 95% and procrastination 20%. Declared vacations without zeroing the day."
   },
   "report_context_effect_work": {
     "message": "Counts 100% of focus and penalties."
@@ -2217,7 +2262,7 @@
     "message": "Holiday detected — no penalties."
   },
   "report_fairness_status_day_off": {
-    "message": "Day off neutralized the score."
+    "message": "Day off softened the index."
   },
   "report_fairness_status_default": {
     "message": "Normal business day."
@@ -2238,13 +2283,13 @@
     "message": "Study mode softened penalties."
   },
   "report_fairness_status_vacation": {
-    "message": "Vacation mode reset the day."
+    "message": "Vacation mode softened the index."
   },
   "report_fairness_title": {
     "message": "Day fairness"
   },
   "report_fairness_tooltip": {
-    "message": "Manual override, context, or holidays can neutralize the score. We log it whenever it happens."
+    "message": "Manual override and holidays can neutralize the score; contexts adjust the weights. We log it whenever it happens."
   },
   "report_filter_apply": {
     "message": "Filter"
@@ -3310,50 +3355,5 @@
   },
   "vscodeTitle": {
     "message": "Turn your editor into a productivity asset."
-  },
-  "popup_ml_title": {
-    "message": "ML Model"
-  },
-  "popup_ml_subtitle": {
-    "message": "Local training"
-  },
-  "popup_ml_updates_label": {
-    "message": "Updates"
-  },
-  "popup_ml_features_label": {
-    "message": "Active features"
-  },
-  "popup_ml_last_updated_label": {
-    "message": "Last training"
-  },
-  "popup_ml_bias_label": {
-    "message": "Bias"
-  },
-  "popup_ml_learning_rate_label": {
-    "message": "Learning rate"
-  },
-  "popup_ml_l2_label": {
-    "message": "L2"
-  },
-  "popup_ml_min_feature_label": {
-    "message": "Min frequency"
-  },
-  "popup_ml_status_training": {
-    "message": "Training"
-  },
-  "popup_ml_status_cold_start": {
-    "message": "Cold start"
-  },
-  "popup_ml_status_unavailable": {
-    "message": "Unavailable"
-  },
-  "popup_ml_status_warming": {
-    "message": "Warming"
-  },
-  "popup_ml_status_ready": {
-    "message": "Ready"
-  },
-  "popup_ml_never": {
-    "message": "Never"
   }
 }

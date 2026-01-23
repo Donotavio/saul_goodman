@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "سکا..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "جب ساؤل کو یہ سہولت ملی تو اُس نے وہاں کے مقامی نظام کو استعمال کِیا ۔"
-  },
   "options_procrastination_block_limit_hint": {
     "message": "تکنیکی حد: ایک وقت میں زیادہ سے زیادہ 500 ڈومین بلاک کیے جا سکتے ہیں۔"
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "جب ساؤل کو یہ سہولت ملی تو اُس نے وہاں کے مقامی نظام کو استعمال کِیا ۔"
   },
   "options_procrastination_block_toggle_label": {
     "message": "اس فہرست میں بلاک تک رسائی"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "لوڈ کریں..."
+  },
+  "popup_ml_bias_label": {
+    "message": "تعصب"
+  },
+  "popup_ml_features_label": {
+    "message": "فعال خصوصیات"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "آخری تربیت"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "سیکھنے کی شرح"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "کم از کم تعدد"
+  },
+  "popup_ml_never": {
+    "message": "کبھی نہیں"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "گرم کرنا"
+  },
+  "popup_ml_status_ready": {
+    "message": "تیار"
+  },
+  "popup_ml_status_training": {
+    "message": "تربیت دے رہا ہے"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "دستیاب نہیں"
+  },
+  "popup_ml_status_warming": {
+    "message": "گرم کرنا"
+  },
+  "popup_ml_subtitle": {
+    "message": "مقامی تربیت"
+  },
+  "popup_ml_title": {
+    "message": "ایم ایل ماڈل"
+  },
+  "popup_ml_updates_label": {
+    "message": "اپ ڈیٹس"
   },
   "popup_options_button": {
     "message": "اوپر لکھیں"

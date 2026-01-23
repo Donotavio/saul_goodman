@@ -1184,11 +1184,11 @@
   "options_openai_placeholder": {
     "message": "sk-..."
   },
-  "options_procrastination_block_toggle_hint": {
-    "message": "Ne zaman etkinleştirilirse, Saul bu siteye yerel Chrome kuralları kullanıyor."
-  },
   "options_procrastination_block_limit_hint": {
     "message": "Teknik limit: aynı anda en fazla 500 alan adı engellenebilir."
+  },
+  "options_procrastination_block_toggle_hint": {
+    "message": "Ne zaman etkinleştirilirse, Saul bu siteye yerel Chrome kuralları kullanıyor."
   },
   "options_procrastination_block_toggle_label": {
     "message": "Bu listeye blok erişim"
@@ -1723,6 +1723,51 @@
   },
   "popup_loading": {
     "message": "Yükleniyor..."
+  },
+  "popup_ml_bias_label": {
+    "message": "Önyargı"
+  },
+  "popup_ml_features_label": {
+    "message": "Aktif özellikler"
+  },
+  "popup_ml_l2_label": {
+    "message": "L2"
+  },
+  "popup_ml_last_updated_label": {
+    "message": "Son eğitim"
+  },
+  "popup_ml_learning_rate_label": {
+    "message": "Öğrenme hızı"
+  },
+  "popup_ml_min_feature_label": {
+    "message": "Minimum frekans"
+  },
+  "popup_ml_never": {
+    "message": "Asla"
+  },
+  "popup_ml_status_cold_start": {
+    "message": "Isınıyor"
+  },
+  "popup_ml_status_ready": {
+    "message": "Hazır"
+  },
+  "popup_ml_status_training": {
+    "message": "Eğitiliyor"
+  },
+  "popup_ml_status_unavailable": {
+    "message": "Kullanılamıyor"
+  },
+  "popup_ml_status_warming": {
+    "message": "Isınıyor"
+  },
+  "popup_ml_subtitle": {
+    "message": "Yerel eğitim"
+  },
+  "popup_ml_title": {
+    "message": "ML Modeli"
+  },
+  "popup_ml_updates_label": {
+    "message": "Güncellemeler"
   },
   "popup_options_button": {
     "message": "Configure"
