@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Você Também Pode Construir um Catálogo de Livros! Ou Não...",
+      "url": "./posts/2026/2026-01-26-voce-tambem-pode-construir-um-catalogo-de-livros-ou-nao/",
+      "markdown": "2026/2026-01-26-voce-tambem-pode-construir-um-catalogo-de-livros-ou-nao.md",
+      "date": "2026-01-26",
+      "category": "dev-performance",
+      "tags": [
+        "produtividade",
+        "desenvolvimento",
+        "UX",
+        "procrastinação",
+        "marketing"
+      ],
+      "excerpt": "Aprenda a construir um catálogo de livros e descubra como não copiar e colar pode ser a parte mais difícil do desenvolvimento.",
+      "title_en": "You Can Build a Book Catalog Too! Or Not...",
+      "title_es": "¡También Puedes Construir un Catálogo de Libros! O No...",
+      "tone": "incredulo",
+      "source_title": "Build a Book Catalog Table",
+      "source_url": "https://dev.to/richardpascoe/build-a-book-catalog-table-1g7i",
+      "source_published_at": "Mon, 26 Jan 2026 11:00:30 +0000",
+      "excerpt_en": "Learn how to build a book catalog and discover how avoiding copy-paste might be the hardest part of development.",
+      "excerpt_es": "Aprende a construir un catálogo de libros y descubre cómo no copiar y pegar puede ser la parte más difícil del desarrollo."
+    },
+    {
       "title": "A Revolução do Molho de Tomate: Como a IA Pode Salvar Sua Criatividade",
       "url": "./posts/2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade/",
       "markdown": "2026/2026-01-21-a-revolucao-do-molho-de-tomate-como-a-ia-pode-salvar-sua-criatividade.md",
