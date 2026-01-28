@@ -1,6 +1,28 @@
 {
   "posts": [
     {
+      "title": "Trabalho Remoto: O Paraíso ou a Desgraça? Você Decide!",
+      "url": "./posts/2026/2026-01-28-trabalho-remoto-o-paraiso-ou-a-desgraca-voce-decide/",
+      "markdown": "2026/2026-01-28-trabalho-remoto-o-paraiso-ou-a-desgraca-voce-decide.md",
+      "date": "2026-01-28",
+      "category": "trabalho-remoto",
+      "tags": [
+        "produtividade",
+        "trabalho-remoto",
+        "equilíbrio",
+        "procrastinação"
+      ],
+      "excerpt": "Vamos discutir a \\\"maravilha\\\" do trabalho remoto e como encontrar um equilíbrio saudável entre trabalho e vida pessoal. Spoiler: é mais difícil do que parece.",
+      "title_en": "Remote Work: Paradise or Disaster? You Decide!",
+      "title_es": "Trabajo Remoto: ¿El Paraíso o la Desgracia? ¡Tú Decides!",
+      "tone": "incredulo",
+      "source_title": "<![CDATA[[Newsletter] Working Better, Every Day]]>",
+      "source_url": "https://remotive.com/blog/newsletter-working-better-every-day/",
+      "source_published_at": "Mon, 26 Jan 2026 18:02:14 GMT",
+      "excerpt_en": "Let's discuss the 'wonder' of remote work and how to find a healthy balance between work and personal life. Spoiler: it's harder than it looks.",
+      "excerpt_es": "Vamos a discutir la \\\"maravilla\\\" del trabajo remoto y cómo encontrar un equilibrio saludable entre trabajo y vida personal. Spoiler: es más difícil de lo que parece."
+    },
+    {
       "title": "Você Também Pode Construir um Catálogo de Livros! Ou Não...",
       "url": "./posts/2026/2026-01-26-voce-tambem-pode-construir-um-catalogo-de-livros-ou-nao/",
       "markdown": "2026/2026-01-26-voce-tambem-pode-construir-um-catalogo-de-livros-ou-nao.md",
