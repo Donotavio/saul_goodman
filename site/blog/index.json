@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Por que ainda precisamos de um 'Sharity'? Porque o mundo é cheio de silos!",
+      "url": "./posts/2026/2026-02-02-por-que-ainda-precisamos-de-um-sharity-porque-o-mundo-e-cheio-de-silos/",
+      "markdown": "2026/2026-02-02-por-que-ainda-precisamos-de-um-sharity-porque-o-mundo-e-cheio-de-silos.md",
+      "date": "2026-02-02",
+      "category": "ux-design",
+      "tags": [
+        "musica",
+        "ux",
+        "design",
+        "problemas",
+        "tecnologia"
+      ],
+      "excerpt": "Música é música, mas não nas plataformas. Conheça o Music Sharity, a solução para nossos problemas de compartilhamento musical.",
+      "title_en": "Why Do We Still Need a 'Sharity'? Because the World is Full of Silos!",
+      "title_es": "¿Por qué aún necesitamos un 'Sharity'? ¡Porque el mundo está lleno de silos!",
+      "tone": "incredulo",
+      "source_title": "Music Sharity: Your Universal Music Link Converter",
+      "source_url": "https://dev.to/sikelio/music-sharity-your-universal-music-link-converter-1500",
+      "source_published_at": "Mon, 02 Feb 2026 11:08:58 +0000",
+      "excerpt_en": "Music is music, but not on the platforms. Meet Music Sharity, the solution to our musical sharing problems.",
+      "excerpt_es": "La música es música, pero no en las plataformas. Conoce el Music Sharity, la solución a nuestros problemas de compartición musical."
+    },
+    {
       "title": "Trabalho Remoto: O Paraíso ou a Desgraça? Você Decide!",
       "url": "./posts/2026/2026-01-28-trabalho-remoto-o-paraiso-ou-a-desgraca-voce-decide/",
       "markdown": "2026/2026-01-28-trabalho-remoto-o-paraiso-ou-a-desgraca-voce-decide.md",
