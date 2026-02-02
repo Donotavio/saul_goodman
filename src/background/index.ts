@@ -80,6 +80,7 @@ const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MODEL_META_KEY = 'sg:ml-model-meta';
 const MAX_SUGGESTIONS = 10;
+const MAX_RECENTLY_CLOSED_RESULTS = 25; // Chrome API limit for sessions.getRecentlyClosed
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
 const ACTIVE_LEARNING_MIN_PROB = 0.4;
 const ACTIVE_LEARNING_MAX_PROB = 0.6;
@@ -1512,7 +1513,12 @@ async function fetchVscodeTrackingSummary(
   url.searchParams.set('key', pairingKey);
   url.searchParams.set('date', dateKey);
 
-  const response = await fetchWithTimeout(url.toString(), 4000);
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(url.toString(), 4000);
+  } catch {
+    return null;
+  }
   if (!response.ok) {
     return null;
   }
@@ -2264,7 +2270,7 @@ function sendCriticalMessageToTab(
 async function updateRestoredItems(): Promise<void> {
   try {
     const metrics = await getMetricsCache();
-    const items = await chrome.sessions.getRecentlyClosed({ maxResults: 100 });
+    const items = await chrome.sessions.getRecentlyClosed({ maxResults: MAX_RECENTLY_CLOSED_RESULTS });
     const today = getTodayKey();
 
     if (!items.length && (metrics.restoredItems ?? 0) > 0) {
