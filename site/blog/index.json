@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Procrastinação: O Esporte Olímpico do Século XXI",
+      "url": "./posts/2026/2026-02-06-procrastinacao-o-esporte-olimpico-do-seculo-xxi/",
+      "markdown": "2026/2026-02-06-procrastinacao-o-esporte-olimpico-do-seculo-xxi.md",
+      "date": "2026-02-06",
+      "category": "foco-atencao",
+      "tags": [
+        "procrastinação",
+        "produtividade",
+        "marketing",
+        "UX",
+        "carreira"
+      ],
+      "excerpt": "Por que você procrastina mesmo sabendo o que precisa fazer? O grande mistério da vida moderna, claro!",
+      "title_en": "Procrastination: The Olympic Sport of the 21st Century",
+      "title_es": "Procrastinación: El Deporte Olímpico del Siglo XXI",
+      "tone": "incredulo",
+      "source_title": "Why Do I Procrastinate When I Know Better?",
+      "source_url": "https://www.lifehack.org/991326/why-do-i-procrastinate-when-i-know-better",
+      "source_published_at": "Wed, 04 Feb 2026 20:37:13 +0000",
+      "excerpt_en": "Why do you procrastinate even when you know what you need to do? The great mystery of modern life, of course!",
+      "excerpt_es": "¿Por qué procrastinas sabiendo lo que necesitas hacer? ¡El gran misterio de la vida moderna, por supuesto!"
+    },
+    {
       "title": "A Revolução da IA: Finalmente, um Robô Para Nos Salvar da Nossa Própria Incompetência!",
       "url": "./posts/2026/2026-02-04-a-revolucao-da-ia-finalmente-um-robo-para-nos-salvar-da-nossa-propria-incompetencia/",
       "markdown": "2026/2026-02-04-a-revolucao-da-ia-finalmente-um-robo-para-nos-salvar-da-nossa-propria-incompetencia.md",
