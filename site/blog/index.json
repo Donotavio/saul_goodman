@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Quando o “cool” vira “fool”: a implosão das marcas legadas",
+      "url": "./posts/2026/2026-02-09-quando-o-cool-vira-fool-a-implosao-das-marcas-legadas/",
+      "markdown": "2026/2026-02-09-quando-o-cool-vira-fool-a-implosao-das-marcas-legadas.md",
+      "date": "2026-02-09",
+      "category": "dev-performance",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "negócios",
+        "procrastinação"
+      ],
+      "excerpt": "Marcas legadas tentam se reinventar, mas o que era “legal” vira um fiasco. Vamos falar sobre isso, com um toque de sarcasmo.",
+      "title_en": "When 'Cool' Turns Into 'Fool': The Implosion of Legacy Brands",
+      "title_es": "Cuando lo “cool” se vuelve “fool”: la implosión de las marcas heredadas",
+      "tone": "incredulo",
+      "source_title": "Why do so many legacy brands implode when trying to attract new customers?",
+      "source_url": "https://www.fastcompany.com/91482594/why-do-so-many-brands-implode-when-trying-to-attract-new-customers",
+      "source_published_at": "2026-02-09T06:00:00",
+      "excerpt_en": "Legacy brands are trying to reinvent themselves, but what was once 'cool' turns into a fiasco. Let's talk about it, with a touch of sarcasm.",
+      "excerpt_es": "Las marcas heredadas intentan reinventarse, pero lo que era “genial” se convierte en un fiasco. Hablemos de esto, con un toque de sarcasmo."
+    },
+    {
       "title": "Procrastinação: O Esporte Olímpico do Século XXI",
       "url": "./posts/2026/2026-02-06-procrastinacao-o-esporte-olimpico-do-seculo-xxi/",
       "markdown": "2026/2026-02-06-procrastinacao-o-esporte-olimpico-do-seculo-xxi.md",
