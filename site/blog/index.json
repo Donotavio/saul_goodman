@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Procurando Emprego? Prepare-se para a Caça aos Golpistas!",
+      "url": "./posts/2026/2026-02-11-procurando-emprego-prepare-se-para-a-caca-aos-golpistas/",
+      "markdown": "2026/2026-02-11-procurando-emprego-prepare-se-para-a-caca-aos-golpistas.md",
+      "date": "2026-02-11",
+      "category": "trabalho-remoto",
+      "tags": [
+        "emprego",
+        "golpistas",
+        "trabalho-remoto",
+        "segurança",
+        "produtividade"
+      ],
+      "excerpt": "Não deixe que golpistas transformem sua busca de emprego em um pesadelo. Aqui vão algumas dicas de como evitar cair na armadilha!",
+      "title_en": "Looking for a Job? Get Ready for the Scammer Hunt!",
+      "title_es": "¿Buscando Trabajo? ¡Prepárate para la Caza de Estafadores!",
+      "tone": "incredulo",
+      "source_title": "<![CDATA[How to Avoid Job Scams]]>",
+      "source_url": "https://remotive.com/blog/how-to-avoid-job-scams/",
+      "source_published_at": "Tue, 10 Feb 2026 17:14:00 GMT",
+      "excerpt_en": "Don't let scammers turn your job search into a nightmare. Here are some tips on how to avoid falling into their trap!",
+      "excerpt_es": "No dejes que los estafadores conviertan tu búsqueda de empleo en una pesadilla. ¡Aquí van algunos consejos sobre cómo evitar caer en la trampa!"
+    },
+    {
       "title": "Quando o “cool” vira “fool”: a implosão das marcas legadas",
       "url": "./posts/2026/2026-02-09-quando-o-cool-vira-fool-a-implosao-das-marcas-legadas/",
       "markdown": "2026/2026-02-09-quando-o-cool-vira-fool-a-implosao-das-marcas-legadas.md",
