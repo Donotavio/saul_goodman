@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "title": "Você está realmente assistindo ao jogo ou só se sentindo importante?",
+      "url": "./posts/2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante/",
+      "markdown": "2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante.md",
+      "date": "2026-02-16",
+      "category": "ux-design",
+      "tags": [
+        "NBA",
+        "streaming",
+        "UX",
+        "Peacock",
+        "tecnologia"
+      ],
+      "excerpt": "Agora você pode \\\"sentar na primeira fila\\\" da NBA sem sair do sofá. Que inovação, não?",
+      "title_en": "Are You Really Watching the Game or Just Feeling Important?",
+      "title_es": "¿Realmente estás viendo el juego o solo sintiéndote importante?",
+      "tone": "incredulo",
+      "source_title": "Peacock’s new feature lets you sit courtside at the NBA All-Star Game",
+      "source_url": "https://www.fastcompany.com/91492814/peacock-new-feature-sit-court-side-at-nba-all-star-game",
+      "source_published_at": "2026-02-14T14:00:00",
+      "excerpt_en": "Now you can \\\"sit courtside\\\" at the NBA without leaving your couch. What an innovation, right?",
+      "excerpt_es": "Ahora puedes \\\"sentarte en primera fila\\\" de la NBA sin salir de tu sofá. ¿Qué innovación, no?"
+    },
+    {
       "title": "Procurando Emprego? Prepare-se para a Caça aos Golpistas!",
       "url": "./posts/2026/2026-02-11-procurando-emprego-prepare-se-para-a-caca-aos-golpistas/",
       "markdown": "2026/2026-02-11-procurando-emprego-prepare-se-para-a-caca-aos-golpistas.md",
