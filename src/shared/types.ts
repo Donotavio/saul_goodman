@@ -73,9 +73,9 @@ export interface DailyMetrics {
   contextDurations?: Record<ContextModeValue, number>;
 
   /**
-   * Índice recalculado para cada contexto considerando o dia inteiro nesse modo.
+   * Último índice registrado por contexto (congelado ao trocar de contexto).
    */
-  contextIndices?: Record<ContextModeValue, number>;
+  contextIndices?: Record<ContextModeValue, number | undefined>;
 }
 
 export interface ApiStats {
@@ -222,6 +222,10 @@ export interface ContextSegment {
   value: ContextModeValue;
   start: number;
   end?: number;
+  /**
+   * Índice registrado ao sair do contexto (ou enquanto ele está ativo).
+   */
+  index?: number;
 }
 
 /**

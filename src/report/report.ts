@@ -1699,13 +1699,13 @@ function resolveModelMaturity(
 }
 
 /**
- * Popula a tabela de contextos com as durações e índices hipotéticos.
+ * Popula a tabela de contextos com as durações e índices registrados.
  * @param durations Mapa com milissegundos gastos por contexto.
- * @param indices Mapa com os índices simulados por contexto.
+ * @param indices Mapa com os índices registrados por contexto.
  */
 export function renderContextBreakdown(
   durations?: Record<ContextModeValue, number>,
-  indices?: Record<ContextModeValue, number>
+  indices?: Record<ContextModeValue, number | undefined>
 ): void {
   if (!contextBreakdownSection || !contextBreakdownBody) {
     return;

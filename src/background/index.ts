@@ -1243,11 +1243,11 @@ async function persistMetrics(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  applyContextBreakdown(metricsCache, settings);
   const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
   metricsCache.currentIndex = scoreResult.score;
   metricsCache.lastUpdated = Date.now();
   updateFairnessSummary(scoreResult);
+  applyContextBreakdown(metricsCache);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -1261,10 +1261,10 @@ async function refreshScore(): Promise<void> {
   }
 
   const settings = await getSettingsCache();
-  applyContextBreakdown(metricsCache, settings);
   const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
   metricsCache.currentIndex = scoreResult.score;
   updateFairnessSummary(scoreResult);
+  applyContextBreakdown(metricsCache);
 
   await saveDailyMetrics(metricsCache);
   void publishIndexToDaemon(metricsCache, settings);
@@ -2040,10 +2040,9 @@ function applyIdleDetectionInterval(settings: ExtensionSettings): void {
 /**
  * Atualiza as métricas em memória com o detalhamento por contexto.
  * @param metrics Métricas do dia corrente.
- * @param settings Configurações atuais que influenciam nos índices hipotéticos.
  */
-function applyContextBreakdown(metrics: DailyMetrics, settings: ExtensionSettings): void {
-  const breakdown = buildContextBreakdown({ history: contextHistory, metrics, settings });
+function applyContextBreakdown(metrics: DailyMetrics): void {
+  const breakdown = buildContextBreakdown({ history: contextHistory, metrics });
   metrics.contextDurations = breakdown.durations;
   metrics.contextIndices = breakdown.indices;
 }
@@ -2083,13 +2082,14 @@ async function handleContextModeHistoryChange(
     return;
   }
   const timestamp = next.updatedAt ?? Date.now();
+  const indexSnapshot = metricsCache?.currentIndex;
   const reference = previous ?? next;
   contextHistory = ensureContextHistoryInitialized(contextHistory, reference, timestamp);
   const last = contextHistory[contextHistory.length - 1];
   if (last && last.value === next.value && typeof last.end !== 'number') {
     return;
   }
-  closeOpenContextSegment(contextHistory, timestamp);
+  closeOpenContextSegment(contextHistory, timestamp, indexSnapshot);
   startContextSegment(contextHistory, next.value, timestamp);
   await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
   await persistMetrics();
@@ -2102,7 +2102,7 @@ async function finalizeContextHistoryForDay(): Promise<void> {
   const now = Date.now();
   const contextState = contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
   contextHistory = ensureContextHistoryInitialized(contextHistory, contextState, now);
-  closeOpenContextSegment(contextHistory, now);
+  closeOpenContextSegment(contextHistory, now, metricsCache?.currentIndex);
   await writeLocalStorage(LocalStorageKey.CONTEXT_HISTORY, contextHistory);
   await persistMetrics();
 }

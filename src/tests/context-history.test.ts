@@ -8,8 +8,7 @@ import {
   aggregateContextDurations,
   buildContextBreakdown
 } from '../shared/utils/context-history.js';
-import { calculateProcrastinationIndex } from '../shared/score.js';
-import { createDefaultMetrics, getDefaultSettings } from '../shared/storage.js';
+import { createDefaultMetrics } from '../shared/storage.js';
 import type { ContextHistory, ContextModeState } from '../shared/types.js';
 
 test('context history closes and opens segments when switching', () => {
@@ -49,49 +48,23 @@ test('aggregateContextDurations sums open segments up to now', () => {
   assert.equal(totals.vacation, 0);
 });
 
-test('buildContextBreakdown matches score calculation per context', () => {
+test('buildContextBreakdown uses recorded indices and current index for active context', () => {
   const now = Date.now();
   const metrics = createDefaultMetrics();
-  metrics.productiveMs = 60 * 60 * 1000;
-  metrics.procrastinationMs = 30 * 60 * 1000;
-  metrics.inactiveMs = 15 * 60 * 1000;
-  metrics.tabSwitches = 12;
-  const settings = getDefaultSettings();
+  metrics.currentIndex = 15;
   const history: ContextHistory = [
-    { value: 'work', start: now - 90 * 60 * 1000, end: now - 45 * 60 * 1000 },
-    { value: 'study', start: now - 45 * 60 * 1000, end: now - 15 * 60 * 1000 },
+    { value: 'work', start: now - 90 * 60 * 1000, end: now - 45 * 60 * 1000, index: 22 },
+    { value: 'study', start: now - 45 * 60 * 1000, end: now - 15 * 60 * 1000, index: 30 },
     { value: 'personal', start: now - 15 * 60 * 1000 }
   ];
 
-  const breakdown = buildContextBreakdown({ history, metrics, settings, now });
-  
-  const baseWorkIndex = calculateProcrastinationIndex(metrics, settings, {
-    contextMode: { value: 'work', updatedAt: now },
-    manualOverride: undefined,
-    holidayNeutral: false
-  }).score;
-  const baseStudyIndex = calculateProcrastinationIndex(metrics, settings, {
-    contextMode: { value: 'study', updatedAt: now },
-    manualOverride: undefined,
-    holidayNeutral: false
-  }).score;
+  const breakdown = buildContextBreakdown({ history, metrics, now });
 
-  const workDuration = 45 * 60 * 1000;
-  const studyDuration = 30 * 60 * 1000;
-  const personalDuration = 15 * 60 * 1000;
-  const totalDuration = workDuration + studyDuration + personalDuration;
-
-  const expectedWorkWeighted = Math.round(baseWorkIndex * (workDuration / totalDuration));
-  const expectedStudyWeighted = Math.round(baseStudyIndex * (studyDuration / totalDuration));
-
-  assert.ok(Math.abs(breakdown.indices.work - expectedWorkWeighted) <= 1);
-  assert.ok(Math.abs(breakdown.indices.study - expectedStudyWeighted) <= 1);
-  assert.equal(breakdown.indices.personal, 0);
-  assert.equal(breakdown.indices.leisure, 0);
-  assert.equal(breakdown.indices.dayOff, 0);
-  assert.equal(breakdown.indices.vacation, 0);
-  assert.ok(breakdown.indices.work > 0);
-  assert.ok(breakdown.indices.study > 0);
-  assert.ok(breakdown.indices.work > breakdown.indices.study);
+  assert.equal(breakdown.indices.work, 22);
+  assert.equal(breakdown.indices.study, 30);
+  assert.equal(breakdown.indices.personal, 15);
+  assert.equal(breakdown.indices.leisure, undefined);
+  assert.equal(breakdown.indices.dayOff, undefined);
+  assert.equal(breakdown.indices.vacation, undefined);
   assert.equal(Object.values(breakdown.durations).reduce((acc, value) => acc + value, 0) > 0, true);
 });

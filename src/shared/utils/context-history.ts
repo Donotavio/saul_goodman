@@ -1,12 +1,10 @@
-import { calculateProcrastinationIndex, type ScoreGuards } from '../score.js';
 import {
   type ContextHistory,
+  type ContextSegment,
   type ContextModeState,
   type ContextModeValue,
-  type DailyMetrics,
-  type ExtensionSettings
+  type DailyMetrics
 } from '../types.js';
-import { resolveContextImpact } from './context.js';
 
 export const CONTEXT_VALUES: ContextModeValue[] = [
   'work',
@@ -22,7 +20,7 @@ export const CONTEXT_VALUES: ContextModeValue[] = [
  */
 export interface ContextBreakdownResult {
   durations: Record<ContextModeValue, number>;
-  indices: Record<ContextModeValue, number>;
+  indices: Record<ContextModeValue, number | undefined>;
 }
 
 /**
@@ -31,7 +29,6 @@ export interface ContextBreakdownResult {
 export interface ContextBreakdownParams {
   history?: ContextHistory;
   metrics: DailyMetrics;
-  settings: ExtensionSettings;
   now?: number;
 }
 
@@ -60,7 +57,11 @@ export function ensureContextHistoryInitialized(
  * @param timestamp Momento usado para fechar o segmento aberto.
  * @returns O próprio histórico para encadeamento.
  */
-export function closeOpenContextSegment(history: ContextHistory, timestamp: number): ContextHistory {
+export function closeOpenContextSegment(
+  history: ContextHistory,
+  timestamp: number,
+  index?: number
+): ContextHistory {
   if (!history.length) {
     return history;
   }
@@ -69,6 +70,10 @@ export function closeOpenContextSegment(history: ContextHistory, timestamp: numb
     return history;
   }
   last.end = Math.max(timestamp, last.start);
+  const normalizedIndex = normalizeIndexValue(index);
+  if (normalizedIndex !== null) {
+    last.index = normalizedIndex;
+  }
   return history;
 }
 
@@ -82,9 +87,15 @@ export function closeOpenContextSegment(history: ContextHistory, timestamp: numb
 export function startContextSegment(
   history: ContextHistory,
   value: ContextModeValue,
-  timestamp: number
+  timestamp: number,
+  index?: number
 ): ContextHistory {
-  history.push({ value, start: timestamp });
+  const entry: ContextSegment = { value, start: timestamp };
+  const normalizedIndex = normalizeIndexValue(index);
+  if (normalizedIndex !== null) {
+    entry.index = normalizedIndex;
+  }
+  history.push(entry);
   return history;
 }
 
@@ -116,57 +127,64 @@ export function aggregateContextDurations(
 }
 
 /**
- * Calcula os tempos e índices hipotéticos por contexto.
- * @param params Informações necessárias para projetar o impacto de cada contexto.
+ * Calcula os tempos e índices registrados por contexto.
+ * @param params Informações necessárias para consolidar histórico e índice atual.
  * @returns Tempos acumulados e índices por contexto.
  */
 export function buildContextBreakdown(params: ContextBreakdownParams): ContextBreakdownResult {
   const now = params.now ?? Date.now();
   const durations = aggregateContextDurations(params.history, now);
   const indices = CONTEXT_VALUES.reduce((acc, value) => {
-    acc[value] = 0;
+    acc[value] = undefined;
     return acc;
-  }, {} as Record<ContextModeValue, number>);
+  }, {} as Record<ContextModeValue, number | undefined>);
 
-  const totalDuration = Object.values(durations).reduce((sum, ms) => sum + ms, 0);
+  const history = params.history;
+  if (!history?.length) {
+    return { durations, indices };
+  }
+
+  const lastByContext = CONTEXT_VALUES.reduce((acc, value) => {
+    acc[value] = undefined;
+    return acc;
+  }, {} as Record<ContextModeValue, ContextSegment | undefined>);
+
+  for (const segment of history) {
+    lastByContext[segment.value] = segment;
+  }
+
+  const activeContext = resolveActiveContext(history);
+  const currentIndex = normalizeIndexValue(params.metrics.currentIndex);
 
   for (const value of CONTEXT_VALUES) {
-    const impact = resolveContextImpact(value);
-    if (impact.neutralize) {
-      indices[value] = 0;
+    const segment = lastByContext[value];
+    if (!segment) {
       continue;
     }
-    
-    const contextDuration = durations[value] ?? 0;
-    if (contextDuration === 0) {
-      indices[value] = 0;
+    if (value === activeContext && currentIndex !== null) {
+      indices[value] = currentIndex;
       continue;
     }
-
-    const guards: ScoreGuards = {
-      contextMode: { value, updatedAt: now },
-      manualOverride: undefined,
-      holidayNeutral: false
-    };
-    const baseIndex = calculateProcrastinationIndex(params.metrics, params.settings, guards).score;
-    
-    const timeWeight = totalDuration > 0 ? contextDuration / totalDuration : 0;
-    const weightedIndex = baseIndex * timeWeight;
-    
-    const tieBreaker = hashContextForTieBreak(value, now) * 0.01;
-    indices[value] = Math.min(100, Math.max(0, Math.round(weightedIndex + tieBreaker)));
+    const recordedIndex = normalizeIndexValue(segment.index);
+    indices[value] = recordedIndex ?? undefined;
   }
 
   return { durations, indices };
 }
 
-function hashContextForTieBreak(context: ContextModeValue, timestamp: number): number {
-  const dayKey = new Date(timestamp).toISOString().split('T')[0];
-  const str = `${context}_${dayKey}`;
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash = hash & hash;
+function normalizeIndexValue(value?: number): number | null {
+  if (typeof value !== 'number' || Number.isNaN(value) || !Number.isFinite(value)) {
+    return null;
   }
-  return Math.abs(hash % 100) / 100;
+  return Math.min(100, Math.max(0, Math.round(value)));
+}
+
+function resolveActiveContext(history: ContextHistory): ContextModeValue | null {
+  for (let i = history.length - 1; i >= 0; i -= 1) {
+    const segment = history[i];
+    if (typeof segment.end !== 'number') {
+      return segment.value;
+    }
+  }
+  return history[history.length - 1]?.value ?? null;
 }
