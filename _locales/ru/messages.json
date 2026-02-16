@@ -3132,31 +3132,31 @@
     "message": "Переключатель CTA"
   },
   "suggestion_reason_infinite_scroll": {
-    "message": "Обнаружен бесконечный прокрутка"
+    "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Ключевое слово \"{keyword}\" в {source}"
+    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
   },
   "suggestion_reason_known_host": {
-    "message": "Известный домен: {host}"
+    "message": "This domain already has a file in the office: {host}."
   },
   "suggestion_reason_og_type": {
-    "message": "Тип страницы: {type}"
+    "message": "Page type appears as {type}."
   },
   "suggestion_reason_source_description": {
-    "message": "описание"
+    "message": "description"
   },
   "suggestion_reason_source_hostname": {
-    "message": "домен"
+    "message": "domain"
   },
   "suggestion_reason_source_keywords": {
-    "message": "ключевые слова"
+    "message": "keywords"
   },
   "suggestion_reason_source_title": {
-    "message": "название"
+    "message": "title"
   },
   "suggestion_reason_video": {
-    "message": "Обнаружен видеоплеер"
+    "message": "A video player was detected on this page."
   },
   "suggestion_toast_close": {
     "message": "Закрыть предложение"
@@ -3472,5 +3472,137 @@
   },
   "vscodeTitle": {
     "message": "Преобразуйте редактор в актив продуктивности."
+  },
+  "suggestion_reason_source_headings": {
+    "message": "headings"
+  },
+  "suggestion_reason_path": {
+    "message": "The URL path \"{path}\" raised a signal."
+  },
+  "suggestion_reason_schema": {
+    "message": "Schema {schema} contributed to the verdict."
+  },
+  "suggestion_reason_autoplay": {
+    "message": "Autoplay is on: classic distraction magnet."
+  },
+  "suggestion_reason_feed": {
+    "message": "Feed layout detected."
+  },
+  "suggestion_reason_shorts": {
+    "message": "Shorts/reels pattern detected."
+  },
+  "suggestion_reason_form": {
+    "message": "Interactive form detected."
+  },
+  "suggestion_reason_editor": {
+    "message": "Text/code editor detected."
+  },
+  "suggestion_reason_table": {
+    "message": "Large table detected."
+  },
+  "suggestion_reason_learned_generic": {
+    "message": "Local history has seen {subject}; that {direction}."
+  },
+  "suggestion_reason_learned_fallback": {
+    "message": "Based on learned signals, this {direction}."
+  },
+  "suggestion_reason_direction_productive": {
+    "message": "leans productive"
+  },
+  "suggestion_reason_direction_procrastination": {
+    "message": "smells like procrastination"
+  },
+  "suggestion_reason_ml_signal": {
+    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
+  },
+  "suggestion_reason_ml_detail": {
+    "message": " ({value})"
+  },
+  "suggestion_reason_ml_family_host": {
+    "message": "the domain"
+  },
+  "suggestion_reason_ml_family_root": {
+    "message": "the root domain"
+  },
+  "suggestion_reason_ml_family_tld": {
+    "message": "the domain suffix"
+  },
+  "suggestion_reason_ml_family_language": {
+    "message": "the page language"
+  },
+  "suggestion_reason_ml_family_og": {
+    "message": "the og:type metadata"
+  },
+  "suggestion_reason_ml_family_schema": {
+    "message": "the page schema"
+  },
+  "suggestion_reason_ml_family_path": {
+    "message": "the URL path"
+  },
+  "suggestion_reason_ml_family_title": {
+    "message": "the page title"
+  },
+  "suggestion_reason_ml_family_description": {
+    "message": "the page description"
+  },
+  "suggestion_reason_ml_family_heading": {
+    "message": "the page headings"
+  },
+  "suggestion_reason_ml_family_keyword": {
+    "message": "the keywords"
+  },
+  "suggestion_reason_ml_family_video": {
+    "message": "video signals"
+  },
+  "suggestion_reason_ml_family_scroll": {
+    "message": "infinite-scroll signals"
+  },
+  "suggestion_reason_ml_family_autoplay": {
+    "message": "autoplay signals"
+  },
+  "suggestion_reason_ml_family_feed": {
+    "message": "feed-layout signals"
+  },
+  "suggestion_reason_ml_family_form": {
+    "message": "form signals"
+  },
+  "suggestion_reason_ml_family_editor": {
+    "message": "editor signals"
+  },
+  "suggestion_reason_ml_family_table": {
+    "message": "large-table signals"
+  },
+  "suggestion_reason_ml_family_shorts": {
+    "message": "shorts/reels signals"
+  },
+  "suggestion_reason_ml_family_page_type": {
+    "message": "the page type"
+  },
+  "suggestion_reason_ml_family_heading_count": {
+    "message": "the heading count"
+  },
+  "suggestion_reason_ml_family_external_links": {
+    "message": "the external-link count"
+  },
+  "suggestion_reason_ml_family_active_time": {
+    "message": "the active-time bucket"
+  },
+  "suggestion_reason_ml_family_scroll_depth": {
+    "message": "the scroll-depth bucket"
+  },
+  "suggestion_reason_ml_family_interactions": {
+    "message": "the interaction volume"
+  },
+  "suggestion_reason_ml_family_unknown": {
+    "message": "a technical signal"
+  },
+  "suggestion_reason_impact_light": {
+    "message": "light impact"
+  },
+  "suggestion_reason_impact_medium": {
+    "message": "medium impact"
+  },
+  "suggestion_reason_impact_strong": {
+    "message": "strong impact"
   }
 }

@@ -3132,16 +3132,16 @@
     "message": "Alternar CTA"
   },
   "suggestion_reason_infinite_scroll": {
-    "message": "Scroll infinito detectado"
+    "message": "Scroll infinito detectado no local."
   },
   "suggestion_reason_keyword": {
-    "message": "Palavra-chave \"{keyword}\" em {source}"
+    "message": "Achei \"{keyword}\" em {source}; isso pesa no veredito."
   },
   "suggestion_reason_known_host": {
-    "message": "Domínio conhecido: {host}"
+    "message": "Esse domínio já tem ficha no escritório: {host}."
   },
   "suggestion_reason_og_type": {
-    "message": "Tipo de página: {type}"
+    "message": "O tipo da página aparece como {type}."
   },
   "suggestion_reason_source_description": {
     "message": "descrição"
@@ -3150,13 +3150,13 @@
     "message": "domínio"
   },
   "suggestion_reason_source_keywords": {
-    "message": "keywords"
+    "message": "palavras-chave"
   },
   "suggestion_reason_source_title": {
     "message": "título"
   },
   "suggestion_reason_video": {
-    "message": "Player de vídeo detectado"
+    "message": "Tem player de vídeo nessa página."
   },
   "suggestion_toast_close": {
     "message": "Fechar sugestão"
@@ -3472,5 +3472,137 @@
   },
   "vscodeTitle": {
     "message": "Transforme seu editor em ativo de produtividade."
+  },
+  "suggestion_reason_source_headings": {
+    "message": "cabeçalhos"
+  },
+  "suggestion_reason_path": {
+    "message": "O caminho \"{path}\" entrou no radar."
+  },
+  "suggestion_reason_schema": {
+    "message": "O schema {schema} ajudou no veredito."
+  },
+  "suggestion_reason_autoplay": {
+    "message": "Autoplay ligado: clássico ímã de distração."
+  },
+  "suggestion_reason_feed": {
+    "message": "Layout de feed detectado por aqui."
+  },
+  "suggestion_reason_shorts": {
+    "message": "Padrão de shorts/reels na cena."
+  },
+  "suggestion_reason_form": {
+    "message": "Formulário interativo encontrado."
+  },
+  "suggestion_reason_editor": {
+    "message": "Editor de texto/código detectado."
+  },
+  "suggestion_reason_table": {
+    "message": "Tabela extensa detectada."
+  },
+  "suggestion_reason_learned_generic": {
+    "message": "Meu histórico local já viu {subject}; isso {direction}."
+  },
+  "suggestion_reason_learned_fallback": {
+    "message": "Pelos sinais aprendidos, isso {direction}."
+  },
+  "suggestion_reason_direction_productive": {
+    "message": "puxa para produtivo"
+  },
+  "suggestion_reason_direction_procrastination": {
+    "message": "tem cheiro de procrastinação"
+  },
+  "suggestion_reason_ml_signal": {
+    "message": "Meu radar jurídico pegou {family}{detail}. Isso {direction} ({impact})."
+  },
+  "suggestion_reason_ml_detail": {
+    "message": " ({value})"
+  },
+  "suggestion_reason_ml_family_host": {
+    "message": "o domínio"
+  },
+  "suggestion_reason_ml_family_root": {
+    "message": "a base do domínio"
+  },
+  "suggestion_reason_ml_family_tld": {
+    "message": "a terminação do domínio"
+  },
+  "suggestion_reason_ml_family_language": {
+    "message": "o idioma da página"
+  },
+  "suggestion_reason_ml_family_og": {
+    "message": "o metadado og:type"
+  },
+  "suggestion_reason_ml_family_schema": {
+    "message": "o schema da página"
+  },
+  "suggestion_reason_ml_family_path": {
+    "message": "o caminho da URL"
+  },
+  "suggestion_reason_ml_family_title": {
+    "message": "o título da página"
+  },
+  "suggestion_reason_ml_family_description": {
+    "message": "a descrição da página"
+  },
+  "suggestion_reason_ml_family_heading": {
+    "message": "os cabeçalhos da página"
+  },
+  "suggestion_reason_ml_family_keyword": {
+    "message": "as palavras-chave"
+  },
+  "suggestion_reason_ml_family_video": {
+    "message": "sinal de vídeo"
+  },
+  "suggestion_reason_ml_family_scroll": {
+    "message": "sinal de scroll infinito"
+  },
+  "suggestion_reason_ml_family_autoplay": {
+    "message": "sinal de autoplay"
+  },
+  "suggestion_reason_ml_family_feed": {
+    "message": "sinal de feed"
+  },
+  "suggestion_reason_ml_family_form": {
+    "message": "sinal de formulário"
+  },
+  "suggestion_reason_ml_family_editor": {
+    "message": "sinal de editor"
+  },
+  "suggestion_reason_ml_family_table": {
+    "message": "sinal de tabela extensa"
+  },
+  "suggestion_reason_ml_family_shorts": {
+    "message": "sinal de shorts/reels"
+  },
+  "suggestion_reason_ml_family_page_type": {
+    "message": "o tipo de página"
+  },
+  "suggestion_reason_ml_family_heading_count": {
+    "message": "a quantidade de cabeçalhos"
+  },
+  "suggestion_reason_ml_family_external_links": {
+    "message": "a quantidade de links externos"
+  },
+  "suggestion_reason_ml_family_active_time": {
+    "message": "o tempo ativo na página"
+  },
+  "suggestion_reason_ml_family_scroll_depth": {
+    "message": "a profundidade de rolagem"
+  },
+  "suggestion_reason_ml_family_interactions": {
+    "message": "o volume de interações"
+  },
+  "suggestion_reason_ml_family_unknown": {
+    "message": "um sinal técnico"
+  },
+  "suggestion_reason_impact_light": {
+    "message": "impacto leve"
+  },
+  "suggestion_reason_impact_medium": {
+    "message": "impacto médio"
+  },
+  "suggestion_reason_impact_strong": {
+    "message": "impacto forte"
   }
 }

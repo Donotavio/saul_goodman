@@ -27,6 +27,17 @@ Elementos-chave que devem manter consistência de copy:
 - **Modo crítico**: overlay e sirene quando o score ultrapassa o limiar configurado.
 - **Blog**: recomendação de artigo baseada no contexto do dia.
 
+### Explicações de recomendação (popup/report/options)
+
+- Padronizar frases no formato: **sinal identificado + efeito no veredito**.
+- Tom Saul moderado: linguagem natural, direta e com ironia leve.
+- Evitar jargão cru de feature (`flag:*`, `host:*`, etc.) no texto principal.
+- Quando houver detalhe técnico, manter discreto entre parênteses.
+- Direções padronizadas:
+  - `productive` => “puxa para produtivo”
+  - `procrastination` => “tem cheiro de procrastinação”
+- Frases devem ser curtas e legíveis para usuário não técnico.
+
 ## Options
 
 - Mensagens devem reforçar que tudo é local.
