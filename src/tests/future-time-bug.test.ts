@@ -5,12 +5,12 @@ import { splitDurationByHour } from '../shared/utils/time.js';
 
 test('BUG: splitDurationByHour não deve adicionar tempo futuro', () => {
   // Cenário: são 7:08 da manhã
-  const now = new Date('2026-01-20T07:08:00-03:00');
+  const now = new Date(2026, 0, 20, 7, 8, 0);
   const nowMs = now.getTime();
   
   // Sessão que começou às 7:00 e ainda está ativa (vai "terminar" às 7:30)
-  const sessionStart = new Date('2026-01-20T07:00:00-03:00').getTime();
-  const futureEnd = new Date('2026-01-20T07:30:00-03:00').getTime();
+  const sessionStart = new Date(2026, 0, 20, 7, 0, 0).getTime();
+  const futureEnd = new Date(2026, 0, 20, 7, 30, 0).getTime();
   const futureDuration = futureEnd - sessionStart; // 30 minutos
   
   console.log('Agora:', now.toLocaleString('pt-BR'));
@@ -30,12 +30,12 @@ test('BUG: splitDurationByHour não deve adicionar tempo futuro', () => {
 });
 
 test('Reprodução exata: 35 minutos às 7:08', () => {
-  const now = new Date('2026-01-20T07:08:00-03:00');
+  const now = new Date(2026, 0, 20, 7, 8, 0);
   
   // Possíveis sessões que somam ~35 minutos
   const sessions = [
-    { start: new Date('2026-01-20T07:00:00-03:00').getTime(), duration: 30 * 60 * 1000 }, // 30min
-    { start: new Date('2026-01-20T07:05:00-03:00').getTime(), duration: 10 * 60 * 1000 }  // 10min (parcial)
+    { start: new Date(2026, 0, 20, 7, 0, 0).getTime(), duration: 30 * 60 * 1000 }, // 30min
+    { start: new Date(2026, 0, 20, 7, 5, 0).getTime(), duration: 10 * 60 * 1000 }  // 10min (parcial)
   ];
   
   let totalHour7 = 0;
@@ -59,10 +59,10 @@ test('Reprodução exata: 35 minutos às 7:08', () => {
 });
 
 test('Solução: validar que endTime não ultrapassa "agora"', () => {
-  const now = new Date('2026-01-20T07:08:00-03:00').getTime();
+  const now = new Date(2026, 0, 20, 7, 8, 0).getTime();
   
   // Sessão ativa que começou às 7:00
-  const sessionStart = new Date('2026-01-20T07:00:00-03:00').getTime();
+  const sessionStart = new Date(2026, 0, 20, 7, 0, 0).getTime();
   const projectedDuration = 30 * 60 * 1000; // Estimativa de 30min
   
   // CORREÇÃO: clipar a duração para não ultrapassar "agora"

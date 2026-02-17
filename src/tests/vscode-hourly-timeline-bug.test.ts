@@ -6,13 +6,13 @@ import type { DailyMetrics, TimelineEntry } from '../shared/types.js';
 
 test('BUG-FIX: vscodeTimeline deve filtrar sessões de dias anteriores', () => {
   // Simula cenário: são 6:16 da manhã de 20/01/2026
-  const now = new Date('2026-01-20T06:16:00-03:00');
+  const now = new Date(2026, 0, 20, 6, 16, 0);
   const todayKey = getTodayKey(now);
   
   // Sessão do dia anterior (19/01) que NÃO deve ser contabilizada
   const yesterdaySession: TimelineEntry = {
-    startTime: new Date('2026-01-19T23:00:00-03:00').getTime(),
-    endTime: new Date('2026-01-20T01:00:00-03:00').getTime(),
+    startTime: new Date(2026, 0, 19, 23, 0, 0).getTime(),
+    endTime: new Date(2026, 0, 20, 1, 0, 0).getTime(),
     durationMs: 2 * 60 * 60 * 1000, // 2 horas
     domain: 'VS Code (IDE)',
     category: 'productive'
@@ -20,8 +20,8 @@ test('BUG-FIX: vscodeTimeline deve filtrar sessões de dias anteriores', () => {
   
   // Sessão de hoje (20/01) que DEVE ser contabilizada
   const todaySession: TimelineEntry = {
-    startTime: new Date('2026-01-20T06:06:00-03:00').getTime(),
-    endTime: new Date('2026-01-20T06:16:00-03:00').getTime(),
+    startTime: new Date(2026, 0, 20, 6, 6, 0).getTime(),
+    endTime: new Date(2026, 0, 20, 6, 16, 0).getTime(),
     durationMs: 10 * 60 * 1000, // 10 minutos
     domain: 'VS Code (IDE)',
     category: 'productive'
@@ -45,23 +45,23 @@ test('BUG-FIX: não deve inflar buckets horários com sessões antigas', () => {
   const vscodeTimeline: TimelineEntry[] = [
     // Sessão antiga (NÃO deve ser contabilizada)
     {
-      startTime: new Date('2026-01-19T06:00:00-03:00').getTime(),
-      endTime: new Date('2026-01-19T06:55:00-03:00').getTime(),
+      startTime: new Date(2026, 0, 19, 6, 0, 0).getTime(),
+      endTime: new Date(2026, 0, 19, 6, 55, 0).getTime(),
       durationMs: 55 * 60 * 1000,
       domain: 'VS Code (IDE)',
       category: 'productive'
     },
     // Sessão de hoje (DEVE ser contabilizada)
     {
-      startTime: new Date('2026-01-20T06:06:00-03:00').getTime(),
-      endTime: new Date('2026-01-20T06:16:00-03:00').getTime(),
+      startTime: new Date(2026, 0, 20, 6, 6, 0).getTime(),
+      endTime: new Date(2026, 0, 20, 6, 16, 0).getTime(),
       durationMs: 10 * 60 * 1000,
       domain: 'VS Code (IDE)',
       category: 'productive'
     }
   ];
   
-  const todayKey = getTodayKey(new Date('2026-01-20T06:16:00-03:00'));
+  const todayKey = getTodayKey(new Date(2026, 0, 20, 6, 16, 0));
   
   // Filtra apenas sessões de hoje (como a correção faz)
   const todaySessions = vscodeTimeline.filter(entry => {
@@ -90,12 +90,12 @@ test('BUG-FIX: não deve inflar buckets horários com sessões antigas', () => {
 test('BUG-FIX: daemon com dados corrompidos não deve quebrar o relatório', () => {
   // Cenário: daemon retornou timeline com sessões de várias datas
   const corruptedTimeline: TimelineEntry[] = [
-    { startTime: new Date('2026-01-18T10:00:00-03:00').getTime(), endTime: new Date('2026-01-18T11:00:00-03:00').getTime(), durationMs: 3600000, domain: 'VS Code', category: 'productive' },
-    { startTime: new Date('2026-01-19T14:00:00-03:00').getTime(), endTime: new Date('2026-01-19T15:00:00-03:00').getTime(), durationMs: 3600000, domain: 'VS Code', category: 'productive' },
-    { startTime: new Date('2026-01-20T06:06:00-03:00').getTime(), endTime: new Date('2026-01-20T06:16:00-03:00').getTime(), durationMs: 600000, domain: 'VS Code', category: 'productive' }
+    { startTime: new Date(2026, 0, 18, 10, 0, 0).getTime(), endTime: new Date(2026, 0, 18, 11, 0, 0).getTime(), durationMs: 3600000, domain: 'VS Code', category: 'productive' },
+    { startTime: new Date(2026, 0, 19, 14, 0, 0).getTime(), endTime: new Date(2026, 0, 19, 15, 0, 0).getTime(), durationMs: 3600000, domain: 'VS Code', category: 'productive' },
+    { startTime: new Date(2026, 0, 20, 6, 6, 0).getTime(), endTime: new Date(2026, 0, 20, 6, 16, 0).getTime(), durationMs: 600000, domain: 'VS Code', category: 'productive' }
   ];
   
-  const todayKey = getTodayKey(new Date('2026-01-20T06:16:00-03:00'));
+  const todayKey = getTodayKey(new Date(2026, 0, 20, 6, 16, 0));
   
   // Filtra sessões válidas (apenas de hoje)
   const validSessions = corruptedTimeline.filter(entry => {

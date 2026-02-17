@@ -5,7 +5,7 @@ import { splitDurationByHour } from '../shared/utils/time.js';
 
 test('Bug: não deve acumular mais tempo do que o tempo decorrido na hora atual', () => {
     // Simula: são 6:16 da manhã (16 minutos passados desde 6:00)
-    const now = new Date('2026-01-20T06:16:00-03:00');
+    const now = new Date(2026, 0, 20, 6, 16, 0);
     const nowTimestamp = now.getTime();
     
     // Simula uma sessão que começou há 10 minutos (6:06) e termina agora (6:16)
@@ -31,8 +31,8 @@ test('Bug: não deve acumular mais tempo do que o tempo decorrido na hora atual'
 
 test('deve lidar corretamente com sessões que atravessam a virada de hora', () => {
     // Sessão que começa às 5:50 e termina às 6:10 (20 minutos no total)
-    const sessionEnd = new Date('2026-01-20T06:10:00-03:00');
-    const sessionStart = new Date('2026-01-20T05:50:00-03:00');
+    const sessionEnd = new Date(2026, 0, 20, 6, 10, 0);
+    const sessionStart = new Date(2026, 0, 20, 5, 50, 0);
     const duration = sessionEnd.getTime() - sessionStart.getTime(); // 20 minutos
     
     const segments = splitDurationByHour(sessionStart.getTime(), duration);
@@ -58,9 +58,9 @@ test('deve lidar corretamente com sessões que atravessam a virada de hora', () 
 test('deve acumular múltiplas sessões corretamente sem duplicar tempo', () => {
     // Simula múltiplas sessões pequenas durante a manhã
     const sessions = [
-      { start: new Date('2026-01-20T06:00:00-03:00'), duration: 5 * 60 * 1000 }, // 5 min
-      { start: new Date('2026-01-20T06:06:00-03:00'), duration: 5 * 60 * 1000 }, // 5 min
-      { start: new Date('2026-01-20T06:12:00-03:00'), duration: 4 * 60 * 1000 }  // 4 min
+      { start: new Date(2026, 0, 20, 6, 0, 0), duration: 5 * 60 * 1000 }, // 5 min
+      { start: new Date(2026, 0, 20, 6, 6, 0), duration: 5 * 60 * 1000 }, // 5 min
+      { start: new Date(2026, 0, 20, 6, 12, 0), duration: 4 * 60 * 1000 }  // 4 min
     ];
     
     let totalHour6 = 0;
@@ -85,12 +85,12 @@ test('deve reproduzir o bug: 55 minutos às 6:16 da manhã', () => {
     // Cenário: usuário relata 55 minutos produtivos às 6:16 da manhã
     // Possível causa: alguma sessão da madrugada ou dia anterior sendo contabilizada
     
-    const now = new Date('2026-01-20T06:16:00-03:00');
+    const now = new Date(2026, 0, 20, 6, 16, 0);
     
     // Hipótese: uma sessão longa da madrugada está sendo contabilizada errada
     // Por exemplo: sessão de 23:00 de ontem até 1:00 de hoje
     const midnightSession = {
-      start: new Date('2026-01-19T23:00:00-03:00').getTime(),
+      start: new Date(2026, 0, 19, 23, 0, 0).getTime(),
       duration: 2 * 60 * 60 * 1000 // 2 horas
     };
     
