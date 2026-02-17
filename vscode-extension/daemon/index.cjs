@@ -148,20 +148,40 @@ function sendError(req, res, status, message) {
 }
 
 function parseDateKey(input) {
-  // BUG-020: Strict validation to prevent path traversal
-  if (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
-    // Validate that the date is actually valid
-    const d = new Date(input + 'T00:00:00Z');
-    if (!isNaN(d.getTime())) {
-      // Additional check: ensure year is reasonable (1900-2100)
-      const year = d.getUTCFullYear();
-      if (year >= 1900 && year <= 2100) {
-        return input;
-      }
+  if (typeof input === 'string') {
+    const normalized = normalizeDateKey(input);
+    if (normalized) {
+      return normalized;
     }
   }
   const now = new Date();
   return formatDateKey(now);
+}
+
+function normalizeDateKey(input) {
+  const trimmed = typeof input === 'string' ? input.trim() : '';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return null;
+  }
+  const [yearRaw, monthRaw, dayRaw] = trimmed.split('-');
+  const year = Number(yearRaw);
+  const month = Number(monthRaw);
+  const day = Number(dayRaw);
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) {
+    return null;
+  }
+  if (year < 1900 || year > 2100) {
+    return null;
+  }
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+  return trimmed;
 }
 
 function getDateFromTimestamp(ts) {
@@ -952,7 +972,11 @@ function handleVscodeHeartbeatsGet(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
   const filtered = entry.heartbeats.filter((heartbeat) => {
@@ -996,7 +1020,11 @@ function handleVscodeDurations(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
   const durations = entry.durations.filter((duration) =>
@@ -1033,7 +1061,11 @@ function handleVscodeSummaries(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
   const daily = summarizeDurationsByDay(entry.durations, startMs, endMs, filters);
@@ -1064,7 +1096,11 @@ function handleVscodeStatsToday(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
@@ -1097,7 +1133,11 @@ function handleVscodeBreakdown(req, res, url, type) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
   const summary = summarizeDurations(entry.durations, startMs, endMs, filters);
@@ -1123,7 +1163,11 @@ function handleVscodeCommits(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
 
@@ -1148,7 +1192,11 @@ function handleVscodeBranches(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
 
@@ -1185,7 +1233,11 @@ function handleVscodeRepositories(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
 
@@ -1226,7 +1278,11 @@ function handleVscodeEditorMetadata(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const entry = ensureVscodeEntry(key);
 
   const metadataSnapshots = entry.heartbeats
@@ -1264,7 +1320,11 @@ function handleVscodeWorkspaces(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const entry = ensureVscodeEntry(key);
 
   const workspaceMap = new Map();
@@ -1311,7 +1371,11 @@ function handleVscodeActivityInsights(req, res, url) {
     sendError(req, res, 401, 'Invalid key');
     return;
   }
-  const { startMs, endMs } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startMs, endMs } = range;
   const entry = ensureVscodeEntry(key);
 
   let totalTabSwitches = 0;
@@ -1671,7 +1735,11 @@ function handleVscodeTelemetry(req, res, url) {
     return;
   }
 
-  const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+  const range = getDateRangeOrError(req, res, url);
+  if (!range) {
+    return;
+  }
+  const { startKey, endKey, startMs, endMs, timezone } = range;
   const entry = ensureVscodeEntry(key);
 
   const telemetry = aggregateTelemetry(entry.heartbeats, startMs, endMs);
@@ -1690,7 +1758,11 @@ function handleVscodeDashboard(req, res, url) {
       sendError(req, res, 401, 'Invalid key');
       return;
     }
-    const { startKey, endKey, startMs, endMs, timezone } = resolveDateRange(url);
+    const range = getDateRangeOrError(req, res, url);
+    if (!range) {
+      return;
+    }
+    const { startKey, endKey, startMs, endMs, timezone } = range;
   const filters = readVscodeFilters(url);
   const entry = ensureVscodeEntry(key);
 
@@ -1836,8 +1908,39 @@ function handleVscodeMeta(req, res) {
 }
 
 function resolveDateRange(url) {
-  const startKey = getTodayKey();
-  const endKey = startKey;
+  const todayKey = getTodayKey();
+  const rawDate = url.searchParams.get('date');
+  const rawStart = url.searchParams.get('start') ?? rawDate;
+  const rawEnd = url.searchParams.get('end');
+  const parsedStart = rawStart ? normalizeDateKey(rawStart) : null;
+  const parsedEnd = rawEnd ? normalizeDateKey(rawEnd) : null;
+
+  if (rawStart && !parsedStart) {
+    return { error: 'invalid start date; expected YYYY-MM-DD' };
+  }
+  if (rawEnd && !parsedEnd) {
+    return { error: 'invalid end date; expected YYYY-MM-DD' };
+  }
+
+  let startKey = parsedStart ?? todayKey;
+  let endKey = parsedEnd ?? (parsedStart ?? todayKey);
+
+  if (!parsedStart && parsedEnd) {
+    startKey = parsedEnd;
+    endKey = parsedEnd;
+  }
+
+  if (startKey > endKey) {
+    return { error: 'start date must be less than or equal to end date' };
+  }
+
+  if (!isDateWithinWindowWithRetention(startKey, VSCODE_RETENTION_DAYS)) {
+    return { error: 'start date out of allowed window' };
+  }
+  if (!isDateWithinWindowWithRetention(endKey, VSCODE_RETENTION_DAYS)) {
+    return { error: 'end date out of allowed window' };
+  }
+
   const startMs = getDayStartMs(startKey);
   const endMs = getDayEndMsExclusive(endKey);
   return {
@@ -1847,6 +1950,15 @@ function resolveDateRange(url) {
     endMs,
     timezone: url.searchParams.get('tz') ?? guessTimezone()
   };
+}
+
+function getDateRangeOrError(req, res, url) {
+  const range = resolveDateRange(url);
+  if (!range || range.error) {
+    sendError(req, res, 400, range?.error ?? 'invalid date range');
+    return null;
+  }
+  return range;
 }
 
 function guessTimezone() {

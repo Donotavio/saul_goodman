@@ -2,6 +2,12 @@ const { describe, it, before, after, beforeEach, afterEach } = require('node:tes
 const assert = require('node:assert');
 const { ComboTracker } = require('../tracking/combo-tracker');
 
+function getLocalDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getDate()
+  ).padStart(2, '0')}`;
+}
+
 describe('ComboTracker', () => {
   let tracker;
   let mockContext;
@@ -63,7 +69,7 @@ describe('ComboTracker', () => {
         maxComboToday: 3,
         totalCombosToday: 5,
         lifetimeMaxCombo: 10,
-        lastSaveDate: new Date().toISOString().slice(0, 10)
+        lastSaveDate: getLocalDateKey()
       });
 
       await tracker.loadState();
@@ -234,7 +240,7 @@ describe('ComboTracker', () => {
         maxComboToday: 2,
         totalCombosToday: 5,
         lifetimeMaxCombo: 10,
-        lastSaveDate: yesterday.toISOString().slice(0, 10)
+        lastSaveDate: getLocalDateKey(yesterday)
       });
 
       // Carregar o estado para aplicar lifetimeMaxCombo: 10

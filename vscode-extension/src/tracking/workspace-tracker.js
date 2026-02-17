@@ -2,6 +2,18 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
 const { getCurrentProjectName } = require('../utils/workspace-helper').default;
+const WORKSPACE_DEBUG = process.env.SAUL_DEBUG_WORKSPACE === '1';
+
+function workspaceDebug(message, payload) {
+  if (!WORKSPACE_DEBUG) {
+    return;
+  }
+  if (payload === undefined) {
+    console.debug(`[Saul Workspace] ${message}`);
+    return;
+  }
+  console.debug(`[Saul Workspace] ${message}`, payload);
+}
 
 class WorkspaceTracker {
   constructor(options) {
@@ -24,7 +36,7 @@ class WorkspaceTracker {
         try {
           this.scanWorkspaces();
         } catch (error) {
-          console.error('[Saul Workspace] Initial scan error:', error);
+          console.error('[Saul Workspace] Initial scan error:', error?.message || String(error));
         }
       }, 10000);
       
@@ -32,7 +44,7 @@ class WorkspaceTracker {
         try {
           this.scanWorkspaces();
         } catch (error) {
-          console.error('[Saul Workspace] Periodic scan error:', error);
+          console.error('[Saul Workspace] Periodic scan error:', error?.message || String(error));
         }
       }, this.SCAN_INTERVAL_MS);
 
@@ -42,12 +54,12 @@ class WorkspaceTracker {
             this.trackWorkspaceChange(event);
             this.scanWorkspaces();
           } catch (error) {
-            console.error('[Saul Workspace] Workspace change error:', error);
+            console.error('[Saul Workspace] Workspace change error:', error?.message || String(error));
           }
         })
       );
     } catch (error) {
-      console.error('[Saul Workspace] Start failed:', error);
+      console.error('[Saul Workspace] Start failed:', error?.message || String(error));
     }
   }
 
@@ -69,12 +81,12 @@ class WorkspaceTracker {
   async scanWorkspaces() {
     const config = this.getConfig();
     if (!config.enableTracking) {
-      console.log('[Saul Workspace] Tracking disabled');
+      workspaceDebug('Tracking disabled');
       return;
     }
 
     const folders = vscode.workspace.workspaceFolders || [];
-    console.log('[Saul Workspace] Scanning', folders.length, 'workspace folders');
+    workspaceDebug('Scanning workspace folders', { totalFolders: folders.length });
     
     for (const folder of folders) {
       await this.scanWorkspaceFolder(folder);
@@ -109,12 +121,12 @@ class WorkspaceTracker {
       this.queue.enqueue(heartbeat);
       this.workspaceSizes.set(folder.uri.fsPath, stats.totalSizeBytes);
     } catch (error) {
-      console.error('[Saul Workspace] Failed to scan workspace:', error);
+      console.error('[Saul Workspace] Failed to scan workspace:', error?.message || String(error));
     }
   }
 
   async analyzeWorkspace(folder) {
-    console.log('[Saul Workspace] Analyzing folder:', folder.name, folder.uri.fsPath);
+    workspaceDebug('Analyzing workspace folder', { folderName: folder.name });
     
     const stats = {
       totalFiles: 0,
@@ -126,7 +138,7 @@ class WorkspaceTracker {
     };
 
     try {
-      console.log('[Saul Workspace] Finding files in:', folder.uri.fsPath);
+      workspaceDebug('Finding files for workspace analysis');
       
       const files = await vscode.workspace.findFiles(
         new vscode.RelativePattern(folder, '**/*'),
@@ -134,10 +146,10 @@ class WorkspaceTracker {
         5000
       );
 
-      console.log('[Saul Workspace] Found', files.length, 'potential files');
+      workspaceDebug('Found potential files', { files: files.length });
 
       if (files.length === 0) {
-        console.warn('[Saul Workspace] No files found - workspace might be empty or all excluded');
+        workspaceDebug('No files found during workspace scan');
         return stats;
       }
 
@@ -162,11 +174,11 @@ class WorkspaceTracker {
             });
           }
         } catch (error) {
-          console.log('[Saul Workspace] Skipped file (stat failed):', file.fsPath);
+          workspaceDebug('Skipped one file due to stat error');
         }
       }
 
-      console.log('[Saul Workspace] Processed', processedCount, 'of', files.length, 'files');
+      workspaceDebug('Workspace files processed', { processed: processedCount, discovered: files.length });
 
       stats.largestFiles = fileSizes
         .sort((a, b) => b.size - a.size)
@@ -182,12 +194,11 @@ class WorkspaceTracker {
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
 
-      const sizeMB = (stats.totalSizeBytes / (1024 * 1024)).toFixed(2);
-      console.log('[Saul Workspace] ✓ Analysis complete:', stats.totalFiles, 'files,', sizeMB, 'MB');
+      const sizeMB = Number((stats.totalSizeBytes / (1024 * 1024)).toFixed(2));
+      workspaceDebug('Workspace analysis complete', { totalFiles: stats.totalFiles, totalSizeMB: sizeMB });
 
     } catch (error) {
-      console.error('[Saul Workspace] ✗ Failed to analyze workspace:', error);
-      console.error('[Saul Workspace] Error stack:', error.stack);
+      console.error('[Saul Workspace] Failed to analyze workspace:', error?.message || String(error));
     }
 
     return stats;

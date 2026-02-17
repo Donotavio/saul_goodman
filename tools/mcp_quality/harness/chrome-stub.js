@@ -8,6 +8,36 @@
     return;
   }
 
+  const FIXED_NOW_MS = Date.parse('2026-01-20T15:00:00.000Z');
+  if (!globalScope.__MCP_DETERMINISTIC_ENV__) {
+    const NativeDate = Date;
+    function FixedDate(...args) {
+      if (!(this instanceof FixedDate)) {
+        if (args.length === 0) {
+          return NativeDate(FIXED_NOW_MS).toString();
+        }
+        return NativeDate(...args);
+      }
+      if (args.length === 0) {
+        return new NativeDate(FIXED_NOW_MS);
+      }
+      return new NativeDate(...args);
+    }
+    FixedDate.UTC = NativeDate.UTC;
+    FixedDate.parse = NativeDate.parse;
+    FixedDate.now = () => FIXED_NOW_MS;
+    FixedDate.prototype = NativeDate.prototype;
+    Object.setPrototypeOf(FixedDate, NativeDate);
+    globalScope.Date = FixedDate;
+
+    let randomSeed = 0x12345678;
+    globalScope.Math.random = () => {
+      randomSeed = (1664525 * randomSeed + 1013904223) >>> 0;
+      return randomSeed / 4294967296;
+    };
+    globalScope.__MCP_DETERMINISTIC_ENV__ = true;
+  }
+
   const STORAGE_KEY = '__saul_mcp_storage__';
   const baseUrl = String(globalScope.__MCP_BASE_URL__ ?? globalScope.location.origin ?? '')
     .replace(/\/$/, '');

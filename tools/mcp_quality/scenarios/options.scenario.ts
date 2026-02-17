@@ -78,11 +78,28 @@ export async function runOptionsScenario(
       if (!form || !input) {
         return { ok: false, reason: 'missing elements' };
       }
+      const expectedMs = ${newThresholdSeconds * 1000};
       input.value = '${newThresholdSeconds}';
-      form.requestSubmit();
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+
+      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+
+      for (let i = 0; i < 30; i++) {
+        const data = await chrome.storage.local.get('sg:settings');
+        const stored = data['sg:settings']?.inactivityThresholdMs;
+        if (stored === expectedMs) {
+          return { ok: true, stored };
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+
       const data = await chrome.storage.local.get('sg:settings');
-      return { ok: true, stored: data['sg:settings']?.inactivityThresholdMs };
+      return {
+        ok: false,
+        reason: 'persist-timeout',
+        stored: data['sg:settings']?.inactivityThresholdMs
+      };
     }`
   );
   const updatePayload = extractJson<{ ok?: boolean; stored?: number; reason?: string } | undefined>(

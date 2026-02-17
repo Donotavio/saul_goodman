@@ -2,7 +2,7 @@ import path from 'node:path';
 import { HARNESS_PAGES } from '../config.js';
 import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
-import { extractJson, saveJsonArtifact } from './helpers.js';
+import { extractJson, saveJsonArtifact, stabilizeVisualSnapshot } from './helpers.js';
 
 export async function runReportScenario(
   client: DevtoolsMcpClient,
@@ -20,6 +20,18 @@ export async function runReportScenario(
 
   await client.newPage(pageUrl, 15000);
   await client.waitFor('Relatório', 10000);
+  await client.evaluateScript(`async () => {
+    for (let i = 0; i < 60; i++) {
+      const hero = (document.getElementById('heroIndex')?.textContent ?? '').trim();
+      const storyItems = document.querySelectorAll('#storyList li').length;
+      if (hero && hero !== '--' && storyItems > 0) {
+        return true;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    return false;
+  }`);
+  await stabilizeVisualSnapshot(client);
 
   const consoleRes = await client.listConsoleMessages();
   const consolePayload = extractJson<{ messages?: Array<{ type?: string; text?: string }> }>(

@@ -1167,7 +1167,7 @@ async function pollStatus() {
     if (!healthRes.ok) {
       throw new Error(`HTTP ${healthRes.status}`);
     }
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getTodayKey();
     const [summary, indexData] = await Promise.all([
       apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
       apiClient.getIndex(baseUrl, key, today).catch(() => null)

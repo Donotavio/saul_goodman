@@ -15,7 +15,8 @@
   },
   "main": "./src/extension.js",
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:saulGoodman.startDaemon"
   ],
   "contributes": {
     "commands": [

@@ -29,6 +29,16 @@ function showReports(context, getConfig, getI18n) {
   activePanel = panel;
 }
 
+function buildReportConfig(config) {
+  const safe = config && typeof config === 'object' ? config : {};
+  return {
+    enableReportsInVscode: Boolean(safe.enableReportsInVscode),
+    enableTelemetry: Boolean(safe.enableTelemetry),
+    apiBase: typeof safe.apiBase === 'string' ? safe.apiBase : '',
+    pairingKey: typeof safe.pairingKey === 'string' ? safe.pairingKey : ''
+  };
+}
+
 function buildHtml(webview, extensionUri, config, i18n) {
   const templatePath = path.join(extensionUri.fsPath, 'src', 'reports', 'report.html');
   const cssPath = path.join(extensionUri.fsPath, 'src', 'reports', 'report.css');
@@ -51,9 +61,22 @@ function buildHtml(webview, extensionUri, config, i18n) {
   const commitsDistributionUri = webview.asWebviewUri(
     vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'commit-distribution.js')
   );
+  const chartJsUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(extensionUri, 'src', 'reports', 'vendor', 'chart.umd.js')
+  );
+  const chartAdapterUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(
+      extensionUri,
+      'src',
+      'reports',
+      'vendor',
+      'chartjs-adapter-date-fns.bundle.min.js'
+    )
+  );
 
   const inlineStyles = `<style nonce="${nonce}">${cssContent}</style>`;
   const logoDataUri = `data:image/png;base64,${logoBase64}`;
+  const reportConfig = buildReportConfig(config);
 
   // Replace all i18n placeholders in the template
   template = template.replace(/{i18n_([a-zA-Z0-9_]+)}/g, (match, key) => {
@@ -67,9 +90,11 @@ function buildHtml(webview, extensionUri, config, i18n) {
     .replace('{reportHourlyUri}', reportHourlyUri.toString())
     .replace('{comboTimelineUri}', comboTimelineUri.toString())
     .replace('{commitsDistributionUri}', commitsDistributionUri.toString())
+    .replace('{chartJsUri}', chartJsUri.toString())
+    .replace('{chartAdapterUri}', chartAdapterUri.toString())
     .replace('<link rel="stylesheet" href="{styleUri}" />', inlineStyles)
     .replace('{logoUri}', logoDataUri)
-    .replace('{config}', JSON.stringify(config))
+    .replace('{config}', JSON.stringify(reportConfig))
     .replace('{i18n}', JSON.stringify(i18n || {}));
 }
 

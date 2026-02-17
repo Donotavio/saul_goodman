@@ -406,7 +406,7 @@ async function refreshVscodeReport(): Promise<void> {
   if (!baseUrl || !pairingKey) {
     return;
   }
-  const start = new Date().toISOString().slice(0, 10);
+  const start = getTodayKey();
   const end = start;
   const project = vscodeFilterProjectEl?.value ?? '';
   const language = vscodeFilterLanguageEl?.value ?? '';

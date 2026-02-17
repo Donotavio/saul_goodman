@@ -1,4 +1,4 @@
-import type { McpCallResult } from '../mcp/client.js';
+import type { DevtoolsMcpClient, McpCallResult } from '../mcp/client.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -92,4 +92,50 @@ export function saveJsonArtifact(
   const filePath = path.join(dir, `${ctx.viewportName}-${scenario}-${suffix}.json`);
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
   return filePath;
+}
+
+export async function stabilizeVisualSnapshot(client: DevtoolsMcpClient): Promise<void> {
+  await client.evaluateScript(`async () => {
+    if (window.Chart && window.Chart.defaults) {
+      window.Chart.defaults.animation = false;
+      window.Chart.defaults.responsiveAnimationDuration = 0;
+      const instances = window.Chart.instances
+        ? Object.values(window.Chart.instances)
+        : [];
+      for (const chart of instances) {
+        if (!chart) {
+          continue;
+        }
+        if (typeof chart.stop === 'function') {
+          chart.stop();
+        }
+        if (typeof chart.update === 'function') {
+          chart.update('none');
+        }
+      }
+    }
+    const existing = document.getElementById('__mcp_quality_no_motion__');
+    if (!existing) {
+      const style = document.createElement('style');
+      style.id = '__mcp_quality_no_motion__';
+      style.textContent = \`
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+          caret-color: transparent !important;
+        }
+      \`;
+      document.head.appendChild(style);
+    }
+    if (document.fonts?.ready) {
+      try {
+        await document.fonts.ready;
+      } catch {
+        // ignore
+      }
+    }
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    return true;
+  }`);
 }

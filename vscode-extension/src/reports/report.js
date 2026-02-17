@@ -133,8 +133,7 @@
 
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
-      console.error('[Saul Report] ✗ Error loading data:', error);
-      console.error('[Saul Report] Error stack:', error.stack);
+      console.error('[Saul Report] Error loading data:', error?.message || String(error));
       statusEl.textContent = `${i18n.error || 'Error loading data.'} ${error.message}`;
     }
   }
@@ -467,7 +466,7 @@
         }
       });
     } catch (error) {
-      console.error('[Saul Report] Error creating projects chart:', error);
+      console.error('[Saul Report] Error creating projects chart:', error?.message || String(error));
     }
   }
 
@@ -566,28 +565,19 @@
         }
       });
     } catch (error) {
-      console.error('[Saul Report] Error creating commits chart:', error);
+      console.error('[Saul Report] Error creating commits chart:', error?.message || String(error));
     }
   }
 
   function renderCrossReferenceChart(languagesByProject) {
-    console.log('[Saul Report] renderCrossReferenceChart called with:', languagesByProject);
-    
     const canvas = document.getElementById('crossReferenceChart');
     const emptyEl = document.getElementById('crossReferenceEmpty');
-    
-    console.log('[Saul Report] Canvas element:', canvas);
-    console.log('[Saul Report] Empty element:', emptyEl);
-    console.log('[Saul Report] languagesByProject length:', languagesByProject?.length);
-    
+
     if (!canvas || !languagesByProject || languagesByProject.length === 0) {
-      console.log('[Saul Report] Showing empty state for cross-reference chart');
       if (canvas) canvas.style.display = 'none';
       if (emptyEl) emptyEl.classList.remove('hidden');
       return;
     }
-
-    console.log('[Saul Report] Rendering cross-reference chart with', languagesByProject.length, 'projects');
     canvas.style.display = 'block';
     if (emptyEl) emptyEl.classList.add('hidden');
 
@@ -605,7 +595,6 @@
       });
     });
     
-    console.log('[Saul Report] Filtered languages (removed unknown):', Array.from(allLanguages));
 
     const languageColors = {
       'javascript': '#f7df1e',
@@ -698,7 +687,6 @@
       return name.length > 20 ? name.substring(0, 18) + '...' : name;
     });
     
-    console.log('[Saul Report] Filtered projects (removed unknown):', projectLabels);
 
     const unknownLanguages = [];
     const datasets = Array.from(allLanguages).map((language, index) => {
@@ -722,15 +710,8 @@
       };
     });
 
-    console.log('[Saul Report] Project labels:', projectLabels);
-    console.log('[Saul Report] Datasets:', datasets);
-    console.log('[Saul Report] Chart.js available:', typeof Chart !== 'undefined');
-
     try {
-      console.log('[Saul Report] Getting canvas context...');
       const ctx = canvas.getContext('2d');
-      console.log('[Saul Report] Canvas context:', ctx);
-      console.log('[Saul Report] Creating Chart.js instance...');
       window.crossReferenceChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -795,10 +776,11 @@
           }
         }
       });
-      console.log('[Saul Report] ✓ Cross-reference chart created successfully');
     } catch (error) {
-      console.error('[Saul Report] ✗ Error creating cross-reference chart:', error);
-      console.error('[Saul Report] Error stack:', error.stack);
+      console.error(
+        '[Saul Report] Error creating cross-reference chart:',
+        error?.message || String(error)
+      );
     }
   }
 
@@ -828,29 +810,8 @@
     document.getElementById('telPomodoros').textContent = tel.focus?.pomodorosCompleted || 0;
     document.getElementById('telFocusTime').textContent = formatDurationMs(tel.focus?.totalFocusMs || 0);
 
-    console.log('[Saul Report] ===== TELEMETRY DEBUG =====');
-    console.log('[Saul Report] Full telemetry object:', JSON.stringify(tel, null, 2));
-    console.log('[Saul Report] All telemetry keys:', Object.keys(tel));
-    console.log('[Saul Report] Combo data exists?', tel.combo !== undefined);
-    console.log('[Saul Report] Combo data:', tel.combo);
-    
-    if (tel.combo) {
-      console.log('[Saul Report] ✓ Combo data FOUND:', {
-        maxComboToday: tel.combo.maxComboToday,
-        totalCombosToday: tel.combo.totalCombosToday,
-        lifetimeMaxCombo: tel.combo.lifetimeMaxCombo,
-        comboTimeline: tel.combo.comboTimeline?.length || 0
-      });
-    } else {
-      console.log('[Saul Report] ❌ NO COMBO DATA - Daemon não retornou campo "combo"');
-      console.log('[Saul Report] Isso significa que o daemon ainda não processa heartbeats de combo');
-    }
-    
     const maxCombo = tel.combo?.maxComboToday || 0;
     const comboMinutes = maxCombo * 25;
-    
-    console.log('[Saul Report] Max combo:', maxCombo, 'minutes:', comboMinutes);
-    console.log('[Saul Report] ===========================');
     
     document.getElementById('telMaxCombo').textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
     document.getElementById('telComboMinutes').textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';
@@ -1033,11 +994,9 @@
   function renderTopErrorFiles(files) {
     const list = document.getElementById('topErrorFilesList');
     if (!list) {
-      console.warn('[Report] topErrorFilesList element not found');
+      console.warn('[Saul Report] topErrorFilesList element not found');
       return;
     }
-
-    console.log('[Report] renderTopErrorFiles called with:', files);
     list.innerHTML = '';
     if (!files || files.length === 0) {
       const li = document.createElement('li');
@@ -1112,27 +1071,10 @@
   }
 
   function todayKey() {
-    return new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
-
-  // Debug helper - call window.__SAUL_DEBUG__() in browser console
-  window.__SAUL_DEBUG__ = function() {
-    console.log('========== SAUL DEBUG INFO ==========');
-    console.log('Config:', config);
-    console.log('reportContent hidden?', contentEl?.classList.contains('hidden'));
-    console.log('reportsDisabled hidden?', disabledEl?.classList.contains('hidden'));
-    console.log('projectsList:', projectsList, 'children:', projectsList?.children.length);
-    console.log('languagesList:', languagesList, 'children:', languagesList?.children.length);
-    console.log('statToday:', statToday?.textContent);
-    console.log('All KPI values:', {
-      focus: document.getElementById('kpiFocus')?.textContent,
-      switches: document.getElementById('kpiSwitches')?.textContent,
-      productive: document.getElementById('kpiProductive')?.textContent,
-      procrast: document.getElementById('kpiProcrast')?.textContent,
-      inactive: document.getElementById('kpiInactive')?.textContent
-    });
-    console.log('=====================================');
-  };
-  
-  console.log('[Saul Report] Debug helper available: window.__SAUL_DEBUG__()');
 })();

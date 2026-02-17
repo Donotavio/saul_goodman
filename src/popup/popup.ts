@@ -502,7 +502,7 @@ function renderSuggestionCard(
     }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
   suggestionConfidenceEl.textContent = confidenceTemplate;
   suggestionReasonsEl.innerHTML = '';
-  suggestion.reasons.slice(0, 4).forEach((reason) => {
+  suggestion.reasons.slice(0, 3).forEach((reason) => {
     const li = document.createElement('li');
     li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReasonsEl.appendChild(li);

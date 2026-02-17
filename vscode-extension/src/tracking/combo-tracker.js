@@ -227,7 +227,7 @@ class ComboTracker {
       totalCombosToday: this.totalCombosToday,
       lifetimeMaxCombo: this.lifetimeMaxCombo,
       comboTimeline: this.comboTimeline.slice(-100), // Últimos 100 eventos
-      lastSaveDate: new Date().toISOString().slice(0, 10)
+      lastSaveDate: getLocalDateKey()
     };
     
     await this.context.globalState.update('sg:combo:state', state);
@@ -255,7 +255,7 @@ class ComboTracker {
    */
   async checkDailyReset() {
     const state = this.context.globalState.get('sg:combo:state');
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getLocalDateKey();
     
     if (state && state.lastSaveDate !== today) {
       this.consecutivePomodoros = 0;
@@ -324,6 +324,12 @@ class ComboTracker {
   dispose() {
     // Cleanup if needed
   }
+}
+
+function getLocalDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getDate()
+  ).padStart(2, '0')}`;
 }
 
 module.exports = { ComboTracker };
