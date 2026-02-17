@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "সংবেদনশীল টেলিমেট্রি অনুমোদন করে (যেমন: টার্মিনাল কমান্ড)।",
   "config_api_base_description": "স্থানীয় সৌলডেমন এর বেস URL।",
   "config_pairing_key_description": "ক্রোম এক্সটেনশনের সাথে শেয়ার করা পেয়ারিং কী।",
+  "config_daemon_path_description": "স্থানীয় SaulDaemon এর সম্পূর্ণ পথ (ঐচ্ছিক)।",
   "config_hash_file_paths_description": "হার্টবিটে প্রেরিত ফাইলের পথগুলোর হ্যাশ করে।",
   "config_hash_project_names_description": "ডেমন এ পাঠানোর আগে প্রকল্পের নামগুলোর হ্যাশ করে।",
   "config_heartbeat_interval_description": "সৌলডেমন এ প্রেরিত হার্টবিটের মধ্যে মিলিসেকেন্ডে ব্যবধান।",

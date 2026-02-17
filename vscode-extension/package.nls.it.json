@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "Autorizza telemetria sensibile (es.: comandi del terminale).",
   "config_api_base_description": "URL base del SaulDaemon locale.",
   "config_pairing_key_description": "Chiave di accoppiamento condivisa con l'estensione Chrome.",
+  "config_daemon_path_description": "Percorso assoluto del SaulDaemon locale (opzionale).",
   "config_hash_file_paths_description": "Fai hash dei percorsi dei file inviati negli heartbeat.",
   "config_hash_project_names_description": "Fai hash dei nomi dei progetti prima di inviarli al daemon.",
   "config_heartbeat_interval_description": "Intervallo in millisecondi tra heartbeat inviati al SaulDaemon.",

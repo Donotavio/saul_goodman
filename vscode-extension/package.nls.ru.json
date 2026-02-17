@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "Разрешает чувствительную телеметрию (например, команды терминала).",
   "config_api_base_description": "Базовый URL локального SaulDaemon.",
   "config_pairing_key_description": "Ключ сопряжения, общий с расширением Chrome.",
+  "config_daemon_path_description": "Абсолютный путь к локальному SaulDaemon (необязательно).",
   "config_hash_file_paths_description": "Создает хэш путей файлов, отправленных в heartbeats.",
   "config_hash_project_names_description": "Создает хэш имен проектов перед отправкой в демон.",
   "config_heartbeat_interval_description": "Интервал в миллисекундах между отправленными heartbeats в SaulDaemon.",

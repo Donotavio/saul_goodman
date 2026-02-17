@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "حساس ٹیلی میٹری کی اجازت دیتا ہے (جیسے: ٹرمینل کے کمانڈ).",
   "config_api_base_description": "سول ڈیمون کی مقامی بیس URL.",
   "config_pairing_key_description": "کروم توسیع کے ساتھ مشترکہ پیئرنگ کی.",
+  "config_daemon_path_description": "SaulDaemon مقامی کا مکمل راستہ (اختیاری)۔",
   "config_hash_file_paths_description": "ہارٹ بیٹس میں بھیجے گئے فائلوں کے راستوں کا ہیش بناتا ہے.",
   "config_hash_project_names_description": "ڈیمون کو بھیجنے سے پہلے پروجیکٹ کے ناموں کا ہیش بناتا ہے.",
   "config_heartbeat_interval_description": "سول ڈیمون کو بھیجے گئے ہارٹ بیٹس کے درمیان ملی سیکنڈز میں وقفہ.",

@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "授权敏感遥测（例如：终端命令）。",
   "config_api_base_description": "本地索尔守护进程的基础URL。",
   "config_pairing_key_description": "与Chrome扩展共享的配对密钥。",
+  "config_daemon_path_description": "本地 SaulDaemon 的绝对路径（可选）。",
   "config_hash_file_paths_description": "对发送的心跳中的文件路径进行哈希处理。",
   "config_hash_project_names_description": "在发送到守护进程之前对项目名称进行哈希处理。",
   "config_heartbeat_interval_description": "发送到索尔守护进程的心跳之间的毫秒间隔。",

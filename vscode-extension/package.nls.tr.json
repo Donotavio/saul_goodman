@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "Hassas telemetriyi yetkilendirir (örneğin: terminal komutları).",
   "config_api_base_description": "Yerel SaulDaemon için temel URL.",
   "config_pairing_key_description": "Chrome uzantısıyla paylaşılan eşleştirme anahtarı.",
+  "config_daemon_path_description": "Yerel SaulDaemon'ın mutlak yolu (isteğe bağlı).",
   "config_hash_file_paths_description": "Kalp atışlarında gönderilen dosya yollarını hashler.",
   "config_hash_project_names_description": "Daemon'a göndermeden önce proje isimlerini hashler.",
   "config_heartbeat_interval_description": "SaulDaemon'a gönderilen kalp atışları arasındaki milisaniye cinsinden aralık.",

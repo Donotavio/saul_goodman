@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "Authorizes sensitive telemetry (e.g., terminal commands).",
   "config_api_base_description": "Base URL of the local SaulDaemon.",
   "config_pairing_key_description": "Pairing key shared with the Chrome extension.",
+  "config_daemon_path_description": "Absolute path of the local SaulDaemon (optional).",
   "config_hash_file_paths_description": "Hashes file paths sent in heartbeats.",
   "config_hash_project_names_description": "Hashes project names before sending to daemon.",
   "config_heartbeat_interval_description": "Interval in milliseconds between heartbeats sent to SaulDaemon.",

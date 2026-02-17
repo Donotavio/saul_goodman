@@ -19,6 +19,7 @@ const VSCODE_KEYS = [
   'config_enable_sensitive_telemetry_description',
   'config_api_base_description',
   'config_pairing_key_description',
+  'config_daemon_path_description',
   'config_hash_file_paths_description',
   'config_hash_project_names_description',
   'config_heartbeat_interval_description',

@@ -12,6 +12,7 @@
   "config_enable_sensitive_telemetry_description": "संवेदनशील टेलीमेट्री की अनुमति देता है (जैसे: टर्मिनल कमांड)।",
   "config_api_base_description": "स्थानीय सॉलडेमन का बेस URL।",
   "config_pairing_key_description": "क्रोम एक्सटेंशन के साथ साझा की गई पेयरिंग कुंजी।",
+  "config_daemon_path_description": "स्थानीय SaulDaemon का पूर्ण पथ (वैकल्पिक)।",
   "config_hash_file_paths_description": "हार्टबीट में भेजे गए फ़ाइल पथों का हैश बनाता है।",
   "config_hash_project_names_description": "डेमन को भेजने से पहले परियोजनाओं के नामों का हैश बनाता है।",
   "config_heartbeat_interval_description": "सॉलडेमन को भेजे गए हार्टबीट के बीच मिलीसेकंड में अंतराल।",
