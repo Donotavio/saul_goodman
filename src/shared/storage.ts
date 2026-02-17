@@ -23,66 +23,27 @@ const DEFAULT_WORK_SCHEDULE: WorkInterval[] = [
 ];
 
 const DEFAULT_SETTINGS: ExtensionSettings = {
-  productiveDomains: [
-    'google.com',
-    'docs.google.com',
-    'sheets.google.com',
-    'drive.google.com',
-    'calendar.google.com',
-    'github.com',
-    'gitlab.com',
-    'bitbucket.org',
-    'atlassian.com',
-    'notion.so',
-    'slack.com',
-    'microsoft.com',
-    'office.com',
-    'teams.microsoft.com',
-    'outlook.office.com',
-    'figma.com',
-    'miro.com',
-    'zoom.us',
-    'meet.google.com',
-    'loom.com',
-    'asana.com',
-    'trello.com'
-  ],
-  procrastinationDomains: [
-    'instagram.com',
-    'facebook.com',
-    'tiktok.com',
-    'x.com',
-    'twitter.com',
-    'threads.net',
-    'snapchat.com',
-    'pinterest.com',
-    'youtube.com',
-    'netflix.com',
-    'primevideo.com',
-    'globoplay.com',
-    'disneyplus.com',
-    'twitch.tv',
-    'crunchyroll.com',
-    '9gag.com',
-    'buzzfeed.com',
-    'boredpanda.com',
-    'reddit.com',
-    'amazon.com',
-    'mercadolivre.com.br',
-    'shopee.com.br',
-    'shein.com',
-    'whatsapp.com',
-    'telegram.org',
-    'discord.com',
-    'messenger.com',
-    'steampowered.com',
-    'store.steampowered.com',
-    'epicgames.com',
-    'roblox.com',
-    'valorant.com',
-    'pokemongolive.com'
-  ],
+  productiveDomains: [],
+  procrastinationDomains: [],
   blockProcrastination: false,
+  enableAutoClassification: true,
+  enableAISuggestions: false,
+  suggestionCooldownMs: 86_400_000,
+  suggestionsHistory: {},
+  learningSignals: {
+    version: 1,
+    tokens: {},
+    weights: {
+      host: 3,
+      root: 2,
+      kw: 1,
+      og: 1.5,
+      path: 1.25,
+      schema: 1.25,
+      lang: 0.5,
+      flag: 1
+    }
+  },
   weights: {
     procrastinationWeight: 0.6,
     tabSwitchWeight: 0.25,
@@ -211,8 +172,17 @@ export async function getSettings(): Promise<ExtensionSettings> {
     return {
       ...defaults,
       ...stored,
+      learningSignals: {
+        version: stored.learningSignals?.version ?? defaults.learningSignals?.version ?? 1,
+        tokens: stored.learningSignals?.tokens ?? defaults.learningSignals?.tokens ?? {},
+        weights: {
+          ...(defaults.learningSignals?.weights ?? {}),
+          ...(stored.learningSignals?.weights ?? {})
+        }
+      },
       locale,
       localePreference: preference,
+      suggestionsHistory: stored.suggestionsHistory ?? defaults.suggestionsHistory ?? {},
       weights: {
         ...defaults.weights,
         ...(stored.weights ?? {})

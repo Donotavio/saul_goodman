@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="options_head_title">Saul Goodman - Configurações</title>
+    <link rel="icon" type="image/x-icon" href="/src/img/logotipo_saul_goodman.ico" />
+    <link rel="stylesheet" href="options.css" />
+        <script>window.__MCP_FORCE_CHROME_STUB__ = true;</script>
+    <script src="./chrome-stub.js"></script>
+<script type="module" src="/dist/options/options.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-text">
+        <span class="tagline" data-i18n="options_tagline">Seu advogado particular contra a procrastinação</span>
+        <h1 data-i18n="options_heading">Configurações do Escritório</h1>
+        <p class="subtitle" data-i18n="options_subtitle">
+          Personalize o radar para combinar com seu tipo de procrastinação. Tudo fica no seu navegador.
+        </p>
+        <p class="promise" data-i18n="options_promise">
+          Saul mantém os dados sob sigilo total enquanto negocia com o seu foco.
+        </p>
+      </div>
+      <div class="logo-frame">
+        <img src="/src/img/logotipo_saul_goodman.png" alt="Logotipo Saul Goodman" class="logo" />
+        <span class="logo-caption" data-i18n="options_digital_branch">Filial digital</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel-grid">
+        <form id="weightsForm" class="settings-form" novalidate>
+          <div class="panel language-panel">
+            <fieldset class="field-group">
+              <legend data-i18n="options_language_label">Idioma da interface</legend>
+              <label class="field locale-select" for="localeSelect">
+                <span data-i18n="options_language_label">Idioma da interface</span>
+                <select id="localeSelect" aria-describedby="localeHint" dir="auto">
+                  <option value="auto" data-i18n="options_language_auto">Automático (navegador)</option>
+                  <option value="pt-BR" data-i18n="options_language_pt">Português (Brasil)</option>
+                  <option value="en-US" data-i18n="options_language_en">English (US)</option>
+                  <option value="es-419" data-i18n="options_language_es">Español</option>
+                </select>
+                <small id="localeHint" class="hint" data-i18n="options_language_hint">
+                  Escolha manualmente ou deixe o idioma seguir o Chrome.
+                </small>
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="panel weights-panel">
+            <h2 data-i18n="options_thresholds_heading">Limiares e Pesos</h2>
+            <fieldset class="field-group">
+              <legend data-i18n="options_thresholds_heading">Limiares e Pesos</legend>
+              <label class="field" for="procrastinationWeight">
+                <span data-i18n="options_weight_procrastination">Tempo improdutivo (peso)</span>
+                <input
+                  type="number"
+                  id="procrastinationWeight"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  required
+                  aria-describedby="procrastinationWeightHint"
+                  inputmode="decimal"
+                  autocomplete="off"
+                />
+                <small id="procrastinationWeightHint" class="hint" data-i18n="options_weight_hint">
+                  Use números entre 0 e 1 para calibrar a influência no índice.
+                </small>
+              </label>
+
+              <label class="field" for="tabSwitchWeight">
+                <span data-i18n="options_weight_switches">Trocas de abas (peso)</span>
+                <input
+                  type="number"
+                  id="tabSwitchWeight"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  required
+                  aria-describedby="tabSwitchWeightHint"
+                  inputmode="decimal"
+                  autocomplete="off"
+                />
+                <small id="tabSwitchWeightHint" class="hint" data-i18n="options_weight_hint">
+                  Use números entre 0 e 1 para calibrar a influência no índice.
+                </small>
+              </label>
+
+              <label class="field" for="inactivityWeight">
+                <span data-i18n="options_weight_inactivity">Inatividade (peso)</span>
+                <input
+                  type="number"
+                  id="inactivityWeight"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  required
+                  aria-describedby="inactivityWeightHint"
+                  inputmode="decimal"
+                  autocomplete="off"
+                />
+                <small id="inactivityWeightHint" class="hint" data-i18n="options_weight_hint">
+                  Use números entre 0 e 1 para calibrar a influência no índice.
+                </small>
+              </label>
+
+              <label class="field" for="inactivityThreshold">
+                <span data-i18n="options_inactivity_threshold">
+                  Tempo máximo ocioso antes de considerar inatividade (segundos)
+                </span>
+                <input
+                  type="number"
+                  id="inactivityThreshold"
+                  min="10"
+                  max="600"
+                  step="10"
+                  required
+                  aria-describedby="inactivityThresholdHint"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+                <small id="inactivityThresholdHint" class="hint" data-i18n="options_inactivity_threshold_hint">
+                  Entre 10s e 10min; impacta o cálculo de inatividade.
+                </small>
+              </label>
+
+              <label class="field" for="openAiKey">
+                <span data-i18n="options_openai_label">Chave OpenAI (opcional)</span>
+                <input
+                  type="password"
+                  id="openAiKey"
+                  placeholder="sk-..."
+                  data-i18n-placeholder="options_openai_placeholder"
+                  aria-describedby="openAiKeyHint"
+                  autocomplete="off"
+                  inputmode="text"
+                />
+                <small id="openAiKeyHint" class="hint" data-i18n="options_openai_hint">
+                  Guardamos apenas localmente para gerar narrativas no relatório.
+                </small>
+              </label>
+            </fieldset>
+            <button type="submit" class="primary" data-i18n="options_save_weights">Salvar pesos</button>
+          </div>
+
+          <div class="panel critical-panel">
+            <h2 data-i18n="options_critical_threshold_label">Modo terremoto</h2>
+            <fieldset class="field-group">
+              <legend data-i18n="options_critical_threshold_label">Modo terremoto</legend>
+              <label class="field" for="criticalThreshold">
+                <span data-i18n="options_critical_threshold_label">Limiar do modo terremoto (0–100)</span>
+                <input
+                  type="number"
+                  id="criticalThreshold"
+                  min="0"
+                  max="100"
+                  step="5"
+                  required
+                  aria-describedby="criticalThresholdHint"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+                <small id="criticalThresholdHint" class="hint" data-i18n="options_critical_threshold_hint">
+                  Quando o índice atingir esse valor, Saul ativa o alerta crítico.
+                </small>
+              </label>
+
+              <label class="toggle field" for="criticalSoundEnabled">
+                <span data-i18n="options_critical_sound_label">Sirene automática do modo terremoto</span>
+                <input
+                  type="checkbox"
+                  id="criticalSoundEnabled"
+                  aria-describedby="criticalSoundHint"
+                />
+                <small id="criticalSoundHint" class="hint" data-i18n="options_critical_sound_hint">
+                  Quando ativo, a sirene toca sempre que o alerta crítico dispara.
+                </small>
+              </label>
+            </fieldset>
+          </div>
+        </form>
+
+        <div class="panel-stack">
+          <div class="panel schedule-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_schedule_heading">Horários de trabalho</h2>
+              <p class="hint" data-i18n="options_schedule_hint">
+                Informe os blocos de horário em que Saul deve considerar seu expediente oficial. Fora desses
+                períodos, minutos produtivos contam em dobro.
+              </p>
+              <div id="workScheduleList" class="schedule-list"></div>
+              <button
+                type="button"
+                id="addWorkIntervalButton"
+                class="ghost"
+                data-i18n="options_schedule_add"
+              >
+                Adicionar intervalo
+              </button>
+            </div>
+          </div>
+
+          <div class="panel holiday-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_holiday_heading">Feriados e contexto justo</h2>
+              <p class="hint" data-i18n="options_holiday_hint">
+                Quando ativado, Saul consulta apenas o Nager.Date para saber se hoje é feriado nacional e neutraliza o índice.
+              </p>
+              <p class="hint" data-i18n="options_holiday_context_hint">
+                Use o popup para escolher o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal). Saul registra esse histórico e ajusta o índice sem injustiças.
+              </p>
+              <label class="toggle field" for="holidayAutoEnabled">
+                <span data-i18n="options_holiday_toggle_label">Pausar pontuação em feriados nacionais</span>
+                <input type="checkbox" id="holidayAutoEnabled" aria-describedby="holidayToggleHint" />
+                <small id="holidayToggleHint" class="hint" data-i18n="options_holiday_toggle_hint">
+                  Chamadas são feitas só quando você permite, usando o código do país informado abaixo.
+                </small>
+              </label>
+              <label class="field" for="holidayCountryCode">
+                <span data-i18n="options_holiday_country_label">Código do país (ISO-3166)</span>
+                <input
+                  type="text"
+                  id="holidayCountryCode"
+                  maxlength="2"
+                  autocomplete="off"
+                  inputmode="text"
+                  aria-describedby="holidayCountryHint"
+                />
+                <small id="holidayCountryHint" class="hint" data-i18n="options_holiday_country_hint">
+                  Ex.: BR, US, PT. Nunca usamos localização automática, só o código que você definir.
+                </small>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel vscode-panel">
+            <div class="panel-section field-group">
+              <h2 data-i18n="options_vscode_heading">Integração com VS Code</h2>
+              <label class="toggle field" for="vscodeIntegrationEnabled">
+                <span data-i18n="options_vscode_toggle_label">Somar sessões do VS Code como foco</span>
+                <input
+                  type="checkbox"
+                  id="vscodeIntegrationEnabled"
+                  aria-describedby="vscodeIntegrationHint"
+                />
+                <small id="vscodeIntegrationHint" class="hint" data-i18n="options_vscode_toggle_hint">
+                  Saul consulta o backend local SaulDaemon (localhost) antes de calcular os índices.
+                </small>
+              </label>
+
+              <label class="field" for="vscodeLocalApiUrl">
+                <span data-i18n="options_vscode_url_label">URL do backend local</span>
+                <input
+                  type="text"
+                  id="vscodeLocalApiUrl"
+                  placeholder="http://127.0.0.1:3123"
+                  aria-describedby="vscodeLocalApiUrlHint"
+                  autocomplete="url"
+                  inputmode="url"
+                />
+                <small id="vscodeLocalApiUrlHint" class="hint" data-i18n="options_vscode_url_hint">
+                  A extensão só faz chamadas para localhost; nada sai da sua máquina.
+                </small>
+              </label>
+
+              <label class="field" for="vscodePairingKey">
+                <span data-i18n="options_vscode_key_label">Chave de pareamento</span>
+                <input
+                  type="text"
+                  id="vscodePairingKey"
+                  data-i18n-placeholder="options_vscode_key_placeholder"
+                  aria-describedby="vscodePairingKeyHint"
+                  autocomplete="new-password"
+                />
+                <small id="vscodePairingKeyHint" class="hint" data-i18n="options_vscode_key_hint">
+                  Deve coincidir com a chave configurada no SaulDaemon/VS Code.
+                </small>
+                <div class="field__actions">
+                  <button type="button" id="generateVscodeKey" class="ghost small">
+                    <span data-i18n="options_vscode_key_generate">Gerar nova chave</span>
+                  </button>
+                  <button type="button" id="copyVscodeKey" class="ghost small">
+                    <span data-i18n="options_vscode_key_copy">Copiar chave</span>
+                  </button>
+                  <button type="button" id="testVscodeConnection" class="ghost small">
+                    <span data-i18n="options_vscode_test_button">Testar conexão</span>
+                  </button>
+                </div>
+                <p id="vscodeTestStatus" class="inline-status" role="status" aria-live="polite"></p>
+              </label>
+              <div class="field vscode-marketplace">
+                <p class="hint" data-i18n="options_vscode_install_hint">
+                  Instale a extensão oficial do VS Code para transmitir sessões de foco automaticamente.
+                </p>
+                <button
+                  type="button"
+                  id="installVscodeExtensionButton"
+                  class="ghost small"
+                  data-i18n="options_vscode_install_link"
+                >
+                  Instalar extensão VS Code
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel two-columns">
+        <div class="domain-panel">
+          <div class="domain-panel-header field-group">
+            <h2 data-i18n="options_productive_heading">Domínios produtivos</h2>
+            <p class="hint" data-i18n="options_productive_hint">
+              Saul sabe onde o trabalho acontece. Adicione ou remova conforme sua rotina.
+            </p>
+            <form id="productiveForm" class="domain-form">
+              <input
+                type="text"
+                id="productiveInput"
+                placeholder="ex: docs.google.com"
+                data-i18n-placeholder="options_productive_placeholder"
+              />
+              <button type="submit" data-i18n="options_domain_add">Adicionar</button>
+            </form>
+          </div>
+          <ul id="productiveList" class="domain-list scrollable"></ul>
+        </div>
+
+        <div class="domain-panel">
+          <div class="domain-panel-header field-group">
+            <h2 data-i18n="options_procrastination_heading">Domínios procrastinatórios</h2>
+            <p class="hint" data-i18n="options_procrastination_hint">
+              Aqui vivem as tentações. Se adora um site, provavelmente deveria listá-lo.
+            </p>
+            <label class="toggle field" for="blockProcrastination">
+              <span data-i18n="options_procrastination_block_toggle_label">
+                Bloquear acesso aos domínios desta lista
+              </span>
+              <input type="checkbox" id="blockProcrastination" aria-describedby="blockProcrastinationHint" />
+              <small
+                id="blockProcrastinationHint"
+                class="hint"
+                data-i18n="options_procrastination_block_toggle_hint"
+              >
+                Ativando, Saul bloqueia a navegação para estes domínios via regras locais do Chrome.
+              </small>
+            </label>
+            <form id="procrastinationForm" class="domain-form">
+              <input
+                type="text"
+                id="procrastinationInput"
+                placeholder="ex: youtube.com"
+                data-i18n-placeholder="options_procrastination_placeholder"
+              />
+              <button type="submit" data-i18n="options_domain_add">Adicionar</button>
+            </form>
+          </div>
+          <ul id="procrastinationList" class="domain-list scrollable"></ul>
+        </div>
+      </section>
+
+
+    </main>
+
+    <div
+      id="statusMessage"
+      class="status-toast"
+      role="status"
+      aria-live="polite"
+      data-i18n="options_status_ready"
+    >
+      Tudo certo.
+    </div>
+
+    <footer>
+      <div class="footer-actions">
+        <button id="backToPopupButton" class="ghost" data-i18n="options_back_to_popup">
+          Voltar ao popup
+        </button>
+        <button id="resetButton" class="danger" data-i18n="options_restore_defaults">
+          Restaurar padrões
+        </button>
+      </div>
+      <p class="footer-note" data-i18n="options_footer_note">
+        Saul não compartilha seus dados com ninguém. Nem com o juiz.
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "vscode_ext_display_name": "سول گڈمین VS Code پل",
+  "vscode_ext_description": "VS Code سے فعال وقت کو سول ڈیمون کے مقامی استعمال کے لئے کروم توسیع کے ذریعے بھیجتا ہے.",
+  "command_start_daemon": "سول گڈمین: سول ڈیمون کے لئے کمانڈ تیار کریں",
+  "command_test_daemon": "سول گڈمین: سول ڈیمون کے ساتھ کنکشن ٹیسٹ کریں",
+  "command_open_reports": "سول گڈمین: رپورٹس کھولیں",
+  "command_setup_pomodoro": "سول گڈمین: پومودورو سسٹم ترتیب دیں",
+  "command_reset_combo": "سول گڈمین: کمبو کو ری سیٹ کریں",
+  "config_enabled_description": "سول ڈیمون کے لئے فعال وقت بھیجنے کی اجازت دیتا ہے.",
+  "config_enable_tracking_description": "سول ڈیمون کے لئے ہارٹ بیٹس جمع کرنے اور بھیجنے کو کنٹرول کرتا ہے.",
+  "config_enable_reports_description": "VS Code میں سول کی رپورٹ دکھاتا ہے.",
+  "config_enable_sensitive_telemetry_description": "حساس ٹیلی میٹری کی اجازت دیتا ہے (جیسے: ٹرمینل کے کمانڈ).",
+  "config_api_base_description": "سول ڈیمون کی مقامی بیس URL.",
+  "config_pairing_key_description": "کروم توسیع کے ساتھ مشترکہ پیئرنگ کی.",
+  "config_hash_file_paths_description": "ہارٹ بیٹس میں بھیجے گئے فائلوں کے راستوں کا ہیش بناتا ہے.",
+  "config_hash_project_names_description": "ڈیمون کو بھیجنے سے پہلے پروجیکٹ کے ناموں کا ہیش بناتا ہے.",
+  "config_heartbeat_interval_description": "سول ڈیمون کو بھیجے گئے ہارٹ بیٹس کے درمیان ملی سیکنڈز میں وقفہ.",
+  "config_idle_threshold_description": "غیر فعال سمجھے جانے سے پہلے زیادہ سے زیادہ غیر فعالیت کا وقت.",
+  "config_language_description": "VS Code کی توسیع کی زبان (خودکار طور پر VS Code کی زبان استعمال کرتا ہے).",
+  "config_enable_telemetry_description": "مقامی پیداوری کے میٹرکس جمع کرنے کی اجازت دیتا ہے (ڈیبگنگ، ٹیسٹ، ٹاسک، ٹرمینل، وغیرہ). ڈیٹا کبھی بھی مشین سے باہر نہیں جاتا.",
+  "config_pomodoro_test_mode_description": "پومودورو کے لیے ٹیسٹ موڈ کو فعال کریں (25 کے بجائے ہر سائیکل کے لیے 1 منٹ)۔",
+  "config_telemetry_diagnostics_interval_description": "فائلوں کی تشخیصی (غلطیاں/انتباہات) کو نمونہ لینے کے لئے سیکنڈز میں وقفہ."
+}

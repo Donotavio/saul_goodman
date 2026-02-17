@@ -1,8 +1,8 @@
 {
   "name": "saul-goodman-vscode",
-  "displayName": "Saul Goodman VS Code Bridge",
-  "description": "Envia tempo ativo do VS Code para o SaulDaemon local usado pela extensão Chrome.",
-  "version": "1.21.10",
+  "displayName": "%vscode_ext_display_name%",
+  "description": "%vscode_ext_description%",
+  "version": "1.21.25",
   "publisher": "donotavio",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,27 @@
     "commands": [
       {
         "command": "saulGoodman.startDaemon",
-        "title": "Saul Goodman: preparar comando do SaulDaemon",
+        "title": "%command_start_daemon%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.testDaemon",
+        "title": "%command_test_daemon%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.openReports",
+        "title": "%command_open_reports%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.setupPomodoro",
+        "title": "%command_setup_pomodoro%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.resetCombo",
+        "title": "%command_reset_combo%",
         "category": "Saul Goodman"
       }
     ],
@@ -33,27 +53,57 @@
         "saulGoodman.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Habilita o envio de tempo ativo para o SaulDaemon local."
+          "description": "%config_enabled_description%"
+        },
+        "saulGoodman.enableTracking": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config_enable_tracking_description%"
+        },
+        "saulGoodman.enableReportsInVscode": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config_enable_reports_description%"
+        },
+        "saulGoodman.enableSensitiveTelemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config_enable_sensitive_telemetry_description%"
         },
         "saulGoodman.apiBase": {
           "type": "string",
           "default": "http://127.0.0.1:3123",
-          "description": "URL base do SaulDaemon local."
+          "description": "%config_api_base_description%"
         },
         "saulGoodman.pairingKey": {
           "type": "string",
           "default": "",
-          "description": "Chave de pareamento compartilhada com a extensão Chrome."
+          "description": "%config_pairing_key_description%"
+        },
+        "saulGoodman.daemonPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "%config_daemon_path_description%"
+        },
+        "saulGoodman.hashFilePaths": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config_hash_file_paths_description%"
+        },
+        "saulGoodman.hashProjectNames": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config_hash_project_names_description%"
         },
         "saulGoodman.heartbeatIntervalMs": {
           "type": "number",
           "default": 15000,
-          "description": "Intervalo em milissegundos entre heartbeats enviados ao SaulDaemon."
+          "description": "%config_heartbeat_interval_description%"
         },
         "saulGoodman.idleThresholdMs": {
           "type": "number",
           "default": 60000,
-          "description": "Tempo máximo sem atividade antes de considerar a sessão inativa."
+          "description": "%config_idle_threshold_description%"
         },
         "saulGoodman.language": {
           "type": "string",
@@ -64,7 +114,22 @@
             "pt-BR",
             "es-419"
           ],
-          "description": "Idioma da extensão VS Code (auto usa o idioma do VS Code)."
+          "description": "%config_language_description%"
+        },
+        "saulGoodman.enableTelemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config_enable_telemetry_description%"
+        },
+        "saulGoodman.pomodoroTestMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config_pomodoro_test_mode_description%"
+        },
+        "saulGoodman.telemetrySampleDiagnosticsIntervalSec": {
+          "type": "number",
+          "default": 60,
+          "description": "%config_telemetry_diagnostics_interval_description%"
         }
       }
     }
@@ -72,7 +137,15 @@
   "categories": [
     "Other"
   ],
+  "scripts": {
+    "test": "node --test src/tests/**/*.test.js",
+    "generate-nls": "node scripts/generate-nls.js",
+    "copy-daemon": "rm -rf daemon && mkdir -p daemon/src && cp ../saul-daemon/index.cjs ../saul-daemon/package.json daemon/ && cp ../saul-daemon/src/vscode-aggregation.cjs daemon/src/",
+    "prebuild:vsix": "npm run copy-daemon && npm run generate-nls && npm --prefix .. run i18n:copy-site",
+    "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
+  },
   "devDependencies": {
-    "@types/vscode": "^1.80.0"
+    "@types/vscode": "^1.80.0",
+    "vsce": "^2.15.0"
   }
 }

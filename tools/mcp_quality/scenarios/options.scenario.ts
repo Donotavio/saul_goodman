@@ -1,0 +1,157 @@
+import path from 'node:path';
+import { HARNESS_PAGES } from '../config.js';
+import type { DevtoolsMcpClient } from '../mcp/client.js';
+import type { ScenarioContext, ScenarioResult } from './types.js';
+import { extractJson, saveJsonArtifact } from './helpers.js';
+
+export async function runOptionsScenario(
+  client: DevtoolsMcpClient,
+  ctx: ScenarioContext
+): Promise<ScenarioResult> {
+  const pageUrl = `${ctx.baseUrl}${HARNESS_PAGES.options}`;
+  const screenshotPath = path.join(
+    ctx.artifactsDir,
+    'screenshots',
+    `${ctx.viewportName}-options.png`
+  );
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const details: string[] = [];
+
+  await client.newPage(pageUrl, 15000);
+  await client.waitFor('Configurações', 10000);
+
+  // Aguarda hidratação inicial preencher os campos.
+  await client.evaluateScript(
+    `async () => {
+      for (let i = 0; i < 30; i++) {
+        const input = document.getElementById('inactivityThreshold');
+        if (input && input.value) {
+          return true;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      return false;
+    }`
+  );
+
+  const consoleRes = await client.listConsoleMessages();
+  const consolePayload = extractJson<{ messages?: Array<{ type?: string; text?: string }> }>(
+    consoleRes
+  );
+  const consoleErrors =
+    consolePayload?.messages?.filter((m) => m.type === 'error' || m.type === 'exception') ?? [];
+  const consolePath = saveJsonArtifact(ctx, 'options', 'console', consolePayload ?? {});
+  if (consoleErrors.length > 0 && !ctx.allowWarnings) {
+    errors.push(`Console errors: ${consoleErrors.length}`);
+  } else if (consoleErrors.length > 0) {
+    warnings.push(`Console errors: ${consoleErrors.length}`);
+  }
+
+  const networkRes = await client.listNetworkRequests();
+  const networkPayload = extractJson<{ requests?: Array<{ status?: number; url?: string }> }>(
+    networkRes
+  );
+  const failed =
+    networkPayload?.requests?.filter((r) => typeof r.status === 'number' && r.status >= 400) ?? [];
+  const networkPath = saveJsonArtifact(ctx, 'options', 'network', networkPayload ?? {});
+  if (failed.length > 0 && !ctx.allowWarnings) {
+    errors.push(`Requests com status >=400: ${failed.length}`);
+  } else if (failed.length > 0) {
+    warnings.push(`Requests com status >=400: ${failed.length}`);
+  }
+
+  // Captura settings atuais
+  const initialSettingsResult = await client.evaluateScript(
+    `async () => {
+      const data = await chrome.storage.local.get('sg:settings');
+      return data['sg:settings'];
+    }`
+  );
+  const initialSettings = extractJson<Record<string, unknown> | undefined>(initialSettingsResult);
+
+  const newThresholdSeconds = 120;
+  const updateResult = await client.evaluateScript(
+    `async () => {
+      const form = document.getElementById('weightsForm');
+      const input = document.getElementById('inactivityThreshold');
+      if (!form || !input) {
+        return { ok: false, reason: 'missing elements' };
+      }
+      const expectedMs = ${newThresholdSeconds * 1000};
+      input.value = '${newThresholdSeconds}';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+
+      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+
+      for (let i = 0; i < 30; i++) {
+        const data = await chrome.storage.local.get('sg:settings');
+        const stored = data['sg:settings']?.inactivityThresholdMs;
+        if (stored === expectedMs) {
+          return { ok: true, stored };
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+
+      const data = await chrome.storage.local.get('sg:settings');
+      return {
+        ok: false,
+        reason: 'persist-timeout',
+        stored: data['sg:settings']?.inactivityThresholdMs
+      };
+    }`
+  );
+  const updatePayload = extractJson<{ ok?: boolean; stored?: number; reason?: string } | undefined>(
+    updateResult
+  );
+  const expectedMs = newThresholdSeconds * 1000;
+  const storedMs = updatePayload?.stored;
+  if (!updatePayload?.ok) {
+    errors.push(`Falha ao submeter formulário de pesos.${updatePayload?.reason ? ` ${updatePayload.reason}` : ''}`);
+  } else if (typeof storedMs !== 'number' || Math.abs(storedMs - expectedMs) > 1) {
+    errors.push(`Persistência falhou: esperado ${expectedMs}, obtido ${storedMs ?? 'n/a'}`);
+  }
+
+  // Recarrega para validar persistência
+  await client.reload(5000);
+  await client.waitFor('Configurações', 8000);
+  const afterReload = await client.evaluateScript(
+    `() => {
+      const input = document.getElementById('inactivityThreshold');
+      return input ? Number(input.value) : null;
+    }`
+  );
+  const reloadedThreshold = extractJson<number | null | undefined>(afterReload);
+  if (reloadedThreshold !== newThresholdSeconds) {
+    errors.push(
+      `Persistência falhou: esperado ${newThresholdSeconds}, obtido ${reloadedThreshold ?? 'n/a'}`
+    );
+  }
+
+  if (initialSettings?.localePreference === undefined) {
+    warnings.push('Locale preference não carregado na coleta inicial.');
+  }
+
+  await client.takeScreenshot(screenshotPath, { fullPage: true });
+
+    details.push(
+      `inactivityThreshold inicial: ${
+        (initialSettings?.inactivityThresholdMs as number | undefined) ?? 'n/a'
+      }, atualizado para ${newThresholdSeconds}s`
+  );
+
+  return {
+    name: 'options',
+    viewport: ctx.viewportName,
+    passed: errors.length === 0,
+    errors,
+    warnings,
+    screenshotPath,
+    artifacts: {
+      console: consolePath,
+      network: networkPath
+    },
+    details
+  };
+}

@@ -4,7 +4,6 @@ title_en: "The Stock Market: The Great Roller Coaster of Silicon Valley"
 title_es: "El Mercado de Acciones: La Gran Montaña Rusa del Silicon Valley"
 date: 2026-01-07
 category: "negocios"
-tone: "incredulo"
 tags: ["mercado", "tecnologia", "ações", "sarcasmo", "análise"]
 source_title: "Stock market surges on Big Tech gains, nearing records"
 source_url: "https://www.fastcompany.com/91470120/stock-market-big-tech-amazon-sandisk"

@@ -1,1142 +1,24 @@
-const translations = {
-  pt: {
-    navProcess: 'Como funciona',
-    navIndex: 'Índice',
-    navCodeCon: 'CodeCon',
-    navBenefits: 'Benefícios',
-    navDemo: 'Demo',
-    navClients: 'Depoimentos',
-    navBlog: 'Blog',
-    navCta: 'Instalar no Chrome',
-    mobileMenuToggle: 'Abrir menu',
-    seoTitle: 'Saul Goodman - Extensão Anti-Procrastinação',
-    seoDescription:
-      'Saul Goodman fiscaliza suas abas, combate a procrastinação e gera relatórios dramáticos direto no navegador. Tudo local, sem servidores externos.',
-    languageLabel: 'Selecionar idioma',
-    heroTag: 'Extensão anti-procrastinação para gente real',
-    heroTitle: 'Pare de procrastinar. Saul Goodman assume o caso.',
-    heroSubtitle:
-      'A extensão monitora suas abas, identifica distrações e pressiona você a voltar ao foco antes que o dia escapole. Tudo direto no seu Chrome, sem cadastros.',
-    heroPrimaryCta: 'Instalar no Chrome',
-    heroSecondaryCta: 'Veja como funciona',
-    heroGaugeLabel: 'Índice ao vivo',
-    heroGaugeHint: 'Acima de 70% Saul solta o terremoto.',
-    heroConfidence1: 'Modo terremoto personalizado',
-    heroConfidence2: 'Lista negra & lista VIP de domínios',
-    heroConfidence3: 'Relatório com storytelling IA',
-    heroBadge: '“Em caso de preguiça... CALL SAUL!”',
-    multilingualLabel: 'Disponível em PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
-    indexEyebrow: 'Na mesa do Saul',
-    indexTitle: 'Como Saul interpreta o Índice de Procrastinação',
-    indexLead:
-      'Tradução simultânea do advogado: nota 0 não é troféu e 100 não é all inclusive. Saul lê cada faixa para saber se sacode sua cadeira ou manda você tirar férias forçadas.',
-    indexCalloutLabel: 'Recado do Saul',
-    indexCalloutQuote:
-      '“Passou de 60% eu ligo pra sua chefe. Ficou abaixo de 10% eu marco consulta com o terapeuta. Equilíbrio, meu cliente!”',
-    indexPitch1:
-      'O índice vai de 0 a 100. Quanto mais perto de 100, mais claro que você largou o caso no meio e virou cliente VIP da procrastinação.',
-    indexPitch2:
-      'Só que zerar também levanta suspeita: quem fica em aba produtiva 24/7 normalmente está a um passo de virar peça do ministério do burnout.',
-    indexGaugeLabel: 'Faixa recomendada',
-    indexGaugeHint: '18% é o ponto doce — foco firme sem virar robô.',
-    indexCluesLabel: 'Checklist do caso',
-    indexClueFocus: 'Anote seus vilões',
-    indexClueFocusBody:
-      'Tenha uma lista viva de sites que puxam o índice pra cima antes que Saul demande.',
-    indexClueBreak: 'Agende micro-pausas',
-    indexClueBreakBody:
-      'A faixa 15–22 pede respirações estratégicas. Bloqueie no calendário, cliente.',
-    indexClueAlert: 'Revise o terremoto',
-    indexClueAlertBody:
-      'Confirme limite, sirene e mensagem para que a intimação chegue na hora certa.',
-    indexMemoHeading: 'Nota do escritório',
-    indexMemoBody:
-      'Se o índice subir por culpa de uma aba vilã, acione o bloqueio em tela cheia. Saul trava os vilões, libera só a aba produtiva e sua nota volta a respirar.',
-    indexMemoSign: '— Saul, advogado da produtividade',
-    indexFootnote:
-      'Entre 15 e 22 Saul escreve “cliente estável”. Acima disso ele prepara o terremoto; abaixo disso ele prescreve descanso, não mais tarefas.',
-    indexRange0to14Title: '0 – 14: Over-work duvidoso',
-    indexRange0to14Body:
-      'Você está tão colado no trabalho que Saul chama isso de “excesso de zelo”. Respire, levante e tome água antes que vire depoimento.',
-    indexRange15to22Title: '15 – 22: Equilíbrio de ouro',
-    indexRange15to22Body:
-      'Aqui está o veredito ideal: foco consistente, pausas saudáveis e nenhuma sirene. Saul até cogita dar desconto nos honorários.',
-    indexStamp: 'Cliente que dorme tranquilo',
-    indexRange23to60Title: '23 – 60: Foco cambaleando',
-    indexRange23to60Body:
-      'Você ainda defende o caso, mas tropeça em feeds vilões. Saul dispara notificações espirituosas para botar o processo de volta no trilho.',
-    indexRange61to100Title: '61 – 100: Procrastinação flagrante',
-    indexRange61to100Body:
-      'Chegou o momento terremoto. A tela treme, o áudio toca e Saul entra com a intimação para fechar as abas vilãs.',
-    socialProofCaption: 'Saul já ajuda milhares de pessoas a vigiar o foco diariamente.',
-    socialProofMetricLabel: 'Usuários satisfeitos',
-    ratingBadgeAlt: 'Nota média na Chrome Web Store',
-    usersBadgeAlt: 'Usuários na Chrome Web Store',
-    reasonsEyebrow: 'Benefícios chave',
-    reasonsTitle: 'Por que usar Saul Goodman?',
-    reasonsLead: 'Menos texto, mais clareza: cada cartão resume o valor da extensão.',
-    reason1Title: 'Foco guiado',
-    reason1Body: 'O índice no popup mostra seu status em tempo real para você decidir o próximo passo.',
-    reason2Title: 'Alertas impossíveis de ignorar',
-    reason2Body: 'Tela treme e Saul aparece antes que uma aba vilã acabe com o dia.',
-    reason3Title: 'Relatórios prontos para apresentar',
-    reason3Body: 'Os gráficos e resumos cabem em qualquer daily, 1:1 ou conversa com o cliente.',
-    reason4Title: 'Privacidade total',
-    reason4Body: 'Todos os dados permanecem no seu Chrome; nem Saul vê nada fora dali.',
-    featureSectionEyebrow: 'Recursos principais',
-    featureSectionTitle: 'O pacote completo anti-procrastinação.',
-    featureSectionLead:
-      'Cada cartão mistura humor e clareza para mostrar como Saul cuida do foco dentro do navegador.',
-    featureContextLabel: 'Novidade',
-    featureContextBody:
-      'Agora você escolhe o CONTEXTO do dia (trabalho, lazer, estudos ou pessoal) direto no popup; Saul recalibra o índice, neutraliza penalidades e evita injustiças.',
-    featureSwipeHint: 'Arraste para o lado e confira todos os recursos.',
-    featureRealtimeTitle: 'Rastreamento em tempo real',
-    featureRealtimeBody:
-      'O badge monitora cada aba e atualiza o índice para você saber se é hora de virar o jogo.',
-    featureRealtimeHint: '“Saul está de olho nas suas 37 abas.”',
-    featureCustomTitle: 'Listas e pesos sob medida',
-    featureCustomBody:
-      'Defina domínios produtivos, vilões, pesos por horário e limite do terremoto conforme o seu dia.',
-    featureCustomHint: '“Planilha vale ouro, feed infinito vira vilão.”',
-    featureQuakeTitle: 'Modo terremoto cinematográfico',
-    featureQuakeBody:
-      'Tela treme, sirene toca e Saul aparece na frente das abas vilãs com um CTA impossível de ignorar.',
-    featureQuakeHint: '“Peguei você: volte para a aba produtiva já!”',
-    featureBlockTitle: 'Bloqueio de telas vilãs',
-    featureBlockBody:
-      'Se você ativar o modo, Saul fecha as abas problemáticas em tela cheia até você voltar ao foco e recuperar pontos.',
-    featureBlockHint: '“Ative quando quiser: só a aba produtiva fica liberada.”',
-    featureReportTitle: 'Relatório dramatizado',
-    featureReportBody:
-      'Gráficos, narrativa IA, CSV/PDF e timeline minuto a minuto para prestar contas com estilo.',
-    featureReportHint: '“Aqui estão as provas para o chefe (e para você).”',
-    featurePrivacyTitle: 'Privacidade total',
-    featurePrivacyBody:
-      'Tudo roda em <code>chrome.storage.local</code> e fica no seu navegador, sem servidores externos.',
-    featurePrivacyHint: '“Nem o juiz tem acesso aos seus dados.”',
-    featureGaugeTitle: 'Índice de procrastinação',
-    featureGaugeLabel: 'Seu status agora',
-    featureGaugeHint: 'Acima de 70% Saul prepara o terremoto.',
-    featureQuakeTest: 'Testar alerta',
-    featurePrevLabel: 'Anterior',
-    featureNextLabel: 'Próximo',
-    backToHome: 'Voltar ao site',
-    backToHome: 'Voltar ao site',
-    privacyTitle: 'Política de Privacidade',
-    privacyEyebrow: 'Transparência total',
-    privacyHeading: 'Política de Privacidade',
-    privacySubheading: 'Aqui está a versão mais recente publicada no repositório.',
-    privacyLoading: 'Carregando política diretamente do repositório...',
-    privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
-    changelogTitle: 'Changelog',
-    changelogEyebrow: 'Tudo documentado',
-    changelogHeading: 'Changelog oficial',
-    changelogSubheading: 'Veja todas as mudanças por versão direto do repositório.',
-    changelogLoading: 'Carregando changelog diretamente do repositório...',
-    changelogError: 'Não foi possível carregar o changelog agora. Tente novamente mais tarde.',
-    privacyError: 'Não foi possível carregar a política agora. Tente novamente mais tarde.',
-    changelogTitle: 'Changelog',
-    changelogEyebrow: 'Tudo documentado',
-    changelogHeading: 'Changelog oficial',
-    changelogSubheading: 'Veja tudo que mudou por versão, direto do repositório.',
-    changelogLoading: 'Carregando changelog diretamente do repositório...',
-    changelogError: 'Não foi possível carregar o changelog agora. Tente novamente mais tarde.',
-    processEyebrow: 'Como funciona',
-    processTitle: 'Saul prende a procrastinação em três passos.',
-    processLead:
-      'Linguagem simples, sem juridiquês: você instala, ele monitora, alerta e entrega provas para o fim do dia.',
-    process1Title: 'Monitora suas abas ativas',
-    process1Body:
-      'O ícone acompanha o que está aberto e entende imediatamente se você está estudando, trabalhando ou caindo no feed eterno.',
-    process2Title: 'Detecta distrações',
-    process2Body:
-      'Domínios produtivos e vilões ficam configurados de forma simples. Se você fugir do plano, o alerta entra em ação com tremor e áudio.',
-    process3Title: 'Gera provas utilizáveis',
-    process3Body:
-      'Ao final do dia você recebe um relatório direto, com gráfico, resumo e plano de ação para ajustar o próximo round.',
-    featuresEyebrow: 'Features detalhadas',
-    featuresTitle: 'O arsenal da extensão Saul Goodman.',
-    feature1Title: 'Dashboard em tempo real',
-    feature1Item1: 'Badge com índice atual e mensagens sarcásticas.',
-    feature1Item2: 'Top domínios produtivos e vilões com tempo formatado.',
-    feature1Item3: 'Exportações CSV/PDF com um clique.',
-    feature2Title: 'Modo terremoto',
-    feature2Item1: 'Limiar configurável e sirene opcional.',
-    feature2Item2: 'Overlay crítico com contador regressivo e CTA.',
-    feature2Item3: 'Bloqueia somente as abas vilãs para você recuperar em produtivas.',
-    feature3Title: 'Relatório dramático',
-    feature3Item1: 'Gráficos por hora e breakdown de trocas de aba.',
-    feature3Item2: 'Narrativa IA em tom Better Call Saul.',
-    feature3Item3: 'Banner crítico com plano de ação imediato.',
-    feature4Title: 'Privacidade total',
-    feature4Item1: 'Dados em <code>chrome.storage.local</code> — nada é enviado à nuvem.',
-    feature4Item2: 'Listas produtivas/vilãs salvas só no seu navegador.',
-    feature4Item3: 'Chave OpenAI opcional e guardada localmente.',
-    integrationEyebrow: 'Para devs',
-    integrationTitle: 'VS Code + daemon local, tudo como foco produtivo.',
-    integrationLead: 'Ative a integração opcional: Saul soma sessões do editor como tempo produtivo sem sair do localhost.',
-    integrationCard1Title: 'Ligue nas opções',
-    integrationCard1Body: 'Gere a chave de pareamento, ative a integração e configure a URL local. Nada sai do seu navegador.',
-    integrationCard2Title: 'Daemon local',
-    integrationCard2Body:
-      'Use o comando da extensão VS Code para iniciar: ele já preenche PAIRING_KEY/PORT e abre no diretório do daemon.',
-    integrationCard3Title: 'Extensão VS Code',
-    integrationCard3Body:
-      'Comando “Saul Goodman: preparar comando do SaulDaemon” vem pronto após instalar e envia batimentos do editor para o Chrome.',
-    integrationVsixCta: 'Instalar extensão VS Code',
-    integrationCta: 'Ver guia da integração',
-    manifestoEyebrow: 'Manifesto',
-    manifestoTitle: 'Marketing agressivo com uma pitada de ética.',
-    manifesto1Title: '100% local',
-    manifesto1Body: 'Seu dia é julgado dentro do navegador. Nenhum dado sai do computador, nem com ordem do juiz.',
-    manifesto2Title: 'Transparência na cobrança',
-    manifesto2Body: 'Alertas visuais e sonoros deixam claro quando Saul está prestes a cobrar honorários extras.',
-    manifesto3Title: 'Humor como arma',
-    manifesto3Body: 'Mensagens sarcásticas e banners dramáticos lembram que procrastinar também custa caro.',
-    blogPreviewEyebrow: 'Blog do Saul',
-    blogPreviewTitle: 'Últimos casos do tribunal digital.',
-    blogPreviewLead:
-      'Leia os 3 artigos mais recentes e descubra como o Saul defende o seu foco com sarcasmo jurídico.',
-    blogPreviewLoading: 'Carregando artigos...',
-    blogPreviewEmpty: 'Nenhum artigo disponível no momento.',
-    blogPreviewError: 'Não foi possível carregar os artigos.',
-    blogPreviewCta: 'Ver todos os artigos',
-    blogPreviewRead: 'Ler artigo',
-    blogPreviewImageAlt: 'Ilustração Saul Goodman',
-    feedbackLink: 'Dar feedback',
-    demoEyebrow: 'Demonstração rápida',
-    demoTitle: 'Veja onde você decide e onde Saul cobra.',
-    demoLead:
-      'Popup para decisões rápidas, relatório para analisar o dia. Dois quadros bastam para entender o valor.',
-    demoPopupTitle: 'Popup para decisões instantâneas',
-    demoPopupBody: 'Índice diário, domínios campeões e atalhos para exportar provas.',
-    demoReportTitle: 'Relatório para planejar o dia',
-    demoReportBody: 'Gráficos, narrativa leve e próximos passos sugeridos.',
-    demoCta: 'View full demo',
-    quakeEyebrow: 'Modo terremoto',
-    quakeTitle: 'Quando Saul detecta vilões, a página treme junto.',
-    quakeLead:
-      'O mesmo efeito dramático da extensão aparece aqui para mostrar a seriedade do alerta quando o índice passa do limite.',
-    quakeMicro: '“Peguei você no feed! Prepare-se para o abalo.”',
-    quakeBody:
-      'O overlay bloqueia as abas vilãs, exibe CTA direto e pode tocar sirene opcional. É impossível ignorar — e esse é o ponto.',
-    quakeButton: 'Testar tremor agora',
-    quakeTip: 'Fique tranquilo: o demo dura só alguns segundos.',
-    quakeCallout: 'Terremoto à vista!',
-    quakeDisplayCopy: 'Volte ao foco ou Saul aumenta os honorários.',
-    splitPopupTitle: 'Popup de plantão',
-    splitPopupBody:
-      'O painel mostra o índice, top domínios, indicadores extras e permite exportar CSV/PDF. Quando o foco despenca, o modo terremoto invade para salvar a barra da justiça.',
-    splitPopupCaption: 'Popup com índice, top domínios e exportações.',
-    splitPopupCaption2: 'KPIs, top domínios e exportação rápida.',
-    splitPopupCaption3: 'Listas produtivas/vilãs no painel de opções.',
-    splitPopupCaption4: 'Pesos e horários configuráveis para cálculo do índice.',
-    splitReportTitle: 'Relatório dramático',
-    splitReportBody:
-      'Gráficos por hora, ranking de vilões, narrativa IA e banner crítico com plano de ação. Tudo com visual juramentado.',
-    splitReportCaption: 'Resumo do relatório com gráficos e ranking.',
-    splitReportCaption2: 'Narrativa IA e timeline minuto a minuto.',
-    splitReportCaption3: 'Ranking de vilões, campeões e distribuição.',
-    splitStats1: 'Minutos recuperados/dia',
-    splitStats2: 'Clientes absolvidos',
-    demoViewFull: 'Ver em alta',
-    reactionsEyebrow: 'Saul reage',
-    reactionsTitle: 'O veredito instantâneo do Saul.',
-    reactionsBody:
-      'Quando o índice sobe, Saul fica incrédulo. Quando você volta ao foco, ele celebra. Pequenos lembretes visuais para manter a barra da justiça no lugar.',
-    codeconEyebrow: 'Hack Lab CodeCon',
-    codeconTitle: 'Onde Saul Goodman virou extensão do Chrome',
-    codeconLead:
-      'A ideia nasceu em um laboratório da CodeCon: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imaginou Saul como advogado pessoal contra procrastinação — com tremor, sirene e relatórios dignos de tribunal.',
-    codeconTag: 'Nasceu em comunidade',
-    codeconPlanChip: '30 min de plano',
-    codeconBuildChip: '4h de teclado',
-    codeconStoryLead:
-      'Em 30 minutos de quadro branco, o Otávio desenhou o MVP e, nas 4 horas seguintes, colocou no ar o embrião do Saul: uma extensão que prova que home office funciona monitorando abas, calculando um índice e escrevendo a defesa do dev para o “júri” (o chefe), sem recorrer a IA.',
-    codeconBulletChallenge: 'Desafio: provar o home office em 4h de código, de forma artesanal e sem IA.',
-    codeconBulletTracking: 'Extensão vigia trocas de abas, inatividade e sites vilões para formar um índice.',
-    codeconBulletNarrative: 'Narrativa “advogado” traduz métricas em defesa para o gestor/júri.',
-    codeconBulletRepoPrefix: 'Código aberto do Hack Lab:',
-    codeconBulletRepoLink: 'repositório original',
-    codeconVideoCaption: 'Trecho do Hack Lab da CodeCon em que Saul ganhou vida como extensão que derruba distrações.',
-    codeconCtaSite: 'Conheça a CodeCon',
-    codeconCtaVideo: 'Ver vídeo completo',
-    codeconCtaRepo: 'Ver código do Hack Lab',
-    reactionDisbeliefLabel: 'Modo incrédulo',
-    reactionDisbeliefText: '“Você chamou isso de foco?”',
-    reactionDisbeliefHint: 'Aciona quando o índice passa do limiar de terremoto.',
-    reactionBlockLabel: 'Modo bloqueio',
-    reactionBlockText: '“Nem tente: vilões barrados no ato.”',
-    reactionBlockAlt: 'Saul bloqueando o acesso',
-    reactionBlockHint: 'Redireciona para a página de bloqueio com o Saul de cara fechada.',
-    reactionHypeLabel: 'Modo aprovado',
-    reactionHypeText: '“Assim eu até desconto honorários.”',
-    reactionHypeHint: 'Aparece quando você volta às abas produtivas.',
-    quakeDemoEyebrow: 'Modo terremoto (demo)',
-    quakeDemoTitle: 'Teste o alerta mais dramático do Saul.',
-    quakeDemoBody:
-      'Clique para simular o modo terremoto: tremor de tela, sirene e mensagem dramática. Igual à extensão, mas só por alguns segundos aqui no site.',
-    quakeDemoButton: 'Simular modo terremoto',
-    quakeOverlayTitle: 'Modo terremoto acionado!',
-    quakeOverlayBody: 'Saul está derrubando as abas vilãs. Volte ao foco antes que ele cobre honorários.',
-    quakeOverlayClose: 'Voltar ao foco',
-    timelineEyebrow: 'Linha do tempo',
-    timelineTitle: 'Do rastreamento ao veredito.',
-    timeline1Title: 'Radar inicial',
-    timeline1Body: 'Content script detecta atividade nas primeiras abas. Saul registra quem é produtivo ou vilão.',
-    timeline2Title: 'Auto de infração',
-    timeline2Body:
-      'Se o índice sobe demais, o modo terremoto invade o Chrome com tremor, sirene e CTA para virar o jogo.',
-    timeline3Title: 'Sentença diária',
-    timeline3Body:
-      'Relatório detalhado envia gráficos, timeline e narrativa IA para encerrar o expediente com provas.',
-    benefitsEyebrow: 'Benefícios',
-    benefitsTitle: 'Saul cuida do processo, você fecha o caso.',
-    benefit1Title: 'Provas incontestáveis',
-    benefit1Body: 'Gráficos e CSV para apresentar ao chefe, à equipe ou ao seu próprio senso de culpa.',
-    benefit2Title: 'Alertas cinematográficos',
-    benefit2Body: 'Modo terremoto e mensagens sarcásticas que você nunca ignora.',
-    benefit3Title: 'Privacidade garantida',
-    benefit3Body: 'Todo o julgamento acontece localmente; nenhum dado deixa o seu navegador.',
-    testimonialsEyebrow: 'Testemunhos',
-    testimonialsTitle: 'Clientes absolvidos.',
-    testimonial1Quote: '“Saul me lembrou que trocar 40 abas por hora é crime.”',
-    testimonial1Cite: '— Cliente anônimo',
-    testimonial2Quote: '“O relatório virou peça de defesa na reunião com o chefe.”',
-    testimonial2Cite: '— Engenheiro arrependido',
-    testimonial3Quote: '“O modo terremoto salvou meu sprint. Honorários pagos com gosto.”',
-    testimonial3Cite: '— Product Manager',
-    testimonialPrev: 'Anterior',
-    testimonialNext: 'Próximo',
-    trustEyebrow: 'Privacidade & confiança',
-    trustTitle: 'Tudo fica entre você e seu navegador.',
-    trustLead: 'O tom sarcástico continua, mas com transparência total sobre dados e alertas.',
-    trustCard1Title: '100% local',
-    trustCard1Body: 'As métricas moram em <code>chrome.storage.local</code>. Nada é enviado para servidores externos.',
-    trustCard2Title: 'Open-source auditável',
-    trustCard2Body: 'O código é público. Se algo mudar, a comunidade vê primeiro.',
-    trustCard3Title: 'Alertas transparentes',
-    trustCard3Body: 'Você controla limiares e sons, podendo desligar em um clique.',
-    transparencyEyebrow: 'Transparência',
-    transparencyTitle: 'Política e changelog públicos.',
-    transparencyBody: 'Leia como tratamos seus dados e tudo que mudou a cada release — sem rodeios.',
-    transparencyPrivacyCta: 'Ler Política de Privacidade',
-    transparencyChangelogCta: 'Abrir changelog completo',
-    lightboxClose: 'Fechar',
-    finalCtaTitle: 'Hora de deixar Saul assumir o caso?',
-    finalCtaBody:
-      'Clique, instale e configure seus domínios em minutos. Saul lembra você do foco antes que a aba vilã vença.',
-    finalPrimary: 'Install on Chrome',
-    stickyCtaText: 'Saul está pronto para vigiar suas abas.',
-    stickyCtaButton: 'Install on Chrome',
-    stickyToggleLabel: 'Alternar CTA',
-    faq1Question: 'É grátis?',
-    faq1Answer: 'Totalmente. Saul só cobra atenção e senso de humor.',
-    faq2Question: 'Meus dados saem do navegador?',
-    faq2Answer: 'Jamais. Tudo fica em <code>chrome.storage.local</code>.',
-    faq3Question: 'Preciso de IA?',
-    faq3Answer: 'Só se quiser as narrativas no relatório. O resto funciona offline.',
-    faq4Question: 'Preciso criar uma conta?',
-    faq4Answer: 'Não. Tudo funciona localmente, sem login.',
-    faq5Question: 'Como funciona o modo terremoto?',
-    faq5Answer: 'Quando o índice passa do limite configurado, a tela treme e a sirene toca alguns segundos.',
-    faq6Question: 'Posso personalizar domínios e horários?',
-    faq6Answer: 'Sim, nas opções você define listas produtivas/vilãs, pesos e horários.',
-    faq7Question: 'Posso exportar meus dados?',
-    faq7Answer: 'Sim. Há botões CSV/PDF para baixar as métricas em um clique.',
-    faq8Question: 'Funciona em outros navegadores?',
-    faq8Answer: 'Foi feita para Chrome, mas roda em navegadores Chromium como Brave ou Edge.',
-    faq9Question: 'É seguro usar IA no relatório?',
-    faq9Answer: 'A IA é opcional; sem chave OpenAI tudo continua offline.',
-    faqEyebrow: 'Perguntas rápidas',
-    faqTitle: 'FAQ direto ao ponto.',
-    devEyebrow: 'For developers',
-    devTitle: 'Quer contribuir ou integrar?',
-    devLead:
-      'Mantivemos os detalhes técnicos fora do fluxo principal. Leia os guias sem sair do contexto.',
-    devBody:
-      'Integra com o daemon local e com a extensão VS Code para contar tempo de editor como foco produtivo sem sair do localhost.',
-    devCtaReadme: 'Abrir README',
-    devCtaDocs: 'Ver docs',
-    devCtaVsCode: 'Instalar extensão VS Code',
-    footerTitle: 'Saul Goodman Extension',
-    footerBody: 'Instale, liste seus vilões e deixe Saul cobrar os honorários do foco.',
-    footerLinkArchitecture: 'Arquitetura',
-    footerLinkIndicators: 'Indicadores',
-    footerLinkGithub: 'GitHub',
-    footerPrivacy: 'Dados 100% locais. Nem o juiz vê.',
-    footerPrivacyLink: 'Política de Privacidade',
-    footerChangelogLink: 'Changelog'
-  },
-  en: {
-    navProcess: 'How it works',
-    navIndex: 'Index',
-    navCodeCon: 'CodeCon',
-    navBenefits: 'Benefits',
-    navDemo: 'Demo',
-    navClients: 'Testimonials',
-    navBlog: 'Blog',
-    navCta: 'Install on Chrome',
-    mobileMenuToggle: 'Open menu',
-    seoTitle: 'Saul Goodman - Anti-Procrastination Extension',
-    seoDescription:
-      'Saul Goodman polices your tabs, fights procrastination, and delivers dramatic reports in your browser. Everything stays local, no external servers.',
-    languageLabel: 'Select language',
-    heroTag: 'Anti-procrastination extension for real life',
-    heroTitle: 'Stop procrastinating. Saul Goodman takes the case.',
-    heroSubtitle:
-      'It tracks your tabs, flags distractions, and nudges you back to focus before the day derails — all inside Chrome, no sign-ups.',
-    heroPrimaryCta: 'Install on Chrome',
-    heroSecondaryCta: 'See how it works',
-    heroGaugeLabel: 'Live index',
-    heroGaugeHint: 'When it hits 70%, quake mode storms in.',
-    heroConfidence1: 'Custom earthquake mode',
-    heroConfidence2: 'Blacklist & VIP domain lists',
-    heroConfidence3: 'Report with AI storytelling',
-    heroBadge: '“When laziness strikes... CALL SAUL!”',
-    multilingualLabel: 'Available in PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
-    indexEyebrow: 'On Saul’s desk',
-    indexTitle: 'How Saul reads the Procrastination Index',
-    indexLead:
-      'Legal translation service: a score of 0 isn’t a trophy and 100 isn’t an all-inclusive. Saul reads each band to decide whether to shake your chair or force a vacation day.',
-    indexCalloutLabel: 'Saul’s memo',
-    indexCalloutQuote:
-      '“Cross 60% and I’m calling your boss. Drop below 10% and I’m booking your therapist. Balance the docket, client!”',
-    indexPitch1:
-      'The index ranges from 0 to 100. The closer to 100, the clearer you dropped the case mid-trial and became a VIP client of procrastination.',
-    indexPitch2:
-      'But hitting zero looks suspicious too: anyone glued to productive tabs 24/7 is one step from a burnout deposition.',
-    indexGaugeLabel: 'Sweet spot',
-    indexGaugeHint: '18% hits the sweet spot — steady focus without going full robot.',
-    indexCluesLabel: 'Case checklist',
-    indexClueFocus: 'List your villains',
-    indexClueFocusBody:
-      'Keep a living list of tabs that spike the index before Saul files a motion.',
-    indexClueBreak: 'Schedule micro-breaks',
-    indexClueBreakBody:
-      'The 15–22 range demands strategic breaths. Block them on your calendar, client.',
-    indexClueAlert: 'Audit the quake',
-    indexClueAlertBody:
-      'Double-check threshold, siren, and copy so the summons hits at the right time.',
-    indexMemoHeading: 'Office memo',
-    indexMemoBody:
-      'If a villain tab spikes the index, trigger full-screen block mode. Saul locks villains out, frees only the productive tab, and your score breathes again.',
-    indexMemoSign: '— Saul, your productivity attorney',
-    indexFootnote:
-      'Between 15 and 22 Saul files “steady client.” Above that he arms the quake; below that he prescribes rest, not extra tasks.',
-    indexRange0to14Title: '0 – 14: Questionable over-work',
-    indexRange0to14Body:
-      'You’re so glued to work that Saul calls it “excessive zeal.” Breathe, stand up, and grab water before this becomes testimony.',
-    indexRange15to22Title: '15 – 22: Golden balance',
-    indexRange15to22Body:
-      'Ideal verdict: consistent focus, healthy breaks, zero sirens. Saul might even consider a fee discount.',
-    indexStamp: 'Client sleeps easy',
-    indexRange23to60Title: '23 – 60: Wobbly focus',
-    indexRange23to60Body:
-      'You’re still pleading the case but stumble into villain feeds. Saul fires witty notices to haul the trial back on track.',
-    indexRange61to100Title: '61 – 100: Procrastination in flagrante',
-    indexRange61to100Body:
-      'It’s quake o’clock. The screen shakes, the siren blares, and Saul walks in with a cease-and-desist for every villain tab.',
-    socialProofCaption: 'Saul already helps thousands keep their focus.',
-    socialProofMetricLabel: 'Happy users',
-    ratingBadgeAlt: 'Average rating on Chrome Web Store',
-    usersBadgeAlt: 'Users on Chrome Web Store',
-    reasonsEyebrow: 'Key benefits',
-    reasonsTitle: 'Why use Saul Goodman?',
-    reasonsLead: 'Four quick cards explain the value with zero fluff.',
-    reason1Title: 'Guided focus',
-    reason1Body: 'The popup index shows your current status so you know what to fix next.',
-    reason2Title: 'Impossible-to-ignore alerts',
-    reason2Body: 'The quake takes over the screen before a villain tab ruins your momentum.',
-    reason3Title: 'Shareable reports',
-    reason3Body: 'Charts and summaries drop perfectly into a daily, stand-up, or client update.',
-    reason4Title: 'Total privacy',
-    reason4Body: 'Every metric lives inside Chrome; nothing leaves your machine.',
-    featureSectionEyebrow: 'Core features',
-    featureSectionTitle: 'Everything you need to keep tabs in check.',
-    featureSectionLead:
-      'Each card mixes humor and clarity so newcomers instantly understand what Saul does inside Chrome.',
-    featureContextLabel: 'New',
-    featureContextBody:
-      'You can now set the day’s CONTEXT (work, leisure, study, personal) in the popup; Saul recalibrates the score, softens penalties, and keeps things fair.',
-    featureSwipeHint: 'Swipe sideways to review every feature Saul handles.',
-    featureRealtimeTitle: 'Real-time tracking',
-    featureRealtimeBody:
-      'The badge watches every tab and turns your day into a clear score of focus versus procrastination.',
-    featureRealtimeHint: '“Saul is watching those 37 tabs.”',
-    featureCustomTitle: 'Custom lists & weights',
-    featureCustomBody:
-      'Define productive and villain domains, hourly weights, and quake thresholds tuned to your routine.',
-    featureCustomHint: '“Spreadsheet? VIP. Endless feed? Defendant.”',
-    featureQuakeTitle: 'Cinematic quake mode',
-    featureQuakeBody:
-      'Screen shake, siren, and Saul on top of villain tabs screaming for you to get back on track.',
-    featureQuakeHint: '“Caught you! Back to the productive tab now.”',
-    featureBlockTitle: 'Villain tab lock',
-    featureBlockBody:
-      'If you enable the mode, Saul slams villain tabs in full-screen until you return to focus and win back points.',
-    featureBlockHint: '“Flip the switch when you want: only the productive tab stays open.”',
-    featureReportTitle: 'Dramatic report',
-    featureReportBody:
-      'Charts, AI storytelling, CSV/PDF exports, and minute-by-minute timeline for your next stand-up.',
-    featureReportHint: '“Here’s the evidence for you and your boss.”',
-    featurePrivacyTitle: 'Privacy-first',
-    featurePrivacyBody:
-      'Everything runs inside <code>chrome.storage.local</code>; no external servers or leaked verdicts.',
-    featurePrivacyHint: '“Not even the judge sees your data.”',
-    featureGaugeTitle: 'Índice de procrastinación',
-    featureGaugeLabel: 'Live status',
-    featureGaugeHint: 'When it crosses 70%, Saul prepares the quake.',
-    featureQuakeTest: 'Test alert',
-    featurePrevLabel: 'Previous card',
-    featureNextLabel: 'Next card',
-    processEyebrow: 'How it works',
-    processTitle: 'Saul locks procrastination in three steps.',
-    processLead:
-      'No legal jargon: install it, let it watch your tabs, feel the alerts, and end your day with ready-to-share evidence.',
-    process1Title: 'Tracks your active tabs',
-    process1Body:
-      'The badge sits quietly watching what’s open and knows instantly if you’re studying, working, or doom-scrolling.',
-    process2Title: 'Flags distractions',
-    process2Body:
-      'You define productive vs. villain domains. If you wander off, Saul shakes the screen and shouts before the spiral begins.',
-    process3Title: 'Delivers usable proof',
-    process3Body:
-      'Every day ends with a clean report: charts, highlights, and an action plan for tomorrow.',
-    featuresEyebrow: 'Detailed features',
-    featuresTitle: 'The arsenal of the Saul Goodman extension.',
-    feature1Title: 'Real-time dashboard',
-    feature1Item1: 'Badge with current index and sarcastic messages.',
-    feature1Item2: 'Top productive and villain domains with formatted time.',
-    feature1Item3: 'CSV/PDF exports with one click.',
-    feature2Title: 'Earthquake mode',
-    feature2Item1: 'Configurable threshold and optional siren.',
-    feature2Item2: 'Critical overlay with countdown and CTA.',
-    feature2Item3: 'Blocks only villain tabs so you can recover in productive ones.',
-    feature3Title: 'Dramatic report',
-    feature3Item1: 'Charts per hour and tab-switch breakdown.',
-    feature3Item2: 'AI narrative in Better Call Saul tone.',
-    feature3Item3: 'Critical banner with immediate action plan.',
-    feature4Title: 'Total privacy',
-    feature4Item1: 'Data in <code>chrome.storage.local</code> — nothing goes to the cloud.',
-    feature4Item2: 'Productive/villain lists saved only in your browser.',
-    feature4Item3: 'Optional OpenAI key stored locally.',
-    integrationEyebrow: 'For devs',
-    integrationTitle: 'VS Code + local daemon, all counted as productive.',
-    integrationLead: 'Turn on the optional integration: Saul adds editor time as productive without leaving localhost.',
-    integrationCard1Title: 'Enable in options',
-    integrationCard1Body: 'Generate the pairing key, toggle the integration, and set the local URL. Nothing leaves your browser.',
-    integrationCard2Title: 'Local daemon',
-    integrationCard2Body:
-      'Use the VS Code extension command to start it: it pre-fills PAIRING_KEY/PORT and opens in the daemon folder.',
-    integrationCard3Title: 'VS Code extension',
-    integrationCard3Body:
-      'Command “Saul Goodman: preparar comando do SaulDaemon” ships ready after install and sends editor heartbeats to Chrome.',
-    integrationVsixCta: 'Install VS Code extension',
-    integrationCta: 'See integration guide',
-    manifestoEyebrow: 'Manifesto',
-    manifestoTitle: 'Aggressive marketing with a pinch of ethics.',
-    manifesto1Title: '100% local',
-    manifesto1Body: 'Your day is judged inside the browser. No data leaves the computer, not even by court order.',
-    manifesto2Title: 'Transparent billing',
-    manifesto2Body: 'Visual and sound alerts make it clear when Saul is about to charge extra fees.',
-    manifesto3Title: 'Humor as weapon',
-    manifesto3Body: 'Sarcastic messages and dramatic banners remind you procrastination is also expensive.',
-    blogPreviewEyebrow: 'Saul Blog',
-    blogPreviewTitle: 'Latest cases from the digital courtroom.',
-    blogPreviewLead: 'Read the 3 newest articles and see how Saul defends your focus with legal sarcasm.',
-    blogPreviewLoading: 'Loading articles...',
-    blogPreviewEmpty: 'No articles available right now.',
-    blogPreviewError: 'Unable to load articles.',
-    blogPreviewCta: 'See all articles',
-    blogPreviewRead: 'Read article',
-    blogPreviewImageAlt: 'Saul Goodman illustration',
-    feedbackLink: 'Give feedback',
-    demoEyebrow: 'Quick demo',
-    demoTitle: 'See where you decide and where Saul intervenes.',
-    demoLead: 'One glance is enough: popup for instant reactions, report for end-of-day decisions.',
-    demoPopupTitle: 'Popup for instant decisions',
-    demoPopupBody: 'Daily index, top domains, and export shortcuts at hand.',
-    demoReportTitle: 'Report for planning',
-    demoReportBody: 'Charts, light storytelling, and suggested next moves.',
-    demoCta: 'View full demo',
-    quakeEyebrow: 'Earthquake mode',
-    quakeTitle: 'When Saul spots villains, the page shakes with him.',
-    quakeLead:
-      'The same dramatic alert from the extension shows up here so visitors feel how serious the warning is past the threshold.',
-    quakeMicro: '“Caught you doom-scrolling! Brace for impact.”',
-    quakeBody:
-      'The overlay blocks villain tabs, shows a bold CTA, and can blast the optional siren. Impossible to ignore — exactly as planned.',
-    quakeButton: 'Trigger the shake',
-    quakeTip: 'Relax: the preview lasts just a few seconds.',
-    quakeCallout: 'Earthquake incoming!',
-    quakeDisplayCopy: 'Jump back to focus or Saul raises his fees.',
-    splitPopupTitle: 'On-call popup',
-    splitPopupBody:
-      'The panel shows the index, top domains, extra indicators, and lets you export CSV/PDF. When focus drops, earthquake mode storms in to save the bar of justice.',
-    splitPopupCaption: 'Popup with index, top domains, and exports.',
-    splitPopupCaption2: 'KPIs, top domains, and quick export.',
-    splitPopupCaption3: 'Productive/villain lists in the options panel.',
-    splitPopupCaption4: 'Configurable weights and schedules for the index.',
-    splitReportTitle: 'Dramatic report',
-    splitReportBody:
-      'Charts per hour, villain ranking, AI narrative, and critical banner with action plan. All with sworn visuals.',
-    splitReportCaption: 'Report summary with charts and ranking.',
-    splitReportCaption2: 'AI narrative and minute-by-minute timeline.',
-    splitReportCaption3: 'Villain ranking, champions, and distribution.',
-    splitStats1: 'Minutes recovered/day',
-    splitStats2: 'Clients acquitted',
-    demoViewFull: 'View full size',
-    reactionsEyebrow: 'Saul reacts',
-    reactionsTitle: 'Saul’s instant verdict.',
-    reactionsBody:
-      'When the index spikes, Saul is incredulous. When you return to focus, he celebrates. Quick visuals to keep the bar of justice in place.',
-    codeconEyebrow: 'Hack Lab CodeCon',
-    codeconTitle: 'Where Saul Goodman became a Chrome extension',
-    codeconLead:
-      'The idea was born at a CodeCon hack lab: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imagined Saul as a personal attorney against procrastination — with tremor, siren, and courtroom-grade reports.',
-    codeconTag: 'Born in community',
-    codeconPlanChip: '30 min of planning',
-    codeconBuildChip: '4h of coding',
-    codeconStoryLead:
-      'In 30 minutes of whiteboard, Otávio sketched the MVP and, over the next 4 hours, shipped the seed of Saul: an extension that proves remote work works by watching tabs, calculating an index, and drafting the dev’s defense for the “jury” (the boss) — all without AI.',
-    codeconBulletChallenge: 'Challenge: prove remote work in 4 hours of hand-crafted code, no AI allowed.',
-    codeconBulletTracking: 'Extension watches tab switches, idle time, and villain sites to build an index.',
-    codeconBulletNarrative: '“Attorney” narrative turns metrics into a defense for the manager/jury.',
-    codeconBulletRepoPrefix: 'Hack Lab open source:',
-    codeconBulletRepoLink: 'original repo',
-    codeconVideoCaption: 'Clip from the CodeCon Hack Lab where Saul came to life as a distraction-busting extension.',
-    codeconCtaSite: 'Meet CodeCon',
-    codeconCtaVideo: 'Watch full video',
-    codeconCtaRepo: 'See Hack Lab code',
-    reactionDisbeliefLabel: 'Incredulous mode',
-    reactionDisbeliefText: '“You call that focus?”',
-    reactionDisbeliefHint: 'Triggers when the quake threshold is crossed.',
-    reactionBlockLabel: 'Block mode',
-    reactionBlockText: '“Don’t even try it: villains get blocked instantly.”',
-    reactionBlockAlt: 'Saul blocking the access',
-    reactionBlockHint: 'Redirects to the block page with Saul shutting the door.',
-    reactionHypeLabel: 'Approved mode',
-    reactionHypeText: '“Now I might discount my fees.”',
-    reactionHypeHint: 'Shows up when you jump back to productive tabs.',
-    quakeDemoEyebrow: 'Earthquake mode (demo)',
-    quakeDemoTitle: 'Test Saul’s most dramatic alert.',
-    quakeDemoBody:
-      'Click to simulate earthquake mode: screen shake, siren, and a dramatic message. Same as the extension, but only for a few seconds here.',
-    quakeDemoButton: 'Simulate earthquake mode',
-    quakeOverlayTitle: 'Earthquake mode triggered!',
-    quakeOverlayBody: 'Saul is shaking villain tabs. Get back to focus before he charges extra.',
-    quakeOverlayClose: 'Back to focus',
-    timelineEyebrow: 'Timeline',
-    timelineTitle: 'From tracking to verdict.',
-    timeline1Title: 'Initial radar',
-    timeline1Body: 'Content script detects activity on first tabs. Saul logs who is productive or a villain.',
-    timeline2Title: 'Infraction notice',
-    timeline2Body:
-      'If the index climbs too high, earthquake mode storms Chrome with quake, siren, and CTA to turn the game.',
-    timeline3Title: 'Daily sentence',
-    timeline3Body:
-      'Detailed report ships charts, timeline, and AI narrative to close the day with evidence.',
-    benefitsEyebrow: 'Benefits',
-    benefitsTitle: 'Saul handles the case, you close it.',
-    benefit1Title: 'Undeniable evidence',
-    benefit1Body: 'Charts and CSV to show your boss, team, or your own conscience.',
-    benefit2Title: 'Cinematic alerts',
-    benefit2Body: "Earthquake mode and sarcastic messages you can't ignore.",
-    benefit3Title: 'Guaranteed privacy',
-    benefit3Body: 'All judgment happens locally; no data leaves your browser.',
-    testimonialsEyebrow: 'Testimonials',
-    testimonialsTitle: 'Clients acquitted.',
-    testimonial1Quote: '“Saul reminded me that switching 40 tabs per hour is a crime.”',
-    testimonial1Cite: '— Anonymous client',
-    testimonial2Quote: '“The report became a defense piece in the meeting with my boss.”',
-    testimonial2Cite: '— Regretful engineer',
-    testimonial3Quote: '“Earthquake mode saved my sprint. Fees gladly paid.”',
-    testimonial3Cite: '— Product Manager',
-    testimonialPrev: 'Previous testimonial',
-    testimonialNext: 'Next testimonial',
-    trustEyebrow: 'Privacy & trust',
-    trustTitle: 'Everything stays between you and your browser.',
-    trustLead: 'Playful tone, serious security: here’s how data and alerts really work.',
-    trustCard1Title: '100% local',
-    trustCard1Body: 'Metrics live in <code>chrome.storage.local</code>. Nothing touches external servers.',
-    trustCard2Title: 'Open-source',
-    trustCard2Body: 'Every line is public so the community can audit changes.',
-    trustCard3Title: 'Transparent alerts',
-    trustCard3Body: 'You pick the threshold and can silence Saul whenever you need.',
-    transparencyEyebrow: 'Transparency',
-    transparencyTitle: 'Privacy & changelog in the open.',
-    transparencyBody: 'Read how we handle your data and every release note with zero fluff.',
-    transparencyPrivacyCta: 'Read the Privacy Policy',
-    transparencyChangelogCta: 'Open full changelog',
-    lightboxClose: 'Close',
-    finalCtaTitle: 'Ready to let Saul take over?',
-    finalCtaBody:
-      'Install, set your domains, and get nudged back to focus before villain tabs win the day.',
-    finalPrimary: 'Install on Chrome',
-    stickyCtaText: 'Saul is ready to watch your tabs.',
-    stickyCtaButton: 'Install on Chrome',
-    stickyToggleLabel: 'Toggle CTA',
-    faq1Question: 'Is it free?',
-    faq1Answer: 'Totally. Saul only charges attention and humor.',
-    faq2Question: 'Do my data leave the browser?',
-    faq2Answer: 'Never. Everything stays in <code>chrome.storage.local</code>.',
-    faq3Question: 'Do I need AI?',
-    faq3Answer: 'Only if you want narratives in the report. The rest works offline.',
-    faq4Question: 'Do I need an account?',
-    faq4Answer: 'No. Everything runs locally with no login.',
-    faq5Question: 'How does earthquake mode work?',
-    faq5Answer: 'When the index crosses your threshold the screen shakes and a siren plays for a few seconds.',
-    faq6Question: 'Can I customize domains and schedules?',
-    faq6Answer: 'Yes. In the options screen you set productive/villain lists, weights, and schedules.',
-    faq7Question: 'Can I export my data?',
-    faq7Answer: 'Yes. CSV and PDF buttons let you download the data instantly.',
-    faq8Question: 'Does it work in other browsers?',
-    faq8Answer: 'Built for Chrome but compatible with Chromium-based browsers like Brave or Edge.',
-    faq9Question: 'Is the AI report safe?',
-    faq9Answer: 'AI storytelling is optional; if you skip the OpenAI key everything stays offline.',
-    faqEyebrow: 'Quick questions',
-    faqTitle: 'Straightforward FAQ.',
-    devEyebrow: 'For developers',
-    devTitle: 'Want to contribute or integrate?',
-    devLead: 'All technical details moved out of the main flow. Start with the guides below.',
-    devBody:
-      'Hook up the local daemon and VS Code extension to count editor time as productive minutes without leaving localhost.',
-    devCtaReadme: 'Open README',
-    devCtaDocs: 'View docs',
-    devCtaVsCode: 'Install VS Code extension',
-    footerTitle: 'Saul Goodman Extension',
-    footerBody: 'Install, list your villains, and let Saul collect focus fees.',
-    footerLinkArchitecture: 'Architecture',
-    footerLinkIndicators: 'Indicators',
-    footerLinkGithub: 'GitHub',
-    footerPrivacy: '100% local data. Not even the judge sees it.',
-    footerPrivacyLink: 'Privacy Policy',
-    footerChangelogLink: 'Changelog',
-    privacyTitle: 'Privacy Policy',
-    privacyEyebrow: 'Full transparency',
-    privacyHeading: 'Privacy Policy',
-    privacySubheading: 'Here is the latest version of the policy published in the repository.',
-    privacyLoading: 'Loading the policy straight from the repository...',
-    privacyError: 'We could not load the policy right now. Try again in a moment.',
-    changelogTitle: 'Changelog',
-    changelogEyebrow: 'Everything documented',
-    changelogHeading: 'Official changelog',
-    changelogSubheading: 'Track every change per release directly from the repository.',
-    changelogLoading: 'Loading the changelog straight from the repository...',
-    changelogError: 'We could not load the changelog right now. Try again later.'
-  },
-  es: {
-    navProcess: 'Cómo funciona',
-    navIndex: 'Índice',
-    navCodeCon: 'CodeCon',
-    navBenefits: 'Beneficios',
-    navDemo: 'Demo',
-    navClients: 'Testimonios',
-    navBlog: 'Blog',
-    navCta: 'Instalar en Chrome',
-    mobileMenuToggle: 'Abrir menú',
-    seoTitle: 'Saul Goodman - Extensión Anti-Procrastinación',
-    seoDescription:
-      'Saul Goodman vigila tus pestañas, combate la procrastinación y genera informes dramáticos en tu navegador. Todo queda local, sin servidores externos.',
-    languageLabel: 'Seleccionar idioma',
-    heroTag: 'Extensión anti-procrastinación para la vida real',
-    heroTitle: 'Detén la procrastinación. Saul Goodman toma el caso.',
-    heroSubtitle:
-      'Supervisa tus pestañas, detecta distracciones y te empuja de vuelta al foco antes de que el día se vaya. Todo en Chrome, sin registros.',
-    heroPrimaryCta: 'Instalar en Chrome',
-    heroSecondaryCta: 'Ver cómo funciona',
-    heroGaugeLabel: 'Índice en vivo',
-    heroGaugeHint: 'Si pasa del 70%, llega el terremoto.',
-    heroConfidence1: 'Modo terremoto personalizado',
-    heroConfidence2: 'Lista negra y lista VIP de dominios',
-    heroConfidence3: 'Informe con narrativa IA',
-    heroBadge: '“En caso de pereza... CALL SAUL!”',
-    multilingualLabel: 'Disponible en PT 🇧🇷 · EN 🇺🇸 · ES 🇪🇸',
-    indexEyebrow: 'En el escritorio de Saul',
-    indexTitle: 'Cómo Saul interpreta el Índice de Procrastinación',
-    indexLead:
-      'Traducción jurídica instantánea: 0 no es trofeo y 100 no son vacaciones. Saul revisa cada franja para decidir si te sacude o te manda a un descanso forzado.',
-    indexCalloutLabel: 'Memorándum de Saul',
-    indexCalloutQuote:
-      '“Pasaste de 60% y llamo a tu jefe. Bajaste de 10% y pido cita con tu terapeuta. ¡Balance, cliente!”',
-    indexPitch1:
-      'El índice va de 0 a 100. Mientras más te acercas a 100, más claro que dejaste el caso tirado y viraste cliente VIP de la procrastinación.',
-    indexPitch2:
-      'Pero marcar 0 también levanta cejas: quien vive pegado a pestañas productivas 24/7 está a un paso de declarar burnout.',
-    indexGaugeLabel: 'Zona ideal',
-    indexGaugeHint: '18% es el punto dulce: foco firme sin volverte robot.',
-    indexCluesLabel: 'Checklist del caso',
-    indexClueFocus: 'Anota tus villanos',
-    indexClueFocusBody:
-      'Mantén una lista viva de sitios que suben el índice antes de que Saul presente demanda.',
-    indexClueBreak: 'Agenda micro-pausas',
-    indexClueBreakBody:
-      'La franja 15–22 pide respiraciones estratégicas. Bloquéalas en el calendario, cliente.',
-    indexClueAlert: 'Revisa el terremoto',
-    indexClueAlertBody:
-      'Confirma límite, sirena y mensaje para que la citación llegue a tiempo.',
-    indexMemoHeading: 'Nota del bufete',
-    indexMemoBody:
-      'Si el índice sube por culpa de una pestaña villana, activa el bloqueo a pantalla completa. Saul cierra los villanos, deja libre solo la pestaña productiva y tu nota respira de novo.',
-    indexMemoSign: '— Saul, abogado de la productividad',
-    indexFootnote:
-      'Entre 15 y 22 Saul escribe “cliente estable”. Arriba de eso prepara el terremoto; abajo receta descanso, no más tareas.',
-    indexRange0to14Title: '0 – 14: Over-work dudoso',
-    indexRange0to14Body:
-      'Estás tan pegado al trabajo que Saul lo llama “celo excesivo”. Respira, estírate y bebe agua antes de testificar.',
-    indexRange15to22Title: '15 – 22: Equilibrio dorado',
-    indexRange15to22Body:
-      'Veredicto ideal: foco constante, pausas sanas y cero sirenas. Saul hasta considera descontar honorarios.',
-    indexStamp: 'Cliente que duerme en paz',
-    indexRange23to60Title: '23 – 60: Foco tambaleando',
-    indexRange23to60Body:
-      'Aún llevas el caso, pero tropiezas en feeds villanos. Saul lanza notificaciones sarcásticas para enderezar el expediente.',
-    indexRange61to100Title: '61 – 100: Procrastinación flagrante',
-    indexRange61to100Body:
-      'Hora del terremoto. La pantalla tiembla, la sirena suena y Saul llega con la intimación para cerrar las pestañas villanas.',
-    socialProofCaption: 'Saul ya ayuda a miles de personas a cuidar el foco.',
-    socialProofMetricLabel: 'Usuarios satisfechos',
-    ratingBadgeAlt: 'Calificación en Chrome Web Store',
-    usersBadgeAlt: 'Usuarios en la Chrome Web Store',
-    reasonsEyebrow: 'Beneficios clave',
-    reasonsTitle: 'Why use Saul Goodman?',
-    reasonsLead: 'Cuatro tarjetas, cuatro motivos claros. Nada de rodeos.',
-    reason1Title: 'Foco guiado',
-    reason1Body: 'El índice en el popup muestra tu estado para saber qué ajustar.',
-    reason2Title: 'Alertas imposibles de ignorar',
-    reason2Body: 'La pantalla tiembla antes de que una pestaña villana arruine el día.',
-    reason3Title: 'Informes listos para compartir',
-    reason3Body: 'Gráficos y resúmenes caben en la daily, en un 1:1 o con el cliente.',
-    reason4Title: 'Privacidad total',
-    reason4Body: 'Los datos viven en tu Chrome; nada sale del computador.',
-    featureSectionEyebrow: 'Funciones clave',
-    featureSectionTitle: 'El paquete completo anti-procrastinación.',
-    featureSectionLead:
-      'Cada tarjeta explica con humor y claridad lo que Saul hace dentro del navegador.',
-    featureContextLabel: 'Novedad',
-    featureContextBody:
-      'Ahora eliges el CONTEXTO del día (trabajo, ocio, estudios o personal) desde el popup; Saul recalibra el índice, suaviza penalizaciones y evita injusticias.',
-    featureSwipeHint: 'Desliza hacia los lados para ver todas las funciones de Saul.',
-    featureRealtimeTitle: 'Rastreo en tiempo real',
-    featureRealtimeBody:
-      'El badge observa cada pestaña y convierte tu jornada en un índice claro de foco vs. distracción.',
-    featureRealtimeHint: '“Saul vigila esas 37 pestañas.”',
-    featureCustomTitle: 'Listas y pesos a tu medida',
-    featureCustomBody:
-      'Define dominios productivos, villanos, pesos por horario y límites de terremoto según tu rutina.',
-    featureCustomHint: '“Planilla es VIP, feed infinito es sospechoso.”',
-    featureQuakeTitle: 'Modo terremoto cinematográfico',
-    featureQuakeBody:
-      'Sacudida de pantalla, sirena y Saul sobre las pestañas villanas gritando que vuelvas al foco.',
-    featureQuakeHint: '“Te vi: regresa a la pestaña productiva.”',
-    featureBlockTitle: 'Bloqueo de pestañas villanas',
-    featureBlockBody:
-      'Si activas el modo, Saul cierra las pestañas problemáticas a pantalla completa hasta que vuelvas al foco y recuperes puntos.',
-    featureBlockHint: '“Activa cuando quieras: solo la pestaña productiva queda libre.”',
-    featureReportTitle: 'Informe dramatizado',
-    featureReportBody:
-      'Gráficos, narrativa IA, CSV/PDF y timeline por minuto para defender tu sprint.',
-    featureReportHint: '“Pruebas listas para el jefe (y para ti).”',
-    featurePrivacyTitle: 'Privacidad total',
-    featurePrivacyBody:
-      'Todo corre en <code>chrome.storage.local</code>; nada sale a servidores externos.',
-    featurePrivacyHint: '“Ni el juez ve tus datos.”',
-    featureGaugeTitle: 'Procrastination Index',
-    featureGaugeLabel: 'Tu estado ahora',
-    featureGaugeHint: 'Si pasa del 70%, Saul prepara el temblor.',
-    featureQuakeTest: 'Probar alerta',
-    featurePrevLabel: 'Tarjeta anterior',
-    featureNextLabel: 'Siguiente tarjeta',
-    backToHome: 'Volver al inicio',
-    privacyTitle: 'Política de Privacidad',
-    privacyEyebrow: 'Transparencia total',
-    privacyHeading: 'Política de Privacidad',
-    privacySubheading: 'Aquí encuentras la versión más reciente publicada en el repositorio.',
-    privacyLoading: 'Cargando la política directo del repositorio...',
-    privacyError: 'No pudimos cargar la política ahora. Intenta más tarde.',
-    changelogTitle: 'Changelog',
-    changelogEyebrow: 'Todo documentado',
-    changelogHeading: 'Changelog oficial',
-    changelogSubheading: 'Revisa cada cambio por versión directo desde el repositorio.',
-    changelogLoading: 'Cargando el changelog directo del repositorio...',
-    changelogError: 'No pudimos cargar el changelog ahora. Intenta más tarde.',
-    processEyebrow: 'Cómo funciona',
-    processTitle: 'Saul encierra la procrastinación en tres pasos.',
-    processLead:
-      'Sin tecnicismos: instalas, él vigila tus pestañas, activa alertas y entrega pruebas para cerrar el día.',
-    process1Title: 'Monitorea tus pestañas activas',
-    process1Body:
-      'El ícono mira qué está abierto y detecta al instante si trabajas, estudias o te pierdes en el feed.',
-    process2Title: 'Detecta distracciones',
-    process2Body:
-      'Defines dominios productivos y villanos. Si te escapas, la pantalla tiembla y Saul te llama la atención.',
-    process3Title: 'Genera pruebas útiles',
-    process3Body:
-      'Al final del día recibes un informe simple con gráfico, resumen y próximos pasos.',
-    featuresEyebrow: 'Funciones detalladas',
-    featuresTitle: 'El arsenal de la extensión Saul Goodman.',
-    feature1Title: 'Dashboard en tiempo real',
-    feature1Item1: 'Badge con índice actual y mensajes sarcásticos.',
-    feature1Item2: 'Top dominios productivos y villanos con tiempo formateado.',
-    feature1Item3: 'Exportaciones CSV/PDF con un clic.',
-    feature2Title: 'Modo terremoto',
-    feature2Item1: 'Umbral configurable y sirena opcional.',
-    feature2Item2: 'Overlay crítico con contador regresivo y CTA.',
-    feature2Item3: 'Bloquea solo las pestañas villanas para que recuperes en productivas.',
-    feature3Title: 'Informe dramático',
-    feature3Item1: 'Gráficos por hora y breakdown de cambios de pestaña.',
-    feature3Item2: 'Narrativa IA en tono Better Call Saul.',
-    feature3Item3: 'Banner crítico con plan de acción inmediato.',
-    feature4Title: 'Privacidad total',
-    feature4Item1: 'Datos en <code>chrome.storage.local</code>; nada va a la nube.',
-    feature4Item2: 'Listas productivas/villanas guardadas solo en tu navegador.',
-    feature4Item3: 'Clave OpenAI opcional y guardada localmente.',
-    integrationEyebrow: 'Para devs',
-    integrationTitle: 'VS Code + daemon local, todo como tiempo productivo.',
-    integrationLead: 'Activa la integración opcional: Saul suma sesiones del editor como productivas sin salir de localhost.',
-    integrationCard1Title: 'Activa en opciones',
-    integrationCard1Body: 'Genera la clave de pareamiento, habilita la integración y define la URL local. Nada sale de tu navegador.',
-    integrationCard2Title: 'Daemon local',
-    integrationCard2Body:
-      'Usa el comando de la extensión VS Code para iniciarlo: ya rellena PAIRING_KEY/PORT y abre en la carpeta del daemon.',
-    integrationCard3Title: 'Extensión VS Code',
-    integrationCard3Body:
-      'El comando “Saul Goodman: preparar comando do SaulDaemon” llega listo tras instalar y envía latidos del editor al Chrome.',
-    integrationVsixCta: 'Instalar extensión VS Code',
-    integrationCta: 'Ver guía de integración',
-    manifestoEyebrow: 'Manifiesto',
-    manifestoTitle: 'Marketing agresivo con una pizca de ética.',
-    manifesto1Title: '100% local',
-    manifesto1Body:
-      'Tu día se juzga dentro del navegador. Ningún dato sale de la computadora, ni con orden del juez.',
-    manifesto2Title: 'Transparencia en el cobro',
-    manifesto2Body: 'Alertas visuales y sonoras dejan claro cuando Saul está a punto de cobrar honorarios extra.',
-    manifesto3Title: 'Humor como arma',
-    manifesto3Body: 'Mensajes sarcásticos y banners dramáticos recuerdan que procrastinar también cuesta caro.',
-    blogPreviewEyebrow: 'Blog de Saul',
-    blogPreviewTitle: 'Últimos casos del tribunal digital.',
-    blogPreviewLead:
-      'Lee los 3 artículos más recientes y descubre cómo Saul defiende tu foco con sarcasmo legal.',
-    blogPreviewLoading: 'Cargando artículos...',
-    blogPreviewEmpty: 'No hay artículos disponibles por ahora.',
-    blogPreviewError: 'No fue posible cargar los artículos.',
-    blogPreviewCta: 'Ver todos los artículos',
-    blogPreviewRead: 'Leer artículo',
-    blogPreviewImageAlt: 'Ilustración de Saul Goodman',
-    feedbackLink: 'Enviar feedback',
-    demoEyebrow: 'Demo rápida',
-    demoTitle: 'Mira dónde decides y dónde Saul interviene.',
-    demoLead: 'Popup para reacciones inmediatas, informe para cerrar el día. Solo eso.',
-    demoPopupTitle: 'Popup para decisiones instantáneas',
-    demoPopupBody: 'Índice diario, dominios destacados y atajos de exportación.',
-    demoReportTitle: 'Informe para planear',
-    demoReportBody: 'Gráficos, narrativa ligera y próximos pasos sugeridos.',
-    demoCta: 'View full demo',
-    quakeEyebrow: 'Modo terremoto',
-    quakeTitle: 'Cuando Saul detecta villanos, la página tiembla con él.',
-    quakeLead:
-      'El mismo alertón dramático de la extensión aparece aquí para mostrar lo serio que es cruzar el umbral.',
-    quakeMicro: '“Te pillé en el feed. Prepárate para el temblor.”',
-    quakeBody:
-      'El overlay bloquea pestañas villanas, muestra un CTA firme y puede sonar la sirena. Es imposible ignorarlo.',
-    quakeButton: 'Probar el temblor',
-    quakeTip: 'Tranquilo: la demo dura solo unos segundos.',
-    quakeCallout: '¡Terremoto en camino!',
-    quakeDisplayCopy: 'Vuelve al foco o Saul sube los honorarios.',
-    splitPopupTitle: 'Popup de guardia',
-    splitPopupBody:
-      'El panel muestra el índice, top dominios, indicadores extra y permite exportar CSV/PDF. Cuando el foco cae, el modo terremoto invade para salvar la barra de la justicia.',
-    splitPopupCaption: 'Popup con índice, top dominios y exportaciones.',
-    splitPopupCaption2: 'KPIs, top dominios y exportación rápida.',
-    splitPopupCaption3: 'Listas productivas/villanas en el panel de opciones.',
-    splitPopupCaption4: 'Pesos y horarios configurables para el índice.',
-    splitReportTitle: 'Informe dramático',
-    splitReportBody:
-      'Gráficos por hora, ranking de villanos, narrativa IA y banner crítico con plan de acción. Todo con visual jurada.',
-    splitReportCaption: 'Resumen del informe con gráficos y ranking.',
-    splitReportCaption2: 'Narrativa IA y timeline minuto a minuto.',
-    splitReportCaption3: 'Ranking de villanos, campeones y distribución.',
-    splitStats1: 'Minutos recuperados/día',
-    splitStats2: 'Clientes absueltos',
-    demoViewFull: 'Ver en alta',
-    reactionsEyebrow: 'Saul reacciona',
-    reactionsTitle: 'El veredicto instantáneo de Saul.',
-    reactionsBody:
-      'Cuando el índice sube, Saul queda incrédulo. Cuando vuelves al foco, él celebra. Recordatorios visuales para mantener la barra de la justicia en su sitio.',
-    codeconEyebrow: 'Hack Lab CodeCon',
-    codeconTitle: 'Donde Saul Goodman se volvió extensión de Chrome',
-    codeconLead:
-      'La idea nació en un laboratorio de CodeCon: Otávio Ribeiro (<a href="https://www.linkedin.com/in/donotavio/" target="_blank" rel="noreferrer">LinkedIn</a>, <a href="https://github.com/Donotavio" target="_blank" rel="noreferrer">GitHub</a>) imaginó a Saul como abogado personal contra la procrastinación — con temblor, sirena y reportes dignos de tribunal.',
-    codeconTag: 'Nacido en comunidad',
-    codeconPlanChip: '30 min de plan',
-    codeconBuildChip: '4 h de código',
-    codeconStoryLead:
-      'En 30 minutos de pizarra, Otávio dibujó el MVP y, en las 4 horas siguientes, puso en el aire la semilla de Saul: una extensión que demuestra que el home office funciona vigilando pestañas, calculando un índice y escribiendo la defensa del dev para el “jurado” (el jefe), sin usar IA.',
-    codeconBulletChallenge: 'Reto: probar el home office con 4 horas de código artesanal, sin IA.',
-    codeconBulletTracking: 'La extensión vigila cambios de pestaña, inactividad y sitios villanos para formar un índice.',
-    codeconBulletNarrative: 'Narrativa de “abogado” traduce métricas en defensa para el manager/jurado.',
-    codeconBulletRepoPrefix: 'Código abierto del Hack Lab:',
-    codeconBulletRepoLink: 'repositorio original',
-    codeconVideoCaption: 'Fragmento del Hack Lab de CodeCon donde Saul cobró vida como extensión anti-distracciones.',
-    codeconCtaSite: 'Conoce CodeCon',
-    codeconCtaVideo: 'Ver video completo',
-    codeconCtaRepo: 'Ver código del Hack Lab',
-    reactionDisbeliefLabel: 'Modo incrédulo',
-    reactionDisbeliefText: '“¿Eso llamas foco?”',
-    reactionDisbeliefHint: 'Se activa al pasar el umbral de terremoto.',
-    reactionBlockLabel: 'Modo bloqueo',
-    reactionBlockText: '“Ni lo intentes: los villanos se bloquean al instante.”',
-    reactionBlockAlt: 'Saul bloqueando el acceso',
-    reactionBlockHint: 'Redirige a la página de bloqueo con Saul cerrando la puerta.',
-    reactionHypeLabel: 'Modo aprobado',
-    reactionHypeText: '“Así hasta descuento honorarios.”',
-    reactionHypeHint: 'Aparece cuando regresas a las pestañas productivas.',
-    quakeDemoEyebrow: 'Modo terremoto (demo)',
-    quakeDemoTitle: 'Prueba la alerta más dramática de Saul.',
-    quakeDemoBody:
-      'Haz clic para simular el modo terremoto: temblor de pantalla, sirena y mensaje dramático. Igual que en la extensión, pero solo por unos segundos aquí.',
-    quakeDemoButton: 'Simular modo terremoto',
-    quakeOverlayTitle: '¡Modo terremoto activado!',
-    quakeOverlayBody: 'Saul está sacudiendo las pestañas villanas. Vuelve al foco antes de que cobre honorarios.',
-    quakeOverlayClose: 'Volver al foco',
-    timelineEyebrow: 'Línea del tiempo',
-    timelineTitle: 'Del rastreo al veredicto.',
-    timeline1Title: 'Radar inicial',
-    timeline1Body:
-      'El content script detecta actividad en las primeras pestañas. Saul registra quién es productivo o villano.',
-    timeline2Title: 'Auto de infracción',
-    timeline2Body:
-      'Si el índice sube demasiado, el modo terremoto invade Chrome con temblor, sirena y CTA para dar vuelta el juego.',
-    timeline3Title: 'Sentencia diaria',
-    timeline3Body:
-      'El informe detallado envía gráficos, línea del tiempo y narrativa IA para cerrar el día con pruebas.',
-    benefitsEyebrow: 'Beneficios',
-    benefitsTitle: 'Saul cuida del proceso, tú cierras el caso.',
-    benefit1Title: 'Pruebas incontestables',
-    benefit1Body: 'Gráficos y CSV para presentar al jefe, al equipo o a tu propia conciencia.',
-    benefit2Title: 'Alertas cinematográficas',
-    benefit2Body: 'Modo terremoto y mensajes sarcásticos que no ignoras.',
-    benefit3Title: 'Privacidad garantizada',
-    benefit3Body: 'Todo el juicio ocurre localmente; ningún dato sale del navegador.',
-    testimonialsEyebrow: 'Testimonios',
-    testimonialsTitle: 'Clientes absueltos.',
-    testimonial1Quote: '“Saul me recordó que cambiar 40 pestañas por hora es delito.”',
-    testimonial1Cite: '— Cliente anónimo',
-    testimonial2Quote: '“El informe se volvió pieza de defensa en la reunión con el jefe.”',
-    testimonial2Cite: '— Ingeniero arrepentido',
-    testimonial3Quote: '“El modo terremoto salvó mi sprint. Honorarios pagados con gusto.”',
-    testimonial3Cite: '— Product Manager',
-    testimonialPrev: 'Testimonio anterior',
-    testimonialNext: 'Siguiente testimonio',
-    trustEyebrow: 'Privacidad y confianza',
-    trustTitle: 'Todo queda entre tú y tu navegador.',
-    trustLead: 'El tono sigue divertido, pero la explicación es directa sobre datos y alertas.',
-    trustCard1Title: '100% local',
-    trustCard1Body: 'Las métricas viven en <code>chrome.storage.local</code>. Nada toca servidores externos.',
-    trustCard2Title: 'Open-source auditable',
-    trustCard2Body: 'El código es público para que la comunidad revise cada cambio.',
-    trustCard3Title: 'Alertas transparentes',
-    trustCard3Body: 'Tú eliges el umbral y puedes silenciar a Saul cuando lo necesites.',
-    transparencyEyebrow: 'Transparencia',
-    transparencyTitle: 'Política y changelog al frente.',
-    transparencyBody: 'Lee cómo tratamos tus datos y cada nota de versión sin rodeos.',
-    transparencyPrivacyCta: 'Ver Política de Privacidad',
-    transparencyChangelogCta: 'Abrir changelog completo',
-    lightboxClose: 'Cerrar',
-    finalCtaTitle: '¿Listo para dejar que Saul tome el caso?',
-    finalCtaBody:
-      'Instala, configura tus dominios y recibe avisos antes de que las pestañas villanas ganen el día.',
-    finalPrimary: 'Install on Chrome',
-    stickyCtaText: 'Saul está listo para vigilar tus pestañas.',
-    stickyCtaButton: 'Install on Chrome',
-    stickyToggleLabel: 'Alternar CTA',
-    faq1Question: '¿Es gratis?',
-    faq1Answer: 'Totalmente. Saul solo cobra atención y sentido del humor.',
-    faq2Question: '¿Mis datos salen del navegador?',
-    faq2Answer: 'Jamás. Todo queda en <code>chrome.storage.local</code>.',
-    faq3Question: '¿Necesito IA?',
-    faq3Answer: 'Solo si quieres las narrativas en el informe. El resto funciona offline.',
-    faq4Question: '¿Necesito crear una cuenta?',
-    faq4Answer: 'No. Todo funciona localmente sin registro.',
-    faq5Question: '¿Cómo funciona el modo terremoto?',
-    faq5Answer: 'Cuando el índice supera tu umbral, la pantalla tiembla y la sirena suena unos segundos.',
-    faq6Question: '¿Puedo personalizar dominios y horarios?',
-    faq6Answer: 'Sí. En opciones defines listas productivas/villanas, pesos y horarios.',
-    faq7Question: '¿Puedo exportar mis datos?',
-    faq7Answer: 'Sí. Hay botones para descargar CSV o PDF con un clic.',
-    faq8Question: '¿Funciona en otros navegadores?',
-    faq8Answer: 'Pensada para Chrome, pero compatible con navegadores basados en Chromium como Brave o Edge.',
-    faq9Question: '¿Es seguro usar IA en el informe?',
-    faq9Answer: 'La narrativa IA es opcional; sin clave OpenAI todo sigue offline.',
-    faqEyebrow: 'Preguntas rápidas',
-    faqTitle: 'FAQ directo al grano.',
-    devEyebrow: 'For developers',
-    devTitle: '¿Quieres contribuir o integrar?',
-    devLead: 'Movimos los detalles técnicos fuera del flujo principal. Empieza por aquí.',
-    devBody:
-      'Integra el daemon local y la extensión de VS Code para contar tiempo de editor como minutos productivos sin salir de localhost.',
-    devCtaReadme: 'Abrir README',
-    devCtaDocs: 'Ver docs',
-    devCtaVsCode: 'Instalar extensión VS Code',
-    footerTitle: 'Extensión Saul Goodman',
-    footerBody: 'Instala, lista tus villanos y deja que Saul cobre los honorarios del foco.',
-    footerLinkArchitecture: 'Arquitectura',
-    footerLinkIndicators: 'Indicadores',
-    footerLinkGithub: 'GitHub',
-    footerPrivacy: 'Datos 100% locales. Ni el juez los ve.',
-    footerPrivacyLink: 'Política de Privacidad',
-    footerChangelogLink: 'Changelog',
-    privacyTitle: 'Política de Privacidad',
-    privacyEyebrow: 'Transparencia total',
-    privacyHeading: 'Política de Privacidad',
-    privacySubheading: 'Aquí encuentras la versión más reciente publicada en el repositorio.',
-    privacyLoading: 'Cargando la política directo del repositorio...',
-    privacyError: 'No pudimos cargar la política ahora. Intenta más tarde.',
-    changelogTitle: 'Changelog',
-    changelogEyebrow: 'Todo documentado',
-    changelogHeading: 'Changelog oficial',
-    changelogSubheading: 'Revisa cada cambio por versión directo desde el repositorio.',
-    changelogLoading: 'Cargando el changelog directo del repositorio...',
-    changelogError: 'No pudimos cargar el changelog ahora. Intenta más tarde.'
-  }
-};
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  RTL_LANGUAGES,
+  createI18nContext
+} from './shared/i18n.js';
 
-const primeHeroCrashAudio = () => {
-  if (heroCrashPrimed || prefersReducedMotion()) {
-    return Promise.resolve();
-  }
+const scriptUrl = typeof document !== 'undefined' && document.currentScript?.src
+  ? document.currentScript.src
+  : '';
+const siteBase = scriptUrl ? new URL('./', scriptUrl) : new URL('./', document.baseURI);
 
-  const audios = [ensureHeroCrashAudio(), ensureHeroShockAudio()].filter(Boolean);
-  const primePromises = audios.map((audio) => {
-    const originalVolume = audio.volume;
-    audio.volume = Math.min(originalVolume, 1);
-    audio.currentTime = 0;
-    const playResult = audio.play();
-    const resume = () => {
-      audio.pause();
-      audio.currentTime = 0;
-      audio.volume = originalVolume;
-    };
-    if (playResult && typeof playResult.then === 'function') {
-      return playResult.then(resume).catch(() => {
-        resume();
-      });
-    }
-    resume();
-    return Promise.resolve();
-  });
+const LOCALES_BASES = [
+  new URL('_locales/', siteBase),
+  // fallback quando o site é servido a partir de um subdiretório
+  new URL('../_locales/', siteBase),
+];
 
-  return Promise.all(primePromises)
-    .then(() => {
-      heroCrashPrimed = true;
-    })
-    .catch(() => {
-      heroCrashPrimed = false;
-    });
-};
-
+// Create i18n context
+const i18nContext = createI18nContext(LOCALES_BASES);
+const { setLanguage, t } = i18nContext;
 const richTextKeys = new Set([
   'feature4Item1',
   'faq2Answer',
@@ -1144,29 +26,17 @@ const richTextKeys = new Set([
   'featurePrivacyBody',
   'codeconLead',
 ]);
-const supportedLanguages = ['pt', 'en', 'es'];
-const defaultLanguage = 'pt';
-let currentLanguage = defaultLanguage;
 const BLOG_PREVIEW_LIMIT = 3;
-const BLOG_CATEGORY_LABELS = {
-  pt: {
-    'procrastinacao': 'Procrastinação',
-    'foco-atencao': 'Foco & Atenção',
-    'dev-performance': 'Performance Dev',
-    'trabalho-remoto': 'Trabalho Remoto',
-  },
-  en: {
-    'procrastinacao': 'Procrastination',
-    'foco-atencao': 'Focus & Attention',
-    'dev-performance': 'Dev Performance',
-    'trabalho-remoto': 'Remote Work',
-  },
-  es: {
-    'procrastinacao': 'Procrastinación',
-    'foco-atencao': 'Enfoque y Atención',
-    'dev-performance': 'Rendimiento Dev',
-    'trabalho-remoto': 'Trabajo Remoto',
-  },
+const BLOG_CATEGORY_LABEL_KEYS = {
+  'procrastinacao': 'blogCategoryLabelProcrastinacao',
+  'foco-atencao': 'blogCategoryLabelFocoAtencao',
+  'dev-performance': 'blogCategoryLabelDevPerformance',
+  'trabalho-remoto': 'blogCategoryLabelTrabalhoRemoto',
+  'ux-design': 'blogCategoryLabelUxDesign',
+  'marketing': 'blogCategoryLabelMarketing',
+  'produto': 'blogCategoryLabelProduto',
+  'carreira': 'blogCategoryLabelCarreira',
+  'negocios': 'blogCategoryLabelNegocios',
 };
 const BLOG_CATEGORY_TONES = {
   'procrastinacao': 'incredulo',
@@ -1184,6 +54,16 @@ const DATE_LOCALE = {
   pt: 'pt-BR',
   en: 'en-US',
   es: 'es-ES',
+  fr: 'fr-FR',
+  de: 'de-DE',
+  it: 'it-IT',
+  tr: 'tr-TR',
+  zh: 'zh-CN',
+  hi: 'hi-IN',
+  ar: 'ar',
+  bn: 'bn',
+  ru: 'ru-RU',
+  ur: 'ur',
 };
 const runWhenIdle = (task) => {
   if (typeof task !== 'function') return;
@@ -1207,11 +87,6 @@ let quakeHighlightObserver;
 let stickyCtaLastState = false;
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-const getDictionary = () => translations[currentLanguage] || translations[defaultLanguage];
-const t = (key) => {
-  const dictionary = getDictionary();
-  return dictionary[key] || key;
-};
 
 const parseDateValue = (value) => {
   if (!value || typeof value !== 'string') return null;
@@ -1232,7 +107,7 @@ const parseDateValue = (value) => {
 const formatBlogDate = (value) => {
   const date = parseDateValue(value);
   if (!date) return value;
-  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  const locale = DATE_LOCALE[i18nContext.currentLanguage] || DATE_LOCALE[DEFAULT_LANGUAGE];
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
@@ -1244,8 +119,8 @@ const getPostSortTime = (post) => {
 
 const getLocalizedValue = (data, key) => {
   if (!data) return '';
-  if (currentLanguage !== 'pt') {
-    const localizedKey = `${key}_${currentLanguage}`;
+  if (i18nContext.currentLanguage !== 'pt') {
+    const localizedKey = `${key}_${i18nContext.currentLanguage}`;
     if (data[localizedKey]) return data[localizedKey];
   }
   return data[key] || '';
@@ -1253,8 +128,8 @@ const getLocalizedValue = (data, key) => {
 
 const getBlogCategoryLabel = (category) => {
   if (!category) return '';
-  const labels = BLOG_CATEGORY_LABELS[currentLanguage] || BLOG_CATEGORY_LABELS[defaultLanguage];
-  return labels[category] || category;
+  const key = BLOG_CATEGORY_LABEL_KEYS[category];
+  return key ? t(key) : category;
 };
 
 const getBlogArtwork = (post) => {
@@ -1826,12 +701,22 @@ const setupCarousels = () => {
 };
 
 const normalizeLanguage = (value) => {
-  if (!value || typeof value !== 'string') return defaultLanguage;
+  if (!value || typeof value !== 'string') return DEFAULT_LANGUAGE;
   const normalized = value.toLowerCase();
   if (normalized.startsWith('pt')) return 'pt';
-  if (normalized.startsWith('es')) return 'es';
   if (normalized.startsWith('en')) return 'en';
-  return defaultLanguage;
+  if (normalized.startsWith('es')) return 'es';
+  if (normalized.startsWith('fr')) return 'fr';
+  if (normalized.startsWith('de')) return 'de';
+  if (normalized.startsWith('it')) return 'it';
+  if (normalized.startsWith('tr')) return 'tr';
+  if (normalized.startsWith('zh')) return 'zh';
+  if (normalized.startsWith('hi')) return 'hi';
+  if (normalized.startsWith('ar')) return 'ar';
+  if (normalized.startsWith('bn')) return 'bn';
+  if (normalized.startsWith('ru')) return 'ru';
+  if (normalized.startsWith('ur')) return 'ur';
+  return DEFAULT_LANGUAGE;
 };
 
 const setMetaContent = (selector, value) => {
@@ -1841,29 +726,81 @@ const setMetaContent = (selector, value) => {
   element.setAttribute('content', value);
 };
 
-const updateSiteSeo = (dictionary) => {
-  if (!dictionary) return;
-  if (dictionary.seoTitle) {
-    document.title = dictionary.seoTitle;
-    setMetaContent('meta[property="og:title"]', dictionary.seoTitle);
-    setMetaContent('meta[name="twitter:title"]', dictionary.seoTitle);
+const getHtmlLang = (lang) => {
+  if (lang === 'pt') return 'pt-BR';
+  if (lang === 'es') return 'es-419';
+  if (lang === 'zh') return 'zh-CN';
+  return lang;
+};
+
+const getLanguageLabel = (lang) => {
+  const labels = {
+    pt: 'PT',
+    en: 'EN',
+    es: 'ES',
+    fr: 'FR',
+    de: 'DE',
+    it: 'IT',
+    tr: 'TR',
+    zh: '中文',
+    hi: 'हिंदी',
+    ar: 'العربية',
+    bn: 'বাংলা',
+    ru: 'RU',
+    ur: 'اردو',
+  };
+  return labels[lang] || String(lang || '').toUpperCase();
+};
+
+const ensureLanguageSelectorOptions = () => {
+  const selector = document.getElementById('language-select');
+  if (!selector) return;
+
+  const existingValues = new Set(
+    Array.from(selector.querySelectorAll('option')).map((opt) => opt.value)
+  );
+
+  if (
+    SUPPORTED_LANGUAGES.every((lang) => existingValues.has(lang)) &&
+    selector.querySelectorAll('option').length === SUPPORTED_LANGUAGES.length
+  ) {
+    return;
   }
-  if (dictionary.seoDescription) {
-    setMetaContent('meta[name="description"]', dictionary.seoDescription);
-    setMetaContent('meta[property="og:description"]', dictionary.seoDescription);
-    setMetaContent('meta[name="twitter:description"]', dictionary.seoDescription);
+
+  selector.innerHTML = '';
+  SUPPORTED_LANGUAGES.forEach((lang) => {
+    const option = document.createElement('option');
+    option.value = lang;
+    option.textContent = getLanguageLabel(lang);
+    selector.appendChild(option);
+  });
+};
+
+const updateSiteSeo = () => {
+  const seoTitle = i18nContext.currentMessages.seoTitle || i18nContext.fallbackMessages.seoTitle;
+  const seoDescription = i18nContext.currentMessages.seoDescription || i18nContext.fallbackMessages.seoDescription;
+  if (seoTitle) {
+    document.title = seoTitle;
+    setMetaContent('meta[property="og:title"]', seoTitle);
+    setMetaContent('meta[name="twitter:title"]', seoTitle);
+  }
+  if (seoDescription) {
+    setMetaContent('meta[name="description"]', seoDescription);
+    setMetaContent('meta[property="og:description"]', seoDescription);
+    setMetaContent('meta[name="twitter:description"]', seoDescription);
   }
 };
 
-const applyTranslations = (language) => {
-  const lang = supportedLanguages.includes(language) ? language : defaultLanguage;
-  currentLanguage = lang;
-  const dictionary = translations[lang] || translations[defaultLanguage];
-  updateSiteSeo(dictionary);
-  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+const applyTranslations = () => {
+  updateSiteSeo();
+  document.documentElement.lang = getHtmlLang(i18nContext.currentLanguage);
+  document.documentElement.dir = RTL_LANGUAGES.has(i18nContext.currentLanguage) ? 'rtl' : 'ltr';
+  ensureLanguageSelectorOptions();
+
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
-    const text = dictionary[key];
+    if (!key) return;
+    const text = i18nContext.currentMessages[key] || i18nContext.fallbackMessages[key];
     if (!text) return;
     if (richTextKeys.has(key)) {
       element.innerHTML = text;
@@ -1871,32 +808,60 @@ const applyTranslations = (language) => {
       element.textContent = text;
     }
   });
+
   document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
     const key = element.getAttribute('data-i18n-alt');
-    const text = dictionary[key];
+    if (!key) return;
+    const text = i18nContext.currentMessages[key] || i18nContext.fallbackMessages[key];
     if (!text) return;
     element.setAttribute('alt', text);
   });
+
   const selector = document.getElementById('language-select');
-  if (selector && selector.value !== lang) {
-    selector.value = lang;
+  if (selector && selector.value !== i18nContext.currentLanguage) {
+    selector.value = i18nContext.currentLanguage;
   }
   if (selector) {
-    selector.setAttribute('aria-label', dictionary.languageLabel);
+    const aria = i18nContext.currentMessages.languageLabel || i18nContext.fallbackMessages.languageLabel;
+    if (aria) selector.setAttribute('aria-label', aria);
   }
+
   const lightboxClose = document.querySelector('.lightbox-close');
-  if (lightboxClose && dictionary.lightboxClose) {
-    lightboxClose.textContent = dictionary.lightboxClose;
+  const lightboxLabel = i18nContext.currentMessages.lightboxClose || i18nContext.fallbackMessages.lightboxClose;
+  if (lightboxClose && lightboxLabel) {
+    lightboxClose.textContent = lightboxLabel;
   }
+
+  const updateShieldBadgeLabel = (img, labelKey) => {
+    if (!img?.getAttribute) return;
+    const label = i18nContext.currentMessages[labelKey] || i18nContext.fallbackMessages[labelKey];
+    if (!label) return;
+    const src = img.getAttribute('src');
+    if (!src) return;
+    try {
+      const url = new URL(src);
+      url.searchParams.set('label', label);
+      img.setAttribute('src', url.toString());
+    } catch {
+      // ignore invalid URLs
+    }
+  };
+
+  const ratingBadge = document.querySelector('img[data-i18n-alt="ratingBadgeAlt"]');
+  updateShieldBadgeLabel(ratingBadge, 'ratingBadgeLabel');
+  const usersBadge = document.querySelector('img[data-i18n-alt="usersBadgeAlt"]');
+  updateShieldBadgeLabel(usersBadge, 'usersBadgeLabel');
 };
 
 const detectLanguage = () => {
   const stored = localStorage.getItem('saul-language');
-  if (stored) return normalizeLanguage(stored);
-  const fromNavigator = normalizeLanguage(
-    (navigator.languages && navigator.languages[0]) || navigator.language || ''
-  );
-  return supportedLanguages.includes(fromNavigator) ? fromNavigator : defaultLanguage;
+  if (stored) {
+    const normalized = normalizeLanguage(stored);
+    return SUPPORTED_LANGUAGES.includes(normalized) ? normalized : DEFAULT_LANGUAGE;
+  }
+  const first = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+  const fromNavigator = normalizeLanguage(first);
+  return SUPPORTED_LANGUAGES.includes(fromNavigator) ? fromNavigator : DEFAULT_LANGUAGE;
 };
 
 const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
@@ -1907,9 +872,11 @@ const bindLanguageSelector = () => {
   selector.addEventListener('change', (event) => {
     const value = normalizeLanguage(event.target.value);
     localStorage.setItem('saul-language', value);
-    applyTranslations(value);
-    renderBlogPreview();
-    document.dispatchEvent(new CustomEvent(LANGUAGE_CHANGED_EVENT, { detail: value }));
+    void setLanguage(value).then(() => {
+      applyTranslations();
+      renderBlogPreview();
+      document.dispatchEvent(new CustomEvent(LANGUAGE_CHANGED_EVENT, { detail: value }));
+    });
   });
 };
 
@@ -2458,47 +1425,52 @@ const setupQuakeHighlight = () => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  const isDocumentPage = document.body?.classList.contains('document-page');
-  applyTranslations(detectLanguage());
-  bindLanguageSelector();
-  setupScrollReveal();
-  if (isDocumentPage) {
-    return;
-  }
-  initHeroSign();
-  setupLightbox();
-  setupMobileMenu();
-  setupGauges();
-  setupFeatureCarousel();
-  setupQuakeTilt();
-  setupTestimonials();
-  setupStickyCta();
-  setupStickyColorToggle();
-  setupQuakeHighlight();
-  runWhenIdle(() => {
-    renderBlogPreview();
-    setupCarousels();
-    setupCounters();
-    setupParallax();
-    setupSectionParallax();
-    setupIntroAudio();
-    registerServiceWorker();
-  });
-  document.addEventListener('click', (event) => {
-    const trigger = event.target.closest('[data-quake-trigger]');
-    if (trigger) {
-      event.preventDefault();
-      startQuakeDemo();
+  void (async () => {
+    const isDocumentPage = document.body?.classList.contains('document-page');
+    await setLanguage(detectLanguage());
+    applyTranslations();
+    bindLanguageSelector();
+    setupScrollReveal();
+
+    if (isDocumentPage) {
+      return;
     }
-  });
-  const handleHeroMediaChange = () => {
+
     initHeroSign();
-  };
-  if (typeof heroMotionQuery?.addEventListener === 'function') {
-    heroMotionQuery.addEventListener('change', handleHeroMediaChange);
-  } else if (typeof heroMotionQuery?.addListener === 'function') {
-    heroMotionQuery.addListener(handleHeroMediaChange);
-  }
+    setupLightbox();
+    setupMobileMenu();
+    setupGauges();
+    setupFeatureCarousel();
+    setupQuakeTilt();
+    setupTestimonials();
+    setupStickyCta();
+    setupStickyColorToggle();
+    setupQuakeHighlight();
+    runWhenIdle(() => {
+      renderBlogPreview();
+      setupCarousels();
+      setupCounters();
+      setupParallax();
+      setupSectionParallax();
+      setupIntroAudio();
+      registerServiceWorker();
+    });
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-quake-trigger]');
+      if (trigger) {
+        event.preventDefault();
+        startQuakeDemo();
+      }
+    });
+    const handleHeroMediaChange = () => {
+      initHeroSign();
+    };
+    if (typeof heroMotionQuery?.addEventListener === 'function') {
+      heroMotionQuery.addEventListener('change', handleHeroMediaChange);
+    } else if (typeof heroMotionQuery?.addListener === 'function') {
+      heroMotionQuery.addListener(handleHeroMediaChange);
+    }
+  })();
 });
 const updateCarouselPreview = (carousel) => {
   const slides = Array.from(carousel.querySelectorAll('.demo-figure'));

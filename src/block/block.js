@@ -1,10 +1,6 @@
+import { resolveLocale, localeToDir } from '../../dist/shared/i18n.js';
+
 const DEFAULT_LOCALE = 'en-US';
-const SUPPORTED_LOCALES = ['pt-BR', 'en-US', 'es-419'];
-const LOCALE_DIR_MAP = {
-  'pt-BR': 'pt_BR',
-  'en-US': 'en_US',
-  'es-419': 'es_419'
-};
 const SETTINGS_KEY = 'sg:settings';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +14,8 @@ async function initialize() {
     t = i18n.t;
     document.documentElement.lang = i18n.locale;
     applyTranslations(t);
-  } catch {
+  } catch (error) {
+    console.warn('[block] Failed to load i18n, using fallback:', error);
     applyTranslations(t);
   }
 
@@ -94,8 +91,8 @@ function attachActions(t) {
 }
 
 async function createBlockI18n() {
-  const { preference, storedLocale } = await loadLocalePreference();
-  const locale = resolveLocale(preference, storedLocale);
+  const { preference } = await loadLocalePreference();
+  const locale = resolveLocale(preference);
   const messages = await loadMessages(locale);
   const fallback = locale === DEFAULT_LOCALE ? messages : await loadMessages(DEFAULT_LOCALE);
 
@@ -112,38 +109,15 @@ async function loadLocalePreference() {
   try {
     const stored = (await chrome.storage.local.get(SETTINGS_KEY))[SETTINGS_KEY];
     return {
-      preference: stored?.localePreference ?? 'auto',
-      storedLocale: stored?.locale
+      preference: stored?.localePreference ?? 'auto'
     };
   } catch {
-    return { preference: 'auto', storedLocale: undefined };
+    return { preference: 'auto' };
   }
-}
-
-function resolveLocale(preference, storedLocale) {
-  if (preference && preference !== 'auto' && SUPPORTED_LOCALES.includes(preference)) {
-    return preference;
-  }
-
-  if (storedLocale && SUPPORTED_LOCALES.includes(storedLocale)) {
-    return storedLocale;
-  }
-
-  const uiLanguage = (chrome?.i18n?.getUILanguage?.() ?? navigator.language ?? '').toLowerCase();
-  const normalized = uiLanguage.split('-')[0];
-
-  if (uiLanguage.startsWith('pt') || normalized === 'pt') {
-    return 'pt-BR';
-  }
-  if (uiLanguage.startsWith('es') || normalized === 'es') {
-    return 'es-419';
-  }
-
-  return DEFAULT_LOCALE;
 }
 
 async function loadMessages(locale) {
-  const dir = LOCALE_DIR_MAP[locale] ?? LOCALE_DIR_MAP[DEFAULT_LOCALE];
+  const dir = localeToDir(locale);
   try {
     const response = await fetch(chrome.runtime.getURL(`_locales/${dir}/messages.json`));
     if (!response.ok) {

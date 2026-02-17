@@ -1,122 +1,47 @@
 const vscode = require('vscode');
-const http = require('http');
-const https = require('https');
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const child_process = require('child_process');
+
+// Lazy load these to avoid blocking activation
+let child_process, fetchWithTimeout, parsePort, apiClient;
+let BufferedEventQueue, HeartbeatTracker, registerExtraEventCollectors, createHeartbeatFactory;
+let GitTracker, EditorMetadataTracker, WorkspaceTracker;
+let DebugTracker, TestTracker, TaskTracker, ExtensionTracker, TerminalTracker;
+let FocusTracker, DiagnosticTracker, RefactorTracker, showReports;
+let ComboTracker, ComboToast;
 
 let statusBarItem = null;
 let statusPollTimer = null;
-let trackerInstance = null;
+let trackingController = null;
+let localesRootDir = null;
+let currentComboSuffix = '';
 
-const SUPPORTED_LANGUAGES = ['en-US', 'pt-BR', 'es-419'];
-const DEFAULT_LANGUAGE = 'en-US';
+const SUPPORTED_LOCALES = ['en_US', 'pt_BR', 'es_419'];
+const DEFAULT_LOCALE = 'en_US';
 const LANGUAGE_ALIASES = {
-  'en': 'en-US',
-  'en-us': 'en-US',
-  'pt': 'pt-BR',
-  'pt-br': 'pt-BR',
-  'es': 'es-419',
-  'es-419': 'es-419'
+  'en': 'en_US',
+  'en-us': 'en_US',
+  'pt': 'pt_BR',
+  'pt-br': 'pt_BR',
+  'es': 'es_419',
+  'es-419': 'es_419'
 };
-
-const MESSAGES = {
-  'en-US': {
-    'status.index.text': 'Saul Index: {index}',
-    'status.index.tooltip': 'Index {index} — updated at {time}{port}',
-    'status.portSuffix': ' (port {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon connected',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon unavailable',
-    'status.disabled.text': 'SaulDaemon disabled',
-    'status.disabled.tooltip': 'VS Code integration is disabled',
-    'status.loading.text': 'Checking SaulDaemon...',
-    'status.loading.tooltip': 'Checking SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: pairing key',
-    'prepare.keyPrompt': 'Enter the same key configured in the Chrome extension.',
-    'prepare.portTitle': 'Saul Goodman: daemon port',
-    'prepare.portPrompt': 'Local HTTP port of the daemon.',
-    'prepare.missingDaemon': 'Cannot find saul-daemon/index.cjs. Open the repository root before starting the daemon.',
-    'prepare.started': 'SaulDaemon started in background (port {port}, key {key}). Logs saved at {logFile}.',
-    'prepare.startFailed': 'Failed to start SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configure a pairing key',
-    'prompt.missingKey.prompt': 'Enter the same key configured in the Chrome extension.',
-    'prompt.missingKey.warning': 'Without a pairing key we cannot send active time. Open settings now?',
-    'prompt.missingKey.openSettings': 'Open settings',
-    'test.healthSuccess': 'SaulDaemon responded at {origin}',
-    'test.healthStatus': 'SaulDaemon responded with status {status} at {origin}',
-    'test.healthFailure': 'SaulDaemon did not respond at {origin}: {error}',
-    'log.heartbeatFailed': 'Heartbeat request failed',
-    'log.publishIndexFailed': 'Failed to publish index to SaulDaemon'
-  },
-  'pt-BR': {
-    'status.index.text': 'Índice do Saul: {index}',
-    'status.index.tooltip': 'Índice {index} — atualizado em {time}{port}',
-    'status.portSuffix': ' (porta {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon conectado',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon indisponível',
-    'status.disabled.text': 'SaulDaemon desativado',
-    'status.disabled.tooltip': 'Integração VS Code desativada',
-    'status.loading.text': 'Verificando SaulDaemon...',
-    'status.loading.tooltip': 'Verificando SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: pairing key do SaulDaemon',
-    'prepare.keyPrompt': 'Use a mesma chave configurada na extensão Chrome.',
-    'prepare.portTitle': 'Saul Goodman: porta do SaulDaemon',
-    'prepare.portPrompt': 'Porta HTTP local do daemon.',
-    'prepare.missingDaemon': 'Pasta saul-daemon/index.cjs não encontrada. Abra o repositório raiz antes de iniciar o daemon.',
-    'prepare.started': 'SaulDaemon iniciado em background (porta {port}, key {key}). Logs em {logFile}.',
-    'prepare.startFailed': 'Falha ao iniciar SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configure uma pairing key',
-    'prompt.missingKey.prompt': 'Digite a mesma chave configurada na extensão Chrome.',
-    'prompt.missingKey.warning': 'Sem pairing key não enviaremos tempo. Abrir configurações agora?',
-    'prompt.missingKey.openSettings': 'Abrir configurações',
-    'test.healthSuccess': 'SaulDaemon respondeu em {origin}',
-    'test.healthStatus': 'SaulDaemon respondeu com status {status} em {origin}',
-    'test.healthFailure': 'SaulDaemon não respondeu em {origin}: {error}',
-    'log.heartbeatFailed': 'Falha ao enviar heartbeat',
-    'log.publishIndexFailed': 'Falha ao publicar índice para o SaulDaemon'
-  },
-  'es-419': {
-    'status.index.text': 'Índice de Saul: {index}',
-    'status.index.tooltip': 'Índice {index} — actualizado a las {time}{port}',
-    'status.portSuffix': ' (puerto {port})',
-    'status.on.text': 'SaulDaemon ON{port}',
-    'status.on.tooltip': 'SaulDaemon conectado',
-    'status.off.text': 'SaulDaemon OFF',
-    'status.off.tooltip': 'SaulDaemon no disponible',
-    'status.disabled.text': 'SaulDaemon deshabilitado',
-    'status.disabled.tooltip': 'Integración VS Code desactivada',
-    'status.loading.text': 'Verificando SaulDaemon...',
-    'status.loading.tooltip': 'Verificando SaulDaemon',
-    'prepare.keyTitle': 'Saul Goodman: clave de emparejamiento',
-    'prepare.keyPrompt': 'Usa la misma clave configurada en la extensión de Chrome.',
-    'prepare.portTitle': 'Saul Goodman: puerto del SaulDaemon',
-    'prepare.portPrompt': 'Puerto HTTP local del daemon.',
-    'prepare.missingDaemon': 'No se encontró saul-daemon/index.cjs. Abre la raíz del repositorio antes de iniciar el daemon.',
-    'prepare.started': 'SaulDaemon iniciado en segundo plano (puerto {port}, clave {key}). Logs en {logFile}.',
-    'prepare.startFailed': 'Error al iniciar SaulDaemon: {error}',
-    'prompt.missingKey.title': 'Saul Goodman: configura una clave',
-    'prompt.missingKey.prompt': 'Ingresa la misma clave configurada en la extensión de Chrome.',
-    'prompt.missingKey.warning': 'Sin clave de emparejamiento no enviaremos tiempo. ¿Abrir configuraciones ahora?',
-    'prompt.missingKey.openSettings': 'Abrir configuraciones',
-    'test.healthSuccess': 'SaulDaemon respondió en {origin}',
-    'test.healthStatus': 'SaulDaemon respondió con estado {status} en {origin}',
-    'test.healthFailure': 'SaulDaemon no respondió en {origin}: {error}',
-    'log.heartbeatFailed': 'Error al enviar el heartbeat',
-    'log.publishIndexFailed': 'Error al publicar el índice en SaulDaemon'
-  }
+const CONFIG_LOCALE_MAP = {
+  'en-US': 'en_US',
+  'pt-BR': 'pt_BR',
+  'es-419': 'es_419'
 };
+const messagesCache = new Map();
 
-function getPreferredLanguage() {
+function getPreferredLocale() {
   try {
     const config = vscode.workspace.getConfiguration('saulGoodman');
     const configured = config.get('language', 'auto');
-    if (configured && configured !== 'auto' && SUPPORTED_LANGUAGES.includes(configured)) {
-      return configured;
+    if (configured && configured !== 'auto') {
+      const mapped = CONFIG_LOCALE_MAP[configured];
+      if (mapped && SUPPORTED_LOCALES.includes(mapped)) {
+        return mapped;
+      }
     }
   } catch {
     // ignore configuration errors
@@ -129,15 +54,62 @@ function getPreferredLanguage() {
   if (LANGUAGE_ALIASES[short]) {
     return LANGUAGE_ALIASES[short];
   }
-  return DEFAULT_LANGUAGE;
+  return DEFAULT_LOCALE;
 }
 
 function localize(key, params) {
-  const lang = getPreferredLanguage();
-  const bundle = MESSAGES[lang] ?? MESSAGES[DEFAULT_LANGUAGE];
-  const fallback = MESSAGES[DEFAULT_LANGUAGE];
+  const locale = getPreferredLocale();
+  const bundle = loadMessages(locale) ?? {};
+  const fallback = loadMessages(DEFAULT_LOCALE) ?? {};
   const template = bundle[key] ?? fallback[key] ?? key;
   return formatMessage(template, params);
+}
+
+function loadMessages(locale) {
+  if (messagesCache.has(locale)) {
+    return messagesCache.get(locale);
+  }
+  const rootDir = localesRootDir || path.join(__dirname, '..', '..', '_locales');
+  const filePath = path.join(rootDir, locale, 'messages.json');
+  try {
+    if (!fs.existsSync(filePath)) {
+      console.warn(`[Saul i18n] Messages file not found: ${filePath}`);
+      messagesCache.set(locale, null);
+      return null;
+    }
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    const mapped = {};
+    for (const [key, value] of Object.entries(parsed)) {
+      if (value && typeof value === 'object' && typeof value.message === 'string') {
+        mapped[key] = value.message;
+      }
+    }
+    messagesCache.set(locale, mapped);
+    console.log(`[Saul i18n] Loaded ${Object.keys(mapped).length} keys for locale ${locale}`);
+    return mapped;
+  } catch (error) {
+    console.error(`[Saul i18n] Failed to load ${filePath}:`, error.message);
+    messagesCache.set(locale, null);
+    return null;
+  }
+}
+
+async function warmLocaleCache() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      try {
+        const locale = getPreferredLocale();
+        loadMessages(locale);
+        if (locale !== DEFAULT_LOCALE) {
+          loadMessages(DEFAULT_LOCALE);
+        }
+      } catch (error) {
+        console.error('[Saul i18n] Failed to warm locale cache:', error);
+      }
+      resolve();
+    }, 500);
+  });
 }
 
 function formatMessage(message, params = {}) {
@@ -147,25 +119,149 @@ function formatMessage(message, params = {}) {
   });
 }
 
-function formatTimestamp(value) {
-  const lang = getPreferredLanguage();
-  const date = new Date(typeof value === 'number' ? value : Date.now());
-  if (Number.isNaN(date.getTime())) {
-    return '';
+function getTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function formatDurationSeconds(seconds) {
+  if (!Number.isFinite(seconds)) {
+    return '--';
   }
-  return date.toLocaleString(lang);
+  const total = Math.round(seconds);
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+  return `${minutes}m`;
 }
 
 function activate(context) {
-  trackerInstance = new ActivityTracker();
-  context.subscriptions.push(trackerInstance);
-  context.subscriptions.push(
-    vscode.commands.registerCommand('saulGoodman.startDaemon', () => void prepareDaemonCommand())
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('saulGoodman.testDaemon', () => void testDaemonHealth())
-  );
-  initStatusBar(context);
+  console.log('[Saul] Activation starting...');
+  
+  try {
+    localesRootDir = path.join(context.extensionPath, '_locales');
+    
+    // Lazy load modules asynchronously to avoid blocking activation
+    setTimeout(() => {
+      try {
+        child_process = require('child_process');
+        const netHelpers = require('./net-helpers');
+        fetchWithTimeout = netHelpers.fetchWithTimeout;
+        parsePort = netHelpers.parsePort;
+        apiClient = require('./apiClient');
+        BufferedEventQueue = require('./queue/buffered-event-queue').BufferedEventQueue;
+        HeartbeatTracker = require('./tracking/heartbeat-tracker').HeartbeatTracker;
+        createHeartbeatFactory = require('./tracking/heartbeat-factory').createHeartbeatFactory;
+        registerExtraEventCollectors = require('./tracking/extra-events').registerExtraEventCollectors;
+        
+        GitTracker = require('./tracking/git-tracker').GitTracker;
+        EditorMetadataTracker = require('./tracking/editor-metadata-tracker').EditorMetadataTracker;
+        WorkspaceTracker = require('./tracking/workspace-tracker').WorkspaceTracker;
+        DebugTracker = require('./tracking/debug-tracker').DebugTracker;
+        TestTracker = require('./tracking/test-tracker').TestTracker;
+        TaskTracker = require('./tracking/task-tracker').TaskTracker;
+        ExtensionTracker = require('./tracking/extension-tracker').ExtensionTracker;
+        TerminalTracker = require('./tracking/terminal-tracker').TerminalTracker;
+        FocusTracker = require('./tracking/focus-tracker').FocusTracker;
+        DiagnosticTracker = require('./tracking/diagnostic-tracker').DiagnosticTracker;
+        RefactorTracker = require('./tracking/refactor-tracker').RefactorTracker;
+        showReports = require('./reports/report-view').showReports;
+        ComboTracker = require('./tracking/combo-tracker').ComboTracker;
+        ComboToast = require('./ui/combo-toast').ComboToast;
+        
+        trackingController = new TrackingController(context);
+        trackingController.init().catch(err => {
+          console.error('[Saul] Failed to initialize tracking:', err);
+        });
+      } catch (error) {
+        console.error('[Saul] Failed to load modules:', error);
+      }
+    }, 100);
+    
+    // Warm locale cache
+    void warmLocaleCache();
+
+    // Register commands immediately
+    context.subscriptions.push(
+      vscode.commands.registerCommand('saulGoodman.startDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.startDaemon');
+        if (!child_process) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        void prepareDaemonCommand(context);
+      }),
+      vscode.commands.registerCommand('saulGoodman.testDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.testDaemon');
+        if (!apiClient) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        void testDaemonHealth();
+      }),
+      vscode.commands.registerCommand('saulGoodman.openReports', () => {
+        trackingController?.trackOwnCommand('saulGoodman.openReports');
+        if (!showReports) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        showReports(context, readConfig, getReportI18n);
+      }),
+      vscode.commands.registerCommand('saulGoodman.setupPomodoro', async () => {
+        trackingController?.trackOwnCommand('saulGoodman.setupPomodoro');
+        if (!trackingController) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        await trackingController.setupPomodoroHelper();
+      }),
+      vscode.commands.registerCommand('saulGoodman.resetCombo', async () => {
+        const answer = await vscode.window.showWarningMessage(
+          localize('vscode_combo_reset_confirm'),
+          { modal: true },
+          localize('vscode_combo_reset_yes'),
+          localize('vscode_combo_reset_cancel')
+        );
+
+        if (answer === localize('vscode_combo_reset_yes')) {
+          if (trackingController && trackingController.comboTracker) {
+            await trackingController.comboTracker.resetCombo();
+            await context.globalState.update('sg:combo:state', undefined);
+            vscode.window.showInformationMessage(localize('vscode_combo_reset_success'));
+            console.log('[Saul Combo] Manual reset completed');
+          }
+        }
+      })
+    );
+
+    context.subscriptions.push(
+      vscode.workspace.onDidChangeConfiguration((event) => {
+        if (event.affectsConfiguration('saulGoodman')) {
+          trackingController?.reloadConfig();
+          void updateStatusBar('unknown');
+        }
+      })
+    );
+
+    // BUG-FIX: Re-check daemon health when workspace changes
+    context.subscriptions.push(
+      vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        if (trackingController) {
+          console.log('[Saul] Workspace changed, re-checking daemon health');
+          setTimeout(() => {
+            void trackingController.checkDaemonHealthAndNotify();
+          }, 1000);
+        }
+      })
+    );
+
+    initStatusBar(context);
+    console.log('[Saul] Extension activated (modules loading in background)');
+  } catch (error) {
+    console.error('[Saul] Activation failed:', error);
+  }
 }
 
 function deactivate() {
@@ -173,124 +269,402 @@ function deactivate() {
     clearInterval(statusPollTimer);
     statusPollTimer = null;
   }
-  trackerInstance?.dispose?.();
-  trackerInstance = null;
+  trackingController?.dispose();
+  trackingController = null;
 }
 
-class ActivityTracker {
-  constructor() {
-    this.disposables = [];
-    this.lastActivity = Date.now();
-    this.lastBeat = Date.now();
-    this.windowFocused = true;
-    this.sessionId = null;
-    this.heartbeatTimer = null;
+class TrackingController {
+  constructor(context) {
+    this.context = context;
     this.config = readConfig();
+    this.queue = new BufferedEventQueue({
+      apiClient,
+      storageDir: context.globalStorageUri.fsPath,
+      apiBase: this.config.apiBase,
+      pairingKey: this.config.pairingKey,
+      enabled: this.config.enableTracking
+    });
+    this.buildHeartbeat = createHeartbeatFactory(context, () => this.config);
+    this.resetIdleTimer = this.resetIdleTimer.bind(this);
+    
+    // Inicializar ComboToast
+    this.comboToast = new ComboToast({
+      context,
+      localize
+    });
+    
+    // Inicializar ComboTracker
+    this.comboTracker = new ComboTracker({
+      context,
+      getConfig: () => this.config,
+      queue: this.queue,
+      buildHeartbeat: this.buildHeartbeat,
+      onComboChange: (comboData) => {
+        this.comboToast.show(comboData);
+        void this.updateStatusBarWithCombo(comboData);
+      }
+    });
+    
+    this.heartbeatTracker = new HeartbeatTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.gitTracker = new GitTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
+    this.editorMetadataTracker = new EditorMetadataTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.workspaceTracker = new WorkspaceTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.debugTracker = new DebugTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
+    this.testTracker = new TestTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
+    this.taskTracker = new TaskTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
+    this.extensionTracker = new ExtensionTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.terminalTracker = new TerminalTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
+    this.focusTracker = new FocusTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      comboTracker: this.comboTracker,
+      heartbeatTracker: this.heartbeatTracker
+    });
+    this.diagnosticTracker = new DiagnosticTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    this.refactorTracker = new RefactorTracker({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
+    registerExtraEventCollectors({
+      context,
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat,
+      resetIdleTimer: this.resetIdleTimer
+    });
     this.promptedMissingKey = false;
+  }
 
-    if (!this.config.enabled) {
+  async init() {
+    try {
+      await this.queue.init();
+      this.queue.start();
+      await this.checkDailyReset();
+      
+      // BUG-FIX: Check daemon health on init to prevent silent failures
+      setTimeout(() => {
+        void this.checkDaemonHealthAndNotify();
+      }, 2000); // Wait 2s for modules to load
+      
+      // Start combo tracker
+      await this.comboTracker.start();
+      
+      // Notify user if telemetry is disabled (pomodoro won't work)
+      this.checkPomodoroSetup();
+      
+      // Start core trackers with staggered delays to prevent blocking
+      setTimeout(() => this.safeStart(() => this.gitTracker.start()), 100);
+      setTimeout(() => this.safeStart(() => this.editorMetadataTracker.start()), 200);
+      setTimeout(() => this.safeStart(() => this.workspaceTracker.start()), 300);
+      
+      // Start telemetry trackers with additional delays
+      if (this.config.enableTelemetry) {
+        setTimeout(() => this.safeStart(() => this.debugTracker.start()), 500);
+        setTimeout(() => this.safeStart(() => this.testTracker.start()), 600);
+        setTimeout(() => this.safeStart(() => this.taskTracker.start()), 700);
+        setTimeout(() => this.safeStart(() => this.extensionTracker.start()), 800);
+        setTimeout(() => this.safeStart(() => this.terminalTracker.start()), 900);
+        setTimeout(() => this.safeStart(() => this.focusTracker.start()), 1000);
+        setTimeout(() => this.safeStart(() => this.diagnosticTracker.start()), 1100);
+        setTimeout(() => this.safeStart(() => this.refactorTracker.start()), 1200);
+      }
+      
+      this.applyConfig();
+    } catch (error) {
+      console.error('[Saul] Failed to initialize tracking controller:', error);
+    }
+  }
+
+  async updateStatusBarWithCombo(comboData) {
+    if (!comboData) {
+      currentComboSuffix = '';
+      void pollStatus();
       return;
     }
-
-    if (!this.config.pairingKey) {
-      void this.promptMissingKey();
+    
+    const { level, pomodoros, maxComboToday, totalMinutes } = comboData;
+    
+    if (level === 0) {
+      currentComboSuffix = '';
+    } else {
+      // Emoji dinâmico por nível
+      const emoji = level >= 5 ? '💎' : level >= 4 ? '💥' : level >= 3 ? '⚡' : level >= 2 ? '🔥' : '🎯';
+      
+      // Informações ricas: emoji + streak + tempo + max hoje
+      const minutes = totalMinutes || pomodoros * 25;
+      const maxIndicator = maxComboToday > pomodoros ? ` | ⭐ ${maxComboToday}x` : '';
+      currentComboSuffix = ` | ${emoji} ${pomodoros}x COMBO (${minutes}min)${maxIndicator}`;
     }
+    
+    void pollStatus();
+  }
+  
+  async getComboStats() {
+    return this.comboTracker ? await this.comboTracker.getStats() : null;
+  }
 
-    this.disposables.push(
-      vscode.window.onDidChangeWindowState((state) => this.handleWindowStateChange(state)),
-      vscode.window.onDidChangeActiveTextEditor(() => this.bumpActivity()),
-      vscode.window.onDidChangeTextEditorSelection(() => this.bumpActivity()),
-      vscode.workspace.onDidChangeTextDocument(() => this.bumpActivity()),
-      vscode.workspace.onDidCloseTextDocument(() => this.bumpActivity()),
-      vscode.workspace.onDidChangeConfiguration((event) => {
-        if (event.affectsConfiguration('saulGoodman')) {
-          this.reloadConfig();
-        }
-      })
-    );
+  resetIdleTimer() {
+    if (this.heartbeatTracker && typeof this.heartbeatTracker.resetIdleTimer === 'function') {
+      this.heartbeatTracker.resetIdleTimer();
+    }
+  }
 
-    this.startHeartbeat();
+  checkPomodoroSetup() {
+    if (!this.config.enableTelemetry) {
+      setTimeout(() => {
+        vscode.window.showWarningMessage(
+          localize('vscode_pomodoro_disabled_warning'),
+          localize('vscode_pomodoro_enable_now'),
+          localize('vscode_pomodoro_enable_later')
+        ).then(choice => {
+          if (choice === localize('vscode_pomodoro_enable_now')) {
+            vscode.commands.executeCommand('saulGoodman.setupPomodoro');
+          }
+        });
+      }, 3000);
+    }
+  }
+
+  async setupPomodoroHelper() {
+    const config = vscode.workspace.getConfiguration('saulGoodman');
+    const telemetryEnabled = config.get('enableTelemetry', false);
+    const testModeEnabled = config.get('pomodoroTestMode', false);
+    
+    let message = localize('vscode_pomodoro_setup_title');
+    
+    if (!telemetryEnabled) {
+      message += localize('vscode_pomodoro_telemetry_disabled');
+    } else {
+      message += localize('vscode_pomodoro_telemetry_enabled');
+    }
+    
+    if (testModeEnabled) {
+      message += localize('vscode_pomodoro_testmode_enabled');
+    } else {
+      message += localize('vscode_pomodoro_testmode_disabled');
+    }
+    
+    message += localize('vscode_pomodoro_what_to_do');
+    
+    const choices = [];
+    if (!telemetryEnabled) {
+      choices.push(localize('vscode_pomodoro_enable_telemetry'));
+    }
+    if (!testModeEnabled) {
+      choices.push(localize('vscode_pomodoro_enable_testmode'));
+    }
+    if (!telemetryEnabled || !testModeEnabled) {
+      choices.push(localize('vscode_pomodoro_enable_all'));
+    }
+    choices.push(localize('vscode_pomodoro_open_settings'), localize('vscode_combo_reset_cancel'));
+    
+    const choice = await vscode.window.showInformationMessage(message, { modal: true }, ...choices);
+    
+    if (choice === localize('vscode_pomodoro_enable_telemetry')) {
+      await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_telemetry_activated'));
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === localize('vscode_pomodoro_enable_testmode')) {
+      await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_testmode_activated'));
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === localize('vscode_pomodoro_enable_all')) {
+      await config.update('enableTelemetry', true, vscode.ConfigurationTarget.Global);
+      await config.update('pomodoroTestMode', true, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(localize('vscode_pomodoro_all_activated'));
+      await vscode.commands.executeCommand('workbench.action.reloadWindow');
+    } else if (choice === localize('vscode_pomodoro_open_settings')) {
+      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman');
+    }
+  }
+
+  safeStart(startFn) {
+    try {
+      const result = startFn();
+      if (result && typeof result.catch === 'function') {
+        result.catch(error => {
+          console.error('[Saul] Tracker start error:', error);
+        });
+      }
+    } catch (error) {
+      console.error('[Saul] Tracker start error:', error);
+    }
+  }
+
+  trackOwnCommand(command) {
+    if (this.extensionTracker && this.config.enableTelemetry) {
+      this.extensionTracker.trackCommand(command, 'donotavio.saul-goodman-vscode');
+    }
   }
 
   dispose() {
-    if (this.heartbeatTimer) {
-      clearInterval(this.heartbeatTimer);
-    }
-    this.disposables.forEach((d) => d.dispose());
+    this.queue.stop();
+    this.heartbeatTracker.dispose();
+    this.gitTracker.dispose();
+    this.editorMetadataTracker.dispose();
+    this.workspaceTracker.dispose();
+    this.debugTracker.dispose();
+    this.testTracker.dispose();
+    this.taskTracker.dispose();
+    this.extensionTracker.dispose();
+    this.terminalTracker.dispose();
+    this.focusTracker.dispose();
+    this.diagnosticTracker.dispose();
+    this.refactorTracker.dispose();
+    this.comboTracker.dispose();
+    this.comboToast.dispose();
   }
 
   reloadConfig() {
     this.config = readConfig();
-    if (!this.config.pairingKey) {
-      void this.promptMissingKey();
-    } else {
-      this.promptedMissingKey = false;
+    this.queue.updateConfig({
+      apiBase: this.config.apiBase,
+      pairingKey: this.config.pairingKey,
+      enabled: this.config.enableTracking
+    });
+    this.applyConfig();
+  }
+
+  async checkDailyReset() {
+    const storageKey = 'sg:vscode:lastActiveDate';
+    const today = getTodayKey();
+    try {
+      const stored = this.context.globalState.get(storageKey);
+      if (stored && stored !== today) {
+        console.log(`[Saul] Day changed from ${stored} to ${today}, clearing old data`);
+        await this.queue.clearOldEvents();
+        this.heartbeatTracker.lastSentByEntity.clear();
+      }
+      await this.context.globalState.update(storageKey, today);
+    } catch (error) {
+      console.error('[Saul] Failed to check daily reset:', error);
     }
   }
 
-  handleWindowStateChange(state) {
-    this.windowFocused = state.focused;
-    if (state.focused) {
-      this.bumpActivity(true);
-    }
-  }
-
-  bumpActivity(forceNewSession = false) {
-    this.lastActivity = Date.now();
-    if (!this.sessionId || forceNewSession) {
-      this.sessionId = createSessionId();
-      this.lastBeat = Date.now();
-    }
-  }
-
-  startHeartbeat() {
-    const period = Math.max(5000, Number(this.config.heartbeatIntervalMs ?? 15000));
-    this.heartbeatTimer = setInterval(() => this.sendHeartbeat(), period);
-  }
-
-  async sendHeartbeat() {
-    if (!this.config.enabled) {
-      this.sessionId = null;
-      this.lastBeat = Date.now();
-      return;
-    }
-
-    const now = Date.now();
-    const idleLimit = Math.max(10000, Number(this.config.idleThresholdMs ?? 60000));
-    const sinceActivity = now - this.lastActivity;
-    const shouldReport = this.windowFocused && sinceActivity <= idleLimit;
-    if (!shouldReport) {
-      this.sessionId = null;
-      this.lastBeat = now;
-      return;
-    }
-
-    if (!this.sessionId) {
-      this.sessionId = createSessionId();
-      this.lastBeat = now;
-      return;
-    }
-
-    const durationMs = Math.max(0, now - this.lastBeat);
-    this.lastBeat = now;
-
-    if (durationMs === 0) {
-      return;
-    }
-
-    if (!this.config.pairingKey) {
-      return;
+  async checkDaemonHealthAndNotify() {
+    if (!this.config.pairingKey || !apiClient || !fetchWithTimeout) {
+      return; // Skip if not configured or modules not loaded
     }
 
     try {
-      await postHeartbeat(this.config.apiBase, {
-        key: this.config.pairingKey,
-        sessionId: this.sessionId,
-        durationMs,
-        timestamp: now
-      });
+      const apiBase = normalizeApiBase(this.config.apiBase?.trim(), inferPortFromApiBase(this.config.apiBase));
+      const response = await fetchWithTimeout(getHealthUrl(apiBase), 3000);
+
+      if (response.ok) {
+        console.log('[Saul] Daemon is healthy');
+        return; // Daemon is running fine
+      }
+      throw new Error(`HTTP ${response.status}`);
     } catch (error) {
-      console.warn('[saul-goodman-vscode] ', localize('log.heartbeatFailed'), error);
+      // Daemon not responding - notify user
+      console.warn('[Saul] Daemon not responding:', error.message);
+      
+      const choice = await vscode.window.showWarningMessage(
+        localize('daemon_not_running_warning') || 
+        'Saul Goodman daemon is not running. Time tracking will not work until you start it.',
+        localize('daemon_start_now') || 'Start Daemon Now',
+        localize('daemon_ignore') || 'Ignore'
+      );
+
+      if (choice === (localize('daemon_start_now') || 'Start Daemon Now')) {
+        await vscode.commands.executeCommand('saulGoodman.startDaemon');
+      }
+    }
+  }
+
+  applyConfig() {
+    if (this.config.enableTracking) {
+      this.heartbeatTracker.start();
+      void this.gitTracker.start();
+      this.editorMetadataTracker.start();
+      this.workspaceTracker.start();
+      if (!this.config.pairingKey) {
+        void this.promptMissingKey();
+      }
+    } else {
+      this.heartbeatTracker.dispose();
+      this.gitTracker.dispose();
+      this.editorMetadataTracker.dispose();
+      this.workspaceTracker.dispose();
+    }
+
+    if (this.config.enableTelemetry) {
+      this.debugTracker.start();
+      this.testTracker.start();
+      this.taskTracker.start();
+      this.extensionTracker.start();
+      this.terminalTracker.start();
+      this.focusTracker.start();
+      this.diagnosticTracker.start();
+      this.refactorTracker.start();
+    } else {
+      this.debugTracker.dispose();
+      this.testTracker.dispose();
+      this.taskTracker.dispose();
+      this.extensionTracker.dispose();
+      this.terminalTracker.dispose();
+      this.focusTracker.dispose();
+      this.diagnosticTracker.dispose();
+      this.refactorTracker.dispose();
     }
   }
 
@@ -301,8 +675,8 @@ class ActivityTracker {
     this.promptedMissingKey = true;
     try {
       const value = await vscode.window.showInputBox({
-        title: localize('prompt.missingKey.title'),
-        prompt: localize('prompt.missingKey.prompt'),
+        title: localize('prompt_missing_key_title'),
+        prompt: localize('prompt_missing_key_prompt'),
         placeHolder: 'ex: teste-123',
         ignoreFocusOut: true
       });
@@ -311,11 +685,11 @@ class ActivityTracker {
       if (!key) {
         await vscode.window
           .showWarningMessage(
-            localize('prompt.missingKey.warning'),
-            localize('prompt.missingKey.openSettings')
+            localize('prompt_missing_key_warning'),
+            localize('prompt_missing_key_open_settings')
           )
           .then((choice) => {
-            if (choice === localize('prompt.missingKey.openSettings')) {
+            if (choice === localize('prompt_missing_key_open_settings')) {
               void vscode.commands.executeCommand(
                 'workbench.action.openSettings',
                 'saulGoodman.pairingKey'
@@ -327,28 +701,148 @@ class ActivityTracker {
       const config = vscode.workspace.getConfiguration('saulGoodman');
       await config.update('pairingKey', key, vscode.ConfigurationTarget.Global);
       this.config.pairingKey = key;
+      this.queue.updateConfig({ pairingKey: key });
     } catch {
       this.promptedMissingKey = false;
     }
   }
 }
 
-function readConfig() {
-  const config = vscode.workspace.getConfiguration('saulGoodman');
+function getReportI18n() {
   return {
-    enabled: config.get('enabled', true),
-    apiBase: config.get('apiBase', 'http://127.0.0.1:3123'),
-    pairingKey: config.get('pairingKey', ''),
-    heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
-    idleThresholdMs: config.get('idleThresholdMs', 60000)
+    disabled: localize('vscode_reports_disabled'),
+    disabledDetail: localize('vscode_reports_disabled_detail'),
+    loading: localize('vscode_reports_loading'),
+    error: localize('vscode_reports_error'),
+    synced: localize('vscode_reports_synced'),
+    configure: localize('vscode_reports_configure'),
+    filterProject: localize('vscode_reports_filter_project'),
+    filterLanguage: localize('vscode_reports_filter_language'),
+    filterMachine: localize('vscode_reports_filter_machine'),
+    filterAll: localize('vscode_reports_filter_all'),
+    filterApply: localize('vscode_reports_filter_apply'),
+    filterClear: localize('vscode_reports_filter_clear'),
+    today: localize('vscode_reports_today'),
+    projects: localize('vscode_reports_projects'),
+    languages: localize('vscode_reports_languages'),
+    summaries: localize('vscode_reports_summaries'),
+    noData: localize('vscode_reports_no_data'),
+    noRecords: localize('vscode_reports_no_records'),
+    
+    report_vscode_title: localize('report_vscode_title'),
+    report_vscode_status_loading: localize('report_vscode_status_loading'),
+    report_vscode_logo_caption: localize('report_vscode_logo_caption'),
+    report_vscode_filters_title: localize('report_vscode_filters_title'),
+    report_vscode_index_label: localize('report_vscode_index_label'),
+    report_vscode_kpi_focus: localize('report_vscode_kpi_focus'),
+    report_vscode_kpi_switches: localize('report_vscode_kpi_switches'),
+    report_vscode_kpi_productive: localize('report_vscode_kpi_productive'),
+    report_vscode_kpi_procrast: localize('report_vscode_kpi_procrast'),
+    report_vscode_kpi_inactive: localize('report_vscode_kpi_inactive'),
+    report_vscode_branches: localize('report_vscode_branches'),
+    report_vscode_activity: localize('report_vscode_activity'),
+    report_vscode_activity_tab_switches: localize('report_vscode_activity_tab_switches'),
+    report_vscode_activity_commits: localize('report_vscode_activity_commits'),
+    report_vscode_activity_files_changed: localize('report_vscode_activity_files_changed'),
+    report_vscode_activity_lines_added: localize('report_vscode_activity_lines_added'),
+    report_vscode_activity_lines_deleted: localize('report_vscode_activity_lines_deleted'),
+    report_vscode_hourly_breakdown: localize('report_vscode_hourly_breakdown'),
+    report_vscode_hourly_subtitle: localize('report_vscode_hourly_subtitle'),
+    report_vscode_hourly_empty: localize('report_vscode_hourly_empty'),
+    report_vscode_time_by_project: localize('report_vscode_time_by_project'),
+    report_vscode_time_by_project_subtitle: localize('report_vscode_time_by_project_subtitle'),
+    report_vscode_projects_empty: localize('report_vscode_projects_empty'),
+    report_vscode_commit_activity: localize('report_vscode_commit_activity'),
+    report_vscode_commit_subtitle: localize('report_vscode_commit_subtitle'),
+    report_vscode_commits_empty: localize('report_vscode_commits_empty'),
+    report_vscode_languages_projects: localize('report_vscode_languages_projects'),
+    report_vscode_languages_projects_subtitle: localize('report_vscode_languages_projects_subtitle'),
+    report_vscode_cross_reference_empty: localize('report_vscode_cross_reference_empty'),
+    report_vscode_workspaces: localize('report_vscode_workspaces'),
+    report_vscode_workspaces_empty: localize('report_vscode_workspaces_empty'),
+    report_vscode_workspaces_files: localize('report_vscode_workspaces_files'),
+    report_vscode_editor_info: localize('report_vscode_editor_info'),
+    report_vscode_editor_empty: localize('report_vscode_editor_empty'),
+    report_vscode_editor_label_version: localize('report_vscode_editor_label_version'),
+    report_vscode_editor_label_extensions: localize('report_vscode_editor_label_extensions'),
+    report_vscode_editor_label_theme: localize('report_vscode_editor_label_theme'),
+    report_vscode_editor_label_workspace: localize('report_vscode_editor_label_workspace'),
+    report_vscode_editor_value_unknown: localize('report_vscode_editor_value_unknown'),
+    report_vscode_editor_value_empty: localize('report_vscode_editor_value_empty'),
+    report_vscode_telemetry_title: localize('report_vscode_telemetry_title'),
+    report_vscode_telemetry_subtitle: localize('report_vscode_telemetry_subtitle'),
+    report_vscode_tel_debug_sessions: localize('report_vscode_tel_debug_sessions'),
+    report_vscode_tel_test_rate: localize('report_vscode_tel_test_rate'),
+    report_vscode_tel_builds: localize('report_vscode_tel_builds'),
+    report_vscode_tel_pomodoros: localize('report_vscode_tel_pomodoros'),
+    report_vscode_tel_combo: localize('report_vscode_tel_combo'),
+    report_vscode_combo_timeline: localize('report_vscode_combo_timeline'),
+    report_vscode_combo_timeline_subtitle: localize('report_vscode_combo_timeline_subtitle'),
+    report_vscode_combo_timeline_empty: localize('report_vscode_combo_timeline_empty'),
+    report_vscode_combo_level_label: localize('report_vscode_combo_level_label'),
+    report_vscode_terminal_commands: localize('report_vscode_terminal_commands'),
+    report_vscode_terminal_subtitle: localize('report_vscode_terminal_subtitle'),
+    report_vscode_terminal_empty: localize('report_vscode_terminal_empty'),
+    report_vscode_focus_patterns: localize('report_vscode_focus_patterns'),
+    report_vscode_focus_patterns_subtitle: localize('report_vscode_focus_patterns_subtitle'),
+    report_vscode_focus_patterns_empty: localize('report_vscode_focus_patterns_empty'),
+    report_vscode_focus_intensity: localize('report_vscode_focus_intensity'),
+    report_vscode_top_extensions: localize('report_vscode_top_extensions'),
+    report_vscode_top_extensions_empty: localize('report_vscode_top_extensions_empty'),
+    report_vscode_top_extensions_cmds: localize('report_vscode_top_extensions_cmds'),
+    report_vscode_top_debugged_files: localize('report_vscode_top_debugged_files'),
+    report_vscode_top_debugged_files_empty: localize('report_vscode_top_debugged_files_empty'),
+    report_vscode_top_debugged_files_sessions: localize('report_vscode_top_debugged_files_sessions'),
+    report_vscode_top_debugged_files_bps: localize('report_vscode_top_debugged_files_bps'),
+    report_vscode_top_error_files: localize('report_vscode_top_error_files'),
+    report_vscode_top_error_files_empty: localize('report_vscode_top_error_files_empty'),
+    report_vscode_top_error_files_stats: localize('report_vscode_top_error_files_stats'),
+    report_vscode_refactoring_activity: localize('report_vscode_refactoring_activity'),
+    report_vscode_refactor_files_renamed: localize('report_vscode_refactor_files_renamed'),
+    report_vscode_refactor_edits_applied: localize('report_vscode_refactor_edits_applied'),
+    report_vscode_refactor_code_actions: localize('report_vscode_refactor_code_actions'),
+    report_vscode_refresh_button: localize('report_vscode_refresh_button'),
+    
+    vscode_reports_disabled: localize('vscode_reports_disabled'),
+    vscode_reports_disabled_detail: localize('vscode_reports_disabled_detail'),
+    vscode_reports_filter_project: localize('vscode_reports_filter_project'),
+    vscode_reports_filter_language: localize('vscode_reports_filter_language'),
+    vscode_reports_filter_machine: localize('vscode_reports_filter_machine'),
+    vscode_reports_filter_all: localize('vscode_reports_filter_all'),
+    vscode_reports_filter_apply: localize('vscode_reports_filter_apply'),
+    vscode_reports_filter_clear: localize('vscode_reports_filter_clear'),
+    vscode_reports_today: localize('vscode_reports_today'),
+    vscode_reports_projects: localize('vscode_reports_projects'),
+    vscode_reports_languages: localize('vscode_reports_languages'),
+    vscode_reports_summaries: localize('vscode_reports_summaries')
   };
 }
 
-async function prepareDaemonCommand() {
+function readConfig() {
+  const config = vscode.workspace.getConfiguration('saulGoodman');
+  const enableTracking = config.get('enableTracking', config.get('enabled', true));
+  return {
+    enableTracking,
+    apiBase: config.get('apiBase', 'http://127.0.0.1:3123'),
+    pairingKey: config.get('pairingKey', ''),
+    daemonPath: config.get('daemonPath', ''),
+    hashFilePaths: config.get('hashFilePaths', true),
+    hashProjectNames: config.get('hashProjectNames', false),
+    heartbeatIntervalMs: config.get('heartbeatIntervalMs', 15000),
+    idleThresholdMs: config.get('idleThresholdMs', 60000),
+    enableReportsInVscode: config.get('enableReportsInVscode', true),
+    enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
+    enableTelemetry: config.get('enableTelemetry', false),
+    pomodoroTestMode: config.get('pomodoroTestMode', false),
+    telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60)
+  };
+}
+
+async function prepareDaemonCommand(context) {
   const config = readConfig();
   const keyInput = await vscode.window.showInputBox({
-    title: localize('prepare.keyTitle'),
-    prompt: localize('prepare.keyPrompt'),
+    title: localize('prepare_key_title'),
+    prompt: localize('prepare_key_prompt'),
     value: config.pairingKey?.trim() || '',
     ignoreFocusOut: true
   });
@@ -361,23 +855,89 @@ async function prepareDaemonCommand() {
     .update('pairingKey', key, vscode.ConfigurationTarget.Global);
 
   const portInput = await vscode.window.showInputBox({
-    title: localize('prepare.portTitle'),
-    prompt: localize('prepare.portPrompt'),
+    title: localize('prepare_port_title'),
+    prompt: localize('prepare_port_prompt'),
     value: inferPortFromApiBase(config.apiBase) || '3123',
     ignoreFocusOut: true
   });
   if (portInput === undefined) {
     return;
   }
-  const port = portInput.trim() || '3123';
+  const parsedPort = parsePort(portInput.trim() || '3123');
+  if (!parsedPort) {
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: localize('prepare_port_invalid') }));
+    return;
+  }
+  const port = String(parsedPort);
+  const normalizedApiBase = normalizeApiBase(config.apiBase?.trim(), port);
+  if (normalizedApiBase !== (config.apiBase?.trim() || '')) {
+    await vscode.workspace
+      .getConfiguration('saulGoodman')
+      .update('apiBase', normalizedApiBase, vscode.ConfigurationTarget.Global);
+  }
+  if (await isDaemonHealthy(normalizedApiBase, 1200)) {
+    vscode.window.showInformationMessage(
+      localize('prepare_already_running', { origin: normalizedApiBase })
+    );
+    void updateStatusBar('ok', port);
+    trackingController?.reloadConfig?.();
+    return;
+  }
 
+  // Daemon search strategy (priority order):
+  // 1. Bundled daemon (vscode-extension/daemon/) - DEFAULT
+  // 2. Custom daemonPath config (advanced users)
+  // 3. Workspace saul-daemon/ (dev mode)
+  
+  const configuredPath = config.daemonPath?.trim();
   const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-  const daemonDir = workspace ? path.join(workspace, 'saul-daemon') : null;
-  const daemonIndex = daemonDir ? path.join(daemonDir, 'index.cjs') : null;
-  const daemonExists = Boolean(daemonIndex && fs.existsSync(daemonIndex));
-
-  if (!daemonExists) {
-    vscode.window.showErrorMessage(localize('prepare.missingDaemon'));
+  const extensionPath = context.extensionPath;
+  
+  let daemonDir = null;
+  let daemonIndex = null;
+  let daemonSource = 'unknown';
+  
+  // 1. Try bundled daemon first (DEFAULT)
+  const bundledDaemonDir = path.join(extensionPath, 'daemon');
+  const bundledDaemonIndex = path.join(bundledDaemonDir, 'index.cjs');
+  if (fs.existsSync(bundledDaemonIndex)) {
+    daemonDir = bundledDaemonDir;
+    daemonIndex = bundledDaemonIndex;
+    daemonSource = 'bundled';
+  }
+  
+  // 2. Override with custom path if configured
+  if (configuredPath) {
+    const customDir = path.resolve(configuredPath);
+    const customIndex = path.join(customDir, 'index.cjs');
+    if (fs.existsSync(customIndex)) {
+      daemonDir = customDir;
+      daemonIndex = customIndex;
+      daemonSource = 'custom';
+    }
+  }
+  
+  // 3. Fallback to workspace/saul-daemon (dev mode)
+  if (!daemonIndex && workspace) {
+    const workspaceDir = path.join(workspace, 'saul-daemon');
+    const workspaceIndex = path.join(workspaceDir, 'index.cjs');
+    if (fs.existsSync(workspaceIndex)) {
+      daemonDir = workspaceDir;
+      daemonIndex = workspaceIndex;
+      daemonSource = 'workspace';
+    }
+  }
+  
+  if (!daemonIndex) {
+    const choice = await vscode.window.showErrorMessage(
+      localize('prepare_missing_daemon_improved') || 
+      `Cannot find daemon.\n\nTried:\n- Bundled: ${bundledDaemonIndex}\n- Custom: ${configuredPath || 'not configured'}\n- Workspace: ${workspace ? path.join(workspace, 'saul-daemon') : 'no workspace'}`,
+      localize('prepare_open_settings') || 'Open Settings'
+    );
+    
+    if (choice === (localize('prepare_open_settings') || 'Open Settings')) {
+      await vscode.commands.executeCommand('workbench.action.openSettings', 'saulGoodman.daemonPath');
+    }
     return;
   }
 
@@ -399,6 +959,27 @@ async function prepareDaemonCommand() {
       detached: true,
       stdio: ['ignore', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
     });
+    const spawnError = await new Promise((resolve) => {
+      let settled = false;
+      child.once('error', (error) => {
+        settled = true;
+        resolve(error);
+      });
+      setTimeout(() => {
+        if (!settled) {
+          resolve(null);
+        }
+      }, 250);
+    });
+    if (spawnError) {
+      if (stdoutFd) {
+        fs.closeSync(stdoutFd);
+      }
+      if (stderrFd) {
+        fs.closeSync(stderrFd);
+      }
+      throw spawnError;
+    }
     child.unref();
     if (stdoutFd) {
       fs.closeSync(stdoutFd);
@@ -406,13 +987,29 @@ async function prepareDaemonCommand() {
     if (stderrFd) {
       fs.closeSync(stderrFd);
     }
+    const healthy = await waitForDaemonHealthy(normalizedApiBase, 8, 300);
+    if (!healthy) {
+      vscode.window.showErrorMessage(
+        localize('prepare_start_failed', {
+          error: localize('prepare_start_failed_health', {
+            origin: normalizedApiBase,
+            logFile
+          })
+        })
+      );
+      void updateStatusBar('error');
+      return;
+    }
+    const sourceInfo = daemonSource === 'bundled' ? '(bundled)' : 
+                       daemonSource === 'custom' ? '(custom path)' : 
+                       daemonSource === 'workspace' ? '(workspace)' : '';
     vscode.window.showInformationMessage(
-      localize('prepare.started', { port, key, logFile })
+      `${localize('prepare_started', { port, key, logFile })} ${sourceInfo}`
     );
     void updateStatusBar('ok', port);
-    trackerInstance?.reloadConfig?.();
+    trackingController?.reloadConfig?.();
   } catch (error) {
-    vscode.window.showErrorMessage(localize('prepare.startFailed', { error: error.message }));
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: error.message }));
     void updateStatusBar('error');
   }
 }
@@ -429,45 +1026,70 @@ function inferPortFromApiBase(apiBase) {
   }
 }
 
-function createSessionId() {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
+function normalizeApiBase(apiBase, port) {
+  const fallback = `http://127.0.0.1:${port || 3123}`;
+  try {
+    const url = new URL(apiBase || fallback);
+    if (port) {
+      url.port = String(port);
+    }
+    return url.origin;
+  } catch {
+    return fallback;
+  }
+}
+
+function getHealthUrl(apiBase) {
+  try {
+    return new URL('/health', apiBase).toString();
+  } catch {
+    return 'http://127.0.0.1:3123/health';
+  }
+}
+
+async function isDaemonHealthy(apiBase, timeoutMs) {
+  if (!fetchWithTimeout) {
+    return false;
   }
   try {
-    const bytes = crypto.randomBytes?.(16);
-    if (bytes) {
-      return `session-${Date.now()}-${bytes.toString('hex')}`;
-    }
+    const res = await fetchWithTimeout(getHealthUrl(apiBase), timeoutMs);
+    return Boolean(res?.ok);
   } catch {
-    // ignore and fall back below
+    return false;
   }
-  const fallback = typeof process !== 'undefined' && process.hrtime?.bigint
-    ? process.hrtime.bigint().toString(16)
-    : Date.now().toString(16);
-  return `session-${Date.now()}-${fallback}`;
+}
+
+async function waitForDaemonHealthy(apiBase, attempts, delayMs) {
+  if (!fetchWithTimeout) {
+    return true;
+  }
+  for (let i = 0; i < attempts; i += 1) {
+    if (await isDaemonHealthy(apiBase, 1200)) {
+      return true;
+    }
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+  return false;
 }
 
 async function testDaemonHealth() {
   const config = readConfig();
   const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
-  const url = new URL('/health', apiBase);
+  const url = new URL('/v1/health', apiBase);
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
-    const res = await fetch(url.toString(), { signal: controller.signal });
-    clearTimeout(timer);
+    const res = await fetchWithTimeout(url.toString(), 4000);
     if (res.ok) {
-      vscode.window.showInformationMessage(localize('test.healthSuccess', { origin: url.origin }));
+      vscode.window.showInformationMessage(localize('test_health_success', { origin: url.origin }));
       void updateStatusBar('ok', url.port || '3123');
       return;
     }
     vscode.window.showWarningMessage(
-      localize('test.healthStatus', { status: res.status, origin: url.origin })
+      localize('test_health_status', { status: res.status, origin: url.origin })
     );
     void updateStatusBar('error');
   } catch (error) {
     vscode.window.showWarningMessage(
-      localize('test.healthFailure', { origin: url.origin, error: error.message })
+      localize('test_health_failure', { origin: url.origin, error: error.message })
     );
     void updateStatusBar('error');
   }
@@ -476,207 +1098,106 @@ async function testDaemonHealth() {
 function initStatusBar(context) {
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   statusBarItem.command = 'saulGoodman.testDaemon';
-  statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
-  statusBarItem.tooltip = localize('status.loading.tooltip');
+  statusBarItem.text = `$(loading~spin) ${localize('status_loading_text')}`;
+  statusBarItem.tooltip = localize('status_loading_tooltip');
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
   void updateStatusBar('unknown');
   startStatusPolling();
 }
 
-async function updateStatusBar(state, port, stats) {
+async function updateStatusBar(state, port, stats, comboSuffix) {
   if (!statusBarItem) {
     return;
   }
-  const portSuffix = port ? localize('status.portSuffix', { port }) : '';
+  const portSuffix = port ? localize('status_port_suffix', { port }) : '';
+  const combo = comboSuffix || '';
+  
   if (state === 'ok') {
-    if (stats && typeof stats.index === 'number') {
-      const roundedIndex = Math.round(stats.index);
-      const tooltipPort = portSuffix;
-      statusBarItem.text = `$(law) ${localize('status.index.text', { index: roundedIndex })}`;
-      statusBarItem.tooltip = localize('status.index.tooltip', {
-        index: stats.index.toFixed(1),
-        time: formatTimestamp(stats.updatedAt),
-        port: tooltipPort
+    if (stats && typeof stats.totalSeconds === 'number') {
+      const timeLabel = formatDurationSeconds(stats.totalSeconds);
+      const indexLabel = typeof stats.index === 'number' ? ` | ${stats.index}%` : '';
+      statusBarItem.text = `$(law) ${localize('status_today_text', { time: timeLabel })}${indexLabel}${combo}`;
+      statusBarItem.tooltip = localize('status_today_tooltip', {
+        time: timeLabel,
+        port: portSuffix
       });
     } else {
-      statusBarItem.text = `$(debug-start) ${localize('status.on.text', { port: portSuffix })}`;
-      statusBarItem.tooltip = localize('status.on.tooltip');
+      statusBarItem.text = `$(debug-start) ${localize('status_on_text', { port: portSuffix })}${combo}`;
+      statusBarItem.tooltip = localize('status_on_tooltip');
     }
     statusBarItem.color = undefined;
   } else if (state === 'error') {
-    statusBarItem.text = `$(error) ${localize('status.off.text')}`;
+    statusBarItem.text = `$(error) ${localize('status_off_text')}`;
     statusBarItem.color = new vscode.ThemeColor('errorForeground');
-    statusBarItem.tooltip = localize('status.off.tooltip');
+    statusBarItem.tooltip = localize('status_off_tooltip');
   } else if (state === 'disabled') {
-    statusBarItem.text = `$(circle-slash) ${localize('status.disabled.text')}`;
+    statusBarItem.text = `$(circle-slash) ${localize('status_disabled_text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = localize('status.disabled.tooltip');
+    statusBarItem.tooltip = localize('status_disabled_tooltip');
   } else {
-    statusBarItem.text = `$(loading~spin) ${localize('status.loading.text')}`;
+    statusBarItem.text = `$(loading~spin) ${localize('status_loading_text')}`;
     statusBarItem.color = undefined;
-    statusBarItem.tooltip = localize('status.loading.tooltip');
+    statusBarItem.tooltip = localize('status_loading_tooltip');
+  }
+}
+
+async function pollStatus() {
+  const config = readConfig();
+  if (!config.enableTracking) {
+    await updateStatusBar('disabled');
+    return;
+  }
+  const key = config.pairingKey?.trim();
+  if (!key) {
+    await updateStatusBar('error');
+    return;
+  }
+  const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
+  let endpoint;
+  try {
+    endpoint = new URL('/v1/health', baseUrl);
+  } catch {
+    await updateStatusBar('error');
+    return;
+  }
+
+  try {
+    const healthRes = await apiClient.getHealth(baseUrl);
+    if (!healthRes.ok) {
+      throw new Error(`HTTP ${healthRes.status}`);
+    }
+    const today = getTodayKey();
+    const [summary, indexData] = await Promise.all([
+      apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
+      apiClient.getIndex(baseUrl, key, today).catch(() => null)
+    ]);
+    const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
+    const index = indexData?.index ?? null;
+    
+    // Obter combo atual do tracker
+    if (!currentComboSuffix && trackingController) {
+      const comboStats = await trackingController.getComboStats();
+      if (comboStats && comboStats.currentLevel > 0) {
+        currentComboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboStats.currentLevel })}`;
+      }
+    }
+    
+    await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
+      totalSeconds,
+      index
+    }, currentComboSuffix);
+  } catch {
+    await updateStatusBar('error');
   }
 }
 
 function startStatusPolling() {
-  const run = async () => {
-    const config = readConfig();
-    if (!config.enabled) {
-      await updateStatusBar('disabled');
-      return;
-    }
-    const key = config.pairingKey?.trim();
-    if (!key) {
-      await updateStatusBar('error');
-      return;
-    }
-    const baseUrl = (config.apiBase?.trim() || 'http://127.0.0.1:3123').trim();
-    let endpoint;
-    try {
-      endpoint = new URL('/v1/tracking/index', baseUrl);
-    } catch {
-      await updateStatusBar('error');
-      return;
-    }
-    endpoint.searchParams.set('key', key);
-    endpoint.searchParams.set('date', new Date().toISOString().slice(0, 10));
-
-    try {
-      const res = await fetchWithTimeout(endpoint.toString(), 4000);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const body = await res.json();
-      await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), body);
-    } catch (error) {
-      await updateStatusBar('error');
-    }
-  };
-
   if (statusPollTimer) {
     clearInterval(statusPollTimer);
   }
-  void run();
-  statusPollTimer = setInterval(run, 60000);
-}
-
-function fetchWithTimeout(url, timeout = 4000, options = {}) {
-  if (typeof fetch === 'function') {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeout);
-    const opts = { ...options, signal: controller.signal };
-    return fetch(url, opts)
-      .finally(() => clearTimeout(timer));
-  }
-
-  return new Promise((resolve, reject) => {
-    try {
-      const parsed = new URL(url);
-      const isHttps = parsed.protocol === 'https:';
-      const client = isHttps ? https : http;
-      const req = client.request(
-        {
-          method: options.method || 'GET',
-          hostname: parsed.hostname,
-          port: parsed.port || (isHttps ? 443 : 80),
-          path: parsed.pathname + parsed.search,
-          headers: options.headers || {},
-          timeout
-        },
-        (res) => {
-          const chunks = [];
-          res.on('data', (chunk) => chunks.push(chunk));
-          res.on('end', () => {
-            const body = Buffer.concat(chunks).toString('utf8');
-            const result = {
-              ok: res.statusCode >= 200 && res.statusCode < 300,
-              status: res.statusCode ?? 0,
-              json: async () => {
-                if (!body) {
-                  return {};
-                }
-                try {
-                  return JSON.parse(body);
-                } catch (error) {
-                  throw error;
-                }
-              },
-              text: async () => body
-            };
-            resolve(result);
-          });
-        }
-      );
-      req.on('error', reject);
-      req.on('timeout', () => {
-        req.destroy(new Error('Request timed out'));
-      });
-      if (options.body) {
-        req.write(options.body);
-      }
-      req.end();
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-async function postHeartbeat(apiBase, payload) {
-  const url = new URL('/v1/tracking/vscode/heartbeat', apiBase);
-  const body = JSON.stringify(payload);
-
-  if (typeof fetch === 'function') {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 5000);
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body,
-        signal: controller.signal
-      });
-      clearTimeout(timer);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      return;
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-
-  return postWithNodeHttp(url, body);
-}
-
-function postWithNodeHttp(url, body) {
-  return new Promise((resolve, reject) => {
-    const isHttps = url.protocol === 'https:';
-    const client = isHttps ? https : http;
-    const req = client.request(
-      {
-        method: 'POST',
-        hostname: url.hostname,
-        port: url.port || (isHttps ? 443 : 80),
-        path: url.pathname + url.search,
-        headers: {
-          'content-type': 'application/json',
-          'content-length': Buffer.byteLength(body)
-        },
-        timeout: 5000
-      },
-      (res) => {
-        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          resolve();
-        } else {
-          reject(new Error(`HTTP ${res.statusCode ?? 'ERR'}`));
-        }
-      }
-    );
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
+  void pollStatus();
+  statusPollTimer = setInterval(pollStatus, 60000);
 }
 
 module.exports = {

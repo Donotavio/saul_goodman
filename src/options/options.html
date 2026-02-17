@@ -21,7 +21,12 @@
         </p>
       </div>
       <div class="logo-frame">
-        <img src="../img/logotipo_saul_goodman.png" alt="Logotipo Saul Goodman" class="logo" />
+        <img
+          src="../img/logotipo_saul_goodman.png"
+          alt="Logotipo Saul Goodman"
+          data-i18n-alt="options_logo_alt"
+          class="logo"
+        />
         <span class="logo-caption" data-i18n="options_digital_branch">Filial digital</span>
       </div>
     </header>
@@ -34,7 +39,7 @@
               <legend data-i18n="options_language_label">Idioma da interface</legend>
               <label class="field locale-select" for="localeSelect">
                 <span data-i18n="options_language_label">Idioma da interface</span>
-                <select id="localeSelect" aria-describedby="localeHint">
+                <select id="localeSelect" aria-describedby="localeHint" dir="auto">
                   <option value="auto" data-i18n="options_language_auto">Automático (navegador)</option>
                   <option value="pt-BR" data-i18n="options_language_pt">Português (Brasil)</option>
                   <option value="en-US" data-i18n="options_language_en">English (US)</option>
@@ -64,7 +69,7 @@
                   inputmode="decimal"
                   autocomplete="off"
                 />
-                <small id="procrastinationWeightHint" class="hint">
+                <small id="procrastinationWeightHint" class="hint" data-i18n="options_weight_hint">
                   Use números entre 0 e 1 para calibrar a influência no índice.
                 </small>
               </label>
@@ -82,7 +87,7 @@
                   inputmode="decimal"
                   autocomplete="off"
                 />
-                <small id="tabSwitchWeightHint" class="hint">
+                <small id="tabSwitchWeightHint" class="hint" data-i18n="options_weight_hint">
                   Use números entre 0 e 1 para calibrar a influência no índice.
                 </small>
               </label>
@@ -100,7 +105,7 @@
                   inputmode="decimal"
                   autocomplete="off"
                 />
-                <small id="inactivityWeightHint" class="hint">
+                <small id="inactivityWeightHint" class="hint" data-i18n="options_weight_hint">
                   Use números entre 0 e 1 para calibrar a influência no índice.
                 </small>
               </label>
@@ -120,7 +125,7 @@
                   inputmode="numeric"
                   autocomplete="off"
                 />
-                <small id="inactivityThresholdHint" class="hint">
+                <small id="inactivityThresholdHint" class="hint" data-i18n="options_inactivity_threshold_hint">
                   Entre 10s e 10min; impacta o cálculo de inatividade.
                 </small>
               </label>
@@ -175,6 +180,47 @@
                 />
                 <small id="criticalSoundHint" class="hint" data-i18n="options_critical_sound_hint">
                   Quando ativo, a sirene toca sempre que o alerta crítico dispara.
+                </small>
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="panel auto-classification-panel">
+            <h2 data-i18n="options_auto_classification_title">Classificação automática</h2>
+            <p class="hint" data-i18n="options_auto_classification_hint">
+              Tudo roda localmente. Coletamos apenas título, metatags (description/keywords), og:type e sinais de vídeo/scroll infinito para sugerir rótulo.
+            </p>
+            <fieldset class="field-group">
+              <legend data-i18n="options_auto_classification_title">Classificação automática</legend>
+              <label class="toggle field" for="enableAutoClassification">
+                <span data-i18n="options_auto_classification_toggle">Ativar sugestões automáticas</span>
+                <input type="checkbox" id="enableAutoClassification" />
+                <small class="hint" data-i18n="options_auto_classification_toggle_hint">
+                  Opcional: gera uma sugestão quando um domínio não está na sua lista.
+                </small>
+              </label>
+              <label class="toggle field" for="enableAISuggestions">
+                <span data-i18n="options_auto_classification_ai">Sugestões por IA (em breve)</span>
+                <input type="checkbox" id="enableAISuggestions" disabled />
+                <small class="hint" data-i18n="options_auto_classification_ai_hint">
+                  Reservado para futura IA. Mantemos desligado.
+                </small>
+              </label>
+              <label class="field" for="suggestionCooldownHours">
+                <span data-i18n="options_auto_classification_cooldown">
+                  Não sugerir novamente por (horas)
+                </span>
+                <input
+                  type="number"
+                  id="suggestionCooldownHours"
+                  min="1"
+                  max="168"
+                  step="1"
+                  aria-describedby="suggestionCooldownHint"
+                  inputmode="numeric"
+                />
+                <small id="suggestionCooldownHint" class="hint" data-i18n="options_auto_classification_cooldown_hint">
+                  Respeita o intervalo antes de lembrar do mesmo domínio. Padrão: 24h.
                 </small>
               </label>
             </fieldset>
@@ -234,7 +280,7 @@
             </div>
           </div>
 
-          <div class="panel vscode-panel">
+          <div class="panel vscode-panel" id="vscode">
             <div class="panel-section field-group">
               <h2 data-i18n="options_vscode_heading">Integração com VS Code</h2>
               <label class="toggle field" for="vscodeIntegrationEnabled">
@@ -308,6 +354,18 @@
       </section>
 
       <section class="panel two-columns">
+        <div class="domain-filter-row field">
+          <span data-i18n="options_domain_filter_label">Filtrar domínios</span>
+          <input
+            type="text"
+            id="domainFilterInput"
+            placeholder="Buscar domínio..."
+            data-i18n-placeholder="options_domain_filter_placeholder"
+          />
+          <small class="hint" data-i18n="options_domain_filter_hint">
+            Digite parte do domínio para localizar nas listas abaixo.
+          </small>
+        </div>
         <div class="domain-panel">
           <div class="domain-panel-header field-group">
             <h2 data-i18n="options_productive_heading">Domínios produtivos</h2>
@@ -337,13 +395,24 @@
               <span data-i18n="options_procrastination_block_toggle_label">
                 Bloquear acesso aos domínios desta lista
               </span>
-              <input type="checkbox" id="blockProcrastination" aria-describedby="blockProcrastinationHint" />
+              <input
+                type="checkbox"
+                id="blockProcrastination"
+                aria-describedby="blockProcrastinationHint blockProcrastinationLimitHint"
+              />
               <small
                 id="blockProcrastinationHint"
                 class="hint"
                 data-i18n="options_procrastination_block_toggle_hint"
               >
                 Ativando, Saul bloqueia a navegação para estes domínios via regras locais do Chrome.
+              </small>
+              <small
+                id="blockProcrastinationLimitHint"
+                class="hint"
+                data-i18n="options_procrastination_block_limit_hint"
+              >
+                Limite técnico: até 500 domínios podem ser bloqueados por vez.
               </small>
             </label>
             <form id="procrastinationForm" class="domain-form">
@@ -357,6 +426,40 @@
             </form>
           </div>
           <ul id="procrastinationList" class="domain-list scrollable"></ul>
+        </div>
+
+        <div class="domain-panel recommendations-panel">
+          <div class="domain-panel-header field-group">
+            <h2 data-i18n="options_recommendations_heading">Domínios recomendados</h2>
+            <p class="hint" data-i18n="options_recommendations_hint">
+              Sugestões rápidas para iniciar suas listas. Ajuste conforme seu fluxo e tentações.
+            </p>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_productive_heading">
+              Produtividade sugerida
+            </h3>
+            <ul id="recommendationsProductiveList" class="recommendation-list"></ul>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_procrastination_heading">
+              Procrastinação provável
+            </h3>
+            <ul id="recommendationsProcrastinationList" class="recommendation-list"></ul>
+          </div>
+          <div class="recommendations-block">
+            <h3 class="recommendations-title" data-i18n="options_recommendations_neutral_heading">
+              Revisar manualmente
+            </h3>
+            <ul id="recommendationsNeutralList" class="recommendation-list"></ul>
+          </div>
+          <p
+            id="recommendationsEmpty"
+            class="hint recommendations-empty"
+            data-i18n="options_recommendations_empty"
+          >
+            Nenhuma recomendação no momento.
+          </p>
         </div>
       </section>
 

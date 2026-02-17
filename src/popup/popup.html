@@ -25,6 +25,89 @@
     </header>
 
     <main>
+      <section id="suggestionCard" class="suggestion-card hidden" aria-live="polite">
+        <div class="suggestion-header">
+          <div class="suggestion-title-wrapper">
+            <p id="suggestionTitle" data-i18n="popup_suggestion_title">Sugestão automática</p>
+            <p id="suggestionDomain" class="suggestion-domain" aria-live="polite"></p>
+            <p id="suggestionClassification" class="suggestion-classification" aria-live="polite"></p>
+          </div>
+          <small id="suggestionConfidence" data-i18n="popup_suggestion_confidence"></small>
+        </div>
+        <ul id="suggestionReasons"></ul>
+        <div class="suggestion-actions">
+          <button id="suggestionProductiveButton" class="primary" data-i18n="popup_suggestion_add_productive">
+            Adicionar como produtivo
+          </button>
+          <button
+            id="suggestionProcrastinationButton"
+            class="danger"
+            data-i18n="popup_suggestion_add_procrastination"
+          >
+            Adicionar como procrastinador
+          </button>
+          <button id="suggestionIgnoreButton" class="ghost" data-i18n="popup_suggestion_ignore">
+            Ignorar hoje
+          </button>
+          <button id="suggestionManualButton" class="ghost" data-i18n="popup_suggestion_manual">
+            Classificar manualmente
+          </button>
+          <div
+            class="suggestion-nav suggestion-nav-footer"
+            aria-label="Navegar recomendações"
+            data-i18n-aria-label="popup_suggestion_nav_aria"
+          >
+            <button
+              id="suggestionPrevButton"
+              class="suggestion-nav-btn"
+              aria-label="Anterior recomendação"
+              data-i18n-aria-label="popup_suggestion_prev_aria"
+              type="button"
+            >
+              ‹
+            </button>
+            <span id="suggestionCounter" class="suggestion-counter"></span>
+            <button
+              id="suggestionNextButton"
+              class="suggestion-nav-btn"
+              aria-label="Próxima recomendação"
+              data-i18n-aria-label="popup_suggestion_next_aria"
+              type="button"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="mlCard" class="ml-card" aria-live="polite">
+        <div class="ml-header">
+          <div>
+            <h2 data-i18n="popup_ml_title">Modelo ML</h2>
+            <p class="ml-subtitle" data-i18n="popup_ml_subtitle">Aprendizado local</p>
+          </div>
+          <span id="mlStatusBadge" class="ml-status">--</span>
+        </div>
+        <div class="ml-grid">
+          <article>
+            <span class="ml-label" data-i18n="popup_ml_updates_label">Atualizações</span>
+            <strong id="mlUpdates">--</strong>
+          </article>
+          <article>
+            <span class="ml-label" data-i18n="popup_ml_features_label">Features ativas</span>
+            <strong id="mlActiveFeatures">--</strong>
+          </article>
+          <article>
+            <span class="ml-label" data-i18n="popup_ml_last_updated_label">Último treino</span>
+            <strong id="mlLastUpdated">--</strong>
+          </article>
+          <article>
+            <span class="ml-label" data-i18n="popup_ml_bias_label">Bias</span>
+            <strong id="mlBias">--</strong>
+          </article>
+        </div>
+      </section>
+
       <section class="fairness-card">
         <div class="fairness-header">
           <div>
@@ -77,7 +160,7 @@
             aria-label="Explicação"
             data-i18n-aria-label="popup_tooltip_aria"
             data-i18n-tooltip="popup_fairness_note"
-            data-tooltip="Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contextos: Trabalho mantém 100%, Pessoal neutraliza tudo, Lazer conta 30% do foco e ignora vilões, Estudos reduz as penalidades pela metade, Folga e Férias zeram o dia sem precisar de feriado."
+            data-tooltip="Saul só calcula quando faz sentido. Ignorar hoje zera o índice e pausa alertas. Contextos: Trabalho mantém 100%. Pessoal neutraliza tudo. Lazer aplica 55% do produtivo e 10% do procrastinatório. Estudos aplica 75% do produtivo e 50% do procrastinatório. Folga aplica 85% do produtivo e 15% do procrastinatório. Férias aplica 95% do produtivo e 20% do procrastinatório."
           >
             i
           </span>

@@ -4,7 +4,6 @@ title_en: "Focus? Only if it's on Netflix!"
 title_es: "¿Foco? ¡Solo si es en Netflix!"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["foco", "procrastinação", "dev", "performance", "iOS"]
 source_title: "iOS Developer"
 source_url: "https://remotive.com/remote-jobs/software-development/ios-developer-1956455"

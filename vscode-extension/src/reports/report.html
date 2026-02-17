@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; connect-src http://127.0.0.1:* http://localhost:*; img-src {cspSource} https: http: data:; style-src {cspSource} 'unsafe-inline'; script-src {cspSource} 'nonce-{nonce}';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{styleUri}" />
+    <title>{i18n_report_vscode_title}</title>
+  </head>
+  <body>
+    <main class="report">
+      <header class="report__header">
+        <div class="header__content">
+          <h1>{i18n_report_vscode_title}</h1>
+          <p id="reportStatus" class="report__status">{i18n_report_vscode_status_loading}</p>
+        </div>
+        <div class="header__logo">
+          <img src="{logoUri}" alt="Saul Goodman" class="logo" />
+          <span class="logo-caption">{i18n_report_vscode_logo_caption}</span>
+        </div>
+      </header>
+
+      <section id="reportsDisabled" class="card card--warning hidden">
+        <h2 id="disabledTitle">{i18n_vscode_reports_disabled}</h2>
+        <p id="disabledDetail">{i18n_vscode_reports_disabled_detail}</p>
+      </section>
+
+      <section id="reportContent" class="hidden">
+        <section class="card">
+          <h2 id="filtersTitle">{i18n_report_vscode_filters_title}</h2>
+          <div class="filters">
+            <label>
+              <span id="labelProject">{i18n_vscode_reports_filter_project}</span>
+              <select id="filterProject">
+                <option value="">{i18n_vscode_reports_filter_all}</option>
+              </select>
+            </label>
+            <label>
+              <span id="labelLanguage">{i18n_vscode_reports_filter_language}</span>
+              <select id="filterLanguage">
+                <option value="">{i18n_vscode_reports_filter_all}</option>
+              </select>
+            </label>
+            <label>
+              <span id="labelMachine">{i18n_vscode_reports_filter_machine}</span>
+              <select id="filterMachine">
+                <option value="">{i18n_vscode_reports_filter_all}</option>
+              </select>
+            </label>
+            <div class="filters__actions">
+              <button id="applyFilters">{i18n_vscode_reports_filter_apply}</button>
+              <button id="resetFilters" class="ghost">{i18n_vscode_reports_filter_clear}</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-grid">
+          <div class="card today-card">
+            <div class="today-content">
+              <div class="today-left">
+                <h3 id="todayTitle">{i18n_vscode_reports_today}</h3>
+                <div class="stat">
+                  <span class="stat-value" id="statToday">--</span>
+                </div>
+              </div>
+              <div class="index-badge">
+                <span class="index-label">{i18n_report_vscode_index_label}</span>
+                <span class="index-value" id="indexValue">--</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">{i18n_report_vscode_kpi_focus}</span>
+            <span class="kpi-value" id="kpiFocus">--</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">{i18n_report_vscode_kpi_switches}</span>
+            <span class="kpi-value" id="kpiSwitches">--</span>
+          </div>
+          <div class="kpi-card kpi-card--productive">
+            <span class="kpi-label">{i18n_report_vscode_kpi_productive}</span>
+            <span class="kpi-value" id="kpiProductive">--</span>
+          </div>
+          <div class="kpi-card kpi-card--procrast">
+            <span class="kpi-label">{i18n_report_vscode_kpi_procrast}</span>
+            <span class="kpi-value" id="kpiProcrast">--</span>
+          </div>
+          <div class="kpi-card kpi-card--inactive">
+            <span class="kpi-label">{i18n_report_vscode_kpi_inactive}</span>
+            <span class="kpi-value" id="kpiInactive">--</span>
+          </div>
+        </section>
+
+        <section class="grid-two">
+          <div class="card">
+            <h3 id="projectsTitle">{i18n_vscode_reports_projects}</h3>
+            <ul id="projectsList" class="data-list"></ul>
+          </div>
+          <div class="card">
+            <h3 id="languagesTitle">{i18n_vscode_reports_languages}</h3>
+            <ul id="languagesList" class="data-list"></ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3 id="summariesTitle">{i18n_vscode_reports_summaries}</h3>
+          <ul id="summariesList" class="summary-list"></ul>
+        </section>
+
+        <section class="grid-two">
+          <div class="card">
+            <h3>{i18n_report_vscode_branches}</h3>
+            <ul id="branchesList" class="data-list"></ul>
+          </div>
+          <div class="card">
+            <h3>{i18n_report_vscode_activity}</h3>
+            <ul id="activityList" class="data-list"></ul>
+          </div>
+        </section>
+
+        <section class="card chart-section">
+          <h3>{i18n_report_vscode_hourly_breakdown}</h3>
+          <p class="chart-subtitle">{i18n_report_vscode_hourly_subtitle}</p>
+          <div class="chart-container">
+            <canvas id="hourlyChart" height="200"></canvas>
+            <p id="hourlyEmpty" class="empty-state hidden">{i18n_report_vscode_hourly_empty}</p>
+          </div>
+        </section>
+
+        <section class="grid-two charts-row">
+          <div class="card chart-section">
+            <h3>{i18n_report_vscode_time_by_project}</h3>
+            <p class="chart-subtitle">{i18n_report_vscode_time_by_project_subtitle}</p>
+            <div class="chart-container chart-container--small">
+              <canvas id="projectsChart"></canvas>
+              <p id="projectsEmpty" class="empty-state hidden">{i18n_report_vscode_projects_empty}</p>
+            </div>
+          </div>
+          <div class="card chart-section">
+            <h3>{i18n_report_vscode_commit_activity}</h3>
+            <p class="chart-subtitle">{i18n_report_vscode_commit_subtitle}</p>
+            <div class="chart-container chart-container--small">
+              <canvas id="commitsChart"></canvas>
+              <p id="commitsEmpty" class="empty-state hidden">{i18n_report_vscode_commits_empty}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card chart-section">
+          <h3>{i18n_report_vscode_languages_projects}</h3>
+          <p class="chart-subtitle">{i18n_report_vscode_languages_projects_subtitle}</p>
+          <div class="chart-container chart-container--medium">
+            <canvas id="crossReferenceChart"></canvas>
+            <p id="crossReferenceEmpty" class="empty-state hidden">{i18n_report_vscode_cross_reference_empty}</p>
+          </div>
+        </section>
+
+        <section class="grid-two">
+          <div class="card">
+            <h3 id="workspacesTitle">{i18n_report_vscode_workspaces}</h3>
+            <ul id="workspacesList" class="data-list"></ul>
+          </div>
+          <div class="card">
+            <h3 id="editorInfoTitle">{i18n_report_vscode_editor_info}</h3>
+            <div id="editorInfo"></div>
+          </div>
+        </section>
+
+        <section id="telemetrySection" class="telemetry-section hidden">
+          <div class="section-header">
+            <h2>{i18n_report_vscode_telemetry_title}</h2>
+            <p class="section-subtitle">{i18n_report_vscode_telemetry_subtitle}</p>
+          </div>
+
+          <section class="telemetry-kpis">
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon kpi-icon--debug" data-label="DBG" aria-hidden="true"></span>
+              <span class="kpi-label">{i18n_report_vscode_tel_debug_sessions}</span>
+              <span class="kpi-value" id="telDebugSessions">--</span>
+              <span class="kpi-detail" id="telDebugTime">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon kpi-icon--tests" data-label="TST" aria-hidden="true"></span>
+              <span class="kpi-label">{i18n_report_vscode_tel_test_rate}</span>
+              <span class="kpi-value" id="telTestSuccess">--</span>
+              <span class="kpi-detail" id="telTestRuns">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon kpi-icon--builds" data-label="BLD" aria-hidden="true"></span>
+              <span class="kpi-label">{i18n_report_vscode_tel_builds}</span>
+              <span class="kpi-value" id="telBuilds">--</span>
+              <span class="kpi-detail" id="telBuildTime">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry">
+              <span class="kpi-icon kpi-icon--pomodoro" data-label="POM" aria-hidden="true"></span>
+              <span class="kpi-label">{i18n_report_vscode_tel_pomodoros}</span>
+              <span class="kpi-value" id="telPomodoros">--</span>
+              <span class="kpi-detail" id="telFocusTime">--</span>
+            </div>
+            <div class="kpi-card kpi-card--telemetry kpi-card--combo">
+              <span class="kpi-icon kpi-icon--combo" data-label="CMB" aria-hidden="true"></span>
+              <span class="kpi-label">{i18n_report_vscode_tel_combo}</span>
+              <span class="kpi-value" id="telMaxCombo">--</span>
+              <span class="kpi-detail" id="telComboMinutes">--</span>
+            </div>
+          </section>
+
+          <section class="grid-two charts-row">
+            <div class="card chart-section">
+              <h3>{i18n_report_vscode_terminal_commands}</h3>
+              <p class="chart-subtitle">{i18n_report_vscode_terminal_subtitle}</p>
+              <div class="chart-container chart-container--small">
+                <canvas id="terminalCommandsChart"></canvas>
+                <p id="terminalEmpty" class="empty-state hidden">{i18n_report_vscode_terminal_empty}</p>
+              </div>
+            </div>
+            <div class="card chart-section">
+              <h3>{i18n_report_vscode_focus_patterns}</h3>
+              <p class="chart-subtitle">{i18n_report_vscode_focus_patterns_subtitle}</p>
+              <div class="chart-container chart-container--small">
+                <canvas id="focusPatternsChart"></canvas>
+                <p id="focusEmpty" class="empty-state hidden">{i18n_report_vscode_focus_patterns_empty}</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid-one">
+            <div class="card chart-section">
+              <h3>{i18n_report_vscode_combo_timeline}</h3>
+              <p class="chart-subtitle">{i18n_report_vscode_combo_timeline_subtitle}</p>
+              <div class="chart-container">
+                <canvas id="comboTimelineChart"></canvas>
+                <p id="comboTimelineEmpty" class="empty-state hidden">{i18n_report_vscode_combo_timeline_empty}</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid-two">
+            <div class="card">
+              <h3>
+                <span class="card-heading-icon card-heading-icon--extensions" data-label="EXT" aria-hidden="true"></span>
+                {i18n_report_vscode_top_extensions}
+              </h3>
+              <ul id="topExtensionsList" class="data-list"></ul>
+            </div>
+            <div class="card">
+              <h3>
+                <span class="card-heading-icon card-heading-icon--debug" data-label="DBG" aria-hidden="true"></span>
+                {i18n_report_vscode_top_debugged_files}
+              </h3>
+              <ul id="topDebuggedFilesList" class="data-list"></ul>
+            </div>
+          </section>
+
+          <section class="grid-two">
+            <div class="card">
+              <h3>
+                <span class="card-heading-icon card-heading-icon--errors" data-label="ERR" aria-hidden="true"></span>
+                {i18n_report_vscode_top_error_files}
+              </h3>
+              <ul id="topErrorFilesList" class="data-list"></ul>
+            </div>
+            <div class="card">
+              <h3>
+                <span class="card-heading-icon card-heading-icon--refactor" data-label="REF" aria-hidden="true"></span>
+                {i18n_report_vscode_refactoring_activity}
+              </h3>
+              <div id="refactoringStats" class="stats-grid-mini"></div>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <button id="refreshButton" class="refresh-button" title="{i18n_report_vscode_refresh_button}">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+      </svg>
+    </button>
+
+    <script nonce="{nonce}" src="{chartJsUri}"></script>
+    <script nonce="{nonce}" src="{chartAdapterUri}"></script>
+    <script nonce="{nonce}">window.__SAUL_CONFIG__ = {config};</script>
+    <script nonce="{nonce}">window.__SAUL_I18N__ = {i18n};</script>
+    <script nonce="{nonce}" src="{reportHourlyUri}"></script>
+    <script nonce="{nonce}" src="{comboTimelineUri}"></script>
+    <script nonce="{nonce}" src="{commitsDistributionUri}"></script>
+    <script nonce="{nonce}" src="{scriptUri}"></script>
+  </body>
+</html>

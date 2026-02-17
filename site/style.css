@@ -264,6 +264,15 @@ body {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.blog-preview-actions,
+.vscode-actions,
+.section.cta .hero-cta {
+  margin: 0 auto;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+}
+
 .hero.hero-has-crashed .hero-cta {
   gap: 18px;
   transform: rotate(-1.6deg) translate(-6px, 4px);
@@ -2074,6 +2083,185 @@ body {
   margin: 12px auto 0;
 }
 
+.vscode-section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fff7d9, #e8f3ff, #fffdf5);
+  border-top: 3px solid var(--black);
+  border-bottom: 3px solid var(--black);
+  box-shadow:
+    inset 0 12px 0 rgba(0, 0, 0, 0.04),
+    inset 0 -12px 0 rgba(0, 0, 0, 0.04);
+}
+
+.vscode-section::before,
+.vscode-section::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 200, 120, 0.28), transparent 65%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.vscode-section::before {
+  top: -60px;
+  left: -30px;
+}
+
+.vscode-section::after {
+  bottom: -60px;
+  right: -30px;
+}
+
+.vscode-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 6px auto 16px;
+  max-width: 900px;
+}
+
+.vscode-meta span {
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  background: #fff;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.vscode-proof {
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vscode-proof::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.vscode-proof-head {
+  display: grid;
+  gap: 6px;
+}
+
+.vscode-proof-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  font-weight: 800;
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.vscode-proof-body {
+  margin: 0;
+}
+
+.vscode-proof-log {
+  display: grid;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.vscode-proof-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  background: #fffdf5;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+}
+
+.vscode-proof-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 2px solid var(--black);
+  font-weight: 800;
+  font-size: 0.8rem;
+  background: #ffe680;
+}
+
+.vscode-proof-chip.warning {
+  background: #ffe0d9;
+}
+
+.vscode-proof-chip.success {
+  background: #d9ffe8;
+}
+
+.vscode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.vscode-card {
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  padding: 18px;
+  background: #fff;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.vscode-card::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px dashed rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+}
+
+.vscode-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--red);
+  font-weight: 800;
+  font-size: 0.78rem;
+  margin: 0 0 8px;
+}
+
+.vscode-card h3 {
+  margin: 0 0 8px;
+}
+
+.vscode-card p {
+  margin: 0;
+}
+
+.vscode-actions {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 6px;
+}
+
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -2604,7 +2792,6 @@ blockquote p {
   max-width: min(540px, 96vw);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
   text-align: center;
-  animation: quake 0.6s linear infinite;
 }
 
 .quake-title {
@@ -2629,8 +2816,12 @@ blockquote p {
   cursor: pointer;
 }
 
-.quake-active {
+.quake-active > *:not(.quake-overlay) {
   animation: quake 0.6s linear infinite;
+}
+
+.quake-overlay.active .quake-card {
+  animation: none;
 }
 
 .reactions-grid {
@@ -2981,7 +3172,8 @@ blockquote p {
   .why-grid,
   .demo-grid,
   .trust-grid,
-  .blog-preview-grid {
+  .blog-preview-grid,
+  .vscode-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3015,6 +3207,17 @@ blockquote p {
 
   .sticky-cta {
     bottom: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vscode-meta {
+    justify-content: flex-start;
+  }
+
+  .vscode-proof-line {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

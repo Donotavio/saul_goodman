@@ -1,3 +1,9 @@
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  createI18nContext
+} from '../shared/i18n.js';
+
 const scriptUrl = typeof document !== 'undefined' && document.currentScript?.src
   ? document.currentScript.src
   : import.meta.url;
@@ -5,303 +11,30 @@ const blogBase = new URL('./', scriptUrl);
 const indexUrl = new URL('index.json', blogBase);
 const postsBase = new URL('posts/', blogBase);
 
-const BLOG_TRANSLATIONS = {
-  pt: {
-    languageLabel: 'Selecionar idioma',
-    navProcess: 'Processo',
-    navDemo: 'Demonstração',
-    navClients: 'Clientes',
-    navBlog: 'Blog',
-    navCta: 'Instalar',
-    blogHeroEyebrow: 'Blog do Saul Goodman',
-    blogHeroTitle: 'Opiniões jurídicas sobre procrastinação digital',
-    blogHeroLead:
-      'Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul, direto ao ponto, sem coach barato.',
-    heroBadge: '“Em caso de preguiça... CALL SAUL!”',
-    heroPill: 'Publicações semanais, sarcasmo diário',
-    featuredEyebrow: 'Destaque',
-    featuredTitle: 'Caso quente da semana',
-    latestEyebrow: 'Novidades',
-    latestTitle: 'Artigos recém-saídos do tribunal do foco',
-    searchLabel: 'Buscar',
-    searchPlaceholder: 'Buscar por título, trecho ou tag...',
-    searchReset: 'Limpar filtros',
-    statsTitle: 'Radar do blog',
-    statsPosts: 'posts publicados',
-    statsCategories: 'categorias em julgamento',
-    statsFresh: 'atualizado por último',
-    categoriesTitle: 'Categorias em pauta',
-    tagsTitle: 'Assuntos em alta',
-    newsletterTitle: 'Receba o relatório do Saul',
-    newsletterCopy: 'Doses curtas de sarcasmo e disciplina para não deixar o VS Code virar Netflix.',
-    newsletterCta: 'Conhecer o Saul',
-    rssCta: 'Assinar RSS',
-    shareIndexTitle: 'Compartilhar o blog',
-    shareIndexTwitter: 'X',
-    shareIndexLinkedin: 'LinkedIn',
-    shareIndexCopy: 'Copiar link',
-    shareIndexCopied: 'Link copiado!',
-    categoryActiveLabel: 'Categoria ativa',
-    categoryClear: 'Limpar categoria',
-    blogCategoryAll: 'Todos',
-    categoryEyebrow: 'Categoria',
-    categoryProcrastinacaoTitle: 'Procrastinação sob investigação',
-    categoryProcrastinacaoLead:
-      'Casos reais de atrasos, preguiça digital e tab hunting que o Saul adora processar.',
-    categoryFocoTitle: 'Foco & Atenção em julgamento',
-    categoryFocoLead:
-      'Pesquisas e tretas do dia a dia sobre manter a cabeça no código sem sucumbir ao feed.',
-    categoryDevTitle: 'Performance dev com réu confesso',
-    categoryDevLead: 'Produtividade realista para quem vive entre VS Code, PRs e reuniões remotas.',
-    categoryRemotoTitle: 'Trabalho remoto sem álibi',
-    categoryRemotoLead: 'Histórias e achados sobre home office, Slack aberto e a arte de não sumir do Zoom.',
-    breadcrumbBlog: 'Blog',
-    breadcrumbArticle: 'Artigo',
-    postLoadingTitle: 'Carregando artigo...',
-    postLoadingBody: 'Carregando...',
-    readTimeUnit: 'min de leitura',
-    readingTimeLabel: 'Tempo de leitura',
-    readArticle: 'Ler artigo',
-    blogEmptyState: 'Nenhum artigo publicado por aqui ainda.',
-    blogError: 'Erro ao carregar blog',
-    postNotFound: 'Post não encontrado.',
-    postInvalid: 'Post inválido ou sem metadados.',
-    postLoadError: 'Erro ao carregar este artigo.',
-    metaCategory: 'Categoria',
-    metaTags: 'Tags',
-    metaSource: 'Fonte',
-    metaSourceUrl: 'URL da fonte',
-    metaPublishedAt: 'Publicado no blog em',
-    metaSourcePublishedAt: 'Data da fonte',
-    mediaTaglineProcrastinacao: 'Osciloscópios emocionais e sarcasmo terapêutico.',
-    mediaTaglineFoco: 'Foco e atenção sob interrogatório diário.',
-    mediaTaglineDev: 'Performance dev julgada por métricas reais.',
-    mediaTaglineRemoto: 'Home office sem álibi e sem modo fantasma.',
-    shareTitle: 'Compartilhar',
-    shareTwitter: 'X',
-    shareLinkedin: 'LinkedIn',
-    shareCopy: 'Copiar link',
-    shareCopied: 'Link copiado!',
-    shareCopyPrompt: 'Copie o link para compartilhar:',
-    extensionsTitle: 'Instale as extensões do Saul',
-    extensionsCopy: 'Leve o Saul para o Chrome e para o VS Code e mantenha o foco.',
-    extensionsChromeCta: 'Extensão Chrome',
-    extensionsVscodeCta: 'Extensão VS Code',
-    relatedTitle: 'Posts relacionados',
-    previousPost: 'Anterior',
-    nextPost: 'Próximo',
-    newsletterLabel: 'Seu e-mail',
-    newsletterPlaceholder: 'seuemail@foco.dev',
-    newsletterSubmit: 'Receber relatórios',
-    newsletterDisclaimer: 'Sem spam. Só o sarcasmo necessário.',
-    newsletterSuccess: 'Quase lá! Te avisaremos das próximas publicações.',
-    newsletterError: 'Ops, precisamos de um e-mail válido.'
-  },
-  en: {
-    languageLabel: 'Select language',
-    navProcess: 'Process',
-    navDemo: 'Demo',
-    navClients: 'Clients',
-    navBlog: 'Blog',
-    navCta: 'Install',
-    blogHeroEyebrow: 'Saul Goodman Blog',
-    blogHeroTitle: 'Legal takes on digital procrastination',
-    blogHeroLead:
-      "Sarcastic takes on focus, attention, and dev performance. Weekly articles written in Saul's tone—no coach vibe.",
-    heroBadge: '"In case of laziness... CALL SAUL!"',
-    heroPill: 'Weekly drops, daily sarcasm',
-    featuredEyebrow: 'Featured',
-    featuredTitle: 'Case of the week',
-    latestEyebrow: 'Fresh',
-    latestTitle: 'Hot off the productivity court',
-    searchLabel: 'Search',
-    searchPlaceholder: 'Search title, excerpt, or tag...',
-    searchReset: 'Clear filters',
-    statsTitle: 'Blog radar',
-    statsPosts: 'published posts',
-    statsCategories: 'categories on trial',
-    statsFresh: 'last updated',
-    categoriesTitle: 'Categories in session',
-    tagsTitle: 'Topics on fire',
-    newsletterTitle: "Get Saul's memo",
-    newsletterCopy: 'Short bursts of sarcasm and discipline so your VS Code stops acting like Netflix.',
-    newsletterCta: 'Meet Saul',
-    rssCta: 'Subscribe via RSS',
-    shareIndexTitle: 'Share the blog',
-    shareIndexTwitter: 'X',
-    shareIndexLinkedin: 'LinkedIn',
-    shareIndexCopy: 'Copy link',
-    shareIndexCopied: 'Link copied!',
-    categoryActiveLabel: 'Active category',
-    categoryClear: 'Clear category',
-    blogCategoryAll: 'All',
-    categoryEyebrow: 'Category',
-    categoryProcrastinacaoTitle: 'Procrastination under investigation',
-    categoryProcrastinacaoLead: 'Real cases of delay, digital laziness, and tab hunting Saul loves to prosecute.',
-    categoryFocoTitle: 'Focus & Attention on trial',
-    categoryFocoLead: 'Daily studies and drama about keeping your head in the code without surrendering to feeds.',
-    categoryDevTitle: 'Dev performance with a guilty plea',
-    categoryDevLead: 'Practical productivity for anyone juggling VS Code, PRs, and remote meetings.',
-    categoryRemotoTitle: 'Remote work with no alibi',
-    categoryRemotoLead: 'Stories about home office, Slack presence, and avoiding a Zoom disappearance.',
-    breadcrumbBlog: 'Blog',
-    breadcrumbArticle: 'Article',
-    postLoadingTitle: 'Loading article...',
-    postLoadingBody: 'Loading...',
-    readTimeUnit: 'min read',
-    readingTimeLabel: 'Reading time',
-    readArticle: 'Read article',
-    blogEmptyState: 'No articles published here yet.',
-    blogError: 'Failed to load blog',
-    postNotFound: 'Post not found.',
-    postInvalid: 'Invalid post or missing metadata.',
-    postLoadError: 'Error while loading this article.',
-    metaCategory: 'Category',
-    metaTags: 'Tags',
-    metaSource: 'Source',
-    metaSourceUrl: 'Source URL',
-    metaPublishedAt: 'Published on the blog',
-    metaSourcePublishedAt: 'Source published at',
-    mediaTaglineProcrastinacao: 'Mental oscilloscopes meet Saul’s therapeutic sarcasm.',
-    mediaTaglineFoco: 'Focus and attention under daily questioning.',
-    mediaTaglineDev: 'Dev performance judged by hard metrics.',
-    mediaTaglineRemoto: 'Remote work with zero ghost-mode excuses.',
-    shareTitle: 'Share',
-    shareTwitter: 'X',
-    shareLinkedin: 'LinkedIn',
-    shareCopy: 'Copy link',
-    shareCopied: 'Link copied!',
-    shareCopyPrompt: 'Copy this link to share:',
-    extensionsTitle: "Install Saul's extensions",
-    extensionsCopy: 'Bring Saul to Chrome and VS Code to keep your focus honest.',
-    extensionsChromeCta: 'Chrome extension',
-    extensionsVscodeCta: 'VS Code extension',
-    relatedTitle: 'Related posts',
-    previousPost: 'Previous',
-    nextPost: 'Next',
-    newsletterLabel: 'Your email',
-    newsletterPlaceholder: 'you@email.dev',
-    newsletterSubmit: 'Get the memo',
-    newsletterDisclaimer: 'No spam. Only the sarcasm you can handle.',
-    newsletterSuccess: "You're on the radar. New drops coming soon.",
-    newsletterError: 'Please drop a valid email.'
-  },
-  es: {
-    languageLabel: 'Seleccionar idioma',
-    navProcess: 'Proceso',
-    navDemo: 'Demostración',
-    navClients: 'Clientes',
-    navBlog: 'Blog',
-    navCta: 'Instalar',
-    blogHeroEyebrow: 'Blog de Saul Goodman',
-    blogHeroTitle: 'Opiniones legales sobre la procrastinación digital',
-    blogHeroLead:
-      'Relatos sarcásticos sobre foco, atención y performance dev. Artículos semanales en tono Saul, sin coach barato.',
-    heroBadge: '“En caso de pereza... ¡LLAMA A SAUL!”',
-    heroPill: 'Publicaciones semanales, sarcasmo diario',
-    featuredEyebrow: 'Destacado',
-    featuredTitle: 'Caso caliente de la semana',
-    latestEyebrow: 'Novedades',
-    latestTitle: 'Recién salido del tribunal del foco',
-    searchLabel: 'Buscar',
-    searchPlaceholder: 'Buscar por título, fragmento o etiqueta...',
-    searchReset: 'Limpiar filtros',
-    statsTitle: 'Radar del blog',
-    statsPosts: 'posts publicados',
-    statsCategories: 'categorías en juicio',
-    statsFresh: 'última actualización',
-    categoriesTitle: 'Categorías en sesión',
-    tagsTitle: 'Temas en alta',
-    newsletterTitle: 'Recibe el memo de Saul',
-    newsletterCopy: 'Ráfagas cortas de sarcasmo y disciplina para que tu VS Code deje de ser Netflix.',
-    newsletterCta: 'Conocer a Saul',
-    rssCta: 'Suscribirse via RSS',
-    shareIndexTitle: 'Compartir el blog',
-    shareIndexTwitter: 'X',
-    shareIndexLinkedin: 'LinkedIn',
-    shareIndexCopy: 'Copiar enlace',
-    shareIndexCopied: '¡Enlace copiado!',
-    categoryActiveLabel: 'Categoría activa',
-    categoryClear: 'Limpiar categoría',
-    blogCategoryAll: 'Todos',
-    categoryEyebrow: 'Categoría',
-    categoryProcrastinacaoTitle: 'Procrastinación bajo investigación',
-    categoryProcrastinacaoLead: 'Casos reales de retrasos, pereza digital y caza de pestañas que Saul disfruta procesar.',
-    categoryFocoTitle: 'Enfoque y Atención en juicio',
-    categoryFocoLead: 'Estudios y dramas diarios sobre mantener la cabeza en el código sin caer en el feed.',
-    categoryDevTitle: 'Rendimiento dev con confesión',
-    categoryDevLead: 'Productividad realista para quienes viven entre VS Code, PRs y reuniones remotas.',
-    categoryRemotoTitle: 'Trabajo remoto sin coartada',
-    categoryRemotoLead: 'Historias y hallazgos sobre home office, Slack abierto y el arte de no desaparecer de Zoom.',
-    breadcrumbBlog: 'Blog',
-    breadcrumbArticle: 'Artículo',
-    postLoadingTitle: 'Cargando artículo...',
-    postLoadingBody: 'Cargando...',
-    readTimeUnit: 'min de lectura',
-    readingTimeLabel: 'Tiempo de lectura',
-    readArticle: 'Leer artículo',
-    blogEmptyState: 'Aún no hay artículos publicados aquí.',
-    blogError: 'Error al cargar el blog',
-    postNotFound: 'Artículo no encontrado.',
-    postInvalid: 'Artículo inválido o sin metadatos.',
-    postLoadError: 'Error al cargar este artículo.',
-    metaCategory: 'Categoría',
-    metaTags: 'Etiquetas',
-    metaSource: 'Fuente',
-    metaSourceUrl: 'URL de la fuente',
-    metaPublishedAt: 'Publicado en el blog',
-    metaSourcePublishedAt: 'Fecha de la fuente',
-    mediaTaglineProcrastinacao: 'Osciloscopios mentales y sarcasmo terapéutico.',
-    mediaTaglineFoco: 'Foco digital bajo interrogatorio permanente.',
-    mediaTaglineDev: 'Performance dev con jurado técnico.',
-    mediaTaglineRemoto: 'Trabajo remoto sin coartada ni modo fantasma.',
-    shareTitle: 'Compartir',
-    shareTwitter: 'X',
-    shareLinkedin: 'LinkedIn',
-    shareCopy: 'Copiar enlace',
-    shareCopied: '¡Enlace copiado!',
-    shareCopyPrompt: 'Copia este enlace para compartir:',
-    extensionsTitle: 'Instala las extensiones de Saul',
-    extensionsCopy: 'Lleva a Saul al Chrome y al VS Code para mantener el foco.',
-    extensionsChromeCta: 'Extensión de Chrome',
-    extensionsVscodeCta: 'Extensión de VS Code',
-    relatedTitle: 'Posts relacionados',
-    previousPost: 'Anterior',
-    nextPost: 'Siguiente',
-    newsletterLabel: 'Tu correo',
-    newsletterPlaceholder: 'tuemail@foco.dev',
-    newsletterSubmit: 'Recibir reportes',
-    newsletterDisclaimer: 'Sin spam. Solo el sarcasmo necesario.',
-    newsletterSuccess: '¡Listo! Te avisaremos de las próximas publicaciones.',
-    newsletterError: 'Necesitamos un correo válido.'
-  },
-};
+const LOCALES_BASES = [
+  new URL('./_locales/', blogBase),
+  new URL('../_locales/', blogBase),
+];
 
-const CATEGORY_LABELS = {
-  pt: {
-    'procrastinacao': 'Procrastinação',
-    'foco-atencao': 'Foco & Atenção',
-    'dev-performance': 'Performance Dev',
-    'trabalho-remoto': 'Trabalho Remoto',
-    'ux-design': 'UX & Design',
-    'marketing': 'Marketing',
-  },
-  en: {
-    'procrastinacao': 'Procrastination',
-    'foco-atencao': 'Focus & Attention',
-    'dev-performance': 'Dev Performance',
-    'trabalho-remoto': 'Remote Work',
-    'ux-design': 'UX & Design',
-    'marketing': 'Marketing',
-  },
-  es: {
-    'procrastinacao': 'Procrastinación',
-    'foco-atencao': 'Enfoque y Atención',
-    'dev-performance': 'Rendimiento Dev',
-    'trabalho-remoto': 'Trabajo Remoto',
-    'ux-design': 'UX y Diseño',
-    'marketing': 'Marketing',
-  },
+// Create i18n context
+const i18nContext = createI18nContext(LOCALES_BASES);
+const t = i18nContext.t;
+
+async function setLanguage(lang) {
+  await i18nContext.setLanguage(lang);
+  applyTranslations();
+}
+
+const BLOG_CATEGORY_LABEL_KEYS = {
+  'procrastinacao': 'blogCategoryLabelProcrastinacao',
+  'foco-atencao': 'blogCategoryLabelFocoAtencao',
+  'dev-performance': 'blogCategoryLabelDevPerformance',
+  'trabalho-remoto': 'blogCategoryLabelTrabalhoRemoto',
+  'ux-design': 'blogCategoryLabelUxDesign',
+  'marketing': 'blogCategoryLabelMarketing',
+  'produto': 'blogCategoryLabelProduto',
+  'carreira': 'blogCategoryLabelCarreira',
+  'negocios': 'blogCategoryLabelNegocios',
 };
 
 const CATEGORY_TITLE_KEYS = {
@@ -309,8 +42,11 @@ const CATEGORY_TITLE_KEYS = {
   'foco-atencao': 'categoryFocoTitle',
   'dev-performance': 'categoryDevTitle',
   'trabalho-remoto': 'categoryRemotoTitle',
-  'ux-design': 'categoryDevTitle',
-  'marketing': 'categoryDevTitle',
+  'ux-design': 'categoryUxTitle',
+  'marketing': 'categoryMarketingTitle',
+  'produto': 'categoryProdutoTitle',
+  'carreira': 'categoryCarreiraTitle',
+  'negocios': 'categoryNegociosTitle',
 };
 
 const CATEGORY_LEAD_KEYS = {
@@ -318,36 +54,41 @@ const CATEGORY_LEAD_KEYS = {
   'foco-atencao': 'categoryFocoLead',
   'dev-performance': 'categoryDevLead',
   'trabalho-remoto': 'categoryRemotoLead',
-  'ux-design': 'categoryDevLead',
-  'marketing': 'categoryDevLead',
+  'ux-design': 'categoryUxLead',
+  'marketing': 'categoryMarketingLead',
+  'produto': 'categoryProdutoLead',
+  'carreira': 'categoryCarreiraLead',
+  'negocios': 'categoryNegociosLead',
 };
-const VALID_CATEGORIES = Object.keys(CATEGORY_TITLE_KEYS);
 
-const CATEGORY_TAGLINES = {
-  pt: {
-    'procrastinacao': 'Osciloscópios emocionais e sarcasmo terapêutico.',
-    'foco-atencao': 'Foco e atenção sob interrogatório diário.',
-    'dev-performance': 'Performance dev julgada por métricas reais.',
-    'trabalho-remoto': 'Home office sem álibi e sem modo fantasma.',
-  },
-  en: {
-    'procrastinacao': 'Mental oscilloscopes meet Saul’s therapeutic sarcasm.',
-    'foco-atencao': 'Focus and attention under daily questioning.',
-    'dev-performance': 'Dev performance judged by hard metrics.',
-    'trabalho-remoto': 'Remote work with zero ghost-mode excuses.',
-  },
-  es: {
-    'procrastinacao': 'Osciloscopios mentales y sarcasmo terapéutico.',
-    'foco-atencao': 'Enfoque y atención bajo interrogatorio diario.',
-    'dev-performance': 'Rendimiento dev juzgado por métricas reales.',
-    'trabalho-remoto': 'Trabajo remoto sin coartada ni modo fantasma.',
-  },
+const CATEGORY_TAGLINE_KEYS = {
+  'procrastinacao': 'mediaTaglineProcrastinacao',
+  'foco-atencao': 'mediaTaglineFoco',
+  'dev-performance': 'mediaTaglineDev',
+  'trabalho-remoto': 'mediaTaglineRemoto',
+  'ux-design': 'mediaTaglineUx',
+  'marketing': 'mediaTaglineMarketing',
+  'produto': 'mediaTaglineProduto',
+  'carreira': 'mediaTaglineCarreira',
+  'negocios': 'mediaTaglineNegocios',
 };
+
+const VALID_CATEGORIES = Object.keys(CATEGORY_TITLE_KEYS);
 
 const DATE_LOCALE = {
   pt: 'pt-BR',
   en: 'en-US',
   es: 'es-ES',
+  fr: 'fr-FR',
+  de: 'de-DE',
+  it: 'it-IT',
+  tr: 'tr-TR',
+  zh: 'zh-CN',
+  hi: 'hi-IN',
+  ar: 'ar',
+  bn: 'bn',
+  ru: 'ru-RU',
+  ur: 'ur',
 };
 
 const assetsBase = new URL('../assets/', blogBase);
@@ -355,15 +96,15 @@ const BLOG_LOGO = new URL('logotipo_saul_goodman.png', assetsBase).toString();
 const TONE_ARTWORK = {
   'incredulo': {
     src: new URL('saul_incredulo.png', assetsBase).toString(),
-    alt: 'Saul Goodman incrédulo',
+    altKey: 'blogToneAltIncredulo',
   },
   'like': {
     src: new URL('saul_like.png', assetsBase).toString(),
-    alt: 'Saul Goodman aprovando',
+    altKey: 'blogToneAltLike',
   },
   'nao-corte': {
     src: new URL('saul_nao_corte.png', assetsBase).toString(),
-    alt: 'Saul Goodman julgando',
+    altKey: 'blogToneAltNaoCorte',
   },
 };
 
@@ -400,13 +141,22 @@ function inferTone(meta = {}) {
   if (meta.category === 'foco-atencao') return 'like';
   if (meta.category === 'dev-performance') return 'like';
   if (meta.category === 'ux-design') return 'like';
+  if (meta.category === 'produto') return 'like';
+  if (meta.category === 'carreira') return 'like';
+  if (meta.category === 'procrastinacao') return 'incredulo';
+  if (meta.category === 'marketing') return 'incredulo';
+  if (meta.category === 'negocios') return 'incredulo';
   return 'incredulo';
 }
 
 function getToneArtwork(meta = {}) {
   const tone = inferTone(meta);
-  const artwork = TONE_ARTWORK[tone] || { src: BLOG_LOGO, alt: 'Saul Goodman' };
-  return { ...artwork, tone };
+  const artwork = TONE_ARTWORK[tone] || { src: BLOG_LOGO, altKey: 'blogLogoAlt' };
+  return {
+    src: artwork.src,
+    alt: artwork.altKey ? t(artwork.altKey) : '',
+    tone,
+  };
 }
 
 function resolveImageUrl(value) {
@@ -449,9 +199,6 @@ const TONE_TEXT_HINTS = {
   'incredulo': ['procrastina', 'caos', 'bagunça', 'sarcasmo'],
 };
 
-const supportedLanguages = Object.keys(BLOG_TRANSLATIONS);
-const defaultLanguage = 'pt';
-let currentLanguage = defaultLanguage;
 let allPostsCache = [];
 let fullIndexCache = null;
 let activeTagFilter = '';
@@ -478,122 +225,23 @@ function persistReadingTimeToCaches(key, minutes, words) {
   }
 }
 
-function getDictionary(lang = currentLanguage) {
-  return BLOG_TRANSLATIONS[lang] || BLOG_TRANSLATIONS[defaultLanguage];
-}
-
-function t(key, lang = currentLanguage) {
-  const dictionary = getDictionary(lang);
-  return dictionary[key] || BLOG_TRANSLATIONS[defaultLanguage][key] || key;
-}
-
-function getCategoryLabel(value, lang = currentLanguage) {
+function getCategoryLabel(value) {
   if (!value) return '';
-  const labels = CATEGORY_LABELS[lang] || CATEGORY_LABELS[defaultLanguage];
-  return labels[value] || value;
+  const key = BLOG_CATEGORY_LABEL_KEYS[value];
+  return key ? t(key) : value;
 }
 
-function getLocalizedValue(source, key, lang = currentLanguage) {
+function getLocalizedValue(source, key, lang = i18nContext.currentLanguage) {
   if (!source) return undefined;
   const localizedKey = `${key}_${lang}`;
   return source[localizedKey] || source[key];
 }
-
-const TAG_TRANSLATIONS = {
-  en: {
-    produtividade: 'Productivity',
-    procrastinacao: 'Procrastination',
-    procrastinação: 'Procrastination',
-    design: 'Design',
-    dev: 'Dev',
-    desenvolvimento: 'Development',
-    devops: 'DevOps',
-    estrategia: 'Strategy',
-    estratégia: 'Strategy',
-    futuro: 'Future',
-    carreira: 'Career',
-    humor: 'Humor',
-    internet: 'Internet',
-    ios: 'iOS',
-    infraestrutura: 'Infrastructure',
-    hardware: 'Hardware',
-    moda: 'Fashion',
-    mudancas: 'Change',
-    mudanças: 'Change',
-    performance: 'Performance',
-    desempenho: 'Performance',
-    programacao: 'Programming',
-    programação: 'Programming',
-    qualidade: 'Quality',
-    rotina: 'Routine',
-    sarcasmo: 'Sarcasm',
-    software: 'Software',
-    sprint: 'Sprint',
-    tecnologia: 'Tech',
-    terraform: 'Terraform',
-    'trabalho-remoto': 'Remote work',
-    valores: 'Values',
-  },
-  es: {
-    produtividade: 'Productividad',
-    procrastinacao: 'Procrastinación',
-    procrastinação: 'Procrastinación',
-    design: 'Diseño',
-    dev: 'Dev',
-    desenvolvimento: 'Desarrollo',
-    devops: 'DevOps',
-    estrategia: 'Estrategia',
-    estratégia: 'Estrategia',
-    futuro: 'Futuro',
-    carreira: 'Carrera',
-    humor: 'Humor',
-    internet: 'Internet',
-    ios: 'iOS',
-    infraestrutura: 'Infraestructura',
-    hardware: 'Hardware',
-    moda: 'Moda',
-    mudancas: 'Cambios',
-    mudanças: 'Cambios',
-    performance: 'Performance',
-    desempenho: 'Rendimiento',
-    programacao: 'Programación',
-    programação: 'Programación',
-    qualidade: 'Calidad',
-    rotina: 'Rutina',
-    sarcasmo: 'Sarcasmo',
-    software: 'Software',
-    sprint: 'Sprint',
-    tecnologia: 'Tecnología',
-    terraform: 'Terraform',
-    'trabalho-remoto': 'Trabajo remoto',
-    valores: 'Valores',
-  },
-};
-
-const TAG_TRANSLATION_LOOKUP = {};
 
 function normalizeTagKey(tag) {
   return tag
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
-}
-
-function translateTag(tag, lang = currentLanguage) {
-  if (!tag) return '';
-  if (lang === defaultLanguage) return tag;
-  const translations = TAG_TRANSLATIONS[lang];
-  if (!translations) return tag;
-  if (!TAG_TRANSLATION_LOOKUP[lang]) {
-    const lookup = {};
-    Object.keys(translations).forEach((key) => {
-      lookup[normalizeTagKey(key)] = translations[key];
-    });
-    TAG_TRANSLATION_LOOKUP[lang] = lookup;
-  }
-  const normalizedKey = normalizeTagKey(tag);
-  const normalizedTranslations = TAG_TRANSLATION_LOOKUP[lang];
-  return normalizedTranslations[normalizedKey] || translations[tag] || tag;
 }
 
 function normalizeTagList(value) {
@@ -610,7 +258,7 @@ function normalizeTagList(value) {
   return [];
 }
 
-function getLocalizedTags(source, lang = currentLanguage) {
+function getLocalizedTags(source, lang = i18nContext.currentLanguage) {
   if (!source) return [];
   const localizedKey = `tags_${lang}`;
   const localizedRaw = Object.prototype.hasOwnProperty.call(source || {}, localizedKey)
@@ -618,7 +266,7 @@ function getLocalizedTags(source, lang = currentLanguage) {
     : undefined;
   const localizedList = normalizeTagList(localizedRaw);
   if (localizedList.length) return localizedList;
-  return normalizeTagList(source.tags).map((tag) => translateTag(tag, lang));
+  return normalizeTagList(source.tags);
 }
 
 function stripMetadataSection(markdown = '') {
@@ -635,7 +283,7 @@ function stripMetadataSection(markdown = '') {
 
 function extractLocalizedBodies(body) {
   const sections = {};
-  const markerRegex = /<!--lang:(pt|en|es)-->/gi;
+  const markerRegex = new RegExp(`<!--lang:(${SUPPORTED_LANGUAGES.join('|')})-->`, 'gi');
   let match;
   let lastIndex = 0;
   let currentLang = 'pt';
@@ -660,43 +308,53 @@ function extractLocalizedBodies(body) {
   return sections;
 }
 
-function updateCategoryLabels(lang = currentLanguage) {
+function updateCategoryLabels() {
   document.querySelectorAll('[data-category-chip]').forEach((chip) => {
     const key = chip.getAttribute('data-category-chip');
     if (!key) return;
     if (key === 'all') {
-      chip.textContent = t('blogCategoryAll', lang);
+      chip.textContent = t('blogCategoryAll');
     } else {
-      chip.textContent = getCategoryLabel(key, lang);
+      chip.textContent = getCategoryLabel(key);
     }
   });
   document.querySelectorAll('[data-category-label]').forEach((element) => {
     const key = element.getAttribute('data-category-label');
     if (!key) return;
-    element.textContent = getCategoryLabel(key, lang);
+    element.textContent = getCategoryLabel(key);
   });
 }
 
-function updateMediaCopy(category, lang = currentLanguage) {
+function updateMediaCopy(category) {
   const titleEl = document.querySelector('[data-media-title]');
   if (titleEl) {
     const key = CATEGORY_TITLE_KEYS[category];
-    titleEl.textContent = key ? t(key, lang) : getCategoryLabel(category, lang);
+    titleEl.textContent = key ? t(key) : getCategoryLabel(category);
   }
   const taglineEl = document.querySelector('[data-media-tagline]');
   if (taglineEl) {
-    const taglines = CATEGORY_TAGLINES[lang] || CATEGORY_TAGLINES[defaultLanguage];
-    taglineEl.textContent = taglines[category] || taglines.procrastinacao;
+    const key = CATEGORY_TAGLINE_KEYS[category];
+    taglineEl.textContent = key ? t(key) : '';
   }
 }
 
 function normalizeLanguage(value) {
-  if (!value) return defaultLanguage;
+  if (!value) return DEFAULT_LANGUAGE;
   const lower = value.toLowerCase();
   if (lower.startsWith('pt')) return 'pt';
   if (lower.startsWith('en')) return 'en';
   if (lower.startsWith('es')) return 'es';
-  return lower;
+  if (lower.startsWith('fr')) return 'fr';
+  if (lower.startsWith('de')) return 'de';
+  if (lower.startsWith('it')) return 'it';
+  if (lower.startsWith('tr')) return 'tr';
+  if (lower.startsWith('zh')) return 'zh';
+  if (lower.startsWith('hi')) return 'hi';
+  if (lower.startsWith('ar')) return 'ar';
+  if (lower.startsWith('bn')) return 'bn';
+  if (lower.startsWith('ru')) return 'ru';
+  if (lower.startsWith('ur')) return 'ur';
+  return DEFAULT_LANGUAGE;
 }
 
 function getCategoryFromUrl() {
@@ -711,7 +369,7 @@ function detectLanguage() {
     const stored = localStorage.getItem('saul-language');
     if (stored) {
       const normalized = normalizeLanguage(stored);
-      if (supportedLanguages.includes(normalized)) return normalized;
+      if (SUPPORTED_LANGUAGES.includes(normalized)) return normalized;
     }
   } catch (error) {
     // localStorage might be unavailable (Safari private mode). Ignore.
@@ -719,43 +377,93 @@ function detectLanguage() {
   if (Array.isArray(navigator.languages)) {
     for (const lang of navigator.languages) {
       const normalized = normalizeLanguage(lang);
-      if (supportedLanguages.includes(normalized)) return normalized;
+      if (SUPPORTED_LANGUAGES.includes(normalized)) return normalized;
     }
   }
   const navigatorLang = normalizeLanguage(navigator.language || navigator.userLanguage || '');
-  return supportedLanguages.includes(navigatorLang) ? navigatorLang : defaultLanguage;
+  return SUPPORTED_LANGUAGES.includes(navigatorLang) ? navigatorLang : DEFAULT_LANGUAGE;
 }
 
-function applyTranslations(lang) {
-  currentLanguage = supportedLanguages.includes(lang) ? lang : defaultLanguage;
-  const dictionary = getDictionary(currentLanguage);
-  document.documentElement.lang = currentLanguage === 'pt' ? 'pt-BR' : currentLanguage;
+function getHtmlLang(value) {
+  if (value === 'pt') return 'pt-BR';
+  if (value === 'es') return 'es-419';
+  if (value === 'zh') return 'zh-CN';
+  return value;
+}
+
+function getLanguageLabel(value) {
+  const labels = {
+    pt: 'PT',
+    en: 'EN',
+    es: 'ES',
+    fr: 'FR',
+    de: 'DE',
+    it: 'IT',
+    tr: 'TR',
+    zh: '中文',
+    hi: 'हिंदी',
+    ar: 'العربية',
+    bn: 'বাংলা',
+    ru: 'RU',
+    ur: 'اردو',
+  };
+  return labels[value] || String(value || '').toUpperCase();
+}
+
+function ensureLanguageSelectorOptions() {
+  const selector = document.getElementById('blog-language-select');
+  if (!selector) return;
+
+  const existingValues = new Set(
+    Array.from(selector.querySelectorAll('option')).map((opt) => opt.value)
+  );
+
+  if (
+    SUPPORTED_LANGUAGES.every((lang) => existingValues.has(lang)) &&
+    selector.querySelectorAll('option').length === SUPPORTED_LANGUAGES.length
+  ) {
+    return;
+  }
+
+  selector.innerHTML = '';
+  SUPPORTED_LANGUAGES.forEach((lang) => {
+    const option = document.createElement('option');
+    option.value = lang;
+    option.textContent = getLanguageLabel(lang);
+    selector.appendChild(option);
+  });
+}
+
+function applyTranslations() {
+  document.documentElement.lang = getHtmlLang(i18nContext.currentLanguage);
+  ensureLanguageSelectorOptions();
+
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
-    const text = dictionary[key];
-    if (typeof text === 'string') {
-      element.textContent = text;
-    }
+    if (!key) return;
+    element.textContent = t(key);
   });
+
   const selector = document.getElementById('blog-language-select');
   if (selector) {
-    if (selector.value !== currentLanguage) {
-      selector.value = currentLanguage;
+    if (selector.value !== i18nContext.currentLanguage) {
+      selector.value = i18nContext.currentLanguage;
     }
-    selector.setAttribute('aria-label', dictionary.languageLabel);
+    selector.setAttribute('aria-label', t('languageLabel'));
   }
+
   document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
     const key = element.getAttribute('data-i18n-placeholder');
-    const text = dictionary[key];
-    if (typeof text === 'string') {
-      element.setAttribute('placeholder', text);
-    }
+    if (!key) return;
+    element.setAttribute('placeholder', t(key));
   });
+
   const srLabel = document.querySelector('label[for="blog-language-select"]');
   if (srLabel) {
-    srLabel.textContent = dictionary.languageLabel;
+    srLabel.textContent = t('languageLabel');
   }
-  updateCategoryLabels(currentLanguage);
+
+  updateCategoryLabels();
 
   const view = document.body.dataset.blogView;
   if (view === 'post') {
@@ -781,8 +489,9 @@ function bindLanguageSelector() {
     } catch (error) {
       // ignore
     }
-    applyTranslations(value);
-    renderCurrentView();
+    void setLanguage(value).then(() => {
+      renderCurrentView();
+    });
   });
 }
 
@@ -1138,14 +847,14 @@ function parseDateValue(value) {
 function formatDate(dateStr) {
   const date = parseDateValue(dateStr);
   if (!date) return dateStr;
-  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  const locale = DATE_LOCALE[i18nContext.currentLanguage] || DATE_LOCALE[DEFAULT_LANGUAGE];
   return date.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 function formatDateTime(dateStr) {
   const date = parseDateValue(dateStr);
   if (!date) return dateStr;
-  const locale = DATE_LOCALE[currentLanguage] || DATE_LOCALE[defaultLanguage];
+  const locale = DATE_LOCALE[i18nContext.currentLanguage] || DATE_LOCALE[DEFAULT_LANGUAGE];
   return date.toLocaleString(locale, {
     day: '2-digit',
     month: 'short',
@@ -1187,10 +896,10 @@ function resolveReadingMinutes(meta = {}) {
   return null;
 }
 
-function formatReadingMinutes(minutes, lang = currentLanguage) {
+function formatReadingMinutes(minutes, lang = i18nContext.currentLanguage) {
   if (!minutes) return '';
   const rounded = Math.max(1, Math.round(minutes));
-  return `${rounded} ${t('readTimeUnit', lang)}`;
+  return `${rounded} ${t('readTimeUnit')}`;
 }
 
 function normalizeCanonicalUrl(value) {
@@ -1886,7 +1595,7 @@ function updatePostMedia(meta) {
   const heroLogo = document.querySelector('.post-logo');
   if (heroLogo) {
     heroLogo.src = BLOG_LOGO;
-    heroLogo.alt = 'Saul Goodman logo';
+    heroLogo.alt = t('blogLogoAlt');
   }
   updateMediaCopy(meta.category);
 }
@@ -1964,7 +1673,7 @@ async function renderPost() {
     updatePostMedia(data);
 
     const localizedBodies = extractLocalizedBodies(body);
-    const selectedBody = localizedBodies[currentLanguage] || localizedBodies.pt || body;
+    const selectedBody = localizedBodies[i18nContext.currentLanguage] || localizedBodies.pt || body;
     const cleanedBody = stripMetadataSection(selectedBody);
     const computedMinutes = estimateReadingMinutesFromText(cleanedBody);
     const bodyWordCount = countWords(cleanedBody);
@@ -2053,9 +1762,9 @@ function ensurePostLayout() {
   }
 }
 
-function init() {
+async function init() {
   const detected = detectLanguage();
-  applyTranslations(detected);
+  await setLanguage(detected);
   bindLanguageSelector();
   bindSearch();
   bindNewsletterForm();
@@ -2064,7 +1773,9 @@ function init() {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', () => {
+    void init();
+  });
 }
 
 export {

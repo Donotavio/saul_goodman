@@ -73,9 +73,9 @@ export interface DailyMetrics {
   contextDurations?: Record<ContextModeValue, number>;
 
   /**
-   * Índice recalculado para cada contexto considerando o dia inteiro nesse modo.
+   * Último índice registrado por contexto (congelado ao trocar de contexto).
    */
-  contextIndices?: Record<ContextModeValue, number>;
+  contextIndices?: Record<ContextModeValue, number | undefined>;
 }
 
 export interface ApiStats {
@@ -112,7 +112,20 @@ export interface WorkInterval {
   end: string;
 }
 
-export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-419';
+export type SupportedLocale =
+  | 'pt-BR'
+  | 'en-US'
+  | 'es-419'
+  | 'fr'
+  | 'de'
+  | 'it'
+  | 'tr'
+  | 'zh-CN'
+  | 'hi'
+  | 'ar'
+  | 'bn'
+  | 'ru'
+  | 'ur';
 export type LocalePreference = 'auto' | SupportedLocale;
 
 export interface ExtensionSettings {
@@ -120,7 +133,12 @@ export interface ExtensionSettings {
   procrastinationDomains: string[];
   blockProcrastination?: boolean;
   weights: WeightConfig;
+  learningSignals?: LearningSignals;
   inactivityThresholdMs: number;
+  enableAutoClassification?: boolean;
+  enableAISuggestions?: boolean;
+  suggestionCooldownMs?: number;
+  suggestionsHistory?: Record<string, SuggestionHistoryEntry>;
   locale: SupportedLocale;
   localePreference?: LocalePreference;
   openAiKey?: string;
@@ -134,6 +152,7 @@ export interface ExtensionSettings {
    * Ativa/desativa a integração com VS Code via backend local.
    */
   vscodeIntegrationEnabled?: boolean;
+
 
   /**
    * URL base da API HTTP local do SaulDaemon.
@@ -160,6 +179,9 @@ export interface RuntimeMessageResponse {
   metrics?: DailyMetrics;
   settings?: ExtensionSettings;
   fairness?: FairnessSummary;
+  suggestions?: DomainSuggestion[];
+  activeSuggestion?: DomainSuggestion | null;
+  mlModel?: MlModelStatus | null;
 }
 
 export type RuntimeMessageType =
@@ -167,12 +189,18 @@ export type RuntimeMessageType =
   | 'metrics-request'
   | 'clear-data'
   | 'settings-updated'
-  | 'release-notes';
+  | 'release-notes'
+  | 'apply-suggestion'
+  | 'ignore-suggestion'
+  | 'open-extension-page';
 
 export interface PopupData {
   metrics: DailyMetrics;
   settings: ExtensionSettings;
   fairness?: FairnessSummary;
+  suggestions?: DomainSuggestion[];
+  activeSuggestion?: DomainSuggestion | null;
+  mlModel?: MlModelStatus | null;
 }
 
 export interface ManualOverrideState {
@@ -194,6 +222,10 @@ export interface ContextSegment {
   value: ContextModeValue;
   start: number;
   end?: number;
+  /**
+   * Índice registrado ao sair do contexto (ou enquanto ele está ativo).
+   */
+  index?: number;
 }
 
 /**
@@ -229,6 +261,81 @@ export interface FairnessSummary {
   contextMode: ContextModeState;
   holidayNeutral: boolean;
   isHolidayToday: boolean;
+}
+
+export interface DomainMetadata {
+  hostname: string;
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  ogType?: string;
+  hasVideoPlayer: boolean;
+  hasInfiniteScroll: boolean;
+  hasAutoplayMedia?: boolean;
+  hasFeedLayout?: boolean;
+  hasFormFields?: boolean;
+  hasRichEditor?: boolean;
+  hasLargeTable?: boolean;
+  hasShortsPattern?: boolean;
+  schemaTypes?: string[];
+  headings?: string[];
+  pathTokens?: string[];
+  language?: string;
+  externalLinksCount?: number;
+  scrollDepth?: number;
+  interactionCount?: number;
+  activeMs?: number;
+}
+
+export interface MlModelStatus {
+  version: number;
+  dimensions: number;
+  totalUpdates: number;
+  lastUpdated: number;
+  activeFeatures: number;
+  learningRate: number;
+  l2: number;
+  minFeatureCount: number;
+  bias: number;
+}
+
+export interface LearningTokenStat {
+  productive: number;
+  procrastination: number;
+  lastUpdated: number;
+}
+
+export interface LearningWeights {
+  host: number;
+  root: number;
+  kw: number;
+  og: number;
+  path: number;
+  schema: number;
+  lang: number;
+  flag: number;
+}
+
+export interface LearningSignals {
+  version?: number;
+  tokens: Record<string, LearningTokenStat>;
+  weights?: LearningWeights;
+}
+
+export interface DomainSuggestion {
+  domain: string;
+  classification: DomainCategory;
+  confidence: number;
+  reasons: string[];
+  timestamp: number;
+  learningTokens?: string[];
+}
+
+export interface SuggestionHistoryEntry {
+  lastSuggestedAt: number;
+  ignoredUntil?: number;
+  decidedAt?: number;
+  decidedAs?: DomainCategory | 'ignored';
 }
 
 

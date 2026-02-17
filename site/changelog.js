@@ -8,6 +8,41 @@ const loadingText = container?.querySelector('[data-i18n="changelogLoading"]');
 const prefersNoMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FALLBACK_LANG = 'pt';
 const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
+const DANGEROUS_PROTOCOLS = new Set(['javascript:', 'data:', 'vbscript:']);
+
+const hasDangerousUrlProtocol = (value) => {
+  const normalized = value
+    .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+    .trim()
+    .toLowerCase();
+  const explicitProtocol = normalized.match(/^([a-z][a-z0-9+.-]*):/i);
+  if (!explicitProtocol) {
+    return false;
+  }
+  return DANGEROUS_PROTOCOLS.has(`${explicitProtocol[1]}:`);
+};
+
+const sanitizeHtml = (html) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  doc.querySelectorAll('script, style').forEach((el) => el.remove());
+  doc.querySelectorAll('*').forEach((el) => {
+    for (const attr of Array.from(el.attributes)) {
+      const name = attr.name.toLowerCase();
+      const value = attr.value || '';
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+        continue;
+      }
+      if (name === 'href' || name === 'src') {
+        if (hasDangerousUrlProtocol(value)) {
+          el.removeAttribute(attr.name);
+        }
+      }
+    }
+  });
+  return doc.body.innerHTML;
+};
 
 const resolveLanguage = (value) => {
   if (!value) return null;
@@ -45,7 +80,7 @@ const renderChangelog = async () => {
     const markdown = await response.text();
     const localized = extractLocalizedMarkdown(markdown, getDocumentLanguage());
     const html = marked.parse(localized);
-    container.innerHTML = html;
+    container.innerHTML = sanitizeHtml(html);
     container.classList.add('document-ready');
   } catch (error) {
     console.error('Falha ao carregar changelog', error);

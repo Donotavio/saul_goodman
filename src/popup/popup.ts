@@ -1,8 +1,10 @@
 import {
   DailyMetrics,
   DomainStats,
+  DomainSuggestion,
   FairnessSummary,
   LocalePreference,
+  MlModelStatus,
   PopupData,
   RuntimeMessageType,
   SupportedLocale,
@@ -17,12 +19,13 @@ import {
   formatRate,
   formatProductivityRatio
 } from '../shared/metrics.js';
-import { pickScoreMessageKey } from '../shared/score.js';
+import { getScoreBand, pickScoreMessageKey } from '../shared/score.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
 import { setManualOverride } from '../shared/utils/manual-override.js';
 import { setContextMode } from '../shared/utils/context.js';
 import { LocalStorageKey, readLocalStorage } from '../shared/utils/storage.js';
 import { buildDetailedCsvSection } from '../shared/utils/csv-detail.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
 
 declare const Chart: any;
 type ChartInstance = any;
@@ -51,6 +54,39 @@ const csvExportButton = document.getElementById('csvExportButton') as HTMLButton
 const pdfExportButton = document.getElementById('pdfExportButton') as HTMLButtonElement;
 const reportButton = document.getElementById('reportButton') as HTMLButtonElement;
 const releaseNotesButton = document.getElementById('releaseNotesButton') as HTMLButtonElement | null;
+const suggestionCardEl = document.getElementById('suggestionCard') as HTMLDivElement | null;
+const suggestionTitleEl = document.getElementById('suggestionTitle') as HTMLElement | null;
+const suggestionConfidenceEl = document.getElementById('suggestionConfidence') as HTMLElement | null;
+const suggestionReasonsEl = document.getElementById('suggestionReasons') as HTMLUListElement | null;
+const suggestionDomainEl = document.getElementById('suggestionDomain') as HTMLElement | null;
+const suggestionClassificationEl = document.getElementById(
+  'suggestionClassification'
+) as HTMLElement | null;
+const suggestionPrevButton = document.getElementById(
+  'suggestionPrevButton'
+) as HTMLButtonElement | null;
+const suggestionNextButton = document.getElementById(
+  'suggestionNextButton'
+) as HTMLButtonElement | null;
+const suggestionCounterEl = document.getElementById('suggestionCounter') as HTMLElement | null;
+const suggestionProductiveButton = document.getElementById(
+  'suggestionProductiveButton'
+) as HTMLButtonElement | null;
+const suggestionProcrastinationButton = document.getElementById(
+  'suggestionProcrastinationButton'
+) as HTMLButtonElement | null;
+const suggestionIgnoreButton = document.getElementById(
+  'suggestionIgnoreButton'
+) as HTMLButtonElement | null;
+const suggestionManualButton = document.getElementById(
+  'suggestionManualButton'
+) as HTMLButtonElement | null;
+const mlCardEl = document.getElementById('mlCard') as HTMLDivElement | null;
+const mlStatusBadgeEl = document.getElementById('mlStatusBadge') as HTMLSpanElement | null;
+const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
+const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
+const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
+const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -135,7 +171,17 @@ const BLOG_REASON_KEYS: Record<BlogCategory, string> = {
 const BLOG_LOCALE_SUFFIX: Record<SupportedLocale, 'pt' | 'en' | 'es'> = {
   'pt-BR': 'pt',
   'en-US': 'en',
-  'es-419': 'es'
+  'es-419': 'es',
+  fr: 'en',
+  de: 'en',
+  it: 'en',
+  tr: 'en',
+  'zh-CN': 'en',
+  hi: 'en',
+  ar: 'en',
+  bn: 'en',
+  ru: 'en',
+  ur: 'en'
 };
 
 let productivityChart: ChartInstance = null;
@@ -157,6 +203,9 @@ let latestFairness: FairnessSummary | null = null;
 let cachedBlogPosts: BlogPost[] | null = null;
 let blogFetchPromise: Promise<BlogPost[] | null> | null = null;
 let blogSelectedPostUrl: string | null = null;
+let currentSuggestion: DomainSuggestion | null = null;
+let suggestionList: DomainSuggestion[] = [];
+let suggestionIndex = 0;
 
 const POPUP_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'popup_critical_message_1', needsThreshold: true },
@@ -181,8 +230,8 @@ const FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   popup_fairness_status_personal: 'Modo pessoal ativo, sem pontuação.',
   popup_fairness_status_leisure: 'Modo lazer reduz a pressão.',
   popup_fairness_status_study: 'Modo estudo suaviza o índice.',
-  popup_fairness_status_day_off: 'Folga cadastrada — índice pausado.',
-  popup_fairness_status_vacation: 'Modo férias neutraliza o dia.',
+  popup_fairness_status_day_off: 'Folga cadastrada — índice suavizado.',
+  popup_fairness_status_vacation: 'Modo férias suaviza o índice.',
   popup_fairness_status_holiday: 'Feriado nacional neutralizando o dia.',
   popup_fairness_status_default: 'Dia útil normal.'
 };
@@ -191,6 +240,21 @@ const FAIRNESS_HOLIDAY_FALLBACKS: Record<string, string> = {
   popup_fairness_holiday_active: 'Saul ignorou o índice porque hoje é feriado.',
   popup_fairness_holiday_detected: 'Feriado detectado — sem penalizar este dia.'
 };
+
+// BUG-011: Cleanup timers when popup closes
+window.addEventListener('pagehide', () => {
+  if (criticalCountdownTimer) {
+    window.clearInterval(criticalCountdownTimer);
+    criticalCountdownTimer = null;
+  }
+  if (badgeConfettiTimer) {
+    window.clearTimeout(badgeConfettiTimer);
+    badgeConfettiTimer = null;
+  }
+  if (sirenPlayer) {
+    sirenPlayer.stop();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -231,6 +295,16 @@ function attachListeners(): void {
     }
     void chrome.tabs.create({ url: blogSelectedPostUrl });
   });
+  suggestionPrevButton?.addEventListener('click', () => moveSuggestion(-1));
+  suggestionNextButton?.addEventListener('click', () => moveSuggestion(1));
+  suggestionProductiveButton?.addEventListener('click', () =>
+    void handleSuggestionDecision('productive')
+  );
+  suggestionProcrastinationButton?.addEventListener('click', () =>
+    void handleSuggestionDecision('procrastination')
+  );
+  suggestionIgnoreButton?.addEventListener('click', () => void handleSuggestionIgnore());
+  suggestionManualButton?.addEventListener('click', () => void openManualClassification());
   manualOverrideToggle?.addEventListener('change', () => {
     const enabled = manualOverrideToggle.checked;
     void handleManualOverrideToggle(enabled);
@@ -263,7 +337,14 @@ async function handleContextChange(value: ContextModeValue): Promise<void> {
   if (!contextSelect) {
     return;
   }
-  const normalized: ContextModeValue = ['work', 'personal', 'leisure', 'study'].includes(value)
+  const normalized: ContextModeValue = [
+    'work',
+    'personal',
+    'leisure',
+    'study',
+    'dayOff',
+    'vacation'
+  ].includes(value)
     ? value
     : 'work';
   contextSelect.disabled = true;
@@ -294,6 +375,9 @@ async function hydrate(): Promise<void> {
     await ensureI18n(preference);
     latestData = data;
     latestFairness = data.fairness ?? null;
+    suggestionList = buildSuggestionList(data);
+    suggestionIndex = 0;
+    currentSuggestion = suggestionList[0] ?? null;
     criticalSoundEnabledSetting = Boolean(data.settings?.criticalSoundEnabled);
     renderSummary(data.metrics);
     renderScore(data.metrics.currentIndex);
@@ -301,6 +385,8 @@ async function hydrate(): Promise<void> {
     renderTopDomains(data.metrics);
     renderChart(data.metrics);
     renderFairness(latestFairness);
+    renderSuggestionCard(currentSuggestion, data.settings, suggestionList.length, suggestionIndex);
+    renderMlStatus(data.mlModel ?? null, data.settings?.locale ?? 'en-US');
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -314,6 +400,26 @@ async function hydrate(): Promise<void> {
   }
 }
 
+function buildSuggestionList(data: PopupData): DomainSuggestion[] {
+  const combined: DomainSuggestion[] = [
+    ...(data.activeSuggestion ? [data.activeSuggestion] : []),
+    ...(data.suggestions ?? [])
+  ].filter((item): item is DomainSuggestion => Boolean(item));
+
+  const seen = new Set<string>();
+  const sorted = combined.sort((a, b) => b.timestamp - a.timestamp);
+  const deduped: DomainSuggestion[] = [];
+  for (const entry of sorted) {
+    const key = entry.domain;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(entry);
+  }
+  return deduped;
+}
+
 async function ensureI18n(preference: LocalePreference): Promise<void> {
   if (i18n && activeLocalePreference === preference) {
     return;
@@ -321,6 +427,197 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
   i18n = await createI18n(preference);
   activeLocalePreference = preference;
   i18n.apply();
+}
+
+function moveSuggestion(delta: number): void {
+  if (!suggestionList.length) {
+    return;
+  }
+  suggestionIndex = (suggestionIndex + delta + suggestionList.length) % suggestionList.length;
+  currentSuggestion = suggestionList[suggestionIndex] ?? null;
+  renderSuggestionCard(currentSuggestion, latestData?.settings, suggestionList.length, suggestionIndex);
+}
+
+function renderSuggestionCard(
+  suggestion: DomainSuggestion | null,
+  settings?: { enableAutoClassification?: boolean },
+  totalCount?: number,
+  currentIndexValue?: number
+): void {
+  if (!suggestionCardEl || !suggestionTitleEl || !suggestionReasonsEl || !suggestionConfidenceEl) {
+    return;
+  }
+  const total = totalCount ?? suggestionList.length;
+  const activeIndex = currentIndexValue ?? suggestionIndex;
+  const featureEnabled = settings?.enableAutoClassification;
+  if (!featureEnabled || !suggestion) {
+    suggestionCardEl.classList.add('hidden');
+    if (suggestionCounterEl) {
+      suggestionCounterEl.textContent = '';
+    }
+    suggestionPrevButton?.setAttribute('disabled', 'true');
+    suggestionNextButton?.setAttribute('disabled', 'true');
+    return;
+  }
+  suggestionCardEl.classList.remove('hidden');
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'PRODUTIVO',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'PROCRASTINADOR',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'NEUTRO'
+  };
+  const titleTemplate =
+    i18n?.t('popup_suggestion_title_filled', {
+      label: labelMap[suggestion.classification]
+    }) ?? `Este site parece ser ${labelMap[suggestion.classification]}`;
+  suggestionTitleEl.textContent = titleTemplate;
+  if (suggestionClassificationEl) {
+    suggestionClassificationEl.textContent = labelMap[suggestion.classification];
+    const baseClass = 'suggestion-classification';
+    const variant =
+      suggestion.classification === 'productive'
+        ? 'success'
+        : suggestion.classification === 'procrastination'
+        ? 'danger'
+        : 'neutral';
+    suggestionClassificationEl.className = `${baseClass} ${variant}`;
+  }
+  if (suggestionDomainEl) {
+    suggestionDomainEl.textContent = suggestion.domain;
+  }
+  if (suggestionCounterEl) {
+    if (total > 1) {
+      suggestionCounterEl.textContent = `${activeIndex + 1}/${total}`;
+    } else {
+      suggestionCounterEl.textContent = '';
+    }
+  }
+  if (suggestionPrevButton && suggestionNextButton) {
+    const enableNav = total > 1;
+    suggestionPrevButton.disabled = !enableNav;
+    suggestionNextButton.disabled = !enableNav;
+  }
+  const confidenceTemplate =
+    i18n?.t('popup_suggestion_confidence_filled', {
+      confidence: Math.round(suggestion.confidence)
+    }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
+  suggestionConfidenceEl.textContent = confidenceTemplate;
+  suggestionReasonsEl.innerHTML = '';
+  suggestion.reasons.slice(0, 3).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = translateSuggestionReason(reason, i18n);
+    suggestionReasonsEl.appendChild(li);
+  });
+}
+
+function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): void {
+  if (!mlCardEl || !mlStatusBadgeEl || !mlUpdatesEl || !mlActiveFeaturesEl || !mlLastUpdatedEl || !mlBiasEl) {
+    return;
+  }
+
+  const formatNumber = (value: number): string => value.toLocaleString(locale ?? 'en-US');
+  mlStatusBadgeEl.classList.remove('training', 'cold', 'unavailable');
+
+  if (!status) {
+    mlStatusBadgeEl.textContent = i18n?.t('popup_ml_status_unavailable') ?? 'Unavailable';
+    mlStatusBadgeEl.classList.add('unavailable');
+    mlUpdatesEl.textContent = '--';
+    mlActiveFeaturesEl.textContent = '--';
+    mlLastUpdatedEl.textContent = '--';
+    mlBiasEl.textContent = '--';
+    return;
+  }
+
+  const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
+  mlStatusBadgeEl.textContent = maturity.label;
+  mlStatusBadgeEl.classList.add(maturity.className);
+
+  mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
+  mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
+  mlBiasEl.textContent = status.bias.toFixed(3);
+  if (status.lastUpdated > 0) {
+    mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(locale ?? 'en-US');
+  } else {
+    mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
+  }
+}
+
+function resolveModelMaturity(
+  totalUpdates: number,
+  activeFeatures: number
+): { label: string; className: string } {
+  if (totalUpdates < 5 || activeFeatures < 20) {
+    return {
+      label: i18n?.t('popup_ml_status_cold_start') ?? 'Cold start',
+      className: 'cold'
+    };
+  }
+  if (totalUpdates < 30 || activeFeatures < 100) {
+    return {
+      label: i18n?.t('popup_ml_status_warming') ?? 'Warming',
+      className: 'training'
+    };
+  }
+  return {
+    label: i18n?.t('popup_ml_status_ready') ?? 'Ready',
+    className: 'training'
+  };
+}
+
+async function handleSuggestionDecision(target: 'productive' | 'procrastination'): Promise<void> {
+  if (!currentSuggestion) {
+    return;
+  }
+  setSuggestionBusy(true);
+  try {
+    await sendRuntimeMessage('apply-suggestion', {
+      domain: currentSuggestion.domain,
+      classification: target
+    });
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to apply suggestion', error);
+  } finally {
+    setSuggestionBusy(false);
+  }
+}
+
+async function handleSuggestionIgnore(): Promise<void> {
+  if (!currentSuggestion) {
+    return;
+  }
+  setSuggestionBusy(true);
+  try {
+    await sendRuntimeMessage('ignore-suggestion', { domain: currentSuggestion.domain });
+    await hydrate();
+  } catch (error) {
+    console.error('Failed to ignore suggestion', error);
+  } finally {
+    setSuggestionBusy(false);
+  }
+}
+
+function openManualClassification(): void {
+  const url = chrome.runtime.getURL('src/options/options.html#vilains');
+  void chrome.tabs.create({ url });
+}
+
+function setSuggestionBusy(busy: boolean): void {
+  [
+    suggestionProductiveButton,
+    suggestionProcrastinationButton,
+    suggestionIgnoreButton,
+    suggestionManualButton
+  ].forEach((button) => {
+    if (!button) {
+      return;
+    }
+    button.disabled = busy;
+    if (busy) {
+      button.setAttribute('aria-busy', 'true');
+    } else {
+      button.removeAttribute('aria-busy');
+    }
+  });
 }
 
 function renderSummary(metrics: DailyMetrics): void {
@@ -421,19 +718,6 @@ function renderScore(score: number): void {
   }
   toggleCriticalMode(score >= threshold);
   lastCriticalScoreNotified = score >= threshold ? score : -Infinity;
-}
-
-function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
-  if (score <= 25) {
-    return 'good';
-  }
-  if (score <= 50) {
-    return 'warn';
-  }
-  if (score >= 70) {
-    return 'alert';
-  }
-  return 'neutral';
 }
 
 function triggerBadgeConfetti(): void {

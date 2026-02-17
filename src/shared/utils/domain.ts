@@ -16,7 +16,7 @@ export function normalizeDomain(domain: string): string {
   return domain.trim().toLowerCase();
 }
 
-function domainMatches(host: string, candidate: string): boolean {
+export function domainMatches(host: string, candidate: string): boolean {
   const normalizedCandidate = normalizeDomain(candidate);
   if (!normalizedCandidate) {
     return false;

@@ -1,42 +1,53 @@
 import {
   DailyMetrics,
   DomainStats,
+  DomainSuggestion,
   FairnessRule,
   FairnessSummary,
   HourlyBucket,
   LocalePreference,
+  MlModelStatus,
   TimelineEntry,
   WorkInterval,
-  ContextModeValue
+  ContextModeValue,
+  ExtensionSettings
 } from '../shared/types.js';
-import {
-  formatDuration,
-  formatTimeRange,
-  isWithinWorkSchedule,
-  splitDurationByHour
-} from '../shared/utils/time.js';
-import {
-  calculateKpis,
-  CalculatedKpis,
-  formatPercentage,
-  formatRate,
-  formatProductivityRatio
-} from '../shared/metrics.js';
+import { formatDuration, formatTimeRange, isWithinWorkSchedule, splitDurationByHour, getTodayKey, formatDateKey } from '../shared/utils/time.js';
+import { calculateKpis, formatPercentage, CalculatedKpis } from '../shared/metrics.js';
 import { TAB_SWITCH_SERIES } from '../shared/tab-switch.js';
 import { createI18n, I18nService } from '../shared/i18n.js';
+import { translateSuggestionReason } from '../shared/utils/suggestion-reasons.js';
+import { ensureHostPermission } from '../shared/utils/permissions.js';
+import { getScoreBand, getScoreMessageBand, type ScoreMessageBand } from '../shared/score.js';
 
 declare const Chart: any;
 declare const jspdf: { jsPDF: new (...args: any[]) => any };
 
 type ChartInstance = any;
 
+const OPENAI_HOST_PERMISSION = 'https://api.openai.com/*';
 const reportDateEl = document.getElementById('reportDate') as HTMLElement;
 const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
 const heroIndexEl = document.getElementById('heroIndex') as HTMLElement;
 const heroFocusEl = document.getElementById('heroFocus') as HTMLElement;
 const heroSwitchesEl = document.getElementById('heroSwitches') as HTMLElement;
+const heroProductiveEl = document.getElementById('heroProductive') as HTMLElement | null;
+const heroProcrastinationEl = document.getElementById('heroProcrastination') as HTMLElement | null;
+const heroIdleEl = document.getElementById('heroIdle') as HTMLElement | null;
 const fairnessStatusReportEl = document.getElementById('fairnessStatusReport') as HTMLElement | null;
 const fairnessHintReportEl = document.getElementById('fairnessHintReport') as HTMLElement | null;
+const suggestionSectionEl = document.getElementById('suggestionSection') as HTMLElement | null;
+const suggestionReportTitleEl = document.getElementById('suggestionReportTitle') as HTMLElement | null;
+const suggestionReportReasonsEl = document.getElementById('suggestionReportReasons') as HTMLUListElement | null;
+const mlSummarySectionEl = document.getElementById('mlSummarySection') as HTMLElement | null;
+const mlStatusBadgeEl = document.getElementById('mlStatusBadge') as HTMLSpanElement | null;
+const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
+const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
+const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
+const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
+const mlLearningRateEl = document.getElementById('mlLearningRate') as HTMLElement | null;
+const mlL2El = document.getElementById('mlL2') as HTMLElement | null;
+const mlMinFeatureEl = document.getElementById('mlMinFeature') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -83,13 +94,72 @@ const contextBreakdownSection = document.getElementById(
 const contextBreakdownBody = document
   .getElementById('contextBreakdownTable')
   ?.querySelector('tbody') as HTMLTableSectionElement | null;
+const vscodeReportSection = document.getElementById('vscodeReportSection') as HTMLElement | null;
+const vscodeReportDisabledEl = document.getElementById('vscodeReportDisabled') as HTMLElement | null;
+const vscodeReportContentEl = document.getElementById('vscodeReportContent') as HTMLElement | null;
+const vscodeReportStatusEl = document.getElementById('vscodeReportStatus') as HTMLElement | null;
+const vscodeFilterProjectEl = document.getElementById('vscodeFilterProject') as HTMLSelectElement | null;
+const vscodeFilterLanguageEl = document.getElementById('vscodeFilterLanguage') as HTMLSelectElement | null;
+const vscodeFilterMachineEl = document.getElementById('vscodeFilterMachine') as HTMLSelectElement | null;
+const vscodeApplyFiltersButton = document.getElementById(
+  'vscodeApplyFilters'
+) as HTMLButtonElement | null;
+const vscodeResetFiltersButton = document.getElementById(
+  'vscodeResetFilters'
+) as HTMLButtonElement | null;
+const vscodeStatTodayEl = document.getElementById('vscodeStatToday') as HTMLElement | null;
+const vscodeProjectsListEl = document.getElementById('vscodeProjectsList') as HTMLUListElement | null;
+const vscodeLanguagesListEl = document.getElementById('vscodeLanguagesList') as HTMLUListElement | null;
+const vscodeSummariesListEl = document.getElementById('vscodeSummariesList') as HTMLUListElement | null;
+const openVscodeOptionsButton = document.getElementById(
+  'openVscodeOptions'
+) as HTMLButtonElement | null;
+const vscodeBranchesListEl = document.getElementById('vscodeBranchesList') as HTMLUListElement | null;
+const vscodeActivityListEl = document.getElementById('vscodeActivityList') as HTMLUListElement | null;
+const vscodeHourlyChartCanvas = document.getElementById('vscodeHourlyChart') as HTMLCanvasElement | null;
+const vscodeHourlyEmptyEl = document.getElementById('vscodeHourlyEmpty') as HTMLElement | null;
+const vscodeProjectsChartCanvas = document.getElementById('vscodeProjectsChart') as HTMLCanvasElement | null;
+const vscodeProjectsEmptyEl = document.getElementById('vscodeProjectsEmpty') as HTMLElement | null;
+const vscodeCommitsChartCanvas = document.getElementById('vscodeCommitsChart') as HTMLCanvasElement | null;
+const vscodeCommitsEmptyEl = document.getElementById('vscodeCommitsEmpty') as HTMLElement | null;
+const vscodeCrossReferenceChartCanvas = document.getElementById('vscodeCrossReferenceChart') as HTMLCanvasElement | null;
+const vscodeCrossReferenceEmptyEl = document.getElementById('vscodeCrossReferenceEmpty') as HTMLElement | null;
+const vscodeWorkspacesListEl = document.getElementById('vscodeWorkspacesList') as HTMLUListElement | null;
+const vscodeEditorInfoEl = document.getElementById('vscodeEditorInfo') as HTMLElement | null;
+const vscodeIndexValueEl = document.getElementById('vscodeIndexValue') as HTMLElement | null;
+const vscodeKpiFocusEl = document.getElementById('vscodeKpiFocus') as HTMLElement | null;
+const vscodeKpiSwitchesEl = document.getElementById('vscodeKpiSwitches') as HTMLElement | null;
+const vscodeKpiProductiveEl = document.getElementById('vscodeKpiProductive') as HTMLElement | null;
+const vscodeKpiProcrastEl = document.getElementById('vscodeKpiProcrast') as HTMLElement | null;
+const vscodeKpiInactiveEl = document.getElementById('vscodeKpiInactive') as HTMLElement | null;
+const vscodeTelemetrySectionEl = document.getElementById('vscodeTelemetrySection') as HTMLElement | null;
+const vscodeTelDebugSessionsEl = document.getElementById('vscodeTelDebugSessions') as HTMLElement | null;
+const vscodeTelDebugTimeEl = document.getElementById('vscodeTelDebugTime') as HTMLElement | null;
+const vscodeTelTestSuccessEl = document.getElementById('vscodeTelTestSuccess') as HTMLElement | null;
+const vscodeTelTestRunsEl = document.getElementById('vscodeTelTestRuns') as HTMLElement | null;
+const vscodeTelBuildsEl = document.getElementById('vscodeTelBuilds') as HTMLElement | null;
+const vscodeTelBuildTimeEl = document.getElementById('vscodeTelBuildTime') as HTMLElement | null;
+const vscodeTelPomodorosEl = document.getElementById('vscodeTelPomodoros') as HTMLElement | null;
+const vscodeTelFocusTimeEl = document.getElementById('vscodeTelFocusTime') as HTMLElement | null;
+const vscodeTelMaxComboEl = document.getElementById('vscodeTelMaxCombo') as HTMLElement | null;
+const vscodeTelComboMinutesEl = document.getElementById('vscodeTelComboMinutes') as HTMLElement | null;
+const vscodeTerminalChartCanvas = document.getElementById('vscodeTerminalCommandsChart') as HTMLCanvasElement | null;
+const vscodeTerminalEmptyEl = document.getElementById('vscodeTerminalEmpty') as HTMLElement | null;
+const vscodeFocusPatternsChartCanvas = document.getElementById('vscodeFocusPatternsChart') as HTMLCanvasElement | null;
+const vscodeFocusEmptyEl = document.getElementById('vscodeFocusEmpty') as HTMLElement | null;
+const vscodeComboTimelineChartCanvas = document.getElementById('vscodeComboTimelineChart') as HTMLCanvasElement | null;
+const vscodeComboTimelineEmptyEl = document.getElementById('vscodeComboTimelineEmpty') as HTMLElement | null;
+const vscodeTopExtensionsListEl = document.getElementById('vscodeTopExtensionsList') as HTMLUListElement | null;
+const vscodeTopDebuggedFilesListEl = document.getElementById('vscodeTopDebuggedFilesList') as HTMLUListElement | null;
+const vscodeTopErrorFilesListEl = document.getElementById('vscodeTopErrorFilesList') as HTMLUListElement | null;
+const vscodeRefactoringStatsEl = document.getElementById('vscodeRefactoringStats') as HTMLElement | null;
 
-const HERO_MESSAGE_KEYS: Array<{ max: number; key: string }> = [
-  { max: 25, key: 'report_hero_message_excellent' },
-  { max: 50, key: 'report_hero_message_ok' },
-  { max: 75, key: 'report_hero_message_warning' },
-  { max: 100, key: 'report_hero_message_alert' }
-];
+const HERO_MESSAGE_KEY_BY_BAND: Record<ScoreMessageBand, string> = {
+  excellent: 'report_hero_message_excellent',
+  ok: 'report_hero_message_ok',
+  warning: 'report_hero_message_warning',
+  alert: 'report_hero_message_alert'
+};
 
 const REPORT_CRITICAL_MESSAGE_KEYS: Array<{ key: string; needsThreshold?: boolean }> = [
   { key: 'report_banner_message_1', needsThreshold: true },
@@ -114,8 +184,8 @@ const REPORT_FAIRNESS_STATUS_FALLBACKS: Record<string, string> = {
   report_fairness_status_personal: 'Modo pessoal — sem pontuação.',
   report_fairness_status_leisure: 'Modo lazer reduziu as cobranças.',
   report_fairness_status_study: 'Modo estudo suavizou as penalidades.',
-  report_fairness_status_day_off: 'Folga cadastrada neutralizou o índice.',
-  report_fairness_status_vacation: 'Modo férias zerou o dia.',
+  report_fairness_status_day_off: 'Folga cadastrada suavizou o índice.',
+  report_fairness_status_vacation: 'Modo férias suavizou o índice.',
   report_fairness_status_holiday: 'Feriado nacional neutralizou o índice.',
   report_fairness_status_default: 'Dia útil normal.'
 };
@@ -154,16 +224,18 @@ let hourlyChart: ChartInstance = null;
 let compositionChart: ChartInstance = null;
 let domainBreakdownChart: ChartInstance = null;
 let tabSwitchChart: ChartInstance = null;
+let vscodeHourlyChart: ChartInstance = null;
+let vscodeProjectsChart: ChartInstance = null;
+let vscodeCommitsChart: ChartInstance = null;
+let vscodeCrossReferenceChart: ChartInstance = null;
+let vscodeTerminalChart: ChartInstance = null;
+let vscodeFocusChart: ChartInstance = null;
+let vscodeComboTimelineChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
+let latestVscodeDashboard: any = null;
 let locale = 'pt-BR';
 let openAiKey = '';
-let latestSettings: {
-  locale?: string;
-  localePreference?: LocalePreference;
-  openAiKey?: string;
-  criticalScoreThreshold?: number;
-  workSchedule?: WorkInterval[];
-} | null = null;
+let latestSettings: ExtensionSettings | null = null;
 let bannerCountdownTimer: number | null = null;
 let bannerCountdownValue = 45;
 let latestTimelineNarrative: string[] = [];
@@ -175,6 +247,9 @@ let activeLocalePreference: LocalePreference = 'auto';
 let hasAiNarrative = false;
 let toastTimer: number | null = null;
 let latestFairness: FairnessSummary | null = null;
+let vscodeReportReady = false;
+let latestSuggestion: DomainSuggestion | null = null;
+let latestMlModel: MlModelStatus | null = null;
 const EXTENSION_SITE_URL = 'https://donotavio.github.io/saul_goodman/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -247,7 +322,10 @@ async function hydrate(): Promise<void> {
     locale = latestSettings?.locale ?? 'pt-BR';
     openAiKey = latestSettings?.openAiKey ?? '';
     latestFairness = response.fairness ?? null;
+    latestSuggestion = response.activeSuggestion ?? null;
+    latestMlModel = response.mlModel ?? null;
     renderReport(latestMetrics);
+    void hydrateVscodeReport();
   } catch (error) {
     console.error(error);
     heroMessageEl.textContent =
@@ -264,9 +342,1164 @@ async function ensureI18n(preference: LocalePreference): Promise<void> {
   i18n.apply();
 }
 
+async function hydrateVscodeReport(): Promise<void> {
+  if (!vscodeReportSection || !latestSettings) {
+    return;
+  }
+  vscodeReportSection.classList.remove('hidden');
+  const enabled = Boolean(latestSettings.vscodeIntegrationEnabled);
+  if (!enabled) {
+    vscodeReportDisabledEl?.classList.remove('hidden');
+    vscodeReportContentEl?.classList.add('hidden');
+    setVscodeReportStatus('report_vscode_disabled', 'Relatorios do VS Code desativados.');
+    return;
+  }
+
+  const baseUrl = latestSettings.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    vscodeReportDisabledEl?.classList.remove('hidden');
+    vscodeReportContentEl?.classList.add('hidden');
+    setVscodeReportStatus(
+      'report_vscode_missing_config',
+      'Configure o backend local e a chave do VS Code nas options.'
+    );
+    return;
+  }
+
+  vscodeReportDisabledEl?.classList.add('hidden');
+  vscodeReportContentEl?.classList.remove('hidden');
+  if (!vscodeReportReady) {
+    resetVscodeFilters();
+    vscodeApplyFiltersButton?.addEventListener('click', () => void refreshVscodeReport());
+    vscodeResetFiltersButton?.addEventListener('click', () => {
+      resetVscodeFilters();
+      void refreshVscodeReport();
+    });
+    openVscodeOptionsButton?.addEventListener('click', () => {
+      const url = chrome.runtime.getURL('src/options/options.html#vscode');
+      void chrome.tabs.create({ url });
+    });
+    vscodeReportReady = true;
+  }
+  await refreshVscodeReport();
+}
+
+function resetVscodeFilters(): void {
+  if (vscodeFilterProjectEl) {
+    vscodeFilterProjectEl.value = '';
+  }
+  if (vscodeFilterLanguageEl) {
+    vscodeFilterLanguageEl.value = '';
+  }
+  if (vscodeFilterMachineEl) {
+    vscodeFilterMachineEl.value = '';
+  }
+}
+
+async function refreshVscodeReport(): Promise<void> {
+  if (!latestSettings?.vscodeIntegrationEnabled) {
+    return;
+  }
+  const baseUrl = latestSettings.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    return;
+  }
+  const start = getTodayKey();
+  const end = start;
+  const project = vscodeFilterProjectEl?.value ?? '';
+  const language = vscodeFilterLanguageEl?.value ?? '';
+  const machine = vscodeFilterMachineEl?.value ?? '';
+
+  setVscodeReportStatus('report_vscode_loading', 'Carregando dados do VS Code...', 'pending');
+
+  try {
+    const params = { start, end, project, language, machine } as Record<string, string>;
+    const [dashboard, summaries, machines, telemetry] = await Promise.all([
+      fetchVscodeJson('/v1/vscode/dashboard', params),
+      fetchVscodeJson('/v1/vscode/summaries', params),
+      fetchVscodeJson('/v1/vscode/machines', params),
+      fetchVscodeJson('/v1/vscode/telemetry', params).catch(() => null)
+    ]);
+
+    latestVscodeDashboard = dashboard?.data || {};
+    
+    updateVscodeSelect(vscodeFilterProjectEl, latestVscodeDashboard.projects || [], project);
+    updateVscodeSelect(vscodeFilterLanguageEl, latestVscodeDashboard.languages || [], language);
+    updateVscodeSelect(vscodeFilterMachineEl, machines?.data || [], machine, true);
+
+    if (vscodeStatTodayEl) {
+      vscodeStatTodayEl.textContent = latestVscodeDashboard.overview?.humanReadableTotal ?? '--';
+    }
+
+    renderVscodeIndex(latestVscodeDashboard.overview?.index);
+    renderVscodeKpis(
+      latestVscodeDashboard.overview || {},
+      latestVscodeDashboard.activity || {},
+      telemetry?.data?.focus?.totalFocusMs
+    );
+
+    renderVscodeList(vscodeProjectsListEl, latestVscodeDashboard.projects || []);
+    renderVscodeList(vscodeLanguagesListEl, latestVscodeDashboard.languages || []);
+    renderVscodeSummaries(vscodeSummariesListEl, summaries?.data?.days);
+    renderVscodeList(vscodeBranchesListEl, latestVscodeDashboard.branches || []);
+    renderVscodeActivity(latestVscodeDashboard.activity || {}, latestVscodeDashboard.git || {});
+    renderVscodeEditorInfo(latestVscodeDashboard.editor);
+    renderVscodeWorkspaces(latestVscodeDashboard.workspaces || []);
+    renderVscodeHourlyChart(latestVscodeDashboard.hourly || []);
+    renderVscodeProjectsChart(latestVscodeDashboard.projects || []);
+    renderVscodeCommitsChart(latestVscodeDashboard.git || {});
+    renderVscodeCrossReferenceChart(latestVscodeDashboard.languagesByProject || []);
+
+    if (telemetry?.data) {
+      renderVscodeTelemetry(telemetry.data);
+    }
+
+    setVscodeReportStatus('report_vscode_loaded', 'Dados sincronizados.');
+  } catch (error) {
+    console.error('Falha ao buscar dados do VS Code:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+    const details = {
+      baseUrl: latestSettings?.vscodeLocalApiUrl,
+      hasPairingKey: !!latestSettings?.vscodePairingKey,
+      error: errorMessage
+    };
+    console.error('Detalhes:', JSON.stringify(details, null, 2));
+    
+    if (errorMessage.includes('Failed to fetch') || errorMessage.includes('fetch')) {
+      setVscodeReportStatus(
+        'report_vscode_daemon_inactive',
+        'Daemon do VS Code não está ativo. Ative o daemon na extensão VS Code e tente novamente.',
+        'error'
+      );
+    } else {
+      setVscodeReportStatus('report_vscode_error', `Erro: ${errorMessage}`, 'error');
+    }
+  }
+}
+
+async function fetchVscodeJson(path: string, params: Record<string, string>): Promise<any> {
+  const baseUrl = latestSettings?.vscodeLocalApiUrl?.trim();
+  const pairingKey = latestSettings?.vscodePairingKey?.trim();
+  if (!baseUrl || !pairingKey) {
+    throw new Error('Missing VS Code config');
+  }
+  const url = new URL(path, baseUrl);
+  url.searchParams.set('key', pairingKey);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      url.searchParams.set(key, value);
+    }
+  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const res = await fetch(url.toString(), { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function updateVscodeSelect(
+  select: HTMLSelectElement | null,
+  data: Array<{ name?: string; id?: string }> | undefined,
+  current: string,
+  useId = false
+): void {
+  if (!select || !Array.isArray(data)) {
+    return;
+  }
+  const saved = current || select.value;
+  select.innerHTML = `<option value="">${i18n?.t('report_vscode_filter_all') ?? 'Todos'}</option>`;
+  data.forEach((item) => {
+    const value = useId ? item.id ?? item.name ?? '' : item.name ?? item.id ?? '';
+    if (!value) {
+      return;
+    }
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+  select.value = saved;
+}
+
+function renderVscodeList(
+  list: HTMLUListElement | null,
+  items: Array<{ name: string; total_seconds: number }> | undefined
+): void {
+  if (!list) {
+    return;
+  }
+  list.innerHTML = '';
+  if (!items || items.length === 0) {
+    const li = document.createElement('li');
+    li.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
+    list.appendChild(li);
+    return;
+  }
+  items.slice(0, 8).forEach((item) => {
+    const li = document.createElement('li');
+    const nameEl = document.createElement('span');
+    nameEl.textContent = item.name;
+    const durationEl = document.createElement('span');
+    durationEl.textContent = formatDuration(item.total_seconds * 1000);
+    li.appendChild(nameEl);
+    li.appendChild(durationEl);
+    list.appendChild(li);
+  });
+}
+
+function renderVscodeSummaries(
+  list: HTMLUListElement | null,
+  days: Array<{ date: string; total_seconds: number }> | undefined
+): void {
+  if (!list) {
+    return;
+  }
+  list.innerHTML = '';
+  if (!days || days.length === 0) {
+    const li = document.createElement('li');
+    li.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
+    list.appendChild(li);
+    return;
+  }
+  days.forEach((day) => {
+    const li = document.createElement('li');
+    const dateEl = document.createElement('span');
+    dateEl.textContent = day.date;
+    const durationEl = document.createElement('span');
+    durationEl.textContent = formatDuration(day.total_seconds * 1000);
+    li.appendChild(dateEl);
+    li.appendChild(durationEl);
+    list.appendChild(li);
+  });
+}
+
+function setVscodeReportStatus(key: string, fallback: string, variant?: 'pending' | 'error'): void {
+  if (!vscodeReportStatusEl) {
+    return;
+  }
+  vscodeReportStatusEl.textContent = i18n?.t(key) ?? fallback;
+  vscodeReportStatusEl.classList.remove('pending', 'error', 'hidden');
+  if (variant) {
+    vscodeReportStatusEl.classList.add(variant);
+  }
+}
+
+function renderVscodeActivity(activity: any, git: any): void {
+  if (!vscodeActivityListEl) {
+    return;
+  }
+  vscodeActivityListEl.innerHTML = '';
+  
+  const items = [
+    {
+      key: 'report_vscode_activity_tab_switches',
+      fallback: 'Tab Switches',
+      value: activity.totalTabSwitches || 0
+    },
+    {
+      key: 'report_vscode_activity_commits',
+      fallback: 'Commits',
+      value: git.totalCommits || 0
+    },
+    {
+      key: 'report_vscode_activity_files_changed',
+      fallback: 'Files Changed',
+      value: git.totalFilesChanged || 0
+    },
+    {
+      key: 'report_vscode_activity_lines_added',
+      fallback: 'Lines Added',
+      value: git.totalLinesAdded || 0
+    },
+    {
+      key: 'report_vscode_activity_lines_deleted',
+      fallback: 'Lines Deleted',
+      value: git.totalLinesDeleted || 0
+    }
+  ];
+
+  items.forEach(item => {
+    const li = document.createElement('li');
+    const labelEl = document.createElement('span');
+    labelEl.textContent = i18n?.t(item.key) ?? item.fallback;
+    const valueEl = document.createElement('span');
+    valueEl.textContent = String(item.value);
+    li.appendChild(labelEl);
+    li.appendChild(valueEl);
+    vscodeActivityListEl.appendChild(li);
+  });
+}
+
+function renderVscodeEditorInfo(editor: any): void {
+  if (!vscodeEditorInfoEl) {
+    return;
+  }
+  if (!editor) {
+    vscodeEditorInfoEl.textContent =
+      i18n?.t('report_vscode_editor_empty') ?? 'No editor metadata available';
+    return;
+  }
+
+  vscodeEditorInfoEl.innerHTML = '';
+  const unknownLabel = i18n?.t('report_vscode_editor_value_unknown') ?? 'unknown';
+  const emptyLabel = i18n?.t('report_vscode_editor_value_empty') ?? 'empty';
+  const ul = document.createElement('ul');
+  ul.className = 'vscode-report-list';
+  const rows = [
+    [i18n?.t('report_vscode_editor_label_version') ?? 'VS Code Version', editor.vscodeVersion || unknownLabel],
+    [i18n?.t('report_vscode_editor_label_extensions') ?? 'Extensions', editor.extensionsCount ?? 0],
+    [i18n?.t('report_vscode_editor_label_theme') ?? 'Theme', editor.themeKind || unknownLabel],
+    [i18n?.t('report_vscode_editor_label_workspace') ?? 'Workspace Type', editor.workspaceType || emptyLabel]
+  ];
+  rows.forEach(([label, value]) => {
+    const li = document.createElement('li');
+    const labelEl = document.createElement('span');
+    labelEl.textContent = String(label);
+    const valueEl = document.createElement('span');
+    valueEl.textContent = String(value);
+    li.appendChild(labelEl);
+    li.appendChild(valueEl);
+    ul.appendChild(li);
+  });
+  vscodeEditorInfoEl.appendChild(ul);
+}
+
+function renderVscodeIndex(index: number | undefined): void {
+  if (!vscodeIndexValueEl) {
+    return;
+  }
+  
+  if (typeof index !== 'number') {
+    vscodeIndexValueEl.textContent = '--';
+    vscodeIndexValueEl.className = 'vscode-index-value';
+    return;
+  }
+
+  vscodeIndexValueEl.textContent = index.toString();
+  vscodeIndexValueEl.classList.remove('good', 'warn', 'alert');
+  
+  if (index <= 25) {
+    vscodeIndexValueEl.classList.add('good');
+  } else if (index <= 50) {
+    vscodeIndexValueEl.classList.add('warn');
+  } else if (index >= 70) {
+    vscodeIndexValueEl.classList.add('alert');
+  }
+}
+
+function renderVscodeKpis(overview: any, activity: any, focusTotalMs?: number): void {
+  const totalSeconds = overview.totalSeconds || 0;
+  const totalMs = totalSeconds * 1000;
+  const totalSwitches = activity.totalTabSwitches || 0;
+
+  const productiveSeconds = Math.round(totalSeconds * 0.8);
+  const procrastSeconds = Math.round(totalSeconds * 0.05);
+  const inactiveSeconds = totalSeconds - productiveSeconds - procrastSeconds;
+
+  const hasTelemetryFocus = typeof focusTotalMs === 'number' && totalMs > 0;
+  const telemetryFocusRate = hasTelemetryFocus
+    ? Math.min(100, Math.max(0, Math.round((focusTotalMs / totalMs) * 100)))
+    : null;
+  const focusRate =
+    telemetryFocusRate ?? (totalSeconds > 0 ? Math.round((productiveSeconds / totalSeconds) * 100) : 0);
+
+  if (vscodeKpiFocusEl) {
+    vscodeKpiFocusEl.textContent = `${focusRate}%`;
+  }
+  if (vscodeKpiSwitchesEl) {
+    vscodeKpiSwitchesEl.textContent = totalSwitches.toString();
+  }
+  if (vscodeKpiProductiveEl) {
+    vscodeKpiProductiveEl.textContent = formatDuration(productiveSeconds * 1000);
+  }
+  if (vscodeKpiProcrastEl) {
+    vscodeKpiProcrastEl.textContent = formatDuration(procrastSeconds * 1000);
+  }
+  if (vscodeKpiInactiveEl) {
+    vscodeKpiInactiveEl.textContent = formatDuration(inactiveSeconds * 1000);
+  }
+}
+
+function renderVscodeWorkspaces(workspaces: any[]): void {
+  if (!vscodeWorkspacesListEl) {
+    return;
+  }
+  vscodeWorkspacesListEl.innerHTML = '';
+  
+  if (!workspaces.length) {
+    const li = document.createElement('li');
+    li.textContent = i18n?.t('report_vscode_workspaces_empty') ?? 'No workspaces tracked';
+    vscodeWorkspacesListEl.appendChild(li);
+    return;
+  }
+
+  workspaces.forEach(ws => {
+    const li = document.createElement('li');
+    const nameEl = document.createElement('span');
+    nameEl.textContent = String(ws?.name ?? '');
+    const countEl = document.createElement('span');
+    const fileCount = ws?.totalFiles || 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_workspaces_files', { count: fileCount }) ?? `${fileCount} files`;
+    li.appendChild(nameEl);
+    li.appendChild(countEl);
+    vscodeWorkspacesListEl.appendChild(li);
+  });
+}
+
+function renderVscodeHourlyChart(hourlyData: any[]): void {
+  if (!vscodeHourlyChartCanvas || !hourlyData || hourlyData.length === 0) {
+    if (vscodeHourlyChartCanvas) {
+      vscodeHourlyChartCanvas.style.display = 'none';
+    }
+    if (vscodeHourlyEmptyEl) {
+      vscodeHourlyEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  const totalSeconds = hourlyData.reduce((sum, h) => sum + (h.total || 0), 0);
+  if (totalSeconds === 0) {
+    vscodeHourlyChartCanvas.style.display = 'none';
+    if (vscodeHourlyEmptyEl) {
+      vscodeHourlyEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeHourlyChartCanvas.style.display = 'block';
+  if (vscodeHourlyEmptyEl) {
+    vscodeHourlyEmptyEl.classList.add('hidden');
+  }
+
+  const labels = hourlyData.map(h => `${String(h.hour).padStart(2, '0')}h`);
+  const codingMinutes = hourlyData.map(h => Math.round((h.coding || 0) / 60));
+  const debuggingMinutes = hourlyData.map(h => Math.round((h.debugging || 0) / 60));
+  const buildingMinutes = hourlyData.map(h => Math.round((h.building || 0) / 60));
+  const testingMinutes = hourlyData.map(h => Math.round((h.testing || 0) / 60));
+
+  if (vscodeHourlyChart) {
+    vscodeHourlyChart.destroy();
+  }
+
+  const ctx = vscodeHourlyChartCanvas.getContext('2d');
+  vscodeHourlyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Coding',
+          data: codingMinutes,
+          backgroundColor: '#ffc857',
+          borderColor: '#ffb347',
+          borderWidth: 1
+        },
+        {
+          label: 'Debugging',
+          data: debuggingMinutes,
+          backgroundColor: '#f59e0b',
+          borderColor: '#d97706',
+          borderWidth: 1
+        },
+        {
+          label: 'Building',
+          data: buildingMinutes,
+          backgroundColor: '#10b981',
+          borderColor: '#059669',
+          borderWidth: 1
+        },
+        {
+          label: 'Testing',
+          data: testingMinutes,
+          backgroundColor: '#0a7e07',
+          borderColor: '#085d05',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { color: '#6b7280', font: { size: 10 } }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          grid: { color: '#e5e7eb' },
+          ticks: { color: '#6b7280', font: { size: 10 } },
+          title: { display: true, text: 'Minutes', color: '#374151', font: { size: 11, weight: 'bold' } }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: { color: '#374151', font: { size: 11 }, padding: 12, usePointStyle: true }
+        }
+      }
+    }
+  });
+}
+
+function renderVscodeProjectsChart(projects: any[]): void {
+  if (!vscodeProjectsChartCanvas || !projects || projects.length === 0) {
+    if (vscodeProjectsChartCanvas) {
+      vscodeProjectsChartCanvas.style.display = 'none';
+    }
+    if (vscodeProjectsEmptyEl) {
+      vscodeProjectsEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  const topProjects = projects.slice(0, 5);
+  const totalSeconds = topProjects.reduce((sum, p) => sum + (p.total_seconds || 0), 0);
+  
+  if (totalSeconds === 0) {
+    vscodeProjectsChartCanvas.style.display = 'none';
+    if (vscodeProjectsEmptyEl) {
+      vscodeProjectsEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeProjectsChartCanvas.style.display = 'block';
+  if (vscodeProjectsEmptyEl) {
+    vscodeProjectsEmptyEl.classList.add('hidden');
+  }
+
+  if (vscodeProjectsChart) {
+    vscodeProjectsChart.destroy();
+  }
+
+  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ffc857', '#ffb347'];
+  const ctx = vscodeProjectsChartCanvas.getContext('2d');
+  vscodeProjectsChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: topProjects.map(p => p.name),
+      datasets: [{
+        data: topProjects.map(p => Math.round((p.total_seconds || 0) / 60)),
+        backgroundColor: colors,
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: { color: '#1f2937', font: { size: 11 }, padding: 10, boxWidth: 15 }
+        }
+      }
+    }
+  });
+}
+
+function renderVscodeCommitsChart(gitData: any): void {
+  if (!vscodeCommitsChartCanvas) {
+    return;
+  }
+  
+  const totalCommits = gitData.totalCommits || 0;
+  
+  if (totalCommits === 0) {
+    vscodeCommitsChartCanvas.style.display = 'none';
+    if (vscodeCommitsEmptyEl) {
+      vscodeCommitsEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeCommitsChartCanvas.style.display = 'block';
+  if (vscodeCommitsEmptyEl) {
+    vscodeCommitsEmptyEl.classList.add('hidden');
+  }
+
+  if (vscodeCommitsChart) {
+    vscodeCommitsChart.destroy();
+  }
+
+  const hours = Array.from({length: 24}, (_, i) => i);
+  const commitsByHour = Array(24).fill(0);
+  commitsByHour[9] = Math.ceil(totalCommits * 0.2);
+  commitsByHour[11] = Math.ceil(totalCommits * 0.3);
+  commitsByHour[14] = Math.ceil(totalCommits * 0.25);
+  commitsByHour[16] = Math.ceil(totalCommits * 0.15);
+  commitsByHour[19] = totalCommits - (commitsByHour[9] + commitsByHour[11] + commitsByHour[14] + commitsByHour[16]);
+
+  const ctx = vscodeCommitsChartCanvas.getContext('2d');
+  vscodeCommitsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: hours.map(h => `${String(h).padStart(2, '0')}h`),
+      datasets: [{
+        label: i18n?.t('report_vscode_activity_commits') ?? 'Commits',
+        data: commitsByHour,
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointRadius: 4,
+        pointBackgroundColor: '#10b981',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#1f2937', font: { size: 9 } } },
+        y: { beginAtZero: true, grid: { color: '#e5e7eb' }, ticks: { color: '#1f2937', font: { size: 10 }, stepSize: 1 } }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+}
+
+function renderVscodeCrossReferenceChart(languagesByProject: any[]): void {
+  if (!vscodeCrossReferenceChartCanvas || !languagesByProject || languagesByProject.length === 0) {
+    if (vscodeCrossReferenceChartCanvas) {
+      vscodeCrossReferenceChartCanvas.style.display = 'none';
+    }
+    if (vscodeCrossReferenceEmptyEl) {
+      vscodeCrossReferenceEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeCrossReferenceChartCanvas.style.display = 'block';
+  if (vscodeCrossReferenceEmptyEl) {
+    vscodeCrossReferenceEmptyEl.classList.add('hidden');
+  }
+
+  if (vscodeCrossReferenceChart) {
+    vscodeCrossReferenceChart.destroy();
+  }
+
+  const allLanguages = new Set<string>();
+  languagesByProject.forEach(proj => {
+    proj.languages.forEach((lang: any) => allLanguages.add(lang.language));
+  });
+
+  const languageColors: Record<string, string> = {
+    'javascript': '#f7df1e',
+    'typescript': '#3178c6',
+    'python': '#3776ab',
+    'java': '#007396',
+    'go': '#00add8',
+    'rust': '#ce422b',
+    'html': '#e34c26',
+    'css': '#563d7c',
+    'json': '#292929'
+  };
+
+  const datasets = Array.from(allLanguages).map(language => {
+    const data = languagesByProject.map(proj => {
+      const langData = proj.languages.find((l: any) => l.language === language);
+      return langData ? langData.minutes : 0;
+    });
+
+    return {
+      label: language,
+      data: data,
+      backgroundColor: languageColors[language] || '#94a3b8',
+      borderColor: '#fff',
+      borderWidth: 1
+    };
+  });
+
+  const projectLabels = languagesByProject.map(p => {
+    const name = p.project.split('/').pop() || p.project;
+    return name.length > 20 ? name.substring(0, 18) + '...' : name;
+  });
+
+  const ctx = vscodeCrossReferenceChartCanvas.getContext('2d');
+  vscodeCrossReferenceChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: projectLabels,
+      datasets: datasets
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          stacked: true,
+          grid: { color: '#e5e7eb' },
+          ticks: { color: '#1f2937', font: { size: 10 } },
+          title: { display: true, text: 'Minutes', color: '#374151', font: { size: 11, weight: 'bold' } }
+        },
+        y: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { color: '#1f2937', font: { size: 11, weight: '500' } }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: { color: '#1f2937', font: { size: 11 }, padding: 10, usePointStyle: true }
+        }
+      }
+    }
+  });
+}
+
+function renderVscodeTelemetry(telemetry: any): void {
+  if (!vscodeTelemetrySectionEl) {
+    return;
+  }
+  
+  vscodeTelemetrySectionEl.classList.remove('hidden');
+
+  if (vscodeTelDebugSessionsEl) {
+    vscodeTelDebugSessionsEl.textContent = String(telemetry.debugging?.totalSessions || 0);
+  }
+  if (vscodeTelDebugTimeEl) {
+    vscodeTelDebugTimeEl.textContent = formatDurationMs(telemetry.debugging?.totalDurationMs || 0);
+  }
+
+  const testSuccess = telemetry.testing?.successRate || 0;
+  if (vscodeTelTestSuccessEl) {
+    vscodeTelTestSuccessEl.textContent = `${testSuccess.toFixed(1)}%`;
+  }
+  if (vscodeTelTestRunsEl) {
+    vscodeTelTestRunsEl.textContent = `${telemetry.testing?.totalRuns || 0} runs`;
+  }
+
+  const totalTasks = telemetry.tasks?.totalTasks || 0;
+  if (vscodeTelBuildsEl) {
+    vscodeTelBuildsEl.textContent = String(totalTasks);
+  }
+  const buildTime = telemetry.tasks?.byGroup?.build?.totalDurationMs || 0;
+  const testTime = telemetry.tasks?.byGroup?.test?.totalDurationMs || 0;
+  const totalTaskTime = buildTime + testTime;
+  if (vscodeTelBuildTimeEl) {
+    vscodeTelBuildTimeEl.textContent = formatDurationMs(totalTaskTime || buildTime);
+  }
+
+  if (vscodeTelPomodorosEl) {
+    vscodeTelPomodorosEl.textContent = String(telemetry.focus?.pomodorosCompleted || 0);
+  }
+  if (vscodeTelFocusTimeEl) {
+    vscodeTelFocusTimeEl.textContent = formatDurationMs(telemetry.focus?.totalFocusMs || 0);
+  }
+
+  const maxCombo = telemetry.combo?.maxComboToday || 0;
+  const comboMinutes = maxCombo * 25;
+  if (vscodeTelMaxComboEl) {
+    vscodeTelMaxComboEl.textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
+  }
+  if (vscodeTelComboMinutesEl) {
+    vscodeTelComboMinutesEl.textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';
+  }
+
+  renderVscodeTerminalCommandsChart(telemetry.terminal || {});
+  renderVscodeFocusPatternsChart(telemetry.focus || {});
+  renderVscodeComboTimelineChart(telemetry.combo || {});
+  renderVscodeTopExtensions(telemetry.extensions?.mostUsed || []);
+  renderVscodeTopDebuggedFiles(telemetry.debugging?.topFiles || []);
+  renderVscodeTopErrorFiles(telemetry.diagnostics?.topErrorFiles || []);
+  renderVscodeRefactoringStats(telemetry.refactoring || {});
+}
+
+function renderVscodeTerminalCommandsChart(terminal: any): void {
+  if (!vscodeTerminalChartCanvas) {
+    return;
+  }
+
+  if (vscodeTerminalChart) {
+    vscodeTerminalChart.destroy();
+  }
+
+  const categories = terminal.byCategory || {};
+  const labels = Object.keys(categories);
+  const data = Object.values(categories);
+
+  if (labels.length === 0) {
+    vscodeTerminalChartCanvas.style.display = 'none';
+    if (vscodeTerminalEmptyEl) {
+      vscodeTerminalEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeTerminalChartCanvas.style.display = 'block';
+  if (vscodeTerminalEmptyEl) {
+    vscodeTerminalEmptyEl.classList.add('hidden');
+  }
+
+  const ctx = vscodeTerminalChartCanvas.getContext('2d');
+  vscodeTerminalChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Comandos',
+        data,
+        backgroundColor: '#ffc857'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+}
+
+function renderVscodeFocusPatternsChart(focus: any): void {
+  if (!vscodeFocusPatternsChartCanvas) {
+    return;
+  }
+
+  if (vscodeFocusChart) {
+    vscodeFocusChart.destroy();
+  }
+
+  const peakHours = focus.peakHours || [];
+
+  if (peakHours.length === 0) {
+    vscodeFocusPatternsChartCanvas.style.display = 'none';
+    if (vscodeFocusEmptyEl) {
+      vscodeFocusEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeFocusPatternsChartCanvas.style.display = 'block';
+  if (vscodeFocusEmptyEl) {
+    vscodeFocusEmptyEl.classList.add('hidden');
+  }
+
+  const hourData = Array(24).fill(0);
+  peakHours.forEach((hour: number, idx: number) => {
+    hourData[hour] = peakHours.length - idx;
+  });
+
+  const ctx = vscodeFocusPatternsChartCanvas.getContext('2d');
+  vscodeFocusChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Array.from({ length: 24 }, (_, i) => `${i}h`),
+      datasets: [{
+        label: 'Intensidade de Foco',
+        data: hourData,
+        backgroundColor: '#10b981'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, display: false } }
+    }
+  });
+}
+
+function renderVscodeComboTimelineChart(comboData: any): void {
+  if (!vscodeComboTimelineChartCanvas) {
+    return;
+  }
+
+  if (vscodeComboTimelineChart) {
+    vscodeComboTimelineChart.destroy();
+  }
+
+  const timeline = comboData.comboTimeline || [];
+
+  if (timeline.length === 0) {
+    vscodeComboTimelineChartCanvas.style.display = 'none';
+    if (vscodeComboTimelineEmptyEl) {
+      vscodeComboTimelineEmptyEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  vscodeComboTimelineChartCanvas.style.display = 'block';
+  if (vscodeComboTimelineEmptyEl) {
+    vscodeComboTimelineEmptyEl.classList.add('hidden');
+  }
+
+  const dataPoints = timeline.map((event: any) => ({
+    x: new Date(event.timestamp),
+    y: event.pomodoros || 0,
+    level: event.level || 0,
+    type: event.type
+  }));
+
+  if (dataPoints.length > 0) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (dataPoints[0].x > today) {
+      dataPoints.unshift({
+        x: today,
+        y: 0,
+        level: 0,
+        type: 'day_start'
+      });
+    }
+  }
+
+  const levelColors: Record<number, string> = {
+    0: '#6B7280',
+    1: '#FFC857',
+    2: '#F59E0B',
+    3: '#EF4444',
+    4: '#A855F7',
+    5: '#FFD700'
+  };
+
+  const dataset = {
+    data: dataPoints,
+    borderColor: '#FFD700',
+    backgroundColor: '#FFD700',
+    pointBackgroundColor: dataPoints.map((p: any) => levelColors[p.level] || levelColors[0]),
+    pointBorderColor: '#fff',
+    pointRadius: dataPoints.map((p: any) => p.type === 'combo_reset' ? 8 : 5),
+    pointStyle: dataPoints.map((p: any) => p.type === 'combo_reset' ? 'crossRot' : 'circle'),
+    fill: false,
+    stepped: 'before' as const,
+    tension: 0,
+    segment: {
+      borderColor: (ctx: any) => {
+        const fromIndex = ctx.p0DataIndex;
+        const point = dataPoints[fromIndex];
+        return levelColors[point?.level || 0];
+      }
+    }
+  };
+
+  const ctx = vscodeComboTimelineChartCanvas.getContext('2d');
+  vscodeComboTimelineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [dataset]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (context: any) => {
+              if (!context || context.length === 0) return '';
+              const date = new Date(context[0].parsed.x);
+              return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            },
+            label: (context: any) => {
+              const pomodoros = context.parsed.y;
+              const minutes = pomodoros * 25;
+              return `${pomodoros}x combo (${minutes} min)`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'hour',
+            displayFormats: {
+              hour: 'HH:mm'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Hora do Dia'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            callback: (value: any) => `${value}x`
+          },
+          title: {
+            display: true,
+            text: i18n?.t('report_vscode_combo_level_label') ?? 'Combo Level'
+          }
+        }
+      }
+    }
+  });
+}
+
+function renderVscodeTopExtensions(extensions: any[]): void {
+  if (!vscodeTopExtensionsListEl) {
+    return;
+  }
+  vscodeTopExtensionsListEl.innerHTML = '';
+  if (!extensions || extensions.length === 0) {
+    const li = document.createElement('li');
+    li.textContent =
+      i18n?.t('report_vscode_top_extensions_empty') ?? 'Nenhuma extensão registrada.';
+    vscodeTopExtensionsListEl.appendChild(li);
+    return;
+  }
+
+  extensions.slice(0, 5).forEach((ext) => {
+    const li = document.createElement('li');
+    const idEl = document.createElement('span');
+    idEl.textContent = String(ext?.extensionId ?? '');
+    const countEl = document.createElement('span');
+    const cmdCount = ext?.commandCount ?? 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_top_extensions_cmds', { count: cmdCount }) ??
+      `${cmdCount} cmds`;
+    li.appendChild(idEl);
+    li.appendChild(countEl);
+    vscodeTopExtensionsListEl.appendChild(li);
+  });
+}
+
+function renderVscodeTopDebuggedFiles(files: any[]): void {
+  if (!vscodeTopDebuggedFilesListEl) {
+    return;
+  }
+  vscodeTopDebuggedFilesListEl.innerHTML = '';
+  if (!files || files.length === 0) {
+    const li = document.createElement('li');
+    li.textContent =
+      i18n?.t('report_vscode_top_debugged_files_empty') ?? 'Nenhum arquivo debugado.';
+    vscodeTopDebuggedFilesListEl.appendChild(li);
+    return;
+  }
+
+  files.slice(0, 5).forEach((file) => {
+    const li = document.createElement('li');
+    const idEl = document.createElement('span');
+    idEl.textContent = String(file?.fileId ?? '');
+    const countEl = document.createElement('span');
+    const breakpoints = file?.breakpoints ?? 0;
+    countEl.textContent =
+      i18n?.t('report_vscode_top_debugged_files_bps', { count: breakpoints }) ??
+      `${breakpoints} BPs`;
+    li.appendChild(idEl);
+    li.appendChild(countEl);
+    vscodeTopDebuggedFilesListEl.appendChild(li);
+  });
+}
+
+function renderVscodeTopErrorFiles(files: any[]): void {
+  if (!vscodeTopErrorFilesListEl) {
+    return;
+  }
+  vscodeTopErrorFilesListEl.innerHTML = '';
+  if (!files || files.length === 0) {
+    const li = document.createElement('li');
+    li.textContent =
+      i18n?.t('report_vscode_top_error_files_empty') ?? 'Nenhum erro registrado. 🎉';
+    vscodeTopErrorFilesListEl.appendChild(li);
+    return;
+  }
+
+  files.slice(0, 5).forEach((file) => {
+    const li = document.createElement('li');
+    const idEl = document.createElement('span');
+    idEl.textContent = String(file?.fileId ?? '');
+    const statsEl = document.createElement('span');
+    const errors = file?.errors ?? 0;
+    const warnings = file?.warnings ?? 0;
+    statsEl.textContent =
+      i18n?.t('report_vscode_top_error_files_stats', { errors, warnings }) ??
+      `⚠️ ${errors} | ⚡ ${warnings}`;
+    li.appendChild(idEl);
+    li.appendChild(statsEl);
+    vscodeTopErrorFilesListEl.appendChild(li);
+  });
+}
+
+function renderVscodeRefactoringStats(refactoring: any): void {
+  if (!vscodeRefactoringStatsEl) {
+    return;
+  }
+  vscodeRefactoringStatsEl.innerHTML = '';
+  const items = [
+    {
+      key: 'report_vscode_refactor_files_renamed',
+      fallback: 'Arquivos Renomeados',
+      value: refactoring?.filesRenamed || 0
+    },
+    {
+      key: 'report_vscode_refactor_edits_applied',
+      fallback: 'Edits Aplicados',
+      value: refactoring?.editsApplied || 0
+    },
+    {
+      key: 'report_vscode_refactor_code_actions',
+      fallback: 'Code Actions Disponíveis',
+      value: refactoring?.codeActionsAvailable || 0
+    }
+  ];
+  items.forEach((item) => {
+    const row = document.createElement('div');
+    row.className = 'stat-item';
+    const labelEl = document.createElement('span');
+    labelEl.className = 'stat-label';
+    labelEl.textContent = i18n?.t(item.key) ?? item.fallback;
+    const valueEl = document.createElement('span');
+    valueEl.className = 'stat-value';
+    valueEl.textContent = String(item.value);
+    row.appendChild(labelEl);
+    row.appendChild(valueEl);
+    vscodeRefactoringStatsEl.appendChild(row);
+  });
+}
+
+function formatDurationMs(ms: number): string {
+  if (!ms || ms === 0) {
+    return '--';
+  }
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  if (hours > 0) {
+    return `${hours}h ${minutes % 60}m`;
+  }
+  if (minutes > 0) {
+    return `${minutes}m`;
+  }
+  return `${seconds}s`;
+}
+
 function renderReport(metrics: DailyMetrics): void {
   const enriched = enrichMetricsWithVscode(metrics);
-  const reportDate = parseDateKey(enriched.dateKey);
+  const fallbackDate = Number.isFinite(enriched.lastUpdated)
+    ? new Date(enriched.lastUpdated)
+    : new Date();
+  const reportDate = parseDateKey(enriched.dateKey, fallbackDate);
   reportDateEl.textContent = reportDate.toLocaleDateString(locale, {
     weekday: 'long',
     month: 'long',
@@ -284,6 +1517,15 @@ function renderReport(metrics: DailyMetrics): void {
   const kpis = calculateKpis(enriched);
   heroFocusEl.textContent = formatPercentage(kpis.focusRate);
   heroSwitchesEl.textContent = `${enriched.tabSwitches}`;
+  if (heroProductiveEl) {
+    heroProductiveEl.textContent = formatDuration(enriched.productiveMs ?? 0);
+  }
+  if (heroProcrastinationEl) {
+    heroProcrastinationEl.textContent = formatDuration(enriched.procrastinationMs ?? 0);
+  }
+  if (heroIdleEl) {
+    heroIdleEl.textContent = formatDuration(enriched.inactiveMs ?? 0);
+  }
   if (audioProcrastinationEl) {
     audioProcrastinationEl.textContent = formatDuration(enriched.audibleProcrastinationMs ?? 0);
   }
@@ -301,6 +1543,8 @@ function renderReport(metrics: DailyMetrics): void {
   }
 
   renderFairnessSummary(latestFairness);
+  renderSuggestionSection(latestSuggestion, latestSettings);
+  renderMlSummary(latestMlModel, locale);
   renderContextBreakdown(enriched.contextDurations, enriched.contextIndices);
 
   renderHourlyChart(enriched);
@@ -346,14 +1590,122 @@ export function renderFairnessSummary(summary?: FairnessSummary | null): void {
   }
 }
 
+function renderSuggestionSection(
+  suggestion: DomainSuggestion | null,
+  settings?: ExtensionSettings | null
+): void {
+  if (!suggestionSectionEl || !suggestionReportTitleEl || !suggestionReportReasonsEl) {
+    return;
+  }
+  const featureEnabled = settings?.enableAutoClassification;
+  if (!featureEnabled || !suggestion) {
+    suggestionSectionEl.classList.add('hidden');
+    suggestionSectionEl.setAttribute('hidden', 'true');
+    return;
+  }
+  suggestionSectionEl.classList.remove('hidden');
+  suggestionSectionEl.removeAttribute('hidden');
+  const labelMap: Record<DomainSuggestion['classification'], string> = {
+    productive: i18n?.t('popup_suggestion_label_productive') ?? 'Produtivo',
+    procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'Procrastinador',
+    neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'Neutro'
+  };
+  const title =
+    i18n?.t('report_suggestion_title_filled', {
+      label: labelMap[suggestion.classification],
+      confidence: Math.round(suggestion.confidence),
+      domain: suggestion.domain
+    }) ??
+    `Sugestão: ${labelMap[suggestion.classification]} (${Math.round(
+      suggestion.confidence
+    )}%) para ${suggestion.domain}`;
+  suggestionReportTitleEl.textContent = title;
+  suggestionReportReasonsEl.innerHTML = '';
+  suggestion.reasons.slice(0, 5).forEach((reason) => {
+    const li = document.createElement('li');
+    li.textContent = translateSuggestionReason(reason, i18n);
+    suggestionReportReasonsEl.appendChild(li);
+  });
+}
+
+function renderMlSummary(status: MlModelStatus | null, localeValue: string): void {
+  if (
+    !mlSummarySectionEl ||
+    !mlStatusBadgeEl ||
+    !mlUpdatesEl ||
+    !mlActiveFeaturesEl ||
+    !mlLastUpdatedEl ||
+    !mlBiasEl ||
+    !mlLearningRateEl ||
+    !mlL2El ||
+    !mlMinFeatureEl
+  ) {
+    return;
+  }
+
+  const formatNumber = (value: number): string => value.toLocaleString(localeValue || 'pt-BR');
+  mlStatusBadgeEl.classList.remove('training', 'cold', 'unavailable');
+
+  if (!status) {
+    mlStatusBadgeEl.textContent = i18n?.t('popup_ml_status_unavailable') ?? 'Unavailable';
+    mlStatusBadgeEl.classList.add('unavailable');
+    mlUpdatesEl.textContent = '--';
+    mlActiveFeaturesEl.textContent = '--';
+    mlLastUpdatedEl.textContent = '--';
+    mlBiasEl.textContent = '--';
+    mlLearningRateEl.textContent = '--';
+    mlL2El.textContent = '--';
+    mlMinFeatureEl.textContent = '--';
+    return;
+  }
+
+  const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
+  mlStatusBadgeEl.textContent = maturity.label;
+  mlStatusBadgeEl.classList.add(maturity.className);
+
+  mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
+  mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
+  mlBiasEl.textContent = status.bias.toFixed(3);
+  mlLearningRateEl.textContent = status.learningRate.toFixed(4);
+  mlL2El.textContent = status.l2.toFixed(6);
+  mlMinFeatureEl.textContent = formatNumber(status.minFeatureCount);
+  if (status.lastUpdated > 0) {
+    mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
+  } else {
+    mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
+  }
+}
+
+function resolveModelMaturity(
+  totalUpdates: number,
+  activeFeatures: number
+): { label: string; className: string } {
+  if (totalUpdates < 5 || activeFeatures < 20) {
+    return {
+      label: i18n?.t('popup_ml_status_cold_start') ?? 'Cold start',
+      className: 'cold'
+    };
+  }
+  if (totalUpdates < 30 || activeFeatures < 100) {
+    return {
+      label: i18n?.t('popup_ml_status_warming') ?? 'Warming',
+      className: 'training'
+    };
+  }
+  return {
+    label: i18n?.t('popup_ml_status_ready') ?? 'Ready',
+    className: 'training'
+  };
+}
+
 /**
- * Popula a tabela de contextos com as durações e índices hipotéticos.
+ * Popula a tabela de contextos com as durações e índices registrados.
  * @param durations Mapa com milissegundos gastos por contexto.
- * @param indices Mapa com os índices simulados por contexto.
+ * @param indices Mapa com os índices registrados por contexto.
  */
 export function renderContextBreakdown(
   durations?: Record<ContextModeValue, number>,
-  indices?: Record<ContextModeValue, number>
+  indices?: Record<ContextModeValue, number | undefined>
 ): void {
   if (!contextBreakdownSection || !contextBreakdownBody) {
     return;
@@ -371,15 +1723,32 @@ export function renderContextBreakdown(
   CONTEXT_ORDER.forEach((context) => {
     const row = document.createElement('tr');
     const labelCell = document.createElement('td');
+    labelCell.className = `context-cell context-${context}`;
     labelCell.textContent = i18n?.t(`popup_context_option_${context}`) ?? context;
     const durationCell = document.createElement('td');
     durationCell.textContent = formatDuration(durations?.[context] ?? 0);
     const indexCell = document.createElement('td');
+    indexCell.className = 'index-cell';
     const indexValue = indices?.[context];
-    indexCell.textContent = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    const formattedIndex = formatPercentage(typeof indexValue === 'number' ? indexValue : null);
+    indexCell.textContent = formattedIndex;
+    if (typeof indexValue === 'number' && Number.isFinite(indexValue)) {
+      const hue = Math.max(0, Math.min(120, 120 - indexValue * 1.2));
+      if (indexCell.style && typeof indexCell.style.setProperty === 'function') {
+        indexCell.style.setProperty('--index-hue', hue.toString());
+      } else {
+        indexCell.setAttribute('style', `--index-hue:${hue}`);
+      }
+      indexCell.classList.remove('index-cell--unknown');
+    } else {
+      indexCell.classList.add('index-cell--unknown');
+    }
+    const effectCell = document.createElement('td');
+    effectCell.textContent = i18n?.t(`report_context_effect_${context}`) ?? '';
     row.appendChild(labelCell);
     row.appendChild(durationCell);
     row.appendChild(indexCell);
+    row.appendChild(effectCell);
     contextBreakdownBody.appendChild(row);
   });
 }
@@ -754,7 +2123,7 @@ function fillRankingTable(tbody: HTMLTableSectionElement, entries: DomainStats[]
     const row = document.createElement('tr');
     const cell = document.createElement('td');
     cell.colSpan = 2;
-    cell.textContent = 'Sem registros.';
+    cell.textContent = i18n?.t('report_no_records') ?? 'Sem registros.';
     row.appendChild(cell);
     tbody.appendChild(row);
     return;
@@ -1471,12 +2840,8 @@ function findLongestSegment(
 }
 
 function pickHeroMessageKey(score: number): string {
-  for (const template of HERO_MESSAGE_KEYS) {
-    if (score <= template.max) {
-      return template.key;
-    }
-  }
-  return HERO_MESSAGE_KEYS[HERO_MESSAGE_KEYS.length - 1].key;
+  const band = getScoreMessageBand(score);
+  return HERO_MESSAGE_KEY_BY_BAND[band];
 }
 
 function describeCategory(category: TimelineEntry['category']): string {
@@ -1533,6 +2898,14 @@ async function generateNarrative(): Promise<void> {
     return;
   }
 
+  if (!(await ensureHostPermission(OPENAI_HOST_PERMISSION))) {
+    aiNarrativeEl.textContent =
+      'Permission to access OpenAI was denied. Enable it in the extension permissions.';
+    aiRetryButton.classList.remove('hidden');
+    hasAiNarrative = false;
+    return;
+  }
+
   aiGenerateButton.disabled = true;
   aiRetryButton.classList.add('hidden');
   aiNarrativeEl.textContent =
@@ -1561,6 +2934,7 @@ async function generateNarrative(): Promise<void> {
 function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
   const enriched = enrichMetricsWithVscode(metrics);
   const kpis = calculateKpis(enriched);
+  const contextBreakdown = buildContextSummary(enriched);
   const timelineSnippets = enriched.timeline
     .sort((a, b) => a.startTime - b.startTime)
     .slice(0, 10)
@@ -1583,7 +2957,9 @@ function buildAiPayload(metrics: DailyMetrics): AiPromptPayload {
     topProcrastination: getTopEntries(metrics.domains, 'procrastination'),
     timeline: timelineSnippets,
     fairnessRule: fairness.rule,
-    fairnessStatus
+    fairnessStatus,
+    contextMode: fairness.contextMode?.value ?? 'work',
+    contextBreakdown
   };
 }
 
@@ -1617,29 +2993,51 @@ async function requestAiNarrative(
     throw new Error('OPENAI_API_KEY not configured.');
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      temperature: 0.6,
-      messages: [
-        {
-          role: 'system',
-          content: `You are Saul Goodman, a sarcastic lawyer and relentless salesman. Tell the user's day as if you were defending them, and write the story in ${languageLabel}.`
-        },
-        {
-          role: 'user',
-          content: `Write a short narrative (2 paragraphs) using these data points:\n${JSON.stringify(
-            payload
-          )}`
-        }
-      ]
-    })
-  });
+  const contextSummary = payload.contextBreakdown
+    ? payload.contextBreakdown
+        .map(
+          (entry) =>
+            `${entry.context}: ${entry.duration}${typeof entry.index === 'number' ? ` (índice ${entry.index}%)` : ''}`
+        )
+        .join('; ')
+    : 'Sem breakdown de contexto.';
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let response: Response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        temperature: 0.6,
+        messages: [
+          {
+            role: 'system',
+            content: `You are Saul Goodman, a sarcastic lawyer and relentless salesman. Tell the user's day as if you were defending them, and write the story in ${languageLabel}.`
+          },
+          {
+            role: 'user',
+            content:
+              `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
+              `${JSON.stringify(payload)}`
+          }
+        ]
+      }),
+      signal: controller.signal
+    });
+  } catch (error) {
+    if ((error as DOMException)?.name === 'AbortError') {
+      throw new Error('OpenAI timeout');
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     throw new Error(`OpenAI falhou: ${response.statusText}`);
@@ -1659,6 +3057,8 @@ interface AiPromptPayload {
   timeline: Array<{ domain: string; category: string; duration: string; range: string }>;
   fairnessRule: FairnessRule;
   fairnessStatus: string;
+  contextMode: ContextModeValue;
+  contextBreakdown?: Array<{ context: ContextModeValue; duration: string; index?: number }>;
 }
 
 interface OpenAiResponse {
@@ -1669,14 +3069,11 @@ interface OpenAiResponse {
 
 interface MetricsResponse {
   metrics: DailyMetrics;
-  settings?: {
-    locale?: string;
-    localePreference?: LocalePreference;
-    openAiKey?: string;
-    criticalScoreThreshold?: number;
-    workSchedule?: WorkInterval[];
-  };
+  settings?: ExtensionSettings;
   fairness?: FairnessSummary;
+  activeSuggestion?: DomainSuggestion | null;
+  suggestions?: DomainSuggestion[];
+  mlModel?: MlModelStatus | null;
 }
 
 function formatAiNarrative(text: string): string {
@@ -1696,6 +3093,42 @@ function formatParagraph(content: string): string {
   const emphasis = content.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
   const italic = emphasis.replace(/_(.*?)_/g, '<em>$1</em>');
   return `<p>${italic}</p>`;
+}
+
+function buildContextSummary(
+  metrics: DailyMetrics
+): Array<{ context: ContextModeValue; duration: string; index?: number }> | undefined {
+  const durations = metrics.contextDurations;
+  const indices = metrics.contextIndices;
+  if (!durations && !indices) {
+    return undefined;
+  }
+  const entries: Array<{ context: ContextModeValue; duration: string; index?: number }> = [];
+  const seen = new Set<ContextModeValue>();
+  if (durations) {
+    Object.entries(durations).forEach(([context, value]) => {
+      const ctx = context as ContextModeValue;
+      seen.add(ctx);
+      entries.push({
+        context: ctx,
+        duration: formatDuration(value ?? 0),
+        index: indices?.[ctx]
+      });
+    });
+  }
+  if (indices) {
+    Object.entries(indices).forEach(([context, idx]) => {
+      const ctx = context as ContextModeValue;
+      if (!seen.has(ctx)) {
+        entries.push({
+          context: ctx,
+          duration: formatDuration(durations?.[ctx] ?? 0),
+          index: idx
+        });
+      }
+    });
+  }
+  return entries.length ? entries : undefined;
 }
 
 /**
@@ -1768,7 +3201,7 @@ function buildTimelineBlocks(entries: TimelineEntry[]): TimelineHourBlock[] {
     .map(([hour, segments]) => ({
       hour,
       totalMs: segments.reduce((acc, segment) => acc + segment.durationMs, 0),
-      segments: segments.sort((a, b) => a.startTime - b.startTime)
+      segments: segments.sort((a, b) => b.startTime - a.startTime)
     }));
 }
 
@@ -1791,7 +3224,7 @@ function createTimelineSegmentElement(entry: TimelineEntry): HTMLLIElement {
   if (isSegmentOvertime(entry)) {
     const overtimeTag = document.createElement('span');
     overtimeTag.className = 'tag overtime';
-    overtimeTag.textContent = 'Overtime';
+    overtimeTag.textContent = i18n?.t('report_overtime_tag') ?? 'Overtime';
     header.appendChild(overtimeTag);
   }
 
@@ -1890,26 +3323,37 @@ function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void 
 interface EnrichedMetrics extends DailyMetrics {
   domains: Record<string, DomainStats>;
   timeline: TimelineEntry[];
-  productiveMs: number;
 }
 
-function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
-  const vscodeMs = metrics.vscodeActiveMs ?? 0;
+const warnedHours = new Set<number>();
+
+function enrichMetricsWithVscode(metrics: DailyMetrics): DailyMetrics {
+  warnedHours.clear();
+  const allowVscode = Boolean(latestSettings?.vscodeIntegrationEnabled);
+  let vscodeMs = allowVscode ? metrics.vscodeActiveMs ?? 0 : 0;
+  const vscodeSwitches = allowVscode ? metrics.vscodeSwitches ?? 0 : 0;
   const label = i18n?.t('label_vscode') ?? 'VS Code (IDE)';
 
+  const MAX_DAY_MS = 24 * 60 * 60 * 1000;
+  if (vscodeMs > MAX_DAY_MS) {
+    console.warn(`[Saul] VS Code time (${(vscodeMs / 3600000).toFixed(1)}h) exceeds 24h, clamping`);
+    vscodeMs = MAX_DAY_MS;
+  }
+
   const domains = { ...metrics.domains };
-  if (vscodeMs > 0) {
+  if (vscodeMs > 0 && allowVscode) {
     domains['__vscode:ide'] = {
       domain: label,
       category: 'productive',
-      milliseconds: (domains['__vscode:ide']?.milliseconds ?? 0) + vscodeMs
+      milliseconds: vscodeMs
     };
   }
 
-  const timeline = mergeTimelines(metrics, domains);
+  const timeline = allowVscode ? mergeTimelines(metrics, domains) : [...metrics.timeline];
 
   const hourly = metrics.hourly.map((bucket) => ({ ...bucket }));
-  if (metrics.vscodeTimeline?.length) {
+  if (allowVscode && metrics.vscodeTimeline?.length) {
+    const todayKey = getTodayKey();
     for (const entry of metrics.vscodeTimeline) {
       const duration = typeof entry.durationMs === 'number'
         ? entry.durationMs
@@ -1921,10 +3365,55 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
         typeof entry.startTime === 'number'
           ? entry.startTime
           : Math.max(0, (entry.endTime ?? Date.now()) - duration);
-      for (const segment of splitDurationByHour(startTime, duration)) {
+      
+      // BUG-FIX: Only process timeline entries from today
+      const entryDateKey = formatDateKey(new Date(startTime));
+      if (entryDateKey !== todayKey) {
+        continue;
+      }
+      
+      // BUG-FIX: Prevent accumulating future time in hourly buckets
+      const now = Date.now();
+      const projectedEnd = startTime + duration;
+      let clippedDuration = duration;
+      
+      if (projectedEnd > now) {
+        clippedDuration = Math.max(0, now - startTime);
+        if (clippedDuration !== duration) {
+          console.warn(
+            `[Saul Report] Clipped VS Code future time: ${new Date(projectedEnd).toLocaleTimeString()} > now ${new Date(now).toLocaleTimeString()}. ` +
+            `Reduced from ${(duration / 60000).toFixed(1)}min to ${(clippedDuration / 60000).toFixed(1)}min`
+          );
+        }
+      }
+      
+      if (clippedDuration <= 0) {
+        continue;
+      }
+      
+      for (const segment of splitDurationByHour(startTime, clippedDuration)) {
         const bucket = hourly[segment.hour];
         if (bucket) {
-          bucket.productiveMs += segment.milliseconds;
+          const MAX_HOUR_MS = 60 * 60 * 1000;
+          const currentTotal = bucket.productiveMs + bucket.procrastinationMs + bucket.inactiveMs + bucket.neutralMs;
+          const remaining = Math.max(0, MAX_HOUR_MS - currentTotal);
+          
+          // Clamp VS Code time to prevent exceeding 60min per hour
+          const vsCodeContribution = Math.min(segment.milliseconds, remaining);
+          
+          if (vsCodeContribution > 0) {
+            bucket.productiveMs += vsCodeContribution;
+          }
+          
+          // Warn if daemon returned overlapping data
+          if (segment.milliseconds > remaining && !warnedHours.has(segment.hour)) {
+            console.warn(
+              `[Saul] Hour ${segment.hour}: daemon returned ${(segment.milliseconds / 60000).toFixed(1)}min VS Code time, ` +
+              `but only ${(remaining / 60000).toFixed(1)}min available. Clamping to prevent overlap. ` +
+              `This indicates duplicate heartbeats in daemon - delete vscode-tracking.json and restart.`
+            );
+            warnedHours.add(segment.hour);
+          }
         }
       }
     }
@@ -1932,10 +3421,15 @@ function enrichMetricsWithVscode(metrics: DailyMetrics): EnrichedMetrics {
 
   return {
     ...metrics,
+    tabSwitches: metrics.tabSwitches + vscodeSwitches,
+    vscodeActiveMs: vscodeMs,
+    vscodeTimeline: allowVscode ? metrics.vscodeTimeline ?? [] : [],
+    vscodeSwitchHourly: allowVscode
+      ? metrics.vscodeSwitchHourly ?? Array.from({ length: 24 }, () => 0)
+      : Array.from({ length: 24 }, () => 0),
     domains,
     timeline,
-    hourly,
-    productiveMs: metrics.productiveMs + vscodeMs
+    hourly
   };
 }
 
@@ -1949,7 +3443,7 @@ function formatDomainLabel(domain: string): string {
 
 function formatDurationFriendly(ms: number): string {
   if (ms < 60000) {
-    return '<1m';
+    return i18n?.t('report_duration_less_than_minute') ?? '<1m';
   }
   return formatDuration(ms);
 }
@@ -2024,19 +3518,6 @@ function updateHeroLogo(isCritical: boolean): void {
     : i18n?.t('report_logo_alt_default') ?? 'Saul Goodman logo';
 }
 
-function getScoreBand(score: number): 'good' | 'warn' | 'alert' | 'neutral' {
-  if (score <= 25) {
-    return 'good';
-  }
-  if (score <= 50) {
-    return 'warn';
-  }
-  if (score >= 70) {
-    return 'alert';
-  }
-  return 'neutral';
-}
-
 function triggerHeroConfetti(): void {
   if (!heroIndexEl) {
     return;
@@ -2105,7 +3586,7 @@ function stopBannerCountdown(): void {
   }
 }
 
-function parseDateKey(dateKey: string): Date {
+function parseDateKey(dateKey: string, fallback: Date = new Date()): Date {
   const [yearStr, monthStr, dayStr] = dateKey.split('-');
   const year = Number(yearStr);
   const month = Number(monthStr);
@@ -2124,7 +3605,16 @@ function parseDateKey(dateKey: string): Date {
   }
 
   // fallback to native parsing when the formato foge do esperado
-  return new Date(dateKey);
+  const parsed = new Date(dateKey);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed;
+  }
+
+  if (!Number.isNaN(fallback.getTime())) {
+    return fallback;
+  }
+
+  return new Date();
 }
 
 function closeReportTab(): void {

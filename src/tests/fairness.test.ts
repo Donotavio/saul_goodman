@@ -115,10 +115,11 @@ test('context modes adjust scoring weights', () => {
   assert.ok(study.score < work.score, 'study mode should soften the index');
   assert.equal(personal.score, 0);
   assert.equal(personal.rule, 'context-personal');
-  assert.equal(dayOff.score, 0);
+  assert.ok(dayOff.score > 0);
   assert.equal(dayOff.rule, 'context-day-off');
-  assert.equal(vacation.score, 0);
+  assert.ok(vacation.score > 0);
   assert.equal(vacation.rule, 'context-vacation');
+  assert.ok(work.score > vacation.score, 'vacation should be softer than work');
 });
 
 test('holiday neutralization is cached and opt-in', async () => {

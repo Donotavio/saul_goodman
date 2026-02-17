@@ -4,7 +4,6 @@ title_en: "Are You Procrastinating? Here’s a Public VPC to Distract You!"
 title_es: "¿Estás procrastinando? ¡Aquí tienes una VPC pública para distraerte!"
 date: 2025-12-23
 category: "dev-performance"
-tone: "incredulo"
 tags: ["procrastinação", "VPC", "devops", "EC2", "internet"]
 source_title: "Day 27.Configuring a Public VPC with an EC2 Instance for Internet Access"
 source_url: "https://dev.to/thukhakyawe_cloud/day-27configuring-a-public-vpc-with-an-ec2-instance-for-internet-access-4n4l"

@@ -4,7 +4,6 @@ title_en: "The Weekly Meetings Nobody Asked For: The Guide to Discontent"
 title_es: "Las Reuniones Semanales que Nadie Pidió: La Guía de la Insatisfacción"
 date: 2025-12-29
 category: "foco-atencao"
-tone: "incredulo"
 tags: ["produtividade", "valores", "procrastinação", "negócios", "design"]
 source_title: "Why the Best Weekly Reviews Focus on Values, Not Tasks (TPS593)"
 source_url: "https://www.asianefficiency.com/podcasts/593-weekly-reviews-values-not-tasks/"

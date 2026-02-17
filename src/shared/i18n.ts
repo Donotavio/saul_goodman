@@ -1,13 +1,27 @@
 import type { LocalePreference, SupportedLocale } from './types.js';
 
-export const SUPPORTED_LOCALES: SupportedLocale[] = ['pt-BR', 'en-US', 'es-419'];
+export const SUPPORTED_LOCALES: SupportedLocale[] = [
+  'pt-BR',
+  'en-US',
+  'es-419',
+  'fr',
+  'de',
+  'it',
+  'tr',
+  'zh-CN',
+  'hi',
+  'ar',
+  'bn',
+  'ru',
+  'ur'
+];
 const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 
-const LOCALE_DIR_MAP: Record<SupportedLocale, string> = {
-  'pt-BR': 'pt_BR',
-  'en-US': 'en_US',
-  'es-419': 'es_419'
-};
+const RTL_LOCALES: Set<SupportedLocale> = new Set(['ar', 'ur']);
+
+export function localeToDir(locale: SupportedLocale): string {
+  return locale.replace(/-/g, '_');
+}
 
 const localeCache = new Map<SupportedLocale, Record<string, string>>();
 
@@ -29,12 +43,26 @@ export function resolveLocale(preference?: LocalePreference): SupportedLocale {
   const browserLocale = (chrome?.i18n?.getUILanguage?.() ?? navigator.language ?? '').toLowerCase();
   const normalized = browserLocale.split('-')[0];
 
-  if (browserLocale.startsWith('pt') || normalized === 'pt') {
-    return 'pt-BR';
+  const mapping: Record<string, SupportedLocale> = {
+    pt: 'pt-BR',
+    es: 'es-419',
+    en: 'en-US',
+    fr: 'fr',
+    de: 'de',
+    it: 'it',
+    tr: 'tr',
+    zh: 'zh-CN',
+    hi: 'hi',
+    ar: 'ar',
+    bn: 'bn',
+    ru: 'ru',
+    ur: 'ur'
+  };
+
+  if (mapping[normalized]) {
+    return mapping[normalized];
   }
-  if (browserLocale.startsWith('es') || normalized === 'es') {
-    return 'es-419';
-  }
+
   return 'en-US';
 }
 
@@ -79,6 +107,7 @@ class I18nImpl implements I18nService {
     const doc =
       target instanceof Document ? target : target.ownerDocument ?? document;
     doc.documentElement.lang = this.locale;
+    doc.documentElement.dir = RTL_LOCALES.has(this.locale) ? 'rtl' : 'ltr';
 
     const elements = target.querySelectorAll<HTMLElement>('[data-i18n]');
     elements.forEach((element) => {
@@ -89,7 +118,10 @@ class I18nImpl implements I18nService {
     });
 
     applyDataset(target, this, 'i18nHtml', (el, key, i18n) => {
-      el.innerHTML = i18n.t(key);
+      // WARNING: Only use data-i18n-html with trusted locale strings from messages.json
+      // This uses innerHTML and can execute scripts if content is not sanitized.
+      // Never use this attribute with user-provided or external content.
+      el.innerHTML = sanitizeI18nHtml(i18n.t(key));
     });
     applyDataset(target, this, 'i18nPlaceholder', (el, key, i18n) => {
       (el as HTMLElement).setAttribute('placeholder', i18n.t(key));
@@ -103,13 +135,90 @@ class I18nImpl implements I18nService {
     applyDataset(target, this, 'i18nTooltip', (el, key, i18n) => {
       (el as HTMLElement).setAttribute('data-tooltip', i18n.t(key));
     });
+    applyDataset(target, this, 'i18nAlt', (el, key, i18n) => {
+      (el as HTMLElement).setAttribute('alt', i18n.t(key));
+    });
   }
+}
+
+function sanitizeI18nHtml(value: string): string {
+  if (!value) {
+    return '';
+  }
+  if (typeof DOMParser === 'undefined') {
+    return escapeHtml(value);
+  }
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(`<div>${value}</div>`, 'text/html');
+  const container = doc.body.firstElementChild as HTMLElement | null;
+  if (!container) {
+    return '';
+  }
+
+  const allowedTags = new Set(['A', 'B', 'STRONG', 'I', 'EM', 'BR', 'P', 'UL', 'OL', 'LI', 'SPAN']);
+
+  const sanitizeHref = (href: string): string | null => {
+    try {
+      const url = new URL(href, 'https://example.com');
+      if (url.protocol === 'http:' || url.protocol === 'https:' || url.protocol === 'mailto:') {
+        return href;
+      }
+    } catch {
+      // ignore invalid URLs
+    }
+    return null;
+  };
+
+  const sanitizeNode = (node: Node): void => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as Element;
+      const tag = element.tagName.toUpperCase();
+      if (!allowedTags.has(tag)) {
+        const text = doc.createTextNode(element.textContent ?? '');
+        element.replaceWith(text);
+        return;
+      }
+
+      const attrs = Array.from(element.attributes);
+      for (const attr of attrs) {
+        if (tag === 'A' && (attr.name === 'href' || attr.name === 'target' || attr.name === 'rel')) {
+          continue;
+        }
+        element.removeAttribute(attr.name);
+      }
+
+      if (tag === 'A') {
+        const href = element.getAttribute('href') ?? '';
+        const sanitized = sanitizeHref(href);
+        if (sanitized) {
+          element.setAttribute('href', sanitized);
+          const target = element.getAttribute('target');
+          if (target === '_blank') {
+            element.setAttribute('rel', 'noopener noreferrer');
+          } else {
+            element.setAttribute('rel', 'noreferrer');
+          }
+        } else {
+          element.removeAttribute('href');
+        }
+      }
+    }
+
+    Array.from(node.childNodes).forEach((child) => sanitizeNode(child));
+  };
+
+  sanitizeNode(container);
+  return container.innerHTML;
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function applyDataset(
   root: Document | HTMLElement,
   i18n: I18nImpl,
-  attr: 'i18nHtml' | 'i18nPlaceholder' | 'i18nTitle' | 'i18nAriaLabel' | 'i18nTooltip',
+  attr: 'i18nHtml' | 'i18nPlaceholder' | 'i18nTitle' | 'i18nAriaLabel' | 'i18nTooltip' | 'i18nAlt',
   setter: (el: HTMLElement, key: string, i18n: I18nImpl) => void
 ): void {
   const selector = `[data-${attr.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}]`;
@@ -151,11 +260,11 @@ async function loadMessages(locale: SupportedLocale): Promise<Record<string, str
     return localeCache.get(locale) as Record<string, string>;
   }
 
-  const url = chrome.runtime.getURL(`_locales/${LOCALE_DIR_MAP[locale]}/messages.json`);
+  const url = chrome.runtime.getURL(`_locales/${localeToDir(locale)}/messages.json`);
   const response = await fetch(url);
   if (!response.ok) {
     if (locale === DEFAULT_LOCALE) {
-      throw new Error(`Não foi possível carregar mensagens para ${locale}`);
+      throw new Error(`Failed to load messages for locale: ${locale}`);
     }
     return loadMessages(DEFAULT_LOCALE);
   }
