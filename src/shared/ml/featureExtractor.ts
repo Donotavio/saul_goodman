@@ -591,7 +591,7 @@ function addListTextFeatures(
 function tokenize(text: string, config: Required<FeatureExtractorConfig>): string[] {
   const raw = text
     .toLowerCase()
-    .split(/[^a-z0-9á-úà-ùãõâêîôûç]+/gi)
+    .split(/[^\p{L}\p{N}]+/gu)
     .map((token) => token.trim())
     .filter(Boolean)
     .filter(

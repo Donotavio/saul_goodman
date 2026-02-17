@@ -602,7 +602,7 @@ function buildLearningReason(token: LearningToken, side: LearningSide): string {
 function extractKeywordTokens(text: string): string[] {
   const words = text
     .toLowerCase()
-    .split(/[^a-z0-9á-úà-ùãõâêîôûç]+/i)
+    .split(/[^\p{L}\p{N}]+/gu)
     .map((kw) => kw.trim())
     .filter((kw) => kw.length >= 3 && kw.length <= 32);
 

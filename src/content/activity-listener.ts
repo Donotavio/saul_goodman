@@ -721,11 +721,14 @@ function countExternalLinks(): number {
   let count = 0;
   anchors.forEach((anchor) => {
     const href = anchor.getAttribute('href')?.trim();
-    if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) {
+    if (!href || href.startsWith('#')) {
       return;
     }
     try {
       const url = new URL(href, window.location.href);
+      if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+        return;
+      }
       if (url.hostname && url.hostname !== host) {
         count += 1;
       }

@@ -3,6 +3,19 @@ import type { DevtoolsMcpClient } from '../mcp/client.js';
 import type { ScenarioContext, ScenarioResult } from './types.js';
 import { extractJson, saveJsonArtifact } from './helpers.js';
 
+const ALLOWED_EXTERNAL_HOSTS = ['googletagmanager.com', 'google-analytics.com', 'gstatic.com'];
+
+function isAllowedExternalHost(urlValue: string): boolean {
+  try {
+    const hostname = new URL(urlValue).hostname.toLowerCase();
+    return ALLOWED_EXTERNAL_HOSTS.some(
+      (allowedHost) => hostname === allowedHost || hostname.endsWith(`.${allowedHost}`)
+    );
+  } catch {
+    return false;
+  }
+}
+
 export async function runBlogScenario(
   client: DevtoolsMcpClient,
   ctx: ScenarioContext
@@ -41,10 +54,7 @@ export async function runBlogScenario(
     networkPayload?.requests?.filter((r) => {
       const statusOk = typeof r.status === 'number' && r.status >= 400;
       const url = r.url ?? '';
-      const isThirdParty =
-        url.includes('googletagmanager.com') ||
-        url.includes('google-analytics.com') ||
-        url.includes('gstatic.com');
+      const isThirdParty = isAllowedExternalHost(url);
       return statusOk && !isThirdParty;
     }) ?? [];
   const networkPath = saveJsonArtifact(ctx, 'blog', 'network', networkPayload ?? {});

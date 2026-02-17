@@ -9,6 +9,19 @@ const container = document.querySelector('[data-privacy-article]');
 const loadingText = container?.querySelector('[data-i18n="privacyLoading"]');
 const FALLBACK_LANG = 'pt';
 const LANGUAGE_CHANGED_EVENT = 'saul-language-changed';
+const DANGEROUS_PROTOCOLS = new Set(['javascript:', 'data:', 'vbscript:']);
+
+const hasDangerousUrlProtocol = (value) => {
+  const normalized = value
+    .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+    .trim()
+    .toLowerCase();
+  const explicitProtocol = normalized.match(/^([a-z][a-z0-9+.-]*):/i);
+  if (!explicitProtocol) {
+    return false;
+  }
+  return DANGEROUS_PROTOCOLS.has(`${explicitProtocol[1]}:`);
+};
 
 const sanitizeHtml = (html) => {
   const parser = new DOMParser();
@@ -22,8 +35,10 @@ const sanitizeHtml = (html) => {
         el.removeAttribute(attr.name);
         continue;
       }
-      if ((name === 'href' || name === 'src') && value.trim().toLowerCase().startsWith('javascript:')) {
-        el.removeAttribute(attr.name);
+      if (name === 'href' || name === 'src') {
+        if (hasDangerousUrlProtocol(value)) {
+          el.removeAttribute(attr.name);
+        }
       }
     }
   });
