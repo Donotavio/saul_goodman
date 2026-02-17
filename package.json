@@ -25,7 +25,7 @@
     "mcp:quality:update-baseline": "npm run mcp:quality -- --update-baseline"
   },
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "@types/chrome": "^0.0.246",
     "@types/node": "^20.11.30",
     "tsx": "^4.21.0",
