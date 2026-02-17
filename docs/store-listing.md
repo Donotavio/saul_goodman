@@ -45,3 +45,7 @@ Tudo roda localmente no seu navegador. Nenhum dado é enviado para servidores ex
 ### Política de privacidade
 
 Use o texto em `docs/privacy-policy.md` e publique em um link acessível pela loja.
+
+## Empacotamento para envio
+
+Para o passo a passo completo de empacotamento e checklist de release, consulte `docs/release.md`.

@@ -32,6 +32,7 @@ npm test
 - `docs/privacy-policy.md` — política de privacidade (multi-idioma).
 - `docs/store-listing.md` — materiais para a Chrome Web Store.
 - `docs/store-assets.md` — organização de screenshots e assets.
+- `docs/release.md` — checklist de release e comandos de publicação (Chrome + VS Code).
 - `docs/mcp-quality.md` — suíte de QA visual/performance.
 
 ## Convenções rápidas

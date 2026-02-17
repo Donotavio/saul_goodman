@@ -60,3 +60,17 @@ Os dados são locais e não incluem conteúdo de código.
 
 - O comando de “preparar daemon” tenta iniciar o daemon **embutido** na extensão.
 - Também aceita `daemonPath` customizado ou `saul-daemon/` no workspace.
+
+## Empacotamento VSIX
+
+- Comando de build:
+
+```bash
+npm --prefix vscode-extension run build:vsix
+```
+
+- Saída:
+  - `vscode-extension/saul-goodman-vscode.vsix`
+
+- Observação:
+  - O projeto usa `@vscode/vsce` (binário `vsce`) para empacotar.

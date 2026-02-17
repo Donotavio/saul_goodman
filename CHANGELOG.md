@@ -3,6 +3,27 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.21.29] - 2026-02-17
+
+- Corrigimos a geração de NLS da extensão VS Code ao incluir a chave `config_daemon_path_description`.
+- O comando `npm --prefix vscode-extension run build:vsix` voltou a empacotar a VSIX com consistência.
+
+## [1.21.28] - 2026-02-17
+
+- Atualizamos dependências de desenvolvimento para fechar alertas Dependabot (`@modelcontextprotocol/sdk`, `hono`, `qs`, `xml2js`).
+- Migramos a extensão VS Code de `vsce` para `@vscode/vsce`.
+- Revalidamos CI/CodeQL após atualização dos lockfiles.
+
+## [1.21.27] - 2026-02-17
+
+- Atualizamos `jspdf` para `4.1.0` via Dependabot.
+
+## [1.21.26] - 2026-02-17
+
+- Integramos a branch `feat/add_languages_plus` na `main`.
+- Entraram melhorias amplas de i18n (extensão, site, blog e VS Code), evolução de auto-classificação/ML local e expansão da suíte MCP Quality.
+- Endurecemos validações de segurança (URL/protocolo/hostname e tokenização) e estabilizamos testes sensíveis a timezone.
+
 ## [1.21.7] - 2026-01-06
 
 - Corrigimos outra brecha de sanitização de URLs no módulo do blog/lightbox, eliminando o alerta de code scanning nº 10.1.
@@ -237,6 +258,27 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.21.29] - 2026-02-17
+
+- Fixed VS Code NLS generation by adding the `config_daemon_path_description` key.
+- Restored consistent VSIX packaging with `npm --prefix vscode-extension run build:vsix`.
+
+## [1.21.28] - 2026-02-17
+
+- Upgraded development dependencies to close Dependabot alerts (`@modelcontextprotocol/sdk`, `hono`, `qs`, `xml2js`).
+- Migrated the VS Code extension from `vsce` to `@vscode/vsce`.
+- Revalidated CI/CodeQL after lockfile updates.
+
+## [1.21.27] - 2026-02-17
+
+- Updated `jspdf` to `4.1.0` via Dependabot.
+
+## [1.21.26] - 2026-02-17
+
+- Merged `feat/add_languages_plus` into `main`.
+- Added broad i18n improvements (extension, site, blog, and VS Code), expanded local auto-classification/ML capabilities, and extended the MCP Quality suite.
+- Hardened security checks (URL/protocol/hostname and tokenization) and stabilized timezone-sensitive tests.
+
 ## [1.21.7] - 2026-01-06
 
 - Patched another URL-sanitization gap in the blog/lightbox module, resolving code scanning alert #10.1.
@@ -470,6 +512,27 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.21.29] - 2026-02-17
+
+- Corregimos la generación de NLS de la extensión de VS Code al incluir la clave `config_daemon_path_description`.
+- El comando `npm --prefix vscode-extension run build:vsix` volvió a empaquetar la VSIX de forma consistente.
+
+## [1.21.28] - 2026-02-17
+
+- Actualizamos dependencias de desarrollo para cerrar alertas de Dependabot (`@modelcontextprotocol/sdk`, `hono`, `qs`, `xml2js`).
+- Migramos la extensión de VS Code de `vsce` a `@vscode/vsce`.
+- Revalidamos CI/CodeQL tras actualizar lockfiles.
+
+## [1.21.27] - 2026-02-17
+
+- Actualizamos `jspdf` a `4.1.0` vía Dependabot.
+
+## [1.21.26] - 2026-02-17
+
+- Integramos la rama `feat/add_languages_plus` en `main`.
+- Entraron mejoras amplias de i18n (extensión, sitio, blog y VS Code), evolución de auto-clasificación/ML local y expansión de la suite MCP Quality.
+- Endurecimos validaciones de seguridad (URL/protocolo/hostname y tokenización) y estabilizamos pruebas sensibles a zona horaria.
 
 ## [1.21.7] - 2026-01-06
 

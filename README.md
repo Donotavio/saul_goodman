@@ -20,3 +20,13 @@ npm install
 npm run build
 npm test
 ```
+
+## Publicação rápida
+
+```bash
+# Pacote Chrome Web Store (pasta em release/)
+npm run package:webstore
+
+# VSIX da extensão VS Code
+npm --prefix vscode-extension run build:vsix
+```
