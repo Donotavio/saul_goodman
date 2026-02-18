@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Sat, 14 Feb 2026 14:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 10:00:00 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mulheres no Conselho: Inovadoras ou Medrosas? A Resposta Pode Surpreender!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender/</guid>
+      <pubDate>Wed, 18 Feb 2026 10:00:00 GMT</pubDate>
+      <description><![CDATA[Um estudo revela que mulheres em conselhos podem ser tanto inovadoras quanto avessas ao risco, dependendo de como a empresa está se saindo. Surpresa!]]></description>
+    </item>
+
     <item>
       <title>Você está realmente assistindo ao jogo ou só se sentindo importante?</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante/</link>
@@ -128,6 +136,22 @@
     </item>
 
     <item>
+      <title>Você ainda usa if statements? Que fofo!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/</guid>
+      <pubDate>Sat, 10 Jan 2026 16:12:30 GMT</pubDate>
+      <description><![CDATA[Se você acha que if statements são suficientes, parabéns! Você é um gênio da tecnologia... em 1999.]]></description>
+    </item>
+
+    <item>
+      <title>Museus: O Segredo da Arquitetura das Nuvens Revelado!</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/</guid>
+      <pubDate>Sat, 10 Jan 2026 13:43:51 GMT</pubDate>
+      <description><![CDATA[Museus antigos e microserviços: a nova fórmula mágica da arquitetura digital. Prepare-se para a revelação do século!]]></description>
+    </item>
+
+    <item>
       <title>Como ser um Engenheiro Frontend Sênior e Não Perder a Sanidade</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade/</link>
       <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade/</guid>
@@ -141,6 +165,14 @@
       <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-09-a-revolucao-da-produtividade-gerenciando-energia-nao-tempo-porque-tempo-e-para-os-fracos/</guid>
       <pubDate>Thu, 08 Jan 2026 19:17:36 GMT</pubDate>
       <description><![CDATA[Aprenda a gerenciar sua energia em vez do seu tempo e evite o burnout. É isso mesmo, quem precisa de horas na agenda?]]></description>
+    </item>
+
+    <item>
+      <title>Você ainda acha que SEO é só para nerds?</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds/</guid>
+      <pubDate>Thu, 08 Jan 2026 12:00:03 GMT</pubDate>
+      <description><![CDATA[A nova era do marketing chegou, e parece que você não foi convidado para a festa.]]></description>
     </item>
 
     <item>

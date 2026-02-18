@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Mulheres no Conselho: Inovadoras ou Medrosas? A Resposta Pode Surpreender!",
+      "url": "./posts/2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender/",
+      "markdown": "2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender.md",
+      "date": "2026-02-18",
+      "category": "negocios",
+      "tags": [
+        "inovação",
+        "conselhos",
+        "mulheres",
+        "riscos",
+        "desempenho"
+      ],
+      "excerpt": "Um estudo revela que mulheres em conselhos podem ser tanto inovadoras quanto avessas ao risco, dependendo de como a empresa está se saindo. Surpresa!",
+      "title_en": "Women on the Board: Innovators or Cowards? The Answer Might Surprise You!",
+      "title_es": "Mujeres en el Consejo: ¿Innovadoras o Miedosas? ¡La Respuesta Puede Sorprender!",
+      "title_fr": "Femmes au Conseil : Innovatrices ou Craintives ? La Réponse Pourrait Surprendre !",
+      "title_de": "Frauen im Vorstand: Innovativ oder Ängstlich? Die Antwort könnte überraschen!",
+      "title_it": "Donne nel Consiglio: Innovatrici o Timorose? La Risposta Potrebbe Sorprendere!",
+      "title_tr": "Konseyde Kadınlar: Yenilikçi mi Korkak mı? Cevap Sizi Şaşırtabilir!",
+      "title_zh": "董事会中的女性：创新者还是胆小鬼？答案可能会让你惊讶！",
+      "title_hi": "काउंसिल में महिलाएं: नवोन्मेषी या डरपोक? जवाब आपको चौंका सकता है!",
+      "title_ar": "النساء في المجالس: مبتكرات أم خائفات؟ قد تكون الإجابة مفاجئة!",
+      "title_bn": "কাউন্সিলে মহিলারা: উদ্ভাবক না ভীতু? উত্তরটি আপনাকে অবাক করতে পারে!",
+      "title_ru": "Женщины в Совете: Инноваторы или Трусливые? Ответ Может Удивить!",
+      "title_ur": "کونسل میں خواتین: جدید یا خوفزدہ؟ جواب آپ کو حیران کر سکتا ہے!",
+      "tone": "incredulo",
+      "tags_en": [
+        "innovation",
+        "boards",
+        "women",
+        "risks",
+        "performance"
+      ],
+      "tags_es": [
+        "innovación",
+        "consejos",
+        "mujeres",
+        "riesgos",
+        "desempeño"
+      ],
+      "tags_fr": [
+        "innovation",
+        "conseils",
+        "femmes",
+        "risques",
+        "performance"
+      ],
+      "tags_de": [
+        "Innovation",
+        "Vorstände",
+        "Frauen",
+        "Risiken",
+        "Leistung"
+      ],
+      "tags_it": [
+        "innovazione",
+        "consigli",
+        "donne",
+        "rischi",
+        "prestazioni"
+      ],
+      "tags_tr": [
+        "yenilik",
+        "konseyler",
+        "kadınlar",
+        "riskler",
+        "performans"
+      ],
+      "tags_zh": [
+        "创新",
+        "董事会",
+        "女性",
+        "风险",
+        "表现"
+      ],
+      "tags_hi": [
+        "नवोन्मेष",
+        "काउंसिल",
+        "महिलाएं",
+        "जोखिम",
+        "प्रदर्शन"
+      ],
+      "tags_ar": [
+        "ابتكار",
+        "مجالس",
+        "نساء",
+        "مخاطر",
+        "أداء"
+      ],
+      "tags_bn": [
+        "উদ্ভাবন",
+        "কাউন্সিল",
+        "মহিলারা",
+        "ঝুঁকি",
+        "পারফরম্যান্স"
+      ],
+      "tags_ru": [
+        "инновации",
+        "советы",
+        "женщины",
+        "риски",
+        "производительность"
+      ],
+      "tags_ur": [
+        "جدت",
+        "کونسل",
+        "خواتین",
+        "خطرات",
+        "کارکردگی"
+      ],
+      "source_title": "Are women board members risk averse or agents of innovation?",
+      "source_url": "https://www.fastcompany.com/91492753/women-board-members-risk-averse-or-agents-of-innovation",
+      "source_published_at": "2026-02-18T10:00:00",
+      "excerpt_en": "A study reveals that women on boards can be both innovative and risk-averse, depending on how the company is performing. Surprise!",
+      "excerpt_es": "Un estudio revela que las mujeres en los consejos pueden ser tanto innovadoras como reacias al riesgo, dependiendo de cómo le esté yendo a la empresa. ¡Sorpresa!",
+      "excerpt_fr": "Une étude révèle que les femmes dans les conseils peuvent être à la fois innovatrices et averses au risque, selon la performance de l'entreprise. Surprise !",
+      "excerpt_de": "Eine Studie zeigt, dass Frauen in Vorständen sowohl innovativ als auch risikoscheu sein können, je nachdem, wie gut das Unternehmen abschneidet. Überraschung!",
+      "excerpt_it": "Uno studio rivela che le donne nei consigli possono essere sia innovative che avverse al rischio, a seconda di come sta andando l'azienda. Sorprendente!",
+      "excerpt_tr": "Bir çalışma, konseylerdeki kadınların şirketin performansına bağlı olarak hem yenilikçi hem de riskten kaçınan olabileceğini ortaya koyuyor. Şaşırdınız mı!",
+      "excerpt_zh": "一项研究表明，董事会中的女性可能既是创新者，也可能是厌恶风险者，这取决于公司的表现。惊讶吧！",
+      "excerpt_hi": "एक अध्ययन से पता चलता है कि काउंसिल में महिलाएं नवोन्मेषी और जोखिम से बचने वाली दोनों हो सकती हैं, यह इस पर निर्भर करता है कि कंपनी कैसे प्रदर्शन कर रही है। आश्चर्य!",
+      "excerpt_ar": "تكشف دراسة أن النساء في المجالس يمكن أن يكن مبتكرات أو متحفظات، اعتمادًا على أداء الشركة. مفاجأة!",
+      "excerpt_bn": "একটি গবেষণা প্রকাশ করে যে কাউন্সিলে মহিলারা উদ্ভাবক এবং ঝুঁকি এড়ানো উভয়ই হতে পারে, কোম্পানির পারফরম্যান্সের উপর নির্ভর করে। অবাক!",
+      "excerpt_ru": "Исследование показывает, что женщины в советах могут быть как инноваторами, так и сторонниками риска, в зависимости от того, как дела у компании. Удивительно!",
+      "excerpt_ur": "ایک مطالعہ ظاہر کرتا ہے کہ کونسل میں خواتین جدید بھی ہو سکتی ہیں اور خطرے سے بھی بچنے والی، اس بات پر منحصر ہے کہ کمپنی کیسی کارکردگی دکھا رہی ہے۔ حیرت!"
+    },
+    {
       "title": "Você está realmente assistindo ao jogo ou só se sentindo importante?",
       "url": "./posts/2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante/",
       "markdown": "2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante.md",
@@ -344,6 +471,172 @@
       "excerpt_es": "¿La receta secreta para el cambio? Trabajar duro, porque claro, el universo debe estar esperando por ti."
     },
     {
+      "title": "Você ainda usa if statements? Que fofo!",
+      "url": "./posts/2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo/",
+      "markdown": "2026/2026-01-10-voce-ainda-usa-if-statements-que-fofo.md",
+      "date": "2026-01-10",
+      "category": "ux-design",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "desenvolvimento",
+        "sarcasmo"
+      ],
+      "excerpt": "Se você acha que if statements são suficientes, parabéns! Você é um gênio da tecnologia... em 1999.",
+      "title_en": "Are You Still Using If Statements? How Cute!",
+      "title_es": "¿Todavía usas declaraciones if? ¡Qué lindo!",
+      "title_fr": "Vous utilisez encore des instructions if ? Comme c'est mignon !",
+      "title_de": "Verwendest du immer noch if-Anweisungen? Wie niedlich!",
+      "title_it": "Usi ancora le istruzioni if? Che carino!",
+      "title_tr": "Hala if ifadeleri mi kullanıyorsun? Ne tatlı!",
+      "title_zh": "你还在用if语句吗？真可爱！",
+      "title_hi": "क्या आप अभी भी if स्टेटमेंट का उपयोग करते हैं? कितना प्यारा!",
+      "title_ar": "هل لا تزال تستخدم جمل if؟ يا لها من براءة!",
+      "title_bn": "আপনি কি এখনও if statements ব্যবহার করেন? কি মিষ্টি!",
+      "title_ru": "Вы все еще используете if-операторы? Как мило!",
+      "title_ur": "کیا آپ ابھی بھی if statements استعمال کرتے ہیں؟ کیا پیارا!",
+      "tags_en": [
+        "productivity",
+        "marketing",
+        "UX",
+        "development",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "productividad",
+        "marketing",
+        "UX",
+        "desarrollo",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "productivité",
+        "marketing",
+        "UX",
+        "développement",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Marketing",
+        "UX",
+        "Entwicklung",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "produttività",
+        "marketing",
+        "UX",
+        "sviluppo",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "pazarlama",
+        "UX",
+        "geliştirme",
+        "alay"
+      ],
+      "tags_zh": [
+        "生产力",
+        "营销",
+        "用户体验",
+        "开发",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "मार्केटिंग",
+        "यूएक्स",
+        "विकास",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويق",
+        "تجربة المستخدم",
+        "التطوير",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "মার্কেটিং",
+        "UX",
+        "বিকাশ",
+        "সারকাসম"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "маркетинг",
+        "UX",
+        "разработка",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "مارکیٹنگ",
+        "UX",
+        "ترقی",
+        "تہذیب"
+      ],
+      "source_title": "SwiftUI Feature Flags & Remote Config Architecture (Production-Grade)",
+      "source_url": "https://dev.to/sebastienlato/swiftui-feature-flags-remote-config-architecture-production-grade-56d8",
+      "source_published_at": "Sat, 10 Jan 2026 16:12:30 +0000",
+      "excerpt_en": "If you think if statements are enough, congratulations! You’re a tech genius... in 1999.",
+      "excerpt_es": "Si crees que las declaraciones if son suficientes, ¡felicitaciones! Eres un genio de la tecnología... en 1999.",
+      "excerpt_fr": "Si vous pensez que les instructions if suffisent, félicitations ! Vous êtes un génie de la technologie... en 1999.",
+      "excerpt_de": "Wenn du denkst, dass if-Anweisungen ausreichen, herzlichen Glückwunsch! Du bist ein Technikgenie... im Jahr 1999.",
+      "excerpt_it": "Se pensi che le istruzioni if siano sufficienti, complimenti! Sei un genio della tecnologia... nel 1999.",
+      "excerpt_tr": "Eğer if ifadelerinin yeterli olduğunu düşünüyorsan, tebrikler! 1999'daki teknoloji dehasısın.",
+      "excerpt_zh": "如果你认为if语句就足够了，恭喜你！你是个科技天才……在1999年。",
+      "excerpt_hi": "अगर आपको लगता है कि if स्टेटमेंट पर्याप्त हैं, तो बधाई हो! आप तकनीक के जीनियस हैं... 1999 में।",
+      "excerpt_ar": "إذا كنت تعتقد أن جمل if كافية، تهانينا! أنت عبقري التكنولوجيا... في عام 1999.",
+      "excerpt_bn": "যদি আপনি মনে করেন যে if statements যথেষ্ট, অভিনন্দন! আপনি একজন প্রযুক্তির জিনিয়াস... 1999 সালে।",
+      "excerpt_ru": "Если вы думаете, что if-операторы достаточны, поздравляю! Вы гений технологий... в 1999 году.",
+      "excerpt_ur": "اگر آپ کو لگتا ہے کہ if statements کافی ہیں، تو مبارک ہو! آپ ایک ٹیکنالوجی کے جینیئس ہیں... 1999 میں۔"
+    },
+    {
+      "title": "Museus: O Segredo da Arquitetura das Nuvens Revelado!",
+      "url": "./posts/2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado/",
+      "markdown": "2026/2026-01-10-museus-o-segredo-da-arquitetura-das-nuvens-revelado.md",
+      "date": "2026-01-10",
+      "category": "dev-performance",
+      "tags": [
+        "museus",
+        "microserviços",
+        "arquitetura",
+        "desenvolvimento",
+        "sarcasmo"
+      ],
+      "excerpt": "Museus antigos e microserviços: a nova fórmula mágica da arquitetura digital. Prepare-se para a revelação do século!",
+      "title_en": "Museums: The Secret of Cloud Architecture Revealed!",
+      "title_es": "Museos: ¡El Secreto de la Arquitectura de las Nubes Revelado!",
+      "title_fr": "Musées : Le Secret de l'Architecture des Nuages Révélé !",
+      "title_de": "Museen: Das Geheimnis der Architektur der Wolken Enthüllt!",
+      "title_it": "Musei: Il Segreto dell'Architettura delle Nuvole Rivelato!",
+      "title_tr": "Müzeler: Bulut Mimarisi Sırları Açığa Çıkarıldı!",
+      "title_zh": "博物馆：云架构的秘密被揭示！",
+      "title_hi": "संग्रहालय: बादलों की वास्तुकला का रहस्य प्रकट हुआ!",
+      "title_ar": "المتاحف: سر عمارة السحب مكشوف!",
+      "title_bn": "মিউজিয়াম: মেঘের স্থাপত্যের গোপন রহস্য উন্মোচিত!",
+      "title_ru": "Музеи: Тайна Архитектуры Облаков Раскрыта!",
+      "source_title": "System Design in Real Life: Why Ancient Museums are actually Microservices?",
+      "source_url": "https://dev.to/tyrell_wellicq_767cb57340/system-design-in-real-life-why-ancient-museums-are-actually-microservices-3a43",
+      "source_published_at": "Sat, 10 Jan 2026 13:43:51 +0000",
+      "excerpt_en": "Ancient museums and microservices: the new magic formula of digital architecture. Get ready for the revelation of the century!",
+      "excerpt_es": "Museos antiguos y microservicios: la nueva fórmula mágica de la arquitectura digital. ¡Prepárate para la revelación del siglo!",
+      "excerpt_fr": "Musées anciens et microservices : la nouvelle formule magique de l'architecture digitale. Préparez-vous à la révélation du siècle !",
+      "excerpt_de": "Antike Museen und Microservices: die neue Zauberformel der digitalen Architektur. Machen Sie sich bereit für die Enthüllung des Jahrhunderts!",
+      "excerpt_it": "Musei antichi e microservizi: la nuova formula magica dell'architettura digitale. Preparati per la rivelazione del secolo!",
+      "excerpt_tr": "Eski müzeler ve mikro hizmetler: dijital mimarinin yeni sihirli formülü. Yüzyılın açıklamasına hazırlanın!",
+      "excerpt_zh": "古老的博物馆和微服务：数字架构的新魔法公式。准备好迎接世纪的揭示吧！",
+      "excerpt_hi": "प्राचीन संग्रहालय और माइक्रोसर्विसेस: डिजिटल आर्किटेक्चर का नया जादुई फॉर्मूला। सदी के रहस्योद्घाटन के लिए तैयार रहें!",
+      "excerpt_ar": "المتاحف القديمة والميكروسيرفيس: الصيغة السحرية الجديدة للعمارة الرقمية. استعد للإفصاح عن القرن!",
+      "excerpt_bn": "প্রাচীন মিউজিয়াম এবং মাইক্রোসার্ভিস: ডিজিটাল স্থাপত্যের নতুন জাদুকরী সূত্র। শতাব্দীর উন্মোচনের জন্য প্রস্তুত হন!",
+      "excerpt_ru": "Старые музеи и микросервисы: новая волшебная формула цифровой архитектуры. Приготовьтесь к откровению века!"
+    },
+    {
       "title": "Como ser um Engenheiro Frontend Sênior e Não Perder a Sanidade",
       "url": "./posts/2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade/",
       "markdown": "2026/2026-01-12-como-ser-um-engenheiro-frontend-senior-e-nao-perder-a-sanidade.md",
@@ -382,12 +675,92 @@
       "excerpt": "Aprenda a gerenciar sua energia em vez do seu tempo e evite o burnout. É isso mesmo, quem precisa de horas na agenda?",
       "title_en": "The Productivity Revolution: Managing Energy, Not Time (Because Time is for the Weak)",
       "title_es": "La Revolución de la Productividad: Gestionando Energía, No Tiempo (Porque el Tiempo es para los Débiles)",
-      "tone": "incredulo",
       "source_title": "Managing Energy Not Time: The Science-Backed System High-Achievers Use to Escape Burnout",
       "source_url": "https://www.lifehack.org/991281/managing-energy-not-time",
       "source_published_at": "Thu, 08 Jan 2026 19:17:36 +0000",
       "excerpt_en": "Learn to manage your energy instead of your time and avoid burnout. That's right, who needs hours on the calendar?",
       "excerpt_es": "Aprende a gestionar tu energía en lugar de tu tiempo y evita el burnout. Así es, ¿quién necesita horas en la agenda?"
+    },
+    {
+      "title": "Você ainda acha que SEO é só para nerds?",
+      "url": "./posts/2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds/",
+      "markdown": "2026/2026-01-10-voce-ainda-acha-que-seo-e-so-para-nerds.md",
+      "date": "2026-01-10",
+      "category": "marketing",
+      "tags": [
+        "SEO",
+        "marketing",
+        "procrastinação",
+        "tecnologia",
+        "UX"
+      ],
+      "excerpt": "A nova era do marketing chegou, e parece que você não foi convidado para a festa.",
+      "title_es": "¿Todavía crees que el SEO es solo para nerds?",
+      "title_fr": "Vous pensez encore que le SEO est réservé aux nerds ?",
+      "title_de": "Denkst du immer noch, dass SEO nur was für Nerds ist?",
+      "title_tr": "Hala SEO'nun sadece nerdler için olduğunu mu düşünüyorsun?",
+      "title_zh": "你还认为SEO只是给书呆子的吗？",
+      "title_bn": "আপনি কি এখনও মনে করেন SEO শুধুমাত্র নার্ডদের জন্য?",
+      "title_ru": "Вы все еще думаете, что SEO – это только для задротов?",
+      "tags_es": [
+        "SEO",
+        "marketing",
+        "procrastinación",
+        "tecnología",
+        "UX"
+      ],
+      "tags_fr": [
+        "SEO",
+        "marketing",
+        "procrastination",
+        "technologie",
+        "UX"
+      ],
+      "tags_de": [
+        "SEO",
+        "Marketing",
+        "Prokrastination",
+        "Technologie",
+        "UX"
+      ],
+      "tags_tr": [
+        "SEO",
+        "pazarlama",
+        "erteleme",
+        "teknoloji",
+        "Kullanıcı Deneyimi"
+      ],
+      "tags_zh": [
+        "SEO",
+        "营销",
+        "拖延",
+        "技术",
+        "用户体验"
+      ],
+      "tags_bn": [
+        "SEO",
+        "মার্কেটিং",
+        "মুলতুবি",
+        "প্রযুক্তি",
+        "UX"
+      ],
+      "tags_ru": [
+        "SEO",
+        "маркетинг",
+        "прокрастинация",
+        "технологии",
+        "UX"
+      ],
+      "source_title": "AI search visibility: The playbook for marketers",
+      "source_url": "https://blog.hubspot.com/marketing/ai-search-visibility",
+      "source_published_at": "Thu, 08 Jan 2026 12:00:03 GMT",
+      "excerpt_es": "La nueva era del marketing ha llegado, y parece que no fuiste invitado a la fiesta.",
+      "excerpt_fr": "La nouvelle ère du marketing est arrivée, et il semble que vous n'ayez pas été invité à la fête.",
+      "excerpt_de": "Die neue Ära des Marketings ist angebrochen, und es scheint, als wärst du nicht zur Party eingeladen worden.",
+      "excerpt_tr": "Yeni pazarlama çağı geldi ve görünüşe göre sen partinin davetlisiydin.",
+      "excerpt_zh": "营销新时代来临了，看来你并没有收到派对邀请。",
+      "excerpt_bn": "নতুন মার্কেটিং যুগ এসেছে, এবং মনে হচ্ছে আপনি পার্টির জন্য আমন্ত্রিত হননি।",
+      "excerpt_ru": "Новая эра маркетинга пришла, и, похоже, вас не пригласили на вечеринку."
     },
     {
       "title": "O Mercado de Ações: A Grande Montanha-Russa do Vale do Silício",
@@ -405,7 +778,6 @@
       "excerpt": "O mercado de ações está em alta, e ninguém se surpreende. É quase como esperar que um gato caia de pé.",
       "title_en": "The Stock Market: The Great Roller Coaster of Silicon Valley",
       "title_es": "El Mercado de Acciones: La Gran Montaña Rusa del Silicon Valley",
-      "tone": "incredulo",
       "source_title": "Stock market surges on Big Tech gains, nearing records",
       "source_url": "https://www.fastcompany.com/91470120/stock-market-big-tech-amazon-sandisk",
       "source_published_at": "2026-01-06T21:04:24",
@@ -428,7 +800,6 @@
       "excerpt": "2026 está batendo à porta e as empresas ainda usam a mesma caneta BIC de 2003. Vamos lá, pessoal!",
       "title_en": "The Future Has Arrived: Are You Prepared or Just Using the Same BIC Pen?",
       "title_es": "El Futuro Ha Llegado: ¿Estás Preparado o Solo Usando el Mismo Bolígrafo BIC?",
-      "tone": "incredulo",
       "source_title": "7 things every leader must do to prepare their organization for 2026",
       "source_url": "https://www.fastcompany.com/91462416/leaders-prepare-organization-2026-ai",
       "source_published_at": "2026-01-05T09:00:00",
@@ -451,7 +822,6 @@
       "excerpt": "A nova estratégia de busca AI: porque complicar o simples é o novo normal no marketing.",
       "title_en": "The AI Search Strategy: What Do We Do with Another Buzzword?",
       "title_es": "La Estrategia de Búsqueda AI: ¿Qué Hacemos con Otra Palabra de Moda?",
-      "tone": "incredulo",
       "source_title": "AI search strategy: A guide for modern marketing teams",
       "source_url": "https://blog.hubspot.com/marketing/ai-search-strategy",
       "source_published_at": "Wed, 31 Dec 2025 12:00:02 GMT",
@@ -474,7 +844,6 @@
       "excerpt": "Todo ano, uma nova chance para a mesma rotina e as mesmas promessas vazias. Que emocionante!",
       "title_en": "Routine: Procrastination's Best Friend!",
       "title_es": "¡Rutina: El Mejor Amigo de la Procrastinación!",
-      "tone": "incredulo",
       "source_title": "<![CDATA[[Newsletter] The Comfort of Routine, the Promise of Change]]>",
       "source_url": "https://remotive.com/blog/newsletter-the-comfort-of-routine-the-promise-of-change/",
       "source_published_at": "Mon, 29 Dec 2025 14:48:15 GMT",
@@ -497,7 +866,6 @@
       "excerpt": "Aprenda a ser produtivo e infeliz com reuniões semanais que focam em valores, não em tarefas. Porque quem precisa de satisfação, não é mesmo?",
       "title_en": "The Weekly Meetings Nobody Asked For: The Guide to Discontent",
       "title_es": "Las Reuniones Semanales que Nadie Pidió: La Guía de la Insatisfacción",
-      "tone": "incredulo",
       "source_title": "Why the Best Weekly Reviews Focus on Values, Not Tasks (TPS593)",
       "source_url": "https://www.asianefficiency.com/podcasts/593-weekly-reviews-values-not-tasks/",
       "source_published_at": "Mon, 29 Dec 2025 12:00:00 +0000",
@@ -520,7 +888,6 @@
       "excerpt": "Vestidos de rede são a nova sensação, mas será que eles ajudam você a procrastinar com estilo?",
       "title_en": "Net Dresses: Or How Procrastination is the New Black",
       "title_es": "Vestidos de Red: O Cómo la Procrastinación es el Nuevo Negro",
-      "tone": "incredulo",
       "source_title": "Net Fabric Dresses: Effortless Grace in Layered Design",
       "source_url": "https://dev.to/houseofsiyaab/net-fabric-dresses-effortless-grace-in-layered-design-1kpe",
       "source_published_at": "Mon, 29 Dec 2025 10:47:55 +0000",
@@ -543,7 +910,6 @@
       "excerpt": "Procrastinação? Que tal criar uma VPC pública para esquecer de tudo?",
       "title_en": "Are You Procrastinating? Here’s a Public VPC to Distract You!",
       "title_es": "¿Estás procrastinando? ¡Aquí tienes una VPC pública para distraerte!",
-      "tone": "incredulo",
       "source_title": "Day 27.Configuring a Public VPC with an EC2 Instance for Internet Access",
       "source_url": "https://dev.to/thukhakyawe_cloud/day-27configuring-a-public-vpc-with-an-ec2-instance-for-internet-access-4n4l",
       "source_published_at": "Tue, 23 Dec 2025 23:18:51 +0000",
@@ -566,7 +932,6 @@
       "excerpt": "Um olhar sarcástico sobre a nova era das Steam Machines e o futuro da tecnologia de consumo.",
       "title_en": "Steam Machines: The Return of the King or the Last Gasp?",
       "title_es": "Steam Machines: ¿El Regreso del Rey o el Último Suspiro?",
-      "tone": "incredulo",
       "source_title": "From Steam Machines to Home Robots: Where Consumer Tech Is Actually Heading",
       "source_url": "https://dev.to/deeppressanalysis/from-steam-machines-to-home-robots-where-consumer-tech-is-actually-heading-7af",
       "source_published_at": "Tue, 23 Dec 2025 23:10:00 +0000",
@@ -589,7 +954,6 @@
       "excerpt": "Aprenda como procrastinar enquanto tenta compilar Tauri para RISC-V. O novo hobby de quem não tem o que fazer.",
       "title_en": "Procrastination: The New Extreme Sport of Programming",
       "title_es": "Procrastinación: El Nuevo Deporte Extremo de la Programación",
-      "tone": "incredulo",
       "source_title": "The Old Dog Learns a New Trick: Cross-Compiling Tauri CLI for RISC-V",
       "source_url": "https://dev.to/gounthar/the-old-dog-learns-a-new-trick-cross-compiling-tauri-cli-for-risc-v-ibn",
       "source_published_at": "Tue, 23 Dec 2025 22:01:34 +0000",
@@ -612,7 +976,6 @@
       "excerpt": "Você sabia que o `login_hint` não funcionava nas Azure Static Web Apps? Agora já sabe. E o que fazer com isso?",
       "title_en": "Login Hint: The Mystery No One Asked For",
       "title_es": "Login Hint: El Misterio Que Nadie Pidió",
-      "tone": "incredulo",
       "source_title": "Azure Static Web Apps: login_hint now works",
       "source_url": "https://dev.to/andrewelans/azure-static-web-apps-add-loginhint-with-functions-37jb",
       "source_published_at": "Tue, 23 Dec 2025 17:37:22 +0000",
@@ -633,7 +996,6 @@
         "sarcasmo"
       ],
       "excerpt": "Descubra como o Stryker transforma seu código em um campo de batalha. E você achando que debugar era complicado...",
-      "tone": "nao-corte",
       "title_en": "Mutants in Code: The Revolution You Didn't Ask For",
       "title_es": "Mutantes en el Código: La Revolución que No Pediste",
       "source_title": "Mutation Testing com Stryker",
@@ -656,7 +1018,6 @@
         "produtividade"
       ],
       "excerpt": "Módulos do Terraform: a solução para você não fazer nada de novo.",
-      "tone": "like",
       "title_en": "Terraform: The Module That Does Everything Except Make Coffee",
       "title_es": "Terraform: El Módulo que Hace Todo, Menos Café",
       "source_title": "🚀 Terraform Day 15: Modules — Writing Reusable, Scalable Infrastructure Code",
@@ -679,7 +1040,6 @@
         "sarcasmo"
       ],
       "excerpt": "Kiro agora tem superpoderes com Supabase. Porque quem não quer mais uma ferramenta para procrastinar, não é mesmo?",
-      "tone": "nao-corte",
       "title_en": "Kiro and Supabase: The Marriage Nobody Asked For",
       "title_es": "Kiro y Supabase: El Matrimonio Que Nadie Pidió",
       "source_title": "The new Supabase power for Kiro",
@@ -702,7 +1062,6 @@
         "humor"
       ],
       "excerpt": "Osciloscópios, abas abertas e procrastinação dividindo o mesmo tribunal digital na rotina de um dev.",
-      "tone": "incredulo",
       "title_en": "Debugging Life: What Does Procrastination Have to Do with Oscilloscopes?",
       "title_es": "Depurando la Vida: ¿Qué Tiene Que Ver la Procrastinación con Osciloscopios?",
       "source_title": "From Serial Ports to WebSockets: Debugging Across Two Worlds",
@@ -725,7 +1084,6 @@
         "Terraform"
       ],
       "excerpt": "Aprenda a procrastinar como um verdadeiro artista enquanto acha que está \"solucionando\" tudo com Terraform.",
-      "tone": "incredulo",
       "source_title": "Cómo solucionarlo con Terraform?",
       "source_url": "https://dev.to/valaug/como-solucionarlo-con-terraform-dcb",
       "source_published_at": "Tue, 23 Dec 2025 13:13:18 +0000"
@@ -767,7 +1125,6 @@
       "excerpt": "Ser um Senior DevOps Engineer é fácil, certo? É só desenhar um futuro resiliente enquanto toma café e ignora a realidade.",
       "title_en": "You Too Can Be an Architect of a Resilient Future! Or Not...",
       "title_es": "¡También Puedes Ser un Arquitecto de un Futuro Resiliente! O No...",
-      "tone": "incredulo",
       "source_title": "Senior DevOps Engineer",
       "source_url": "https://remotive.com/remote-jobs/devops/senior-devops-engineer-2070150",
       "source_published_at": "Thu, 18 Dec 2025 14:30:38 GMT",
@@ -790,7 +1147,6 @@
       "excerpt": "Como a procrastinação se tornou a aliada secreta dos devs e a performance nunca foi tão divertida.",
       "title_en": "Procrastination: The Best Friend of the Modern Developer",
       "title_es": "Procrastinación: El Mejor Amigo del Desarrollador Moderno",
-      "tone": "incredulo",
       "source_title": "AI Trainer",
       "source_url": "https://remotive.com/remote-jobs/ai-ml/ai-trainer-2087694",
       "source_published_at": "Wed, 17 Dec 2025 06:58:48 GMT",
@@ -813,7 +1169,6 @@
       "excerpt": "Foco é o novo preto, mas a procrastinação tá fazendo sucesso na passarela.",
       "title_en": "Focus? Only if it's on Netflix!",
       "title_es": "¿Foco? ¡Solo si es en Netflix!",
-      "tone": "incredulo",
       "source_title": "iOS Developer",
       "source_url": "https://remotive.com/remote-jobs/software-development/ios-developer-1956455",
       "source_published_at": "Tue, 09 Dec 2025 21:16:18 GMT",
@@ -833,7 +1188,6 @@
         "vscode"
       ],
       "excerpt": "Quando o time chama dez standups e o VS Code nunca fica em primeiro plano, o juiz do foco bate o martelo e corta o multitasking.",
-      "tone": "nao-corte",
       "title_en": "Sprint Without Evidence: The Focus Jury Convicts Multitasking",
       "title_es": "Sprint sin pruebas: el jurado del foco condena el multitasking",
       "source_title": "Pesquisa sobre context switching em times remotos",
