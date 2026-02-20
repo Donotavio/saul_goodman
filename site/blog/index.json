@@ -128,6 +128,133 @@
       "excerpt_ur": "ایک مطالعہ ظاہر کرتا ہے کہ کونسل میں خواتین جدید بھی ہو سکتی ہیں اور خطرے سے بھی بچنے والی، اس بات پر منحصر ہے کہ کمپنی کیسی کارکردگی دکھا رہی ہے۔ حیرت!"
     },
     {
+      "title": "Você Está Ocupado ou Apenas Perdido na Matrix?",
+      "url": "./posts/2026/2026-02-20-voce-esta-ocupado-ou-apenas-perdido-na-matrix/",
+      "markdown": "2026/2026-02-20-voce-esta-ocupado-ou-apenas-perdido-na-matrix.md",
+      "date": "2026-02-20",
+      "category": "foco-atencao",
+      "tags": [
+        "produtividade",
+        "procrastinação",
+        "marketing",
+        "UX",
+        "carreiras"
+      ],
+      "excerpt": "Acorda, você não está produtivo, só está ocupado.",
+      "title_en": "Are You Busy or Just Lost in the Matrix?",
+      "title_es": "¿Estás Ocupado o Simplemente Perdido en la Matrix?",
+      "title_fr": "Êtes-vous occupé ou simplement perdu dans la Matrice ?",
+      "title_de": "Bist du beschäftigt oder einfach nur verloren in der Matrix?",
+      "title_it": "Sei Occupato o Sei Solo Perso nella Matrix?",
+      "title_tr": "Meşgul Musun Yoksa Matrix'te Kayboldun mu?",
+      "title_zh": "你忙还是只是迷失在矩阵中？",
+      "title_hi": "क्या आप व्यस्त हैं या बस मैट्रिक्स में खो गए हैं?",
+      "title_ar": "هل أنت مشغول أم فقط ضائع في المصفوفة؟",
+      "title_bn": "আপনি কি ব্যস্ত নাকি মেট্রিক্সে হারিয়ে গেছেন?",
+      "title_ru": "Вы заняты или просто потерялись в Матрице?",
+      "title_ur": "کیا آپ مصروف ہیں یا صرف میٹرکس میں کھوئے ہوئے ہیں؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "procrastination",
+        "marketing",
+        "UX",
+        "careers"
+      ],
+      "tags_es": [
+        "productividad",
+        "procrastinación",
+        "marketing",
+        "UX",
+        "carreras"
+      ],
+      "tags_fr": [
+        "productivité",
+        "procrastination",
+        "marketing",
+        "UX",
+        "carrières"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Prokrastination",
+        "Marketing",
+        "UX",
+        "Karrieren"
+      ],
+      "tags_it": [
+        "produttività",
+        "procrastinazione",
+        "marketing",
+        "UX",
+        "carriere"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "erteleme",
+        "pazarlama",
+        "UX",
+        "kariyerler"
+      ],
+      "tags_zh": [
+        "生产力",
+        "拖延",
+        "营销",
+        "用户体验",
+        "职业生涯"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "टालमटोल",
+        "मार्केटिंग",
+        "यूएक्स",
+        "करियर"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويف",
+        "التسويق",
+        "تجربة المستخدم",
+        "المهن"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "প্রোক্রাস্টিনেশন",
+        "মার্কেটিং",
+        "ইউএক্স",
+        "ক্যারিয়ার"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "прокрастинация",
+        "маркетинг",
+        "UX",
+        "карьеры"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "ٹال مٹول",
+        "مارکیٹنگ",
+        "UX",
+        "کیریئر"
+      ],
+      "source_title": "Why Being Busy Is Keeping You From Being Productive",
+      "source_url": "https://www.lifehack.org/991403/busy-vs-productive",
+      "source_published_at": "Tue, 17 Feb 2026 23:47:15 +0000",
+      "excerpt_en": "Wake up, you're not productive, you're just busy.",
+      "excerpt_es": "Despierta, no estás siendo productivo, solo estás ocupado.",
+      "excerpt_fr": "Réveillez-vous, vous n'êtes pas productif, vous êtes juste occupé.",
+      "excerpt_de": "Wach auf, du bist nicht produktiv, du bist nur beschäftigt.",
+      "excerpt_it": "Svegliati, non sei produttivo, sei solo occupato.",
+      "excerpt_tr": "Uyan, verimli değilsin, sadece meşgulsün.",
+      "excerpt_zh": "醒醒吧，你并没有高效，只是在忙碌。",
+      "excerpt_hi": "जागो, आप उत्पादक नहीं हैं, आप बस व्यस्त हैं।",
+      "excerpt_ar": "استيقظ، أنت لست منتجًا، أنت فقط مشغول.",
+      "excerpt_bn": "জাগ্রত হন, আপনি উৎপাদনশীল নন, আপনি শুধু ব্যস্ত আছেন।",
+      "excerpt_ru": "Проснись, ты не продуктивен, ты просто занят.",
+      "excerpt_ur": "جاگیں، آپ پیداواری نہیں ہیں، آپ صرف مصروف ہیں۔"
+    },
+    {
       "title": "Você está realmente assistindo ao jogo ou só se sentindo importante?",
       "url": "./posts/2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante/",
       "markdown": "2026/2026-02-16-voce-esta-realmente-assistindo-ao-jogo-ou-so-se-sentindo-importante.md",
