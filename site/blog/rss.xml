@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Wed, 18 Feb 2026 10:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 11:00:00 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Entity, DTO, Repository, Service… O Grande Circo da Programação</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao/</guid>
+      <pubDate>Mon, 23 Feb 2026 11:00:00 GMT</pubDate>
+      <description><![CDATA[Quer saber quem faz o quê no seu código? Spoiler: ninguém sabe e todo mundo finge que sim.]]></description>
+    </item>
+
     <item>
       <title>Mulheres no Conselho: Inovadoras ou Medrosas? A Resposta Pode Surpreender!</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender/</link>

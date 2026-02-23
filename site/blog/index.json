@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Entity, DTO, Repository, Service… O Grande Circo da Programação",
+      "url": "./posts/2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao/",
+      "markdown": "2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao.md",
+      "date": "2026-02-23",
+      "category": "dev-performance",
+      "tags": [
+        "Entity",
+        "DTO",
+        "Service",
+        "Repository",
+        "Programação"
+      ],
+      "excerpt": "Quer saber quem faz o quê no seu código? Spoiler: ninguém sabe e todo mundo finge que sim.",
+      "title_en": "Entity, DTO, Repository, Service… The Great Circus of Programming",
+      "title_es": "Entidad, DTO, Repositorio, Servicio… El Gran Circo de la Programación",
+      "title_fr": "Entité, DTO, Répertoire, Service… Le Grand Cirque de la Programmation",
+      "title_de": "Entity, DTO, Repository, Service… Der große Zirkus der Programmierung",
+      "title_it": "Entity, DTO, Repository, Service… Il Grande Circo della Programmazione",
+      "title_tr": "Entity, DTO, Repository, Service… Programlamanın Büyük Sirki",
+      "title_zh": "实体、DTO、仓库、服务……编程的大马戏团",
+      "title_hi": "Entity, DTO, Repository, Service… प्रोग्रामिंग का बड़ा सर्कस",
+      "title_ar": "الكيان، DTO، المستودع، الخدمة… السيرك الكبير للبرمجة",
+      "title_bn": "এন্টিটি, DTO, রিপোজিটরি, সার্ভিস… প্রোগ্রামিংয়ের বড় সার্কাস",
+      "title_ru": "Сущность, DTO, Репозиторий, Сервис… Большой Цирк Программирования",
+      "title_ur": "اینیٹی، ڈی ٹی او، ریپوزٹری، سروس… پروگرامنگ کا بڑا سرکس",
+      "tone": "like",
+      "tags_en": [
+        "Entity",
+        "DTO",
+        "Service",
+        "Repository",
+        "Programming"
+      ],
+      "tags_es": [
+        "Entidad",
+        "DTO",
+        "Servicio",
+        "Repositorio",
+        "Programación"
+      ],
+      "tags_fr": [
+        "Entité",
+        "DTO",
+        "Service",
+        "Répertoire",
+        "Programmation"
+      ],
+      "tags_de": [
+        "Entity",
+        "DTO",
+        "Service",
+        "Repository",
+        "Programmierung"
+      ],
+      "tags_it": [
+        "Entity",
+        "DTO",
+        "Servizio",
+        "Repository",
+        "Programmazione"
+      ],
+      "tags_tr": [
+        "Varlık",
+        "DTO",
+        "Servis",
+        "Depo",
+        "Programlama"
+      ],
+      "tags_zh": [
+        "实体",
+        "DTO",
+        "服务",
+        "仓库",
+        "编程"
+      ],
+      "tags_hi": [
+        "Entity",
+        "DTO",
+        "Service",
+        "Repository",
+        "प्रोग्रामिंग"
+      ],
+      "tags_ar": [
+        "كيان",
+        "DTO",
+        "خدمة",
+        "مستودع",
+        "برمجة"
+      ],
+      "tags_bn": [
+        "এন্টিটি",
+        "DTO",
+        "সার্ভিস",
+        "রিপোজিটরি",
+        "প্রোগ্রামিং"
+      ],
+      "tags_ru": [
+        "Сущность",
+        "DTO",
+        "Сервис",
+        "Репозиторий",
+        "Программирование"
+      ],
+      "tags_ur": [
+        "اینیٹی",
+        "ڈی ٹی او",
+        "سروس",
+        "ریپوزٹری",
+        "پروگرامنگ"
+      ],
+      "source_title": "Entity, DTO, Repository, Service… afinal, quem faz o quê?",
+      "source_url": "https://dev.to/svitorz/entity-dto-repository-service-afinal-quem-faz-o-que-34fn",
+      "source_published_at": "Mon, 23 Feb 2026 11:00:00 +0000",
+      "excerpt_en": "Want to know who does what in your code? Spoiler: nobody knows, and everyone pretends they do.",
+      "excerpt_es": "¿Quieres saber quién hace qué en tu código? Spoiler: nadie sabe y todos fingen que sí.",
+      "excerpt_fr": "Vous voulez savoir qui fait quoi dans votre code ? Spoiler : personne ne sait et tout le monde fait semblant de le savoir.",
+      "excerpt_de": "Willst du wissen, wer was in deinem Code macht? Spoiler: Niemand weiß es und alle tun so, als wüssten sie es.",
+      "excerpt_it": "Vuoi sapere chi fa cosa nel tuo codice? Spoiler: nessuno lo sa e tutti fingono di sì.",
+      "excerpt_tr": "Kodunuzda kim ne yapıyor merak mı ediyorsunuz? Spoiler: kimse bilmiyor ve herkes öyleymiş gibi yapıyor.",
+      "excerpt_zh": "想知道你的代码中谁做什么吗？剧透：没有人知道，大家都在假装知道。",
+      "excerpt_hi": "क्या आप जानना चाहते हैं कि आपके कोड में कौन क्या करता है? स्पॉइलर: कोई नहीं जानता और सभी ऐसा दिखाते हैं जैसे कि जानते हैं।",
+      "excerpt_ar": "هل تريد أن تعرف من يفعل ماذا في كودك؟ تلميح: لا أحد يعرف، والجميع يتظاهر بذلك.",
+      "excerpt_bn": "আপনি কি জানেন আপনার কোডে কে কী করে? স্পয়লার: কেউ জানে না এবং সবাই ভান করে যে জানে।",
+      "excerpt_ru": "Хотите знать, кто что делает в вашем коде? Спойлер: никто не знает, и все делают вид, что знают.",
+      "excerpt_ur": "کیا آپ جاننا چاہتے ہیں کہ آپ کے کوڈ میں کون کیا کرتا ہے؟ اسپوئلر: کوئی نہیں جانتا اور سب یہ ظاہر کرتے ہیں کہ جانتے ہیں۔"
+    },
+    {
       "title": "Mulheres no Conselho: Inovadoras ou Medrosas? A Resposta Pode Surpreender!",
       "url": "./posts/2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender/",
       "markdown": "2026/2026-02-18-mulheres-no-conselho-inovadoras-ou-medrosas-a-resposta-pode-surpreender.md",
