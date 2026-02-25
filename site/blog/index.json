@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Empregos: Para Que Serve Isso Mesmo?",
+      "url": "./posts/2026/2026-02-25-empregos-para-que-serve-isso-mesmo/",
+      "markdown": "2026/2026-02-25-empregos-para-que-serve-isso-mesmo.md",
+      "date": "2026-02-25",
+      "category": "trabalho-remoto",
+      "tags": [
+        "produtividade",
+        "carreira",
+        "startups",
+        "procrastinação",
+        "decisões"
+      ],
+      "excerpt": "Trabalhar em um emprego que parece 'permanente' pode ser só uma fase. Quem diria?",
+      "title_en": "Jobs: What’s the Point Anyway?",
+      "title_es": "Empleos: ¿Para Qué Sirve Esto Realmente?",
+      "title_fr": "Emplois : À Quoi Ça Sert Vraiment ?",
+      "title_de": "Jobs: Wozu dient das eigentlich?",
+      "title_it": "Lavori: A Cosa Serve Davvero?",
+      "title_tr": "İşler: Bu Ne İçin Gerekliydi Ki?",
+      "title_zh": "工作：这到底有什么用？",
+      "title_hi": "नौकरियाँ: इसका क्या मतलब है?",
+      "title_ar": "الوظائف: ما الغرض من ذلك حقًا؟",
+      "title_bn": "চাকরি: এটা আসলে কি কাজে লাগে?",
+      "title_ru": "Работа: Для чего это вообще нужно?",
+      "title_ur": "نوکریاں: یہ واقعی کس کام کی ہیں؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "career",
+        "startups",
+        "procrastination",
+        "decisions"
+      ],
+      "tags_es": [
+        "productividad",
+        "carrera",
+        "startups",
+        "procrastinación",
+        "decisiones"
+      ],
+      "tags_fr": [
+        "productivité",
+        "carrière",
+        "startups",
+        "procrastination",
+        "décisions"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Karriere",
+        "Startups",
+        "Prokrastination",
+        "Entscheidungen"
+      ],
+      "tags_it": [
+        "produttività",
+        "carriera",
+        "startup",
+        "procrastinazione",
+        "decisioni"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "kariyer",
+        "startuplar",
+        "erteleme",
+        "kararlar"
+      ],
+      "tags_zh": [
+        "生产力",
+        "职业",
+        "初创公司",
+        "拖延",
+        "决策"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "करियर",
+        "स्टार्टअप",
+        "टालमटोल",
+        "निर्णय"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "المسيرة المهنية",
+        "الشركات الناشئة",
+        "التسويف",
+        "القرارات"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "ক্যারিয়ার",
+        "স্টার্টআপ",
+        "প্রোক্রাস্টিনেশন",
+        "সিদ্ধান্ত"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "карьера",
+        "стартапы",
+        "прокрастинация",
+        "решения"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "کیریئر",
+        "اسٹارٹ اپس",
+        "ٹال مٹول",
+        "فیصلے"
+      ],
+      "source_title": "<![CDATA[[Newsletter] How to Land a Role That Serves Your Long-Term Goals]]>",
+      "source_url": "https://remotive.com/blog/newsletter-how-to-land-a-role-that-serves-your-long-term-goals/",
+      "source_published_at": "Mon, 23 Feb 2026 14:08:52 GMT",
+      "excerpt_en": "Working in a job that seems 'permanent' might just be a phase. Who would have thought?",
+      "excerpt_es": "Trabajar en un empleo que parece 'permanente' puede ser solo una fase. ¿Quién lo diría?",
+      "excerpt_fr": "Travailler dans un emploi qui semble 'permanent' peut n'être qu'une phase. Qui l'aurait cru ?",
+      "excerpt_de": "In einem Job zu arbeiten, der 'dauerhaft' zu sein scheint, kann nur eine Phase sein. Wer hätte das gedacht?",
+      "excerpt_it": "Lavorare in un impiego che sembra 'permanente' può essere solo una fase. Chi l'avrebbe mai detto?",
+      "excerpt_tr": "Sürekli gibi görünen bir işte çalışmak sadece bir aşama olabilir. Kim bilebilirdi ki?",
+      "excerpt_zh": "在一个看似“永久”的工作中工作可能只是一个阶段。谁会想到呢？",
+      "excerpt_hi": "एक नौकरी में काम करना जो 'स्थायी' लगता है, केवल एक चरण हो सकता है। कौन कहता?",
+      "excerpt_ar": "العمل في وظيفة تبدو 'دائمة' قد تكون مجرد مرحلة. من كان ليقول؟",
+      "excerpt_bn": "একটি 'স্থায়ী' চাকরিতে কাজ করা শুধুমাত্র একটি পর্যায় হতে পারে। কে জানত?",
+      "excerpt_ru": "Работа на 'постоянной' должности может оказаться просто этапом. Кто бы мог подумать?",
+      "excerpt_ur": "ایک ایسی نوکری میں کام کرنا جو 'مستقل' لگتا ہے، صرف ایک مرحلہ ہو سکتا ہے۔ کون جانتا تھا؟"
+    },
+    {
       "title": "Entity, DTO, Repository, Service… O Grande Circo da Programação",
       "url": "./posts/2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao/",
       "markdown": "2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao.md",

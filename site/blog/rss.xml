@@ -5,8 +5,16 @@
     <link>https://donotavio.github.io/saul_goodman/blog/</link>
     <description>Relatos sarcásticos sobre foco, atenção e performance dev. Artigos semanais escritos no tom Saul Goodman, direto ao ponto.</description>
     <language>pt-BR</language>
-    <lastBuildDate>Mon, 23 Feb 2026 11:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 14:08:52 GMT</lastBuildDate>
     <atom:link href="https://donotavio.github.io/saul_goodman/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Empregos: Para Que Serve Isso Mesmo?</title>
+      <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-25-empregos-para-que-serve-isso-mesmo/</link>
+      <guid isPermaLink="true">https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-25-empregos-para-que-serve-isso-mesmo/</guid>
+      <pubDate>Mon, 23 Feb 2026 14:08:52 GMT</pubDate>
+      <description><![CDATA[Trabalhar em um emprego que parece 'permanente' pode ser só uma fase. Quem diria?]]></description>
+    </item>
+
     <item>
       <title>Entity, DTO, Repository, Service… O Grande Circo da Programação</title>
       <link>https://donotavio.github.io/saul_goodman/blog/posts/2026/2026-02-23-entity-dto-repository-service-o-grande-circo-da-programacao/</link>
