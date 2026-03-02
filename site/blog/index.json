@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "O Que um Engenheiro de Software Pode Aprender com a Vida de um Artista de Rua",
+      "url": "./posts/2026/2026-03-02-o-que-um-engenheiro-de-software-pode-aprender-com-a-vida-de-um-artista-de-rua/",
+      "markdown": "2026/2026-03-02-o-que-um-engenheiro-de-software-pode-aprender-com-a-vida-de-um-artista-de-rua.md",
+      "date": "2026-03-02",
+      "category": "ux-design",
+      "tags": [
+        "engenharia",
+        "software",
+        "carreira",
+        "produtividade",
+        "sarcasmo"
+      ],
+      "excerpt": "Quando um engenheiro de software ganha mais que a maioria dos artistas, mas ainda assim vive na procrastinação.",
+      "title_en": "What a Software Engineer Can Learn from the Life of a Street Performer",
+      "title_es": "Lo Que un Ingeniero de Software Puede Aprender de la Vida de un Artista Callejero",
+      "title_fr": "Ce qu'un ingénieur logiciel peut apprendre de la vie d'un artiste de rue",
+      "title_de": "Was ein Software-Ingenieur von dem Leben eines Straßenkünstlers lernen kann",
+      "title_it": "Cosa può imparare un ingegnere software dalla vita di un artista di strada",
+      "title_tr": "Bir Yazılım Mühendisinin Sokak Sanatçısının Hayatından Öğrenebileceği Şeyler",
+      "title_zh": "软件工程师可以从街头艺术家的生活中学到什么",
+      "title_hi": "एक सॉफ़्टवेयर इंजीनियर एक सड़क कलाकार के जीवन से क्या सीख सकता है",
+      "title_ar": "ماذا يمكن لمهندس البرمجيات أن يتعلمه من حياة فنان الشارع",
+      "title_bn": "একজন সফটওয়্যার ইঞ্জিনিয়ার রাস্তার শিল্পীর জীবন থেকে কী শিখতে পারে",
+      "title_ru": "Что может узнать инженер-программист из жизни уличного артиста",
+      "title_ur": "ایک سافٹ ویئر انجینئر سٹریٹ آرٹسٹ کی زندگی سے کیا سیکھ سکتا ہے",
+      "tone": "incredulo",
+      "tags_en": [
+        "engineering",
+        "software",
+        "career",
+        "productivity",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "ingeniería",
+        "software",
+        "carrera",
+        "productividad",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "ingénierie",
+        "logiciel",
+        "carrière",
+        "productivité",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Ingenieurwesen",
+        "Software",
+        "Karriere",
+        "Produktivität",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "ingegneria",
+        "software",
+        "carriera",
+        "produttività",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "mühendislik",
+        "yazılım",
+        "kariyer",
+        "verimlilik",
+        "alay"
+      ],
+      "tags_zh": [
+        "工程",
+        "软件",
+        "职业",
+        "生产力",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "इंजीनियरिंग",
+        "सॉफ़्टवेयर",
+        "करियर",
+        "उत्पादकता",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "الهندسة",
+        "البرمجيات",
+        "المهنة",
+        "الإنتاجية",
+        "السخرية"
+      ],
+      "tags_bn": [
+        "ইঞ্জিনিয়ারিং",
+        "সফটওয়্যার",
+        "ক্যারিয়ার",
+        "উৎপাদনশীলতা",
+        "ব্যঙ্গ"
+      ],
+      "tags_ru": [
+        "инженерия",
+        "программное обеспечение",
+        "карьера",
+        "продуктивность",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "انجینئرنگ",
+        "سافٹ ویئر",
+        "کیریئر",
+        "پیداواری",
+        "تہذیب"
+      ],
+      "source_title": "Product, Platform & Enterprise Front End Sr/Staff Software Engineer",
+      "source_url": "https://remotive.com/remote-jobs/software-development/product-platform-enterprise-front-end-sr-staff-software-engineer-2088611",
+      "source_published_at": "Mon, 23 Feb 2026 22:31:53 GMT",
+      "excerpt_en": "When a software engineer earns more than most artists, yet still lives in procrastination.",
+      "excerpt_es": "Cuando un ingeniero de software gana más que la mayoría de los artistas, pero aún así vive en la procrastinación.",
+      "excerpt_fr": "Quand un ingénieur logiciel gagne plus que la plupart des artistes, mais vit pourtant dans la procrastination.",
+      "excerpt_de": "Wenn ein Software-Ingenieur mehr verdient als die meisten Künstler, aber trotzdem in der Prokrastination lebt.",
+      "excerpt_it": "Quando un ingegnere software guadagna più della maggior parte degli artisti, ma vive comunque nella procrastinazione.",
+      "excerpt_tr": "Bir yazılım mühendisi çoğu sanatçıdan daha fazla kazanırken, yine de erteleme ile yaşıyor.",
+      "excerpt_zh": "当一个软件工程师的收入超过大多数艺术家，但仍然活在拖延中。",
+      "excerpt_hi": "जब एक सॉफ़्टवेयर इंजीनियर अधिकांश कलाकारों से अधिक कमाता है, लेकिन फिर भी आलस्य में जीता है।",
+      "excerpt_ar": "عندما يكسب مهندس البرمجيات أكثر من معظم الفنانين، لكنه لا يزال يعيش في حالة من التسويف.",
+      "excerpt_bn": "যখন একজন সফটওয়্যার ইঞ্জিনিয়ার বেশিরভাগ শিল্পীর চেয়ে বেশি উপার্জন করে, কিন্তু তবুও অলসতায় জীবনযাপন করে।",
+      "excerpt_ru": "Когда инженер-программист зарабатывает больше, чем большинство артистов, но все равно живет в прокрастинации.",
+      "excerpt_ur": "جب ایک سافٹ ویئر انجینئر زیادہ تر آرٹسٹس سے زیادہ کماتا ہے، لیکن پھر بھی ٹال مٹول میں رہتا ہے۔"
+    },
+    {
       "title": "Empregos: Para Que Serve Isso Mesmo?",
       "url": "./posts/2026/2026-02-25-empregos-para-que-serve-isso-mesmo/",
       "markdown": "2026/2026-02-25-empregos-para-que-serve-isso-mesmo.md",
