@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Por que você deve manter seu emprego enquanto sonha em ser um magnata",
+      "url": "./posts/2026/2026-03-04-por-que-voce-deve-manter-seu-emprego-enquanto-sonha-em-ser-um-magnata/",
+      "markdown": "2026/2026-03-04-por-que-voce-deve-manter-seu-emprego-enquanto-sonha-em-ser-um-magnata.md",
+      "date": "2026-03-04",
+      "category": "negocios",
+      "tags": [
+        "produtividade",
+        "carreira",
+        "empreendedorismo",
+        "sarcasmo",
+        "trabalho"
+      ],
+      "excerpt": "Aprenda com o Schwarzenegger que a vida de empreendedor não precisa ser um salto no abismo.",
+      "title_en": "Why You Should Keep Your Job While Dreaming of Being a Tycoon",
+      "title_es": "Por qué deberías mantener tu empleo mientras sueñas con ser un magnate",
+      "title_fr": "Pourquoi vous devriez garder votre emploi tout en rêvant de devenir un magnat",
+      "title_de": "Warum Sie Ihren Job behalten sollten, während Sie davon träumen, ein Magnat zu werden",
+      "title_it": "Perché dovresti mantenere il tuo lavoro mentre sogni di diventare un magnate",
+      "title_tr": "Neden işinizi bırakmadan bir mogul olmayı hayal etmelisiniz",
+      "title_zh": "为什么你应该在追梦成为大亨的同时保住你的工作",
+      "title_hi": "आपको अपनी नौकरी क्यों बनाए रखनी चाहिए जबकि आप एक उद्योगपति बनने का सपना देख रहे हैं",
+      "title_ar": "لماذا يجب عليك الاحتفاظ بوظيفتك بينما تحلم بأن تكون مليارديرًا",
+      "title_bn": "কেন আপনাকে আপনার চাকরি ধরে রাখতে হবে যখন আপনি একজন মেগা ধনকুবের হওয়ার স্বপ্ন দেখছেন",
+      "title_ru": "Почему вам стоит сохранить свою работу, мечтая стать магнатом",
+      "title_ur": "کیوں آپ کو اپنے ملازمت کو برقرار رکھنا چاہیے جبکہ آپ ایک بڑے سرمایہ دار بننے کا خواب دیکھتے ہیں",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "career",
+        "entrepreneurship",
+        "sarcasm",
+        "work"
+      ],
+      "tags_es": [
+        "productividad",
+        "carrera",
+        "emprendimiento",
+        "sarcasmo",
+        "trabajo"
+      ],
+      "tags_fr": [
+        "productivité",
+        "carrière",
+        "entrepreneuriat",
+        "sarcasme",
+        "travail"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Karriere",
+        "Unternehmertum",
+        "Sarkasmus",
+        "Arbeit"
+      ],
+      "tags_it": [
+        "produttività",
+        "carriera",
+        "imprenditorialità",
+        "sarcasmo",
+        "lavoro"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "kariyer",
+        "girişimcilik",
+        "alay",
+        "çalışma"
+      ],
+      "tags_zh": [
+        "生产力",
+        "职业",
+        "创业",
+        "讽刺",
+        "工作"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "करियर",
+        "उद्यमिता",
+        "व्यंग्य",
+        "काम"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "المهنة",
+        "ريادة الأعمال",
+        "سخرية",
+        "عمل"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "ক্যারিয়ার",
+        "উদ্যোক্তা",
+        "সারকাজম",
+        "কর্ম"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "карьера",
+        "предпринимательство",
+        "сарказм",
+        "работа"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "کیریئر",
+        "کاروبار",
+        "تہذیب",
+        "کام"
+      ],
+      "source_title": "Why Arnold Schwarzenegger says you should keep your full-time job when you start your own business",
+      "source_url": "https://www.fastcompany.com/91502066/arnold-schwarzenegger-keep-your-full-time-job-when-you-start-your-own-business",
+      "source_published_at": "2026-03-04T10:30:00",
+      "excerpt_en": "Learn from Schwarzenegger that the entrepreneurial life doesn't have to be a leap into the abyss.",
+      "excerpt_es": "Aprende con Schwarzenegger que la vida de emprendedor no necesita ser un salto al abismo.",
+      "excerpt_fr": "Apprenez avec Schwarzenegger que la vie d'entrepreneur ne doit pas être un saut dans l'abîme.",
+      "excerpt_de": "Lernen Sie von Schwarzenegger, dass das Leben eines Unternehmers kein Sprung ins Ungewisse sein muss.",
+      "excerpt_it": "Impara da Schwarzenegger che la vita da imprenditore non deve essere un salto nel vuoto.",
+      "excerpt_tr": "Schwarzenegger'den öğrenin ki girişimci hayatı bir uçurumdan atlamak zorunda değil.",
+      "excerpt_zh": "向施瓦辛格学习，创业者的生活不一定要是跳入深渊。",
+      "excerpt_hi": "श्वार्ज़नेगर से सीखें कि उद्यमिता का जीवन एक गहरे गड्ढे में कूदने की जरूरत नहीं है।",
+      "excerpt_ar": "تعلم من شوارزنيجر أن حياة ريادة الأعمال لا تحتاج إلى أن تكون قفزة في الهاوية.",
+      "excerpt_bn": "শিখুন শোয়ার্জনেগার থেকে যে উদ্যোক্তার জীবন একটি গভীর খাদে ঝাঁপ দেওয়ার মতো নয়।",
+      "excerpt_ru": "Узнайте у Шварценеггера, что жизнь предпринимателя не обязательно должна быть прыжком в бездну.",
+      "excerpt_ur": "شورزنیگر سے سیکھیں کہ کاروباری زندگی کو گہرے گڑھے میں چھلانگ لگانے کی ضرورت نہیں ہے۔"
+    },
+    {
       "title": "O Que um Engenheiro de Software Pode Aprender com a Vida de um Artista de Rua",
       "url": "./posts/2026/2026-03-02-o-que-um-engenheiro-de-software-pode-aprender-com-a-vida-de-um-artista-de-rua/",
       "markdown": "2026/2026-03-02-o-que-um-engenheiro-de-software-pode-aprender-com-a-vida-de-um-artista-de-rua.md",
