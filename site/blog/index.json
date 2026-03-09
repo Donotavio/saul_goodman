@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Alt Text: O Grande Vilão Que Ninguém Quis Enfrentar",
+      "url": "./posts/2026/2026-03-09-alt-text-o-grande-vilao-que-ninguem-quis-enfrentar/",
+      "markdown": "2026/2026-03-09-alt-text-o-grande-vilao-que-ninguem-quis-enfrentar.md",
+      "date": "2026-03-09",
+      "category": "dev-performance",
+      "tags": [
+        "SEO",
+        "Shopify",
+        "Alt Text",
+        "Imagens",
+        "Marketing"
+      ],
+      "excerpt": "Ignorar o alt text é como deixar a porta da sua loja aberta e a luz acesa enquanto você vai para casa.",
+      "title_en": "Alt Text: The Great Villain No One Wanted to Face",
+      "title_es": "Texto Alternativo: El Gran Villano Que Nadie Quiso Enfrentar",
+      "title_fr": "Texte Alternatif : Le Grand Méchant Que Personne N'a Voulu Affronter",
+      "title_de": "Alt-Text: Der große Bösewicht, dem niemand entgegentreten wollte",
+      "title_it": "Testo Alternativo: Il Grande Cattivo Che Nessuno Vuole Affrontare",
+      "title_tr": "Alternatif Metin: Kimsenin Yüzleşmek İstemediği Büyük Kötü",
+      "title_zh": "替代文本：无人愿意面对的大反派",
+      "title_hi": "ऑल्ट टेक्स्ट: वह बड़ा खलनायक जिसे कोई सामना नहीं करना चाहता",
+      "title_ar": "نص بديل: العدو الكبير الذي لم يرغب أحد في مواجهته",
+      "title_bn": "অল্ট টেক্সট: যে মহান খলনায়ককে কেউ মুখোমুখি হতে চায়নি",
+      "title_ru": "Альтернативный текст: Великий злодей, с которым никто не хотел сталкиваться",
+      "title_ur": "متبادل متن: بڑا ولن جس کا کوئی سامنا نہیں کرنا چاہتا",
+      "tone": "like",
+      "tags_en": [
+        "SEO",
+        "Shopify",
+        "Alt Text",
+        "Images",
+        "Marketing"
+      ],
+      "tags_es": [
+        "SEO",
+        "Shopify",
+        "Texto Alternativo",
+        "Imágenes",
+        "Marketing"
+      ],
+      "tags_fr": [
+        "SEO",
+        "Shopify",
+        "Texte Alternatif",
+        "Images",
+        "Marketing"
+      ],
+      "tags_de": [
+        "SEO",
+        "Shopify",
+        "Alt-Text",
+        "Bilder",
+        "Marketing"
+      ],
+      "tags_it": [
+        "SEO",
+        "Shopify",
+        "Testo Alternativo",
+        "Immagini",
+        "Marketing"
+      ],
+      "tags_tr": [
+        "SEO",
+        "Shopify",
+        "Alternatif Metin",
+        "Görseller",
+        "Pazarlama"
+      ],
+      "tags_zh": [
+        "搜索引擎优化",
+        "Shopify",
+        "替代文本",
+        "图片",
+        "营销"
+      ],
+      "tags_hi": [
+        "SEO",
+        "Shopify",
+        "ऑल्ट टेक्स्ट",
+        "छवियाँ",
+        "मार्केटिंग"
+      ],
+      "tags_ar": [
+        "تحسين محركات البحث",
+        "شوبيفاي",
+        "نص بديل",
+        "صور",
+        "تسويق"
+      ],
+      "tags_bn": [
+        "এসইও",
+        "শপিফাই",
+        "অল্ট টেক্সট",
+        "ছবি",
+        "মার্কেটিং"
+      ],
+      "tags_ru": [
+        "SEO",
+        "Shopify",
+        "Альтернативный текст",
+        "Изображения",
+        "Маркетинг"
+      ],
+      "tags_ur": [
+        "SEO",
+        "شاپائف",
+        "متبادل متن",
+        "تصاویر",
+        "مارکیٹنگ"
+      ],
+      "source_title": "Why Alt Text Matters for Shopify Seo",
+      "source_url": "https://dev.to/menard_codes/why-alt-text-matters-for-shopify-seo-4kl9",
+      "source_published_at": "Mon, 09 Mar 2026 11:04:45 +0000",
+      "excerpt_en": "Ignoring alt text is like leaving your store's door open and the lights on while you head home.",
+      "excerpt_es": "Ignorar el texto alternativo es como dejar la puerta de tu tienda abierta y la luz encendida mientras te vas a casa.",
+      "excerpt_fr": "Ignorer le texte alternatif, c'est comme laisser la porte de votre boutique ouverte et la lumière allumée pendant que vous rentrez chez vous.",
+      "excerpt_de": "Das Ignorieren des Alt-Texts ist wie das Offenlassen der Tür Ihres Geschäfts und das Einschalten des Lichts, während Sie nach Hause gehen.",
+      "excerpt_it": "Ignorare il testo alternativo è come lasciare la porta del tuo negozio aperta e la luce accesa mentre vai a casa.",
+      "excerpt_tr": "Alternatif metni görmezden gelmek, dükkanının kapısını açık bırakıp ışığı açık bırakmak gibidir, sen eve giderken.",
+      "excerpt_zh": "忽视替代文本就像在你回家时把商店的门敞开，灯亮着。",
+      "excerpt_hi": "ऑल्ट टेक्स्ट को नजरअंदाज करना ऐसा है जैसे अपनी दुकान का दरवाजा खुला छोड़ देना और लाइट जलती छोड़ देना जबकि आप घर जा रहे हैं।",
+      "excerpt_ar": "تجاهل النص البديل مثل ترك باب متجرك مفتوحًا والضوء مضاءً بينما تذهب إلى المنزل.",
+      "excerpt_bn": "অল্ট টেক্সট উপেক্ষা করা এমনই, যেন আপনার দোকানের দরজা খোলা রেখে আলো জ্বালিয়ে বাড়ি চলে যাচ্ছেন।",
+      "excerpt_ru": "Игнорировать альтернативный текст — это как оставить дверь своего магазина открытой и свет горящим, пока вы идете домой.",
+      "excerpt_ur": "متبادل متن کو نظر انداز کرنا ایسا ہے جیسے آپ کی دکان کا دروازہ کھلا ہو اور روشنی جل رہی ہو جبکہ آپ گھر جا رہے ہوں۔"
+    },
+    {
       "title": "Por que você deve manter seu emprego enquanto sonha em ser um magnata",
       "url": "./posts/2026/2026-03-04-por-que-voce-deve-manter-seu-emprego-enquanto-sonha-em-ser-um-magnata/",
       "markdown": "2026/2026-03-04-por-que-voce-deve-manter-seu-emprego-enquanto-sonha-em-ser-um-magnata.md",
