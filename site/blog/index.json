@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "O Fim do Mundo Como Conhecemos? Ou Apenas Mais uma Segunda-Feira?",
+      "url": "./posts/2026/2026-03-11-o-fim-do-mundo-como-conhecemos-ou-apenas-mais-uma-segunda-feira/",
+      "markdown": "2026/2026-03-11-o-fim-do-mundo-como-conhecemos-ou-apenas-mais-uma-segunda-feira.md",
+      "date": "2026-03-11",
+      "category": "trabalho-remoto",
+      "tags": [
+        "produtividade",
+        "AI",
+        "carreira",
+        "procrastinação",
+        "futuro"
+      ],
+      "excerpt": "Se você teme que a AI tome seu emprego, parabéns! Você já está na frente da maioria.",
+      "title_en": "The End of the World as We Know It? Or Just Another Monday?",
+      "title_es": "¿El Fin del Mundo Como Lo Conocemos? ¿O Solo Otra Lunes?",
+      "title_fr": "La Fin du Monde Telle Que Nous la Connaissons ? Ou Juste un Lundi Comme un Autre ?",
+      "title_de": "Das Ende der Welt, wie wir sie kennen? Oder nur ein weiterer Montag?",
+      "title_it": "La Fine del Mondo Così Come Lo Conosciamo? O Semplicemente un'Altra Lunedì?",
+      "title_tr": "Tanıdığımız Dünyanın Sonu mu? Yoksa Sadece Bir Pazartesi Daha mı?",
+      "title_zh": "我们所知的世界的终结？还是仅仅是又一个星期一？",
+      "title_hi": "क्या यह दुनिया का अंत है जैसा हम जानते हैं? या बस एक और सोमवार?",
+      "title_ar": "نهاية العالم كما نعرفه؟ أم مجرد يوم اثنين آخر؟",
+      "title_bn": "আমরা জানি এমন পৃথিবীর শেষ? নাকি শুধু আরেকটি সোমবার?",
+      "title_ru": "Конец света, как мы его знаем? Или просто еще один понедельник?",
+      "title_ur": "کیا یہ دنیا کا خاتمہ ہے جیسا کہ ہم جانتے ہیں؟ یا صرف ایک اور پیر؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "AI",
+        "career",
+        "procrastination",
+        "future"
+      ],
+      "tags_es": [
+        "productividad",
+        "IA",
+        "carrera",
+        "procrastinación",
+        "futuro"
+      ],
+      "tags_fr": [
+        "productivité",
+        "IA",
+        "carrière",
+        "procrastination",
+        "avenir"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "KI",
+        "Karriere",
+        "Prokrastination",
+        "Zukunft"
+      ],
+      "tags_it": [
+        "produttività",
+        "AI",
+        "carriera",
+        "procrastinazione",
+        "futuro"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "AI",
+        "kariyer",
+        "erteleme",
+        "gelecek"
+      ],
+      "tags_zh": [
+        "生产力",
+        "人工智能",
+        "职业",
+        "拖延",
+        "未来"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "एआई",
+        "करियर",
+        "टालमटोल",
+        "भविष्य"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "الذكاء الاصطناعي",
+        "المهنة",
+        "التسويف",
+        "المستقبل"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "AI",
+        "ক্যারিয়ার",
+        "প্রোক্রাস্টিনেশন",
+        "ভবিষ্যৎ"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "ИИ",
+        "карьера",
+        "прокрастинация",
+        "будущее"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "AI",
+        "کیریئر",
+        "ٹال مٹول",
+        "مستقبل"
+      ],
+      "source_title": "<![CDATA[[Newsletter] The Advantage of Knowing What’s Next]]>",
+      "source_url": "https://remotive.com/blog/newsletter-the-advantage-of-knowing-whats-next/",
+      "source_published_at": "Mon, 09 Mar 2026 18:08:43 GMT",
+      "excerpt_en": "If you're worried that AI will take your job, congratulations! You're already ahead of most.",
+      "excerpt_es": "¡Si temes que la IA tome tu trabajo, felicidades! Ya estás por delante de la mayoría.",
+      "excerpt_fr": "Si vous craignez que l'IA prenne votre emploi, félicitations ! Vous êtes déjà en avance sur la plupart.",
+      "excerpt_de": "Wenn Sie befürchten, dass KI Ihren Job übernimmt, herzlichen Glückwunsch! Sie sind bereits im Vorteil gegenüber den meisten.",
+      "excerpt_it": "Se temi che l'AI prenda il tuo lavoro, congratulazioni! Sei già un passo avanti rispetto alla maggior parte.",
+      "excerpt_tr": "Eğer AI'nın işinizi alacağından korkuyorsanız, tebrikler! Çoğunluktan öndesiniz.",
+      "excerpt_zh": "如果你担心人工智能会抢走你的工作，恭喜你！你已经走在了大多数人前面。",
+      "excerpt_hi": "अगर आप डरते हैं कि एआई आपकी नौकरी ले लेगी, तो बधाई हो! आप पहले से ही अधिकांश से आगे हैं।",
+      "excerpt_ar": "إذا كنت تخشى أن تأخذ الذكاء الاصطناعي وظيفتك، تهانينا! أنت بالفعل في المقدمة على معظم الناس.",
+      "excerpt_bn": "যদি আপনি ভয় পান যে AI আপনার চাকরি নিয়ে নেবে, অভিনন্দন! আপনি ইতিমধ্যে বেশিরভাগের চেয়ে এগিয়ে আছেন।",
+      "excerpt_ru": "Если вы боитесь, что ИИ заберет вашу работу, поздравляю! Вы уже впереди большинства.",
+      "excerpt_ur": "اگر آپ کو ڈر ہے کہ AI آپ کی نوکری لے لے گی، تو مبارک ہو! آپ پہلے ہی زیادہ تر لوگوں سے آگے ہیں۔"
+    },
+    {
       "title": "Alt Text: O Grande Vilão Que Ninguém Quis Enfrentar",
       "url": "./posts/2026/2026-03-09-alt-text-o-grande-vilao-que-ninguem-quis-enfrentar/",
       "markdown": "2026/2026-03-09-alt-text-o-grande-vilao-que-ninguem-quis-enfrentar.md",
