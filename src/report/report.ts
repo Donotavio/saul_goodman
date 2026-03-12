@@ -48,6 +48,10 @@ const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
 const mlLearningRateEl = document.getElementById('mlLearningRate') as HTMLElement | null;
 const mlL2El = document.getElementById('mlL2') as HTMLElement | null;
 const mlMinFeatureEl = document.getElementById('mlMinFeature') as HTMLElement | null;
+const mlVariantEl = document.getElementById('mlVariant') as HTMLElement | null;
+const mlRolloutEl = document.getElementById('mlRollout') as HTMLElement | null;
+const mlShadowDeltaEl = document.getElementById('mlShadowDelta') as HTMLElement | null;
+const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -1638,7 +1642,11 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     !mlBiasEl ||
     !mlLearningRateEl ||
     !mlL2El ||
-    !mlMinFeatureEl
+    !mlMinFeatureEl ||
+    !mlVariantEl ||
+    !mlRolloutEl ||
+    !mlShadowDeltaEl ||
+    !mlCalibrationEceEl
   ) {
     return;
   }
@@ -1656,11 +1664,16 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     mlLearningRateEl.textContent = '--';
     mlL2El.textContent = '--';
     mlMinFeatureEl.textContent = '--';
+    mlVariantEl.textContent = '--';
+    mlRolloutEl.textContent = '--';
+    mlShadowDeltaEl.textContent = '--';
+    mlCalibrationEceEl.textContent = '--';
     return;
   }
 
   const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
-  mlStatusBadgeEl.textContent = maturity.label;
+  const variant = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
+  mlStatusBadgeEl.textContent = `${maturity.label} · ${variant}`;
   mlStatusBadgeEl.classList.add(maturity.className);
 
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
@@ -1669,6 +1682,12 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
   mlLearningRateEl.textContent = status.learningRate.toFixed(4);
   mlL2El.textContent = status.l2.toFixed(6);
   mlMinFeatureEl.textContent = formatNumber(status.minFeatureCount);
+  mlVariantEl.textContent = variant;
+  mlRolloutEl.textContent = (status.rolloutStage ?? 'shadow').toUpperCase();
+  const delta = status.shadow?.deltaMacroF1 ?? 0;
+  mlShadowDeltaEl.textContent = `${delta >= 0 ? '+' : ''}${delta.toFixed(3)}`;
+  const ece = status.calibration?.ece;
+  mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
   if (status.lastUpdated > 0) {
     mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
   } else {

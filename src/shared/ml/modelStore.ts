@@ -1,4 +1,7 @@
-export interface StoredModelState {
+import type { CalibrationState } from './plattScaler.js';
+import type { RolloutState, ShadowMetrics } from './rollout.js';
+
+export interface LegacyStoredModelState {
   version: number;
   dimensions: number;
   weights: number[];
@@ -7,6 +10,37 @@ export interface StoredModelState {
   totalUpdates: number;
   lastUpdated: number;
 }
+
+export interface FtrlStoredState {
+  dimensions: number;
+  alpha: number;
+  beta: number;
+  l1: number;
+  l2: number;
+  z: number[];
+  n: number[];
+  biasZ: number;
+  biasN: number;
+}
+
+export interface StoredModelStateV2 {
+  version: number;
+  schema: 'dual-model-v2';
+  legacy: LegacyStoredModelState;
+  v2: FtrlStoredState;
+  v2FeatureCounts: number[];
+  calibration: CalibrationState;
+  rollout: RolloutState;
+  shadow: ShadowMetrics;
+  totalUpdates: number;
+  explicitUpdates: number;
+  implicitUpdates: number;
+  lastUpdated: number;
+  explicitSinceCalibration: number;
+  lastCalibrationDayKey?: string;
+}
+
+export type StoredModelState = LegacyStoredModelState | StoredModelStateV2;
 
 export interface ModelStoreConfig {
   dbName?: string;

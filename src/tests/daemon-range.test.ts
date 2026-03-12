@@ -64,6 +64,7 @@ test('daemon /v1/vscode/summaries respects start/end range', async () => {
     const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
     const todayKey = formatDateKey(today);
     const yesterdayKey = formatDateKey(yesterday);
+    const safeHour = Math.max(0, today.getHours() - 1);
 
     const heartbeatRes = await fetch(`${base}/v1/vscode/heartbeats`, {
       method: 'POST',
@@ -73,7 +74,7 @@ test('daemon /v1/vscode/summaries respects start/end range', async () => {
         heartbeats: [
           {
             id: `hb-${yesterdayKey}`,
-            time: buildLocalTimestamp(yesterdayKey, 10),
+            time: buildLocalTimestamp(yesterdayKey, safeHour),
             project: 'range-repo',
             language: 'javascript',
             entityType: 'file',
@@ -83,7 +84,7 @@ test('daemon /v1/vscode/summaries respects start/end range', async () => {
           },
           {
             id: `hb-${todayKey}`,
-            time: buildLocalTimestamp(todayKey, 11),
+            time: buildLocalTimestamp(todayKey, safeHour),
             project: 'range-repo',
             language: 'javascript',
             entityType: 'file',

@@ -57,10 +57,7 @@ import {
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
 import { hasHostPermission, hasLocalhostPermission, isLocalhostUrl } from '../shared/utils/permissions.js';
-import { FeatureExtractor } from '../shared/ml/featureExtractor.js';
-import { FeatureVectorizer, type SparseVector, type FeatureContribution } from '../shared/ml/vectorizer.js';
-import { OnlineLogisticRegression } from '../shared/ml/onlineLogisticRegression.js';
-import { ModelStore, type StoredModelState } from '../shared/ml/modelStore.js';
+import { MlSuggestionEngine, type CachedMlSuggestion } from './ml-engine.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -78,16 +75,9 @@ const BLOCK_PAGE_PATH = 'src/block/block.html';
 const VS_CODE_DOMAIN_ID = '__vscode:ide';
 const VS_CODE_DOMAIN_LABEL = 'VS Code (IDE)';
 const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
-const MODEL_META_KEY = 'sg:ml-model-meta';
 const MAX_SUGGESTIONS = 10;
 const MAX_RECENTLY_CLOSED_RESULTS = 25; // Chrome API limit for sessions.getRecentlyClosed
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
-const ACTIVE_LEARNING_MIN_PROB = 0.4;
-const ACTIVE_LEARNING_MAX_PROB = 0.6;
-const MODEL_DIMENSIONS = 1 << 16;
-const MODEL_LEARNING_RATE = 0.05;
-const MODEL_L2 = 0.0005;
-const MODEL_MIN_FEATURE_COUNT = 3;
 
 console.info('[Saul] Background worker started', { at: new Date().toISOString() });
 
@@ -208,194 +198,38 @@ const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
 
 interface CachedSuggestion {
   suggestion: DomainSuggestion;
-  vector: SparseVector;
   probability: number;
+  activeVariant: CachedMlSuggestion['activeVariant'];
+  predictionV1: CachedMlSuggestion['predictionV1'];
+  predictionV2: CachedMlSuggestion['predictionV2'];
 }
 
-interface ModelContext {
-  model: OnlineLogisticRegression;
-  vectorizer: FeatureVectorizer;
-  extractor: FeatureExtractor;
-  store: ModelStore;
-  totalUpdates: number;
-  lastUpdated: number;
-}
+const mlEngine = new MlSuggestionEngine();
 
-let modelContext: ModelContext | null = null;
-let modelContextPromise: Promise<ModelContext> | null = null;
-
-async function getModelContext(): Promise<ModelContext> {
-  if (modelContext) {
-    return modelContext;
-  }
-  if (modelContextPromise) {
-    return modelContextPromise;
-  }
-
-  modelContextPromise = (async () => {
-    const store = new ModelStore();
-    let stored: StoredModelState | null = null;
-    try {
-      stored = await store.load();
-    } catch (error) {
-      console.warn('Falha ao carregar modelo ML', error);
-    }
-
-    const storedWeights = stored?.dimensions === MODEL_DIMENSIONS ? stored.weights : null;
-    const weights = storedWeights && storedWeights.length === MODEL_DIMENSIONS
-      ? Float32Array.from(storedWeights)
-      : new Float32Array(MODEL_DIMENSIONS);
-    const bias = stored?.bias ?? 0;
-
-    const storedCounts = stored?.dimensions === MODEL_DIMENSIONS ? stored.featureCounts : null;
-    const counts = storedCounts && storedCounts.length === MODEL_DIMENSIONS
-      ? Uint32Array.from(storedCounts)
-      : new Uint32Array(MODEL_DIMENSIONS);
-
-    const model = new OnlineLogisticRegression({
-      dimensions: MODEL_DIMENSIONS,
-      learningRate: MODEL_LEARNING_RATE,
-      l2: MODEL_L2
-    }, weights, bias);
-    const vectorizer = new FeatureVectorizer(
-      { dimensions: MODEL_DIMENSIONS, minFeatureCount: MODEL_MIN_FEATURE_COUNT },
-      counts
-    );
-    const extractor = new FeatureExtractor();
-
-    const context: ModelContext = {
-      model,
-      vectorizer,
-      extractor,
-      store,
-      totalUpdates: stored?.totalUpdates ?? 0,
-      lastUpdated: stored?.lastUpdated ?? 0
-    };
-    modelContext = context;
-    return context;
-  })();
-
-  return modelContextPromise;
-}
-
-async function persistModel(context: ModelContext): Promise<void> {
-  const state: StoredModelState = {
-    version: 1,
-    dimensions: MODEL_DIMENSIONS,
-    weights: Array.from(context.model.getWeights()),
-    bias: context.model.getBias(),
-    featureCounts: Array.from(context.vectorizer.getCounts()),
-    totalUpdates: context.totalUpdates,
-    lastUpdated: context.lastUpdated
-  };
-
-  try {
-    await context.store.save(state);
-  } catch (error) {
-    console.warn('Falha ao persistir modelo ML', error);
-  }
-
-  try {
-    await chrome.storage.local.set({
-      [MODEL_META_KEY]: {
-        version: state.version,
-        lastUpdated: state.lastUpdated,
-        totalUpdates: state.totalUpdates
-      }
-    });
-  } catch (error) {
-    console.warn('Falha ao atualizar metadados do modelo ML', error);
-  }
-}
-
-function buildMlReasons(contributions: FeatureContribution[]): string[] {
-  if (!contributions.length) {
-    return ['Sinais insuficientes para explicar a decisão.'];
-  }
-
-  return contributions.map((entry) => {
-    const direction = entry.score >= 0 ? 'produtivo' : 'procrastinação';
-    const magnitude = Math.abs(entry.weight).toFixed(2);
-    return `Sinal: ${entry.feature} favorece ${direction} (peso ${magnitude})`;
-  });
-}
-
-async function buildMlSuggestion(metadata: DomainMetadata): Promise<CachedSuggestion> {
-  const context = await getModelContext();
-  const features = context.extractor.extract(metadata);
-  const vector = context.vectorizer.vectorize(features, true);
-  const probability = context.model.predictProbability(vector);
-  const classification: DomainCategory = probability >= ACTIVE_LEARNING_MAX_PROB
-    ? 'productive'
-    : probability <= ACTIVE_LEARNING_MIN_PROB
-      ? 'procrastination'
-      : 'neutral';
-  const confidence = Math.round(Math.max(probability, 1 - probability) * 100);
-  const contributions = context.vectorizer.explain(features, context.model.getWeights(), 3);
-  const reasons = buildMlReasons(contributions);
-
+async function buildMlSuggestion(
+  metadata: DomainMetadata,
+  settings: ExtensionSettings
+): Promise<CachedSuggestion> {
+  const cached = await mlEngine.buildSuggestion(metadata, settings);
   return {
-    suggestion: {
-      domain: normalizeDomain(metadata.hostname),
-      classification,
-      confidence,
-      reasons,
-      timestamp: Date.now()
-    },
-    vector,
-    probability
+    suggestion: cached.suggestion,
+    probability: cached.probability,
+    activeVariant: cached.activeVariant,
+    predictionV1: cached.predictionV1,
+    predictionV2: cached.predictionV2
   };
 }
 
 async function updateModelFromFeedback(
   domain: string,
   classification: DomainCategory,
-  vector?: SparseVector
+  cached?: CachedSuggestion
 ): Promise<void> {
-  try {
-    const context = await getModelContext();
-    const label: 0 | 1 = classification === 'productive' ? 1 : 0;
-    const trainingVector = vector
-      ?? context.vectorizer.vectorize(
-        context.extractor.extract({ hostname: domain }),
-        true
-      );
-
-    context.model.update(trainingVector, label);
-    context.totalUpdates += 1;
-    context.lastUpdated = Date.now();
-    await persistModel(context);
-  } catch (error) {
-    console.warn('Falha ao atualizar modelo ML com feedback', error);
-  }
+  await mlEngine.applyExplicitFeedback(domain, classification, cached);
 }
 
 async function getMlStatus(): Promise<MlModelStatus | null> {
-  try {
-    const context = await getModelContext();
-    const counts = context.vectorizer.getCounts();
-    let activeFeatures = 0;
-    for (let i = 0; i < counts.length; i += 1) {
-      if (counts[i] >= context.vectorizer.minFeatureCount) {
-        activeFeatures += 1;
-      }
-    }
-
-    return {
-      version: 1,
-      dimensions: MODEL_DIMENSIONS,
-      totalUpdates: context.totalUpdates,
-      lastUpdated: context.lastUpdated,
-      activeFeatures,
-      learningRate: MODEL_LEARNING_RATE,
-      l2: MODEL_L2,
-      minFeatureCount: context.vectorizer.minFeatureCount,
-      bias: context.model.getBias()
-    };
-  } catch (error) {
-    console.warn('Falha ao obter status do modelo ML', error);
-    return null;
-  }
+  return mlEngine.getStatus();
 }
 
 function isDomainClassified(domain: string, settings: ExtensionSettings): boolean {
@@ -547,7 +381,7 @@ async function handleApplySuggestion(payload: {
   };
   settings.suggestionsHistory = history;
   const cached = suggestionCache.get(domain);
-  await updateModelFromFeedback(domain, classification, cached?.vector);
+  await updateModelFromFeedback(domain, classification, cached);
   settingsCache = settings;
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
@@ -628,14 +462,12 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
 
   let cachedSuggestion: CachedSuggestion;
   try {
-    cachedSuggestion = await buildMlSuggestion(metadata);
+    cachedSuggestion = await buildMlSuggestion(metadata, settings);
   } catch (error) {
     console.warn('Falha ao gerar sugestão ML', error);
     return;
   }
-  const lowConfidence =
-    cachedSuggestion.probability > ACTIVE_LEARNING_MIN_PROB &&
-    cachedSuggestion.probability < ACTIVE_LEARNING_MAX_PROB;
+  const lowConfidence = cachedSuggestion.suggestion.classification === 'neutral';
   if (!lowConfidence && isDomainInCooldown(normalizedDomain, settings)) {
     suggestionCache.delete(normalizedDomain);
     return;
@@ -745,7 +577,8 @@ async function collectDomainMetadata(
           activeMs:
             typeof meta.activeMs === 'number' && Number.isFinite(meta.activeMs)
               ? meta.activeMs
-              : undefined
+              : undefined,
+          sessionAudible: Boolean(tab.audible)
         });
       });
     } catch (error) {

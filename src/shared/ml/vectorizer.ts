@@ -10,6 +10,11 @@ export interface FeatureVectorizerConfig {
   minFeatureCount?: number;
 }
 
+export interface VectorizeOptions {
+  updateCounts?: boolean;
+  applyMinCount?: boolean;
+}
+
 export interface FeatureContribution {
   feature: string;
   weight: number;
@@ -41,7 +46,10 @@ export class FeatureVectorizer {
    * @param updateCounts Se true, incrementa frequência observada.
    * @returns Vetor esparso com índices e valores.
    */
-  vectorize(features: FeatureMap, updateCounts = true): SparseVector {
+  vectorize(features: FeatureMap, options?: boolean | VectorizeOptions): SparseVector {
+    const normalized = normalizeVectorizeOptions(options);
+    const updateCounts = normalized.updateCounts;
+    const applyMinCount = normalized.applyMinCount;
     const accumulator = new Map<number, number>();
 
     Object.entries(features).forEach(([feature, value]) => {
@@ -53,7 +61,7 @@ export class FeatureVectorizer {
         const current = this.counts[index] ?? 0;
         this.counts[index] = current === 0xffffffff ? current : current + 1;
       }
-      if (this.counts[index] < this.minFeatureCount) {
+      if (applyMinCount && this.counts[index] < this.minFeatureCount) {
         return;
       }
       const signedValue = value * sign;
@@ -63,6 +71,20 @@ export class FeatureVectorizer {
     const indices = Array.from(accumulator.keys()).sort((a, b) => a - b);
     const values = indices.map((index) => accumulator.get(index) ?? 0);
     return { indices, values };
+  }
+
+  incrementCounts(indices: number[]): void {
+    indices.forEach((index) => {
+      if (!Number.isFinite(index)) {
+        return;
+      }
+      const intIndex = Math.floor(index);
+      if (intIndex < 0 || intIndex >= this.dimensions) {
+        return;
+      }
+      const current = this.counts[intIndex] ?? 0;
+      this.counts[intIndex] = current === 0xffffffff ? current : current + 1;
+    });
   }
 
   /**
@@ -120,4 +142,17 @@ function fnv1a(value: string): number {
     hash = Math.imul(hash, 0x01000193);
   }
   return hash >>> 0;
+}
+
+function normalizeVectorizeOptions(options?: boolean | VectorizeOptions): Required<VectorizeOptions> {
+  if (typeof options === 'boolean') {
+    return {
+      updateCounts: options,
+      applyMinCount: true
+    };
+  }
+  return {
+    updateCounts: options?.updateCounts ?? true,
+    applyMinCount: options?.applyMinCount ?? true
+  };
 }

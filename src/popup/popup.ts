@@ -87,6 +87,10 @@ const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
 const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
 const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
 const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
+const mlVariantEl = document.getElementById('mlVariant') as HTMLElement | null;
+const mlRolloutEl = document.getElementById('mlRollout') as HTMLElement | null;
+const mlShadowDeltaEl = document.getElementById('mlShadowDelta') as HTMLElement | null;
+const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -524,11 +528,16 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
     mlActiveFeaturesEl.textContent = '--';
     mlLastUpdatedEl.textContent = '--';
     mlBiasEl.textContent = '--';
+    if (mlVariantEl) mlVariantEl.textContent = '--';
+    if (mlRolloutEl) mlRolloutEl.textContent = '--';
+    if (mlShadowDeltaEl) mlShadowDeltaEl.textContent = '--';
+    if (mlCalibrationEceEl) mlCalibrationEceEl.textContent = '--';
     return;
   }
 
   const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
-  mlStatusBadgeEl.textContent = maturity.label;
+  const variant = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
+  mlStatusBadgeEl.textContent = `${maturity.label} · ${variant}`;
   mlStatusBadgeEl.classList.add(maturity.className);
 
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
@@ -538,6 +547,20 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
     mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(locale ?? 'en-US');
   } else {
     mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
+  }
+  if (mlVariantEl) {
+    mlVariantEl.textContent = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
+  }
+  if (mlRolloutEl) {
+    mlRolloutEl.textContent = (status.rolloutStage ?? 'shadow').toUpperCase();
+  }
+  if (mlShadowDeltaEl) {
+    const delta = status.shadow?.deltaMacroF1 ?? 0;
+    mlShadowDeltaEl.textContent = `${delta >= 0 ? '+' : ''}${delta.toFixed(3)}`;
+  }
+  if (mlCalibrationEceEl) {
+    const ece = status.calibration?.ece;
+    mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
   }
 }
 

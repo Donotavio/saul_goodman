@@ -1,0 +1,4 @@
+interface:
+  display_name: "Saul ML"
+  short_description: "Maintain Saul local classification ML flow"
+  default_prompt: "Use $saul-ml to implement or update Saul local auto-classification, thresholds, and feedback training behavior."

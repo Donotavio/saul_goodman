@@ -285,6 +285,29 @@ export interface DomainMetadata {
   scrollDepth?: number;
   interactionCount?: number;
   activeMs?: number;
+  sessionAudible?: boolean;
+  outOfSchedule?: boolean;
+}
+
+export type MlVariant = 'v1' | 'v2';
+export type MlRolloutStage = 'shadow' | 'ab10' | 'ab50' | 'full';
+
+export interface MlCalibrationStatus {
+  a: number;
+  b: number;
+  ece: number;
+  fittedAt: number;
+  holdoutSize: number;
+}
+
+export interface MlShadowStatus {
+  explicitCount: number;
+  macroF1V1: number;
+  macroF1V2: number;
+  deltaMacroF1: number;
+  precisionDropProductive: number;
+  precisionDropProcrastination: number;
+  gatePassed: boolean;
 }
 
 export interface MlModelStatus {
@@ -297,6 +320,16 @@ export interface MlModelStatus {
   l2: number;
   minFeatureCount: number;
   bias: number;
+  activeVariant?: MlVariant;
+  rolloutStage?: MlRolloutStage;
+  thresholds?: {
+    productive: number;
+    procrastination: number;
+  };
+  calibration?: MlCalibrationStatus | null;
+  shadow?: MlShadowStatus | null;
+  explicitUpdates?: number;
+  implicitUpdates?: number;
 }
 
 export interface LearningTokenStat {
@@ -329,6 +362,16 @@ export interface DomainSuggestion {
   reasons: string[];
   timestamp: number;
   learningTokens?: string[];
+  reasonsStructured?: SuggestionReasonStructured[];
+}
+
+export interface SuggestionReasonStructured {
+  family: string;
+  evidence: string;
+  direction: DomainCategory;
+  impact: 'light' | 'medium' | 'strong';
+  source: 'content' | 'behavior' | 'heuristic' | 'model';
+  counter?: boolean;
 }
 
 export interface SuggestionHistoryEntry {

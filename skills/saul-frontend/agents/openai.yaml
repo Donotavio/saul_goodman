@@ -1,0 +1,4 @@
+interface:
+  display_name: "Saul Frontend"
+  short_description: "Implement Saul extension and site user interfaces"
+  default_prompt: "Use $saul-frontend to implement or update Saul popup, options, report, block, and site UX flows."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Saul Backend"
+  short_description: "Maintain Saul daemon local backend flows"
+  default_prompt: "Use $saul-backend to implement or update Saul Daemon endpoints and local tracking contracts."

@@ -40,8 +40,12 @@ export class OnlineLogisticRegression {
    * @returns Probabilidade de classe 1.
    */
   predictProbability(vector: SparseVector): number {
-    const score = this.score(vector);
+    const score = this.predictScore(vector);
     return sigmoid(score);
+  }
+
+  predictScore(vector: SparseVector): number {
+    return this.score(vector);
   }
 
   /**
@@ -51,9 +55,10 @@ export class OnlineLogisticRegression {
    * @param label Classe alvo (0 ou 1).
    * @returns Probabilidade e perda log-loss.
    */
-  update(vector: SparseVector, label: 0 | 1): UpdateResult {
+  update(vector: SparseVector, label: 0 | 1, sampleWeight = 1): UpdateResult {
+    const weight = clampWeight(sampleWeight);
     const probability = this.predictProbability(vector);
-    const error = probability - label;
+    const error = (probability - label) * weight;
     this.bias -= this.learningRate * error;
 
     for (let i = 0; i < vector.indices.length; i += 1) {
@@ -64,8 +69,9 @@ export class OnlineLogisticRegression {
       this.weights[index] = weight * decay - this.learningRate * error * value;
     }
 
-    const loss = -label * Math.log(Math.max(probability, 1e-12)) -
+    const baseLoss = -label * Math.log(Math.max(probability, 1e-12)) -
       (1 - label) * Math.log(Math.max(1 - probability, 1e-12));
+    const loss = baseLoss * weight;
     return { probability, loss };
   }
 
@@ -109,4 +115,11 @@ function sigmoid(value: number): number {
   }
   const exp = Math.exp(value);
   return exp / (1 + exp);
+}
+
+function clampWeight(value: number): number {
+  if (!Number.isFinite(value)) {
+    return 1;
+  }
+  return Math.max(0, Math.min(value, 10));
 }
