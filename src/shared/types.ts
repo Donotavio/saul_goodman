@@ -289,8 +289,7 @@ export interface DomainMetadata {
   outOfSchedule?: boolean;
 }
 
-export type MlVariant = 'v1' | 'v2';
-export type MlRolloutStage = 'shadow' | 'ab10' | 'ab50' | 'full';
+export type MlGuardrailStage = 'guarded' | 'normal';
 
 export interface MlCalibrationStatus {
   a: number;
@@ -300,13 +299,17 @@ export interface MlCalibrationStatus {
   holdoutSize: number;
 }
 
-export interface MlShadowStatus {
-  explicitCount: number;
-  macroF1V1: number;
-  macroF1V2: number;
+export interface MlModelValidationStatus {
+  sampleSize: number;
+  macroF1: number;
+  precisionProductive: number;
+  falseProductiveRate: number;
+  ece: number;
+  brier: number;
   deltaMacroF1: number;
-  precisionDropProductive: number;
-  precisionDropProcrastination: number;
+  deltaMacroF1CiLower: number;
+  deltaMacroF1CiUpper: number;
+  mcnemarPValue: number;
   gatePassed: boolean;
 }
 
@@ -320,14 +323,18 @@ export interface MlModelStatus {
   l2: number;
   minFeatureCount: number;
   bias: number;
-  activeVariant?: MlVariant;
-  rolloutStage?: MlRolloutStage;
+  guardrailStage?: MlGuardrailStage;
   thresholds?: {
     productive: number;
     procrastination: number;
   };
   calibration?: MlCalibrationStatus | null;
-  shadow?: MlShadowStatus | null;
+  validation?: MlModelValidationStatus | null;
+  falseProductiveRate?: number;
+  precisionProductive?: number;
+  deltaMacroF1?: number;
+  mcnemarPValue?: number;
+  ece?: number;
   explicitUpdates?: number;
   implicitUpdates?: number;
 }

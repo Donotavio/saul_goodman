@@ -87,9 +87,11 @@ const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
 const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
 const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
 const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
-const mlVariantEl = document.getElementById('mlVariant') as HTMLElement | null;
-const mlRolloutEl = document.getElementById('mlRollout') as HTMLElement | null;
-const mlShadowDeltaEl = document.getElementById('mlShadowDelta') as HTMLElement | null;
+const mlGuardrailStageEl = document.getElementById('mlGuardrailStage') as HTMLElement | null;
+const mlFalseProductiveRateEl = document.getElementById('mlFalseProductiveRate') as HTMLElement | null;
+const mlPrecisionProductiveEl = document.getElementById('mlPrecisionProductive') as HTMLElement | null;
+const mlDeltaMacroF1El = document.getElementById('mlDeltaMacroF1') as HTMLElement | null;
+const mlMcnemarPEl = document.getElementById('mlMcnemarP') as HTMLElement | null;
 const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
@@ -528,16 +530,18 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
     mlActiveFeaturesEl.textContent = '--';
     mlLastUpdatedEl.textContent = '--';
     mlBiasEl.textContent = '--';
-    if (mlVariantEl) mlVariantEl.textContent = '--';
-    if (mlRolloutEl) mlRolloutEl.textContent = '--';
-    if (mlShadowDeltaEl) mlShadowDeltaEl.textContent = '--';
+    if (mlGuardrailStageEl) mlGuardrailStageEl.textContent = '--';
+    if (mlFalseProductiveRateEl) mlFalseProductiveRateEl.textContent = '--';
+    if (mlPrecisionProductiveEl) mlPrecisionProductiveEl.textContent = '--';
+    if (mlDeltaMacroF1El) mlDeltaMacroF1El.textContent = '--';
+    if (mlMcnemarPEl) mlMcnemarPEl.textContent = '--';
     if (mlCalibrationEceEl) mlCalibrationEceEl.textContent = '--';
     return;
   }
 
   const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
-  const variant = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
-  mlStatusBadgeEl.textContent = `${maturity.label} · ${variant}`;
+  const stage = (status.guardrailStage ?? 'guarded').toUpperCase();
+  mlStatusBadgeEl.textContent = `${maturity.label} · ${stage}`;
   mlStatusBadgeEl.classList.add(maturity.className);
 
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
@@ -548,18 +552,29 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
   } else {
     mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
   }
-  if (mlVariantEl) {
-    mlVariantEl.textContent = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
+  if (mlGuardrailStageEl) {
+    mlGuardrailStageEl.textContent = (status.guardrailStage ?? 'guarded').toUpperCase();
   }
-  if (mlRolloutEl) {
-    mlRolloutEl.textContent = (status.rolloutStage ?? 'shadow').toUpperCase();
+  if (mlFalseProductiveRateEl) {
+    const value = status.falseProductiveRate;
+    mlFalseProductiveRateEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
   }
-  if (mlShadowDeltaEl) {
-    const delta = status.shadow?.deltaMacroF1 ?? 0;
-    mlShadowDeltaEl.textContent = `${delta >= 0 ? '+' : ''}${delta.toFixed(3)}`;
+  if (mlPrecisionProductiveEl) {
+    const value = status.precisionProductive;
+    mlPrecisionProductiveEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
+  }
+  if (mlDeltaMacroF1El) {
+    const delta = status.deltaMacroF1;
+    mlDeltaMacroF1El.textContent = Number.isFinite(delta)
+      ? `${(delta as number) >= 0 ? '+' : ''}${(delta as number).toFixed(3)}`
+      : '--';
+  }
+  if (mlMcnemarPEl) {
+    const value = status.mcnemarPValue;
+    mlMcnemarPEl.textContent = Number.isFinite(value) ? (value as number).toFixed(4) : '--';
   }
   if (mlCalibrationEceEl) {
-    const ece = status.calibration?.ece;
+    const ece = status.ece ?? status.calibration?.ece;
     mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
   }
 }

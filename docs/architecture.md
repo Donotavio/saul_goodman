@@ -37,7 +37,7 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 - **Service worker** (`dist/background/index.js`): tracking de domínio ativo, inatividade, trocas de abas, métricas diárias, cálculo do índice e sincronização VS Code.
 - **Content script** (`dist/content/activity-listener.js`): envia pings de atividade e coleta metadados para sugestões automáticas.
 - **UI** (`src/popup`, `src/options`, `src/report`, `src/block`): painel diário, configurações, relatório detalhado, bloqueio local.
-- **Armazenamento**: `chrome.storage.local` para métricas e configurações; IndexedDB (`sg-ml-models`) para o modelo de sugestões.
+- **Armazenamento**: `chrome.storage.local` para métricas/configurações e metadados de ML; IndexedDB (`sg-ml-models`) para o estado do modelo de sugestões.
 
 ### Saul Daemon
 
@@ -64,7 +64,8 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 
 2. **Sugestões automáticas de domínio**
    - Content script coleta metadados e sinais leves.
-   - Background usa modelo ML local para sugerir categoria.
+   - Background usa modelo ML local único (`WideDeepLiteBinary`) para sugerir categoria.
+   - Probabilidade é calibrada localmente e validada por gate estatístico (macro-F1, FPR, precisão, ECE/Brier, bootstrap e McNemar).
    - Usuário aceita/ignora; feedback atualiza o modelo.
 
 3. **Integração VS Code (opcional)**
@@ -80,6 +81,7 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 ## Decisões arquiteturais relevantes
 
 - **Local‑first**: métricas e modelos ficam no dispositivo do usuário.
+- **Modelo único de sugestão**: estado persistido `single-neural-lite-v3` sem manter payload legado de versões antigas.
 - **Sem bundler**: TypeScript compila direto para `dist/`, HTML referencia módulos gerados.
 - **Bloqueio local**: usa `declarativeNetRequest` para redirecionar domínios procrastinatórios.
 - **Integração opcional**: daemon e VS Code são complementares e não obrigatórios.

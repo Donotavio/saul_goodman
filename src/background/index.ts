@@ -199,9 +199,7 @@ const PRUNE_INTERVAL_MS = 5 * 60 * 1000;
 interface CachedSuggestion {
   suggestion: DomainSuggestion;
   probability: number;
-  activeVariant: CachedMlSuggestion['activeVariant'];
-  predictionV1: CachedMlSuggestion['predictionV1'];
-  predictionV2: CachedMlSuggestion['predictionV2'];
+  prediction: CachedMlSuggestion['prediction'];
 }
 
 const mlEngine = new MlSuggestionEngine();
@@ -214,9 +212,7 @@ async function buildMlSuggestion(
   return {
     suggestion: cached.suggestion,
     probability: cached.probability,
-    activeVariant: cached.activeVariant,
-    predictionV1: cached.predictionV1,
-    predictionV2: cached.predictionV2
+    prediction: cached.prediction
   };
 }
 

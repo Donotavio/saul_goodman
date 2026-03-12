@@ -16,9 +16,11 @@ export interface StoredTrainingExample {
   weight: number;
   isHoldout: boolean;
   vector: SerializedSparseVector;
-  v1Prediction: 0 | 1;
-  v2Prediction: 0 | 1;
-  v2Score: number;
+  baselinePrediction?: 0 | 1;
+  baselineScore?: number;
+  v1Prediction?: 0 | 1;
+  v2Prediction?: 0 | 1;
+  v2Score?: number;
 }
 
 export interface TrainingStoreConfig {

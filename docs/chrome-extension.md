@@ -40,7 +40,7 @@ Campos relevantes em `ExtensionSettings`:
   - `sg:settings` (ExtensionSettings)
   - `sg:manual-override`, `sg:context-mode`, `sg:context-history`, `sg:holidays-cache`
 - IndexedDB:
-  - `sg-ml-models` (modelo local de sugestões)
+  - `sg-ml-models` (estado do modelo local de sugestões, schema `single-neural-lite-v3`)
 
 ## UI e recursos
 
@@ -48,6 +48,16 @@ Campos relevantes em `ExtensionSettings`:
 - **Options**: pesos, listas, horários, feriados, integração VS Code, OpenAI, bloqueio local.
 - **Report**: gráficos por hora, timeline, ranking, relatório VS Code, exportação PDF.
 - **Modo crítico**: overlay e sirene quando o score ultrapassa o limiar.
+
+## Auto‑classificação (ML)
+
+- Modelo único: `WideDeepLiteBinary` (wide + deep leve) com treino online local.
+- Vetorização: `FeatureVectorizer` com hashing esparso (131.072 dimensões).
+- Calibração: Platt scaling em holdout local.
+- Guardrail:
+  - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
+  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após passar no gate estatístico.
+- Gate estatístico local: macro-F1, false productive rate, precision productive, ECE, Brier, bootstrap CI e McNemar.
 
 ## Bloqueio de domínios
 

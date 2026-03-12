@@ -4,8 +4,7 @@ import type {
   DomainSuggestion,
   ExtensionSettings,
   MlModelStatus,
-  MlShadowStatus,
-  MlVariant,
+  MlModelValidationStatus,
   SuggestionReasonStructured
 } from '../shared/types.js';
 import { formatDateKey, isWithinWorkSchedule } from '../shared/utils/time.js';
@@ -16,14 +15,15 @@ import {
 } from '../shared/domain-classifier.js';
 import { FeatureExtractor, type FeatureMap } from '../shared/ml/featureExtractor.js';
 import { FeatureVectorizer, hashFeature, type SparseVector } from '../shared/ml/vectorizer.js';
-import { OnlineLogisticRegression } from '../shared/ml/onlineLogisticRegression.js';
 import {
   ModelStore,
+  deriveWideWarmStart,
   type LegacyStoredModelState,
   type StoredModelState,
-  type StoredModelStateV2
+  type StoredModelStateV2,
+  type StoredModelStateV3
 } from '../shared/ml/modelStore.js';
-import { FtrlProximalBinary } from '../shared/ml/ftrlProximal.js';
+import { WideDeepLiteBinary, type WideDeepLiteInitState } from '../shared/ml/wideDeepLite.js';
 import { PlattScaler, type CalibrationSample } from '../shared/ml/plattScaler.js';
 import { MlTrainingStore, type StoredTrainingExample } from '../shared/ml/trainingStore.js';
 import {
@@ -33,33 +33,28 @@ import {
   type DomainBehaviorStats
 } from '../shared/ml/behaviorSignals.js';
 import {
-  createEmptyConfusion,
-  createInitialRollout,
-  evaluateGate,
-  maybePromoteRollout,
-  resolveVariantByRollout,
-  updateConfusion,
-  type ShadowMetrics,
-  type RolloutState
-} from '../shared/ml/rollout.js';
+  buildBaselineSnapshotFromSamples,
+  evaluateValidationGate,
+  type ValidationBaselineSnapshot,
+  type ValidationSample,
+  type ValidationSummary
+} from '../shared/ml/validationGate.js';
 
 const MODEL_META_KEY = 'sg:ml-model-meta';
 
-const LEGACY_DIMENSIONS = 1 << 16;
-const LEGACY_LEARNING_RATE = 0.05;
-const LEGACY_L2 = 0.0005;
-const LEGACY_MIN_FEATURE_COUNT = 3;
-const LEGACY_POSITIVE_THRESHOLD = 0.6;
-const LEGACY_NEGATIVE_THRESHOLD = 0.4;
+const MODEL_DIMENSIONS = 1 << 17;
+const MODEL_EMBEDDING_DIM = 8;
+const MODEL_HIDDEN_DIM = 16;
+const MODEL_LR_WIDE = 0.03;
+const MODEL_LR_DEEP = 0.01;
+const MODEL_L2 = 1e-4;
+const MODEL_CLIP_GRADIENT = 1.0;
+const MODEL_MIN_FEATURE_COUNT = 5;
 
-const V2_DIMENSIONS = 1 << 17;
-const V2_ALPHA = 0.05;
-const V2_BETA = 1.0;
-const V2_L1 = 1e-6;
-const V2_L2 = 1e-4;
-const V2_MIN_FEATURE_COUNT = 5;
-const V2_POSITIVE_THRESHOLD = 0.7;
-const V2_NEGATIVE_THRESHOLD = 0.3;
+const GUARDED_POSITIVE_THRESHOLD = 0.78;
+const GUARDED_NEGATIVE_THRESHOLD = 0.28;
+const NORMAL_POSITIVE_THRESHOLD = 0.7;
+const NORMAL_NEGATIVE_THRESHOLD = 0.3;
 
 const TRAIN_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const TRAIN_MAX_EXAMPLES = 25_000;
@@ -69,8 +64,7 @@ const EXPLICIT_SAMPLE_WEIGHT = 1.0;
 const IMPLICIT_DOMAIN_COOLDOWN_MS = 6 * 60 * 60 * 1000;
 const IMPLICIT_BEHAVIOR_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
-interface VariantPrediction {
-  variant: MlVariant;
+interface ModelPrediction {
   probability: number;
   rawScore: number;
   classification: DomainCategory;
@@ -92,20 +86,17 @@ interface ReasonCandidate {
 export interface CachedMlSuggestion {
   suggestion: DomainSuggestion;
   probability: number;
-  activeVariant: MlVariant;
-  predictionV1: VariantPrediction;
-  predictionV2: VariantPrediction;
+  prediction: ModelPrediction;
 }
 
 interface MlContext {
   extractor: FeatureExtractor;
-  legacyModel: OnlineLogisticRegression;
-  legacyVectorizer: FeatureVectorizer;
-  v2Model: FtrlProximalBinary;
-  v2Vectorizer: FeatureVectorizer;
+  model: WideDeepLiteBinary;
+  vectorizer: FeatureVectorizer;
   calibration: PlattScaler;
-  rollout: RolloutState;
-  shadow: ShadowMetrics;
+  guardrailStage: 'guarded' | 'normal';
+  validationBaseline: ValidationBaselineSnapshot | null;
+  validationSnapshot: ValidationSummary | null;
   store: ModelStore;
   trainingStore: MlTrainingStore;
   totalUpdates: number;
@@ -129,35 +120,23 @@ export class MlSuggestionEngine {
     const normalizedDomain = normalizeDomain(metadata.hostname);
     const behaviorStats = await this.recordAndAggregateBehavior(context, metadata, settings, now);
     const features = this.buildFeatureMap(context, metadata, settings, behaviorStats);
-    const predictionV1 = this.predictWithLegacy(context, features);
-    const predictionV2 = this.predictWithV2(context, features);
-    const activeVariant = resolveVariantByRollout(context.rollout);
-    const activePrediction = activeVariant === 'v2' ? predictionV2 : predictionV1;
+    const prediction = this.predict(context, features);
 
     const suggestion: DomainSuggestion = {
       domain: normalizedDomain,
-      classification: activePrediction.classification,
-      confidence: activePrediction.confidence,
-      reasons: activePrediction.reasons,
-      reasonsStructured: activePrediction.reasonsStructured,
+      classification: prediction.classification,
+      confidence: prediction.confidence,
+      reasons: prediction.reasons,
+      reasonsStructured: prediction.reasonsStructured,
       timestamp: now
     };
 
-    await this.tryImplicitTraining(
-      context,
-      normalizedDomain,
-      behaviorStats,
-      predictionV1,
-      predictionV2,
-      now
-    );
+    await this.tryImplicitTraining(context, normalizedDomain, behaviorStats, prediction, now);
 
     return {
       suggestion,
-      probability: activePrediction.probability,
-      activeVariant,
-      predictionV1,
-      predictionV2
+      probability: prediction.probability,
+      prediction
     };
   }
 
@@ -171,37 +150,14 @@ export class MlSuggestionEngine {
     }
     const context = await this.getContext();
     const label: 0 | 1 = classification === 'productive' ? 1 : 0;
+
     const fallbackFeatures = context.extractor.extract({ hostname: domain });
-    const fallbackV1 = context.legacyVectorizer.vectorize(fallbackFeatures, {
-      updateCounts: false,
-      applyMinCount: false
-    });
-    const fallbackV2 = context.v2Vectorizer.vectorize(fallbackFeatures, {
-      updateCounts: false,
-      applyMinCount: false
-    });
-    const v1Vector = cached?.predictionV1.vector ?? fallbackV1;
-    const v2Vector = cached?.predictionV2.vector ?? fallbackV2;
+    const fallbackPrediction = this.predict(context, fallbackFeatures);
+    const prediction = cached?.prediction ?? fallbackPrediction;
 
-    context.legacyVectorizer.incrementCounts(v1Vector.indices);
-    context.v2Vectorizer.incrementCounts(v2Vector.indices);
-    const trainV1Vector = this.applyMinFeatureThreshold(v1Vector, context.legacyVectorizer);
-    const trainV2Vector = this.applyMinFeatureThreshold(v2Vector, context.v2Vectorizer);
-    context.legacyModel.update(trainV1Vector, label, EXPLICIT_SAMPLE_WEIGHT);
-    context.v2Model.update(trainV2Vector, label, EXPLICIT_SAMPLE_WEIGHT);
-
-    context.shadow.v1 = updateConfusion(
-      context.shadow.v1,
-      this.predictionToBinary(cached?.predictionV1),
-      label
-    );
-    context.shadow.v2 = updateConfusion(
-      context.shadow.v2,
-      this.predictionToBinary(cached?.predictionV2),
-      label
-    );
-    context.shadow.explicitCount += 1;
-    context.shadow.lastUpdated = Date.now();
+    context.vectorizer.incrementCounts(prediction.vector.indices);
+    const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
+    context.model.update(trainVector, label, EXPLICIT_SAMPLE_WEIGHT);
 
     context.totalUpdates += 1;
     context.explicitUpdates += 1;
@@ -214,12 +170,9 @@ export class MlSuggestionEngine {
         'explicit',
         label,
         EXPLICIT_SAMPLE_WEIGHT,
-        v2Vector,
-        cached?.predictionV1.classification ?? 'neutral',
-        cached?.predictionV1.probability ?? 0.5,
-        cached?.predictionV2.classification ?? 'neutral',
-        cached?.predictionV2.probability ?? 0.5,
-        cached?.predictionV2.rawScore ?? context.v2Model.predictScore(v2Vector)
+        prediction.vector,
+        this.classToBinary(prediction.classification, prediction.probability),
+        prediction.rawScore
       ),
       {
         maxExamples: TRAIN_MAX_EXAMPLES,
@@ -230,51 +183,59 @@ export class MlSuggestionEngine {
     );
 
     await this.maybeRecalibrate(context);
-    const promoted = maybePromoteRollout(context.rollout, context.shadow, Date.now());
-    context.rollout = promoted.state;
+    await this.maybeEvaluateValidation(context);
     await this.persistContext(context);
   }
 
   async getStatus(): Promise<MlModelStatus | null> {
     try {
       const context = await this.getContext();
-      const counts = context.v2Vectorizer.getCounts();
+      if (!context.validationSnapshot) {
+        await this.maybeEvaluateValidation(context);
+      }
+
+      const counts = context.vectorizer.getCounts();
       let activeFeatures = 0;
       for (let i = 0; i < counts.length; i += 1) {
-        if (counts[i] >= context.v2Vectorizer.minFeatureCount) {
+        if (counts[i] >= context.vectorizer.minFeatureCount) {
           activeFeatures += 1;
         }
       }
-      const gate = evaluateGate(context.shadow);
-      const shadow: MlShadowStatus = {
-        explicitCount: context.shadow.explicitCount,
-        macroF1V1: gate.macroF1V1,
-        macroF1V2: gate.macroF1V2,
-        deltaMacroF1: gate.deltaMacroF1,
-        precisionDropProductive: gate.precisionDropProductive,
-        precisionDropProcrastination: gate.precisionDropProcrastination,
-        gatePassed: gate.passed
-      };
+
       const calibrationState = context.calibration.getState();
+      const validation = context.validationSnapshot;
+      const thresholds = this.getDecisionThresholds(context.guardrailStage);
+
+      const validationPayload: MlModelValidationStatus | null = validation
+        ? {
+            sampleSize: validation.sampleSize,
+            macroF1: validation.macroF1,
+            precisionProductive: validation.precisionProductive,
+            falseProductiveRate: validation.falseProductiveRate,
+            ece: validation.ece,
+            brier: validation.brier,
+            deltaMacroF1: validation.deltaMacroF1,
+            deltaMacroF1CiLower: validation.deltaMacroF1CiLower,
+            deltaMacroF1CiUpper: validation.deltaMacroF1CiUpper,
+            mcnemarPValue: validation.mcnemarPValue,
+            gatePassed: validation.gatePassed
+          }
+        : null;
 
       return {
-        version: 2,
-        dimensions: V2_DIMENSIONS,
+        version: 3,
+        dimensions: MODEL_DIMENSIONS,
         totalUpdates: context.totalUpdates,
         explicitUpdates: context.explicitUpdates,
         implicitUpdates: context.implicitUpdates,
         lastUpdated: context.lastUpdated,
         activeFeatures,
-        learningRate: V2_ALPHA,
-        l2: V2_L2,
-        minFeatureCount: context.v2Vectorizer.minFeatureCount,
-        bias: context.v2Model.getBiasWeight(),
-        activeVariant: resolveVariantByRollout(context.rollout),
-        rolloutStage: context.rollout.stage,
-        thresholds: {
-          productive: V2_POSITIVE_THRESHOLD,
-          procrastination: V2_NEGATIVE_THRESHOLD
-        },
+        learningRate: MODEL_LR_WIDE,
+        l2: MODEL_L2,
+        minFeatureCount: context.vectorizer.minFeatureCount,
+        bias: context.model.getWideBias(),
+        guardrailStage: context.guardrailStage,
+        thresholds,
         calibration: {
           a: calibrationState.a,
           b: calibrationState.b,
@@ -282,7 +243,12 @@ export class MlSuggestionEngine {
           fittedAt: calibrationState.fittedAt,
           holdoutSize: calibrationState.holdoutSize
         },
-        shadow
+        validation: validationPayload,
+        falseProductiveRate: validation?.falseProductiveRate,
+        precisionProductive: validation?.precisionProductive,
+        deltaMacroF1: validation?.deltaMacroF1,
+        mcnemarPValue: validation?.mcnemarPValue,
+        ece: validation?.ece ?? calibrationState.ece
       };
     } catch (error) {
       console.warn('Falha ao obter status avançado do modelo ML', error);
@@ -301,94 +267,77 @@ export class MlSuggestionEngine {
     this.contextPromise = (async () => {
       const store = new ModelStore();
       const trainingStore = new MlTrainingStore();
-      const installBucket = await this.getOrCreateInstallBucket(trainingStore);
       let stored: StoredModelState | null = null;
       try {
         stored = await store.load();
       } catch (error) {
-        console.warn('Falha ao carregar estado ML v2', error);
+        console.warn('Falha ao carregar estado ML v3', error);
       }
 
-      const now = Date.now();
+      const storedV3 = extractV3State(stored);
+      const storedV2 = extractV2State(stored);
       const legacyStored = extractLegacyState(stored);
-      const legacyWeights = legacyStored?.dimensions === LEGACY_DIMENSIONS
-        ? Float32Array.from(legacyStored.weights)
-        : new Float32Array(LEGACY_DIMENSIONS);
-      const legacyCounts = legacyStored?.dimensions === LEGACY_DIMENSIONS
-        ? Uint32Array.from(legacyStored.featureCounts)
-        : new Uint32Array(LEGACY_DIMENSIONS);
-      const legacyModel = new OnlineLogisticRegression(
+
+      const warmStart = deriveWideWarmStart(stored, MODEL_DIMENSIONS);
+      const model = new WideDeepLiteBinary(
         {
-          dimensions: LEGACY_DIMENSIONS,
-          learningRate: LEGACY_LEARNING_RATE,
-          l2: LEGACY_L2
+          dimensions: MODEL_DIMENSIONS,
+          embeddingDim: MODEL_EMBEDDING_DIM,
+          hiddenDim: MODEL_HIDDEN_DIM,
+          lrWide: MODEL_LR_WIDE,
+          lrDeep: MODEL_LR_DEEP,
+          l2: MODEL_L2,
+          clipGradient: MODEL_CLIP_GRADIENT
         },
-        legacyWeights,
-        legacyStored?.bias ?? 0
-      );
-      const legacyVectorizer = new FeatureVectorizer(
-        { dimensions: LEGACY_DIMENSIONS, minFeatureCount: LEGACY_MIN_FEATURE_COUNT },
-        legacyCounts
+        storedV3 ? toWideDeepInitState(storedV3) : {
+          wideWeights: warmStart.wideWeights,
+          wideBias: warmStart.wideBias,
+          seed: 42
+        }
       );
 
-      const storedV2 = extractV2State(stored);
-      const v2Model = new FtrlProximalBinary({
-        dimensions: V2_DIMENSIONS,
-        alpha: V2_ALPHA,
-        beta: V2_BETA,
-        l1: V2_L1,
-        l2: V2_L2
-      },
-      storedV2?.v2?.dimensions === V2_DIMENSIONS ? Float32Array.from(storedV2.v2.z) : undefined,
-      storedV2?.v2?.dimensions === V2_DIMENSIONS ? Float32Array.from(storedV2.v2.n) : undefined,
-      storedV2?.v2
-        ? {
-            z: storedV2.v2.biasZ ?? 0,
-            n: storedV2.v2.biasN ?? 0
-          }
-        : undefined);
-      const v2Counts = storedV2?.v2FeatureCounts?.length === V2_DIMENSIONS
-        ? Uint32Array.from(storedV2.v2FeatureCounts)
-        : new Uint32Array(V2_DIMENSIONS);
-      const v2Vectorizer = new FeatureVectorizer(
-        { dimensions: V2_DIMENSIONS, minFeatureCount: V2_MIN_FEATURE_COUNT },
-        v2Counts
+      const vectorizerCounts = deriveFeatureCounts(storedV3, storedV2, legacyStored);
+      const vectorizer = new FeatureVectorizer(
+        { dimensions: MODEL_DIMENSIONS, minFeatureCount: MODEL_MIN_FEATURE_COUNT },
+        vectorizerCounts
       );
-      const calibration = new PlattScaler(storedV2?.calibration ?? undefined);
-      const rollout = storedV2?.rollout
-        ? {
-            ...storedV2.rollout,
-            installBucket: Number.isFinite(storedV2.rollout.installBucket)
-              ? storedV2.rollout.installBucket
-              : installBucket
-          }
-        : createInitialRollout(now, installBucket);
-      const shadow = storedV2?.shadow ?? {
-        explicitCount: 0,
-        v1: createEmptyConfusion(),
-        v2: createEmptyConfusion(),
-        lastUpdated: 0
-      };
+
+      const calibration = new PlattScaler(
+        storedV3?.calibration ??
+          storedV2?.calibration ??
+          undefined
+      );
 
       const context: MlContext = {
         extractor: new FeatureExtractor(),
-        legacyModel,
-        legacyVectorizer,
-        v2Model,
-        v2Vectorizer,
+        model,
+        vectorizer,
         calibration,
-        rollout,
-        shadow,
+        guardrailStage: storedV3?.guardrailStage ?? 'guarded',
+        validationBaseline: storedV3?.validationBaseline ?? null,
+        validationSnapshot: storedV3?.validation ?? null,
         store,
         trainingStore,
-        totalUpdates: storedV2?.totalUpdates ?? legacyStored?.totalUpdates ?? 0,
-        explicitUpdates: storedV2?.explicitUpdates ?? 0,
-        implicitUpdates: storedV2?.implicitUpdates ?? 0,
-        lastUpdated: storedV2?.lastUpdated ?? legacyStored?.lastUpdated ?? 0,
-        explicitSinceCalibration: storedV2?.explicitSinceCalibration ?? 0,
-        lastCalibrationDayKey: storedV2?.lastCalibrationDayKey
+        totalUpdates: storedV3?.totalUpdates ?? storedV2?.totalUpdates ?? legacyStored?.totalUpdates ?? 0,
+        explicitUpdates: storedV3?.explicitUpdates ?? storedV2?.explicitUpdates ?? 0,
+        implicitUpdates: storedV3?.implicitUpdates ?? storedV2?.implicitUpdates ?? 0,
+        lastUpdated: storedV3?.lastUpdated ?? storedV2?.lastUpdated ?? legacyStored?.lastUpdated ?? 0,
+        explicitSinceCalibration:
+          storedV3?.explicitSinceCalibration ?? storedV2?.explicitSinceCalibration ?? 0,
+        lastCalibrationDayKey: storedV3?.lastCalibrationDayKey ?? storedV2?.lastCalibrationDayKey
       };
+
+      if (!context.validationBaseline) {
+        context.validationBaseline = await this.buildBaselineFromHoldout(trainingStore);
+      }
+      await this.maybeEvaluateValidation(context);
+
       this.context = context;
+
+      if (stored && !storedV3) {
+        await this.persistContext(context);
+      }
+
       return context;
     })();
 
@@ -396,32 +345,14 @@ export class MlSuggestionEngine {
   }
 
   private async persistContext(context: MlContext): Promise<void> {
-    const legacy: LegacyStoredModelState = {
-      version: 1,
-      dimensions: LEGACY_DIMENSIONS,
-      weights: Array.from(context.legacyModel.getWeights()),
-      bias: context.legacyModel.getBias(),
-      featureCounts: Array.from(context.legacyVectorizer.getCounts()),
-      totalUpdates: context.totalUpdates,
-      lastUpdated: context.lastUpdated
-    };
+    const modelState = context.model.getState();
     const calibrationState = context.calibration.getState();
-    const v2State: StoredModelStateV2 = {
-      version: 2,
-      schema: 'dual-model-v2',
-      legacy,
-      v2: {
-        dimensions: V2_DIMENSIONS,
-        alpha: V2_ALPHA,
-        beta: V2_BETA,
-        l1: V2_L1,
-        l2: V2_L2,
-        z: Array.from(context.v2Model.getZ()),
-        n: Array.from(context.v2Model.getN()),
-        biasZ: context.v2Model.getBiasState().z,
-        biasN: context.v2Model.getBiasState().n
-      },
-      v2FeatureCounts: Array.from(context.v2Vectorizer.getCounts()),
+
+    const state: StoredModelStateV3 = {
+      version: 3,
+      schema: 'single-neural-lite-v3',
+      model: modelState,
+      featureCounts: Array.from(context.vectorizer.getCounts()),
       calibration: {
         a: calibrationState.a,
         b: calibrationState.b,
@@ -429,8 +360,9 @@ export class MlSuggestionEngine {
         holdoutSize: calibrationState.holdoutSize,
         ece: calibrationState.ece
       },
-      rollout: context.rollout,
-      shadow: context.shadow,
+      guardrailStage: context.guardrailStage,
+      validationBaseline: context.validationBaseline,
+      validation: context.validationSnapshot,
       totalUpdates: context.totalUpdates,
       explicitUpdates: context.explicitUpdates,
       implicitUpdates: context.implicitUpdates,
@@ -440,23 +372,22 @@ export class MlSuggestionEngine {
     };
 
     try {
-      await context.store.save(v2State);
+      await context.store.save(state);
     } catch (error) {
-      console.warn('Falha ao persistir estado ML v2', error);
+      console.warn('Falha ao persistir estado ML v3', error);
     }
 
     try {
       await chrome.storage.local.set({
         [MODEL_META_KEY]: {
-          version: v2State.version,
-          stage: context.rollout.stage,
-          activeVariant: resolveVariantByRollout(context.rollout),
+          version: state.version,
+          stage: context.guardrailStage,
           lastUpdated: context.lastUpdated,
           totalUpdates: context.totalUpdates
         }
       });
     } catch (error) {
-      console.warn('Falha ao atualizar metadados do modelo v2', error);
+      console.warn('Falha ao atualizar metadados do modelo v3', error);
     }
   }
 
@@ -482,62 +413,31 @@ export class MlSuggestionEngine {
     return features;
   }
 
-  private predictWithLegacy(context: MlContext, features: FeatureMap): VariantPrediction {
-    const vector = context.legacyVectorizer.vectorize(features, {
+  private predict(context: MlContext, features: FeatureMap): ModelPrediction {
+    const vector = context.vectorizer.vectorize(features, {
       updateCounts: false,
       applyMinCount: false
     });
-    const scoreVector = this.applyMinFeatureThreshold(vector, context.legacyVectorizer);
-    const rawScore = context.legacyModel.predictScore(scoreVector);
-    const probability = context.legacyModel.predictProbability(scoreVector);
-    const classification = classifyFromThresholds(
-      probability,
-      LEGACY_POSITIVE_THRESHOLD,
-      LEGACY_NEGATIVE_THRESHOLD
-    );
-    const confidence = Math.round(Math.max(probability, 1 - probability) * 100);
-    const reasonPayload = this.buildReasonPayload(
-      features,
-      context.legacyVectorizer,
-      (index) => context.legacyModel.getWeights()[index] ?? 0,
-      classification,
-      3
-    );
-    return {
-      variant: 'v1',
-      probability,
-      rawScore,
-      classification,
-      confidence,
-      reasons: reasonPayload.reasons,
-      reasonsStructured: reasonPayload.reasonsStructured,
-      vector
-    };
-  }
-
-  private predictWithV2(context: MlContext, features: FeatureMap): VariantPrediction {
-    const vector = context.v2Vectorizer.vectorize(features, {
-      updateCounts: false,
-      applyMinCount: false
-    });
-    const scoreVector = this.applyMinFeatureThreshold(vector, context.v2Vectorizer);
-    const rawScore = context.v2Model.predictScore(scoreVector);
+    const scoreVector = this.applyMinFeatureThreshold(vector, context.vectorizer);
+    const rawScore = context.model.predictScore(scoreVector);
     const probability = context.calibration.transform(rawScore);
+
+    const thresholds = this.getDecisionThresholds(context.guardrailStage);
     const classification = classifyFromThresholds(
       probability,
-      V2_POSITIVE_THRESHOLD,
-      V2_NEGATIVE_THRESHOLD
+      thresholds.productive,
+      thresholds.procrastination
     );
     const confidence = Math.round(Math.max(probability, 1 - probability) * 100);
     const reasonPayload = this.buildReasonPayload(
       features,
-      context.v2Vectorizer,
-      (index) => context.v2Model.getWeight(index),
+      context.vectorizer,
+      (index) => context.model.getWideWeight(index),
       classification,
       4
     );
+
     return {
-      variant: 'v2',
       probability,
       rawScore,
       classification,
@@ -681,8 +581,7 @@ export class MlSuggestionEngine {
     context: MlContext,
     domain: string,
     behaviorStats: DomainBehaviorStats,
-    predictionV1: VariantPrediction,
-    predictionV2: VariantPrediction,
+    prediction: ModelPrediction,
     now: number
   ): Promise<void> {
     const decision = deriveImplicitLabel(behaviorStats);
@@ -696,12 +595,10 @@ export class MlSuggestionEngine {
       return;
     }
 
-    context.legacyVectorizer.incrementCounts(predictionV1.vector.indices);
-    context.v2Vectorizer.incrementCounts(predictionV2.vector.indices);
-    const trainV1Vector = this.applyMinFeatureThreshold(predictionV1.vector, context.legacyVectorizer);
-    const trainV2Vector = this.applyMinFeatureThreshold(predictionV2.vector, context.v2Vectorizer);
-    context.legacyModel.update(trainV1Vector, decision.label, decision.weight);
-    context.v2Model.update(trainV2Vector, decision.label, decision.weight);
+    context.vectorizer.incrementCounts(prediction.vector.indices);
+    const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
+    context.model.update(trainVector, decision.label, decision.weight);
+
     context.totalUpdates += 1;
     context.implicitUpdates += 1;
     context.lastUpdated = now;
@@ -712,12 +609,9 @@ export class MlSuggestionEngine {
         'implicit',
         decision.label,
         decision.weight,
-        predictionV2.vector,
-        predictionV1.classification,
-        predictionV1.probability,
-        predictionV2.classification,
-        predictionV2.probability,
-        predictionV2.rawScore
+        prediction.vector,
+        this.classToBinary(prediction.classification, prediction.probability),
+        prediction.rawScore
       ),
       {
         maxExamples: TRAIN_MAX_EXAMPLES,
@@ -726,8 +620,10 @@ export class MlSuggestionEngine {
         maxHoldout: TRAIN_MAX_HOLDOUT
       }
     );
+
     await context.trainingStore.setMeta(cooldownKey, now);
     await this.maybeRecalibrate(context);
+    await this.maybeEvaluateValidation(context);
     await this.persistContext(context);
   }
 
@@ -739,22 +635,80 @@ export class MlSuggestionEngine {
     if (!requiresDailyCalibration && !requiresExplicitCalibration) {
       return;
     }
+
     const holdout = await context.trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
     const samples: CalibrationSample[] = holdout.map((entry) => {
       const rawVector: SparseVector = {
         indices: entry.vector.indices,
         values: entry.vector.values
       };
-      const thresholdedVector = this.applyMinFeatureThreshold(rawVector, context.v2Vectorizer);
+      const thresholdedVector = this.applyMinFeatureThreshold(rawVector, context.vectorizer);
       return {
-        score: context.v2Model.predictScore(thresholdedVector),
+        score: context.model.predictScore(thresholdedVector),
         label: entry.label,
         weight: entry.weight
       };
     });
+
     context.calibration.fit(samples);
     context.explicitSinceCalibration = 0;
     context.lastCalibrationDayKey = todayKey;
+  }
+
+  private async maybeEvaluateValidation(context: MlContext): Promise<void> {
+    const holdout = await context.trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
+    if (!holdout.length) {
+      return;
+    }
+
+    const samples: ValidationSample[] = holdout.map((entry) => {
+      const rawVector: SparseVector = {
+        indices: entry.vector.indices,
+        values: entry.vector.values
+      };
+      const thresholdedVector = this.applyMinFeatureThreshold(rawVector, context.vectorizer);
+      const score = context.model.predictScore(thresholdedVector);
+      const probability = context.calibration.transform(score);
+      return {
+        label: entry.label,
+        weight: entry.weight,
+        baselinePrediction: resolveBaselinePrediction(entry),
+        modelPrediction: probability >= 0.5 ? 1 : 0,
+        modelProbability: probability
+      };
+    });
+
+    const evaluation = evaluateValidationGate(samples, context.validationBaseline, {
+      bootstrapIterations: 1000,
+      bootstrapSeed: 4242,
+      minSamples: 50
+    });
+
+    context.validationBaseline = evaluation.baseline;
+    context.validationSnapshot = evaluation.summary;
+
+    if (context.guardrailStage === 'guarded' && evaluation.summary.gatePassed) {
+      context.guardrailStage = 'normal';
+    }
+  }
+
+  private async buildBaselineFromHoldout(
+    trainingStore: MlTrainingStore
+  ): Promise<ValidationBaselineSnapshot | null> {
+    const holdout = await trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
+    if (!holdout.length) {
+      return null;
+    }
+
+    const samples: ValidationSample[] = holdout.map((entry) => ({
+      label: entry.label,
+      weight: entry.weight,
+      baselinePrediction: resolveBaselinePrediction(entry),
+      modelPrediction: resolveBaselinePrediction(entry),
+      modelProbability: 0.5
+    }));
+
+    return buildBaselineSnapshotFromSamples(samples, Date.now());
   }
 
   private toStoredExample(
@@ -763,11 +717,8 @@ export class MlSuggestionEngine {
     label: 0 | 1,
     weight: number,
     vector: SparseVector,
-    v1Classification: DomainCategory,
-    v1Probability: number,
-    v2Classification: DomainCategory,
-    v2Probability: number,
-    v2Score: number
+    baselinePrediction: 0 | 1,
+    baselineScore: number
   ): Omit<StoredTrainingExample, 'id' | 'isHoldout'> {
     return {
       createdAt: Date.now(),
@@ -779,9 +730,8 @@ export class MlSuggestionEngine {
         indices: vector.indices.slice(),
         values: vector.values.slice()
       },
-      v1Prediction: this.classToBinary(v1Classification, v1Probability),
-      v2Prediction: this.classToBinary(v2Classification, v2Probability),
-      v2Score
+      baselinePrediction,
+      baselineScore
     };
   }
 
@@ -793,13 +743,6 @@ export class MlSuggestionEngine {
       return 0;
     }
     return Number.isFinite(probability) && (probability as number) >= 0.5 ? 1 : 0;
-  }
-
-  private predictionToBinary(prediction?: VariantPrediction): 0 | 1 {
-    if (!prediction) {
-      return 0;
-    }
-    return this.classToBinary(prediction.classification, prediction.probability);
   }
 
   private applyMinFeatureThreshold(vector: SparseVector, vectorizer: FeatureVectorizer): SparseVector {
@@ -817,15 +760,80 @@ export class MlSuggestionEngine {
     return { indices, values };
   }
 
-  private async getOrCreateInstallBucket(store: MlTrainingStore): Promise<number> {
-    const existing = await store.getMeta<number>('rollout:installBucket');
-    if (Number.isFinite(existing)) {
-      return Math.max(0, Math.min(99, Math.floor(existing as number)));
+  private getDecisionThresholds(stage: 'guarded' | 'normal'): { productive: number; procrastination: number } {
+    if (stage === 'guarded') {
+      return {
+        productive: GUARDED_POSITIVE_THRESHOLD,
+        procrastination: GUARDED_NEGATIVE_THRESHOLD
+      };
     }
-    const bucket = Math.floor(Math.random() * 100);
-    await store.setMeta('rollout:installBucket', bucket);
-    return bucket;
+    return {
+      productive: NORMAL_POSITIVE_THRESHOLD,
+      procrastination: NORMAL_NEGATIVE_THRESHOLD
+    };
   }
+}
+
+function resolveBaselinePrediction(entry: StoredTrainingExample): 0 | 1 {
+  if (entry.baselinePrediction === 0 || entry.baselinePrediction === 1) {
+    return entry.baselinePrediction;
+  }
+  if (entry.v2Prediction === 0 || entry.v2Prediction === 1) {
+    return entry.v2Prediction;
+  }
+  if (entry.v1Prediction === 0 || entry.v1Prediction === 1) {
+    return entry.v1Prediction;
+  }
+  return 0;
+}
+
+function deriveFeatureCounts(
+  storedV3: StoredModelStateV3 | null,
+  storedV2: StoredModelStateV2 | null,
+  legacy: LegacyStoredModelState | null
+): Uint32Array {
+  if (storedV3?.featureCounts?.length === MODEL_DIMENSIONS) {
+    return Uint32Array.from(storedV3.featureCounts);
+  }
+  if (storedV2?.v2FeatureCounts?.length === MODEL_DIMENSIONS) {
+    return Uint32Array.from(storedV2.v2FeatureCounts);
+  }
+  const counts = new Uint32Array(MODEL_DIMENSIONS);
+  if (legacy?.featureCounts?.length) {
+    const size = Math.min(MODEL_DIMENSIONS, legacy.featureCounts.length);
+    for (let i = 0; i < size; i += 1) {
+      counts[i] = legacy.featureCounts[i] ?? 0;
+    }
+  }
+  return counts;
+}
+
+function toWideDeepInitState(storedV3: StoredModelStateV3): WideDeepLiteInitState {
+  const model = storedV3.model;
+  return {
+    wideWeights: toFloat32Array(model.wideWeights, model.dimensions),
+    wideAccum: toFloat32Array(model.wideAccum, model.dimensions),
+    wideBias: model.wideBias,
+    wideBiasAccum: model.wideBiasAccum,
+    embeddings: toFloat32Array(model.embeddings, model.dimensions * model.embeddingDim),
+    embeddingsAccum: toFloat32Array(model.embeddingsAccum, model.dimensions * model.embeddingDim),
+    hiddenWeights: toFloat32Array(model.hiddenWeights, model.hiddenDim * model.embeddingDim),
+    hiddenAccum: toFloat32Array(model.hiddenAccum, model.hiddenDim * model.embeddingDim),
+    hiddenBias: toFloat32Array(model.hiddenBias, model.hiddenDim),
+    hiddenBiasAccum: toFloat32Array(model.hiddenBiasAccum, model.hiddenDim),
+    outWeights: toFloat32Array(model.outWeights, model.hiddenDim),
+    outWeightsAccum: toFloat32Array(model.outWeightsAccum, model.hiddenDim),
+    outBias: model.outBias,
+    outBiasAccum: model.outBiasAccum,
+    seed: 42
+  };
+}
+
+function toFloat32Array(values: number[], expectedLength: number): Float32Array {
+  if (!Array.isArray(values) || values.length !== expectedLength) {
+    return new Float32Array(expectedLength);
+  }
+  return Float32Array.from(values);
 }
 
 function extractLegacyState(stored: StoredModelState | null): LegacyStoredModelState | null {
@@ -833,7 +841,10 @@ function extractLegacyState(stored: StoredModelState | null): LegacyStoredModelS
     return null;
   }
   if ('schema' in stored) {
-    return stored.legacy;
+    if (stored.schema === 'dual-model-v2') {
+      return stored.legacy;
+    }
+    return null;
   }
   return stored as LegacyStoredModelState;
 }
@@ -843,6 +854,16 @@ function extractV2State(stored: StoredModelState | null): StoredModelStateV2 | n
     return null;
   }
   if ('schema' in stored && stored.schema === 'dual-model-v2') {
+    return stored;
+  }
+  return null;
+}
+
+function extractV3State(stored: StoredModelState | null): StoredModelStateV3 | null {
+  if (!stored) {
+    return null;
+  }
+  if ('schema' in stored && stored.schema === 'single-neural-lite-v3') {
     return stored;
   }
   return null;

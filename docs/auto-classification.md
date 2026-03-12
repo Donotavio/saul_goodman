@@ -25,16 +25,23 @@ Nada é enviado para a rede.
 
 ## Modelo de sugestões
 
-- **Modelo**: regressão logística online (`OnlineLogisticRegression`).
-- **Vetorização**: `FeatureVectorizer` com 65.536 dimensões e `minFeatureCount=3`.
+- **Modelo**: `WideDeepLiteBinary` (single-model), com:
+  - ramo **wide** linear sobre features hashed,
+  - ramo **deep** com embeddings esparsos + camada oculta ReLU.
+- **Treino**: online por amostra (AdaGrad), com peso maior para feedback explícito e peso menor para rótulos implícitos.
+- **Vetorização**: `FeatureVectorizer` com 131.072 dimensões e `minFeatureCount=5`.
 - **Persistência**: IndexedDB `sg-ml-models` + metadados em `chrome.storage.local` (`sg:ml-model-meta`).
-- **Confiança**: baseada na probabilidade do modelo.
+- **Calibração**: Platt scaling sobre score bruto do modelo.
+- **Validação**: gate estatístico local com macro-F1, `falseProductiveRate`, `precisionProductive`, ECE, Brier, bootstrap CI e McNemar.
+- **Guardrail stage**:
+  - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
+  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após aprovação do gate.
 
 Classificação por probabilidade:
 
-- `>= 0.60` → **produtivo**
-- `<= 0.40` → **procrastinação**
-- entre 0.40 e 0.60 → **neutro**
+- Acima do threshold de produtivo → **produtivo**
+- Abaixo do threshold de procrastinação → **procrastinação**
+- Entre os thresholds → **neutro**
 
 ## Cooldown e histórico
 
@@ -53,3 +60,4 @@ Classificação por probabilidade:
 
 - O toggle **“Sugestões por IA”** está desabilitado na UI (placeholder).
 - O aprendizado é totalmente local; não há chamadas externas.
+- O estado persistido é único (`single-neural-lite-v3`), sem armazenar payload legado de modelos anteriores.

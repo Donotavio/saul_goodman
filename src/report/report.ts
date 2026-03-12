@@ -48,9 +48,11 @@ const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
 const mlLearningRateEl = document.getElementById('mlLearningRate') as HTMLElement | null;
 const mlL2El = document.getElementById('mlL2') as HTMLElement | null;
 const mlMinFeatureEl = document.getElementById('mlMinFeature') as HTMLElement | null;
-const mlVariantEl = document.getElementById('mlVariant') as HTMLElement | null;
-const mlRolloutEl = document.getElementById('mlRollout') as HTMLElement | null;
-const mlShadowDeltaEl = document.getElementById('mlShadowDelta') as HTMLElement | null;
+const mlGuardrailStageEl = document.getElementById('mlGuardrailStage') as HTMLElement | null;
+const mlFalseProductiveRateEl = document.getElementById('mlFalseProductiveRate') as HTMLElement | null;
+const mlPrecisionProductiveEl = document.getElementById('mlPrecisionProductive') as HTMLElement | null;
+const mlDeltaMacroF1El = document.getElementById('mlDeltaMacroF1') as HTMLElement | null;
+const mlMcnemarPEl = document.getElementById('mlMcnemarP') as HTMLElement | null;
 const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
@@ -1643,9 +1645,11 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     !mlLearningRateEl ||
     !mlL2El ||
     !mlMinFeatureEl ||
-    !mlVariantEl ||
-    !mlRolloutEl ||
-    !mlShadowDeltaEl ||
+    !mlGuardrailStageEl ||
+    !mlFalseProductiveRateEl ||
+    !mlPrecisionProductiveEl ||
+    !mlDeltaMacroF1El ||
+    !mlMcnemarPEl ||
     !mlCalibrationEceEl
   ) {
     return;
@@ -1664,16 +1668,18 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     mlLearningRateEl.textContent = '--';
     mlL2El.textContent = '--';
     mlMinFeatureEl.textContent = '--';
-    mlVariantEl.textContent = '--';
-    mlRolloutEl.textContent = '--';
-    mlShadowDeltaEl.textContent = '--';
+    mlGuardrailStageEl.textContent = '--';
+    mlFalseProductiveRateEl.textContent = '--';
+    mlPrecisionProductiveEl.textContent = '--';
+    mlDeltaMacroF1El.textContent = '--';
+    mlMcnemarPEl.textContent = '--';
     mlCalibrationEceEl.textContent = '--';
     return;
   }
 
   const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
-  const variant = status.activeVariant ? status.activeVariant.toUpperCase() : 'V1';
-  mlStatusBadgeEl.textContent = `${maturity.label} · ${variant}`;
+  const stage = (status.guardrailStage ?? 'guarded').toUpperCase();
+  mlStatusBadgeEl.textContent = `${maturity.label} · ${stage}`;
   mlStatusBadgeEl.classList.add(maturity.className);
 
   mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
@@ -1682,11 +1688,22 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
   mlLearningRateEl.textContent = status.learningRate.toFixed(4);
   mlL2El.textContent = status.l2.toFixed(6);
   mlMinFeatureEl.textContent = formatNumber(status.minFeatureCount);
-  mlVariantEl.textContent = variant;
-  mlRolloutEl.textContent = (status.rolloutStage ?? 'shadow').toUpperCase();
-  const delta = status.shadow?.deltaMacroF1 ?? 0;
-  mlShadowDeltaEl.textContent = `${delta >= 0 ? '+' : ''}${delta.toFixed(3)}`;
-  const ece = status.calibration?.ece;
+  mlGuardrailStageEl.textContent = (status.guardrailStage ?? 'guarded').toUpperCase();
+  const falseProductiveRate = status.falseProductiveRate;
+  mlFalseProductiveRateEl.textContent = Number.isFinite(falseProductiveRate)
+    ? `${((falseProductiveRate as number) * 100).toFixed(1)}%`
+    : '--';
+  const precisionProductive = status.precisionProductive;
+  mlPrecisionProductiveEl.textContent = Number.isFinite(precisionProductive)
+    ? `${((precisionProductive as number) * 100).toFixed(1)}%`
+    : '--';
+  const delta = status.deltaMacroF1;
+  mlDeltaMacroF1El.textContent = Number.isFinite(delta)
+    ? `${(delta as number) >= 0 ? '+' : ''}${(delta as number).toFixed(3)}`
+    : '--';
+  const mcnemarP = status.mcnemarPValue;
+  mlMcnemarPEl.textContent = Number.isFinite(mcnemarP) ? (mcnemarP as number).toFixed(4) : '--';
+  const ece = status.ece ?? status.calibration?.ece;
   mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
   if (status.lastUpdated > 0) {
     mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
