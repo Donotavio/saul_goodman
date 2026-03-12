@@ -208,7 +208,8 @@ async function buildMlSuggestion(
   metadata: DomainMetadata,
   settings: ExtensionSettings
 ): Promise<CachedSuggestion> {
-  const cached = await mlEngine.buildSuggestion(metadata, settings);
+  const metrics = await getMetricsCache();
+  const cached = await mlEngine.buildSuggestion(metadata, settings, metrics);
   return {
     suggestion: cached.suggestion,
     probability: cached.probability,
@@ -221,7 +222,11 @@ async function updateModelFromFeedback(
   classification: DomainCategory,
   cached?: CachedSuggestion
 ): Promise<void> {
-  await mlEngine.applyExplicitFeedback(domain, classification, cached);
+  try {
+    await mlEngine.applyExplicitFeedback(domain, classification, cached);
+  } catch (error) {
+    console.warn('Falha ao atualizar modelo ML com feedback', error);
+  }
 }
 
 async function getMlStatus(): Promise<MlModelStatus | null> {

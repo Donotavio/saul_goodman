@@ -2,6 +2,7 @@ import type {
   DomainCategory,
   DomainMetadata,
   DomainSuggestion,
+  DailyMetrics,
   ExtensionSettings,
   MlModelStatus,
   MlModelValidationStatus,
@@ -27,9 +28,9 @@ import { WideDeepLiteBinary, type WideDeepLiteInitState } from '../shared/ml/wid
 import { PlattScaler, type CalibrationSample } from '../shared/ml/plattScaler.js';
 import { MlTrainingStore, type StoredTrainingExample } from '../shared/ml/trainingStore.js';
 import {
+  type DomainBehaviorEvent,
   aggregateDomainBehavior,
   buildBehaviorFeatureMap,
-  deriveImplicitLabel,
   type DomainBehaviorStats
 } from '../shared/ml/behaviorSignals.js';
 import {
@@ -39,6 +40,15 @@ import {
   type ValidationSample,
   type ValidationSummary
 } from '../shared/ml/validationGate.js';
+import {
+  buildNaturalSignalFeatures,
+  computeVscodeActiveMs15m,
+  createEmptyNaturalSignalStats,
+  normalizeNaturalSignalStats,
+  type NaturalReasonDescriptor,
+  type NaturalSignalComputationResult,
+  type NaturalSignalStatsState
+} from '../shared/ml/naturalSignals.js';
 
 const MODEL_META_KEY = 'sg:ml-model-meta';
 
@@ -61,7 +71,15 @@ const TRAIN_MAX_EXAMPLES = 25_000;
 const TRAIN_HOLDOUT_RATIO = 0.2;
 const TRAIN_MAX_HOLDOUT = 2_000;
 const EXPLICIT_SAMPLE_WEIGHT = 1.0;
-const IMPLICIT_DOMAIN_COOLDOWN_MS = 6 * 60 * 60 * 1000;
+const PSEUDO_SAMPLE_WEIGHT = 0.1;
+const PSEUDO_POSITIVE_THRESHOLD = 0.93;
+const PSEUDO_NEGATIVE_THRESHOLD = 0.07;
+const PSEUDO_STABILITY_MIN = 3;
+const PSEUDO_DOMAIN_COOLDOWN_MS = 12 * 60 * 60 * 1000;
+const PSEUDO_DAILY_LIMIT = 20;
+const PSEUDO_CONTRADICTION_QUARANTINE_MS = 14 * 24 * 60 * 60 * 1000;
+const PSEUDO_EXPLICIT_CONFLICT_LOOKBACK_MS = 30 * 24 * 60 * 60 * 1000;
+const HIGH_CONFIDENCE_ECE_THRESHOLD = 0.8;
 const IMPLICIT_BEHAVIOR_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
 interface ModelPrediction {
@@ -74,13 +92,32 @@ interface ModelPrediction {
   vector: SparseVector;
 }
 
-type ReasonSource = 'content' | 'behavior' | 'heuristic';
+type ReasonSource = 'content' | 'behavior' | 'heuristic' | 'natural';
 
 interface ReasonCandidate {
   feature: string;
   score: number;
   weight: number;
   source: ReasonSource;
+  descriptor?: NaturalReasonDescriptor;
+}
+
+interface BehaviorAggregationResult {
+  behavior: DomainBehaviorStats;
+  attention: {
+    tabSwitches10m: number;
+    activeMinutes10m: number;
+    revisits10m: number;
+    returnLatencyMs7d: number;
+    signalStability7d: number;
+  };
+  webActiveMs15m: number;
+}
+
+interface FeatureBuildResult {
+  features: FeatureMap;
+  descriptors: Record<string, NaturalReasonDescriptor>;
+  natural: NaturalSignalComputationResult;
 }
 
 export interface CachedMlSuggestion {
@@ -102,6 +139,10 @@ interface MlContext {
   totalUpdates: number;
   explicitUpdates: number;
   implicitUpdates: number;
+  pseudoLabelAttempts: number;
+  pseudoLabelAccepted: number;
+  highConfidenceEce: number;
+  naturalSignalStats: NaturalSignalStatsState;
   lastUpdated: number;
   explicitSinceCalibration: number;
   lastCalibrationDayKey?: string;
@@ -114,13 +155,24 @@ export class MlSuggestionEngine {
   async buildSuggestion(
     metadata: DomainMetadata,
     settings: ExtensionSettings,
-    now = Date.now()
+    metricsOrNow?: DailyMetrics | number | null,
+    maybeNow?: number
   ): Promise<CachedMlSuggestion> {
+    const metrics = typeof metricsOrNow === 'number' ? null : (metricsOrNow ?? null);
+    const now = typeof metricsOrNow === 'number'
+      ? metricsOrNow
+      : (Number.isFinite(maybeNow) ? (maybeNow as number) : Date.now());
     const context = await this.getContext();
     const normalizedDomain = normalizeDomain(metadata.hostname);
-    const behaviorStats = await this.recordAndAggregateBehavior(context, metadata, settings, now);
-    const features = this.buildFeatureMap(context, metadata, settings, behaviorStats);
-    const prediction = this.predict(context, features);
+    const behavior = await this.recordAndAggregateBehavior(context, metadata, settings, now);
+    const featureBuild = this.buildFeatureMap(context, metadata, settings, behavior, metrics, now);
+    const prediction = this.predict(
+      context,
+      featureBuild.features,
+      featureBuild.descriptors,
+      Boolean(settings.mlReasonDebugMode)
+    );
+    await this.appendPseudoHistory(context, normalizedDomain, prediction, now);
 
     const suggestion: DomainSuggestion = {
       domain: normalizedDomain,
@@ -131,7 +183,7 @@ export class MlSuggestionEngine {
       timestamp: now
     };
 
-    await this.tryImplicitTraining(context, normalizedDomain, behaviorStats, prediction, now);
+    await this.tryImplicitTraining(context, normalizedDomain, behavior.behavior, prediction, now);
 
     return {
       suggestion,
@@ -152,7 +204,7 @@ export class MlSuggestionEngine {
     const label: 0 | 1 = classification === 'productive' ? 1 : 0;
 
     const fallbackFeatures = context.extractor.extract({ hostname: domain });
-    const fallbackPrediction = this.predict(context, fallbackFeatures);
+    const fallbackPrediction = this.predict(context, fallbackFeatures, {}, false);
     const prediction = cached?.prediction ?? fallbackPrediction;
 
     context.vectorizer.incrementCounts(prediction.vector.indices);
@@ -182,6 +234,7 @@ export class MlSuggestionEngine {
       }
     );
 
+    await this.maybeActivatePseudoQuarantine(context, normalizeDomain(domain), label, Date.now());
     await this.maybeRecalibrate(context);
     await this.maybeEvaluateValidation(context);
     await this.persistContext(context);
@@ -213,6 +266,7 @@ export class MlSuggestionEngine {
             precisionProductive: validation.precisionProductive,
             falseProductiveRate: validation.falseProductiveRate,
             ece: validation.ece,
+            highConfidenceEce: context.highConfidenceEce,
             brier: validation.brier,
             deltaMacroF1: validation.deltaMacroF1,
             deltaMacroF1CiLower: validation.deltaMacroF1CiLower,
@@ -221,6 +275,21 @@ export class MlSuggestionEngine {
             gatePassed: validation.gatePassed
           }
         : null;
+
+      const topConceptsCoverage = safeDivide(
+        context.naturalSignalStats.topConceptCovered,
+        Math.max(1, context.naturalSignalStats.topConceptTotal)
+      );
+      const pseudoLabelAcceptedRate = safeDivide(
+        context.pseudoLabelAccepted,
+        Math.max(1, context.pseudoLabelAttempts)
+      );
+      const driftAlert = Boolean(
+        validation &&
+          context.validationBaseline &&
+          validation.falseProductiveRate > context.validationBaseline.falseProductiveRate + 0.01
+      );
+      const highConfidenceEce = context.highConfidenceEce || validation?.ece || calibrationState.ece;
 
       return {
         version: 3,
@@ -248,7 +317,13 @@ export class MlSuggestionEngine {
         precisionProductive: validation?.precisionProductive,
         deltaMacroF1: validation?.deltaMacroF1,
         mcnemarPValue: validation?.mcnemarPValue,
-        ece: validation?.ece ?? calibrationState.ece
+        ece: validation?.ece ?? calibrationState.ece,
+        signalHealth: {
+          topConceptsCoverage,
+          pseudoLabelAcceptedRate,
+          driftAlert,
+          highConfidenceEce
+        }
       };
     } catch (error) {
       console.warn('Falha ao obter status avançado do modelo ML', error);
@@ -316,11 +391,15 @@ export class MlSuggestionEngine {
         guardrailStage: storedV3?.guardrailStage ?? 'guarded',
         validationBaseline: storedV3?.validationBaseline ?? null,
         validationSnapshot: storedV3?.validation ?? null,
+        naturalSignalStats: normalizeNaturalSignalStats(storedV3?.naturalSignalStats),
         store,
         trainingStore,
         totalUpdates: storedV3?.totalUpdates ?? storedV2?.totalUpdates ?? legacyStored?.totalUpdates ?? 0,
         explicitUpdates: storedV3?.explicitUpdates ?? storedV2?.explicitUpdates ?? 0,
         implicitUpdates: storedV3?.implicitUpdates ?? storedV2?.implicitUpdates ?? 0,
+        pseudoLabelAttempts: storedV3?.pseudoLabelAttempts ?? 0,
+        pseudoLabelAccepted: storedV3?.pseudoLabelAccepted ?? 0,
+        highConfidenceEce: storedV3?.highConfidenceEce ?? 0,
         lastUpdated: storedV3?.lastUpdated ?? storedV2?.lastUpdated ?? legacyStored?.lastUpdated ?? 0,
         explicitSinceCalibration:
           storedV3?.explicitSinceCalibration ?? storedV2?.explicitSinceCalibration ?? 0,
@@ -363,6 +442,10 @@ export class MlSuggestionEngine {
       guardrailStage: context.guardrailStage,
       validationBaseline: context.validationBaseline,
       validation: context.validationSnapshot,
+      naturalSignalStats: context.naturalSignalStats,
+      pseudoLabelAttempts: context.pseudoLabelAttempts,
+      pseudoLabelAccepted: context.pseudoLabelAccepted,
+      highConfidenceEce: context.highConfidenceEce,
       totalUpdates: context.totalUpdates,
       explicitUpdates: context.explicitUpdates,
       implicitUpdates: context.implicitUpdates,
@@ -395,12 +478,16 @@ export class MlSuggestionEngine {
     context: MlContext,
     metadata: DomainMetadata,
     settings: ExtensionSettings,
-    behaviorStats: DomainBehaviorStats
-  ): FeatureMap {
+    behavior: BehaviorAggregationResult,
+    metrics: DailyMetrics | null,
+    now: number
+  ): FeatureBuildResult {
     const features = context.extractor.extract(metadata);
-    const behaviorFeatures = buildBehaviorFeatureMap(behaviorStats);
+    const descriptors: Record<string, NaturalReasonDescriptor> = {};
+
+    const behaviorFeatures = buildBehaviorFeatureMap(behavior.behavior);
     Object.entries(behaviorFeatures).forEach(([feature, value]) => {
-      features[feature] = (features[feature] ?? 0) + value;
+      features[feature] = (features[feature] ?? 0) + value * 0.25;
     });
 
     const heuristic = classifyDomainHeuristic(toHeuristicInput(metadata), settings.learningSignals);
@@ -410,10 +497,47 @@ export class MlSuggestionEngine {
       /Host conhecido|Layout de feed|Editor/i.test(reason)
     ).length;
     addFeature(features, `heur:strong_signal_bucket:${bucketCount(strongSignalCount, [0, 1, 2, 4])}`);
-    return features;
+
+    const scheduleFit = isWithinWorkSchedule(new Date(now), settings.workSchedule ?? []) ? 1 : 0;
+    const vscodeActiveMs15m = settings.vscodeIntegrationEnabled ? computeVscodeActiveMs15m(metrics, now) : 0;
+    const vscodeShare15m = safeDivide(vscodeActiveMs15m, vscodeActiveMs15m + behavior.webActiveMs15m);
+    const natural = buildNaturalSignalFeatures(
+      {
+        metadata,
+        behavior: behavior.behavior,
+        settings,
+        attention: behavior.attention,
+        context: {
+          scheduleFit,
+          vscodeActiveMs15m,
+          vscodeShare15m
+        },
+        metrics
+      },
+      context.naturalSignalStats
+    );
+    context.naturalSignalStats = natural.stats;
+
+    Object.entries(natural.features).forEach(([feature, value]) => {
+      features[feature] = (features[feature] ?? 0) + value;
+    });
+    Object.entries(natural.descriptors).forEach(([feature, descriptor]) => {
+      descriptors[feature] = descriptor;
+    });
+
+    return {
+      features,
+      descriptors,
+      natural
+    };
   }
 
-  private predict(context: MlContext, features: FeatureMap): ModelPrediction {
+  private predict(
+    context: MlContext,
+    features: FeatureMap,
+    descriptors: Record<string, NaturalReasonDescriptor>,
+    includeTechnicalReasons: boolean
+  ): ModelPrediction {
     const vector = context.vectorizer.vectorize(features, {
       updateCounts: false,
       applyMinCount: false
@@ -433,6 +557,8 @@ export class MlSuggestionEngine {
       features,
       context.vectorizer,
       (index) => context.model.getWideWeight(index),
+      descriptors,
+      includeTechnicalReasons,
       classification,
       4
     );
@@ -452,6 +578,8 @@ export class MlSuggestionEngine {
     features: FeatureMap,
     vectorizer: FeatureVectorizer,
     getWeight: (index: number) => number,
+    descriptors: Record<string, NaturalReasonDescriptor>,
+    includeTechnicalReasons: boolean,
     classification: DomainCategory,
     limit: number
   ): { reasons: string[]; reasonsStructured: SuggestionReasonStructured[] } {
@@ -475,7 +603,8 @@ export class MlSuggestionEngine {
         feature,
         score,
         weight,
-        source: inferReasonSource(feature)
+        source: inferReasonSource(feature),
+        descriptor: descriptors[feature]
       });
     });
 
@@ -487,26 +616,30 @@ export class MlSuggestionEngine {
     }
 
     contributions.sort((a, b) => Math.abs(b.score) - Math.abs(a.score));
+    const naturalContributions = contributions.filter((entry) => isNaturalFeature(entry.feature));
+    const explanationPool = naturalContributions.length >= 2 ? naturalContributions : contributions;
     const primarySign = classification === 'productive' ? 1 : -1;
     const supportive = classification === 'neutral'
-      ? contributions
-      : contributions.filter((entry) => entry.score * primarySign > 0);
+      ? explanationPool
+      : explanationPool.filter((entry) => entry.score * primarySign > 0);
     const opposing = classification === 'neutral'
       ? []
-      : contributions.filter((entry) => entry.score * primarySign < 0);
+      : explanationPool.filter((entry) => entry.score * primarySign < 0);
 
     const selectedSupportive = classification === 'neutral'
       ? supportive.slice(0, limit)
       : this.pickBalancedReasons(supportive, limit);
-    const fallbackSelected = selectedSupportive.length ? selectedSupportive : contributions.slice(0, limit);
+    const fallbackSelected = selectedSupportive.length ? selectedSupportive : explanationPool.slice(0, limit);
 
-    const reasons = fallbackSelected.map((entry) => toReasonText(entry, false));
-    const reasonsStructured = fallbackSelected.map((entry) => toStructuredReason(entry, false));
+    const reasons = fallbackSelected.map((entry) => toReasonText(entry, false, includeTechnicalReasons));
+    const reasonsStructured = fallbackSelected.map((entry) =>
+      toStructuredReason(entry, false, includeTechnicalReasons)
+    );
 
     if (opposing.length) {
       const counter = opposing[0];
-      reasons.push(toReasonText(counter, true));
-      reasonsStructured.push(toStructuredReason(counter, true));
+      reasons.push(toReasonText(counter, true, includeTechnicalReasons));
+      reasonsStructured.push(toStructuredReason(counter, true, includeTechnicalReasons));
     }
 
     return {
@@ -532,7 +665,8 @@ export class MlSuggestionEngine {
       }
     };
 
-    pickBySource('behavior', Math.min(2, limit));
+    pickBySource('natural', Math.min(2, limit));
+    pickBySource('behavior', Math.min(2, Math.max(0, limit - selected.length)));
     pickBySource('content', Math.min(2, Math.max(0, limit - selected.length)));
 
     if (selected.length < limit) {
@@ -558,7 +692,7 @@ export class MlSuggestionEngine {
     metadata: DomainMetadata,
     settings: ExtensionSettings,
     now: number
-  ): Promise<DomainBehaviorStats> {
+  ): Promise<BehaviorAggregationResult> {
     const domain = normalizeDomain(metadata.hostname);
     const outOfSchedule = !isWithinWorkSchedule(new Date(now), settings.workSchedule ?? []);
     await context.trainingStore.recordBehaviorEvent({
@@ -574,7 +708,15 @@ export class MlSuggestionEngine {
     });
     await context.trainingStore.pruneBehavior(now - IMPLICIT_BEHAVIOR_RETENTION_MS);
     const events = await context.trainingStore.getBehaviorEvents(domain, now - 14 * 24 * 60 * 60 * 1000);
-    return aggregateDomainBehavior(events, now);
+    const behavior = aggregateDomainBehavior(events, now);
+    const recentEvents = await context.trainingStore.getBehaviorEventsSince(now - 15 * 60 * 1000);
+    const attention = deriveAttentionSnapshot(recentEvents, events, domain, now);
+    const webActiveMs15m = recentEvents.reduce((acc, event) => acc + Math.max(0, event.activeMs), 0);
+    return {
+      behavior,
+      attention,
+      webActiveMs15m
+    };
   }
 
   private async tryImplicitTraining(
@@ -584,31 +726,62 @@ export class MlSuggestionEngine {
     prediction: ModelPrediction,
     now: number
   ): Promise<void> {
-    const decision = deriveImplicitLabel(behaviorStats);
-    if (!decision) {
+    context.pseudoLabelAttempts += 1;
+
+    const candidateLabel = resolvePseudoLabel(prediction.probability);
+    if (candidateLabel === null) {
       return;
     }
 
-    const cooldownKey = `implicit:last:${domain}`;
-    const lastImplicit = await context.trainingStore.getMeta<number>(cooldownKey);
-    if (lastImplicit && now - lastImplicit < IMPLICIT_DOMAIN_COOLDOWN_MS) {
+    const quarantineKey = `pseudo:quarantine:${domain}`;
+    const quarantineUntil = await context.trainingStore.getMeta<number>(quarantineKey);
+    if (quarantineUntil && quarantineUntil > now) {
+      return;
+    }
+
+    const cooldownKey = `pseudo:last:${domain}`;
+    const lastPseudo = await context.trainingStore.getMeta<number>(cooldownKey);
+    if (lastPseudo && now - lastPseudo < PSEUDO_DOMAIN_COOLDOWN_MS) {
+      return;
+    }
+
+    if (await this.isPseudoDailyLimitReached(context.trainingStore, now)) {
+      return;
+    }
+
+    const stabilityCount = await this.countStablePredictions(context.trainingStore, domain, candidateLabel, now);
+    if (stabilityCount < PSEUDO_STABILITY_MIN) {
+      return;
+    }
+
+    const explicitConflicts = await context.trainingStore.getRecentExplicitExamplesByDomain(
+      domain,
+      now - PSEUDO_EXPLICIT_CONFLICT_LOOKBACK_MS,
+      100
+    );
+    if (explicitConflicts.some((entry) => entry.label !== candidateLabel)) {
+      return;
+    }
+
+    if (!this.isRiskWindowHealthy(context, candidateLabel, behaviorStats)) {
       return;
     }
 
     context.vectorizer.incrementCounts(prediction.vector.indices);
     const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
-    context.model.update(trainVector, decision.label, decision.weight);
+    context.model.update(trainVector, candidateLabel, PSEUDO_SAMPLE_WEIGHT);
 
     context.totalUpdates += 1;
     context.implicitUpdates += 1;
+    context.pseudoLabelAccepted += 1;
     context.lastUpdated = now;
 
     await context.trainingStore.addTrainingExample(
       this.toStoredExample(
         domain,
         'implicit',
-        decision.label,
-        decision.weight,
+        candidateLabel,
+        PSEUDO_SAMPLE_WEIGHT,
         prediction.vector,
         this.classToBinary(prediction.classification, prediction.probability),
         prediction.rawScore
@@ -621,10 +794,108 @@ export class MlSuggestionEngine {
       }
     );
 
+    await context.trainingStore.setMeta(`pseudo:lastLabel:${domain}`, candidateLabel);
     await context.trainingStore.setMeta(cooldownKey, now);
+    await this.incrementPseudoDailyCounter(context.trainingStore, now);
     await this.maybeRecalibrate(context);
     await this.maybeEvaluateValidation(context);
     await this.persistContext(context);
+  }
+
+  private async appendPseudoHistory(
+    context: MlContext,
+    domain: string,
+    prediction: ModelPrediction,
+    now: number
+  ): Promise<void> {
+    if (!domain) {
+      return;
+    }
+    const key = `pseudo:history:${domain}`;
+    const existing = (await context.trainingStore.getMeta<Array<{ timestamp: number; label: 0 | 1; probability: number }>>(key)) ?? [];
+    const label: 0 | 1 = prediction.probability >= 0.5 ? 1 : 0;
+    const next = [
+      ...existing,
+      {
+        timestamp: now,
+        label,
+        probability: prediction.probability
+      }
+    ]
+      .filter((entry) => Number.isFinite(entry.timestamp) && now - entry.timestamp <= 30 * 24 * 60 * 60 * 1000)
+      .slice(-200);
+    await context.trainingStore.setMeta(key, next);
+  }
+
+  private async countStablePredictions(
+    trainingStore: MlTrainingStore,
+    domain: string,
+    label: 0 | 1,
+    now: number
+  ): Promise<number> {
+    const key = `pseudo:history:${domain}`;
+    const history = (await trainingStore.getMeta<Array<{ timestamp: number; label: 0 | 1; probability: number }>>(key)) ?? [];
+    const recent = history.filter((entry) => {
+      if (now - entry.timestamp > 7 * 24 * 60 * 60 * 1000) {
+        return false;
+      }
+      if (entry.label !== label) {
+        return false;
+      }
+      if (label === 1) {
+        return entry.probability >= 0.9;
+      }
+      return entry.probability <= 0.1;
+    });
+    return recent.length;
+  }
+
+  private async maybeActivatePseudoQuarantine(
+    context: MlContext,
+    domain: string,
+    explicitLabel: 0 | 1,
+    now: number
+  ): Promise<void> {
+    if (!domain) {
+      return;
+    }
+    const lastPseudoLabel = await context.trainingStore.getMeta<0 | 1>(`pseudo:lastLabel:${domain}`);
+    if (lastPseudoLabel !== 0 && lastPseudoLabel !== 1) {
+      return;
+    }
+    if (lastPseudoLabel === explicitLabel) {
+      return;
+    }
+    await context.trainingStore.setMeta(
+      `pseudo:quarantine:${domain}`,
+      now + PSEUDO_CONTRADICTION_QUARANTINE_MS
+    );
+  }
+
+  private isRiskWindowHealthy(
+    context: MlContext,
+    candidateLabel: 0 | 1,
+    behaviorStats: DomainBehaviorStats
+  ): boolean {
+    if (candidateLabel === 1 && behaviorStats.distractionRatio14d >= 0.6) {
+      return false;
+    }
+    if (!context.validationSnapshot || !context.validationBaseline) {
+      return true;
+    }
+    return context.validationSnapshot.falseProductiveRate <= context.validationBaseline.falseProductiveRate + 0.005;
+  }
+
+  private async isPseudoDailyLimitReached(trainingStore: MlTrainingStore, now: number): Promise<boolean> {
+    const key = `pseudo:count:${formatDateKey(new Date(now))}`;
+    const current = (await trainingStore.getMeta<number>(key)) ?? 0;
+    return current >= PSEUDO_DAILY_LIMIT;
+  }
+
+  private async incrementPseudoDailyCounter(trainingStore: MlTrainingStore, now: number): Promise<void> {
+    const key = `pseudo:count:${formatDateKey(new Date(now))}`;
+    const current = (await trainingStore.getMeta<number>(key)) ?? 0;
+    await trainingStore.setMeta(key, current + 1);
   }
 
   private async maybeRecalibrate(context: MlContext): Promise<void> {
@@ -684,10 +955,17 @@ export class MlSuggestionEngine {
       minSamples: 50
     });
 
-    context.validationBaseline = evaluation.baseline;
-    context.validationSnapshot = evaluation.summary;
+    context.highConfidenceEce = calculateHighConfidenceEce(samples, HIGH_CONFIDENCE_ECE_THRESHOLD);
+    const gatePassed = evaluation.summary.gatePassed && context.highConfidenceEce <= 0.05;
+    const summary = {
+      ...evaluation.summary,
+      gatePassed
+    };
 
-    if (context.guardrailStage === 'guarded' && evaluation.summary.gatePassed) {
+    context.validationBaseline = evaluation.baseline;
+    context.validationSnapshot = summary;
+
+    if (context.guardrailStage === 'guarded' && summary.gatePassed) {
       context.guardrailStage = 'normal';
     }
   }
@@ -926,6 +1204,9 @@ function bucketConfidence(confidence: number): string {
 }
 
 function inferReasonSource(feature: string): ReasonSource {
+  if (feature.startsWith('sem:') || feature.startsWith('nat:')) {
+    return 'natural';
+  }
   if (feature.startsWith('beh:')) {
     return 'behavior';
   }
@@ -951,6 +1232,24 @@ function toReasonImpact(weight: number): 'light' | 'medium' | 'strong' {
 }
 
 function toReasonFamily(feature: string): string {
+  if (feature.startsWith('sem:intent:')) {
+    return 'intent';
+  }
+  if (feature.startsWith('nat:attention:')) {
+    return 'attention';
+  }
+  if (feature.startsWith('nat:engagement:')) {
+    return 'engagement';
+  }
+  if (feature.startsWith('nat:task_progress:')) {
+    return 'task_progress';
+  }
+  if (feature.startsWith('nat:context:')) {
+    return 'context';
+  }
+  if (feature.startsWith('nat:reliability:')) {
+    return 'reliability';
+  }
   const [prefix, family] = feature.split(':', 3);
   if (!prefix) {
     return 'signal';
@@ -964,21 +1263,204 @@ function toReasonFamily(feature: string): string {
   return prefix;
 }
 
-function toReasonText(candidate: ReasonCandidate, counter: boolean): string {
+function toReasonText(candidate: ReasonCandidate, counter: boolean, includeTechnical: boolean): string {
   const direction = toReasonDirection(candidate.score) === 'productive' ? 'produtivo' : 'procrastinação';
+  const descriptor = candidate.descriptor;
+  if (descriptor) {
+    if (counter) {
+      return `Contra-sinal: ${descriptor.text} aponta para ${direction}`;
+    }
+    if (includeTechnical) {
+      return `${descriptor.text} favorece ${direction} (sinal ${candidate.feature})`;
+    }
+    return `${descriptor.text} favorece ${direction}`;
+  }
+  if (!includeTechnical) {
+    const friendly = humanizeLegacyFeature(candidate.feature);
+    if (counter) {
+      return `Contra-sinal: ${friendly} aponta para ${direction}`;
+    }
+    return `${friendly} favorece ${direction}`;
+  }
   if (counter) {
     return `Contra-sinal: ${candidate.feature} aponta para ${direction}`;
   }
   return `Sinal: ${candidate.feature} favorece ${direction} (peso ${Math.abs(candidate.weight).toFixed(2)})`;
 }
 
-function toStructuredReason(candidate: ReasonCandidate, counter: boolean): SuggestionReasonStructured {
+function toStructuredReason(
+  candidate: ReasonCandidate,
+  counter: boolean,
+  includeTechnical: boolean
+): SuggestionReasonStructured {
+  const descriptor = candidate.descriptor;
   return {
-    family: toReasonFamily(candidate.feature),
-    evidence: toReasonText(candidate, counter),
+    family: descriptor?.family ?? toReasonFamily(candidate.feature),
+    evidence: toReasonText(candidate, counter, includeTechnical),
     direction: toReasonDirection(candidate.score),
     impact: toReasonImpact(candidate.weight),
     source: candidate.source,
-    counter
+    counter,
+    conceptKey: descriptor?.conceptKey,
+    conceptLabel: descriptor?.conceptLabel,
+    evidenceType: descriptor?.evidenceType,
+    technicalEvidence: includeTechnical ? candidate.feature : undefined
   };
+}
+
+function isNaturalFeature(feature: string): boolean {
+  return feature.startsWith('sem:') || feature.startsWith('nat:');
+}
+
+function humanizeLegacyFeature(feature: string): string {
+  if (feature.startsWith('beh:')) {
+    return 'Padrao comportamental recente';
+  }
+  if (feature.startsWith('heur:')) {
+    return 'Regra heuristica contextual';
+  }
+  if (feature.startsWith('host:') || feature.startsWith('root:') || feature.startsWith('tld:')) {
+    return 'Contexto do dominio';
+  }
+  if (feature.startsWith('title:') || feature.startsWith('desc:') || feature.startsWith('heading:') || feature.startsWith('kw:')) {
+    return 'Semantica do conteudo da pagina';
+  }
+  if (feature.startsWith('flag:') || feature.startsWith('type:')) {
+    return 'Estrutura de interface da pagina';
+  }
+  return 'Sinal contextual local';
+}
+
+function deriveAttentionSnapshot(
+  recentEvents15m: DomainBehaviorEvent[],
+  domainEvents14d: DomainBehaviorEvent[],
+  domain: string,
+  now: number
+): {
+  tabSwitches10m: number;
+  activeMinutes10m: number;
+  revisits10m: number;
+  returnLatencyMs7d: number;
+  signalStability7d: number;
+} {
+  const recent10m = recentEvents15m
+    .filter((event) => now - event.timestamp <= 10 * 60 * 1000)
+    .sort((a, b) => a.timestamp - b.timestamp);
+  let tabSwitches10m = 0;
+  let revisits10m = 0;
+  const seenAfterSwitch = new Set<string>();
+  for (let i = 1; i < recent10m.length; i += 1) {
+    const previous = recent10m[i - 1];
+    const current = recent10m[i];
+    if (!previous || !current) {
+      continue;
+    }
+    if (previous.domain !== current.domain) {
+      tabSwitches10m += 1;
+      if (seenAfterSwitch.has(current.domain)) {
+        revisits10m += 1;
+      }
+      seenAfterSwitch.add(previous.domain);
+      seenAfterSwitch.add(current.domain);
+    }
+  }
+  const activeMinutes10m = recent10m.reduce((acc, event) => acc + Math.max(0, event.activeMs) / 60_000, 0);
+
+  const domain7d = domainEvents14d
+    .filter((event) => event.domain === domain && now - event.timestamp <= 7 * 24 * 60 * 60 * 1000)
+    .sort((a, b) => a.timestamp - b.timestamp);
+  const gaps: number[] = [];
+  for (let i = 1; i < domain7d.length; i += 1) {
+    const gap = (domain7d[i]?.timestamp ?? 0) - (domain7d[i - 1]?.timestamp ?? 0);
+    if (gap > 0) {
+      gaps.push(gap);
+    }
+  }
+  const returnLatencyMs7d = median(gaps);
+  const activeValues = domain7d.map((event) => Math.max(0, event.activeMs));
+  const meanActive = activeValues.length
+    ? activeValues.reduce((acc, value) => acc + value, 0) / activeValues.length
+    : 0;
+  const variance = activeValues.length
+    ? activeValues.reduce((acc, value) => acc + (value - meanActive) * (value - meanActive), 0) / activeValues.length
+    : 0;
+  const std = Math.sqrt(Math.max(variance, 0));
+  const cv = meanActive > 0 ? std / meanActive : 1;
+  const signalStability7d = 1 - Math.min(1, cv);
+
+  return {
+    tabSwitches10m,
+    activeMinutes10m,
+    revisits10m,
+    returnLatencyMs7d,
+    signalStability7d
+  };
+}
+
+function median(values: number[]): number {
+  if (!values.length) {
+    return 0;
+  }
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 0) {
+    return ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2;
+  }
+  return sorted[mid] ?? 0;
+}
+
+function resolvePseudoLabel(probability: number): 0 | 1 | null {
+  if (!Number.isFinite(probability)) {
+    return null;
+  }
+  if (probability >= PSEUDO_POSITIVE_THRESHOLD) {
+    return 1;
+  }
+  if (probability <= PSEUDO_NEGATIVE_THRESHOLD) {
+    return 0;
+  }
+  return null;
+}
+
+function calculateHighConfidenceEce(samples: ValidationSample[], threshold: number): number {
+  const selected = samples.filter((sample) =>
+    sample.modelProbability >= threshold || sample.modelProbability <= 1 - threshold
+  );
+  if (!selected.length) {
+    return 0;
+  }
+  const buckets = 10;
+  let totalWeight = 0;
+  let weightedError = 0;
+  for (let bucket = 0; bucket < buckets; bucket += 1) {
+    const min = bucket / buckets;
+    const max = (bucket + 1) / buckets;
+    const bucketSamples = selected.filter((sample) =>
+      bucket === buckets - 1
+        ? sample.modelProbability >= min && sample.modelProbability <= max
+        : sample.modelProbability >= min && sample.modelProbability < max
+    );
+    if (!bucketSamples.length) {
+      continue;
+    }
+    const weight = bucketSamples.reduce((acc, sample) => acc + (sample.weight ?? 1), 0);
+    const avgProb = safeDivide(
+      bucketSamples.reduce((acc, sample) => acc + sample.modelProbability * (sample.weight ?? 1), 0),
+      weight
+    );
+    const avgTrue = safeDivide(
+      bucketSamples.reduce((acc, sample) => acc + sample.label * (sample.weight ?? 1), 0),
+      weight
+    );
+    weightedError += Math.abs(avgProb - avgTrue) * weight;
+    totalWeight += weight;
+  }
+  return safeDivide(weightedError, totalWeight);
+}
+
+function safeDivide(value: number, total: number): number {
+  if (!Number.isFinite(value) || !Number.isFinite(total) || total <= 0) {
+    return 0;
+  }
+  return value / total;
 }

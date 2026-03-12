@@ -42,7 +42,7 @@ const DEFAULT_DB_NAME = 'sg-ml-training';
 const DEFAULT_EXAMPLES_STORE = 'examples';
 const DEFAULT_BEHAVIOR_STORE = 'behavior';
 const DEFAULT_META_STORE = 'meta';
-const DEFAULT_VERSION = 1;
+const DEFAULT_VERSION = 2;
 
 /**
  * Stores trainable examples, holdout examples, behavior events and metadata in IndexedDB.
@@ -67,7 +67,6 @@ export class MlTrainingStore {
     example: Omit<StoredTrainingExample, 'id' | 'isHoldout'>,
     options: AddTrainingOptions
   ): Promise<void> {
-    const db = await this.open();
     await this.pruneExamples(Date.now() - options.retentionMs);
 
     const [totalSeen, holdoutCount, count] = await Promise.all([
@@ -77,7 +76,7 @@ export class MlTrainingStore {
     ]);
 
     const seen = (totalSeen ?? 0) + 1;
-    const canUseHoldout = holdoutCount < options.maxHoldout;
+    const canUseHoldout = example.source === 'explicit' && holdoutCount < options.maxHoldout;
     const isHoldout = canUseHoldout && Math.random() < options.holdoutRatio;
     const next: StoredTrainingExample = {
       ...example,
@@ -113,6 +112,75 @@ export class MlTrainingStore {
     });
   }
 
+  async getRecentExamples(limit = 5000): Promise<StoredTrainingExample[]> {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.examplesStore, 'readonly');
+      const store = tx.objectStore(this.examplesStore);
+      const request = store.getAll();
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const entries = (request.result as StoredTrainingExample[])
+          .sort((a, b) => b.createdAt - a.createdAt)
+          .slice(0, limit);
+        resolve(entries);
+      };
+    });
+  }
+
+  async getRecentExplicitExamplesByDomain(
+    domain: string,
+    sinceTimestamp: number,
+    limit = 200
+  ): Promise<StoredTrainingExample[]> {
+    const normalizedDomain = (domain ?? '').trim().toLowerCase();
+    const safeSince = Number.isFinite(sinceTimestamp) ? Math.max(0, sinceTimestamp) : 0;
+    const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
+    if (!normalizedDomain || safeLimit <= 0) {
+      return [];
+    }
+
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.examplesStore, 'readonly');
+      const store = tx.objectStore(this.examplesStore);
+
+      if (!store.indexNames.contains('domainCreatedAt')) {
+        const request = store.getAll();
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          const entries = (request.result as StoredTrainingExample[])
+            .filter((entry) => isExplicitExample(entry, normalizedDomain, safeSince))
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .slice(0, safeLimit);
+          resolve(entries);
+        };
+        return;
+      }
+
+      const index = store.index('domainCreatedAt');
+      const range = IDBKeyRange.bound(
+        [normalizedDomain, safeSince],
+        [normalizedDomain, Number.MAX_SAFE_INTEGER]
+      );
+      const entries: StoredTrainingExample[] = [];
+      const request = index.openCursor(range, 'prev');
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (!cursor || entries.length >= safeLimit) {
+          resolve(entries);
+          return;
+        }
+        const row = cursor.value as StoredTrainingExample;
+        if (row.source === 'explicit') {
+          entries.push(row);
+        }
+        cursor.continue();
+      };
+    });
+  }
+
   async recordBehaviorEvent(event: DomainBehaviorEvent): Promise<void> {
     const db = await this.open();
     const payload = {
@@ -135,6 +203,32 @@ export class MlTrainingStore {
       const store = tx.objectStore(this.behaviorStore);
       const index = store.index('domainTimestamp');
       const range = IDBKeyRange.bound([domain, sinceTimestamp], [domain, Number.MAX_SAFE_INTEGER]);
+      const request = index.getAll(range);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const rows = (request.result as Array<DomainBehaviorEvent & { createdAt: number }>) ?? [];
+        resolve(rows.map((entry) => ({
+          domain: entry.domain,
+          timestamp: entry.timestamp,
+          activeMs: entry.activeMs,
+          interactionCount: entry.interactionCount,
+          hasFeedLayout: entry.hasFeedLayout,
+          hasAutoplayMedia: entry.hasAutoplayMedia,
+          hasShortsPattern: entry.hasShortsPattern,
+          audible: entry.audible,
+          outOfSchedule: entry.outOfSchedule
+        })));
+      };
+    });
+  }
+
+  async getBehaviorEventsSince(sinceTimestamp: number): Promise<DomainBehaviorEvent[]> {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.behaviorStore, 'readonly');
+      const store = tx.objectStore(this.behaviorStore);
+      const index = store.index('timestamp');
+      const range = IDBKeyRange.bound(sinceTimestamp, Number.MAX_SAFE_INTEGER);
       const request = index.getAll(range);
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
@@ -276,24 +370,36 @@ export class MlTrainingStore {
       request.onerror = () => reject(request.error);
       request.onupgradeneeded = () => {
         const db = request.result;
+        const upgradeTx = request.transaction;
 
+        let examples: IDBObjectStore | null = null;
         if (!db.objectStoreNames.contains(this.examplesStore)) {
-          const examples = db.createObjectStore(this.examplesStore, {
+          examples = db.createObjectStore(this.examplesStore, {
             keyPath: 'id',
             autoIncrement: true
           });
-          examples.createIndex('createdAt', 'createdAt', { unique: false });
-          examples.createIndex('isHoldout', 'isHoldout', { unique: false });
-          examples.createIndex('source', 'source', { unique: false });
+        } else if (upgradeTx) {
+          examples = upgradeTx.objectStore(this.examplesStore);
+        }
+        if (examples) {
+          ensureIndex(examples, 'createdAt', 'createdAt');
+          ensureIndex(examples, 'isHoldout', 'isHoldout');
+          ensureIndex(examples, 'source', 'source');
+          ensureIndex(examples, 'domainCreatedAt', ['domain', 'createdAt']);
         }
 
+        let behavior: IDBObjectStore | null = null;
         if (!db.objectStoreNames.contains(this.behaviorStore)) {
-          const behavior = db.createObjectStore(this.behaviorStore, {
+          behavior = db.createObjectStore(this.behaviorStore, {
             keyPath: 'id',
             autoIncrement: true
           });
-          behavior.createIndex('timestamp', 'timestamp', { unique: false });
-          behavior.createIndex('domainTimestamp', ['domain', 'timestamp'], { unique: false });
+        } else if (upgradeTx) {
+          behavior = upgradeTx.objectStore(this.behaviorStore);
+        }
+        if (behavior) {
+          ensureIndex(behavior, 'timestamp', 'timestamp');
+          ensureIndex(behavior, 'domainTimestamp', ['domain', 'timestamp']);
         }
 
         if (!db.objectStoreNames.contains(this.metaStore)) {
@@ -338,4 +444,36 @@ function isHoldoutEntry(entry: StoredTrainingExample | null | undefined): boolea
   }
   const value = (entry as { isHoldout?: unknown }).isHoldout;
   return value === true || value === 1 || value === '1';
+}
+
+function isExplicitExample(
+  entry: StoredTrainingExample | null | undefined,
+  normalizedDomain: string,
+  sinceTimestamp: number
+): boolean {
+  if (!entry || typeof entry !== 'object') {
+    return false;
+  }
+  if (entry.source !== 'explicit') {
+    return false;
+  }
+  if (!entry.domain || entry.domain.trim().toLowerCase() !== normalizedDomain) {
+    return false;
+  }
+  if (!Number.isFinite(entry.createdAt)) {
+    return false;
+  }
+  return entry.createdAt >= sinceTimestamp;
+}
+
+function ensureIndex(
+  store: IDBObjectStore,
+  name: string,
+  keyPath: string | string[],
+  options: IDBIndexParameters = { unique: false }
+): void {
+  if (store.indexNames.contains(name)) {
+    return;
+  }
+  store.createIndex(name, keyPath, options);
 }

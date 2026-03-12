@@ -54,6 +54,10 @@ const mlPrecisionProductiveEl = document.getElementById('mlPrecisionProductive')
 const mlDeltaMacroF1El = document.getElementById('mlDeltaMacroF1') as HTMLElement | null;
 const mlMcnemarPEl = document.getElementById('mlMcnemarP') as HTMLElement | null;
 const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
+const mlTopConceptsCoverageEl = document.getElementById('mlTopConceptsCoverage') as HTMLElement | null;
+const mlPseudoAcceptanceEl = document.getElementById('mlPseudoAcceptance') as HTMLElement | null;
+const mlDriftAlertEl = document.getElementById('mlDriftAlert') as HTMLElement | null;
+const mlHighConfidenceEceEl = document.getElementById('mlHighConfidenceEce') as HTMLElement | null;
 const storyListEl = document.getElementById('storyList') as HTMLUListElement;
 const timelineListEl = document.getElementById('timelineList') as HTMLOListElement;
 const timelineStartHourInput = document.getElementById('timelineStartHour') as HTMLInputElement;
@@ -1650,7 +1654,11 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     !mlPrecisionProductiveEl ||
     !mlDeltaMacroF1El ||
     !mlMcnemarPEl ||
-    !mlCalibrationEceEl
+    !mlCalibrationEceEl ||
+    !mlTopConceptsCoverageEl ||
+    !mlPseudoAcceptanceEl ||
+    !mlDriftAlertEl ||
+    !mlHighConfidenceEceEl
   ) {
     return;
   }
@@ -1674,6 +1682,10 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
     mlDeltaMacroF1El.textContent = '--';
     mlMcnemarPEl.textContent = '--';
     mlCalibrationEceEl.textContent = '--';
+    mlTopConceptsCoverageEl.textContent = '--';
+    mlPseudoAcceptanceEl.textContent = '--';
+    mlDriftAlertEl.textContent = '--';
+    mlHighConfidenceEceEl.textContent = '--';
     return;
   }
 
@@ -1705,6 +1717,19 @@ function renderMlSummary(status: MlModelStatus | null, localeValue: string): voi
   mlMcnemarPEl.textContent = Number.isFinite(mcnemarP) ? (mcnemarP as number).toFixed(4) : '--';
   const ece = status.ece ?? status.calibration?.ece;
   mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
+  const coverage = status.signalHealth?.topConceptsCoverage;
+  mlTopConceptsCoverageEl.textContent = Number.isFinite(coverage)
+    ? `${((coverage as number) * 100).toFixed(1)}%`
+    : '--';
+  const pseudoAcceptance = status.signalHealth?.pseudoLabelAcceptedRate;
+  mlPseudoAcceptanceEl.textContent = Number.isFinite(pseudoAcceptance)
+    ? `${((pseudoAcceptance as number) * 100).toFixed(1)}%`
+    : '--';
+  mlDriftAlertEl.textContent = status.signalHealth?.driftAlert ? 'YES' : 'NO';
+  const highConfidenceEce = status.signalHealth?.highConfidenceEce ?? status.validation?.highConfidenceEce;
+  mlHighConfidenceEceEl.textContent = Number.isFinite(highConfidenceEce)
+    ? (highConfidenceEce as number).toFixed(3)
+    : '--';
   if (status.lastUpdated > 0) {
     mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(localeValue || 'pt-BR');
   } else {

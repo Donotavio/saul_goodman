@@ -64,9 +64,10 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 
 2. **Sugestões automáticas de domínio**
    - Content script coleta metadados e sinais leves.
-   - Background usa modelo ML local único (`WideDeepLiteBinary`) para sugerir categoria.
+   - Background usa modelo ML local único (`WideDeepLiteBinary`) para sugerir categoria, com camada de sinais naturais semânticos/comportamentais.
    - Probabilidade é calibrada localmente e validada por gate estatístico (macro-F1, FPR, precisão, ECE/Brier, bootstrap e McNemar).
-   - Usuário aceita/ignora; feedback atualiza o modelo.
+   - Auto-treino conservador promove pseudo-rótulos apenas em alta confiança e estabilidade temporal.
+   - Usuário aceita/ignora; feedback explícito atualiza o modelo e pode acionar quarentena anti-drift.
 
 3. **Integração VS Code (opcional)**
    - Extensão VS Code envia heartbeats para o daemon.
@@ -82,6 +83,7 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 
 - **Local‑first**: métricas e modelos ficam no dispositivo do usuário.
 - **Modelo único de sugestão**: estado persistido `single-neural-lite-v3` sem manter payload legado de versões antigas.
+- **Sinais naturais por padrão**: explicações no UI priorizam conceitos humanos (intenção/atenção/progresso/contexto).
 - **Sem bundler**: TypeScript compila direto para `dist/`, HTML referencia módulos gerados.
 - **Bloqueio local**: usa `declarativeNetRequest` para redirecionar domínios procrastinatórios.
 - **Integração opcional**: daemon e VS Code são complementares e não obrigatórios.

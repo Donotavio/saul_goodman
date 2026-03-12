@@ -5,6 +5,7 @@ import type {
   ValidationBaselineSnapshot,
   ValidationSummary
 } from './validationGate.js';
+import type { NaturalSignalStatsState } from './naturalSignals.js';
 
 export interface LegacyStoredModelState {
   version: number;
@@ -54,6 +55,10 @@ export interface StoredModelStateV3 {
   guardrailStage: 'guarded' | 'normal';
   validationBaseline?: ValidationBaselineSnapshot | null;
   validation?: ValidationSummary | null;
+  naturalSignalStats?: NaturalSignalStatsState;
+  pseudoLabelAttempts?: number;
+  pseudoLabelAccepted?: number;
+  highConfidenceEce?: number;
   totalUpdates: number;
   explicitUpdates: number;
   implicitUpdates: number;

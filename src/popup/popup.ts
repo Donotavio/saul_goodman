@@ -93,6 +93,10 @@ const mlPrecisionProductiveEl = document.getElementById('mlPrecisionProductive')
 const mlDeltaMacroF1El = document.getElementById('mlDeltaMacroF1') as HTMLElement | null;
 const mlMcnemarPEl = document.getElementById('mlMcnemarP') as HTMLElement | null;
 const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
+const mlTopConceptsCoverageEl = document.getElementById('mlTopConceptsCoverage') as HTMLElement | null;
+const mlPseudoAcceptanceEl = document.getElementById('mlPseudoAcceptance') as HTMLElement | null;
+const mlDriftAlertEl = document.getElementById('mlDriftAlert') as HTMLElement | null;
+const mlHighConfidenceEceEl = document.getElementById('mlHighConfidenceEce') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -536,6 +540,10 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
     if (mlDeltaMacroF1El) mlDeltaMacroF1El.textContent = '--';
     if (mlMcnemarPEl) mlMcnemarPEl.textContent = '--';
     if (mlCalibrationEceEl) mlCalibrationEceEl.textContent = '--';
+    if (mlTopConceptsCoverageEl) mlTopConceptsCoverageEl.textContent = '--';
+    if (mlPseudoAcceptanceEl) mlPseudoAcceptanceEl.textContent = '--';
+    if (mlDriftAlertEl) mlDriftAlertEl.textContent = '--';
+    if (mlHighConfidenceEceEl) mlHighConfidenceEceEl.textContent = '--';
     return;
   }
 
@@ -576,6 +584,21 @@ function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): 
   if (mlCalibrationEceEl) {
     const ece = status.ece ?? status.calibration?.ece;
     mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
+  }
+  if (mlTopConceptsCoverageEl) {
+    const value = status.signalHealth?.topConceptsCoverage;
+    mlTopConceptsCoverageEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
+  }
+  if (mlPseudoAcceptanceEl) {
+    const value = status.signalHealth?.pseudoLabelAcceptedRate;
+    mlPseudoAcceptanceEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
+  }
+  if (mlDriftAlertEl) {
+    mlDriftAlertEl.textContent = status.signalHealth?.driftAlert ? 'YES' : 'NO';
+  }
+  if (mlHighConfidenceEceEl) {
+    const value = status.signalHealth?.highConfidenceEce ?? status.validation?.highConfidenceEce;
+    mlHighConfidenceEceEl.textContent = Number.isFinite(value) ? (value as number).toFixed(3) : '--';
   }
 }
 

@@ -53,7 +53,9 @@ Campos relevantes em `ExtensionSettings`:
 
 - Modelo único: `WideDeepLiteBinary` (wide + deep leve) com treino online local.
 - Vetorização: `FeatureVectorizer` com hashing esparso (131.072 dimensões).
+- Camada de sinais naturais: semântica de intenção + sinais contínuos de atenção, engajamento, progresso de tarefa, contexto e confiabilidade.
 - Calibração: Platt scaling em holdout local.
+- Auto-treino conservador: pseudo-rótulos de alta confiança com estabilidade temporal, limite diário e quarentena após contradição explícita.
 - Guardrail:
   - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
   - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após passar no gate estatístico.

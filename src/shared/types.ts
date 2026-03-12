@@ -137,6 +137,7 @@ export interface ExtensionSettings {
   inactivityThresholdMs: number;
   enableAutoClassification?: boolean;
   enableAISuggestions?: boolean;
+  mlReasonDebugMode?: boolean;
   suggestionCooldownMs?: number;
   suggestionsHistory?: Record<string, SuggestionHistoryEntry>;
   locale: SupportedLocale;
@@ -305,12 +306,20 @@ export interface MlModelValidationStatus {
   precisionProductive: number;
   falseProductiveRate: number;
   ece: number;
+  highConfidenceEce?: number;
   brier: number;
   deltaMacroF1: number;
   deltaMacroF1CiLower: number;
   deltaMacroF1CiUpper: number;
   mcnemarPValue: number;
   gatePassed: boolean;
+}
+
+export interface MlSignalHealthStatus {
+  topConceptsCoverage: number;
+  pseudoLabelAcceptedRate: number;
+  driftAlert: boolean;
+  highConfidenceEce: number;
 }
 
 export interface MlModelStatus {
@@ -335,6 +344,7 @@ export interface MlModelStatus {
   deltaMacroF1?: number;
   mcnemarPValue?: number;
   ece?: number;
+  signalHealth?: MlSignalHealthStatus;
   explicitUpdates?: number;
   implicitUpdates?: number;
 }
@@ -377,8 +387,12 @@ export interface SuggestionReasonStructured {
   evidence: string;
   direction: DomainCategory;
   impact: 'light' | 'medium' | 'strong';
-  source: 'content' | 'behavior' | 'heuristic' | 'model';
+  source: 'content' | 'behavior' | 'heuristic' | 'model' | 'natural';
   counter?: boolean;
+  conceptKey?: string;
+  conceptLabel?: string;
+  evidenceType?: 'intent' | 'attention' | 'engagement' | 'task_progress' | 'context' | 'reliability';
+  technicalEvidence?: string;
 }
 
 export interface SuggestionHistoryEntry {

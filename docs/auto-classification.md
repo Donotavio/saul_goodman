@@ -20,8 +20,22 @@ O content script envia apenas metadados e sinais leves:
 - Flags de layout: vídeo, scroll infinito, autoplay, feed, formulário, editor rico, tabela grande, shorts/reels.
 - Contadores: links externos, profundidade de scroll, interações, tempo ativo na página.
 - `language` do documento.
+- Sinais de contexto recente do usuário (atenção, continuidade e fragmentação de foco) derivados localmente.
+- Sinais de integração com VS Code em janela curta (quando a integração está ativa e consentida).
 
 Nada é enviado para a rede.
+
+### Camada de sinais naturais (v3+)
+
+- Os sinais passam por uma camada `raw -> semantic signals -> model features`.
+- Features contínuas usam normalização local com winsorização (`p1/p99`), `log1p` e padronização por histórico.
+- Famílias semânticas principais:
+  - `intent`: `work_legal`, `work_knowledge`, `collaboration`, `admin_ops`, `social_entertainment`, `commerce`.
+  - `attention`: continuidade de foco, taxa de troca, latência de retorno e fragmentação.
+  - `engagement`: dwell time, interação, scroll e razão de áudio.
+  - `task_progress`: edição, progresso em formulário e proxy de conclusão.
+  - `context`: aderência ao horário e share de atividade VS Code/web.
+  - `reliability`: qualidade de metadados e estabilidade dos sinais.
 
 ## Modelo de sugestões
 
@@ -33,6 +47,7 @@ Nada é enviado para a rede.
 - **Persistência**: IndexedDB `sg-ml-models` + metadados em `chrome.storage.local` (`sg:ml-model-meta`).
 - **Calibração**: Platt scaling sobre score bruto do modelo.
 - **Validação**: gate estatístico local com macro-F1, `falseProductiveRate`, `precisionProductive`, ECE, Brier, bootstrap CI e McNemar.
+- **Auto-treino conservador**: pseudo-rótulos apenas em alta confiança (`>=0.93` / `<=0.07`), estabilidade temporal e proteção anti-drift.
 - **Guardrail stage**:
   - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
   - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após aprovação do gate.
@@ -61,3 +76,4 @@ Classificação por probabilidade:
 - O toggle **“Sugestões por IA”** está desabilitado na UI (placeholder).
 - O aprendizado é totalmente local; não há chamadas externas.
 - O estado persistido é único (`single-neural-lite-v3`), sem armazenar payload legado de modelos anteriores.
+- Razões exibidas no popup/report priorizam conceitos naturais (não buckets técnicos), com evidência técnica apenas em modo debug.
