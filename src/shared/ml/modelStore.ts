@@ -1,12 +1,33 @@
 import type { CalibrationState as LegacyCalibrationState } from './plattScaler.js';
 import type { TemperatureCalibrationState } from './temperatureScaler.js';
-import type { RolloutState, ShadowMetrics } from './rollout.js';
 import type { WideDeepLiteState } from './wideDeepLite.js';
 import type {
   ValidationBaselineSnapshot,
   ValidationSummary
 } from './validationGate.js';
 import type { NaturalSignalStatsState } from './naturalSignals.js';
+
+export interface LegacyBinaryConfusion {
+  tp: number;
+  fp: number;
+  tn: number;
+  fn: number;
+}
+
+export interface LegacyShadowMetrics {
+  explicitCount: number;
+  v1: LegacyBinaryConfusion;
+  v2: LegacyBinaryConfusion;
+  lastUpdated: number;
+}
+
+export interface LegacyRolloutState {
+  stage: 'shadow' | 'ab10' | 'ab50' | 'full';
+  installBucket: number;
+  shadowStartedAt: number;
+  stageStartedAt: number;
+  lastGateEvaluationAt: number;
+}
 
 export interface LegacyStoredModelState {
   version: number;
@@ -37,8 +58,8 @@ export interface StoredModelStateV2 {
   v2: FtrlStoredState;
   v2FeatureCounts: number[];
   calibration: LegacyCalibrationState;
-  rollout: RolloutState;
-  shadow: ShadowMetrics;
+  rollout: LegacyRolloutState;
+  shadow: LegacyShadowMetrics;
   totalUpdates: number;
   explicitUpdates: number;
   implicitUpdates: number;

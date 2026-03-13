@@ -533,7 +533,7 @@ function matchesSplit(
   return true;
 }
 
-function resolveStoredSplit(entry: StoredTrainingExample | null | undefined): TrainingSplit {
+export function resolveStoredSplit(entry: StoredTrainingExample | null | undefined): TrainingSplit {
   if (entry?.split === 'train' || entry?.split === 'calibration' || entry?.split === 'test') {
     return entry.split;
   }
