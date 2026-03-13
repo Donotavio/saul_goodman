@@ -181,6 +181,7 @@ export interface RuntimeMessageResponse {
   settings?: ExtensionSettings;
   fairness?: FairnessSummary;
   suggestions?: DomainSuggestion[];
+  reviewCandidates?: MlReviewCandidate[];
   activeSuggestion?: DomainSuggestion | null;
   mlModel?: MlModelStatus | null;
 }
@@ -193,6 +194,7 @@ export type RuntimeMessageType =
   | 'release-notes'
   | 'apply-suggestion'
   | 'ignore-suggestion'
+  | 'record-explicit-feedback'
   | 'open-extension-page';
 
 export interface PopupData {
@@ -200,6 +202,7 @@ export interface PopupData {
   settings: ExtensionSettings;
   fairness?: FairnessSummary;
   suggestions?: DomainSuggestion[];
+  reviewCandidates?: MlReviewCandidate[];
   activeSuggestion?: DomainSuggestion | null;
   mlModel?: MlModelStatus | null;
 }
@@ -293,11 +296,11 @@ export interface DomainMetadata {
 export type MlGuardrailStage = 'guarded' | 'normal';
 
 export interface MlCalibrationStatus {
-  a: number;
-  b: number;
+  method: 'temperature';
+  temperature: number;
   ece: number;
   fittedAt: number;
-  holdoutSize: number;
+  sampleSize: number;
 }
 
 export interface MlModelValidationStatus {
@@ -380,6 +383,19 @@ export interface DomainSuggestion {
   timestamp: number;
   learningTokens?: string[];
   reasonsStructured?: SuggestionReasonStructured[];
+}
+
+export type MlQueueReason = 'threshold_borderline' | 'uncertainty_sampling';
+
+export interface MlReviewCandidate {
+  domain: string;
+  suggestedClassification: DomainCategory;
+  probability: number;
+  uncertainty: number;
+  confidence: number;
+  reasons: string[];
+  timestamp: number;
+  queueReason: MlQueueReason;
 }
 
 export interface SuggestionReasonStructured {

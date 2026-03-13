@@ -1,6 +1,7 @@
 import type { DomainBehaviorEvent } from './behaviorSignals.js';
 
 export type TrainingSource = 'explicit' | 'implicit';
+export type TrainingSplit = 'train' | 'calibration' | 'test';
 
 export interface SerializedSparseVector {
   indices: number[];
@@ -12,15 +13,21 @@ export interface StoredTrainingExample {
   createdAt: number;
   domain: string;
   source: TrainingSource;
+  split: TrainingSplit;
   label: 0 | 1;
   weight: number;
-  isHoldout: boolean;
   vector: SerializedSparseVector;
+  featureNames?: string[];
   baselinePrediction?: 0 | 1;
   baselineScore?: number;
+  naturalPrediction?: 0 | 1;
+  naturalProbability?: number;
+  naturalSelfPrediction?: 0 | 1;
+  naturalSelfProbability?: number;
   v1Prediction?: 0 | 1;
   v2Prediction?: 0 | 1;
   v2Score?: number;
+  isHoldout?: boolean;
 }
 
 export interface TrainingStoreConfig {
@@ -34,18 +41,20 @@ export interface TrainingStoreConfig {
 export interface AddTrainingOptions {
   maxExamples: number;
   retentionMs: number;
-  holdoutRatio: number;
-  maxHoldout: number;
 }
 
 const DEFAULT_DB_NAME = 'sg-ml-training';
 const DEFAULT_EXAMPLES_STORE = 'examples';
 const DEFAULT_BEHAVIOR_STORE = 'behavior';
 const DEFAULT_META_STORE = 'meta';
-const DEFAULT_VERSION = 2;
+const DEFAULT_VERSION = 3;
+
+const TRAIN_SPLIT_THRESHOLD = 70;
+const CALIBRATION_SPLIT_THRESHOLD = 85;
+const MAX_CURSOR_TIMESTAMP = Number.MAX_SAFE_INTEGER;
 
 /**
- * Stores trainable examples, holdout examples, behavior events and metadata in IndexedDB.
+ * Stores trainable examples, calibration/test splits, behavior events and metadata in IndexedDB.
  */
 export class MlTrainingStore {
   private readonly dbName: string;
@@ -64,23 +73,20 @@ export class MlTrainingStore {
   }
 
   async addTrainingExample(
-    example: Omit<StoredTrainingExample, 'id' | 'isHoldout'>,
+    example: Omit<StoredTrainingExample, 'id' | 'split'>,
     options: AddTrainingOptions
   ): Promise<void> {
     await this.pruneExamples(Date.now() - options.retentionMs);
 
-    const [totalSeen, holdoutCount, count] = await Promise.all([
+    const [totalSeen, count] = await Promise.all([
       this.getMeta<number>('examples:totalSeen'),
-      this.countHoldout(),
       this.countExamples()
     ]);
 
     const seen = (totalSeen ?? 0) + 1;
-    const canUseHoldout = example.source === 'explicit' && holdoutCount < options.maxHoldout;
-    const isHoldout = canUseHoldout && Math.random() < options.holdoutRatio;
     const next: StoredTrainingExample = {
       ...example,
-      isHoldout
+      split: determineSplit(example)
     };
 
     if (count < options.maxExamples) {
@@ -95,19 +101,40 @@ export class MlTrainingStore {
     await this.setMeta('examples:totalSeen', seen);
   }
 
-  async getHoldoutExamples(limit = 2000): Promise<StoredTrainingExample[]> {
+  async getCalibrationExamples(limit = 2000): Promise<StoredTrainingExample[]> {
+    return this.getExamplesBySplit('calibration', limit);
+  }
+
+  async getTestExamples(limit = 2000): Promise<StoredTrainingExample[]> {
+    return this.getExamplesBySplit('test', limit);
+  }
+
+  async countSplitExamples(split: TrainingSplit, source?: TrainingSource): Promise<number> {
     const db = await this.open();
     return new Promise((resolve, reject) => {
       const tx = db.transaction(this.examplesStore, 'readonly');
       const store = tx.objectStore(this.examplesStore);
+      if (source && store.indexNames.contains('splitSourceCreatedAt')) {
+        const range = IDBKeyRange.bound(
+          [split, source, 0],
+          [split, source, MAX_CURSOR_TIMESTAMP]
+        );
+        const request = store.index('splitSourceCreatedAt').count(range);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result ?? 0);
+        return;
+      }
+      if (store.indexNames.contains('split')) {
+        const request = store.index('split').count(split);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result ?? 0);
+        return;
+      }
       const request = store.getAll();
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const entries = (request.result as StoredTrainingExample[])
-          .filter((entry) => isHoldoutEntry(entry))
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .slice(0, limit);
-        resolve(entries);
+        const entries = (request.result as StoredTrainingExample[]) ?? [];
+        resolve(entries.filter((entry) => matchesSplit(entry, split, source)).length);
       };
     });
   }
@@ -161,7 +188,7 @@ export class MlTrainingStore {
       const index = store.index('domainCreatedAt');
       const range = IDBKeyRange.bound(
         [normalizedDomain, safeSince],
-        [normalizedDomain, Number.MAX_SAFE_INTEGER]
+        [normalizedDomain, MAX_CURSOR_TIMESTAMP]
       );
       const entries: StoredTrainingExample[] = [];
       const request = index.openCursor(range, 'prev');
@@ -202,7 +229,7 @@ export class MlTrainingStore {
       const tx = db.transaction(this.behaviorStore, 'readonly');
       const store = tx.objectStore(this.behaviorStore);
       const index = store.index('domainTimestamp');
-      const range = IDBKeyRange.bound([domain, sinceTimestamp], [domain, Number.MAX_SAFE_INTEGER]);
+      const range = IDBKeyRange.bound([domain, sinceTimestamp], [domain, MAX_CURSOR_TIMESTAMP]);
       const request = index.getAll(range);
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
@@ -228,7 +255,7 @@ export class MlTrainingStore {
       const tx = db.transaction(this.behaviorStore, 'readonly');
       const store = tx.objectStore(this.behaviorStore);
       const index = store.index('timestamp');
-      const range = IDBKeyRange.bound(sinceTimestamp, Number.MAX_SAFE_INTEGER);
+      const range = IDBKeyRange.bound(sinceTimestamp, MAX_CURSOR_TIMESTAMP);
       const request = index.getAll(range);
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
@@ -294,23 +321,50 @@ export class MlTrainingStore {
     });
   }
 
-  private async countHoldout(): Promise<number> {
+  private async getExamplesBySplit(
+    split: TrainingSplit,
+    limit: number,
+    source?: TrainingSource
+  ): Promise<StoredTrainingExample[]> {
     const db = await this.open();
     return new Promise((resolve, reject) => {
       const tx = db.transaction(this.examplesStore, 'readonly');
       const store = tx.objectStore(this.examplesStore);
-      const request = store.openCursor();
-      let total = 0;
+      const entries: StoredTrainingExample[] = [];
+
+      const indexName = source && store.indexNames.contains('splitSourceCreatedAt')
+        ? 'splitSourceCreatedAt'
+        : store.indexNames.contains('splitCreatedAt')
+          ? 'splitCreatedAt'
+          : null;
+      if (!indexName) {
+        const request = store.getAll();
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          const all = (request.result as StoredTrainingExample[]) ?? [];
+          resolve(
+            all
+              .filter((entry) => matchesSplit(entry, split, source))
+              .sort((a, b) => b.createdAt - a.createdAt)
+              .slice(0, limit)
+          );
+        };
+        return;
+      }
+
+      const index = store.index(indexName);
+      const range = source
+        ? IDBKeyRange.bound([split, source, 0], [split, source, MAX_CURSOR_TIMESTAMP])
+        : IDBKeyRange.bound([split, 0], [split, MAX_CURSOR_TIMESTAMP]);
+      const request = index.openCursor(range, 'prev');
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
         const cursor = request.result;
-        if (!cursor) {
-          resolve(total);
+        if (!cursor || entries.length >= limit) {
+          resolve(entries);
           return;
         }
-        if (isHoldoutEntry(cursor.value as StoredTrainingExample)) {
-          total += 1;
-        }
+        entries.push(cursor.value as StoredTrainingExample);
         cursor.continue();
       };
     });
@@ -368,7 +422,7 @@ export class MlTrainingStore {
     this.dbPromise = new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.version);
       request.onerror = () => reject(request.error);
-      request.onupgradeneeded = () => {
+      request.onupgradeneeded = (event) => {
         const db = request.result;
         const upgradeTx = request.transaction;
 
@@ -383,9 +437,14 @@ export class MlTrainingStore {
         }
         if (examples) {
           ensureIndex(examples, 'createdAt', 'createdAt');
-          ensureIndex(examples, 'isHoldout', 'isHoldout');
           ensureIndex(examples, 'source', 'source');
+          ensureIndex(examples, 'split', 'split');
+          ensureIndex(examples, 'splitCreatedAt', ['split', 'createdAt']);
+          ensureIndex(examples, 'splitSourceCreatedAt', ['split', 'source', 'createdAt']);
           ensureIndex(examples, 'domainCreatedAt', ['domain', 'createdAt']);
+          if (event.oldVersion < 3) {
+            migrateLegacyExamples(examples);
+          }
         }
 
         let behavior: IDBObjectStore | null = null;
@@ -436,6 +495,84 @@ async function deleteByIndexRange(
       deleteRequest.onsuccess = () => cursor.continue();
     };
   });
+}
+
+function determineSplit(example: Omit<StoredTrainingExample, 'id' | 'split'>): TrainingSplit {
+  if (example.source === 'implicit') {
+    return 'train';
+  }
+  const bucket = hashToPercent([
+    normalizeForHash(example.domain),
+    String(Math.max(0, Math.floor(example.createdAt))),
+    String(example.label),
+    example.source
+  ].join('|'));
+  if (bucket < TRAIN_SPLIT_THRESHOLD) {
+    return 'train';
+  }
+  if (bucket < CALIBRATION_SPLIT_THRESHOLD) {
+    return 'calibration';
+  }
+  return 'test';
+}
+
+function matchesSplit(
+  entry: StoredTrainingExample | null | undefined,
+  split: TrainingSplit,
+  source?: TrainingSource
+): boolean {
+  if (!entry || typeof entry !== 'object') {
+    return false;
+  }
+  if (resolveStoredSplit(entry) !== split) {
+    return false;
+  }
+  if (source && entry.source !== source) {
+    return false;
+  }
+  return true;
+}
+
+function resolveStoredSplit(entry: StoredTrainingExample | null | undefined): TrainingSplit {
+  if (entry?.split === 'train' || entry?.split === 'calibration' || entry?.split === 'test') {
+    return entry.split;
+  }
+  return isHoldoutEntry(entry) ? 'calibration' : 'train';
+}
+
+function migrateLegacyExamples(store: IDBObjectStore): void {
+  const request = store.openCursor();
+  request.onsuccess = () => {
+    const cursor = request.result;
+    if (!cursor) {
+      return;
+    }
+    const row = cursor.value as StoredTrainingExample;
+    if (row.split === 'train' || row.split === 'calibration' || row.split === 'test') {
+      cursor.continue();
+      return;
+    }
+    const next: StoredTrainingExample = {
+      ...row,
+      split: resolveStoredSplit(row)
+    };
+    const updateRequest = cursor.update(next);
+    updateRequest.onsuccess = () => cursor.continue();
+    updateRequest.onerror = () => cursor.continue();
+  };
+}
+
+function hashToPercent(value: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) % 100;
+}
+
+function normalizeForHash(value: string): string {
+  return (value ?? '').trim().toLowerCase();
 }
 
 function isHoldoutEntry(entry: StoredTrainingExample | null | undefined): boolean {

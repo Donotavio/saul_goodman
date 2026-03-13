@@ -22,10 +22,11 @@ import {
   type LegacyStoredModelState,
   type StoredModelState,
   type StoredModelStateV2,
-  type StoredModelStateV3
+  type StoredModelStateV3,
+  type StoredModelStateV4
 } from '../shared/ml/modelStore.js';
 import { WideDeepLiteBinary, type WideDeepLiteInitState } from '../shared/ml/wideDeepLite.js';
-import { PlattScaler, type CalibrationSample } from '../shared/ml/plattScaler.js';
+import { TemperatureScaler, type CalibrationSample } from '../shared/ml/temperatureScaler.js';
 import { MlTrainingStore, type StoredTrainingExample } from '../shared/ml/trainingStore.js';
 import {
   type DomainBehaviorEvent,
@@ -49,6 +50,10 @@ import {
   type NaturalSignalComputationResult,
   type NaturalSignalStatsState
 } from '../shared/ml/naturalSignals.js';
+import {
+  buildVectorFeatureNames,
+  projectFeatureMap
+} from '../shared/ml/featureScenarios.js';
 
 const MODEL_META_KEY = 'sg:ml-model-meta';
 
@@ -68,8 +73,8 @@ const NORMAL_NEGATIVE_THRESHOLD = 0.3;
 
 const TRAIN_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const TRAIN_MAX_EXAMPLES = 25_000;
-const TRAIN_HOLDOUT_RATIO = 0.2;
-const TRAIN_MAX_HOLDOUT = 2_000;
+const TRAIN_MAX_CALIBRATION = 2_000;
+const TRAIN_MAX_TEST = 2_000;
 const EXPLICIT_SAMPLE_WEIGHT = 1.0;
 const PSEUDO_SAMPLE_WEIGHT = 0.1;
 const PSEUDO_POSITIVE_THRESHOLD = 0.93;
@@ -81,6 +86,7 @@ const PSEUDO_CONTRADICTION_QUARANTINE_MS = 14 * 24 * 60 * 60 * 1000;
 const PSEUDO_EXPLICIT_CONFLICT_LOOKBACK_MS = 30 * 24 * 60 * 60 * 1000;
 const HIGH_CONFIDENCE_ECE_THRESHOLD = 0.8;
 const IMPLICIT_BEHAVIOR_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
+const VALIDATION_MIN_SAMPLES = 50;
 
 interface ModelPrediction {
   probability: number;
@@ -120,17 +126,26 @@ interface FeatureBuildResult {
   natural: NaturalSignalComputationResult;
 }
 
+interface TrainingExampleContext {
+  featureNames?: string[];
+  naturalPrediction?: 0 | 1;
+  naturalProbability?: number;
+  naturalSelfPrediction?: 0 | 1;
+  naturalSelfProbability?: number;
+}
+
 export interface CachedMlSuggestion {
   suggestion: DomainSuggestion;
   probability: number;
   prediction: ModelPrediction;
+  trainingExampleContext: TrainingExampleContext;
 }
 
 interface MlContext {
   extractor: FeatureExtractor;
   model: WideDeepLiteBinary;
   vectorizer: FeatureVectorizer;
-  calibration: PlattScaler;
+  calibration: TemperatureScaler;
   guardrailStage: 'guarded' | 'normal';
   validationBaseline: ValidationBaselineSnapshot | null;
   validationSnapshot: ValidationSummary | null;
@@ -172,6 +187,11 @@ export class MlSuggestionEngine {
       featureBuild.descriptors,
       Boolean(settings.mlReasonDebugMode)
     );
+    const trainingExampleContext = this.buildTrainingExampleContext(
+      context,
+      featureBuild.features,
+      prediction.vector
+    );
     await this.appendPseudoHistory(context, normalizedDomain, prediction, now);
 
     const suggestion: DomainSuggestion = {
@@ -183,12 +203,20 @@ export class MlSuggestionEngine {
       timestamp: now
     };
 
-    await this.tryImplicitTraining(context, normalizedDomain, behavior.behavior, prediction, now);
+    await this.tryImplicitTraining(
+      context,
+      normalizedDomain,
+      behavior.behavior,
+      prediction,
+      trainingExampleContext,
+      now
+    );
 
     return {
       suggestion,
       probability: prediction.probability,
-      prediction
+      prediction,
+      trainingExampleContext
     };
   }
 
@@ -205,7 +233,13 @@ export class MlSuggestionEngine {
 
     const fallbackFeatures = context.extractor.extract({ hostname: domain });
     const fallbackPrediction = this.predict(context, fallbackFeatures, {}, false);
+    const fallbackTrainingExampleContext = this.buildTrainingExampleContext(
+      context,
+      fallbackFeatures,
+      fallbackPrediction.vector
+    );
     const prediction = cached?.prediction ?? fallbackPrediction;
+    const trainingExampleContext = cached?.trainingExampleContext ?? fallbackTrainingExampleContext;
 
     context.vectorizer.incrementCounts(prediction.vector.indices);
     const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
@@ -224,13 +258,12 @@ export class MlSuggestionEngine {
         EXPLICIT_SAMPLE_WEIGHT,
         prediction.vector,
         this.classToBinary(prediction.classification, prediction.probability),
-        prediction.rawScore
+        prediction.rawScore,
+        trainingExampleContext
       ),
       {
         maxExamples: TRAIN_MAX_EXAMPLES,
-        retentionMs: TRAIN_RETENTION_MS,
-        holdoutRatio: TRAIN_HOLDOUT_RATIO,
-        maxHoldout: TRAIN_MAX_HOLDOUT
+        retentionMs: TRAIN_RETENTION_MS
       }
     );
 
@@ -292,7 +325,7 @@ export class MlSuggestionEngine {
       const highConfidenceEce = context.highConfidenceEce || validation?.ece || calibrationState.ece;
 
       return {
-        version: 3,
+        version: 4,
         dimensions: MODEL_DIMENSIONS,
         totalUpdates: context.totalUpdates,
         explicitUpdates: context.explicitUpdates,
@@ -306,11 +339,11 @@ export class MlSuggestionEngine {
         guardrailStage: context.guardrailStage,
         thresholds,
         calibration: {
-          a: calibrationState.a,
-          b: calibrationState.b,
+          method: calibrationState.method,
+          temperature: calibrationState.temperature,
           ece: calibrationState.ece,
           fittedAt: calibrationState.fittedAt,
-          holdoutSize: calibrationState.holdoutSize
+          sampleSize: calibrationState.sampleSize
         },
         validation: validationPayload,
         falseProductiveRate: validation?.falseProductiveRate,
@@ -346,12 +379,14 @@ export class MlSuggestionEngine {
       try {
         stored = await store.load();
       } catch (error) {
-        console.warn('Falha ao carregar estado ML v3', error);
+        console.warn('Falha ao carregar estado ML v4', error);
       }
 
+      const storedV4 = extractV4State(stored);
       const storedV3 = extractV3State(stored);
       const storedV2 = extractV2State(stored);
       const legacyStored = extractLegacyState(stored);
+      const storedNeuralState = storedV4 ?? storedV3;
 
       const warmStart = deriveWideWarmStart(stored, MODEL_DIMENSIONS);
       const model = new WideDeepLiteBinary(
@@ -364,56 +399,54 @@ export class MlSuggestionEngine {
           l2: MODEL_L2,
           clipGradient: MODEL_CLIP_GRADIENT
         },
-        storedV3 ? toWideDeepInitState(storedV3) : {
+        storedNeuralState ? toWideDeepInitState(storedNeuralState) : {
           wideWeights: warmStart.wideWeights,
           wideBias: warmStart.wideBias,
           seed: 42
         }
       );
 
-      const vectorizerCounts = deriveFeatureCounts(storedV3, storedV2, legacyStored);
+      const vectorizerCounts = deriveFeatureCounts(storedV4, storedV3, storedV2, legacyStored);
       const vectorizer = new FeatureVectorizer(
         { dimensions: MODEL_DIMENSIONS, minFeatureCount: MODEL_MIN_FEATURE_COUNT },
         vectorizerCounts
       );
 
-      const calibration = new PlattScaler(
-        storedV3?.calibration ??
-          storedV2?.calibration ??
-          undefined
-      );
+      const calibration = new TemperatureScaler(storedV4?.calibration);
 
       const context: MlContext = {
         extractor: new FeatureExtractor(),
         model,
         vectorizer,
         calibration,
-        guardrailStage: storedV3?.guardrailStage ?? 'guarded',
-        validationBaseline: storedV3?.validationBaseline ?? null,
-        validationSnapshot: storedV3?.validation ?? null,
-        naturalSignalStats: normalizeNaturalSignalStats(storedV3?.naturalSignalStats),
+        guardrailStage: storedV4?.guardrailStage ?? storedV3?.guardrailStage ?? 'guarded',
+        validationBaseline: storedV4?.validationBaseline ?? storedV3?.validationBaseline ?? null,
+        validationSnapshot: storedV4?.validation ?? storedV3?.validation ?? null,
+        naturalSignalStats: normalizeNaturalSignalStats(storedV4?.naturalSignalStats ?? storedV3?.naturalSignalStats),
         store,
         trainingStore,
-        totalUpdates: storedV3?.totalUpdates ?? storedV2?.totalUpdates ?? legacyStored?.totalUpdates ?? 0,
-        explicitUpdates: storedV3?.explicitUpdates ?? storedV2?.explicitUpdates ?? 0,
-        implicitUpdates: storedV3?.implicitUpdates ?? storedV2?.implicitUpdates ?? 0,
-        pseudoLabelAttempts: storedV3?.pseudoLabelAttempts ?? 0,
-        pseudoLabelAccepted: storedV3?.pseudoLabelAccepted ?? 0,
-        highConfidenceEce: storedV3?.highConfidenceEce ?? 0,
-        lastUpdated: storedV3?.lastUpdated ?? storedV2?.lastUpdated ?? legacyStored?.lastUpdated ?? 0,
+        totalUpdates: storedV4?.totalUpdates ?? storedV3?.totalUpdates ?? storedV2?.totalUpdates ?? legacyStored?.totalUpdates ?? 0,
+        explicitUpdates: storedV4?.explicitUpdates ?? storedV3?.explicitUpdates ?? storedV2?.explicitUpdates ?? 0,
+        implicitUpdates: storedV4?.implicitUpdates ?? storedV3?.implicitUpdates ?? storedV2?.implicitUpdates ?? 0,
+        pseudoLabelAttempts: storedV4?.pseudoLabelAttempts ?? storedV3?.pseudoLabelAttempts ?? 0,
+        pseudoLabelAccepted: storedV4?.pseudoLabelAccepted ?? storedV3?.pseudoLabelAccepted ?? 0,
+        highConfidenceEce: storedV4?.highConfidenceEce ?? storedV3?.highConfidenceEce ?? 0,
+        lastUpdated: storedV4?.lastUpdated ?? storedV3?.lastUpdated ?? storedV2?.lastUpdated ?? legacyStored?.lastUpdated ?? 0,
         explicitSinceCalibration:
-          storedV3?.explicitSinceCalibration ?? storedV2?.explicitSinceCalibration ?? 0,
-        lastCalibrationDayKey: storedV3?.lastCalibrationDayKey ?? storedV2?.lastCalibrationDayKey
+          storedV4?.explicitSinceCalibration ?? storedV3?.explicitSinceCalibration ?? storedV2?.explicitSinceCalibration ?? 0,
+        lastCalibrationDayKey:
+          storedV4?.lastCalibrationDayKey ?? storedV3?.lastCalibrationDayKey ?? storedV2?.lastCalibrationDayKey
       };
 
       if (!context.validationBaseline) {
-        context.validationBaseline = await this.buildBaselineFromHoldout(trainingStore);
+        context.validationBaseline = await this.buildBaselineFromTest(trainingStore);
       }
+      await this.enforceMinimumTestCoverage(context);
       await this.maybeEvaluateValidation(context);
 
       this.context = context;
 
-      if (stored && !storedV3) {
+      if (stored && !storedV4) {
         await this.persistContext(context);
       }
 
@@ -427,18 +460,12 @@ export class MlSuggestionEngine {
     const modelState = context.model.getState();
     const calibrationState = context.calibration.getState();
 
-    const state: StoredModelStateV3 = {
-      version: 3,
-      schema: 'single-neural-lite-v3',
+    const state: StoredModelStateV4 = {
+      version: 4,
+      schema: 'single-neural-lite-v4',
       model: modelState,
       featureCounts: Array.from(context.vectorizer.getCounts()),
-      calibration: {
-        a: calibrationState.a,
-        b: calibrationState.b,
-        fittedAt: calibrationState.fittedAt,
-        holdoutSize: calibrationState.holdoutSize,
-        ece: calibrationState.ece
-      },
+      calibration: calibrationState,
       guardrailStage: context.guardrailStage,
       validationBaseline: context.validationBaseline,
       validation: context.validationSnapshot,
@@ -457,7 +484,7 @@ export class MlSuggestionEngine {
     try {
       await context.store.save(state);
     } catch (error) {
-      console.warn('Falha ao persistir estado ML v3', error);
+      console.warn('Falha ao persistir estado ML v4', error);
     }
 
     try {
@@ -470,7 +497,7 @@ export class MlSuggestionEngine {
         }
       });
     } catch (error) {
-      console.warn('Falha ao atualizar metadados do modelo v3', error);
+      console.warn('Falha ao atualizar metadados do modelo v4', error);
     }
   }
 
@@ -724,6 +751,7 @@ export class MlSuggestionEngine {
     domain: string,
     behaviorStats: DomainBehaviorStats,
     prediction: ModelPrediction,
+    trainingExampleContext: TrainingExampleContext,
     now: number
   ): Promise<void> {
     context.pseudoLabelAttempts += 1;
@@ -784,13 +812,12 @@ export class MlSuggestionEngine {
         PSEUDO_SAMPLE_WEIGHT,
         prediction.vector,
         this.classToBinary(prediction.classification, prediction.probability),
-        prediction.rawScore
+        prediction.rawScore,
+        trainingExampleContext
       ),
       {
         maxExamples: TRAIN_MAX_EXAMPLES,
-        retentionMs: TRAIN_RETENTION_MS,
-        holdoutRatio: TRAIN_HOLDOUT_RATIO,
-        maxHoldout: TRAIN_MAX_HOLDOUT
+        retentionMs: TRAIN_RETENTION_MS
       }
     );
 
@@ -907,8 +934,8 @@ export class MlSuggestionEngine {
       return;
     }
 
-    const holdout = await context.trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
-    const samples: CalibrationSample[] = holdout.map((entry) => {
+    const calibrationRows = await context.trainingStore.getCalibrationExamples(TRAIN_MAX_CALIBRATION);
+    const samples: CalibrationSample[] = calibrationRows.map((entry) => {
       const rawVector: SparseVector = {
         indices: entry.vector.indices,
         values: entry.vector.values
@@ -927,12 +954,15 @@ export class MlSuggestionEngine {
   }
 
   private async maybeEvaluateValidation(context: MlContext): Promise<void> {
-    const holdout = await context.trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
-    if (!holdout.length) {
+    const testExamples = await context.trainingStore.getTestExamples(TRAIN_MAX_TEST);
+    if (!testExamples.length) {
+      context.validationSnapshot = null;
+      context.highConfidenceEce = 0;
+      await this.enforceMinimumTestCoverage(context);
       return;
     }
 
-    const samples: ValidationSample[] = holdout.map((entry) => {
+    const samples: ValidationSample[] = testExamples.map((entry) => {
       const rawVector: SparseVector = {
         indices: entry.vector.indices,
         values: entry.vector.values
@@ -952,11 +982,16 @@ export class MlSuggestionEngine {
     const evaluation = evaluateValidationGate(samples, context.validationBaseline, {
       bootstrapIterations: 1000,
       bootstrapSeed: 4242,
-      minSamples: 50
+      minSamples: VALIDATION_MIN_SAMPLES
     });
 
     context.highConfidenceEce = calculateHighConfidenceEce(samples, HIGH_CONFIDENCE_ECE_THRESHOLD);
-    const gatePassed = evaluation.summary.gatePassed && context.highConfidenceEce <= 0.05;
+    const explicitTestCount = await context.trainingStore.countSplitExamples('test', 'explicit');
+    const hasRequiredTestCoverage = explicitTestCount >= VALIDATION_MIN_SAMPLES;
+    const gatePassed =
+      hasRequiredTestCoverage &&
+      evaluation.summary.gatePassed &&
+      context.highConfidenceEce <= 0.05;
     const summary = {
       ...evaluation.summary,
       gatePassed
@@ -965,20 +1000,25 @@ export class MlSuggestionEngine {
     context.validationBaseline = evaluation.baseline;
     context.validationSnapshot = summary;
 
+    if (!hasRequiredTestCoverage) {
+      context.guardrailStage = 'guarded';
+      return;
+    }
+
     if (context.guardrailStage === 'guarded' && summary.gatePassed) {
       context.guardrailStage = 'normal';
     }
   }
 
-  private async buildBaselineFromHoldout(
+  private async buildBaselineFromTest(
     trainingStore: MlTrainingStore
   ): Promise<ValidationBaselineSnapshot | null> {
-    const holdout = await trainingStore.getHoldoutExamples(TRAIN_MAX_HOLDOUT);
-    if (!holdout.length) {
+    const testExamples = await trainingStore.getTestExamples(TRAIN_MAX_TEST);
+    if (!testExamples.length) {
       return null;
     }
 
-    const samples: ValidationSample[] = holdout.map((entry) => ({
+    const samples: ValidationSample[] = testExamples.map((entry) => ({
       label: entry.label,
       weight: entry.weight,
       baselinePrediction: resolveBaselinePrediction(entry),
@@ -989,6 +1029,47 @@ export class MlSuggestionEngine {
     return buildBaselineSnapshotFromSamples(samples, Date.now());
   }
 
+  private async enforceMinimumTestCoverage(context: MlContext): Promise<void> {
+    const explicitTestCount = await context.trainingStore.countSplitExamples('test', 'explicit');
+    if (explicitTestCount < VALIDATION_MIN_SAMPLES) {
+      context.guardrailStage = 'guarded';
+    }
+  }
+
+  private buildTrainingExampleContext(
+    context: MlContext,
+    features: FeatureMap,
+    vector: SparseVector
+  ): TrainingExampleContext {
+    const featureNames = buildVectorFeatureNames(features, vector, context.vectorizer.dimensions);
+    const natural = this.scoreScenarioFeatures(context, projectFeatureMap(features, 'natural'));
+    const naturalSelf = this.scoreScenarioFeatures(context, projectFeatureMap(features, 'natural+self'));
+    return {
+      featureNames: featureNames.some((entry) => entry.trim().length > 0) ? featureNames : undefined,
+      naturalPrediction: natural.prediction,
+      naturalProbability: natural.probability,
+      naturalSelfPrediction: naturalSelf.prediction,
+      naturalSelfProbability: naturalSelf.probability
+    };
+  }
+
+  private scoreScenarioFeatures(
+    context: MlContext,
+    features: FeatureMap
+  ): { prediction: 0 | 1; probability: number } {
+    const vector = context.vectorizer.vectorize(features, {
+      updateCounts: false,
+      applyMinCount: false
+    });
+    const scoreVector = this.applyMinFeatureThreshold(vector, context.vectorizer);
+    const rawScore = context.model.predictScore(scoreVector);
+    const probability = context.calibration.transform(rawScore);
+    return {
+      prediction: probability >= 0.5 ? 1 : 0,
+      probability
+    };
+  }
+
   private toStoredExample(
     domain: string,
     source: 'explicit' | 'implicit',
@@ -996,8 +1077,9 @@ export class MlSuggestionEngine {
     weight: number,
     vector: SparseVector,
     baselinePrediction: 0 | 1,
-    baselineScore: number
-  ): Omit<StoredTrainingExample, 'id' | 'isHoldout'> {
+    baselineScore: number,
+    trainingExampleContext?: TrainingExampleContext
+  ): Omit<StoredTrainingExample, 'id' | 'split'> {
     return {
       createdAt: Date.now(),
       domain: normalizeDomain(domain),
@@ -1008,8 +1090,13 @@ export class MlSuggestionEngine {
         indices: vector.indices.slice(),
         values: vector.values.slice()
       },
+      featureNames: trainingExampleContext?.featureNames?.slice(),
       baselinePrediction,
-      baselineScore
+      baselineScore,
+      naturalPrediction: trainingExampleContext?.naturalPrediction,
+      naturalProbability: trainingExampleContext?.naturalProbability,
+      naturalSelfPrediction: trainingExampleContext?.naturalSelfPrediction,
+      naturalSelfProbability: trainingExampleContext?.naturalSelfProbability
     };
   }
 
@@ -1066,10 +1153,14 @@ function resolveBaselinePrediction(entry: StoredTrainingExample): 0 | 1 {
 }
 
 function deriveFeatureCounts(
+  storedV4: StoredModelStateV4 | null,
   storedV3: StoredModelStateV3 | null,
   storedV2: StoredModelStateV2 | null,
   legacy: LegacyStoredModelState | null
 ): Uint32Array {
+  if (storedV4?.featureCounts?.length === MODEL_DIMENSIONS) {
+    return Uint32Array.from(storedV4.featureCounts);
+  }
   if (storedV3?.featureCounts?.length === MODEL_DIMENSIONS) {
     return Uint32Array.from(storedV3.featureCounts);
   }
@@ -1086,8 +1177,8 @@ function deriveFeatureCounts(
   return counts;
 }
 
-function toWideDeepInitState(storedV3: StoredModelStateV3): WideDeepLiteInitState {
-  const model = storedV3.model;
+function toWideDeepInitState(storedState: StoredModelStateV3 | StoredModelStateV4): WideDeepLiteInitState {
+  const model = storedState.model;
   return {
     wideWeights: toFloat32Array(model.wideWeights, model.dimensions),
     wideAccum: toFloat32Array(model.wideAccum, model.dimensions),
@@ -1142,6 +1233,16 @@ function extractV3State(stored: StoredModelState | null): StoredModelStateV3 | n
     return null;
   }
   if ('schema' in stored && stored.schema === 'single-neural-lite-v3') {
+    return stored;
+  }
+  return null;
+}
+
+function extractV4State(stored: StoredModelState | null): StoredModelStateV4 | null {
+  if (!stored) {
+    return null;
+  }
+  if ('schema' in stored && stored.schema === 'single-neural-lite-v4') {
     return stored;
   }
   return null;

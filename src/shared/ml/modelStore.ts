@@ -1,4 +1,5 @@
-import type { CalibrationState } from './plattScaler.js';
+import type { CalibrationState as LegacyCalibrationState } from './plattScaler.js';
+import type { TemperatureCalibrationState } from './temperatureScaler.js';
 import type { RolloutState, ShadowMetrics } from './rollout.js';
 import type { WideDeepLiteState } from './wideDeepLite.js';
 import type {
@@ -35,7 +36,7 @@ export interface StoredModelStateV2 {
   legacy: LegacyStoredModelState;
   v2: FtrlStoredState;
   v2FeatureCounts: number[];
-  calibration: CalibrationState;
+  calibration: LegacyCalibrationState;
   rollout: RolloutState;
   shadow: ShadowMetrics;
   totalUpdates: number;
@@ -51,7 +52,7 @@ export interface StoredModelStateV3 {
   schema: 'single-neural-lite-v3';
   model: WideDeepLiteState;
   featureCounts: number[];
-  calibration: CalibrationState;
+  calibration: LegacyCalibrationState;
   guardrailStage: 'guarded' | 'normal';
   validationBaseline?: ValidationBaselineSnapshot | null;
   validation?: ValidationSummary | null;
@@ -67,7 +68,32 @@ export interface StoredModelStateV3 {
   lastCalibrationDayKey?: string;
 }
 
-export type StoredModelState = LegacyStoredModelState | StoredModelStateV2 | StoredModelStateV3;
+export interface StoredModelStateV4 {
+  version: number;
+  schema: 'single-neural-lite-v4';
+  model: WideDeepLiteState;
+  featureCounts: number[];
+  calibration: TemperatureCalibrationState;
+  guardrailStage: 'guarded' | 'normal';
+  validationBaseline?: ValidationBaselineSnapshot | null;
+  validation?: ValidationSummary | null;
+  naturalSignalStats?: NaturalSignalStatsState;
+  pseudoLabelAttempts?: number;
+  pseudoLabelAccepted?: number;
+  highConfidenceEce?: number;
+  totalUpdates: number;
+  explicitUpdates: number;
+  implicitUpdates: number;
+  lastUpdated: number;
+  explicitSinceCalibration: number;
+  lastCalibrationDayKey?: string;
+}
+
+export type StoredModelState =
+  | LegacyStoredModelState
+  | StoredModelStateV2
+  | StoredModelStateV3
+  | StoredModelStateV4;
 
 export interface ModelStoreConfig {
   dbName?: string;
@@ -77,7 +103,7 @@ export interface ModelStoreConfig {
 }
 
 export interface WideWarmStart {
-  source: 'none' | 'legacy' | 'v2' | 'v3';
+  source: 'none' | 'legacy' | 'v2' | 'v3' | 'v4';
   wideWeights: Float32Array;
   wideBias: number;
 }
@@ -189,13 +215,13 @@ export function deriveWideWarmStart(
     };
   }
 
-  if (isV3State(stored)) {
+  if (isV4State(stored) || isV3State(stored)) {
     const size = Math.min(dimensions, stored.model.dimensions, stored.model.wideWeights.length);
     for (let i = 0; i < size; i += 1) {
       wideWeights[i] = stored.model.wideWeights[i] ?? 0;
     }
     return {
-      source: 'v3',
+      source: isV4State(stored) ? 'v4' : 'v3',
       wideWeights,
       wideBias: stored.model.wideBias ?? 0
     };
@@ -237,6 +263,10 @@ export function deriveWideWarmStart(
 
 function isV2State(state: StoredModelState): state is StoredModelStateV2 {
   return 'schema' in state && state.schema === 'dual-model-v2';
+}
+
+function isV4State(state: StoredModelState): state is StoredModelStateV4 {
+  return 'schema' in state && state.schema === 'single-neural-lite-v4';
 }
 
 function isV3State(state: StoredModelState): state is StoredModelStateV3 {

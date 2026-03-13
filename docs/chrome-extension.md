@@ -40,12 +40,12 @@ Campos relevantes em `ExtensionSettings`:
   - `sg:settings` (ExtensionSettings)
   - `sg:manual-override`, `sg:context-mode`, `sg:context-history`, `sg:holidays-cache`
 - IndexedDB:
-  - `sg-ml-models` (estado do modelo local de sugestões, schema `single-neural-lite-v3`)
+  - `sg-ml-models` (estado do modelo local de sugestões, schema `single-neural-lite-v4`)
 
 ## UI e recursos
 
 - **Popup**: índice, KPIs, gráfico, sugestões automáticas, ML status, justiça do dia, exportações e recomendação de blog.
-- **Options**: pesos, listas, horários, feriados, integração VS Code, OpenAI, bloqueio local.
+- **Options**: pesos, listas, horários, feriados, integração VS Code, OpenAI, bloqueio local e fila de revisão ML.
 - **Report**: gráficos por hora, timeline, ranking, relatório VS Code, exportação PDF.
 - **Modo crítico**: overlay e sirene quando o score ultrapassa o limiar.
 
@@ -54,12 +54,15 @@ Campos relevantes em `ExtensionSettings`:
 - Modelo único: `WideDeepLiteBinary` (wide + deep leve) com treino online local.
 - Vetorização: `FeatureVectorizer` com hashing esparso (131.072 dimensões).
 - Camada de sinais naturais: semântica de intenção + sinais contínuos de atenção, engajamento, progresso de tarefa, contexto e confiabilidade.
-- Calibração: Platt scaling em holdout local.
+- Splits explícitos: `train/calibration/test` com roteamento determinístico; exemplos implícitos entram apenas em `train`.
+- Calibração: `temperature scaling` usando apenas o split `calibration`.
 - Auto-treino conservador: pseudo-rótulos de alta confiança com estabilidade temporal, limite diário e quarentena após contradição explícita.
+- Active learning: fila de revisão ML na tela de opções, priorizando casos próximos ao threshold e depois por incerteza.
 - Guardrail:
   - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
-  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após passar no gate estatístico.
-- Gate estatístico local: macro-F1, false productive rate, precision productive, ECE, Brier, bootstrap CI e McNemar.
+  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) apenas após o gate passar em teste explícito independente.
+- Gate estatístico local: macro-F1, false productive rate, precision productive, ECE, Brier, bootstrap CI e McNemar sobre o split `test`.
+- Replay offline: gera bins de confiabilidade e ablação `no_attention` para auditar o impacto das features `nat:attention:*` e `nat:reliability:signal_stability_7d`.
 
 ## Bloqueio de domínios
 

@@ -1,88 +1,97 @@
 ---
 name: saul-ml
-description: Implement and maintain Saul Goodman's fully local auto-classification system. Use when tasks involve feature extraction from page metadata, online model updates, local model persistence, IndexedDB compatibility, suggestion confidence thresholds, cooldown rules, suggestion generation, or feedback-based training behavior.
+description: Guide data engineering and production ML decisions for Saul Goodman's local classification stack. Use when tasks involve local feature extraction, offline replay datasets, online training behavior, probability calibration, thresholding, active learning, imbalanced evaluation, data leakage prevention, drift monitoring, explainability, model persistence, or ML governance across the Chrome extension and related local data flows.
 ---
 
 # Saul ML
 
 ## Scope
 
-- Maintain local domain auto-classification behavior.
-- Keep inference, training, and persistence fully local.
-- Improve suggestion quality without violating privacy constraints.
+- Guide architecture and implementation decisions for Saul's local-first ML system.
+- Improve training, evaluation, and monitoring before increasing model complexity.
+- Keep privacy, governance, and operational reliability explicit in every ML change.
 
 ## Start Here
 
-- Inspect ML-related modules under `src/`.
-- Inspect suggestion handling in popup, background, and content flows.
-- Read `docs/auto-classification.md`, `docs/chrome-extension.md`, and `docs/architecture.md`.
-
-## System Facts
-
-- Model: `OnlineLogisticRegression`.
-- Feature vectorizer size: `65536`.
-- Minimum feature frequency: `minFeatureCount=3`.
-- Model persistence: IndexedDB database `sg-ml-models`.
-- Model metadata: `chrome.storage.local` key `sg:ml-model-meta`.
-- Classification thresholds:
-  - `>= 0.60`: productive
-  - `<= 0.40`: procrastination
-  - otherwise: neutral
+- Inspect `src/background/ml-engine.ts` and `src/shared/ml/`.
+- Read `docs/auto-classification.md` and `docs/architecture.md`.
+- Read `docs/skills/data_engineering_ml_specialist.md` for the repo-specific operating model.
+- Load only the foundation note that matches the task:
+  - calibration: `docs/ml_foundations/calibration.md`
+  - active learning: `docs/ml_foundations/active_learning.md`
+  - imbalanced evaluation: `docs/ml_foundations/imbalanced_metrics.md`
+  - drift and shift: `docs/ml_foundations/drift_monitoring.md`
+  - leakage checks: `docs/ml_foundations/leakage_validation.md`
+  - ML debt and maintainability: `docs/ml_foundations/technical_debt_ml.md`
+  - reading list: `docs/references/papers_reading_list.md`
 
 ## Non-Negotiables
 
-- Do not send metadata, features, or inferred labels to the network.
-- Do not auto-modify productive or procrastination lists without explicit user action.
-- Preserve accept, ignore, and manual classification flows.
-- Respect suggestion cooldown and low-confidence suppression.
-- Keep model behavior explainable enough for debugging.
+- Check data leakage risk before discussing metric gains.
+- Prefer data quality, label quality, and split quality improvements before more complex models.
+- For imbalanced datasets, prioritize PR-AUC, thresholded precision/recall, and segment-level metrics when the dataset supports them.
+- Calibrate probabilities before changing thresholds when scores drive product behavior.
+- Keep pseudo-labels lower trust than explicit labels and out of evaluation holdouts.
+- Require versioning for datasets, experiments, features, and model state when production behavior changes.
+- Keep inference and training local unless the user explicitly changes product boundaries.
+- Consider performance, scalability, cost, maintenance, reliability, governance, and LGPD/GDPR impact.
+- Mention Unity Catalog only when the task actually touches shared data governance platforms; it is usually not relevant to this repo.
 
 ## Workflow
 
-1. Identify impacted ML stage: features, model update, confidence logic, or persistence.
-2. Confirm privacy boundaries for any new signal.
-3. Implement change with backward-compatible storage handling.
-4. Validate confidence behavior, cooldown gating, and suggestion volume impact.
-5. Add deterministic tests where feasible.
-6. Document user-facing, privacy, and threshold impacts.
+1. Summarize the problem, constraints, and missing assumptions.
+2. Inspect the current data path, feature path, labels, thresholds, and storage contracts.
+3. Review leakage, imbalance, calibration, drift, and observability risk.
+4. Choose the smallest change that improves operational metrics and maintainability.
+5. Define validation with offline replay, deterministic tests, and segment-level checks.
+6. Report rollout, rollback, monitoring, and governance implications.
 
-## Change Playbooks
+## Playbooks
 
-### Feature Change
+### Training and Evaluation
 
-- Identify new local page signal.
-- Confirm the signal does not expose sensitive content.
-- Integrate with existing vectorization pipeline.
-- Measure impact on confidence distribution and class balance.
+- Use `npm run ml:replay -- --input ...` when a dataset is available.
+- Report macro-F1, `falseProductiveRate`, `precisionProductive`, ECE, and Brier for Saul-specific model changes.
+- Add PR-AUC, recall, or threshold sweeps when class imbalance or label cost is central to the decision.
+- Verify metrics by segment when behavior differs by source, domain family, or feedback type.
 
-### Threshold or Confidence Change
+### Calibration and Thresholds
 
-- Justify precision versus recall tradeoff.
-- Validate cooldown interactions and low-confidence suppression.
-- Verify popup suggestion load does not become aggressive.
-- Verify no silent over-classification into user lists.
+- Inspect score distributions before changing thresholds.
+- Refit or re-evaluate calibration whenever score behavior changes materially.
+- Keep threshold changes tied to an explicit product tradeoff such as lower false productive errors or lower suggestion volume.
 
-### Persistence Change
+### Labeling and Active Learning
 
-- Preserve IndexedDB schema compatibility or add migration path.
-- Version metadata when schema changes.
-- Keep backward compatibility for previously stored models.
+- Treat explicit user feedback as the highest-trust label source.
+- Keep pseudo-labels conservative, low-weight, and quarantined when contradicted by explicit feedback.
+- Suggest active learning or weak supervision when labeling cost is high and uncertainty is concentrated.
+
+### Drift and Operations
+
+- Monitor score stability, feature coverage, calibration error, label mix, and false productive regressions.
+- Define rollback triggers before relaxing guardrails or increasing pseudo-label throughput.
+- Call out failure modes from silent schema changes, stale thresholds, and feedback loops.
+
+### Governance and Compliance
+
+- Document feature provenance, retention, and permission boundaries for new signals.
+- Flag LGPD/GDPR concerns when data could identify user behavior beyond the current local-first scope.
+- Keep explanations understandable enough for debugging and user support.
 
 ## Validation Checklist
 
-- Run `npm run build` for extension integration checks.
-- Run `npm test` for logic touching suggestions, storage, or model update behavior.
-- Add deterministic tests for:
-  - classification threshold decisions
-  - cooldown suppression
-  - feedback-based update behavior
-  - persistence read and write compatibility
+- Run `npm run build` when touching integrated extension behavior.
+- Run `npm test` when changing training, calibration, persistence, or suggestion logic.
+- Run `npm run ml:replay -- --input ...` for offline dataset evaluation when dataset-backed claims are made.
+- Confirm holdout integrity, threshold rationale, and drift/leakage checks in the final output.
 
 ## Output Expectations
 
-When finishing ML changes, always include:
+Always include:
 
-- user-facing impact
-- privacy implications
-- threshold or cooldown changes
-- deterministic test coverage added or updated
+- objective problem summary
+- assumptions and missing data
+- recommended solution with alternatives and tradeoffs
+- validation and monitoring checklist
+- privacy, governance, and operational impact

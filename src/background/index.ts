@@ -34,7 +34,8 @@ import {
   ContextHistory,
   ManualOverrideState,
   HolidaysCache,
-  MlModelStatus
+  MlModelStatus,
+  MlReviewCandidate
 } from '../shared/types.js';
 import { classifyDomain, extractDomain, normalizeDomain, domainMatches } from '../shared/utils/domain.js';
 import { formatDateKey, getTodayKey, isWithinWorkSchedule, splitDurationByHour } from '../shared/utils/time.js';
@@ -57,6 +58,7 @@ import {
 import { resolveHolidayNeutralState } from '../shared/utils/holidays.js';
 import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
 import { hasHostPermission, hasLocalhostPermission, isLocalhostUrl } from '../shared/utils/permissions.js';
+import { buildReviewQueue } from '../shared/ml/reviewQueue.js';
 import { MlSuggestionEngine, type CachedMlSuggestion } from './ml-engine.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
@@ -78,6 +80,8 @@ const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_RECENTLY_CLOSED_RESULTS = 25; // Chrome API limit for sessions.getRecentlyClosed
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
+const DEFAULT_REVIEW_PRODUCTIVE_THRESHOLD = 0.78;
+const DEFAULT_REVIEW_PROCRASTINATION_THRESHOLD = 0.28;
 
 console.info('[Saul] Background worker started', { at: new Date().toISOString() });
 
@@ -200,6 +204,7 @@ interface CachedSuggestion {
   suggestion: DomainSuggestion;
   probability: number;
   prediction: CachedMlSuggestion['prediction'];
+  trainingExampleContext: CachedMlSuggestion['trainingExampleContext'];
 }
 
 const mlEngine = new MlSuggestionEngine();
@@ -213,7 +218,8 @@ async function buildMlSuggestion(
   return {
     suggestion: cached.suggestion,
     probability: cached.probability,
-    prediction: cached.prediction
+    prediction: cached.prediction,
+    trainingExampleContext: cached.trainingExampleContext
   };
 }
 
@@ -308,6 +314,31 @@ function getActiveSuggestion(): DomainSuggestion | null {
   return suggestionCache.get(domain)?.suggestion ?? null;
 }
 
+function buildReviewCandidates(
+  settings: ExtensionSettings,
+  mlModel: MlModelStatus | null
+): MlReviewCandidate[] {
+  const thresholds = mlModel?.thresholds ?? {
+    productive: DEFAULT_REVIEW_PRODUCTIVE_THRESHOLD,
+    procrastination: DEFAULT_REVIEW_PROCRASTINATION_THRESHOLD
+  };
+  const reviewable = Array.from(suggestionCache.values())
+    .filter((entry) => shouldIncludeReviewCandidate(entry.suggestion.domain, settings))
+    .map((entry) => ({
+      suggestion: entry.suggestion,
+      probability: entry.probability
+    }));
+  return buildReviewQueue(reviewable, {
+    productiveThreshold: thresholds.productive,
+    procrastinationThreshold: thresholds.procrastination,
+    limit: 20
+  });
+}
+
+function shouldIncludeReviewCandidate(domain: string, settings: ExtensionSettings): boolean {
+  return !isDomainClassified(domain, settings) && !isDomainInCooldown(domain, settings);
+}
+
 const messageHandlers: Record<
   RuntimeMessageType,
   (payload?: unknown) => Promise<RuntimeMessageResponse | void>
@@ -322,11 +353,13 @@ const messageHandlers: Record<
       getMlStatus()
     ]);
     pruneSuggestionCache(settings);
+    const reviewCandidates = buildReviewCandidates(settings, mlModel);
     return {
       metrics,
       settings,
       fairness: getFairnessSummary(),
       suggestions: Array.from(suggestionCache.values(), (entry) => entry.suggestion),
+      reviewCandidates,
       activeSuggestion: getActiveSuggestion(),
       mlModel
     };
@@ -352,6 +385,8 @@ const messageHandlers: Record<
     handleApplySuggestion(payload as { domain?: string; classification?: DomainCategory }),
   'ignore-suggestion': async (payload?: unknown) =>
     handleIgnoreSuggestion(payload as { domain?: string }),
+  'record-explicit-feedback': async (payload?: unknown) =>
+    handleRecordExplicitFeedback(payload as { domain?: string; classification?: DomainCategory }),
   'open-extension-page': async (payload?: unknown) =>
     openExtensionPage(payload as { path?: string })
 };
@@ -411,6 +446,21 @@ async function handleIgnoreSuggestion(payload: { domain?: string }): Promise<voi
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
   await saveSettings(settings);
+}
+
+async function handleRecordExplicitFeedback(payload: {
+  domain?: string;
+  classification?: DomainCategory;
+}): Promise<void> {
+  const domain = normalizeDomain(payload?.domain ?? '');
+  const classification = payload?.classification;
+  if (!domain || (classification !== 'productive' && classification !== 'procrastination')) {
+    return;
+  }
+
+  const cached = suggestionCache.get(domain);
+  await updateModelFromFeedback(domain, classification, cached);
+  suggestionCache.delete(domain);
 }
 
 async function openExtensionPage(payload?: { path?: string }): Promise<void> {

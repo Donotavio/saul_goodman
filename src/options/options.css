@@ -562,6 +562,59 @@ button {
   background: transparent;
 }
 
+.review-queue-list {
+  gap: 12px;
+}
+
+.review-queue-item {
+  gap: 10px;
+}
+
+.review-queue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.review-queue-chip {
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1px solid #111;
+  padding: 2px 8px;
+  background: #fff6d8;
+  color: #5b4a30;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.review-queue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.review-queue-actions button {
+  border: 2px solid #111;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.review-queue-actions button:hover {
+  background: #ffe434;
+}
+
+.review-queue-actions .danger {
+  background: #ffe3e2;
+}
+
+.review-queue-actions .primary {
+  background: #ddf5e4;
+}
+
 .recommendations-empty {
   margin: 0;
   display: none;

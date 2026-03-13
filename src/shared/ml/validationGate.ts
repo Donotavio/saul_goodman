@@ -1,4 +1,4 @@
-import { calculateExpectedCalibrationError } from './plattScaler.js';
+import { calculateExpectedCalibrationError } from './calibrationMetrics.js';
 
 export interface ValidationSample {
   label: 0 | 1;

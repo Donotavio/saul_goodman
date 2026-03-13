@@ -1,8 +1,8 @@
 import {
   DomainCategory,
-  DomainSuggestion,
   ExtensionSettings,
   LocalePreference,
+  MlReviewCandidate,
   RuntimeMessageResponse,
   SupportedLocale,
   WorkInterval
@@ -29,17 +29,11 @@ const procrastinationInput = document.getElementById('procrastinationInput') as 
 const productiveListEl = document.getElementById('productiveList') as HTMLUListElement;
 const procrastinationListEl = document.getElementById('procrastinationList') as HTMLUListElement;
 const domainFilterInput = document.getElementById('domainFilterInput') as HTMLInputElement | null;
-const recommendationsProductiveListEl = document.getElementById(
-  'recommendationsProductiveList'
+const reviewQueueListEl = document.getElementById(
+  'mlReviewQueueList'
 ) as HTMLUListElement | null;
-const recommendationsProcrastinationListEl = document.getElementById(
-  'recommendationsProcrastinationList'
-) as HTMLUListElement | null;
-const recommendationsNeutralListEl = document.getElementById(
-  'recommendationsNeutralList'
-) as HTMLUListElement | null;
-const recommendationsEmptyEl = document.getElementById(
-  'recommendationsEmpty'
+const reviewQueueEmptyEl = document.getElementById(
+  'mlReviewQueueEmpty'
 ) as HTMLParagraphElement | null;
 const blockProcrastinationEl = document.getElementById('blockProcrastination') as HTMLInputElement;
 const procrastinationWeightEl = document.getElementById('procrastinationWeight') as HTMLInputElement;
@@ -100,7 +94,7 @@ let currentSettings: ExtensionSettings | null = null;
 let statusTimeout: number | undefined;
 let procrastinationHighlightDone = false;
 let i18n: I18nService | null = null;
-let suggestionList: DomainSuggestion[] = [];
+let reviewCandidateList: MlReviewCandidate[] = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   attachListeners();
@@ -165,7 +159,24 @@ function attachListeners(): void {
   domainFilterInput?.addEventListener('input', () => {
     renderDomainList('productiveDomains', productiveListEl);
     renderDomainList('procrastinationDomains', procrastinationListEl);
-    renderRecommendations();
+    renderReviewQueue();
+  });
+
+  reviewQueueListEl?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    const button = target?.closest('button[data-action]') as HTMLButtonElement | null;
+    if (!button?.dataset.domain || !button.dataset.action) {
+      return;
+    }
+    const domain = button.dataset.domain;
+    if (button.dataset.action === 'ignore') {
+      void handleReviewIgnore(domain);
+      return;
+    }
+    const classification = button.dataset.classification as DomainCategory | undefined;
+    if (classification === 'productive' || classification === 'procrastination') {
+      void handleReviewApply(domain, classification);
+    }
   });
 
   blockProcrastinationEl?.addEventListener('change', () => {
@@ -551,7 +562,7 @@ function renderForms(): void {
 
   renderDomainList('productiveDomains', productiveListEl);
   renderDomainList('procrastinationDomains', procrastinationListEl);
-  renderRecommendations();
+  renderReviewQueue();
 }
 
 function translateOrFallback(key: string, fallback: string): string {
@@ -692,8 +703,17 @@ async function handleDomainSubmit(key: DomainListKey, input: HTMLInputElement): 
   bumpLearningFromDomain(normalized, category);
   input.value = '';
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
-  renderRecommendations();
+  renderReviewQueue();
   await persistSettings('options_status_list_updated');
+  chrome.runtime.sendMessage({
+    type: 'record-explicit-feedback',
+    payload: {
+      domain: normalized,
+      classification: category
+    }
+  }).catch((error) => {
+    console.warn('[options] Falha ao registrar feedback explicito do modelo:', error);
+  });
 }
 
 async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
@@ -703,7 +723,7 @@ async function removeDomain(key: DomainListKey, domain: string): Promise<void> {
 
   currentSettings[key] = currentSettings[key].filter((item) => item !== domain);
   renderDomainList(key, key === 'productiveDomains' ? productiveListEl : procrastinationListEl);
-  renderRecommendations();
+  renderReviewQueue();
   await persistSettings('options_status_domain_removed');
 }
 
@@ -713,28 +733,22 @@ async function loadSuggestions(): Promise<void> {
       type: 'metrics-request'
     })) as { ok?: boolean; data?: RuntimeMessageResponse; error?: string } | undefined;
     if (!response?.ok || !response.data) {
-      suggestionList = [];
-      renderRecommendations();
+      reviewCandidateList = [];
+      renderReviewQueue();
       return;
     }
-    suggestionList = buildSuggestionList(response.data);
-    renderRecommendations();
+    reviewCandidateList = buildReviewCandidateList(response.data);
+    renderReviewQueue();
   } catch (error) {
     console.warn('[options] Falha ao carregar sugestões:', error);
   }
 }
 
-function buildSuggestionList(data: RuntimeMessageResponse): DomainSuggestion[] {
-  const combined: DomainSuggestion[] = [
-    ...(data.activeSuggestion ? [data.activeSuggestion] : []),
-    ...(data.suggestions ?? [])
-  ].filter((item): item is DomainSuggestion => Boolean(item));
-
+function buildReviewCandidateList(data: RuntimeMessageResponse): MlReviewCandidate[] {
   const seen = new Set<string>();
-  const sorted = combined.sort((a, b) => b.timestamp - a.timestamp);
-  const deduped: DomainSuggestion[] = [];
-  for (const entry of sorted) {
-    const key = entry.domain;
+  const deduped: MlReviewCandidate[] = [];
+  for (const entry of data.reviewCandidates ?? []) {
+    const key = entry.domain.trim().toLowerCase();
     if (seen.has(key)) {
       continue;
     }
@@ -744,112 +758,159 @@ function buildSuggestionList(data: RuntimeMessageResponse): DomainSuggestion[] {
   return deduped;
 }
 
-function renderRecommendations(): void {
-  if (
-    !recommendationsProductiveListEl ||
-    !recommendationsProcrastinationListEl ||
-    !recommendationsNeutralListEl
-  ) {
+function renderReviewQueue(): void {
+  if (!reviewQueueListEl) {
     return;
   }
 
-  recommendationsProductiveListEl.innerHTML = '';
-  recommendationsProcrastinationListEl.innerHTML = '';
-  recommendationsNeutralListEl.innerHTML = '';
-
+  reviewQueueListEl.innerHTML = '';
   const filter = getDomainFilter();
   const classified = new Set<string>([
     ...(currentSettings?.productiveDomains ?? []),
     ...(currentSettings?.procrastinationDomains ?? [])
   ]);
-
-  const productiveSuggestions: DomainSuggestion[] = [];
-  const procrastinationSuggestions: DomainSuggestion[] = [];
-  const neutralSuggestions: DomainSuggestion[] = [];
-
-  suggestionList.forEach((suggestion) => {
-    if (classified.has(suggestion.domain)) {
+  reviewCandidateList.forEach((candidate) => {
+    if (classified.has(candidate.domain)) {
       return;
     }
-    if (filter && !suggestion.domain.toLowerCase().includes(filter)) {
+    if (filter && !candidate.domain.toLowerCase().includes(filter)) {
       return;
     }
-    if (suggestion.classification === 'productive') {
-      productiveSuggestions.push(suggestion);
-    }
-    if (suggestion.classification === 'procrastination') {
-      procrastinationSuggestions.push(suggestion);
-    }
-    if (suggestion.classification === 'neutral') {
-      neutralSuggestions.push(suggestion);
-    }
+    reviewQueueListEl.appendChild(buildReviewQueueItem(candidate));
   });
 
-  productiveSuggestions.forEach((suggestion) => {
-    recommendationsProductiveListEl.appendChild(buildRecommendationItem(suggestion));
-  });
-  procrastinationSuggestions.forEach((suggestion) => {
-    recommendationsProcrastinationListEl.appendChild(buildRecommendationItem(suggestion));
-  });
-  neutralSuggestions.forEach((suggestion) => {
-    recommendationsNeutralListEl.appendChild(buildRecommendationItem(suggestion));
-  });
-
-  if (recommendationsEmptyEl) {
-    const isEmpty =
-      recommendationsProductiveListEl.childElementCount === 0 &&
-      recommendationsProcrastinationListEl.childElementCount === 0 &&
-      recommendationsNeutralListEl.childElementCount === 0;
-    recommendationsEmptyEl.classList.toggle('visible', isEmpty);
+  if (reviewQueueEmptyEl) {
+    reviewQueueEmptyEl.classList.toggle('visible', reviewQueueListEl.childElementCount === 0);
   }
 }
 
-function buildRecommendationItem(suggestion: DomainSuggestion): HTMLLIElement {
+function buildReviewQueueItem(candidate: MlReviewCandidate): HTMLLIElement {
   const item = document.createElement('li');
+  item.className = 'review-queue-item';
   const header = document.createElement('div');
   header.className = 'recommendation-header';
 
   const headerLeft = document.createElement('div');
   headerLeft.className = 'recommendation-header-left';
 
-  const labelMap: Record<DomainSuggestion['classification'], string> = {
+  const labelMap: Record<DomainCategory, string> = {
     productive: i18n?.t('popup_suggestion_label_productive') ?? 'PRODUTIVO',
     procrastination: i18n?.t('popup_suggestion_label_procrastination') ?? 'PROCRASTINADOR',
     neutral: i18n?.t('popup_suggestion_label_neutral') ?? 'NEUTRO'
   };
 
   const classificationEl = document.createElement('span');
-  classificationEl.className = `recommendation-classification ${suggestion.classification}`;
-  classificationEl.textContent = labelMap[suggestion.classification];
+  classificationEl.className = `recommendation-classification ${candidate.suggestedClassification}`;
+  classificationEl.textContent = labelMap[candidate.suggestedClassification];
 
   const domainEl = document.createElement('span');
   domainEl.className = 'recommendation-domain';
-  domainEl.textContent = suggestion.domain;
+  domainEl.textContent = candidate.domain;
 
   headerLeft.appendChild(classificationEl);
   headerLeft.appendChild(domainEl);
 
   const confidenceEl = document.createElement('span');
   confidenceEl.className = 'recommendation-confidence';
-  const confidenceText =
-    i18n?.t('popup_suggestion_confidence_filled', {
-      confidence: Math.round(suggestion.confidence)
-    }) ?? `Confiança ${Math.round(suggestion.confidence)}%`;
-  confidenceEl.textContent = confidenceText;
+  confidenceEl.textContent = `${Math.round(candidate.probability * 100)}%`;
 
   header.appendChild(headerLeft);
   header.appendChild(confidenceEl);
   item.appendChild(header);
 
+  const meta = document.createElement('div');
+  meta.className = 'review-queue-meta';
+  meta.appendChild(buildMetaChip(describeQueueReason(candidate.queueReason)));
+  meta.appendChild(buildMetaChip(`INCERTEZA ${Math.round(candidate.uncertainty * 100)}%`));
+  item.appendChild(meta);
+
   const reasonsList = document.createElement('ul');
   reasonsList.className = 'recommendation-reasons';
-  suggestion.reasons.slice(0, 3).forEach((reason) => {
+  candidate.reasons.slice(0, 3).forEach((reason) => {
     const li = document.createElement('li');
     li.textContent = translateSuggestionReason(reason, i18n);
     reasonsList.appendChild(li);
   });
   item.appendChild(reasonsList);
+
+  const actions = document.createElement('div');
+  actions.className = 'review-queue-actions';
+  actions.appendChild(buildReviewActionButton(
+    i18n?.t('popup_suggestion_add_productive') ?? 'Produtivo',
+    'apply',
+    candidate.domain,
+    'productive',
+    'primary'
+  ));
+  actions.appendChild(buildReviewActionButton(
+    i18n?.t('popup_suggestion_add_procrastination') ?? 'Procrastinador',
+    'apply',
+    candidate.domain,
+    'procrastination',
+    'danger'
+  ));
+  actions.appendChild(buildReviewActionButton(
+    i18n?.t('popup_suggestion_ignore') ?? 'Ignorar',
+    'ignore',
+    candidate.domain
+  ));
+  item.appendChild(actions);
+
   return item;
+}
+
+function buildMetaChip(label: string): HTMLSpanElement {
+  const chip = document.createElement('span');
+  chip.className = 'review-queue-chip';
+  chip.textContent = label;
+  return chip;
+}
+
+function buildReviewActionButton(
+  label: string,
+  action: 'apply' | 'ignore',
+  domain: string,
+  classification?: 'productive' | 'procrastination',
+  tone?: 'primary' | 'danger'
+): HTMLButtonElement {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.dataset.action = action;
+  button.dataset.domain = domain;
+  if (classification) {
+    button.dataset.classification = classification;
+  }
+  if (tone) {
+    button.classList.add(tone);
+  }
+  button.textContent = label;
+  return button;
+}
+
+function describeQueueReason(reason: MlReviewCandidate['queueReason']): string {
+  if (reason === 'threshold_borderline') {
+    return 'BORDA DO THRESHOLD';
+  }
+  return 'UNCERTAINTY SAMPLING';
+}
+
+async function handleReviewApply(
+  domain: string,
+  classification: 'productive' | 'procrastination'
+): Promise<void> {
+  await chrome.runtime.sendMessage({
+    type: 'apply-suggestion',
+    payload: { domain, classification }
+  });
+  await hydrate();
+}
+
+async function handleReviewIgnore(domain: string): Promise<void> {
+  await chrome.runtime.sendMessage({
+    type: 'ignore-suggestion',
+    payload: { domain }
+  });
+  await hydrate();
 }
 
 async function persistSettings(messageKey: string): Promise<void> {

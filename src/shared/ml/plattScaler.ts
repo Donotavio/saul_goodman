@@ -1,3 +1,5 @@
+import { calculateExpectedCalibrationError, clampProbability } from './calibrationMetrics.js';
+
 export interface CalibrationSample {
   score: number;
   label: 0 | 1;
@@ -112,44 +114,6 @@ export class PlattScaler {
   }
 }
 
-export function calculateExpectedCalibrationError(
-  probabilities: number[],
-  labels: Array<0 | 1>,
-  bins = 10
-): number {
-  if (!probabilities.length || probabilities.length !== labels.length) {
-    return 0;
-  }
-  const safeBins = Math.max(1, Math.min(50, bins));
-  const bucketData = Array.from({ length: safeBins }, () => ({
-    count: 0,
-    confidenceSum: 0,
-    accuracySum: 0
-  }));
-
-  for (let i = 0; i < probabilities.length; i += 1) {
-    const probability = clampProbability(probabilities[i]);
-    const label = labels[i];
-    const index = Math.min(safeBins - 1, Math.floor(probability * safeBins));
-    const bucket = bucketData[index];
-    bucket.count += 1;
-    bucket.confidenceSum += probability;
-    bucket.accuracySum += label;
-  }
-
-  let weightedError = 0;
-  for (let i = 0; i < bucketData.length; i += 1) {
-    const bucket = bucketData[i];
-    if (bucket.count === 0) {
-      continue;
-    }
-    const avgConfidence = bucket.confidenceSum / bucket.count;
-    const avgAccuracy = bucket.accuracySum / bucket.count;
-    weightedError += (bucket.count / probabilities.length) * Math.abs(avgConfidence - avgAccuracy);
-  }
-  return weightedError;
-}
-
 function sigmoid(value: number): number {
   if (value >= 0) {
     const exp = Math.exp(-value);
@@ -157,13 +121,6 @@ function sigmoid(value: number): number {
   }
   const exp = Math.exp(value);
   return exp / (1 + exp);
-}
-
-function clampProbability(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0.5;
-  }
-  return Math.max(0, Math.min(value, 1));
 }
 
 function clampWeight(value: number | undefined): number {

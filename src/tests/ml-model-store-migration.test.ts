@@ -5,7 +5,8 @@ import {
   deriveWideWarmStart,
   type LegacyStoredModelState,
   type StoredModelStateV2,
-  type StoredModelStateV3
+  type StoredModelStateV3,
+  type StoredModelStateV4
 } from '../shared/ml/modelStore.js';
 
 function computeFtrlWeight(
@@ -144,4 +145,56 @@ test('single v3 model state does not keep legacy v1/v2 payload', () => {
 
   assert.equal('legacy' in state, false);
   assert.equal('v2' in state, false);
+});
+
+test('deriveWideWarmStart reads wide weights from v4 single-model state', () => {
+  const state: StoredModelStateV4 = {
+    version: 4,
+    schema: 'single-neural-lite-v4',
+    model: {
+      dimensions: 4,
+      embeddingDim: 2,
+      hiddenDim: 2,
+      lrWide: 0.03,
+      lrDeep: 0.01,
+      l2: 1e-4,
+      clipGradient: 1,
+      wideWeights: [0.25, -0.4, 0.1, 0.05],
+      wideAccum: [0, 0, 0, 0],
+      wideBias: -0.15,
+      wideBiasAccum: 0,
+      embeddings: Array(8).fill(0),
+      embeddingsAccum: Array(8).fill(0),
+      hiddenWeights: Array(4).fill(0),
+      hiddenAccum: Array(4).fill(0),
+      hiddenBias: Array(2).fill(0),
+      hiddenBiasAccum: Array(2).fill(0),
+      outWeights: Array(2).fill(0),
+      outWeightsAccum: Array(2).fill(0),
+      outBias: 0,
+      outBiasAccum: 0
+    },
+    featureCounts: [4, 4, 4, 4],
+    calibration: {
+      method: 'temperature',
+      temperature: 1,
+      ece: 0,
+      fittedAt: 0,
+      sampleSize: 0
+    },
+    guardrailStage: 'guarded',
+    validationBaseline: null,
+    validation: null,
+    totalUpdates: 0,
+    explicitUpdates: 0,
+    implicitUpdates: 0,
+    lastUpdated: 0,
+    explicitSinceCalibration: 0
+  };
+
+  const warm = deriveWideWarmStart(state, 4);
+  assert.equal(warm.source, 'v4');
+  assert.equal(warm.wideBias, -0.15);
+  assert.ok(Math.abs(warm.wideWeights[0] - 0.25) < 1e-6);
+  assert.ok(Math.abs(warm.wideWeights[1] + 0.4) < 1e-6);
 });

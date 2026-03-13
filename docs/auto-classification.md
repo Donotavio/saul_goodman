@@ -9,7 +9,7 @@ Este recurso sugere como classificar domínios não listados pelo usuário. Ele 
 - A aba precisa ser `http(s)` (páginas internas do Chrome não são analisadas).
 - O content script responde com metadados dentro do timeout (2s).
 
-As sugestões aparecem como **toast na página** e no **card de sugestões do popup**.
+As sugestões continuam podendo aparecer como **toast na página** e no **card de sugestões do popup**, mas a superfície oficial de active learning é a **fila de revisão ML** nas opções.
 
 ## Sinais coletados (localmente)
 
@@ -45,12 +45,33 @@ Nada é enviado para a rede.
 - **Treino**: online por amostra (AdaGrad), com peso maior para feedback explícito e peso menor para rótulos implícitos.
 - **Vetorização**: `FeatureVectorizer` com 131.072 dimensões e `minFeatureCount=5`.
 - **Persistência**: IndexedDB `sg-ml-models` + metadados em `chrome.storage.local` (`sg:ml-model-meta`).
-- **Calibração**: Platt scaling sobre score bruto do modelo.
-- **Validação**: gate estatístico local com macro-F1, `falseProductiveRate`, `precisionProductive`, ECE, Brier, bootstrap CI e McNemar.
+- **Splits explícitos**: exemplos `explicit` são roteados de forma determinística para `train/calibration/test` (`70/15/15`); exemplos `implicit` entram apenas em `train`.
+- **Calibração**: `temperature scaling` sobre o score bruto do modelo, ajustado apenas no split `calibration`.
+- **Validação**: gate estatístico local com macro-F1, `falseProductiveRate`, `precisionProductive`, ECE, Brier, bootstrap CI e McNemar usando apenas o split `test`.
 - **Auto-treino conservador**: pseudo-rótulos apenas em alta confiança (`>=0.93` / `<=0.07`), estabilidade temporal e proteção anti-drift.
 - **Guardrail stage**:
   - `guarded`: thresholds conservadores (`productive >= 0.78`, `procrastination <= 0.28`).
-  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) após aprovação do gate.
+  - `normal`: thresholds padrão (`productive >= 0.70`, `procrastination <= 0.30`) apenas após aprovação do gate em `test` explícito com pelo menos 50 amostras.
+
+## Fila de revisão ML
+
+- A tela de opções exibe uma fila dedicada de revisão.
+- A fila combina sugestões ainda não classificadas e fora de cooldown.
+- Prioridade:
+  - domínios a `<= 0.05` do threshold vigente (`threshold_borderline`);
+  - depois maior incerteza;
+  - depois timestamp mais recente.
+- Cada item mostra domínio, classe sugerida, probabilidade calibrada, motivo e top razões.
+- Ações disponíveis:
+  - `Produtivo`
+  - `Procrastinador`
+  - `Ignorar`
+
+## Governança de sinais de atenção
+
+- Features `nat:attention:*` e `nat:reliability:signal_stability_7d` permanecem ativas em runtime.
+- Toda alegação de ganho offline precisa incluir ablação `no_attention`.
+- O replay marca `attentionRisk=true` quando remover essas famílias melhora materialmente `falseProductiveRate` ou `deltaMacroF1`.
 
 Classificação por probabilidade:
 
@@ -75,5 +96,5 @@ Classificação por probabilidade:
 
 - O toggle **“Sugestões por IA”** está desabilitado na UI (placeholder).
 - O aprendizado é totalmente local; não há chamadas externas.
-- O estado persistido é único (`single-neural-lite-v3`), sem armazenar payload legado de modelos anteriores.
+- O estado persistido é único (`single-neural-lite-v4`), com calibração de temperatura e sem manter payload legado de versões antigas.
 - Razões exibidas no popup/report priorizam conceitos naturais (não buckets técnicos), com evidência técnica apenas em modo debug.

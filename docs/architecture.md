@@ -65,8 +65,10 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 2. **Sugestões automáticas de domínio**
    - Content script coleta metadados e sinais leves.
    - Background usa modelo ML local único (`WideDeepLiteBinary`) para sugerir categoria, com camada de sinais naturais semânticos/comportamentais.
-   - Probabilidade é calibrada localmente e validada por gate estatístico (macro-F1, FPR, precisão, ECE/Brier, bootstrap e McNemar).
+   - Exemplos `explicit` entram em `train/calibration/test` por split determinístico; exemplos `implicit` entram somente em `train`.
+   - Probabilidade é calibrada localmente com `temperature scaling` no split `calibration` e validada por gate estatístico em `test` (macro-F1, FPR, precisão, ECE/Brier, bootstrap e McNemar).
    - Auto-treino conservador promove pseudo-rótulos apenas em alta confiança e estabilidade temporal.
+   - A tela de opções expõe uma fila de revisão ML para active learning, priorizando casos perto do threshold e depois por incerteza.
    - Usuário aceita/ignora; feedback explícito atualiza o modelo e pode acionar quarentena anti-drift.
 
 3. **Integração VS Code (opcional)**
@@ -82,8 +84,9 @@ O monorepo é composto por quatro blocos principais: extensão Chrome (produto),
 ## Decisões arquiteturais relevantes
 
 - **Local‑first**: métricas e modelos ficam no dispositivo do usuário.
-- **Modelo único de sugestão**: estado persistido `single-neural-lite-v3` sem manter payload legado de versões antigas.
+- **Modelo único de sugestão**: estado persistido `single-neural-lite-v4` com calibração por temperatura e sem manter payload legado de versões antigas.
 - **Sinais naturais por padrão**: explicações no UI priorizam conceitos humanos (intenção/atenção/progresso/contexto).
+- **Governança de atenção**: qualquer avaliação offline relevante deve incluir ablação `no_attention` para auditar o impacto de `nat:attention:*` e `nat:reliability:signal_stability_7d`.
 - **Sem bundler**: TypeScript compila direto para `dist/`, HTML referencia módulos gerados.
 - **Bloqueio local**: usa `declarativeNetRequest` para redirecionar domínios procrastinatórios.
 - **Integração opcional**: daemon e VS Code são complementares e não obrigatórios.
