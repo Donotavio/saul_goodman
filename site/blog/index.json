@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "X-Files: O Futuro É Agora, E Estamos Sem Filtro",
+      "url": "./posts/2026/2026-03-13-x-files-o-futuro-e-agora-e-estamos-sem-filtro/",
+      "markdown": "2026/2026-03-13-x-files-o-futuro-e-agora-e-estamos-sem-filtro.md",
+      "date": "2026-03-13",
+      "category": "marketing",
+      "tags": [
+        "X-Files",
+        "AI",
+        "governo",
+        "previsões",
+        "sarcasmo"
+      ],
+      "excerpt": "Quando a ficção se torna realidade, você sabe que estamos em apuros. Bem-vindo ao futuro, onde o medo é mais real que a vida.",
+      "title_en": "X-Files: The Future Is Now, And We're Unfiltered",
+      "title_es": "X-Files: El Futuro Es Ahora, Y Estamos Sin Filtro",
+      "title_fr": "X-Files : L'Avenir, C'est Maintenant, Et Nous Sommes Sans Filtre",
+      "title_de": "X-Akten: Die Zukunft ist Jetzt, und Wir Sind Ohne Filter",
+      "title_it": "X-Files: Il Futuro È Adesso, E Siamo Senza Filtri",
+      "title_tr": "X-Files: Gelecek Şimdi, Ve Filtresiziz",
+      "title_zh": "X档案：未来就是现在，我们没有过滤器",
+      "title_hi": "X-Files: भविष्य अब है, और हम बिना फ़िल्टर के हैं",
+      "title_ar": "ملفات X: المستقبل هو الآن، ونحن بلا فلتر",
+      "title_bn": "এক্স-ফাইলস: ভবিষ্যৎ এখন, এবং আমরা ফিল্টারহীন",
+      "title_ru": "X-Files: Будущее — Это Сейчас, И Мы Без Фильтра",
+      "title_ur": "ایکس فائلز: مستقبل اب ہے، اور ہم بغیر فلٹر کے ہیں",
+      "tone": "incredulo",
+      "tags_en": [
+        "X-Files",
+        "AI",
+        "government",
+        "predictions",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "X-Files",
+        "IA",
+        "gobierno",
+        "predicciones",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "X-Files",
+        "IA",
+        "gouvernement",
+        "prévisions",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "X-Akten",
+        "KI",
+        "Regierung",
+        "Vorhersagen",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "X-Files",
+        "IA",
+        "governo",
+        "previsioni",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "X-Files",
+        "Yapay Zeka",
+        "hükümet",
+        "tahminler",
+        "alay"
+      ],
+      "tags_zh": [
+        "X档案",
+        "人工智能",
+        "政府",
+        "预测",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "X-Files",
+        "AI",
+        "सरकार",
+        "पूर्वानुमान",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "ملفات X",
+        "ذكاء اصطناعي",
+        "حكومة",
+        "توقعات",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "এক্স-ফাইলস",
+        "এআই",
+        "সরকার",
+        "ভবিষ্যদ্বাণী",
+        "সারকাজম"
+      ],
+      "tags_ru": [
+        "X-Files",
+        "ИИ",
+        "государство",
+        "прогнозы",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "ایکس فائلز",
+        "AI",
+        "حکومت",
+        "پیش گوئیاں",
+        "تہذیبی طنز"
+      ],
+      "source_title": "AI companies fighting with the U.S. government over safety? ‘The X-Files’ predicted it in 1993",
+      "source_url": "https://www.fastcompany.com/91507279/x-files-episode-eerily-predicted-anthropic-pentagon-ai-fight-1993",
+      "source_published_at": "2026-03-12T20:30:00",
+      "excerpt_en": "When fiction becomes reality, you know we're in trouble. Welcome to the future, where fear is more real than life.",
+      "excerpt_es": "Cuando la ficción se convierte en realidad, sabes que estamos en problemas. Bienvenido al futuro, donde el miedo es más real que la vida.",
+      "excerpt_fr": "Quand la fiction devient réalité, vous savez que nous sommes dans de beaux draps. Bienvenue dans le futur, où la peur est plus réelle que la vie.",
+      "excerpt_de": "Wenn Fiktion zur Realität wird, wissen Sie, dass wir in Schwierigkeiten stecken. Willkommen in der Zukunft, wo die Angst realer ist als das Leben.",
+      "excerpt_it": "Quando la finzione diventa realtà, sai che siamo nei guai. Benvenuto nel futuro, dove la paura è più reale della vita.",
+      "excerpt_tr": "Kurgu gerçek olduğunda, başımızın dertte olduğunu bilirsiniz. Geleceğe hoş geldiniz, burada korku, hayattan daha gerçek.",
+      "excerpt_zh": "当虚构变成现实时，你知道我们有麻烦了。欢迎来到未来，这里恐惧比生活更真实。",
+      "excerpt_hi": "जब कल्पना वास्तविकता बन जाती है, तो आप जानते हैं कि हम मुसीबत में हैं। भविष्य में आपका स्वागत है, जहाँ डर जीवन से अधिक वास्तविक है।",
+      "excerpt_ar": "عندما تصبح الخيال واقعًا، تعرف أننا في ورطة. مرحبًا بك في المستقبل، حيث الخوف أكثر واقعية من الحياة.",
+      "excerpt_bn": "যখন কল্পনা বাস্তবতা হয়ে যায়, আপনি জানেন যে আমরা বিপদে আছি। ভবিষ্যতে স্বাগতম, যেখানে ভয় জীবনের চেয়ে বেশি বাস্তব।",
+      "excerpt_ru": "Когда фантастика становится реальностью, вы знаете, что мы в беде. Добро пожаловать в будущее, где страх более реален, чем жизнь.",
+      "excerpt_ur": "جب فکشن حقیقت بن جاتی ہے، تو آپ جانتے ہیں کہ ہم مشکل میں ہیں۔ خوش آمدید مستقبل میں، جہاں خوف زندگی سے زیادہ حقیقی ہے۔"
+    },
+    {
       "title": "O Fim do Mundo Como Conhecemos? Ou Apenas Mais uma Segunda-Feira?",
       "url": "./posts/2026/2026-03-11-o-fim-do-mundo-como-conhecemos-ou-apenas-mais-uma-segunda-feira/",
       "markdown": "2026/2026-03-11-o-fim-do-mundo-como-conhecemos-ou-apenas-mais-uma-segunda-feira.md",
