@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Audio AI Trainer: O Novo Emprego dos Sonhos para Quem Ama Ouvir Barulho",
+      "url": "./posts/2026/2026-03-16-audio-ai-trainer-o-novo-emprego-dos-sonhos-para-quem-ama-ouvir-barulho/",
+      "markdown": "2026/2026-03-16-audio-ai-trainer-o-novo-emprego-dos-sonhos-para-quem-ama-ouvir-barulho.md",
+      "date": "2026-03-16",
+      "category": "ux-design",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "carreira",
+        "IA"
+      ],
+      "excerpt": "Que tal ser pago para ouvir barulho? O futuro é agora, meu amigo.",
+      "title_en": "Audio AI Trainer: The New Dream Job for Noise Lovers",
+      "title_es": "Audio AI Trainer: El Nuevo Trabajo de Ensueño para los Que Aman Escuchar Ruido",
+      "title_fr": "Audio AI Trainer : Le Nouvel Emploi de Rêve pour Ceux qui Aiment Écouter du Bruit",
+      "title_de": "Audio AI Trainer: Der Neue Traumjob für Alle, die Gerüche Lieben",
+      "title_it": "Audio AI Trainer: Il Nuovo Lavoro dei Sogni per Chi Ama Ascoltare Rumori",
+      "title_tr": "Audio AI Eğitmeni: Gürültü Dinlemeyi Sevenler İçin Yeni Hayal İş",
+      "title_zh": "音频人工智能训练师：爱听噪音者的梦想新工作",
+      "title_hi": "ऑडियो एआई ट्रेनर: शोर सुनने वालों के लिए नया सपनों की नौकरी",
+      "title_ar": "مدرب الذكاء الاصطناعي الصوتي: الوظيفة الجديدة التي تحلم بها لمن يحب الاستماع إلى الضوضاء",
+      "title_bn": "অডিও এআই প্রশিক্ষক: যারা শব্দ শুনতে ভালোবাসে তাদের জন্য নতুন স্বপ্নের চাকরি",
+      "title_ru": "Аудио AI Тренер: Новая Работа Мечты для Любителей Слушать Шум",
+      "title_ur": "آڈیو AI ٹرینر: شور سننے کے شوقین افراد کے لیے نیا خوابوں کا کام",
+      "tone": "like",
+      "tags_en": [
+        "productivity",
+        "marketing",
+        "UX",
+        "career",
+        "AI"
+      ],
+      "tags_es": [
+        "productividad",
+        "marketing",
+        "UX",
+        "carrera",
+        "IA"
+      ],
+      "tags_fr": [
+        "productivité",
+        "marketing",
+        "UX",
+        "carrière",
+        "IA"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Marketing",
+        "UX",
+        "Karriere",
+        "KI"
+      ],
+      "tags_it": [
+        "produttività",
+        "marketing",
+        "UX",
+        "carriera",
+        "IA"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "pazarlama",
+        "UX",
+        "kariyer",
+        "Yapay Zeka"
+      ],
+      "tags_zh": [
+        "生产力",
+        "营销",
+        "用户体验",
+        "职业",
+        "人工智能"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "मार्केटिंग",
+        "यूएक्स",
+        "करियर",
+        "एआई"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويق",
+        "تجربة المستخدم",
+        "المهنة",
+        "الذكاء الاصطناعي"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "মার্কেটিং",
+        "ইউএক্স",
+        "ক্যারিয়ার",
+        "এআই"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "маркетинг",
+        "UX",
+        "карьера",
+        "ИИ"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "مارکیٹنگ",
+        "UX",
+        "کیریئر",
+        "AI"
+      ],
+      "source_title": "Audio AI Trainer",
+      "source_url": "https://remotive.com/remote-jobs/ai-ml/audio-ai-trainer-2087694",
+      "source_published_at": "Thu, 12 Mar 2026 21:00:56 GMT",
+      "excerpt_en": "How about getting paid to listen to noise? The future is now, my friend.",
+      "excerpt_es": "¿Qué tal ser pagado por escuchar ruido? El futuro es ahora, amigo mío.",
+      "excerpt_fr": "Que diriez-vous d'être payé pour écouter du bruit ? L'avenir est maintenant, mon ami.",
+      "excerpt_de": "Wie wäre es, dafür bezahlt zu werden, Geräusche zu hören? Die Zukunft ist jetzt, mein Freund.",
+      "excerpt_it": "Che ne dici di essere pagato per ascoltare rumori? Il futuro è adesso, amico mio.",
+      "excerpt_tr": "Gürültü dinlemek için para kazanmak nasıl? Gelecek şimdi, dostum.",
+      "excerpt_zh": "你想要被支付来听噪音吗？未来就在眼前，我的朋友。",
+      "excerpt_hi": "क्या आप शोर सुनने के लिए पैसे कमाना चाहेंगे? भविष्य अब है, मेरे दोस्त।",
+      "excerpt_ar": "ماذا عن أن تُدفع مقابل الاستماع إلى الضوضاء؟ المستقبل هو الآن، صديقي.",
+      "excerpt_bn": "শব্দ শুনতে পেয়ে টাকা উপার্জন করার কথা কেমন? ভবিষ্যৎ এখনই, আমার বন্ধু।",
+      "excerpt_ru": "Как насчет того, чтобы получать деньги за то, чтобы слушать шум? Будущее уже здесь, мой друг.",
+      "excerpt_ur": "کیا آپ شور سننے کے لیے پیسے کمانا چاہتے ہیں؟ مستقبل اب ہے، میرے دوست۔"
+    },
+    {
       "title": "X-Files: O Futuro É Agora, E Estamos Sem Filtro",
       "url": "./posts/2026/2026-03-13-x-files-o-futuro-e-agora-e-estamos-sem-filtro/",
       "markdown": "2026/2026-03-13-x-files-o-futuro-e-agora-e-estamos-sem-filtro.md",
