@@ -212,7 +212,7 @@ async function main(): Promise<void> {
 
   const baselineSamples = split.testRows.map((row) => toBaselineValidationSample(row));
   const baselineSnapshot = buildBaselineSnapshotFromSamples(baselineSamples, Date.now());
-  const baselineEvaluation = evaluateValidationGate(baselineSamples, baselineSnapshot, {
+  const baselineEvaluation = await evaluateValidationGate(baselineSamples, baselineSnapshot, {
     bootstrapIterations: options.bootstrapIterations,
     bootstrapSeed: options.seed,
     minSamples: options.minSamples
@@ -226,7 +226,7 @@ async function main(): Promise<void> {
     reliabilityBins: buildScenarioReliabilityBins(baselineSamples)
   };
 
-  const trained = runTrainedScenario({
+  const trained = await runTrainedScenario({
     trainRows: split.trainRows,
     calibrationRows: split.calibrationRows,
     testRows: split.testRows,
@@ -241,7 +241,7 @@ async function main(): Promise<void> {
     }
   });
 
-  const naturalScenario = evaluateOptionalScenario(
+  const naturalScenario = await evaluateOptionalScenario(
     'natural',
     split.testRows,
     baselineSnapshot,
@@ -255,7 +255,7 @@ async function main(): Promise<void> {
     (row) => row.naturalProbability
   );
 
-  const naturalSelfScenario = evaluateOptionalScenario(
+  const naturalSelfScenario = await evaluateOptionalScenario(
     'natural+self',
     split.testRows,
     baselineSnapshot,
@@ -269,7 +269,7 @@ async function main(): Promise<void> {
     (row) => row.naturalSelfProbability
   );
 
-  const attentionAblation = runAttentionAblation({
+  const attentionAblation = await runAttentionAblation({
     split,
     dimensions: dimensions.resolved,
     minFeatureCount: options.minFeatureCount,
@@ -909,7 +909,7 @@ function runTrainedScenario(args: {
     minSamples: number;
   };
   vectorMask?: (row: NormalizedSample) => SparseVector;
-}): TrainedScenarioResult {
+}): Promise<TrainedScenarioResult> {
   const model = new WideDeepLiteBinary(
     {
       dimensions: args.dimensions,
@@ -964,7 +964,7 @@ function runTrainedScenario(args: {
     } satisfies ValidationSample;
   });
 
-  const evaluation = evaluateValidationGate(testSamples, args.baseline, args.gateConfig);
+  const evaluation = await evaluateValidationGate(testSamples, args.baseline, args.gateConfig);
   return {
     calibration,
     testSamples,
@@ -1079,7 +1079,7 @@ function evaluateOptionalScenario(
   missingFields: string[],
   getPrediction: (row: NormalizedSample) => 0 | 1 | undefined,
   getProbability: (row: NormalizedSample) => number | undefined
-): ScenarioReport {
+): Promise<ScenarioReport> {
   const samples: ValidationSample[] = [];
   let missingCount = 0;
 
@@ -1109,7 +1109,7 @@ function evaluateOptionalScenario(
     };
   }
 
-  const evaluation = evaluateValidationGate(samples, baseline, gateConfig);
+  const evaluation = await evaluateValidationGate(samples, baseline, gateConfig);
   return {
     name,
     status: 'computed',
@@ -1133,7 +1133,7 @@ function runAttentionAblation(args: {
     minSamples: number;
   };
   featureDictionary: Map<number, string>;
-}): AttentionAblationReport {
+}): Promise<AttentionAblationReport> {
   const hasMaskingMetadata =
     args.featureDictionary.size > 0 ||
     [...args.split.trainRows, ...args.split.calibrationRows, ...args.split.testRows].some((row) => row.featureNames?.length);
@@ -1145,7 +1145,7 @@ function runAttentionAblation(args: {
     };
   }
 
-  const noAttention = runTrainedScenario({
+  const noAttention = await runTrainedScenario({
     ...args,
     trainRows: args.split.trainRows,
     calibrationRows: args.split.calibrationRows,
@@ -1153,7 +1153,7 @@ function runAttentionAblation(args: {
     vectorMask: (row) => stripAttentionFeatures(row, args.featureDictionary)
   });
 
-  const full = runTrainedScenario({
+  const full = await runTrainedScenario({
     ...args,
     trainRows: args.split.trainRows,
     calibrationRows: args.split.calibrationRows,

@@ -1,4 +1,5 @@
 import type { SparseVector } from './vectorizer.js';
+import { sigmoid, clampWeight, createSeededRandom as seededRandom } from './utils.js';
 
 export interface WideDeepLiteConfig {
   dimensions: number;
@@ -442,13 +443,6 @@ function ensureArray(source: Float32Array | undefined, length: number): Float32A
   return new Float32Array(length);
 }
 
-function clampWeight(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 1;
-  }
-  return Math.max(0, Math.min(value, 10));
-}
-
 function clampValue(value: number, clip: number): number {
   if (!Number.isFinite(value)) {
     return 0;
@@ -463,19 +457,3 @@ function clampValue(value: number, clip: number): number {
   return value;
 }
 
-function sigmoid(value: number): number {
-  if (value >= 0) {
-    const exp = Math.exp(-value);
-    return 1 / (1 + exp);
-  }
-  const exp = Math.exp(value);
-  return exp / (1 + exp);
-}
-
-function seededRandom(seed: number): () => number {
-  let state = Math.floor(seed) || 1;
-  return () => {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    return state / 0xffffffff;
-  };
-}

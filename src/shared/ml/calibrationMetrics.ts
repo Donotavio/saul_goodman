@@ -1,3 +1,7 @@
+import { clampProbability } from './utils.js';
+
+export { clampProbability };
+
 export interface CalibrationReliabilityBin {
   index: number;
   lowerBound: number;
@@ -64,9 +68,3 @@ export function buildReliabilityBins(
   }));
 }
 
-export function clampProbability(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0.5;
-  }
-  return Math.max(0, Math.min(value, 1));
-}

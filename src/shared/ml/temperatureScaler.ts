@@ -1,9 +1,9 @@
 import {
   buildReliabilityBins,
   calculateExpectedCalibrationError,
-  clampProbability,
   type CalibrationReliabilityBin
 } from './calibrationMetrics.js';
+import { sigmoid, clamp, clampProbability, clampWeight } from './utils.js';
 
 export interface CalibrationSample {
   score: number;
@@ -116,34 +116,11 @@ export class TemperatureScaler {
   }
 }
 
-function sigmoid(value: number): number {
-  if (value >= 0) {
-    const exp = Math.exp(-value);
-    return 1 / (1 + exp);
-  }
-  const exp = Math.exp(value);
-  return exp / (1 + exp);
-}
-
 function normalizeTemperature(value: number | undefined): number {
   if (!Number.isFinite(value)) {
     return 1;
   }
   return clamp(value as number, 0.05, 20);
-}
-
-function clampWeight(value: number | undefined): number {
-  if (!Number.isFinite(value)) {
-    return 1;
-  }
-  return clamp(value as number, 0.05, 10);
-}
-
-function clamp(value: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) {
-    return min;
-  }
-  return Math.min(max, Math.max(min, value));
 }
 
 export { calculateExpectedCalibrationError, buildReliabilityBins, clampProbability };

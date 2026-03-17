@@ -54,6 +54,7 @@ import {
   buildVectorFeatureNames,
   projectFeatureMap
 } from '../shared/ml/featureScenarios.js';
+import { safeDivide } from '../shared/ml/utils.js';
 
 const MODEL_META_KEY = 'sg:ml-model-meta';
 
@@ -166,6 +167,16 @@ interface MlContext {
 export class MlSuggestionEngine {
   private context: MlContext | null = null;
   private contextPromise: Promise<MlContext> | null = null;
+  private persistTimer: ReturnType<typeof setTimeout> | null = null;
+  private static readonly PERSIST_DEBOUNCE_MS = 2000;
+
+  private schedulePersist(context: MlContext): void {
+    if (this.persistTimer) clearTimeout(this.persistTimer);
+    this.persistTimer = setTimeout(() => {
+      this.persistTimer = null;
+      void this.persistContext(context);
+    }, MlSuggestionEngine.PERSIST_DEBOUNCE_MS);
+  }
 
   async buildSuggestion(
     metadata: DomainMetadata,
@@ -270,7 +281,7 @@ export class MlSuggestionEngine {
     await this.maybeActivatePseudoQuarantine(context, normalizeDomain(domain), label, Date.now());
     await this.maybeRecalibrate(context);
     await this.maybeEvaluateValidation(context);
-    await this.persistContext(context);
+    this.schedulePersist(context);
   }
 
   async getStatus(): Promise<MlModelStatus | null> {
@@ -826,7 +837,7 @@ export class MlSuggestionEngine {
     await this.incrementPseudoDailyCounter(context.trainingStore, now);
     await this.maybeRecalibrate(context);
     await this.maybeEvaluateValidation(context);
-    await this.persistContext(context);
+    this.schedulePersist(context);
   }
 
   private async appendPseudoHistory(
@@ -979,7 +990,7 @@ export class MlSuggestionEngine {
       };
     });
 
-    const evaluation = evaluateValidationGate(samples, context.validationBaseline, {
+    const evaluation = await evaluateValidationGate(samples, context.validationBaseline, {
       bootstrapIterations: 1000,
       bootstrapSeed: 4242,
       minSamples: VALIDATION_MIN_SAMPLES
@@ -1559,9 +1570,3 @@ function calculateHighConfidenceEce(samples: ValidationSample[], threshold: numb
   return safeDivide(weightedError, totalWeight);
 }
 
-function safeDivide(value: number, total: number): number {
-  if (!Number.isFinite(value) || !Number.isFinite(total) || total <= 0) {
-    return 0;
-  }
-  return value / total;
-}

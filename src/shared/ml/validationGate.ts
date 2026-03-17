@@ -1,4 +1,5 @@
 import { calculateExpectedCalibrationError } from './calibrationMetrics.js';
+import { safeDivide, clampProbability, clampWeight, createSeededRandom } from './utils.js';
 
 export interface ValidationSample {
   label: 0 | 1;
@@ -61,11 +62,11 @@ const DEFAULT_CONFIG: Required<ValidationGateConfig> = {
   minSamples: 50
 };
 
-export function evaluateValidationGate(
+export async function evaluateValidationGate(
   samples: ValidationSample[],
   previousBaseline?: ValidationBaselineSnapshot | null,
   config?: ValidationGateConfig
-): ValidationGateResult {
+): Promise<ValidationGateResult> {
   const options = { ...DEFAULT_CONFIG, ...(config ?? {}) };
   const usable = normalizeSamples(samples);
   const fallbackBaseline = previousBaseline ?? createEmptyBaseline();
@@ -101,7 +102,7 @@ export function evaluateValidationGate(
   const baseline = chooseBaseline(fallbackBaseline, baselineFromSamples, options.minSamples);
 
   const deltaMacroF1 = currentMetrics.macroF1 - baseline.macroF1;
-  const bootstrap = bootstrapDeltaMacroF1(usable, options.bootstrapIterations, options.bootstrapSeed);
+  const bootstrap = await bootstrapDeltaMacroF1(usable, options.bootstrapIterations, options.bootstrapSeed);
   const mcnemarPValue = computeMcNemarPValue(usable);
   const brier = computeWeightedBrier(usable);
   const ece = calculateExpectedCalibrationError(
@@ -178,14 +179,15 @@ function chooseBaseline(
   return previous;
 }
 
-function bootstrapDeltaMacroF1(
+async function bootstrapDeltaMacroF1(
   samples: Array<Required<ValidationSample>>,
   iterations: number,
   seed: number
-): { lower: number; upper: number } {
+): Promise<{ lower: number; upper: number }> {
   if (!samples.length || iterations <= 0) {
     return { lower: 0, upper: 0 };
   }
+  const CHUNK_SIZE = 100;
   const rng = createSeededRandom(seed);
   const n = samples.length;
   const deltas: number[] = [];
@@ -212,6 +214,10 @@ function bootstrapDeltaMacroF1(
       }))
     );
     deltas.push(modelMetrics.macroF1 - baselineMetrics.macroF1);
+
+    if ((i + 1) % CHUNK_SIZE === 0 && i + 1 < iterations) {
+      await new Promise<void>((r) => setTimeout(r, 0));
+    }
   }
 
   deltas.sort((a, b) => a - b);
@@ -348,13 +354,6 @@ function createEmptyBaseline(): ValidationBaselineSnapshot {
   };
 }
 
-function safeDivide(numerator: number, denominator: number): number {
-  if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) {
-    return 0;
-  }
-  return numerator / denominator;
-}
-
 function f1(precision: number, recall: number): number {
   if (precision <= 0 || recall <= 0) {
     return 0;
@@ -362,24 +361,3 @@ function f1(precision: number, recall: number): number {
   return (2 * precision * recall) / (precision + recall);
 }
 
-function clampProbability(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0.5;
-  }
-  return Math.max(0, Math.min(value, 1));
-}
-
-function clampWeight(value: number | undefined): number {
-  if (!Number.isFinite(value)) {
-    return 1;
-  }
-  return Math.max(0.05, Math.min(value as number, 10));
-}
-
-function createSeededRandom(seed: number): () => number {
-  let state = Math.max(1, Math.floor(seed) || 1);
-  return () => {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    return state / 0xffffffff;
-  };
-}

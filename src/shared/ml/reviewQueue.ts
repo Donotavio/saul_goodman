@@ -4,6 +4,7 @@ import type {
   MlQueueReason,
   MlReviewCandidate
 } from '../types.js';
+import { clampProbability } from './utils.js';
 
 export interface ReviewQueueInput {
   suggestion: DomainSuggestion;
@@ -84,13 +85,6 @@ function compareCandidates(
 
 function queueReasonRank(reason: MlQueueReason): number {
   return reason === 'threshold_borderline' ? 0 : 1;
-}
-
-function clampProbability(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0.5;
-  }
-  return Math.max(0, Math.min(1, value));
 }
 
 export function formatSuggestedClassification(classification: DomainCategory): string {

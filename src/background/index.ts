@@ -60,6 +60,7 @@ import { clearVscodeMetrics } from '../shared/utils/vscode-sync.js';
 import { hasHostPermission, hasLocalhostPermission, isLocalhostUrl } from '../shared/utils/permissions.js';
 import { buildReviewQueue } from '../shared/ml/reviewQueue.js';
 import { MlSuggestionEngine, type CachedMlSuggestion } from './ml-engine.js';
+import { reconcileMetricsFromTimeline } from '../shared/reconcile.js';
 
 const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
@@ -80,6 +81,7 @@ const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_RECENTLY_CLOSED_RESULTS = 25; // Chrome API limit for sessions.getRecentlyClosed
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
+const ML_RECLASSIFICATION_COOLDOWN_MS = 4 * 60 * 60 * 1000; // 4h
 const DEFAULT_REVIEW_PRODUCTIVE_THRESHOLD = 0.78;
 const DEFAULT_REVIEW_PROCRASTINATION_THRESHOLD = 0.28;
 
@@ -122,11 +124,49 @@ interface VscodeSummariesResponse {
 }
 
 interface VscodeDurationEntry {
+  start?: string;       // ISO string from daemon
+  end?: string;         // ISO string from daemon
+  startTime?: number;   // epoch ms (normalized)
+  endTime?: number;
+  duration_seconds?: number;
+  durationMs?: number;
+  project?: string;
+  language?: string;
+}
+
+interface NormalizedVscodeDuration {
   startTime: number;
   endTime: number;
   durationMs: number;
   project?: string;
   language?: string;
+}
+
+function normalizeDurationEntry(entry: VscodeDurationEntry): NormalizedVscodeDuration | null {
+  let startTime = entry.startTime;
+  let endTime = entry.endTime;
+  let durationMs = entry.durationMs;
+
+  if (startTime == null && entry.start) {
+    const parsed = Date.parse(entry.start);
+    if (!Number.isFinite(parsed)) return null;
+    startTime = parsed;
+  }
+  if (endTime == null && entry.end) {
+    const parsed = Date.parse(entry.end);
+    if (!Number.isFinite(parsed)) return null;
+    endTime = parsed;
+  }
+  if (durationMs == null && entry.duration_seconds != null) {
+    durationMs = entry.duration_seconds * 1000;
+  }
+
+  if (startTime == null || endTime == null) return null;
+  if (durationMs == null) {
+    durationMs = endTime - startTime;
+  }
+
+  return { startTime, endTime, durationMs, project: entry.project, language: entry.language };
 }
 
 interface VscodeDurationsResponse {
@@ -270,8 +310,13 @@ function isDomainInCooldown(domain: string, settings: ExtensionSettings): boolea
   if (history.ignoredUntil && history.ignoredUntil > now) {
     return true;
   }
-  if (history.decidedAt && history.decidedAs && history.decidedAt + getSuggestionCooldownMs(settings) > now) {
-    return true;
+  if (history.decidedAt && history.decidedAs) {
+    const cooldown = history.decidedAs !== 'ignored'
+      ? ML_RECLASSIFICATION_COOLDOWN_MS
+      : getSuggestionCooldownMs(settings);
+    if (history.decidedAt + cooldown > now) {
+      return true;
+    }
   }
   return false;
 }
@@ -354,9 +399,10 @@ const messageHandlers: Record<
     ]);
     pruneSuggestionCache(settings);
     const reviewCandidates = buildReviewCandidates(settings, mlModel);
+    const { openAiKey: _key, ...safeSettings } = settings;
     return {
       metrics,
-      settings,
+      settings: safeSettings,
       fairness: getFairnessSummary(),
       suggestions: Array.from(suggestionCache.values(), (entry) => entry.suggestion),
       reviewCandidates,
@@ -371,6 +417,9 @@ const messageHandlers: Record<
     applyIdleDetectionInterval(settings);
     await syncBlockingRules(settings);
     await syncVscodeMetrics(true);
+    // Reconciliar metricas antes de recalcular score
+    const metrics = await getMetricsCache();
+    reconcileMetricsFromTimeline(metrics, settings);
     await refreshScore();
     pruneSuggestionCache(settings);
   },
@@ -401,13 +450,8 @@ async function handleApplySuggestion(payload: {
     return;
   }
   const settings = await getSettingsCache();
-  const listKey = classification === 'productive' ? 'productiveDomains' : 'procrastinationDomains';
-  const list = Array.isArray(settings[listKey]) ? settings[listKey] : [];
-  if (!list.some((candidate) => domainMatches(domain, candidate))) {
-    list.push(domain);
-    settings[listKey] = Array.from(new Set(list.map(normalizeDomain))).filter(Boolean);
-  }
 
+  // 1. SuggestionsHistory (cooldown/dedup — mantido)
   const now = Date.now();
   const history = settings.suggestionsHistory ?? {};
   history[domain] = {
@@ -416,13 +460,34 @@ async function handleApplySuggestion(payload: {
     decidedAs: classification
   };
   settings.suggestionsHistory = history;
+
+  // 2. Adicionar na lista permanente
+  const targetList = classification === 'productive'
+    ? 'productiveDomains' : 'procrastinationDomains';
+  const oppositeList = classification === 'productive'
+    ? 'procrastinationDomains' : 'productiveDomains';
+
+  // Remover da lista oposta se estiver la
+  settings[oppositeList] = settings[oppositeList].filter((d) => d !== domain);
+  // Adicionar na lista alvo se nao estiver
+  if (!settings[targetList].includes(domain)) {
+    settings[targetList].push(domain);
+    settings[targetList].sort();
+  }
+
+  // 3. Treinar modelo ML com feedback
   const cached = suggestionCache.get(domain);
   await updateModelFromFeedback(domain, classification, cached);
+
+  // 4. Reconciliar metricas e salvar
   settingsCache = settings;
   suggestionCache.delete(domain);
   pruneSuggestionCache(settings);
   await saveSettings(settings);
   await syncBlockingRules(settings);
+
+  const metrics = await getMetricsCache();
+  reconcileMetricsFromTimeline(metrics, settings);
   await refreshScore();
 }
 
@@ -580,6 +645,7 @@ async function collectDomainMetadata(
           resolve(null);
           return;
         }
+        const MAX_METADATA_ARRAY_LENGTH = 100;
         const meta = (payload ?? {}) as DomainMetadata;
         const hostname = normalizeDomain(meta.hostname || fallbackHost);
         resolve({
@@ -587,7 +653,7 @@ async function collectDomainMetadata(
           title: meta.title,
           description: meta.description,
           keywords: Array.isArray(meta.keywords)
-            ? meta.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0)
+            ? meta.keywords.filter((kw) => typeof kw === 'string' && kw.trim().length > 0).slice(0, MAX_METADATA_ARRAY_LENGTH)
             : [],
           ogType: meta.ogType,
           hasVideoPlayer: Boolean(meta.hasVideoPlayer),
@@ -601,13 +667,13 @@ async function collectDomainMetadata(
           schemaTypes: Array.isArray(meta.schemaTypes)
             ? (meta.schemaTypes ?? []).filter(
                 (entry) => typeof entry === 'string' && entry.trim().length > 0
-              )
+              ).slice(0, MAX_METADATA_ARRAY_LENGTH)
             : [],
           headings: Array.isArray(meta.headings)
-            ? (meta.headings ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0)
+            ? (meta.headings ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0).slice(0, MAX_METADATA_ARRAY_LENGTH)
             : [],
           pathTokens: Array.isArray(meta.pathTokens)
-            ? (meta.pathTokens ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0)
+            ? (meta.pathTokens ?? []).filter((entry) => typeof entry === 'string' && entry.trim().length > 0).slice(0, MAX_METADATA_ARRAY_LENGTH)
             : [],
           language:
             typeof meta.language === 'string' && meta.language.trim().length > 0
@@ -814,25 +880,28 @@ async function initialize(): Promise<void> {
   }
 
   initializing = true;
-  console.info('[Saul] Background initialize:start', { at: new Date().toISOString() });
+  try {
+    console.info('[Saul] Background initialize:start', { at: new Date().toISOString() });
 
-  await Promise.all([getSettingsCache(), getMetricsCache()]);
-  await hydrateFairnessState();
-  await updateRestoredItems();
+    await Promise.all([getSettingsCache(), getMetricsCache()]);
+    await hydrateFairnessState();
+    await updateRestoredItems();
 
-  chrome.action.setBadgeBackgroundColor({ color: '#000000' });
-  if (settingsCache) {
-    applyIdleDetectionInterval(settingsCache);
-    await syncBlockingRules(settingsCache);
+    chrome.action.setBadgeBackgroundColor({ color: '#000000' });
+    if (settingsCache) {
+      applyIdleDetectionInterval(settingsCache);
+      await syncBlockingRules(settingsCache);
+    }
+    await scheduleTrackingAlarm();
+    await scheduleMidnightAlarm();
+    await hydrateActiveTab();
+    await syncVscodeMetrics(true);
+    await notifyReleaseNotesIfNeeded();
+
+    console.info('[Saul] Background initialize:complete', { at: new Date().toISOString() });
+  } finally {
+    initializing = false;
   }
-  await scheduleTrackingAlarm();
-  await scheduleMidnightAlarm();
-  await hydrateActiveTab();
-  await syncVscodeMetrics(true);
-  await notifyReleaseNotesIfNeeded();
-
-  console.info('[Saul] Background initialize:complete', { at: new Date().toISOString() });
-  initializing = false;
 }
 
 async function handleTrackingTick(): Promise<void> {
@@ -1361,7 +1430,7 @@ function resolveSummaryTotalMs(summary: VscodeSummariesResponse, dateKey: string
   return Math.max(0, seconds) * 1000;
 }
 
-function isValidVscodeDuration(duration: VscodeDurationEntry): boolean {
+function isValidVscodeDuration(duration: NormalizedVscodeDuration): boolean {
   const project = (duration.project ?? '').trim();
   const language = (duration.language ?? '').trim();
   if (!project || project.toLowerCase() === 'unknown') {
@@ -1413,7 +1482,7 @@ async function fetchVscodeTrackingSummary(
 async function fetchVscodeDurations(
   baseUrl: string,
   pairingKey: string
-): Promise<VscodeDurationEntry[]> {
+): Promise<NormalizedVscodeDuration[]> {
   const perPage = 200;
   let page = 1;
   let total = Infinity;
@@ -1447,7 +1516,12 @@ async function fetchVscodeDurations(
     }
   }
 
-  return entries;
+  const normalized: NormalizedVscodeDuration[] = [];
+  for (const entry of entries) {
+    const norm = normalizeDurationEntry(entry);
+    if (norm) normalized.push(norm);
+  }
+  return normalized;
 }
 
 /**

@@ -144,13 +144,18 @@ export class MlTrainingStore {
     return new Promise((resolve, reject) => {
       const tx = db.transaction(this.examplesStore, 'readonly');
       const store = tx.objectStore(this.examplesStore);
-      const request = store.getAll();
+      const entries: StoredTrainingExample[] = [];
+      const index = store.index('createdAt');
+      const request = index.openCursor(null, 'prev');
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const entries = (request.result as StoredTrainingExample[])
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .slice(0, limit);
-        resolve(entries);
+        const cursor = request.result;
+        if (!cursor || entries.length >= limit) {
+          resolve(entries);
+          return;
+        }
+        entries.push(cursor.value as StoredTrainingExample);
+        cursor.continue();
       };
     });
   }
@@ -467,6 +472,7 @@ export class MlTrainingStore {
       };
       request.onsuccess = () => resolve(request.result);
     });
+    this.dbPromise.catch(() => { this.dbPromise = null; });
 
     return this.dbPromise;
   }

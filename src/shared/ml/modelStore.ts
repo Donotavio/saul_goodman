@@ -217,6 +217,7 @@ export class ModelStore {
       };
       request.onsuccess = () => resolve(request.result);
     });
+    this.dbPromise.catch(() => { this.dbPromise = null; });
 
     return this.dbPromise;
   }

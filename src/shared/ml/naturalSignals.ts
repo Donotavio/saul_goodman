@@ -1,6 +1,7 @@
 import type { DomainMetadata, ExtensionSettings, DailyMetrics } from '../types.js';
 import type { FeatureMap } from './featureExtractor.js';
 import type { DomainBehaviorStats } from './behaviorSignals.js';
+import { safeDivide, clamp } from './utils.js';
 
 const CONCEPT_VECTOR_DIMENSIONS = 256;
 const MAX_SIGNAL_SAMPLES = 256;
@@ -619,20 +620,6 @@ function calculateEntropy(values: number[]): number {
     entropy -= probability * Math.log(probability);
   });
   return entropy / Math.log(Math.max(2, positive.length));
-}
-
-function safeDivide(value: number, total: number): number {
-  if (!Number.isFinite(value) || !Number.isFinite(total) || total <= 0) {
-    return 0;
-  }
-  return value / total;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) {
-    return min;
-  }
-  return Math.min(max, Math.max(min, value));
 }
 
 function addFeature(features: FeatureMap, key: string, value: number): void {

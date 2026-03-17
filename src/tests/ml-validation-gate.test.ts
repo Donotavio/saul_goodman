@@ -28,11 +28,11 @@ function makeSamplesBetterModel(total = 240): ValidationSample[] {
   return samples;
 }
 
-test('validation gate passes when false productive errors are significantly reduced', () => {
+test('validation gate passes when false productive errors are significantly reduced', async () => {
   const samples = makeSamplesBetterModel();
   const baseline = buildBaselineSnapshotFromSamples(samples, Date.UTC(2026, 2, 12));
 
-  const result = evaluateValidationGate(samples, baseline, {
+  const result = await evaluateValidationGate(samples, baseline, {
     bootstrapIterations: 400,
     bootstrapSeed: 99,
     minSamples: 100
@@ -45,7 +45,7 @@ test('validation gate passes when false productive errors are significantly redu
   assert.equal(result.summary.gatePassed, true);
 });
 
-test('validation gate fails when model increases false productive errors', () => {
+test('validation gate fails when model increases false productive errors', async () => {
   const samples = makeSamplesBetterModel().map((sample) => ({
     ...sample,
     modelPrediction: sample.label === 0 && sample.baselinePrediction === 0 ? 1 : sample.modelPrediction,
@@ -53,7 +53,7 @@ test('validation gate fails when model increases false productive errors', () =>
   }));
   const baseline = buildBaselineSnapshotFromSamples(samples, Date.UTC(2026, 2, 12));
 
-  const result = evaluateValidationGate(samples, baseline, {
+  const result = await evaluateValidationGate(samples, baseline, {
     bootstrapIterations: 300,
     bootstrapSeed: 123,
     minSamples: 80

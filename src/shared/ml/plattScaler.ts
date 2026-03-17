@@ -1,4 +1,5 @@
-import { calculateExpectedCalibrationError, clampProbability } from './calibrationMetrics.js';
+import { calculateExpectedCalibrationError } from './calibrationMetrics.js';
+import { sigmoid, clampProbability, clampWeight } from './utils.js';
 
 export interface CalibrationSample {
   score: number;
@@ -114,18 +115,3 @@ export class PlattScaler {
   }
 }
 
-function sigmoid(value: number): number {
-  if (value >= 0) {
-    const exp = Math.exp(-value);
-    return 1 / (1 + exp);
-  }
-  const exp = Math.exp(value);
-  return exp / (1 + exp);
-}
-
-function clampWeight(value: number | undefined): number {
-  if (!Number.isFinite(value)) {
-    return 1;
-  }
-  return Math.max(0.05, Math.min(value as number, 10));
-}

@@ -5,6 +5,7 @@ import {
   type ValidationSummary,
   type ValidationSample
 } from './validationGate.js';
+import { clamp } from './utils.js';
 
 export interface ReplaySample {
   timestamp: number;
@@ -28,14 +29,14 @@ export interface ReplayHarnessResult {
   scenarios: ReplayScenarioMetrics[];
 }
 
-export function runReplayAblation(
+export async function runReplayAblation(
   samples: ReplaySample[],
   options?: {
     bootstrapIterations?: number;
     bootstrapSeed?: number;
     minSamples?: number;
   }
-): ReplayHarnessResult {
+): Promise<ReplayHarnessResult> {
   const ordered = [...samples]
     .filter((sample) => Number.isFinite(sample.timestamp))
     .sort((a, b) => a.timestamp - b.timestamp);
@@ -56,7 +57,7 @@ export function runReplayAblation(
     modelPrediction: sample.naturalPrediction,
     modelProbability: clamp(sample.naturalProbability, 0, 1)
   }));
-  const natural = evaluateValidationGate(naturalSamples, baseline, {
+  const natural = await evaluateValidationGate(naturalSamples, baseline, {
     bootstrapIterations: options?.bootstrapIterations ?? 1000,
     bootstrapSeed: options?.bootstrapSeed ?? 4242,
     minSamples: options?.minSamples ?? 50
@@ -69,7 +70,7 @@ export function runReplayAblation(
     modelPrediction: sample.naturalSelfPrediction ?? sample.naturalPrediction,
     modelProbability: clamp(sample.naturalSelfProbability ?? sample.naturalProbability, 0, 1)
   }));
-  const naturalSelf = evaluateValidationGate(naturalSelfSamples, baseline, {
+  const naturalSelf = await evaluateValidationGate(naturalSelfSamples, baseline, {
     bootstrapIterations: options?.bootstrapIterations ?? 1000,
     bootstrapSeed: (options?.bootstrapSeed ?? 4242) + 1,
     minSamples: options?.minSamples ?? 50
@@ -113,9 +114,3 @@ function baselineAsSummary(baseline: ValidationBaselineSnapshot, sampleSize: num
   };
 }
 
-function clamp(value: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) {
-    return min;
-  }
-  return Math.min(max, Math.max(min, value));
-}

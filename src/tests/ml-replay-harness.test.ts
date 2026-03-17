@@ -25,8 +25,8 @@ function buildSamples(total = 240): ReplaySample[] {
   return samples;
 }
 
-test('replay harness reports natural scenarios with reduced false productive rate', () => {
-  const result = runReplayAblation(buildSamples(), {
+test('replay harness reports natural scenarios with reduced false productive rate', async () => {
+  const result = await runReplayAblation(buildSamples(), {
     bootstrapIterations: 300,
     bootstrapSeed: 99,
     minSamples: 80
