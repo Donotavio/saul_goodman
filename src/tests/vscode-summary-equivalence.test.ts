@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 import { normalizeVscodeTrackingSummary } from '../shared/vscode-summary.js';
 
 const require = createRequire(import.meta.url);
-const { splitDurationByDay } = require('../../saul-daemon/src/vscode-aggregation.cjs');
+const { splitDurationByDay } = require('../../vscode-extension/daemon/src/vscode-aggregation.cjs');
 
 function legacyAggregate(durations: Array<{ startTime: number; endTime: number; project?: string; language?: string }>, startMs: number, endMs: number) {
   const timeline: Array<{ startTime: number; endTime: number; durationMs: number }> = [];

@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { mergeOverlappingSlices } = require('../../saul-daemon/src/vscode-aggregation.cjs');
+const { mergeOverlappingSlices } = require('../../vscode-extension/daemon/src/vscode-aggregation.cjs');
 
 test('mergeOverlappingSlices unions overlapping intervals', () => {
   const slices = [

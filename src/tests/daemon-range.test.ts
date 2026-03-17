@@ -6,7 +6,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-const DAEMON_PATH = path.join(process.cwd(), 'saul-daemon', 'index.cjs');
+const DAEMON_PATH = path.join(process.cwd(), 'vscode-extension', 'daemon', 'index.cjs');
 
 function formatDateKey(date: Date): string {
   const year = date.getFullYear();

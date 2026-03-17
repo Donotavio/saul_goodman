@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const aggregationPath = pathToFileURL(
-  path.join(process.cwd(), 'saul-daemon', 'src', 'vscode-aggregation.cjs')
+  path.join(process.cwd(), 'vscode-extension', 'daemon', 'src', 'vscode-aggregation.cjs')
 ).href;
 
 test('buildDurations splits on gaps and group changes', async () => {

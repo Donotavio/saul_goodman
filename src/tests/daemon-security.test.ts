@@ -6,7 +6,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-const DAEMON_PATH = path.join(process.cwd(), 'saul-daemon', 'index.cjs');
+const DAEMON_PATH = path.join(process.cwd(), 'vscode-extension', 'daemon', 'index.cjs');
 
 async function waitForHealth(port: number): Promise<void> {
   const origin = `http://127.0.0.1:${port}`;

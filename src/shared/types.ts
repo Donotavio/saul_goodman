@@ -78,13 +78,6 @@ export interface DailyMetrics {
   contextIndices?: Record<ContextModeValue, number | undefined>;
 }
 
-export interface ApiStats {
-  index: number;
-  updatedAt: number;
-  productiveMs: number;
-  procrastinationMs: number;
-}
-
 export interface TabSwitchBreakdown {
   productiveToProductive: number;
   productiveToProcrastination: number;
@@ -236,11 +229,6 @@ export interface ContextSegment {
  * Histórico diário de segmentos de contexto.
  */
 export type ContextHistory = ContextSegment[];
-
-export interface HolidaySettingsSnapshot {
-  enabled: boolean;
-  countryCode?: string;
-}
 
 export interface HolidayCacheEntry {
   fetchedAt: number;
@@ -416,25 +404,4 @@ export interface SuggestionHistoryEntry {
   ignoredUntil?: number;
   decidedAt?: number;
   decidedAs?: DomainCategory | 'ignored';
-}
-
-
-export interface DomainListChange {
-  domain: string;
-  category: DomainCategory;
-  action: 'add' | 'remove';
-}
-
-export interface OptionsFormState {
-  productiveDomains: string[];
-  procrastinationDomains: string[];
-  blockProcrastination?: boolean;
-  weights: WeightConfig;
-  inactivityThresholdMs: number;
-  openAiKey?: string;
-  criticalScoreThreshold?: number;
-  workSchedule?: WorkInterval[];
-  vscodeIntegrationEnabled?: boolean;
-  vscodeLocalApiUrl?: string;
-  vscodePairingKey?: string;
 }

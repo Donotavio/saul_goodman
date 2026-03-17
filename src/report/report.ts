@@ -7,6 +7,7 @@ import {
   HourlyBucket,
   LocalePreference,
   MlModelStatus,
+  MlReviewCandidate,
   TimelineEntry,
   WorkInterval,
   ContextModeValue,
@@ -3134,6 +3135,7 @@ interface MetricsResponse {
   fairness?: FairnessSummary;
   activeSuggestion?: DomainSuggestion | null;
   suggestions?: DomainSuggestion[];
+  reviewCandidates?: MlReviewCandidate[];
   mlModel?: MlModelStatus | null;
 }
 
