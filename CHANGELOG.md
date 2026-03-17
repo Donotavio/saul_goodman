@@ -3,6 +3,24 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.21.32] - 2026-03-17
+
+- Novo modelo WideDeepLite (wide+deep com embeddings esparsos e otimizador AdaGrad).
+- CLI de replay ML offline (`tools/ml_replay`) para reprocessamento de sinais.
+- Stack ML completa: temperature scaler, validation gate bootstrap, sinais naturais/comportamentais.
+- Oito correções do code review: IDB cache, leak de openAiKey, limites de metadata, flag initializing, bootstrap chunked async, cursor getRecentExamples, persistContext debounce e utils DRY.
+- Módulo reconcile para recálculo de métricas.
+- Remoção do diretório `saul-daemon` legado.
+- Fix CI: referência ao `saul-daemon/package.json` deletado.
+
+## [1.21.31] - 2026-03-17
+
+- Atualização de dependências npm via Dependabot (grupo npm_and_yarn, 3 pacotes, 2 diretórios).
+
+## [1.21.30] - 2026-02-17
+
+- Atualização de docs internos (changelog e guias de publicação).
+
 ## [1.21.29] - 2026-02-17
 
 - Corrigimos a geração de NLS da extensão VS Code ao incluir a chave `config_daemon_path_description`.
@@ -258,6 +276,24 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.21.32] - 2026-03-17
+
+- New WideDeepLite model (wide+deep with sparse embeddings and AdaGrad optimizer).
+- Offline ML replay CLI (`tools/ml_replay`) for signal reprocessing.
+- Full ML stack: temperature scaler, validation gate bootstrap, natural/behavioral signals.
+- Eight code-review fixes: IDB cache, openAiKey leak, metadata limits, initializing flag, bootstrap chunked async, cursor getRecentExamples, persistContext debounce, and utils DRY.
+- Reconcile module for metric recalculation.
+- Removed legacy `saul-daemon` directory.
+- CI fix: removed reference to deleted `saul-daemon/package.json`.
+
+## [1.21.31] - 2026-03-17
+
+- Updated npm dependencies via Dependabot (npm_and_yarn group, 3 packages, 2 directories).
+
+## [1.21.30] - 2026-02-17
+
+- Updated internal docs (changelog and publishing guides).
+
 ## [1.21.29] - 2026-02-17
 
 - Fixed VS Code NLS generation by adding the `config_daemon_path_description` key.
@@ -512,6 +548,24 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.21.32] - 2026-03-17
+
+- Nuevo modelo WideDeepLite (wide+deep con embeddings dispersos y optimizador AdaGrad).
+- CLI de replay ML offline (`tools/ml_replay`) para reprocesamiento de señales.
+- Stack ML completa: temperature scaler, validation gate bootstrap, señales naturales/comportamentales.
+- Ocho correcciones del code review: IDB cache, leak de openAiKey, límites de metadata, flag initializing, bootstrap chunked async, cursor getRecentExamples, persistContext debounce y utils DRY.
+- Módulo reconcile para recálculo de métricas.
+- Eliminación del directorio `saul-daemon` legado.
+- Fix CI: referencia al `saul-daemon/package.json` eliminado.
+
+## [1.21.31] - 2026-03-17
+
+- Actualización de dependencias npm vía Dependabot (grupo npm_and_yarn, 3 paquetes, 2 directorios).
+
+## [1.21.30] - 2026-02-17
+
+- Actualización de docs internos (changelog y guías de publicación).
 
 ## [1.21.29] - 2026-02-17
 
