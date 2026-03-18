@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "O milagre da tecnologia: um AI que fala mais do que você!",
+      "url": "./posts/2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce/",
+      "markdown": "2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce.md",
+      "date": "2026-03-18",
+      "category": "negocios",
+      "tags": [
+        "tecnologia",
+        "AI",
+        "produtividade",
+        "comunicação",
+        "sarcasmo"
+      ],
+      "excerpt": "Quando a tecnologia não só fala, mas também faz você acreditar que tudo é possível. É, eu sei, impressionante, né?",
+      "title_en": "The Miracle of Technology: An AI That Talks More Than You Do!",
+      "title_es": "El milagro de la tecnología: ¡una IA que habla más que tú!",
+      "title_fr": "Le miracle de la technologie : une IA qui parle plus que vous !",
+      "title_de": "Das Wunder der Technologie: Eine KI, die mehr spricht als Sie!",
+      "title_it": "Il miracolo della tecnologia: un'AI che parla più di te!",
+      "title_tr": "Teknolojinin Mucizesi: Senden Daha Fazla Konuşan Bir AI!",
+      "title_zh": "科技的奇迹：一个比你说得还多的AI！",
+      "title_hi": "प्रौद्योगिकी का चमत्कार: एक AI जो आपसे ज्यादा बोलता है!",
+      "title_ar": "معجزة التكنولوجيا: ذكاء اصطناعي يتحدث أكثر منك!",
+      "title_bn": "প্রযুক্তির অলৌকিকতা: একটি AI যা আপনার চেয়ে বেশি কথা বলে!",
+      "title_ru": "Чудо технологии: ИИ, который говорит больше, чем вы!",
+      "title_ur": "ٹیکنالوجی کا معجزہ: ایک AI جو آپ سے زیادہ بولتا ہے!",
+      "tone": "incredulo",
+      "tags_en": [
+        "technology",
+        "AI",
+        "productivity",
+        "communication",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "tecnología",
+        "IA",
+        "productividad",
+        "comunicación",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "technologie",
+        "IA",
+        "productivité",
+        "communication",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Technologie",
+        "KI",
+        "Produktivität",
+        "Kommunikation",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "tecnologia",
+        "AI",
+        "produttività",
+        "comunicazione",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "teknoloji",
+        "AI",
+        "verimlilik",
+        "iletişim",
+        "alay"
+      ],
+      "tags_zh": [
+        "科技",
+        "人工智能",
+        "生产力",
+        "沟通",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "प्रौद्योगिकी",
+        "AI",
+        "उत्पादकता",
+        "संचार",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "تكنولوجيا",
+        "ذكاء اصطناعي",
+        "إنتاجية",
+        "اتصال",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "প্রযুক্তি",
+        "AI",
+        "উৎপাদনশীলতা",
+        "যোগাযোগ",
+        "বিদ্রূপ"
+      ],
+      "tags_ru": [
+        "технология",
+        "ИИ",
+        "продуктивность",
+        "коммуникация",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "ٹیکنالوجی",
+        "AI",
+        "پیداواری",
+        "رابطہ",
+        "تہذیبی طنز"
+      ],
+      "source_title": "The tech that restored Eric Dane’s voice shows how AI can be used for good, says Rebecca Gayheart Dane",
+      "source_url": "https://www.fastcompany.com/91510490/the-tech-that-restored-eric-danes-voice-shows-how-ai-can-be-used-for-good-says-howard-gayheart-dane",
+      "source_published_at": "2026-03-18T10:45:00",
+      "excerpt_en": "When technology not only talks but also makes you believe that anything is possible. Yeah, I know, impressive, right?",
+      "excerpt_es": "Cuando la tecnología no solo habla, sino que también te hace creer que todo es posible. Sí, lo sé, impresionante, ¿verdad?",
+      "excerpt_fr": "Quand la technologie ne se contente pas de parler, mais vous fait aussi croire que tout est possible. Oui, je sais, impressionnant, non ?",
+      "excerpt_de": "Wenn Technologie nicht nur spricht, sondern Sie auch glauben lässt, dass alles möglich ist. Ja, ich weiß, beeindruckend, oder?",
+      "excerpt_it": "Quando la tecnologia non solo parla, ma ti fa anche credere che tutto sia possibile. Sì, lo so, impressionante, vero?",
+      "excerpt_tr": "Teknoloji sadece konuşmakla kalmıyor, aynı zamanda her şeyin mümkün olduğuna inanmanı sağlıyor. Evet, biliyorum, etkileyici, değil mi?",
+      "excerpt_zh": "当科技不仅会说话，还让你相信一切皆有可能。是的，我知道，令人印象深刻，对吧？",
+      "excerpt_hi": "जब प्रौद्योगिकी न केवल बोलती है, बल्कि आपको विश्वास दिलाती है कि सब कुछ संभव है। हाँ, मुझे पता है, प्रभावशाली है, है ना?",
+      "excerpt_ar": "عندما تتحدث التكنولوجيا ليس فقط، بل تجعل منك تصدق أن كل شيء ممكن. نعم، أعلم، مذهل، أليس كذلك؟",
+      "excerpt_bn": "যখন প্রযুক্তি শুধু কথা বলে না, বরং আপনাকে বিশ্বাস করায় যে সবকিছু সম্ভব। হ্যাঁ, আমি জানি, চমৎকার, তাই না?",
+      "excerpt_ru": "Когда технология не только говорит, но и заставляет вас поверить, что все возможно. Да, я знаю, впечатляет, правда?",
+      "excerpt_ur": "جب ٹیکنالوجی نہ صرف بولتی ہے بلکہ آپ کو یقین دلاتی ہے کہ سب کچھ ممکن ہے۔ ہاں، میں جانتا ہوں، متاثر کن ہے، نا؟"
+    },
+    {
       "title": "Audio AI Trainer: O Novo Emprego dos Sonhos para Quem Ama Ouvir Barulho",
       "url": "./posts/2026/2026-03-16-audio-ai-trainer-o-novo-emprego-dos-sonhos-para-quem-ama-ouvir-barulho/",
       "markdown": "2026/2026-03-16-audio-ai-trainer-o-novo-emprego-dos-sonhos-para-quem-ama-ouvir-barulho.md",
