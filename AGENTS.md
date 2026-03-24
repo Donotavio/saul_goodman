@@ -1,47 +1,43 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+This repository uses project-specific skills for Codex.
 
-- Extension code lives in `src/` and is organized by domain: `background/`, `content/`, `popup/`, `options/`, `report/`, `shared/utils/`, `tests/`.
-- Extension assets: icons in `src/img/`; vendored libs in `src/vendor/`.
-- Compiled output is written to `dist/` (mirrors `src/`). Never edit `dist/` directly.
-- Landing site and blog live in `site/` (`site/blog/` for blog pages). Static assets belong in `site/assets/`.
-- Localization lives in `_locales/<dir>/messages.json` (Chrome format). Site/blog consume a copied view under `site/_locales/` and `site/blog/_locales/`.
-- Documentation lives in `docs/` (update when UX flows/metrics/copy change).
-- Tooling lives in `tools/` (i18n scripts under `tools/i18n/`, blog content engine under `tools/content_engine/`).
-- VS Code companion extension lives in `vscode-extension/`. Other auxiliary pieces may exist (e.g., `saul-daemon/`).
+## Skill routing
 
-## Build, Test, and Development Commands
+Use the minimum set of skills required for each task.
 
-- `npm install` — install dependencies (Node 18+).
-- `npm run build` — compile TypeScript to `dist/`.
-- `npm run watch` — incremental rebuild while developing.
-- `npm test` — build, then run Node’s native test runner over `dist/tests/**/*.test.js`.
-- `npm run clean` — remove `dist/` for a pristine build.
-- `npm run i18n:copy-site` — copy `_locales/` into `site/_locales/` and `site/blog/_locales/` for local site/blog dev.
-- `npm run content:engine` — generate new blog posts and update blog index (uses `tools/content_engine/`).
+- `skills/saul_backend/SKILL.md`
+  - Use for Saul Daemon, local HTTP endpoints, JSON persistence, pairing key auth, Chrome <-> VS Code sync, local API contracts, retention rules, CORS, telemetry ingestion.
 
-## Coding Style & Naming Conventions
+- `skills/saul_frontend/SKILL.md`
+  - Use for Chrome extension UI, popup, options, report, block page, background/content interactions that affect UX, static site/blog pages, i18n and copy updates.
 
-- TypeScript ES modules, 2-space indentation, semicolons.
-- Exported helpers/functions declare explicit return types.
-- Naming: `PascalCase` for types/interfaces, `camelCase` for values/functions, `UPPER_SNAKE_CASE` for constants.
-- Keep logic near its domain (e.g., background work in `src/background/`, shared helpers in `src/shared/utils/`).
+- `skills/saul_ml/SKILL.md`
+  - Use for local auto-classification, feature extraction, online logistic regression, IndexedDB model persistence, confidence thresholds, suggestion cooldown and feedback learning.
 
-## Testing Guidelines
+## Architecture guardrails
 
-- Write deterministic tests in `src/tests/**/*.test.ts` (or `*.spec.ts`), compiled into `dist/tests/`.
-- Mock Chrome APIs, timers, and storage; avoid network/time-dependent behavior.
-- Run `npm test` before touching scoring, storage, tab tracking, i18n, or report generation.
+- The product is local-first. Do not introduce external backends unless explicitly requested.
+- Browser data stays in `chrome.storage.local` and IndexedDB when applicable.
+- VS Code integration is optional and depends on Saul Daemon running on localhost.
+- Any network call must be opt-in and documented.
+- Do not edit `dist/` directly. Build outputs must come from source files.
+- Prefer changes that preserve privacy and avoid sending code or sensitive browsing content externally.
 
-## Commit & Pull Request Guidelines
+## Repository facts
 
-- Commits: short, imperative subjects (e.g., “Add inactive time tracking”).
-- PRs: link issues, describe user-facing impact, and include screenshots for popup/options/site/blog UI changes.
-- Keep scope focused; update `docs/` and/or `README.md` when UX flows, permissions, or metrics change.
+- Main product: Chrome extension in `src/`
+- Local bridge service: `saul-daemon/`
+- VS Code companion: `vscode-extension/`
+- Static site/blog: `site/`
+- Official docs source of truth: `docs/`
 
-## Security & Configuration Tips
+## Documentation to consult before changes
 
-- Persist data in `chrome.storage.local`.
-- Avoid adding remote calls without explicit opt-in; never log sensitive domains or API keys.
-- Vendor third-party libs in `src/vendor/` and document source/version; review `manifest.json` permissions when needed.
+- `docs/architecture.md`
+- `docs/chrome-extension.md`
+- `docs/saul-daemon.md`
+- `docs/vscode-extension.md`
+- `docs/auto-classification.md`
+- `docs/i18n.md`
+- `docs/blog.md`
