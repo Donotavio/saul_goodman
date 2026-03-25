@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "A Revolução da Procrastinação: Como a AI Pode Fazer Você Trabalhar Menos",
+      "url": "./posts/2026/2026-03-25-a-revolucao-da-procrastinacao-como-a-ai-pode-fazer-voce-trabalhar-menos/",
+      "markdown": "2026/2026-03-25-a-revolucao-da-procrastinacao-como-a-ai-pode-fazer-voce-trabalhar-menos.md",
+      "date": "2026-03-25",
+      "category": "dev-performance",
+      "tags": [
+        "produtividade",
+        "AI",
+        "solopreneurs",
+        "marketing",
+        "procrastinação"
+      ],
+      "excerpt": "Solopreneurs, bem-vindos à era da AI, onde sua única tarefa é não fazer nada.",
+      "title_en": "The Procrastination Revolution: How AI Can Make You Work Less",
+      "title_es": "La Revolución de la Procrastinación: Cómo la IA Puede Hacerte Trabajar Menos",
+      "title_fr": "La Révolution de la Procrastination : Comment l'IA Peut Vous Faire Travailler Moins",
+      "title_de": "Die Revolution der Prokrastination: Wie KI Sie weniger arbeiten lässt",
+      "title_it": "La Rivoluzione della Procrastinazione: Come l'AI Può Farti Lavorare Meno",
+      "title_tr": "Ertelemenin Devrimi: AI Nasıl Daha Az Çalışmanızı Sağlayabilir",
+      "title_zh": "拖延革命：人工智能如何让你工作更少",
+      "title_hi": "प्रोकास्टिनेशन की क्रांति: कैसे AI आपको कम काम करने में मदद कर सकता है",
+      "title_ar": "ثورة التسويف: كيف يمكن للذكاء الاصطناعي أن يجعلك تعمل أقل",
+      "title_bn": "প্রকৃতির বিপ্লব: কিভাবে AI আপনাকে কম কাজ করতে সাহায্য করতে পারে",
+      "title_ru": "Революция Прокрастинации: Как ИИ Может Заставить Вас Работать Меньше",
+      "title_ur": "پروکرستینیشن کا انقلاب: AI آپ کو کم کام کرنے میں کیسے مدد کر سکتا ہے",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "AI",
+        "solopreneurs",
+        "marketing",
+        "procrastination"
+      ],
+      "tags_es": [
+        "productividad",
+        "IA",
+        "solopreneurs",
+        "marketing",
+        "procrastinación"
+      ],
+      "tags_fr": [
+        "productivité",
+        "IA",
+        "solopreneurs",
+        "marketing",
+        "procrastination"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "KI",
+        "Solopreneure",
+        "Marketing",
+        "Prokrastination"
+      ],
+      "tags_it": [
+        "produttività",
+        "AI",
+        "solopreneur",
+        "marketing",
+        "procrastinazione"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "AI",
+        "soloprenörler",
+        "pazarlama",
+        "erteleme"
+      ],
+      "tags_zh": [
+        "生产力",
+        "人工智能",
+        "独立创业者",
+        "营销",
+        "拖延"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "AI",
+        "सोलोप्रेनर्स",
+        "मार्केटिंग",
+        "प्रोकास्टिनेशन"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "الذكاء الاصطناعي",
+        "رواد الأعمال المستقلين",
+        "التسويق",
+        "التسويف"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "AI",
+        "সোলোপ্রেনার",
+        "মার্কেটিং",
+        "প্রকৃতির"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "ИИ",
+        "солопренеры",
+        "маркетинг",
+        "прокрастинация"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "AI",
+        "سولوپریونرز",
+        "مارکیٹنگ",
+        "پروکرستینیشن"
+      ],
+      "source_title": "5 AI projects every solo business owner should try",
+      "source_url": "https://www.fastcompany.com/91511546/5-ai-projects-every-solo-business-owner-should-try",
+      "source_published_at": "2026-03-25T08:00:00",
+      "excerpt_en": "Solopreneurs, welcome to the age of AI, where your only task is to do nothing.",
+      "excerpt_es": "Solopreneurs, bienvenidos a la era de la IA, donde tu única tarea es no hacer nada.",
+      "excerpt_fr": "Solopreneurs, bienvenue à l'ère de l'IA, où votre seule tâche est de ne rien faire.",
+      "excerpt_de": "Solopreneure, willkommen im Zeitalter der KI, wo Ihre einzige Aufgabe darin besteht, nichts zu tun.",
+      "excerpt_it": "Solopreneur, benvenuti nell'era dell'AI, dove il vostro unico compito è non fare nulla.",
+      "excerpt_tr": "Soloprenörler, AI çağını hoş geldiniz, burada tek göreviniz hiçbir şey yapmamaktır.",
+      "excerpt_zh": "独立创业者们，欢迎来到人工智能时代，在这里你唯一的任务就是不做任何事。",
+      "excerpt_hi": "सोलोप्रेनर्स, AI के युग में आपका स्वागत है, जहाँ आपका एकमात्र काम कुछ न करना है।",
+      "excerpt_ar": "أهلاً بكم، رواد الأعمال المستقلين، في عصر الذكاء الاصطناعي، حيث تكون مهمتكم الوحيدة هي عدم القيام بأي شيء.",
+      "excerpt_bn": "সোলোপ্রেনাররা, AI যুগে আপনাদের স্বাগতম, যেখানে আপনার একমাত্র কাজ কিছুই না করা।",
+      "excerpt_ru": "Солопренеры, добро пожаловать в эпоху ИИ, где ваша единственная задача — ничего не делать.",
+      "excerpt_ur": "سولوپریونرز، AI کے دور میں خوش آمدید، جہاں آپ کا واحد کام کچھ نہ کرنا ہے۔"
+    },
+    {
       "title": "O milagre da tecnologia: um AI que fala mais do que você!",
       "url": "./posts/2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce/",
       "markdown": "2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce.md",
