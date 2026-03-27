@@ -128,6 +128,120 @@
       "excerpt_ur": "سولوپریونرز، AI کے دور میں خوش آمدید، جہاں آپ کا واحد کام کچھ نہ کرنا ہے۔"
     },
     {
+      "title": "O Trabalho Remoto: A Solução que Ninguém Pediu, Mas Todos Aceitaram",
+      "url": "./posts/2026/2026-03-27-o-trabalho-remoto-a-solucao-que-ninguem-pediu-mas-todos-aceitaram/",
+      "markdown": "2026/2026-03-27-o-trabalho-remoto-a-solucao-que-ninguem-pediu-mas-todos-aceitaram.md",
+      "date": "2026-03-27",
+      "category": "trabalho-remoto",
+      "tags": [
+        "trabalho-remoto",
+        "produtividade",
+        "sarcasmo",
+        "home-office"
+      ],
+      "excerpt": "O trabalho remoto virou a solução salvadora do mundo corporativo, quem diria, né?",
+      "title_en": "Remote Work: The Solution Nobody Asked For, But Everyone Accepted",
+      "title_es": "El Trabajo Remoto: La Solución que Nadie Pidió, Pero Todos Aceptaron",
+      "title_fr": "Le Télétravail : La Solution que Personne n'a Demandée, Mais que Tout le Monde a Acceptée",
+      "title_de": "Remote-Arbeit: Die Lösung, die Niemand Gefordert Hat, Aber Alle Akzeptiert Haben",
+      "title_it": "Il Lavoro Remoto: La Soluzione Che Nessuno Ha Chiesto, Ma Tutti Hanno Accettato",
+      "title_tr": "Uzaktan Çalışma: Kimsenin Talep Etmediği, Ama Herkesin Kabul Ettiği Çözüm",
+      "title_zh": "远程工作：没人要求的解决方案，但大家都接受了",
+      "title_hi": "दूरस्थ कार्य: वह समाधान जिसे किसी ने नहीं मांगा, लेकिन सभी ने स्वीकार किया",
+      "title_ar": "العمل عن بُعد: الحل الذي لم يطلبه أحد، لكن الجميع قبله",
+      "title_bn": "দূরবর্তী কাজ: যে সমাধানটি কেউ চায়নি, কিন্তু সবাই গ্রহণ করেছে",
+      "title_ru": "Удаленная работа: решение, о котором никто не просил, но все согласились",
+      "title_ur": "دورانِ کار: وہ حل جس کی کسی نے درخواست نہیں کی، لیکن سب نے قبول کر لیا",
+      "tone": "incredulo",
+      "tags_en": [
+        "remote-work",
+        "productivity",
+        "sarcasm",
+        "home-office"
+      ],
+      "tags_es": [
+        "trabajo-remoto",
+        "productividad",
+        "sarcasmo",
+        "home-office"
+      ],
+      "tags_fr": [
+        "télétravail",
+        "productivité",
+        "sarcasme",
+        "bureau à domicile"
+      ],
+      "tags_de": [
+        "remote-arbeit",
+        "produktivität",
+        "sarkasmus",
+        "home-office"
+      ],
+      "tags_it": [
+        "lavoro-remoto",
+        "produttività",
+        "sarcasmo",
+        "smart-working"
+      ],
+      "tags_tr": [
+        "uzaktan-çalışma",
+        "verimlilik",
+        "alay",
+        "ev-ofisi"
+      ],
+      "tags_zh": [
+        "远程工作",
+        "生产力",
+        "讽刺",
+        "居家办公"
+      ],
+      "tags_hi": [
+        "दूरस्थ-कार्य",
+        "उत्पादकता",
+        "व्यंग्य",
+        "होम-ऑफिस"
+      ],
+      "tags_ar": [
+        "العمل-عن-بعد",
+        "الإنتاجية",
+        "سخرية",
+        "العمل-من-المنزل"
+      ],
+      "tags_bn": [
+        "দূরবর্তী-কাজ",
+        "উৎপাদনশীলতা",
+        "ব্যঙ্গ",
+        "হোম-অফিস"
+      ],
+      "tags_ru": [
+        "удаленная-работа",
+        "продуктивность",
+        "сарказм",
+        "домашний-офис"
+      ],
+      "tags_ur": [
+        "دورانِ کار",
+        "پیداواری",
+        "تہذیب",
+        "گھر کا دفتر"
+      ],
+      "source_title": "<![CDATA[[Newsletter] WFH Isn’t a Trend. It’s a Solution]]>",
+      "source_url": "https://remotive.com/blog/newsletter-wfh-isnt-a-trend-its-a-solution/",
+      "source_published_at": "Mon, 23 Mar 2026 13:26:45 GMT",
+      "excerpt_en": "Remote work has become the savior of the corporate world, who would have thought, right?",
+      "excerpt_es": "El trabajo remoto se ha convertido en la solución salvadora del mundo corporativo, ¿quién lo diría, verdad?",
+      "excerpt_fr": "Le télétravail est devenu la solution salvatrice du monde de l'entreprise, qui l'aurait cru, n'est-ce pas ?",
+      "excerpt_de": "Remote-Arbeit ist zur rettenden Lösung der Unternehmenswelt geworden, wer hätte das gedacht, oder?",
+      "excerpt_it": "Il lavoro remoto è diventato la soluzione salvifica del mondo aziendale, chi l'avrebbe mai detto, eh?",
+      "excerpt_tr": "Uzaktan çalışma, kurumsal dünyanın kurtarıcı çözümü haline geldi, kim derdi ki, değil mi?",
+      "excerpt_zh": "远程工作成了企业界的救星，谁能想到呢？",
+      "excerpt_hi": "दूरस्थ कार्य कॉर्पोरेट दुनिया का उद्धारक समाधान बन गया है, कौन सोच सकता था, है ना?",
+      "excerpt_ar": "أصبح العمل عن بُعد الحل المنقذ في عالم الشركات، من كان يظن ذلك، أليس كذلك؟",
+      "excerpt_bn": "দূরবর্তী কাজ কর্পোরেট বিশ্বের জন্য রক্ষাকবচ হয়ে উঠেছে, কে জানত, তাই না?",
+      "excerpt_ru": "Удаленная работа стала спасением для корпоративного мира, кто бы мог подумать, а?",
+      "excerpt_ur": "دورانِ کار کارپوریٹ دنیا کا نجات دہندہ بن گیا ہے، کون سوچ سکتا تھا، ہے نا؟"
+    },
+    {
       "title": "O milagre da tecnologia: um AI que fala mais do que você!",
       "url": "./posts/2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce/",
       "markdown": "2026/2026-03-18-o-milagre-da-tecnologia-um-ai-que-fala-mais-do-que-voce.md",
