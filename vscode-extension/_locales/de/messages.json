@@ -345,7 +345,7 @@
     "message": "Eröffnungsstatement"
   },
   "combo_reduced": {
-    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist, was wir am besten können!"
+    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist es, was wir am besten können!"
   },
   "combo_status_bar_suffix": {
     "message": "{level}x KOMBO"
@@ -1998,7 +1998,7 @@
     "message": "Datenschutz"
   },
   "process1Body": {
-    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob du studierst, arbeitest oder im endlosen Feed versinkst."
+    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob Sie lernen, arbeiten oder im endlosen Feed versinken."
   },
   "process1Title": {
     "message": "Verfolgen Sie Ihre aktiven Tabs"
@@ -2553,7 +2553,7 @@
     "message": "Einspruch! Highlights der Fallstudie"
   },
   "report_share_hint_instagram": {
-    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Füge das, was wir kopiert haben, in das Postfeld ein."
+    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie ein, was wir in das Postfeld kopiert haben."
   },
   "report_share_hint_linkedin": {
     "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."

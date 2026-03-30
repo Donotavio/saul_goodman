@@ -3162,22 +3162,22 @@
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Achei \"{keyword}\" em {source}; isso pesa no veredito."
+    "message": "Encontré \"{keyword}\" en {source}; esto pesa en el veredicto."
   },
   "suggestion_reason_known_host": {
-    "message": "Esse domínio já tem ficha no escritório: {host}."
+    "message": "Este dominio ya tiene ficha en la oficina: {host}."
   },
   "suggestion_reason_learned_fallback": {
-    "message": "Pelos sinais aprendidos, isso {direction}."
+    "message": "Por las señales aprendidas, esto {direction}."
   },
   "suggestion_reason_learned_generic": {
-    "message": "Meu histórico local já viu {subject}; isso {direction}."
+    "message": "Mi historial local ya vio {subject}; esto {direction}."
   },
   "suggestion_reason_ml_detail": {
     "message": "({value})"
   },
   "suggestion_reason_ml_family_active_time": {
-    "message": "o tempo ativo na página"
+    "message": "el tiempo activo en la página"
   },
   "suggestion_reason_ml_family_autoplay": {
     "message": "autoplay signals"
@@ -3189,7 +3189,7 @@
     "message": "editor signals"
   },
   "suggestion_reason_ml_family_external_links": {
-    "message": "a quantidade de links externos"
+    "message": "la cantidad de enlaces externos"
   },
   "suggestion_reason_ml_family_feed": {
     "message": "feed-layout signals"
@@ -3207,7 +3207,7 @@
     "message": "the domain"
   },
   "suggestion_reason_ml_family_interactions": {
-    "message": "o volume de interações"
+    "message": "el volumen de interacciones"
   },
   "suggestion_reason_ml_family_keyword": {
     "message": "the keywords"
@@ -3234,7 +3234,7 @@
     "message": "infinite-scroll signals"
   },
   "suggestion_reason_ml_family_scroll_depth": {
-    "message": "a profundidade de rolagem"
+    "message": "la profundidad de desplazamiento"
   },
   "suggestion_reason_ml_family_shorts": {
     "message": "shorts/reels signals"
@@ -3255,16 +3255,16 @@
     "message": "video signals"
   },
   "suggestion_reason_ml_signal": {
-    "message": "Meu radar jurídico pegou {family}{detail}. Isso {direction} ({impact})."
+    "message": "Mi radar jurídico detectó {family}{detail}. Esto {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
   "suggestion_reason_path": {
-    "message": "O caminho \"{path}\" entrou no radar."
+    "message": "El camino \"{path}\" entró en el radar."
   },
   "suggestion_reason_schema": {
-    "message": "O schema {schema} ajudou no veredito."
+    "message": "El esquema {schema} ayudó en el veredicto."
   },
   "suggestion_reason_shorts": {
     "message": "Shorts/reels pattern detected."
@@ -3288,7 +3288,7 @@
     "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "Tem player de vídeo nessa página."
+    "message": "Hay un reproductor de video en esta página."
   },
   "suggestion_toast_close": {
     "message": "Cerrar sugerencia"

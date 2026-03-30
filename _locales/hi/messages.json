@@ -1746,7 +1746,7 @@
     "message": "सक्रिय विशेषताएँ"
   },
   "popup_ml_l2_label": {
-    "message": "L2"
+    "message": "एल2"
   },
   "popup_ml_last_updated_label": {
     "message": "अंतिम प्रशिक्षण"
@@ -2946,7 +2946,7 @@
     "message": "सबसे अधिक डीबग की गई फ़ाइलें"
   },
   "report_vscode_top_debugged_files_bps": {
-    "message": "{count} BPs"
+    "message": "{count} बीपी"
   },
   "report_vscode_top_debugged_files_empty": {
     "message": "कोई डिबग की गई फ़ाइल नहीं।"
