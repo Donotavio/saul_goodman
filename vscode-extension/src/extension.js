@@ -15,6 +15,7 @@ let statusPollTimer = null;
 let trackingController = null;
 let localesRootDir = null;
 let currentComboSuffix = '';
+let authErrorNotified = false;
 
 const SUPPORTED_LOCALES = ['en_US', 'pt_BR', 'es_419'];
 const DEFAULT_LOCALE = 'en_US';
@@ -714,6 +715,7 @@ function getReportI18n() {
     disabledDetail: localize('vscode_reports_disabled_detail'),
     loading: localize('vscode_reports_loading'),
     error: localize('vscode_reports_error'),
+    errorKeyMismatch: localize('vscode_reports_error_key_mismatch'),
     synced: localize('vscode_reports_synced'),
     configure: localize('vscode_reports_configure'),
     filterProject: localize('vscode_reports_filter_project'),
@@ -1078,15 +1080,38 @@ async function testDaemonHealth() {
   const url = new URL('/v1/health', apiBase);
   try {
     const res = await fetchWithTimeout(url.toString(), 4000);
-    if (res.ok) {
-      vscode.window.showInformationMessage(localize('test_health_success', { origin: url.origin }));
-      void updateStatusBar('ok', url.port || '3123');
+    if (!res.ok) {
+      vscode.window.showWarningMessage(
+        localize('test_health_status', { status: res.status, origin: url.origin })
+      );
+      void updateStatusBar('error');
       return;
     }
-    vscode.window.showWarningMessage(
-      localize('test_health_status', { status: res.status, origin: url.origin })
-    );
-    void updateStatusBar('error');
+    // Daemon is reachable -- check key authentication
+    const key = config.pairingKey?.trim();
+    if (key) {
+      try {
+        const authData = await apiClient.getHealthWithKey(apiBase, key);
+        if (authData.authenticated === false) {
+          const choice = await vscode.window.showWarningMessage(
+            localize('test_health_key_mismatch', { origin: url.origin }),
+            localize('open_settings_action')
+          );
+          if (choice === localize('open_settings_action')) {
+            void vscode.commands.executeCommand(
+              'workbench.action.openSettings',
+              'saulGoodman.pairingKey'
+            );
+          }
+          void updateStatusBar('auth_error');
+          return;
+        }
+      } catch {
+        // Older daemon without key support on /health -- fall through to OK
+      }
+    }
+    vscode.window.showInformationMessage(localize('test_health_success', { origin: url.origin }));
+    void updateStatusBar('ok', url.port || '3123');
   } catch (error) {
     vscode.window.showWarningMessage(
       localize('test_health_failure', { origin: url.origin, error: error.message })
@@ -1127,6 +1152,10 @@ async function updateStatusBar(state, port, stats, comboSuffix) {
       statusBarItem.tooltip = localize('status_on_tooltip');
     }
     statusBarItem.color = undefined;
+  } else if (state === 'auth_error') {
+    statusBarItem.text = `$(key) ${localize('status_auth_error_text')}`;
+    statusBarItem.color = new vscode.ThemeColor('errorForeground');
+    statusBarItem.tooltip = localize('status_auth_error_tooltip');
   } else if (state === 'error') {
     statusBarItem.text = `$(error) ${localize('status_off_text')}`;
     statusBarItem.color = new vscode.ThemeColor('errorForeground');
@@ -1167,6 +1196,31 @@ async function pollStatus() {
     if (!healthRes.ok) {
       throw new Error(`HTTP ${healthRes.status}`);
     }
+
+    // Check key authentication (backward compatible with older daemons)
+    try {
+      const authData = await apiClient.getHealthWithKey(baseUrl, key);
+      if (authData.authenticated === false) {
+        await updateStatusBar('auth_error');
+        if (!authErrorNotified) {
+          authErrorNotified = true;
+          const choice = await vscode.window.showWarningMessage(
+            localize('poll_key_mismatch_warning'),
+            localize('open_settings_action')
+          );
+          if (choice === localize('open_settings_action')) {
+            void vscode.commands.executeCommand(
+              'workbench.action.openSettings',
+              'saulGoodman.pairingKey'
+            );
+          }
+        }
+        return;
+      }
+    } catch {
+      // Older daemon without key support on /health -- continue to data endpoints
+    }
+
     const today = getTodayKey();
     const [summary, indexData] = await Promise.all([
       apiClient.getSummaries(baseUrl, key, { start: today, end: today }),
@@ -1174,7 +1228,7 @@ async function pollStatus() {
     ]);
     const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
     const index = indexData?.index ?? null;
-    
+
     // Obter combo atual do tracker
     if (!currentComboSuffix && trackingController) {
       const comboStats = await trackingController.getComboStats();
@@ -1182,13 +1236,31 @@ async function pollStatus() {
         currentComboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboStats.currentLevel })}`;
       }
     }
-    
+
+    authErrorNotified = false;
     await updateStatusBar('ok', endpoint.port || inferPortFromApiBase(baseUrl), {
       totalSeconds,
       index
     }, currentComboSuffix);
-  } catch {
-    await updateStatusBar('error');
+  } catch (error) {
+    if (error?.message?.includes('401')) {
+      await updateStatusBar('auth_error');
+      if (!authErrorNotified) {
+        authErrorNotified = true;
+        const choice = await vscode.window.showWarningMessage(
+          localize('poll_key_mismatch_warning'),
+          localize('open_settings_action')
+        );
+        if (choice === localize('open_settings_action')) {
+          void vscode.commands.executeCommand(
+            'workbench.action.openSettings',
+            'saulGoodman.pairingKey'
+          );
+        }
+      }
+    } else {
+      await updateStatusBar('error');
+    }
   }
 }
 

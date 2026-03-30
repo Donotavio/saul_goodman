@@ -3101,6 +3101,12 @@
   "status_loading_tooltip": {
     "message": "Verificando SaulDaemon"
   },
+  "status_auth_error_text": {
+    "message": "Saul: Chave incorreta"
+  },
+  "status_auth_error_tooltip": {
+    "message": "A chave de pareamento não corresponde ao daemon. Clique para abrir as configurações."
+  },
   "status_off_text": {
     "message": "SaulDaemon OFF"
   },
@@ -3169,6 +3175,15 @@
   },
   "test_health_status": {
     "message": "SaulDaemon respondeu com status {status} em {origin}"
+  },
+  "test_health_key_mismatch": {
+    "message": "SaulDaemon está em execução em {origin} mas a chave de pareamento está incorreta."
+  },
+  "open_settings_action": {
+    "message": "Abrir Configurações"
+  },
+  "poll_key_mismatch_warning": {
+    "message": "Saul Goodman: A chave de pareamento não corresponde ao daemon. Os dados não podem ser carregados até que a chave seja corrigida."
   },
   "test_health_success": {
     "message": "SaulDaemon respondeu em {origin}"
@@ -3355,6 +3370,9 @@
   },
   "vscode_reports_error": {
     "message": "Erro ao carregar dados do SaulDaemon."
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "Autenticação falhou (HTTP 401). Verifique se saulGoodman.pairingKey corresponde ao PAIRING_KEY do daemon."
   },
   "vscode_reports_filter_all": {
     "message": "Todos"

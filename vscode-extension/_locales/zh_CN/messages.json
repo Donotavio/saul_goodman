@@ -3101,6 +3101,12 @@
   "status_loading_tooltip": {
     "message": "检查索尔守护进程"
   },
+  "status_auth_error_text": {
+    "message": "Saul: Key mismatch"
+  },
+  "status_auth_error_tooltip": {
+    "message": "The pairing key does not match the daemon. Click to open settings."
+  },
   "status_off_text": {
     "message": "索尔守护进程关闭"
   },
@@ -3169,6 +3175,15 @@
   },
   "test_health_status": {
     "message": "索尔守护进程在 {origin} 的状态为 {status}"
+  },
+  "test_health_key_mismatch": {
+    "message": "SaulDaemon is running at {origin} but the pairing key is incorrect."
+  },
+  "open_settings_action": {
+    "message": "Open Settings"
+  },
+  "poll_key_mismatch_warning": {
+    "message": "Saul Goodman: The pairing key does not match the daemon. Data cannot be loaded until the key is corrected."
   },
   "test_health_success": {
     "message": "索尔守护进程在 {origin} 响应"
@@ -3355,6 +3370,9 @@
   },
   "vscode_reports_error": {
     "message": "加载索尔守护进程数据时出错。"
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "Authentication failed (HTTP 401). Check that saulGoodman.pairingKey matches the daemon PAIRING_KEY."
   },
   "vscode_reports_filter_all": {
     "message": "所有"
