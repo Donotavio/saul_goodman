@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Branding: O Que é Isso e Por Que Deveria Te Importar?",
+      "url": "./posts/2026/2026-03-30-branding-o-que-e-isso-e-por-que-deveria-te-importar/",
+      "markdown": "2026/2026-03-30-branding-o-que-e-isso-e-por-que-deveria-te-importar.md",
+      "date": "2026-03-30",
+      "category": "marketing",
+      "tags": [
+        "branding",
+        "marketing",
+        "produtividade",
+        "UX",
+        "sarcasmo"
+      ],
+      "excerpt": "Consistência é a chave para a visibilidade da sua marca. Ou pelo menos é isso que eles dizem.",
+      "title_en": "Branding: What Is It and Why Should You Care?",
+      "title_es": "Branding: ¿Qué es eso y por qué debería importarte?",
+      "title_fr": "Branding : Qu'est-ce que c'est et pourquoi cela devrait vous importer ?",
+      "title_de": "Branding: Was ist das und warum sollte es dich interessieren?",
+      "title_it": "Branding: Che Cos'è e Perché Dovrebbe Importarti?",
+      "title_tr": "Markalaşma: Bu Nedir ve Neden Sizi İlgilendirmeli?",
+      "title_zh": "品牌：这是什么，为什么你应该在意？",
+      "title_hi": "ब्रांडिंग: यह क्या है और आपको इसकी परवाह क्यों करनी चाहिए?",
+      "title_ar": "العلامة التجارية: ما هي ولماذا يجب أن تهمك؟",
+      "title_bn": "ব্র্যান্ডিং: এটা কী এবং কেন আপনার জন্য গুরুত্বপূর্ণ?",
+      "title_ru": "Брендинг: Что это такое и почему это должно вас волновать?",
+      "title_ur": "برانڈنگ: یہ کیا ہے اور آپ کو اس کی پرواہ کیوں کرنی چاہیے؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "branding",
+        "marketing",
+        "productivity",
+        "UX",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "branding",
+        "marketing",
+        "productividad",
+        "UX",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "branding",
+        "marketing",
+        "productivité",
+        "UX",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Branding",
+        "Marketing",
+        "Produktivität",
+        "UX",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "branding",
+        "marketing",
+        "produttività",
+        "UX",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "markalaşma",
+        "pazarlama",
+        "verimlilik",
+        "UX",
+        "alay"
+      ],
+      "tags_zh": [
+        "品牌",
+        "营销",
+        "生产力",
+        "用户体验",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "ब्रांडिंग",
+        "मार्केटिंग",
+        "उत्पादकता",
+        "यूएक्स",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "العلامة التجارية",
+        "التسويق",
+        "الإنتاجية",
+        "تجربة المستخدم",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "ব্র্যান্ডিং",
+        "মার্কেটিং",
+        "উৎপাদনশীলতা",
+        "ইউএক্স",
+        "সারকাজম"
+      ],
+      "tags_ru": [
+        "брендинг",
+        "маркетинг",
+        "продуктивность",
+        "UX",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "برانڈنگ",
+        "مارکیٹنگ",
+        "پیداواری",
+        "UX",
+        "تہذیب"
+      ],
+      "source_title": "Brand optimization: What it is and why your AI visibility depends on it",
+      "source_url": "https://blog.hubspot.com/marketing/brand-optimization",
+      "source_published_at": "Mon, 30 Mar 2026 11:00:03 GMT",
+      "excerpt_en": "Consistency is key to your brand's visibility. Or at least that's what they say.",
+      "excerpt_es": "La consistencia es la clave para la visibilidad de tu marca. O al menos eso es lo que dicen.",
+      "excerpt_fr": "La cohérence est la clé de la visibilité de votre marque. Ou du moins, c'est ce qu'ils disent.",
+      "excerpt_de": "Konsistenz ist der Schlüssel zur Sichtbarkeit deiner Marke. Oder zumindest sagen sie das.",
+      "excerpt_it": "La coerenza è la chiave per la visibilità del tuo marchio. O almeno così dicono.",
+      "excerpt_tr": "Tutarlılık, markanızın görünürlüğü için anahtardır. Ya da en azından onların söylediği bu.",
+      "excerpt_zh": "一致性是品牌可见性的关键。或者至少他们是这么说的。",
+      "excerpt_hi": "संगति आपकी ब्रांड की दृश्यता की कुंजी है। या कम से कम यही वे कहते हैं।",
+      "excerpt_ar": "الاتساق هو المفتاح لرؤية علامتك التجارية. أو على الأقل هذا ما يقولونه.",
+      "excerpt_bn": "সঙ্গতি হল আপনার ব্র্যান্ডের দৃশ্যমানতার চাবিকাঠি। অথবা অন্তত তারা তাই বলে।",
+      "excerpt_ru": "Последовательность — ключ к видимости вашего бренда. Или, по крайней мере, так говорят.",
+      "excerpt_ur": "استحکام آپ کے برانڈ کی مرئیت کی کلید ہے۔ یا کم از کم یہی وہ کہتے ہیں۔"
+    },
+    {
       "title": "A Revolução da Procrastinação: Como a AI Pode Fazer Você Trabalhar Menos",
       "url": "./posts/2026/2026-03-25-a-revolucao-da-procrastinacao-como-a-ai-pode-fazer-voce-trabalhar-menos/",
       "markdown": "2026/2026-03-25-a-revolucao-da-procrastinacao-como-a-ai-pode-fazer-voce-trabalhar-menos.md",
