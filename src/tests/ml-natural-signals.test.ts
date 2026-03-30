@@ -43,14 +43,14 @@ const BASE_ATTENTION = {
 
 function makeMetadata(overrides: Partial<DomainMetadata> = {}): DomainMetadata {
   return {
-    hostname: 'portal.juridico.com.br',
-    title: 'Pesquisa de jurisprudencia e direito tributario',
-    description: 'Analise de processo e peticao com base legal',
-    keywords: ['juridico', 'jurisprudencia', 'tribunal'],
-    headings: ['Direito do trabalho', 'Guia de peticao'],
-    pathTokens: ['pesquisa', 'jurisprudencia'],
+    hostname: 'standards.technical-reference.org',
+    title: 'Specification review and compliance methodology',
+    description: 'Technical report on regulation standards and protocol procedures',
+    keywords: ['specification', 'compliance', 'standard'],
+    headings: ['Protocol guidelines', 'Case study methodology'],
+    pathTokens: ['specification', 'compliance'],
     schemaTypes: ['Article'],
-    language: 'pt-BR',
+    language: 'en',
     hasVideoPlayer: false,
     hasInfiniteScroll: false,
     hasAutoplayMedia: false,
@@ -67,12 +67,12 @@ function makeMetadata(overrides: Partial<DomainMetadata> = {}): DomainMetadata {
   };
 }
 
-test('natural concept scorer captures legal-work intent from multilingual terms', () => {
+test('natural concept scorer captures domain-research intent from professional terms', () => {
   const result = buildNaturalSignalFeatures(
     {
       metadata: makeMetadata({
-        title: 'Analisis de jurisprudencia y derecho civil',
-        description: 'Court filing, peticao e tribunal de justicia'
+        title: 'Normativa de compliance e parecer tecnico',
+        description: 'Case study, specification e reglamento de procedimiento'
       }),
       behavior: DEFAULT_BEHAVIOR,
       settings: DEFAULT_SETTINGS,
@@ -89,7 +89,7 @@ test('natural concept scorer captures legal-work intent from multilingual terms'
 
   assert.ok(result.topConcepts.length >= 1);
   const topConceptKeys = result.topConcepts.map((entry) => entry.key);
-  assert.ok(topConceptKeys.includes('work_legal'));
+  assert.ok(topConceptKeys.includes('work_domain_research'));
   assert.ok(result.metadataQualityScore >= 0 && result.metadataQualityScore <= 1);
 });
 

@@ -72,22 +72,23 @@ interface DenseVector {
 
 const CONCEPTS: ConceptConfig[] = [
   {
-    key: 'work_legal',
-    label: 'pesquisa juridica',
+    key: 'work_domain_research',
+    label: 'pesquisa profissional especializada',
     seeds: [
-      'juridico',
-      'juridica',
-      'law',
-      'legal',
-      'tribunal',
-      'processo',
-      'peticao',
-      'jurisprudencia',
-      'codigo civil',
-      'court filing',
-      'abogado',
-      'derecho',
-      'boletin judicial'
+      'specification',
+      'regulation',
+      'compliance',
+      'standard',
+      'protocol',
+      'procedure',
+      'case study',
+      'technical report',
+      'methodology',
+      'diagnostico',
+      'normativa',
+      'reglamento',
+      'parecer',
+      'laudo'
     ]
   },
   {
