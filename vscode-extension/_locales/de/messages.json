@@ -345,10 +345,10 @@
     "message": "Eröffnungsstatement"
   },
   "combo_reduced": {
-    "message": "🔄 Combo reduziert. Lass uns wieder aufbauen, das ist, was wir am besten können!"
+    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist, was wir am besten können!"
   },
   "combo_status_bar_suffix": {
-    "message": "{level}x COMBO"
+    "message": "{level}x KOMBO"
   },
   "combo_ultra": {
     "message": "RUF SAUL AN!"
@@ -615,7 +615,7 @@
     "message": "Wenn Sie den Modus aktivieren, schmeichelt Saul in Full-Screen Tabs, bis Sie zurück zum Fokus und gewinnen Sie Back Points."
   },
   "featureBlockHint": {
-    "message": "„Flip the switch, wenn Sie wollen: nur die produktive Registerkarte bleibt offen.“"
+    "message": "„Aktiviere es, wann immer du willst: nur der produktive Tab bleibt offen.“"
   },
   "featureBlockTitle": {
     "message": "Villa Schloss"
@@ -699,10 +699,10 @@
     "message": "Kernmerkmale"
   },
   "featureSectionLead": {
-    "message": "Jede Karte mischt Humor und Klarheit so Newcomer sofort verstehen, was Saul in Chrome tut."
+    "message": "Jede Karte kombiniert Humor und Klarheit, um zu zeigen, wie Saul den Fokus im Browser aufrechterhält."
   },
   "featureSectionTitle": {
-    "message": "Alles, was Sie brauchen, um Tabs zu überprüfen."
+    "message": "Das komplette Anti-Prokrastinations-Paket."
   },
   "featuresEyebrow": {
     "message": "Detailansicht"
@@ -789,7 +789,7 @@
     "message": "Sauls Memo"
   },
   "indexCalloutQuote": {
-    "message": "„Cross 60% und ich rufe Ihren Chef an. Unter 10% fallen und ich buche Ihren Therapeuten. Balance the docket, client!“"
+    "message": "„Über 60% rufe ich deine Chefin an. Unter 10% mache ich einen Termin beim Therapeuten. Balance, mein Kunde!“"
   },
   "indexClueAlert": {
     "message": "Prüfung des Erdbebens"
@@ -1689,7 +1689,7 @@
     "message": "Aktiver Fokus"
   },
   "popup_kpi_focus_tooltip": {
-    "message": "Prozentsatz der produktiven Zeit über alles, was heute verfolgt wird."
+    "message": "Prozentsatz der produktiven Zeit im Vergleich zu allem, was heute verfolgt wurde."
   },
   "popup_kpi_idle_hint": {
     "message": "Prozentsatz des Tages"
@@ -1998,7 +1998,7 @@
     "message": "Datenschutz"
   },
   "process1Body": {
-    "message": "Das Badge sitzt ruhig zu beobachten, was offen ist und weiß sofort, wenn Sie studieren, arbeiten, oder doom-scrolling."
+    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob du studierst, arbeitest oder im endlosen Feed versinkst."
   },
   "process1Title": {
     "message": "Verfolgen Sie Ihre aktiven Tabs"
@@ -2094,7 +2094,7 @@
     "message": "Saul blockiert den Zugang"
   },
   "reactionBlockHint": {
-    "message": "Redirects to the block page with Saul shutting the door."
+    "message": "Leitet zur Blockierungsseite mit Saul im finsteren Gesicht."
   },
   "reactionBlockLabel": {
     "message": "Blockmodus"
@@ -2139,7 +2139,7 @@
     "message": "min lesen"
   },
   "reason1Body": {
-    "message": "Der Popup-Index zeigt Ihren aktuellen Status, so dass Sie wissen, was Sie als nächstes beheben."
+    "message": "Der Index im Popup zeigt deinen Status in Echtzeit, damit du den nächsten Schritt entscheiden kannst."
   },
   "reason1Title": {
     "message": "Geführter Fokus"
@@ -2553,7 +2553,7 @@
     "message": "Einspruch! Highlights der Fallstudie"
   },
   "report_share_hint_instagram": {
-    "message": "Instagram Web kann keinen Text vorfüllen: Fügen Sie das ein, was wir in die Buchungsbox kopiert haben."
+    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Füge das, was wir kopiert haben, in das Postfeld ein."
   },
   "report_share_hint_linkedin": {
     "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."
@@ -3132,7 +3132,7 @@
     "message": "Toggle CTA"
   },
   "suggestion_reason_autoplay": {
-    "message": "Autoplay is on: classic distraction magnet."
+    "message": "Autoplay aktiviert: klassischer Ablenkungsmagnet."
   },
   "suggestion_reason_direction_procrastination": {
     "message": "smells like procrastination"
@@ -3162,22 +3162,22 @@
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
+    "message": "Ich habe \"{keyword}\" in {source} gefunden; das beeinflusst das Urteil."
   },
   "suggestion_reason_known_host": {
-    "message": "This domain already has a file in the office: {host}."
+    "message": "Diese Domain hat bereits eine Akte im Büro: {host}."
   },
   "suggestion_reason_learned_fallback": {
-    "message": "Based on learned signals, this {direction}."
+    "message": "Anhand der gelernten Signale {direction}."
   },
   "suggestion_reason_learned_generic": {
-    "message": "Local history has seen {subject}; that {direction}."
+    "message": "Mein lokaler Verlauf hat bereits {subject} gesehen; das {direction}."
   },
   "suggestion_reason_ml_detail": {
     "message": "({value})"
   },
   "suggestion_reason_ml_family_active_time": {
-    "message": "the active-time bucket"
+    "message": "die aktive Zeit auf der Seite"
   },
   "suggestion_reason_ml_family_autoplay": {
     "message": "autoplay signals"
@@ -3189,7 +3189,7 @@
     "message": "editor signals"
   },
   "suggestion_reason_ml_family_external_links": {
-    "message": "the external-link count"
+    "message": "die Anzahl der externen Links"
   },
   "suggestion_reason_ml_family_feed": {
     "message": "feed-layout signals"
@@ -3207,7 +3207,7 @@
     "message": "the domain"
   },
   "suggestion_reason_ml_family_interactions": {
-    "message": "the interaction volume"
+    "message": "das Volumen der Interaktionen"
   },
   "suggestion_reason_ml_family_keyword": {
     "message": "the keywords"
@@ -3234,7 +3234,7 @@
     "message": "infinite-scroll signals"
   },
   "suggestion_reason_ml_family_scroll_depth": {
-    "message": "the scroll-depth bucket"
+    "message": "die Scrolltiefe"
   },
   "suggestion_reason_ml_family_shorts": {
     "message": "shorts/reels signals"
@@ -3255,16 +3255,16 @@
     "message": "video signals"
   },
   "suggestion_reason_ml_signal": {
-    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
+    "message": "Mein rechtlicher Radar hat {family}{detail} erfasst. Das {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
   "suggestion_reason_path": {
-    "message": "The URL path \"{path}\" raised a signal."
+    "message": "Der Pfad \"{path}\" ist im Radar."
   },
   "suggestion_reason_schema": {
-    "message": "Schema {schema} contributed to the verdict."
+    "message": "Das Schema {schema} hat beim Urteil geholfen."
   },
   "suggestion_reason_shorts": {
     "message": "Shorts/reels pattern detected."
@@ -3288,7 +3288,7 @@
     "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "A video player was detected on this page."
+    "message": "Es gibt einen Video-Player auf dieser Seite."
   },
   "suggestion_toast_close": {
     "message": "Vorschlag schließen"

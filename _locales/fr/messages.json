@@ -2004,7 +2004,7 @@
     "message": "Suivre vos onglets actifs"
   },
   "process2Body": {
-    "message": "Vous définissez des domaines productifs contre des domaines vilains. Si vous errez, Saul secoue l'écran et crie avant le début de la spirale."
+    "message": "Les domaines productifs et les méchants sont configurés simplement. Si vous sortez du plan, l'alerte se déclenche avec un tremblement et un son."
   },
   "process2Title": {
     "message": "Drapeaux distractions"
@@ -3132,7 +3132,7 @@
     "message": "Basculer le CTA"
   },
   "suggestion_reason_autoplay": {
-    "message": "Autoplay is on: classic distraction magnet."
+    "message": "Lecture automatique activée : classique aimant à distraction."
   },
   "suggestion_reason_direction_procrastination": {
     "message": "smells like procrastination"
@@ -3162,22 +3162,22 @@
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
+    "message": "J'ai trouvé \"{keyword}\" dans {source} ; cela pèse dans le verdict."
   },
   "suggestion_reason_known_host": {
-    "message": "This domain already has a file in the office: {host}."
+    "message": "Ce domaine a déjà un dossier au bureau : {host}."
   },
   "suggestion_reason_learned_fallback": {
-    "message": "Based on learned signals, this {direction}."
+    "message": "D'après les signaux appris, cela {direction}."
   },
   "suggestion_reason_learned_generic": {
-    "message": "Local history has seen {subject}; that {direction}."
+    "message": "Mon historique local a déjà vu {subject} ; cela {direction}."
   },
   "suggestion_reason_ml_detail": {
     "message": "({value})"
   },
   "suggestion_reason_ml_family_active_time": {
-    "message": "the active-time bucket"
+    "message": "le temps actif sur la page"
   },
   "suggestion_reason_ml_family_autoplay": {
     "message": "autoplay signals"
@@ -3189,7 +3189,7 @@
     "message": "editor signals"
   },
   "suggestion_reason_ml_family_external_links": {
-    "message": "the external-link count"
+    "message": "le nombre de liens externes"
   },
   "suggestion_reason_ml_family_feed": {
     "message": "feed-layout signals"
@@ -3207,7 +3207,7 @@
     "message": "the domain"
   },
   "suggestion_reason_ml_family_interactions": {
-    "message": "the interaction volume"
+    "message": "le volume d'interactions"
   },
   "suggestion_reason_ml_family_keyword": {
     "message": "the keywords"
@@ -3234,7 +3234,7 @@
     "message": "infinite-scroll signals"
   },
   "suggestion_reason_ml_family_scroll_depth": {
-    "message": "the scroll-depth bucket"
+    "message": "la profondeur de défilement"
   },
   "suggestion_reason_ml_family_shorts": {
     "message": "shorts/reels signals"
@@ -3255,16 +3255,16 @@
     "message": "video signals"
   },
   "suggestion_reason_ml_signal": {
-    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
+    "message": "Mon radar juridique a détecté {family}{detail}. Cela {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
   "suggestion_reason_path": {
-    "message": "The URL path \"{path}\" raised a signal."
+    "message": "Le chemin \"{path}\" est entré dans le radar."
   },
   "suggestion_reason_schema": {
-    "message": "Schema {schema} contributed to the verdict."
+    "message": "Le schéma {schema} a aidé dans le verdict."
   },
   "suggestion_reason_shorts": {
     "message": "Shorts/reels pattern detected."
@@ -3288,7 +3288,7 @@
     "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "A video player was detected on this page."
+    "message": "Il y a un lecteur vidéo sur cette page."
   },
   "suggestion_toast_close": {
     "message": "Fermer la suggestion"
