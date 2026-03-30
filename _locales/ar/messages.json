@@ -3132,7 +3132,7 @@
     "message": "تبديل زر الإجراء"
   },
   "suggestion_reason_autoplay": {
-    "message": "Autoplay is on: classic distraction magnet."
+    "message": "التشغيل التلقائي مفعل: مغناطيس كلاسيكي للتشتت."
   },
   "suggestion_reason_direction_procrastination": {
     "message": "smells like procrastination"
@@ -3162,22 +3162,22 @@
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
+    "message": "وجدت \"{keyword}\" في {source}؛ هذا يؤثر على الحكم."
   },
   "suggestion_reason_known_host": {
-    "message": "This domain already has a file in the office: {host}."
+    "message": "هذا النطاق لديه ملف في المكتب: {host}."
   },
   "suggestion_reason_learned_fallback": {
-    "message": "Based on learned signals, this {direction}."
+    "message": "بناءً على الإشارات التي تم تعلمها، هذا {direction}."
   },
   "suggestion_reason_learned_generic": {
-    "message": "Local history has seen {subject}; that {direction}."
+    "message": "تاريخي المحلي قد شهد بالفعل {subject}؛ هذا {direction}."
   },
   "suggestion_reason_ml_detail": {
     "message": "({value})"
   },
   "suggestion_reason_ml_family_active_time": {
-    "message": "the active-time bucket"
+    "message": "الوقت النشط في الصفحة"
   },
   "suggestion_reason_ml_family_autoplay": {
     "message": "autoplay signals"
@@ -3189,7 +3189,7 @@
     "message": "editor signals"
   },
   "suggestion_reason_ml_family_external_links": {
-    "message": "the external-link count"
+    "message": "عدد الروابط الخارجية"
   },
   "suggestion_reason_ml_family_feed": {
     "message": "feed-layout signals"
@@ -3207,7 +3207,7 @@
     "message": "the domain"
   },
   "suggestion_reason_ml_family_interactions": {
-    "message": "the interaction volume"
+    "message": "حجم التفاعلات"
   },
   "suggestion_reason_ml_family_keyword": {
     "message": "the keywords"
@@ -3234,7 +3234,7 @@
     "message": "infinite-scroll signals"
   },
   "suggestion_reason_ml_family_scroll_depth": {
-    "message": "the scroll-depth bucket"
+    "message": "عمق التمرير"
   },
   "suggestion_reason_ml_family_shorts": {
     "message": "shorts/reels signals"
@@ -3255,16 +3255,16 @@
     "message": "video signals"
   },
   "suggestion_reason_ml_signal": {
-    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
+    "message": "راداري القانوني رصد {family}{detail}. هذا {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
   "suggestion_reason_path": {
-    "message": "The URL path \"{path}\" raised a signal."
+    "message": "المسار \"{path}\" دخل الرادار."
   },
   "suggestion_reason_schema": {
-    "message": "Schema {schema} contributed to the verdict."
+    "message": "المخطط {schema} ساعد في الحكم."
   },
   "suggestion_reason_shorts": {
     "message": "Shorts/reels pattern detected."
@@ -3288,7 +3288,7 @@
     "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "A video player was detected on this page."
+    "message": "يوجد مشغل فيديو في هذه الصفحة."
   },
   "suggestion_toast_close": {
     "message": "إغلاق الاقتراح"

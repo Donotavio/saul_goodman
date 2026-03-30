@@ -82,6 +82,12 @@ function isSuspiciousMessage(localeFolder, message, baseMessage) {
   // Se estiver igual ao pt_BR, é fallback.
   if (typeof baseMessage === 'string' && text.trim() === baseMessage.trim()) return true;
 
+  // Texto em inglês em locales não-ingleses é fallback não traduzido.
+  if (localeFolder !== 'en_US') {
+    const enMarkers = /\b(the |is |are |you |your |this |that |with |from |for |and |but |not |can |will |has |have |was |were |been |being )/i;
+    if (enMarkers.test(text) && text.length > 20) return true;
+  }
+
   return false;
 }
 

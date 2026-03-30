@@ -3132,7 +3132,7 @@
     "message": "পর্দা"
   },
   "suggestion_reason_autoplay": {
-    "message": "Autoplay is on: classic distraction magnet."
+    "message": "অটোপ্লে চালু: ক্লাসিক বিভ্রান্তির চুম্বক।"
   },
   "suggestion_reason_direction_procrastination": {
     "message": "smells like procrastination"
@@ -3162,22 +3162,22 @@
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
+    "message": "\"{keyword}\" {source} এ পাওয়া গেছে; এটি রায়ে প্রভাব ফেলে।"
   },
   "suggestion_reason_known_host": {
-    "message": "This domain already has a file in the office: {host}."
+    "message": "এই ডোমেইনের অফিসে ইতিমধ্যে একটি ফাইল রয়েছে: {host}।"
   },
   "suggestion_reason_learned_fallback": {
-    "message": "Based on learned signals, this {direction}."
+    "message": "শিখিত সংকেত অনুযায়ী, এটি {direction}।"
   },
   "suggestion_reason_learned_generic": {
-    "message": "Local history has seen {subject}; that {direction}."
+    "message": "আমার স্থানীয় ইতিহাস ইতিমধ্যে {subject} দেখেছে; এটি {direction}।"
   },
   "suggestion_reason_ml_detail": {
     "message": "({value})"
   },
   "suggestion_reason_ml_family_active_time": {
-    "message": "the active-time bucket"
+    "message": "পৃষ্ঠায় সক্রিয় সময়"
   },
   "suggestion_reason_ml_family_autoplay": {
     "message": "autoplay signals"
@@ -3189,7 +3189,7 @@
     "message": "editor signals"
   },
   "suggestion_reason_ml_family_external_links": {
-    "message": "the external-link count"
+    "message": "বহিরাগত লিঙ্কের সংখ্যা"
   },
   "suggestion_reason_ml_family_feed": {
     "message": "feed-layout signals"
@@ -3207,7 +3207,7 @@
     "message": "the domain"
   },
   "suggestion_reason_ml_family_interactions": {
-    "message": "the interaction volume"
+    "message": "ইন্টারঅ্যাকশনের পরিমাণ"
   },
   "suggestion_reason_ml_family_keyword": {
     "message": "the keywords"
@@ -3234,7 +3234,7 @@
     "message": "infinite-scroll signals"
   },
   "suggestion_reason_ml_family_scroll_depth": {
-    "message": "the scroll-depth bucket"
+    "message": "স্ক্রোল গভীরতা"
   },
   "suggestion_reason_ml_family_shorts": {
     "message": "shorts/reels signals"
@@ -3255,16 +3255,16 @@
     "message": "video signals"
   },
   "suggestion_reason_ml_signal": {
-    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
+    "message": "আমার আইনগত রাডার {family}{detail} ধরেছে। এটি {direction} ({impact})।"
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
   "suggestion_reason_path": {
-    "message": "The URL path \"{path}\" raised a signal."
+    "message": "\"{path}\" রাডারে প্রবেশ করেছে।"
   },
   "suggestion_reason_schema": {
-    "message": "Schema {schema} contributed to the verdict."
+    "message": "{schema} স্কিমাটি রায়ে সহায়তা করেছে।"
   },
   "suggestion_reason_shorts": {
     "message": "Shorts/reels pattern detected."
@@ -3288,7 +3288,7 @@
     "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "A video player was detected on this page."
+    "message": "এই পৃষ্ঠায় ভিডিও প্লেয়ার রয়েছে।"
   },
   "suggestion_toast_close": {
     "message": "সুপারিশ বন্ধ করুন"
