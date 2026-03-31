@@ -216,7 +216,7 @@
     "message": "सरकारी बदलाव"
   },
   "changelogLoading": {
-    "message": "The repository to changelog."
+    "message": "रिपोजिटरी से चेंज लॉग लोड हो रहा है..."
   },
   "changelogSubheading": {
     "message": "प्रत्येक बदलाव को सीधे रिपॉज़िटरी से ट्रैक करें।"
@@ -789,7 +789,7 @@
     "message": "साउल का मेमो"
   },
   "indexCalloutQuote": {
-    "message": "\"Cross 60% और मैं अपने बॉस को बुला रहा हूँ। 10% से नीचे गिरा और मैं अपने चिकित्सक की बुकिंग कर रहा हूँ। The docket."
+    "message": "“60% से ऊपर मैं आपकी बॉस को कॉल करता हूँ। 10% से नीचे मैं थेरेपिस्ट के साथ अपॉइंटमेंट बुक करता हूँ। संतुलन, मेरे ग्राहक!”"
   },
   "indexClueAlert": {
     "message": "अंकगणित"
@@ -855,7 +855,7 @@
     "message": "15 - 22: गोल्डन बैलेंस"
   },
   "indexRange23to60Body": {
-    "message": "आप अभी भी इस मामले को स्वीकार कर रहे हैं लेकिन खलनायक फ़ीड में ठोकर खाते हैं। Saul fire witty Notices to haul the test."
+    "message": "आप अभी भी मामले का बचाव करते हैं, लेकिन खलनायक फीड में ठोकर खाते हैं। सॉल प्रक्रिया को फिर से पटरी पर लाने के लिए मजेदार सूचनाएँ भेजता है।"
   },
   "indexRange23to60Title": {
     "message": "23 - 60: Wobbly फोकस"
@@ -1746,7 +1746,7 @@
     "message": "सक्रिय विशेषताएँ"
   },
   "popup_ml_l2_label": {
-    "message": "L2"
+    "message": "एल2"
   },
   "popup_ml_last_updated_label": {
     "message": "अंतिम प्रशिक्षण"
@@ -2208,7 +2208,7 @@
     "message": "कार्य करने का समय: खलनायक टैब बंद करें और नियंत्रण में वापस आ जाएं।"
   },
   "report_banner_message_1": {
-    "message": "यहां तक कि मैं अनुक्रमणिका के साथ जूरी को रोक सकता हूं{threshold}To cut the विचलन!"
+    "message": "मैं भी {threshold} के साथ जूरी को मनाने में असमर्थ हूँ। ध्यान भंग को काटें!"
   },
   "report_banner_message_2": {
     "message": "इसे जारी रखें और मैं अपने बॉस को चेतावनी देते हुए बिलबोर्ड किराए पर ले जाऊंगा।"
@@ -2946,7 +2946,7 @@
     "message": "सबसे अधिक डीबग की गई फ़ाइलें"
   },
   "report_vscode_top_debugged_files_bps": {
-    "message": "{count} BPs"
+    "message": "{count} बीपी"
   },
   "report_vscode_top_debugged_files_empty": {
     "message": "कोई डिबग की गई फ़ाइल नहीं।"
@@ -3131,20 +3131,149 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_autoplay": {
+    "message": "ऑटोप्ले चालू है: क्लासिक ध्यान भंग करने वाला।"
+  },
+  "suggestion_reason_direction_procrastination": {
+    "message": "smells like procrastination"
+  },
+  "suggestion_reason_direction_productive": {
+    "message": "leans productive"
+  },
+  "suggestion_reason_editor": {
+    "message": "Text/code editor detected."
+  },
+  "suggestion_reason_feed": {
+    "message": "Feed layout detected."
+  },
+  "suggestion_reason_form": {
+    "message": "Interactive form detected."
+  },
+  "suggestion_reason_impact_light": {
+    "message": "light impact"
+  },
+  "suggestion_reason_impact_medium": {
+    "message": "medium impact"
+  },
+  "suggestion_reason_impact_strong": {
+    "message": "strong impact"
+  },
   "suggestion_reason_infinite_scroll": {
     "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Found \"{keyword}\" in {source}; that affects the verdict."
+    "message": "मैंने {source} में \"{keyword}\" पाया; यह निर्णय पर प्रभाव डालता है।"
   },
   "suggestion_reason_known_host": {
-    "message": "This domain already has a file in the office: {host}."
+    "message": "इस डोमेन का कार्यालय में पहले से रिकॉर्ड है: {host}."
+  },
+  "suggestion_reason_learned_fallback": {
+    "message": "सीखे गए संकेतों के अनुसार, यह {direction}."
+  },
+  "suggestion_reason_learned_generic": {
+    "message": "मेरे स्थानीय इतिहास ने {subject} देखा है; यह {direction}."
+  },
+  "suggestion_reason_ml_detail": {
+    "message": "({value})"
+  },
+  "suggestion_reason_ml_family_active_time": {
+    "message": "पृष्ठ पर सक्रिय समय"
+  },
+  "suggestion_reason_ml_family_autoplay": {
+    "message": "autoplay signals"
+  },
+  "suggestion_reason_ml_family_description": {
+    "message": "the page description"
+  },
+  "suggestion_reason_ml_family_editor": {
+    "message": "editor signals"
+  },
+  "suggestion_reason_ml_family_external_links": {
+    "message": "बाहरी लिंक की संख्या"
+  },
+  "suggestion_reason_ml_family_feed": {
+    "message": "feed-layout signals"
+  },
+  "suggestion_reason_ml_family_form": {
+    "message": "form signals"
+  },
+  "suggestion_reason_ml_family_heading": {
+    "message": "the page headings"
+  },
+  "suggestion_reason_ml_family_heading_count": {
+    "message": "the heading count"
+  },
+  "suggestion_reason_ml_family_host": {
+    "message": "the domain"
+  },
+  "suggestion_reason_ml_family_interactions": {
+    "message": "इंटरैक्शन की मात्रा"
+  },
+  "suggestion_reason_ml_family_keyword": {
+    "message": "the keywords"
+  },
+  "suggestion_reason_ml_family_language": {
+    "message": "the page language"
+  },
+  "suggestion_reason_ml_family_og": {
+    "message": "the og:type metadata"
+  },
+  "suggestion_reason_ml_family_page_type": {
+    "message": "the page type"
+  },
+  "suggestion_reason_ml_family_path": {
+    "message": "the URL path"
+  },
+  "suggestion_reason_ml_family_root": {
+    "message": "the root domain"
+  },
+  "suggestion_reason_ml_family_schema": {
+    "message": "the page schema"
+  },
+  "suggestion_reason_ml_family_scroll": {
+    "message": "infinite-scroll signals"
+  },
+  "suggestion_reason_ml_family_scroll_depth": {
+    "message": "स्क्रॉल गहराई"
+  },
+  "suggestion_reason_ml_family_shorts": {
+    "message": "shorts/reels signals"
+  },
+  "suggestion_reason_ml_family_table": {
+    "message": "large-table signals"
+  },
+  "suggestion_reason_ml_family_title": {
+    "message": "the page title"
+  },
+  "suggestion_reason_ml_family_tld": {
+    "message": "the domain suffix"
+  },
+  "suggestion_reason_ml_family_unknown": {
+    "message": "a technical signal"
+  },
+  "suggestion_reason_ml_family_video": {
+    "message": "video signals"
+  },
+  "suggestion_reason_ml_signal": {
+    "message": "मेरे कानूनी रडार ने {family}{detail} को पकड़ा। यह {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
     "message": "Page type appears as {type}."
   },
+  "suggestion_reason_path": {
+    "message": "\"{path}\" मार्ग रडार में आया।"
+  },
+  "suggestion_reason_schema": {
+    "message": "{schema} स्कीमा ने निर्णय में मदद की।"
+  },
+  "suggestion_reason_shorts": {
+    "message": "Shorts/reels pattern detected."
+  },
   "suggestion_reason_source_description": {
     "message": "description"
+  },
+  "suggestion_reason_source_headings": {
+    "message": "headings"
   },
   "suggestion_reason_source_hostname": {
     "message": "domain"
@@ -3155,8 +3284,11 @@
   "suggestion_reason_source_title": {
     "message": "title"
   },
+  "suggestion_reason_table": {
+    "message": "Large table detected."
+  },
   "suggestion_reason_video": {
-    "message": "A video player was detected on this page."
+    "message": "इस पृष्ठ पर वीडियो प्लेयर है।"
   },
   "suggestion_toast_close": {
     "message": "सुझाव बंद करें"
@@ -3472,137 +3604,5 @@
   },
   "vscodeTitle": {
     "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
-  },
-  "suggestion_reason_source_headings": {
-    "message": "headings"
-  },
-  "suggestion_reason_path": {
-    "message": "The URL path \"{path}\" raised a signal."
-  },
-  "suggestion_reason_schema": {
-    "message": "Schema {schema} contributed to the verdict."
-  },
-  "suggestion_reason_autoplay": {
-    "message": "Autoplay is on: classic distraction magnet."
-  },
-  "suggestion_reason_feed": {
-    "message": "Feed layout detected."
-  },
-  "suggestion_reason_shorts": {
-    "message": "Shorts/reels pattern detected."
-  },
-  "suggestion_reason_form": {
-    "message": "Interactive form detected."
-  },
-  "suggestion_reason_editor": {
-    "message": "Text/code editor detected."
-  },
-  "suggestion_reason_table": {
-    "message": "Large table detected."
-  },
-  "suggestion_reason_learned_generic": {
-    "message": "Local history has seen {subject}; that {direction}."
-  },
-  "suggestion_reason_learned_fallback": {
-    "message": "Based on learned signals, this {direction}."
-  },
-  "suggestion_reason_direction_productive": {
-    "message": "leans productive"
-  },
-  "suggestion_reason_direction_procrastination": {
-    "message": "smells like procrastination"
-  },
-  "suggestion_reason_ml_signal": {
-    "message": "My legal radar picked up {family}{detail}. That {direction} ({impact})."
-  },
-  "suggestion_reason_ml_detail": {
-    "message": " ({value})"
-  },
-  "suggestion_reason_ml_family_host": {
-    "message": "the domain"
-  },
-  "suggestion_reason_ml_family_root": {
-    "message": "the root domain"
-  },
-  "suggestion_reason_ml_family_tld": {
-    "message": "the domain suffix"
-  },
-  "suggestion_reason_ml_family_language": {
-    "message": "the page language"
-  },
-  "suggestion_reason_ml_family_og": {
-    "message": "the og:type metadata"
-  },
-  "suggestion_reason_ml_family_schema": {
-    "message": "the page schema"
-  },
-  "suggestion_reason_ml_family_path": {
-    "message": "the URL path"
-  },
-  "suggestion_reason_ml_family_title": {
-    "message": "the page title"
-  },
-  "suggestion_reason_ml_family_description": {
-    "message": "the page description"
-  },
-  "suggestion_reason_ml_family_heading": {
-    "message": "the page headings"
-  },
-  "suggestion_reason_ml_family_keyword": {
-    "message": "the keywords"
-  },
-  "suggestion_reason_ml_family_video": {
-    "message": "video signals"
-  },
-  "suggestion_reason_ml_family_scroll": {
-    "message": "infinite-scroll signals"
-  },
-  "suggestion_reason_ml_family_autoplay": {
-    "message": "autoplay signals"
-  },
-  "suggestion_reason_ml_family_feed": {
-    "message": "feed-layout signals"
-  },
-  "suggestion_reason_ml_family_form": {
-    "message": "form signals"
-  },
-  "suggestion_reason_ml_family_editor": {
-    "message": "editor signals"
-  },
-  "suggestion_reason_ml_family_table": {
-    "message": "large-table signals"
-  },
-  "suggestion_reason_ml_family_shorts": {
-    "message": "shorts/reels signals"
-  },
-  "suggestion_reason_ml_family_page_type": {
-    "message": "the page type"
-  },
-  "suggestion_reason_ml_family_heading_count": {
-    "message": "the heading count"
-  },
-  "suggestion_reason_ml_family_external_links": {
-    "message": "the external-link count"
-  },
-  "suggestion_reason_ml_family_active_time": {
-    "message": "the active-time bucket"
-  },
-  "suggestion_reason_ml_family_scroll_depth": {
-    "message": "the scroll-depth bucket"
-  },
-  "suggestion_reason_ml_family_interactions": {
-    "message": "the interaction volume"
-  },
-  "suggestion_reason_ml_family_unknown": {
-    "message": "a technical signal"
-  },
-  "suggestion_reason_impact_light": {
-    "message": "light impact"
-  },
-  "suggestion_reason_impact_medium": {
-    "message": "medium impact"
-  },
-  "suggestion_reason_impact_strong": {
-    "message": "strong impact"
   }
 }

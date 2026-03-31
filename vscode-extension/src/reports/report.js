@@ -134,7 +134,12 @@
       statusEl.textContent = i18n.synced || 'Synchronized.';
     } catch (error) {
       console.error('[Saul Report] Error loading data:', error?.message || String(error));
-      statusEl.textContent = `${i18n.error || 'Error loading data.'} ${error.message}`;
+      if (error?.message?.includes('401')) {
+        statusEl.textContent = i18n.errorKeyMismatch ||
+          'Authentication failed (HTTP 401). Check that saulGoodman.pairingKey matches the daemon PAIRING_KEY.';
+      } else {
+        statusEl.textContent = `${i18n.error || 'Error loading data.'} ${error.message}`;
+      }
     }
   }
 

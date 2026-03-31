@@ -81,3 +81,54 @@ test('daemon enforces pairing key and date window', async () => {
   child.kill('SIGTERM');
   rmSync(tmpDir, { recursive: true, force: true });
 });
+
+test('health endpoint validates pairing key when provided', async () => {
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), 'saul-daemon-test-'));
+  const port = 4124;
+  const env = {
+    ...process.env,
+    PORT: String(port),
+    PAIRING_KEY: 'health-test-key',
+    SAUL_DAEMON_DATA_DIR: tmpDir,
+    BIND_HOST: '127.0.0.1'
+  };
+  const child = spawn(process.execPath, [DAEMON_PATH], {
+    env,
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+
+  await waitForHealth(port);
+
+  const base = `http://127.0.0.1:${port}`;
+
+  // /health without key returns ok (backward compatible)
+  const noKeyRes = await fetch(`${base}/health`);
+  assert.equal(noKeyRes.status, 200);
+  const noKeyBody = await noKeyRes.json();
+  assert.equal(noKeyBody.ok, true);
+  assert.equal(noKeyBody.authenticated, undefined);
+
+  // /health with correct key returns authenticated: true
+  const goodKeyRes = await fetch(`${base}/health?key=health-test-key`);
+  assert.equal(goodKeyRes.status, 200);
+  const goodKeyBody = await goodKeyRes.json();
+  assert.equal(goodKeyBody.ok, true);
+  assert.equal(goodKeyBody.authenticated, true);
+
+  // /health with wrong key returns authenticated: false
+  const badKeyRes = await fetch(`${base}/health?key=wrong-key`);
+  assert.equal(badKeyRes.status, 200);
+  const badKeyBody = await badKeyRes.json();
+  assert.equal(badKeyBody.ok, true);
+  assert.equal(badKeyBody.authenticated, false);
+
+  // /v1/health also works the same way
+  const v1Res = await fetch(`${base}/v1/health?key=health-test-key`);
+  assert.equal(v1Res.status, 200);
+  const v1Body = await v1Res.json();
+  assert.equal(v1Body.ok, true);
+  assert.equal(v1Body.authenticated, true);
+
+  child.kill('SIGTERM');
+  rmSync(tmpDir, { recursive: true, force: true });
+});

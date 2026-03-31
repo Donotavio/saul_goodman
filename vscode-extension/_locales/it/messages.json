@@ -615,7 +615,7 @@
     "message": "Se si attiva la modalità, Saul sbatte le schede cattivo in schermo intero fino a quando si torna a fuoco e vincere punti indietro."
   },
   "featureBlockHint": {
-    "message": "“Flip the switch when you want: solo la scheda produttiva rimane aperta.”"
+    "message": "“Attiva quando vuoi: solo la scheda produttiva rimane sbloccata.”"
   },
   "featureBlockTitle": {
     "message": "Serratura a linguetta"
@@ -3131,32 +3131,164 @@
   "stickyToggleLabel": {
     "message": "Toggle CTA"
   },
+  "suggestion_reason_autoplay": {
+    "message": "Autoplay attivato: classico magnete di distrazione."
+  },
+  "suggestion_reason_direction_procrastination": {
+    "message": "smells like procrastination"
+  },
+  "suggestion_reason_direction_productive": {
+    "message": "leans productive"
+  },
+  "suggestion_reason_editor": {
+    "message": "Text/code editor detected."
+  },
+  "suggestion_reason_feed": {
+    "message": "Feed layout detected."
+  },
+  "suggestion_reason_form": {
+    "message": "Interactive form detected."
+  },
+  "suggestion_reason_impact_light": {
+    "message": "light impact"
+  },
+  "suggestion_reason_impact_medium": {
+    "message": "medium impact"
+  },
+  "suggestion_reason_impact_strong": {
+    "message": "strong impact"
+  },
   "suggestion_reason_infinite_scroll": {
-    "message": "Scroll infinito rilevato"
+    "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "Parola chiave \"{keyword}\" in {source}"
+    "message": "Ho trovato \"{keyword}\" in {source}; questo pesa nel verdetto."
   },
   "suggestion_reason_known_host": {
-    "message": "Dominio conosciuto: {host}"
+    "message": "Questo dominio ha già un file nell'ufficio: {host}."
+  },
+  "suggestion_reason_learned_fallback": {
+    "message": "Dai segnali appresi, questo {direction}."
+  },
+  "suggestion_reason_learned_generic": {
+    "message": "La mia cronologia locale ha già visto {subject}; questo {direction}."
+  },
+  "suggestion_reason_ml_detail": {
+    "message": "({value})"
+  },
+  "suggestion_reason_ml_family_active_time": {
+    "message": "il tempo attivo sulla pagina"
+  },
+  "suggestion_reason_ml_family_autoplay": {
+    "message": "autoplay signals"
+  },
+  "suggestion_reason_ml_family_description": {
+    "message": "the page description"
+  },
+  "suggestion_reason_ml_family_editor": {
+    "message": "editor signals"
+  },
+  "suggestion_reason_ml_family_external_links": {
+    "message": "la quantità di link esterni"
+  },
+  "suggestion_reason_ml_family_feed": {
+    "message": "feed-layout signals"
+  },
+  "suggestion_reason_ml_family_form": {
+    "message": "form signals"
+  },
+  "suggestion_reason_ml_family_heading": {
+    "message": "the page headings"
+  },
+  "suggestion_reason_ml_family_heading_count": {
+    "message": "the heading count"
+  },
+  "suggestion_reason_ml_family_host": {
+    "message": "the domain"
+  },
+  "suggestion_reason_ml_family_interactions": {
+    "message": "il volume di interazioni"
+  },
+  "suggestion_reason_ml_family_keyword": {
+    "message": "the keywords"
+  },
+  "suggestion_reason_ml_family_language": {
+    "message": "the page language"
+  },
+  "suggestion_reason_ml_family_og": {
+    "message": "the og:type metadata"
+  },
+  "suggestion_reason_ml_family_page_type": {
+    "message": "the page type"
+  },
+  "suggestion_reason_ml_family_path": {
+    "message": "the URL path"
+  },
+  "suggestion_reason_ml_family_root": {
+    "message": "the root domain"
+  },
+  "suggestion_reason_ml_family_schema": {
+    "message": "the page schema"
+  },
+  "suggestion_reason_ml_family_scroll": {
+    "message": "infinite-scroll signals"
+  },
+  "suggestion_reason_ml_family_scroll_depth": {
+    "message": "la profondità di scorrimento"
+  },
+  "suggestion_reason_ml_family_shorts": {
+    "message": "shorts/reels signals"
+  },
+  "suggestion_reason_ml_family_table": {
+    "message": "large-table signals"
+  },
+  "suggestion_reason_ml_family_title": {
+    "message": "the page title"
+  },
+  "suggestion_reason_ml_family_tld": {
+    "message": "the domain suffix"
+  },
+  "suggestion_reason_ml_family_unknown": {
+    "message": "a technical signal"
+  },
+  "suggestion_reason_ml_family_video": {
+    "message": "video signals"
+  },
+  "suggestion_reason_ml_signal": {
+    "message": "Il mio radar legale ha catturato {family}{detail}. Questo {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
-    "message": "Tipo di pagina: {type}"
+    "message": "Page type appears as {type}."
+  },
+  "suggestion_reason_path": {
+    "message": "Il percorso \"{path}\" è entrato nel radar."
+  },
+  "suggestion_reason_schema": {
+    "message": "Lo schema {schema} ha aiutato nel verdetto."
+  },
+  "suggestion_reason_shorts": {
+    "message": "Shorts/reels pattern detected."
   },
   "suggestion_reason_source_description": {
-    "message": "descrizione"
+    "message": "description"
+  },
+  "suggestion_reason_source_headings": {
+    "message": "headings"
   },
   "suggestion_reason_source_hostname": {
-    "message": "dominio"
+    "message": "domain"
   },
   "suggestion_reason_source_keywords": {
     "message": "keywords"
   },
   "suggestion_reason_source_title": {
-    "message": "titolo"
+    "message": "title"
+  },
+  "suggestion_reason_table": {
+    "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "Player video rilevato"
+    "message": "C'è un lettore video in questa pagina."
   },
   "suggestion_toast_close": {
     "message": "Chiudi suggerimento"

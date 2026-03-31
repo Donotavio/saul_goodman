@@ -30,7 +30,7 @@ Nada é enviado para a rede.
 - Os sinais passam por uma camada `raw -> semantic signals -> model features`.
 - Features contínuas usam normalização local com winsorização (`p1/p99`), `log1p` e padronização por histórico.
 - Famílias semânticas principais:
-  - `intent`: `work_legal`, `work_knowledge`, `collaboration`, `admin_ops`, `social_entertainment`, `commerce`.
+  - `intent`: `work_domain_research`, `work_knowledge`, `collaboration`, `admin_ops`, `social_entertainment`, `commerce`.
   - `attention`: continuidade de foco, taxa de troca, latência de retorno e fragmentação.
   - `engagement`: dwell time, interação, scroll e razão de áudio.
   - `task_progress`: edição, progresso em formulário e proxy de conclusão.

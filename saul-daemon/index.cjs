@@ -2297,7 +2297,12 @@ async function start() {
     }
 
     if (req.method === 'GET' && (parsedUrl.pathname === '/health' || parsedUrl.pathname === '/v1/health')) {
-      sendJson(req, res, 200, { ok: true });
+      const keyParam = parsedUrl.searchParams.get('key');
+      if (keyParam !== null) {
+        sendJson(req, res, 200, { ok: true, authenticated: validateKey(keyParam) });
+      } else {
+        sendJson(req, res, 200, { ok: true });
+      }
       return;
     }
 

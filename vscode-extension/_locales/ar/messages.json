@@ -3131,32 +3131,164 @@
   "stickyToggleLabel": {
     "message": "تبديل زر الإجراء"
   },
+  "suggestion_reason_autoplay": {
+    "message": "التشغيل التلقائي مفعل: مغناطيس كلاسيكي للتشتت."
+  },
+  "suggestion_reason_direction_procrastination": {
+    "message": "smells like procrastination"
+  },
+  "suggestion_reason_direction_productive": {
+    "message": "leans productive"
+  },
+  "suggestion_reason_editor": {
+    "message": "Text/code editor detected."
+  },
+  "suggestion_reason_feed": {
+    "message": "Feed layout detected."
+  },
+  "suggestion_reason_form": {
+    "message": "Interactive form detected."
+  },
+  "suggestion_reason_impact_light": {
+    "message": "light impact"
+  },
+  "suggestion_reason_impact_medium": {
+    "message": "medium impact"
+  },
+  "suggestion_reason_impact_strong": {
+    "message": "strong impact"
+  },
   "suggestion_reason_infinite_scroll": {
-    "message": "تم الكشف عن تمرير لا نهائي"
+    "message": "Infinite scroll detected here."
   },
   "suggestion_reason_keyword": {
-    "message": "الكلمة الرئيسية \"{keyword}\" في {source}"
+    "message": "وجدت \"{keyword}\" في {source}؛ هذا يؤثر على الحكم."
   },
   "suggestion_reason_known_host": {
-    "message": "نطاق معروف: {host}"
+    "message": "هذا النطاق لديه ملف في المكتب: {host}."
+  },
+  "suggestion_reason_learned_fallback": {
+    "message": "بناءً على الإشارات التي تم تعلمها، هذا {direction}."
+  },
+  "suggestion_reason_learned_generic": {
+    "message": "تاريخي المحلي قد شهد بالفعل {subject}؛ هذا {direction}."
+  },
+  "suggestion_reason_ml_detail": {
+    "message": "({value})"
+  },
+  "suggestion_reason_ml_family_active_time": {
+    "message": "الوقت النشط في الصفحة"
+  },
+  "suggestion_reason_ml_family_autoplay": {
+    "message": "autoplay signals"
+  },
+  "suggestion_reason_ml_family_description": {
+    "message": "the page description"
+  },
+  "suggestion_reason_ml_family_editor": {
+    "message": "editor signals"
+  },
+  "suggestion_reason_ml_family_external_links": {
+    "message": "عدد الروابط الخارجية"
+  },
+  "suggestion_reason_ml_family_feed": {
+    "message": "feed-layout signals"
+  },
+  "suggestion_reason_ml_family_form": {
+    "message": "form signals"
+  },
+  "suggestion_reason_ml_family_heading": {
+    "message": "the page headings"
+  },
+  "suggestion_reason_ml_family_heading_count": {
+    "message": "the heading count"
+  },
+  "suggestion_reason_ml_family_host": {
+    "message": "the domain"
+  },
+  "suggestion_reason_ml_family_interactions": {
+    "message": "حجم التفاعلات"
+  },
+  "suggestion_reason_ml_family_keyword": {
+    "message": "the keywords"
+  },
+  "suggestion_reason_ml_family_language": {
+    "message": "the page language"
+  },
+  "suggestion_reason_ml_family_og": {
+    "message": "the og:type metadata"
+  },
+  "suggestion_reason_ml_family_page_type": {
+    "message": "the page type"
+  },
+  "suggestion_reason_ml_family_path": {
+    "message": "the URL path"
+  },
+  "suggestion_reason_ml_family_root": {
+    "message": "the root domain"
+  },
+  "suggestion_reason_ml_family_schema": {
+    "message": "the page schema"
+  },
+  "suggestion_reason_ml_family_scroll": {
+    "message": "infinite-scroll signals"
+  },
+  "suggestion_reason_ml_family_scroll_depth": {
+    "message": "عمق التمرير"
+  },
+  "suggestion_reason_ml_family_shorts": {
+    "message": "shorts/reels signals"
+  },
+  "suggestion_reason_ml_family_table": {
+    "message": "large-table signals"
+  },
+  "suggestion_reason_ml_family_title": {
+    "message": "the page title"
+  },
+  "suggestion_reason_ml_family_tld": {
+    "message": "the domain suffix"
+  },
+  "suggestion_reason_ml_family_unknown": {
+    "message": "a technical signal"
+  },
+  "suggestion_reason_ml_family_video": {
+    "message": "video signals"
+  },
+  "suggestion_reason_ml_signal": {
+    "message": "راداري القانوني رصد {family}{detail}. هذا {direction} ({impact})."
   },
   "suggestion_reason_og_type": {
-    "message": "نوع الصفحة: {type}"
+    "message": "Page type appears as {type}."
+  },
+  "suggestion_reason_path": {
+    "message": "المسار \"{path}\" دخل الرادار."
+  },
+  "suggestion_reason_schema": {
+    "message": "المخطط {schema} ساعد في الحكم."
+  },
+  "suggestion_reason_shorts": {
+    "message": "Shorts/reels pattern detected."
   },
   "suggestion_reason_source_description": {
-    "message": "وصف"
+    "message": "description"
+  },
+  "suggestion_reason_source_headings": {
+    "message": "headings"
   },
   "suggestion_reason_source_hostname": {
-    "message": "نطاق"
+    "message": "domain"
   },
   "suggestion_reason_source_keywords": {
-    "message": "الكلمات الرئيسية"
+    "message": "keywords"
   },
   "suggestion_reason_source_title": {
-    "message": "عنوان"
+    "message": "title"
+  },
+  "suggestion_reason_table": {
+    "message": "Large table detected."
   },
   "suggestion_reason_video": {
-    "message": "تم الكشف عن مشغل الفيديو"
+    "message": "يوجد مشغل فيديو في هذه الصفحة."
   },
   "suggestion_toast_close": {
     "message": "إغلاق الاقتراح"

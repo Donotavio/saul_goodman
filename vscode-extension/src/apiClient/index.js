@@ -17,6 +17,15 @@ async function getHealth(apiBase) {
   return res;
 }
 
+async function getHealthWithKey(apiBase, key) {
+  const url = buildUrl(apiBase, '/health', { key });
+  const res = await fetchWithTimeout(url, 4000);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
+  return res.json?.() ?? {};
+}
+
 async function postHeartbeats(apiBase, key, heartbeats) {
   const url = buildUrl(apiBase, '/v1/vscode/heartbeats', { key });
   const res = await fetchWithTimeout(url, 5000, {
@@ -69,6 +78,7 @@ async function getIndex(apiBase, key, date) {
 module.exports = {
   buildUrl,
   getHealth,
+  getHealthWithKey,
   postHeartbeats,
   getSummaries,
   getStats,
