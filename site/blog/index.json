@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Finalmente, um Robô Que Faz o Que Você Deveria Estar Fazendo",
+      "url": "./posts/2026/2026-04-01-finalmente-um-robo-que-faz-o-que-voce-deveria-estar-fazendo/",
+      "markdown": "2026/2026-04-01-finalmente-um-robo-que-faz-o-que-voce-deveria-estar-fazendo.md",
+      "date": "2026-04-01",
+      "category": "ux-design",
+      "tags": [
+        "iMessage",
+        "AI",
+        "produtividade",
+        "OpenClaw",
+        "sarcasmo"
+      ],
+      "excerpt": "Agora sua caixa de entrada do iMessage pode ser gerenciada por uma IA. Porque, claro, você não estava fazendo isso mesmo.",
+      "title_en": "Finally, a Robot That Does What You Should Be Doing",
+      "title_es": "Finalmente, un Robot Que Hace Lo Que Deberías Estar Haciendo",
+      "title_fr": "Enfin, un Robot Qui Fait Ce Que Vous Devriez Être En Train de Faire",
+      "title_de": "Endlich ein Roboter, der tut, was Sie tun sollten",
+      "title_it": "Finalmente, un Robot Che Fa Ciò Che Dovresti Stare Facendo",
+      "title_tr": "Sonunda, Yapmanız Gerekeni Yapan Bir Robot",
+      "title_zh": "终于，一个可以做你应该做的事情的机器人",
+      "title_hi": "आखिरकार, एक रोबोट जो वह करता है जो आपको करना चाहिए था",
+      "title_ar": "أخيرًا، روبوت يقوم بما كان يجب عليك فعله",
+      "title_bn": "অবশেষে, একটি রোবট যা আপনি যা করা উচিত তা করে",
+      "title_ru": "Наконец-то, робот, который делает то, что вы должны были делать",
+      "title_ur": "آخر کار، ایک روبوٹ جو وہ کرتا ہے جو آپ کو کرنا چاہیے تھا",
+      "tone": "incredulo",
+      "tags_en": [
+        "iMessage",
+        "AI",
+        "productivity",
+        "OpenClaw",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "iMessage",
+        "IA",
+        "productividad",
+        "OpenClaw",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "iMessage",
+        "IA",
+        "productivité",
+        "OpenClaw",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "iMessage",
+        "KI",
+        "Produktivität",
+        "OpenClaw",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "iMessage",
+        "IA",
+        "produttività",
+        "OpenClaw",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "iMessage",
+        "Yapay Zeka",
+        "verimlilik",
+        "OpenClaw",
+        "alay"
+      ],
+      "tags_zh": [
+        "iMessage",
+        "人工智能",
+        "生产力",
+        "OpenClaw",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "iMessage",
+        "AI",
+        "उत्पादकता",
+        "OpenClaw",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "iMessage",
+        "الذكاء الاصطناعي",
+        "الإنتاجية",
+        "OpenClaw",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "iMessage",
+        "AI",
+        "উৎপাদনশীলতা",
+        "OpenClaw",
+        "ব্যঙ্গ"
+      ],
+      "tags_ru": [
+        "iMessage",
+        "ИИ",
+        "продуктивность",
+        "OpenClaw",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "iMessage",
+        "AI",
+        "پیداواری",
+        "OpenClaw",
+        "تہذیب"
+      ],
+      "source_title": "iMessage AI: Connect OpenClaw to Apple Messages",
+      "source_url": "https://dev.to/hex_agent/imessage-ai-connect-openclaw-to-apple-messages-4chf",
+      "source_published_at": "Wed, 01 Apr 2026 11:21:27 +0000",
+      "excerpt_en": "Now your iMessage inbox can be managed by an AI. Because, of course, you weren't doing that anyway.",
+      "excerpt_es": "Ahora tu bandeja de entrada de iMessage puede ser gestionada por una IA. Porque, claro, no estabas haciendo eso de todos modos.",
+      "excerpt_fr": "Maintenant, votre boîte de réception iMessage peut être gérée par une IA. Parce que, bien sûr, vous ne faisiez pas ça de toute façon.",
+      "excerpt_de": "Jetzt kann Ihre iMessage-Box von einer KI verwaltet werden. Denn natürlich haben Sie das sowieso nicht gemacht.",
+      "excerpt_it": "Ora la tua casella di posta di iMessage può essere gestita da un'IA. Perché, certo, non lo stavi facendo davvero.",
+      "excerpt_tr": "Artık iMessage kutunuz bir yapay zeka tarafından yönetilebilir. Çünkü elbette, bunu yapmıyordunuz değil mi?",
+      "excerpt_zh": "现在你的iMessage收件箱可以由人工智能管理。因为，当然，你根本没有在做这件事。",
+      "excerpt_hi": "अब आपका iMessage इनबॉक्स एक AI द्वारा प्रबंधित किया जा सकता है। क्योंकि, निश्चित रूप से, आप वास्तव में ऐसा नहीं कर रहे थे।",
+      "excerpt_ar": "الآن يمكن إدارة صندوق الوارد الخاص بك في iMessage بواسطة الذكاء الاصطناعي. لأنه، بالطبع، لم تكن تفعل ذلك بالفعل.",
+      "excerpt_bn": "এখন আপনার iMessage ইনবক্স একটি AI দ্বারা পরিচালিত হতে পারে। কারণ, নিশ্চয়ই, আপনি আসলে এটি করছেন না।",
+      "excerpt_ru": "Теперь ваш почтовый ящик iMessage может управляться ИИ. Потому что, конечно, вы и не собирались этим заниматься.",
+      "excerpt_ur": "اب آپ کا iMessage ان باکس ایک AI کے ذریعے منظم کیا جا سکتا ہے۔ کیونکہ، ظاہر ہے، آپ یہ خود نہیں کر رہے تھے۔"
+    },
+    {
       "title": "Branding: O Que é Isso e Por Que Deveria Te Importar?",
       "url": "./posts/2026/2026-03-30-branding-o-que-e-isso-e-por-que-deveria-te-importar/",
       "markdown": "2026/2026-03-30-branding-o-que-e-isso-e-por-que-deveria-te-importar.md",
