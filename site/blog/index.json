@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Baterias: O Novo Ouro da Califórnia ou Apenas Mais Um Voo de Verão?",
+      "url": "./posts/2026/2026-04-03-baterias-o-novo-ouro-da-california-ou-apenas-mais-um-voo-de-verao/",
+      "markdown": "2026/2026-04-03-baterias-o-novo-ouro-da-california-ou-apenas-mais-um-voo-de-verao.md",
+      "date": "2026-04-03",
+      "category": "negocios",
+      "tags": [
+        "baterias",
+        "produtividade",
+        "inovação",
+        "marketing",
+        "sarcasmo"
+      ],
+      "excerpt": "Califórnia atinge novo marco com baterias. Será que finalmente temos energia para dar conta da nossa procrastinação?",
+      "title_en": "Batteries: California's New Gold or Just Another Summer Fling?",
+      "title_es": "Baterías: ¿El Nuevo Oro de California o Solo Otro Vuelo de Verano?",
+      "title_fr": "Batteries : L'or nouveau de la Californie ou juste un vol d'été ?",
+      "title_de": "Batterien: Das Neue Gold Kaliforniens oder Nur Ein Sommerflug?",
+      "title_it": "Batterie: Il Nuovo Oro della California o Solo un Altro Volo Estivo?",
+      "title_tr": "Piller: Kaliforniya'nın Yeni Altını mı Yoksa Sadece Bir Yaz Uçuşu mu?",
+      "title_zh": "电池：加利福尼亚的新黄金还是又一次夏季飞行？",
+      "title_hi": "बैटरी: कैलिफोर्निया का नया सोना या बस एक और गर्मी की उड़ान?",
+      "title_ar": "البطاريات: الذهب الجديد في كاليفورنيا أم مجرد رحلة صيفية أخرى؟",
+      "title_bn": "ব্যাটারী: ক্যালিফোর্নিয়ার নতুন সোনা নাকি শুধুমাত্র একটি গ্রীষ্মকালীন উড়ান?",
+      "title_ru": "Батареи: Новое золото Калифорнии или просто еще один летний каприз?",
+      "title_ur": "بیٹریاں: کیلیفورنیا کا نیا سونا یا صرف ایک اور گرمیوں کی پرواز؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "batteries",
+        "productivity",
+        "innovation",
+        "marketing",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "baterías",
+        "productividad",
+        "innovación",
+        "marketing",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "batteries",
+        "productivité",
+        "innovation",
+        "marketing",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Batterien",
+        "Produktivität",
+        "Innovation",
+        "Marketing",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "batterie",
+        "produttività",
+        "innovazione",
+        "marketing",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "piller",
+        "verimlilik",
+        "inovasyon",
+        "pazarlama",
+        "alay"
+      ],
+      "tags_zh": [
+        "电池",
+        "生产力",
+        "创新",
+        "营销",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "बैटरी",
+        "उत्पादकता",
+        "नवाचार",
+        "मार्केटिंग",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "بطاريات",
+        "إنتاجية",
+        "ابتكار",
+        "تسويق",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "ব্যাটারী",
+        "উৎপাদনশীলতা",
+        "নবীনতা",
+        "মার্কেটিং",
+        "বিদ্রূপ"
+      ],
+      "tags_ru": [
+        "батареи",
+        "продуктивность",
+        "инновации",
+        "маркетинг",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "بیٹریاں",
+        "پیداواری",
+        "جدت",
+        "مارکیٹنگ",
+        "تہذیب"
+      ],
+      "source_title": "California just hit an inflection point for batteries",
+      "source_url": "https://www.fastcompany.com/91519839/california-just-hit-an-inflection-point-for-batteries",
+      "source_published_at": "2026-04-03T10:00:00",
+      "excerpt_en": "California hits a new milestone with batteries. Do we finally have the energy to tackle our procrastination?",
+      "excerpt_es": "California alcanza un nuevo hito con baterías. ¿Finalmente tenemos energía para hacer frente a nuestra procrastinación?",
+      "excerpt_fr": "La Californie atteint un nouveau jalon avec les batteries. Avons-nous enfin l'énergie pour gérer notre procrastination ?",
+      "excerpt_de": "Kalifornien erreicht einen neuen Meilenstein mit Batterien. Haben wir endlich die Energie, um unsere Prokrastination zu bewältigen?",
+      "excerpt_it": "La California raggiunge un nuovo traguardo con le batterie. Finalmente abbiamo energia per affrontare la nostra procrastinazione?",
+      "excerpt_tr": "Kaliforniya, pillerle yeni bir dönüm noktasına ulaştı. Nihayet ertelemelerimizi aşacak enerjiye mi sahibiz?",
+      "excerpt_zh": "加利福尼亚在电池方面达到了新里程碑。我们是否终于有足够的能量来应对我们的拖延症？",
+      "excerpt_hi": "कैलिफोर्निया ने बैटरी के साथ एक नया मील का पत्थर हासिल किया। क्या हमें आखिरकार अपनी आलस्य को संभालने के लिए ऊर्जा मिल गई?",
+      "excerpt_ar": "كاليفورنيا تحقق إنجازًا جديدًا مع البطاريات. هل لدينا أخيرًا الطاقة للتعامل مع تسويفنا؟",
+      "excerpt_bn": "ক্যালিফোর্নিয়া ব্যাটারির সাথে নতুন মাইলফলক অর্জন করেছে। কি আমরা অবশেষে আমাদের অলসতা মোকাবেলার জন্য শক্তি পেয়েছি?",
+      "excerpt_ru": "Калифорния достигла нового рубежа с батареями. Наконец-то у нас есть энергия, чтобы справиться с нашей прокрастинацией?",
+      "excerpt_ur": "کیلیفورنیا بیٹریوں کے ساتھ ایک نئے سنگ میل پر پہنچ گیا ہے۔ کیا ہمیں آخرکار اپنی ٹال مٹول کے لئے توانائی مل گئی؟"
+    },
+    {
       "title": "Finalmente, um Robô Que Faz o Que Você Deveria Estar Fazendo",
       "url": "./posts/2026/2026-04-01-finalmente-um-robo-que-faz-o-que-voce-deveria-estar-fazendo/",
       "markdown": "2026/2026-04-01-finalmente-um-robo-que-faz-o-que-voce-deveria-estar-fazendo.md",
