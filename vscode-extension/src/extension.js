@@ -1220,8 +1220,16 @@ async function pollStatus() {
         return;
       }
       keyVerified = true;
-    } catch {
-      // Older daemon without key support on /health -- continue to data endpoints
+    } catch (healthKeyErr) {
+      const msg = healthKeyErr?.message ?? '';
+      const isNetworkError = msg.includes('ECONNREFUSED') ||
+        msg.includes('timed out') ||
+        msg.includes('abort') ||
+        msg.includes('ENOTFOUND') ||
+        msg.includes('fetch failed');
+      if (!isNetworkError) {
+        console.warn('[Saul] Unexpected error in health key check:', msg);
+      }
     }
 
     const today = getTodayKey();
