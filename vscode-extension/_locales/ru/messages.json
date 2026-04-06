@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "Преобразуйте редактор в актив продуктивности."
+  },
+  "poll_key_mismatch_warning": {
+    "message": "Ключ сопряжения расширения не совпадает с ключом SaulDaemon. Проверьте настройку saulGoodman.pairingKey."
+  },
+  "open_settings_action": {
+    "message": "Открыть настройки"
+  },
+  "test_health_key_mismatch": {
+    "message": "Демон на {origin} ответил, но ключ сопряжения не совпадает. Проверьте конфигурацию."
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "Аутентификация не удалась (HTTP 401). Проверьте, что saulGoodman.pairingKey совпадает с PAIRING_KEY демона."
+  },
+  "status_auth_error_text": {
+    "message": "Неверный ключ"
+  },
+  "status_auth_error_tooltip": {
+    "message": "Ключ сопряжения не совпадает с SaulDaemon. Нажмите для проверки."
   }
 }

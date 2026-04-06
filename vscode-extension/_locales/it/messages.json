@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "Trasforma l'editor in un attivo di produttività."
+  },
+  "poll_key_mismatch_warning": {
+    "message": "La chiave di accoppiamento dell'estensione non corrisponde alla chiave del SaulDaemon. Verificare l'impostazione saulGoodman.pairingKey."
+  },
+  "open_settings_action": {
+    "message": "Apri impostazioni"
+  },
+  "test_health_key_mismatch": {
+    "message": "Il daemon su {origin} ha risposto, ma la chiave di accoppiamento non corrisponde. Verificare la configurazione."
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "Autenticazione fallita (HTTP 401). Verificare che saulGoodman.pairingKey corrisponda alla PAIRING_KEY del daemon."
+  },
+  "status_auth_error_text": {
+    "message": "Chiave non valida"
+  },
+  "status_auth_error_tooltip": {
+    "message": "La chiave di accoppiamento non corrisponde al SaulDaemon. Fare clic per testare."
   }
 }

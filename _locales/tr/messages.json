@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "Editörü verimlilik varlığına dönüştürün."
+  },
+  "poll_key_mismatch_warning": {
+    "message": "Uzantı eşleştirme anahtarı SaulDaemon anahtarıyla eşleşmiyor. saulGoodman.pairingKey ayarını kontrol edin."
+  },
+  "open_settings_action": {
+    "message": "Ayarları Aç"
+  },
+  "test_health_key_mismatch": {
+    "message": "{origin} adresindeki daemon yanıt verdi, ancak eşleştirme anahtarı eşleşmiyor. Yapılandırmayı kontrol edin."
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "Kimlik doğrulama başarısız (HTTP 401). saulGoodman.pairingKey ile daemon PAIRING_KEY eşleştiğini kontrol edin."
+  },
+  "status_auth_error_text": {
+    "message": "Geçersiz anahtar"
+  },
+  "status_auth_error_tooltip": {
+    "message": "Eşleştirme anahtarı SaulDaemon ile eşleşmiyor. Test etmek için tıklayın."
   }
 }

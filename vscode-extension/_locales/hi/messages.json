@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
+  },
+  "poll_key_mismatch_warning": {
+    "message": "एक्सटेंशन की पेयरिंग कुंजी SaulDaemon कुंजी से मेल नहीं खाती। saulGoodman.pairingKey सेटिंग जांचें।"
+  },
+  "open_settings_action": {
+    "message": "सेटिंग्स खोलें"
+  },
+  "test_health_key_mismatch": {
+    "message": "{origin} पर डेमन ने प्रतिक्रिया दी, लेकिन पेयरिंग कुंजी मेल नहीं खाती। कॉन्फ़िगरेशन जांचें।"
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "प्रमाणीकरण विफल (HTTP 401)। जांचें कि saulGoodman.pairingKey डेमन की PAIRING_KEY से मेल खाती है।"
+  },
+  "status_auth_error_text": {
+    "message": "अमान्य कुंजी"
+  },
+  "status_auth_error_tooltip": {
+    "message": "पेयरिंग कुंजी SaulDaemon से मेल नहीं खाती। परीक्षण के लिए क्लिक करें।"
   }
 }

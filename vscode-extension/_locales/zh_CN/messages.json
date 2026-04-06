@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "将编辑器转变为生产力资产。"
+  },
+  "poll_key_mismatch_warning": {
+    "message": "扩展配对密钥与 SaulDaemon 密钥不匹配。请检查 saulGoodman.pairingKey 设置。"
+  },
+  "open_settings_action": {
+    "message": "打开设置"
+  },
+  "test_health_key_mismatch": {
+    "message": "{origin} 上的守护进程已响应，但配对密钥不匹配。请检查配置。"
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "身份验证失败（HTTP 401）。请检查 saulGoodman.pairingKey 是否与守护进程的 PAIRING_KEY 匹配。"
+  },
+  "status_auth_error_text": {
+    "message": "密钥无效"
+  },
+  "status_auth_error_tooltip": {
+    "message": "配对密钥与 SaulDaemon 不匹配。点击测试。"
   }
 }

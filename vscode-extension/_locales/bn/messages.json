@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "সম্পাদককে উৎপাদনশীলতার সম্পদে রূপান্তর করুন।"
+  },
+  "poll_key_mismatch_warning": {
+    "message": "এক্সটেনশনের পেয়ারিং কী SaulDaemon কী-এর সাথে মেলে না। saulGoodman.pairingKey সেটিং পরীক্ষা করুন।"
+  },
+  "open_settings_action": {
+    "message": "সেটিংস খুলুন"
+  },
+  "test_health_key_mismatch": {
+    "message": "{origin}-এ ডেমন সাড়া দিয়েছে, কিন্তু পেয়ারিং কী মেলে না। কনফিগারেশন পরীক্ষা করুন।"
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "প্রমাণীকরণ ব্যর্থ (HTTP 401)। saulGoodman.pairingKey ডেমনের PAIRING_KEY-এর সাথে মেলে কিনা পরীক্ষা করুন।"
+  },
+  "status_auth_error_text": {
+    "message": "অবৈধ কী"
+  },
+  "status_auth_error_tooltip": {
+    "message": "পেয়ারিং কী SaulDaemon-এর সাথে মেলে না। পরীক্ষা করতে ক্লিক করুন।"
   }
 }

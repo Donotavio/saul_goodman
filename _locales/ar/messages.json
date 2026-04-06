@@ -3604,5 +3604,23 @@
   },
   "vscodeTitle": {
     "message": "حوّل المحرر إلى أصل إنتاجية."
+  },
+  "poll_key_mismatch_warning": {
+    "message": "مفتاح الاقتران للإضافة لا يتطابق مع مفتاح SaulDaemon. تحقق من إعداد saulGoodman.pairingKey."
+  },
+  "open_settings_action": {
+    "message": "فتح الإعدادات"
+  },
+  "test_health_key_mismatch": {
+    "message": "استجاب البرنامج الخفي على {origin}، لكن مفتاح الاقتران لا يتطابق. تحقق من التكوين."
+  },
+  "vscode_reports_error_key_mismatch": {
+    "message": "فشل المصادقة (HTTP 401). تحقق من أن saulGoodman.pairingKey يتطابق مع PAIRING_KEY للبرنامج الخفي."
+  },
+  "status_auth_error_text": {
+    "message": "مفتاح غير صالح"
+  },
+  "status_auth_error_tooltip": {
+    "message": "مفتاح الاقتران لا يتطابق مع SaulDaemon. انقر للاختبار."
   }
 }
