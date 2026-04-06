@@ -80,6 +80,40 @@ function validateLength(key, message, locale) {
   return null;
 }
 
+async function walkJsFiles(dir) {
+  const results = [];
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === 'node_modules' || entry.name === 'vendor') continue;
+      results.push(...(await walkJsFiles(full)));
+    } else if (entry.name.endsWith('.js')) {
+      results.push(full);
+    }
+  }
+  return results;
+}
+
+async function scanSourceForKeys(srcDirs) {
+  const keys = new Set();
+  const pattern = /localize\(\s*['"]([a-zA-Z0-9_]+)['"]/g;
+  for (const dir of srcDirs) {
+    try {
+      const files = await walkJsFiles(dir);
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf-8');
+        for (const match of content.matchAll(pattern)) {
+          keys.add(match[1]);
+        }
+      }
+    } catch {
+      // Directory may not exist
+    }
+  }
+  return keys;
+}
+
 async function main() {
   const defaultMessages = flattenMessages(await loadMessages(DEFAULT_LOCALE.folder));
   const defaultKeys = new Set(Object.keys(defaultMessages));
@@ -145,7 +179,24 @@ async function main() {
     }
   }
 
-  const hasErrors = report.some((r) => r.missingCount > 0 || r.placeholderIssues > 0);
+  // Source code scan: find localize() calls and check they exist in locale files
+  const sourceKeys = await scanSourceForKeys([
+    path.join(ROOT, 'vscode-extension', 'src'),
+  ]);
+  const missingFromLocales = [...sourceKeys].filter((k) => !defaultKeys.has(k)).sort();
+
+  if (sourceKeys.size > 0) {
+    console.log(`\nSource scan: ${sourceKeys.size} keys found in localize() calls`);
+    if (missingFromLocales.length > 0) {
+      console.log(`  ${missingFromLocales.length} keys in source but NOT in locale files:`);
+      missingFromLocales.forEach((k) => console.log(`    - ${k}`));
+    } else {
+      console.log('  All source keys present in locale files.');
+    }
+  }
+
+  const hasErrors = report.some((r) => r.missingCount > 0 || r.placeholderIssues > 0)
+    || missingFromLocales.length > 0;
   if (hasErrors) {
     process.exitCode = 1;
   }
