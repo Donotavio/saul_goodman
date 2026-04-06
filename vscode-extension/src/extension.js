@@ -1191,6 +1191,8 @@ async function pollStatus() {
     return;
   }
 
+  let keyVerified = false;
+
   try {
     const healthRes = await apiClient.getHealth(baseUrl);
     if (!healthRes.ok) {
@@ -1217,6 +1219,7 @@ async function pollStatus() {
         }
         return;
       }
+      keyVerified = true;
     } catch {
       // Older daemon without key support on /health -- continue to data endpoints
     }
@@ -1243,7 +1246,7 @@ async function pollStatus() {
       index
     }, currentComboSuffix);
   } catch (error) {
-    if (error?.message?.includes('401')) {
+    if (error?.message?.includes('401') && !keyVerified) {
       await updateStatusBar('auth_error');
       if (!authErrorNotified) {
         authErrorNotified = true;
