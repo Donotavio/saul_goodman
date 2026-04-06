@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Gadgets que fazem mais de uma coisa? Uau, que novidade!",
+      "url": "./posts/2026/2026-04-06-gadgets-que-fazem-mais-de-uma-coisa-uau-que-novidade/",
+      "markdown": "2026/2026-04-06-gadgets-que-fazem-mais-de-uma-coisa-uau-que-novidade.md",
+      "date": "2026-04-06",
+      "category": "procrastinacao",
+      "tags": [
+        "produtividade",
+        "gadgets",
+        "Anker",
+        "tecnologia",
+        "sarcasmo"
+      ],
+      "excerpt": "Quem diria que a tecnologia poderia ser útil e barata? Prepare-se para a revelação do século!",
+      "title_en": "Gadgets That Do More Than One Thing? Wow, What a Novelty!",
+      "title_es": "¿Gadgets que hacen más de una cosa? ¡Vaya, qué novedad!",
+      "title_fr": "Des gadgets qui font plus d'une chose ? Waouh, quelle nouveauté !",
+      "title_de": "Gadgets, die mehr als eine Sache tun? Wow, was für eine Neuheit!",
+      "title_it": "Gadget che fanno più di una cosa? Wow, che novità!",
+      "title_tr": "Birden Fazla İş Yapan Gadget'lar mı? Vay, Ne Yenilik!",
+      "title_zh": "多功能小工具？哇，真是个新鲜事！",
+      "title_hi": "एक से अधिक काम करने वाले गैजेट्स? वाह, क्या नई बात है!",
+      "title_ar": "أجهزة تقوم بأكثر من شيء واحد؟ واو، يا لها من مفاجأة!",
+      "title_bn": "একাধিক কাজ করা গ্যাজেট? ওয়াও, কি নতুনত্ব!",
+      "title_ru": "Гаджеты, которые делают больше одной вещи? Ух ты, какая новинка!",
+      "title_ur": "گجٹس جو ایک سے زیادہ کام کرتے ہیں؟ واہ، کیا نئی بات ہے!",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "gadgets",
+        "Anker",
+        "technology",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "productividad",
+        "gadgets",
+        "Anker",
+        "tecnología",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "productivité",
+        "gadgets",
+        "Anker",
+        "technologie",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Gadgets",
+        "Anker",
+        "Technologie",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "produttività",
+        "gadget",
+        "Anker",
+        "tecnologia",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "gadget'lar",
+        "Anker",
+        "teknoloji",
+        "alay"
+      ],
+      "tags_zh": [
+        "生产力",
+        "小工具",
+        "Anker",
+        "科技",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "गैजेट्स",
+        "Anker",
+        "तकनीक",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "الأجهزة",
+        "أنكر",
+        "التكنولوجيا",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "গ্যাজেট",
+        "অ্যাঙ্কার",
+        "প্রযুক্তি",
+        "ব্যঙ্গ"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "гаджеты",
+        "Anker",
+        "технологии",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "گجٹس",
+        "انکر",
+        "ٹیکنالوجی",
+        "تہذیب"
+      ],
+      "source_title": "Pack lightly with these 3 inexpensive, multipurpose gadgets from Anker",
+      "source_url": "https://www.fastcompany.com/91500474/anker-portable-devices",
+      "source_published_at": "2026-04-06T04:30:00",
+      "excerpt_en": "Who would have thought technology could be useful and affordable? Get ready for the revelation of the century!",
+      "excerpt_es": "¿Quién diría que la tecnología podría ser útil y barata? ¡Prepárate para la revelación del siglo!",
+      "excerpt_fr": "Qui aurait cru que la technologie pourrait être utile et bon marché ? Préparez-vous pour la révélation du siècle !",
+      "excerpt_de": "Wer hätte gedacht, dass Technologie nützlich und günstig sein könnte? Machen Sie sich bereit für die Offenbarung des Jahrhunderts!",
+      "excerpt_it": "Chi avrebbe mai detto che la tecnologia potesse essere utile e conveniente? Preparati per la rivelazione del secolo!",
+      "excerpt_tr": "Kim derdi ki teknoloji hem faydalı hem de ucuz olabilir? Yüzyılın açıklamasına hazırlanın!",
+      "excerpt_zh": "谁能想到科技竟然可以既实用又便宜？准备好迎接世纪的揭示吧！",
+      "excerpt_hi": "किसने सोचा था कि तकनीक उपयोगी और सस्ती हो सकती है? सदी का रहस्य जानने के लिए तैयार हो जाइए!",
+      "excerpt_ar": "من كان يظن أن التكنولوجيا يمكن أن تكون مفيدة ورخيصة؟ استعد للكشف عن القرن!",
+      "excerpt_bn": "কে বলেছিল যে প্রযুক্তি উপকারী এবং সস্তা হতে পারে? শতাব্দীর প্রকাশনার জন্য প্রস্তুত হন!",
+      "excerpt_ru": "Кто бы мог подумать, что технологии могут быть полезными и дешевыми? Приготовьтесь к откровению века!",
+      "excerpt_ur": "کون سوچ سکتا تھا کہ ٹیکنالوجی مفید اور سستی ہو سکتی ہے؟ صدی کی انکشاف کے لیے تیار ہو جائیں!"
+    },
+    {
       "title": "Baterias: O Novo Ouro da Califórnia ou Apenas Mais Um Voo de Verão?",
       "url": "./posts/2026/2026-04-03-baterias-o-novo-ouro-da-california-ou-apenas-mais-um-voo-de-verao/",
       "markdown": "2026/2026-04-03-baterias-o-novo-ouro-da-california-ou-apenas-mais-um-voo-de-verao.md",
