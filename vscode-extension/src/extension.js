@@ -241,7 +241,11 @@ function activate(context) {
       vscode.workspace.onDidChangeConfiguration((event) => {
         if (event.affectsConfiguration('saulGoodman')) {
           trackingController?.reloadConfig();
+          if (event.affectsConfiguration('saulGoodman.pairingKey')) {
+            authErrorNotified = false;
+          }
           void updateStatusBar('unknown');
+          startStatusPolling();
         }
       })
     );
