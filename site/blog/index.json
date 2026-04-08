@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Esperando o que? O Futuro da IA Não Vai Esperar por Você!",
+      "url": "./posts/2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce/",
+      "markdown": "2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce.md",
+      "date": "2026-04-08",
+      "category": "foco-atencao",
+      "tags": [
+        "produtividade",
+        "IA",
+        "carreira",
+        "procrastinação",
+        "marketing"
+      ],
+      "excerpt": "Se você ainda está esperando para adotar IA, parabéns! Você acaba de ganhar um prêmio por procrastinação.",
+      "title_en": "Waiting for What? The Future of AI Won't Wait for You!",
+      "title_es": "¿Esperando qué? ¡El futuro de la IA no va a esperar por ti!",
+      "title_fr": "En attendant quoi ? L'avenir de l'IA ne va pas vous attendre !",
+      "title_de": "Worauf wartest du? Die Zukunft der KI wird nicht auf dich warten!",
+      "title_it": "Aspettando cosa? Il Futuro dell'IA Non Aspetterà Te!",
+      "title_tr": "Ne Bekliyorsun? Yapay Zekanın Geleceği Seni Beklemeyecek!",
+      "title_zh": "在等什么？人工智能的未来不会等你！",
+      "title_hi": "क्या इंतज़ार कर रहे हैं? एआई का भविष्य आपके लिए इंतज़ार नहीं करेगा!",
+      "title_ar": "ماذا تنتظر؟ مستقبل الذكاء الاصطناعي لن ينتظر من أجلك!",
+      "title_bn": "কিসের জন্য অপেক্ষা? এআই-এর ভবিষ্যৎ আপনার জন্য অপেক্ষা করবে না!",
+      "title_ru": "Чего ждать? Будущее ИИ не будет ждать вас!",
+      "title_ur": "کیا انتظار کر رہے ہیں؟ AI کا مستقبل آپ کا انتظار نہیں کرے گا!",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "AI",
+        "career",
+        "procrastination",
+        "marketing"
+      ],
+      "tags_es": [
+        "productividad",
+        "IA",
+        "carrera",
+        "procrastinación",
+        "marketing"
+      ],
+      "tags_fr": [
+        "productivité",
+        "IA",
+        "carrière",
+        "procrastination",
+        "marketing"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "KI",
+        "Karriere",
+        "Prokrastination",
+        "Marketing"
+      ],
+      "tags_it": [
+        "produttività",
+        "IA",
+        "carriera",
+        "procrastinazione",
+        "marketing"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "Yapay Zeka",
+        "kariyer",
+        "prokrastinasyon",
+        "pazarlama"
+      ],
+      "tags_zh": [
+        "生产力",
+        "人工智能",
+        "职业",
+        "拖延",
+        "营销"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "एआई",
+        "करियर",
+        "प्रोक्रास्टिनेशन",
+        "मार्केटिंग"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "الذكاء الاصطناعي",
+        "المهنة",
+        "التسويف",
+        "التسويق"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "এআই",
+        "ক্যারিয়ার",
+        "প্রোক্রাস্টিনেশন",
+        "মার্কেটিং"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "ИИ",
+        "карьера",
+        "прокрастинация",
+        "маркетинг"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "AI",
+        "کیریئر",
+        "پروکرستینیشن",
+        "مارکیٹنگ"
+      ],
+      "source_title": "The AI Skill Gap: Why Waiting Is Your Biggest Risk",
+      "source_url": "https://www.asianefficiency.com/podcasts/607w-ai-skill-gap-waiting-biggest-risk/",
+      "source_published_at": "Wed, 08 Apr 2026 11:00:00 +0000",
+      "excerpt_en": "If you're still waiting to adopt AI, congratulations! You've just won a procrastination award.",
+      "excerpt_es": "¡Si todavía estás esperando para adoptar la IA, felicitaciones! Acabas de ganar un premio por procrastinación.",
+      "excerpt_fr": "Si vous attendez encore d'adopter l'IA, félicitations ! Vous venez de gagner un prix pour procrastination.",
+      "excerpt_de": "Wenn du immer noch darauf wartest, KI zu übernehmen, herzlichen Glückwunsch! Du hast gerade einen Preis für Prokrastination gewonnen.",
+      "excerpt_it": "Se stai ancora aspettando di adottare l'IA, congratulazioni! Hai appena vinto un premio per procrastinazione.",
+      "excerpt_tr": "Eğer hala yapay zekayı benimsemek için bekliyorsan, tebrikler! Prokrastinasyon ödülünü kazandın.",
+      "excerpt_zh": "如果你还在等待采用人工智能，恭喜你！你刚刚赢得了拖延症的奖项。",
+      "excerpt_hi": "अगर आप अभी भी एआई को अपनाने का इंतज़ार कर रहे हैं, तो बधाई हो! आपने procrastination के लिए एक पुरस्कार जीत लिया है।",
+      "excerpt_ar": "إذا كنت لا تزال تنتظر لتبني الذكاء الاصطناعي، تهانينا! لقد فزت للتو بجائزة التسويف.",
+      "excerpt_bn": "যদি আপনি এখনও এআই গ্রহণের জন্য অপেক্ষা করে থাকেন, অভিনন্দন! আপনি procrastination-এর জন্য একটি পুরস্কার জিতেছেন।",
+      "excerpt_ru": "Если вы все еще ждете, чтобы принять ИИ, поздравляю! Вы только что выиграли приз за прокрастинацию.",
+      "excerpt_ur": "اگر آپ ابھی بھی AI کو اپنانے کے لیے انتظار کر رہے ہیں، تو مبارک ہو! آپ نے procrastination کا انعام جیت لیا ہے۔"
+    },
+    {
       "title": "Gadgets que fazem mais de uma coisa? Uau, que novidade!",
       "url": "./posts/2026/2026-04-06-gadgets-que-fazem-mais-de-uma-coisa-uau-que-novidade/",
       "markdown": "2026/2026-04-06-gadgets-que-fazem-mais-de-uma-coisa-uau-que-novidade.md",
