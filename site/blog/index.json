@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Sua IA Deveria Dormir... Ou Não?",
+      "url": "./posts/2026/2026-04-13-sua-ia-deveria-dormir-ou-nao/",
+      "markdown": "2026/2026-04-13-sua-ia-deveria-dormir-ou-nao.md",
+      "date": "2026-04-13",
+      "category": "dev-performance",
+      "tags": [
+        "IA",
+        "produtividade",
+        "sarcástico",
+        "tecnologia",
+        "procrastinação"
+      ],
+      "excerpt": "O que acontece quando sua IA decide que o sono é para os fracos? Spoiler: nada produtivo.",
+      "title_en": "Should Your AI Sleep... Or Not?",
+      "title_es": "¿Debería Su IA Dormir... O No?",
+      "title_fr": "Votre IA Devrait Dormir... Ou Pas?",
+      "title_de": "Sollte Ihre KI Schlafen... Oder Nicht?",
+      "title_it": "La Tua IA Dovrebbe Dormire... O No?",
+      "title_tr": "Yapay Zekanız Uyumalı mı... Yoksa Uyumasın mı?",
+      "title_zh": "你的人工智能应该睡觉吗...还是不应该？",
+      "title_hi": "क्या आपकी एआई को सोना चाहिए... या नहीं?",
+      "title_ar": "هل يجب أن تنام ذكائك الاصطناعي... أم لا؟",
+      "title_bn": "আপনার এআই কি ঘুমানো উচিত... নাকি না?",
+      "title_ru": "Должен ли ваш ИИ спать... или нет?",
+      "title_ur": "کیا آپ کی AI کو سونا چاہیے... یا نہیں؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "AI",
+        "productivity",
+        "sarcastic",
+        "technology",
+        "procrastination"
+      ],
+      "tags_es": [
+        "IA",
+        "productividad",
+        "sarcástico",
+        "tecnología",
+        "procrastinación"
+      ],
+      "tags_fr": [
+        "IA",
+        "productivité",
+        "sarcastique",
+        "technologie",
+        "procrastination"
+      ],
+      "tags_de": [
+        "KI",
+        "Produktivität",
+        "sarkastisch",
+        "Technologie",
+        "Prokrastination"
+      ],
+      "tags_it": [
+        "IA",
+        "produttività",
+        "sarcastico",
+        "tecnologia",
+        "procrastinazione"
+      ],
+      "tags_tr": [
+        "Yapay Zeka",
+        "üretkenlik",
+        "alaycı",
+        "teknoloji",
+        "ertelemek"
+      ],
+      "tags_zh": [
+        "人工智能",
+        "生产力",
+        "讽刺",
+        "科技",
+        "拖延"
+      ],
+      "tags_hi": [
+        "एआई",
+        "उत्पादकता",
+        "व्यंग्यात्मक",
+        "प्रौद्योगिकी",
+        "टालमटोल"
+      ],
+      "tags_ar": [
+        "ذكاء اصطناعي",
+        "إنتاجية",
+        "ساخر",
+        "تكنولوجيا",
+        "تسويف"
+      ],
+      "tags_bn": [
+        "এআই",
+        "উৎপাদনশীলতা",
+        "সার্কাস্টিক",
+        "প্রযুক্তি",
+        "প্রোক্রাস্টিনেশন"
+      ],
+      "tags_ru": [
+        "ИИ",
+        "продуктивность",
+        "сарказм",
+        "технологии",
+        "прокрастинация"
+      ],
+      "tags_ur": [
+        "AI",
+        "پیداواری",
+        "تہذیبی",
+        "ٹیکنالوجی",
+        "ٹال مٹول"
+      ],
+      "source_title": "Your AI Should Sleep: How We Built a Night Cycle for a Companion Robot",
+      "source_url": "https://dev.to/desve/your-ai-should-sleep-how-we-built-a-night-cycle-for-a-companion-robot-3h2d",
+      "source_published_at": "Mon, 13 Apr 2026 11:24:09 +0000",
+      "excerpt_en": "What happens when your AI decides that sleep is for the weak? Spoiler: nothing productive.",
+      "excerpt_es": "¿Qué pasa cuando su IA decide que dormir es para los débiles? Spoiler: nada productivo.",
+      "excerpt_fr": "Que se passe-t-il lorsque votre IA décide que le sommeil est pour les faibles ? Spoiler : rien de productif.",
+      "excerpt_de": "Was passiert, wenn Ihre KI beschließt, dass Schlaf für Schwächlinge ist? Spoiler: Nichts Produktives.",
+      "excerpt_it": "Cosa succede quando la tua IA decide che il sonno è per i deboli? Spoiler: nulla di produttivo.",
+      "excerpt_tr": "Yapay zekanız uykunun zayıflar için olduğunu düşündüğünde ne olur? Spoiler: hiçbir üretken şey.",
+      "excerpt_zh": "当你的人工智能决定睡眠是弱者的特权时，会发生什么？剧透：没有什么富有成效的事情。",
+      "excerpt_hi": "जब आपकी एआई तय करती है कि नींद कमजोरों के लिए है, तो क्या होता है? स्पॉइलर: कुछ भी उत्पादक नहीं।",
+      "excerpt_ar": "ماذا يحدث عندما يقرر ذكائك الاصطناعي أن النوم للضعفاء؟ تلميح: لا شيء منتج.",
+      "excerpt_bn": "যখন আপনার এআই সিদ্ধান্ত নেয় যে ঘুম দুর্বলদের জন্য, তখন কি ঘটে? স্পয়লার: কিছুই উৎপাদনশীল নয়।",
+      "excerpt_ru": "Что происходит, когда ваш ИИ решает, что сон — это для слабаков? Спойлер: ничего продуктивного.",
+      "excerpt_ur": "جب آپ کی AI یہ فیصلہ کرتی ہے کہ نیند کمزوروں کے لیے ہے تو کیا ہوتا ہے؟ اسپوئلر: کچھ بھی پیداواری نہیں۔"
+    },
+    {
       "title": "Esperando o que? O Futuro da IA Não Vai Esperar por Você!",
       "url": "./posts/2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce/",
       "markdown": "2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce.md",
