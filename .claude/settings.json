@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Sessao iniciada no monorepo Saul Goodman. Lembrar: (1) local-first, (2) nunca editar dist/, (3) privacy-preserving, (4) i18n em 14 locales."
+            "prompt": "Contexto do projeto: monorepo Saul Goodman, local-first, nunca editar dist/, privacy-preserving, i18n em 14 locales."
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Antes de processar: se o pedido envolve ML, consultar docs/auto-classification.md. Se envolve texto visivel, lembrar dos 14 locales. Se envolve daemon, verificar contratos em docs/saul-daemon.md."
+            "prompt": "SEMPRE PROSSIGA com o pedido do usuario. Dicas de contexto opcionais: pedidos sobre ML podem se beneficiar de consultar docs/auto-classification.md; pedidos sobre texto visivel podem precisar de atualizacao nos 14 locales; pedidos sobre daemon podem se beneficiar de docs/saul-daemon.md."
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "GUARDRAIL: Se o arquivo alvo esta dentro de dist/, PARE e sugira editar o TypeScript correspondente em src/. dist/ e auto-gerado pelo build."
+            "prompt": "Lembrete: arquivos dentro de dist/ sao auto-gerados pelo build. Prefira editar o TypeScript correspondente em src/."
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Apos edicao: se o arquivo esta em _locales/ ou contem texto visivel ao usuario, lembrar de rodar npm run i18n:check e atualizar os 14 locales. Se editou src/shared/ml/, considerar se calibracao e impactada."
+            "prompt": "Lembrete pos-edicao: se o arquivo editado esta em _locales/ ou contem texto visivel, considere npm run i18n:check. Se editou src/shared/ml/, considere impacto na calibracao."
           }
         ]
       }
@@ -50,7 +50,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Checklist final: (1) npm test passou se TS mudou? (2) npm run build se codigo da extensao mudou? (3) Docs atualizados para mudancas de contrato/ML? (4) i18n keys para texto visivel? (5) Nenhum dado sensivel exposto?"
+            "prompt": "Checklist opcional: (1) npm test se TS mudou (2) npm run build se extensao mudou (3) docs atualizados se contratos mudaram (4) i18n keys se texto visivel adicionado."
           }
         ]
       }
