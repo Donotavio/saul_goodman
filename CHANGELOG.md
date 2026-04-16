@@ -3,6 +3,13 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.5] - 2026-04-16
+
+- Correção do pipeline NLS da extensão VS Code: chave `config_enable_ai_tracking_description` adicionada ao `generate-nls.js` e a todos os `package.nls.*.json`.
+- Atualização de dependências para resolver todos os 11 alertas do Dependabot: `@modelcontextprotocol/sdk` 1.12→1.29, `jspdf` 3.0→3.2, `@vscode/vsce` 3.3→3.9 (incluindo sub-deps `hono`, `@hono/node-server`, `dompurify`, `lodash`, `picomatch`).
+- Reparo de traduções suspeitas em 13 locales via LLM: ar(7), bn(3), de(29), es_419(115), fr(27), hi(4), it(46), ru(7), tr(22), ur(5), zh_CN(4) chaves corrigidas.
+- Posts do blog traduzidos para 13 locales (78 arquivos HTML gerados).
+
 ## [1.24.0] - 2026-04-16
 
 - Novo sistema de tracking de atividade IA na extensão VS Code: detecção heurística de bursts de edição (janela deslizante de 2s, limiar de 15+ linhas), atribuição de terminal por nome de processo (Claude Code, Copilot, Cline, Aider, Cursor), contagem de inline completions aceitas e registro de extensões IA ativas.
@@ -287,6 +294,13 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.24.5] - 2026-04-16
+
+- Fixed VS Code NLS pipeline: added `config_enable_ai_tracking_description` key to `generate-nls.js` and all `package.nls.*.json` files.
+- Updated dependencies to resolve all 11 Dependabot alerts: `@modelcontextprotocol/sdk` 1.12→1.29, `jspdf` 3.0→3.2, `@vscode/vsce` 3.3→3.9 (including sub-deps `hono`, `@hono/node-server`, `dompurify`, `lodash`, `picomatch`).
+- Repaired suspicious translations across 13 locales via LLM: ar(7), bn(3), de(29), es_419(115), fr(27), hi(4), it(46), ru(7), tr(22), ur(5), zh_CN(4) keys fixed.
+- Blog posts translated into 13 locales (78 HTML files generated).
+
 ## [1.24.0] - 2026-04-16
 
 - New AI activity tracking system in the VS Code extension: heuristic edit burst detection (2s sliding window, 15+ lines threshold), terminal source attribution by process name (Claude Code, Copilot, Cline, Aider, Cursor), inline completion accept counting, and active AI extension registry.
@@ -570,6 +584,13 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.24.5] - 2026-04-16
+
+- Corrección del pipeline NLS de la extensión VS Code: clave `config_enable_ai_tracking_description` añadida a `generate-nls.js` y a todos los `package.nls.*.json`.
+- Actualización de dependencias para resolver las 11 alertas de Dependabot: `@modelcontextprotocol/sdk` 1.12→1.29, `jspdf` 3.0→3.2, `@vscode/vsce` 3.3→3.9 (incluyendo sub-deps `hono`, `@hono/node-server`, `dompurify`, `lodash`, `picomatch`).
+- Reparación de traducciones sospechosas en 13 locales vía LLM: ar(7), bn(3), de(29), es_419(115), fr(27), hi(4), it(46), ru(7), tr(22), ur(5), zh_CN(4) claves corregidas.
+- Posts del blog traducidos a 13 locales (78 archivos HTML generados).
 
 ## [1.24.0] - 2026-04-16
 
