@@ -43,17 +43,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Checklist opcional: (1) npm test se TS mudou (2) npm run build se extensao mudou (3) docs atualizados se contratos mudaram (4) i18n keys se texto visivel adicionado."
-          }
-        ]
-      }
     ]
   }
 }
