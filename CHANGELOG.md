@@ -3,6 +3,17 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.0] - 2026-04-16
+
+- Novo sistema de tracking de atividade IA na extensão VS Code: detecção heurística de bursts de edição (janela deslizante de 2s, limiar de 15+ linhas), atribuição de terminal por nome de processo (Claude Code, Copilot, Cline, Aider, Cursor), contagem de inline completions aceitas e registro de extensões IA ativas.
+- Daemon agrega métricas IA nos endpoints `/v1/vscode/dashboard`, `/v1/vscode/telemetry` e `/v1/tracking/vscode/summary`.
+- Relatórios VS Code e Chrome exibem seção "AI Pair Programming" com gráfico doughnut (contribuição humano vs IA), 4 KPI cards (linhas IA, linhas humanas, completions, comandos terminal IA) e lista de ferramentas IA ativas.
+- Badge compacto "X% IA" no popup da extensão Chrome quando há dados de IA.
+- Enriquecimento do `applyEdit` no refactor-tracker com contagem real de linhas e detecção multi-arquivo.
+- Nova configuração `saulGoodman.enableAiTracking` (default: true, requer `enableTelemetry`).
+- i18n completo para os 13 locales em Chrome `_locales`, VS Code `_locales` e `package.nls.*.json`.
+- Correção de teste pré-existente `vscode-package-contract` que verificava evento de ativação incorreto.
+
 ## [1.21.32] - 2026-03-17
 
 - Novo modelo WideDeepLite (wide+deep com embeddings esparsos e otimizador AdaGrad).
@@ -276,6 +287,17 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.24.0] - 2026-04-16
+
+- New AI activity tracking system in the VS Code extension: heuristic edit burst detection (2s sliding window, 15+ lines threshold), terminal source attribution by process name (Claude Code, Copilot, Cline, Aider, Cursor), inline completion accept counting, and active AI extension registry.
+- Daemon aggregates AI metrics in `/v1/vscode/dashboard`, `/v1/vscode/telemetry`, and `/v1/tracking/vscode/summary` endpoints.
+- VS Code and Chrome reports display an "AI Pair Programming" section with a doughnut chart (human vs AI contribution), 4 KPI cards (AI lines, human lines, completions, AI terminal commands), and active AI tools list.
+- Compact "X% AI" badge in the Chrome extension popup when AI data is available.
+- Enriched `applyEdit` interception in refactor-tracker with real line counts and multi-file detection.
+- New `saulGoodman.enableAiTracking` setting (default: true, requires `enableTelemetry`).
+- Full i18n for all 13 locales across Chrome `_locales`, VS Code `_locales`, and `package.nls.*.json`.
+- Fixed pre-existing `vscode-package-contract` test that checked for an incorrect activation event.
+
 ## [1.21.32] - 2026-03-17
 
 - New WideDeepLite model (wide+deep with sparse embeddings and AdaGrad optimizer).
@@ -548,6 +570,17 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.24.0] - 2026-04-16
+
+- Nuevo sistema de tracking de actividad IA en la extensión VS Code: detección heurística de ráfagas de edición (ventana deslizante de 2s, umbral de 15+ líneas), atribución de terminal por nombre de proceso (Claude Code, Copilot, Cline, Aider, Cursor), conteo de inline completions aceptadas y registro de extensiones IA activas.
+- El daemon agrega métricas IA en los endpoints `/v1/vscode/dashboard`, `/v1/vscode/telemetry` y `/v1/tracking/vscode/summary`.
+- Los reportes de VS Code y Chrome muestran una sección "AI Pair Programming" con gráfico doughnut (contribución humano vs IA), 4 tarjetas KPI (líneas IA, líneas humanas, completions, comandos terminal IA) y lista de herramientas IA activas.
+- Badge compacto "X% IA" en el popup de la extensión Chrome cuando hay datos de IA.
+- Enriquecimiento del `applyEdit` en refactor-tracker con conteo real de líneas y detección multi-archivo.
+- Nueva configuración `saulGoodman.enableAiTracking` (default: true, requiere `enableTelemetry`).
+- i18n completo para los 13 locales en Chrome `_locales`, VS Code `_locales` y `package.nls.*.json`.
+- Corrección de test preexistente `vscode-package-contract` que verificaba un evento de activación incorrecto.
 
 ## [1.21.32] - 2026-03-17
 
