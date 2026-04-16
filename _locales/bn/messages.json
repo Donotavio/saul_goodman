@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "স্থানীয় SaulDaemon এর সম্পূর্ণ পথ (ঐচ্ছিক)।"
   },
+  "config_enable_ai_tracking_description": {
+    "message": "AI-সহায়তায় সম্পাদনা, টার্মিনাল কমান্ড এবং ইনলাইন কমপ্লিশন ট্র্যাক করে মানুষ ও AI-এর অবদান আলাদা করতে।"
+  },
   "config_enable_reports_description": {
     "message": "VS কোডের মধ্যে সৌল এর রিপোর্ট প্রদর্শন করে।"
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "সম্পর্কিত পোস্ট"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "সম্পূর্ণতা"
+  },
   "report_ai_error_generic": {
     "message": "( ১ শমূ. পরে চেষ্টা করো।"
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "এখানে ক্লিক করুন “দি গল্প” যাতে শৌল আপনার দিন নিয়ে ব্যঙ্গ করে বিশ্লেষণ করতে পারেন।"
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "এখনো বন্ধ করা যুক্তি প্রস্তুত করছি..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "আজকের গল্প বলতে কোন মেট্রিক নেই।"
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "পুনরায় প্রচেষ্টা করুন"
   },
   "report_ai_subtitle": {
     "message": "আপনার তথ্য ভিত্তিক একটি নাটকীয় প্রতিরক্ষা।"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "PDF লাইব্রেরি উপলব্ধ নয়।"
@@ -3604,29 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "সম্পাদককে উৎপাদনশীলতার সম্পদে রূপান্তর করুন।"
-  },
-  "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
-  },
-  "config_enable_ai_tracking_description": {
-    "message": "AI-সহায়তায় সম্পাদনা, টার্মিনাল কমান্ড এবং ইনলাইন কমপ্লিশন ট্র্যাক করে মানুষ ও AI-এর অবদান আলাদা করতে।"
   }
 }

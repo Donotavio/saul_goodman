@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "Chemin absolu du SaulDaemon local (optionnel)."
   },
+  "config_enable_ai_tracking_description": {
+    "message": "Suit les modifications assistées par IA, les commandes terminal et les complétions inline pour distinguer les contributions humaines de celles de l'IA."
+  },
   "config_enable_reports_description": {
     "message": "Affiche le rapport de Saul dans VS Code."
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "Postes connexes"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "Achèvements"
+  },
   "report_ai_error_generic": {
     "message": "Saul ne pouvait pas convaincre le juge numérique. Essaie encore plus tard."
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "Cliquez sur « Générer le récit » pour que Saul puisse analyser votre journée avec son sarcasme."
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "Toujours à préparer l'argument de clôture..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "Pas de mesures pour raconter une histoire aujourd'hui."
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "Essaie encore"
   },
   "report_ai_subtitle": {
     "message": "Une défense dramatique basée sur vos données."
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "Bibliothèque PDF non disponible."
@@ -3604,35 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "Transformez l'éditeur en actif de productivité."
-  },
-  "report_ai_activity_title": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_activity_subtitle": {
-    "message": "AI-assisted editing and terminal activity detected during the session."
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_contribution_chart": {
-    "message": "Contribution Split"
-  },
-  "report_ai_tools_active": {
-    "message": "Active AI Tools"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
   }
 }

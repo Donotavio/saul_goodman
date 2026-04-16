@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "SaulDaemon مقامی کا مکمل راستہ (اختیاری)۔"
   },
+  "config_enable_ai_tracking_description": {
+    "message": "AI معاون ترامیم، ٹرمینل کمانڈز اور ان لائن تکمیلات کو ٹریک کرتا ہے تاکہ انسانی اور AI شراکت میں فرق کیا جا سکے۔"
+  },
   "config_enable_reports_description": {
     "message": "VS Code میں سول کی رپورٹ دکھاتا ہے."
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "جگہ"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "مکملات"
+  },
   "report_ai_error_generic": {
     "message": "ساؤل ڈیجیٹل جج کو قائل نہیں کر سکتا تھا۔ بعد میں کوشش کریں."
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "\"جناح بیان\" پر کلک کریں تو ساؤل اپنے طنز سے اپنے دن کا جائزہ لے سکتا ہے۔"
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "اب بھی بند بحث کی تیاری ..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "کوئی میٹرک آج کہانی سنانے کے لیے نہیں۔"
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "دوبارہ کوشش"
   },
   "report_ai_subtitle": {
     "message": "آپ کے اعداد و شمار پر مبنی ڈرامائی دفاع۔"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "پی ڈی ایف لائبریری کے بغیر."
@@ -3604,29 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "ایڈیٹر کو پیداواری اثاثے میں تبدیل کریں۔"
-  },
-  "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
-  },
-  "config_enable_ai_tracking_description": {
-    "message": "AI معاون ترامیم، ٹرمینل کمانڈز اور ان لائن تکمیلات کو ٹریک کرتا ہے تاکہ انسانی اور AI شراکت میں فرق کیا جا سکے۔"
   }
 }

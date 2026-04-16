@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "Caminho absoluto do SaulDaemon local (opcional)."
   },
+  "config_enable_ai_tracking_description": {
+    "message": "Rastreia edições assistidas por IA, comandos de terminal e inline completions para distinguir contribuições humanas de IA."
+  },
   "config_enable_reports_description": {
     "message": "Exibe o relatório do Saul dentro do VS Code."
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "Posts relacionados"
   },
+  "report_ai_chart_ai_label": {
+    "message": "IA"
+  },
+  "report_ai_chart_human_label": {
+    "message": "Você"
+  },
+  "report_ai_completions": {
+    "message": "Completions"
+  },
   "report_ai_error_generic": {
     "message": "Saul não conseguiu convencer o juiz digital. Tente novamente mais tarde."
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "Clique em \"Gerar narrativa\" para o Saul analisar seu dia com sarcasmo."
   },
+  "report_ai_lines_by_ai": {
+    "message": "Linhas por IA"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Linhas por Você"
+  },
   "report_ai_loading": {
     "message": "Ainda preparando o discurso de encerramento..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "Sem métricas para contar uma história hoje."
   },
+  "report_ai_pair_programming": {
+    "message": "Programação em Par com IA"
+  },
   "report_ai_retry": {
     "message": "Tentar novamente"
   },
   "report_ai_subtitle": {
     "message": "Uma defesa dramática baseada nos seus dados."
+  },
+  "report_ai_terminal_cmds": {
+    "message": "Terminal IA"
   },
   "report_alert_pdf_missing": {
     "message": "Biblioteca de PDF indisponível."
@@ -3604,35 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "Transforme seu editor em ativo de produtividade."
-  },
-  "report_ai_activity_title": {
-    "message": "Programação em Par com IA"
-  },
-  "report_ai_activity_subtitle": {
-    "message": "Edições assistidas por IA e atividade de terminal detectadas durante a sessão."
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Linhas por IA"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Linhas por Você"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "Terminal IA"
-  },
-  "report_ai_contribution_chart": {
-    "message": "Divisão de Contribuição"
-  },
-  "report_ai_tools_active": {
-    "message": "Ferramentas IA Ativas"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "IA"
-  },
-  "report_ai_chart_human_label": {
-    "message": "Você"
   }
 }

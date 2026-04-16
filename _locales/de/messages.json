@@ -303,7 +303,7 @@
     "message": "2x COMBO! Die Jury beginnt, dich mit Respekt anzusehen."
   },
   "combo_msg_2_3": {
-    "message": "Zwei hintereinander. Das ist es, was einen soliden Fall aufbaut!"
+    "message": "Zwei in Folge. Das ist es, was einen soliden Fall aufbaut!"
   },
   "combo_msg_3_1": {
     "message": "🔥 3x COMBO! EINWAND AKZEPTIERT! Der Richter steht auf deiner Seite!"
@@ -373,6 +373,9 @@
   },
   "config_daemon_path_description": {
     "message": "Absoluter Pfad zum lokalen SaulDaemon (optional)."
+  },
+  "config_enable_ai_tracking_description": {
+    "message": "Verfolgt KI-unterstützte Bearbeitungen, Terminalbefehle und Inline-Vervollständigungen, um menschliche von KI-Beiträgen zu unterscheiden."
   },
   "config_enable_reports_description": {
     "message": "Zeigt den Bericht von Saul innerhalb von VS Code an."
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "Weitere Beiträge"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "Vervollständigungen"
+  },
   "report_ai_error_generic": {
     "message": "Saul konnte den digitalen Richter nicht überzeugen. Versuchen Sie es später noch mal."
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "Klicken Sie auf \"Generieren Sie Erzählung\", damit Saul Ihren Tag mit seinem Sarkasmus analysieren kann."
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "Noch immer das Schlussargument vorbereiten..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "Keine Metriken, um heute eine Geschichte zu erzählen."
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "Versuchen Sie es wieder"
   },
   "report_ai_subtitle": {
     "message": "Eine dramatische Verteidigung basierend auf Ihren Daten."
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "PDF-Bibliothek nicht verfügbar."
@@ -2553,7 +2577,7 @@
     "message": "Einspruch! Highlights der Fallstudie"
   },
   "report_share_hint_instagram": {
-    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie ein, was wir in das Postfeld kopiert haben."
+    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie das, was wir kopiert haben, in das Beitragsfeld ein."
   },
   "report_share_hint_linkedin": {
     "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."
@@ -3604,29 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "Verwandle den Editor in ein Produktivitäts-Asset."
-  },
-  "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
-  },
-  "config_enable_ai_tracking_description": {
-    "message": "Verfolgt KI-unterstützte Bearbeitungen, Terminalbefehle und Inline-Vervollständigungen, um menschliche von KI-Beiträgen zu unterscheiden."
   }
 }

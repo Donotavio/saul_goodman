@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "本地 SaulDaemon 的绝对路径（可选）。"
   },
+  "config_enable_ai_tracking_description": {
+    "message": "跟踪AI辅助编辑、终端命令和内联补全，以区分人类和AI的贡献。"
+  },
   "config_enable_reports_description": {
     "message": "在VS Code中显示索尔的报告。"
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "有关员额"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "完成"
+  },
   "report_ai_error_generic": {
     "message": "Saul无法说服数字法官 以后再试"
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "点击\"Generate叙事\",索尔就可以用他的讽刺来分析你的一天."
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "还在准备最后辩论..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "今天没有衡量标准可以讲故事"
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "再试一次"
   },
   "report_ai_subtitle": {
     "message": "以你的数据为基础的戏剧性辩护"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "无法使用 PDF 库 。"
@@ -3604,29 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "将编辑器转变为生产力资产。"
-  },
-  "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
-  },
-  "config_enable_ai_tracking_description": {
-    "message": "跟踪AI辅助编辑、终端命令和内联补全，以区分人类和AI的贡献。"
   }
 }

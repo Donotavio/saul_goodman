@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "स्थानीय SaulDaemon का पूर्ण पथ (वैकल्पिक)।"
   },
+  "config_enable_ai_tracking_description": {
+    "message": "AI-सहायता प्राप्त संपादनों, टर्मिनल कमांड और इनलाइन कंप्लीशन को ट्रैक करता है ताकि मानव और AI योगदान को अलग किया जा सके।"
+  },
   "config_enable_reports_description": {
     "message": "VS कोड के भीतर सॉल की रिपोर्ट दिखाता है।"
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "संबंधित पोस्ट"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "पूर्णता"
+  },
   "report_ai_error_generic": {
     "message": "साउल डिजिटल जज को मना नहीं सकता। बाद में फिर से प्रयास करें।"
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "\"जेनरेट कथा\" पर क्लिक करें ताकि शाऊल अपने दिन का विश्लेषण अपने सरकास्म के साथ कर सके।"
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "फिर भी समापन तर्क तैयार करना ..."
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "आज एक कहानी बताने के लिए कोई मेट्रिक्स नहीं।"
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "फिर से कोशिश करो"
   },
   "report_ai_subtitle": {
     "message": "आपके डेटा पर आधारित एक नाटकीय रक्षा।"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "PDF लाइब्रेरी उपलब्ध नहीं है।"
@@ -3604,35 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
-  },
-  "report_ai_activity_title": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_activity_subtitle": {
-    "message": "AI-assisted editing and terminal activity detected during the session."
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_contribution_chart": {
-    "message": "Contribution Split"
-  },
-  "report_ai_tools_active": {
-    "message": "Active AI Tools"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
   }
 }

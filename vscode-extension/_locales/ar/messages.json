@@ -374,6 +374,9 @@
   "config_daemon_path_description": {
     "message": "المسار المطلق لـ SaulDaemon المحلي (اختياري)."
   },
+  "config_enable_ai_tracking_description": {
+    "message": "يتتبع التعديلات بمساعدة الذكاء الاصطناعي وأوامر الطرفية والإكمالات المضمنة للتمييز بين المساهمات البشرية ومساهمات الذكاء الاصطناعي."
+  },
   "config_enable_reports_description": {
     "message": "يعرض تقرير سول داخل VS Code."
   },
@@ -2174,6 +2177,15 @@
   "relatedTitle": {
     "message": "الوظائف ذات الصلة"
   },
+  "report_ai_chart_ai_label": {
+    "message": "AI"
+  },
+  "report_ai_chart_human_label": {
+    "message": "You"
+  },
+  "report_ai_completions": {
+    "message": "الإكمالات"
+  },
   "report_ai_error_generic": {
     "message": "(سول) لم يستطع إقناع القاضي الرقمي حاول مرة أخرى لاحقا."
   },
@@ -2186,6 +2198,12 @@
   "report_ai_hint": {
     "message": "قم بكتابة رواية (جينرات) حتى يتمكن (سول) من تحليل يومك بسخريته"
   },
+  "report_ai_lines_by_ai": {
+    "message": "Lines by AI"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Lines by You"
+  },
   "report_ai_loading": {
     "message": "ما زلت أجهز الحجة الختامية"
   },
@@ -2195,11 +2213,17 @@
   "report_ai_no_metrics": {
     "message": "لا مقاييس لتروي قصة اليوم"
   },
+  "report_ai_pair_programming": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_retry": {
     "message": "حاول مرة أخرى"
   },
   "report_ai_subtitle": {
     "message": "دفاع درامي مستند على بياناتك"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "AI Terminal"
   },
   "report_alert_pdf_missing": {
     "message": "مكتبة PDF غير متاحة."
@@ -3604,35 +3628,5 @@
   },
   "vscodeTitle": {
     "message": "حوّل المحرر إلى أصل إنتاجية."
-  },
-  "report_ai_activity_title": {
-    "message": "AI Pair Programming"
-  },
-  "report_ai_activity_subtitle": {
-    "message": "AI-assisted editing and terminal activity detected during the session."
-  },
-  "report_ai_lines_by_ai": {
-    "message": "Lines by AI"
-  },
-  "report_ai_lines_by_you": {
-    "message": "Lines by You"
-  },
-  "report_ai_completions": {
-    "message": "Completions"
-  },
-  "report_ai_terminal_cmds": {
-    "message": "AI Terminal"
-  },
-  "report_ai_contribution_chart": {
-    "message": "Contribution Split"
-  },
-  "report_ai_tools_active": {
-    "message": "Active AI Tools"
-  },
-  "report_ai_chart_ai_label": {
-    "message": "AI"
-  },
-  "report_ai_chart_human_label": {
-    "message": "You"
   }
 }
