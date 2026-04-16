@@ -20,5 +20,6 @@
   "config_language_description": "VS Code扩展的语言（自动使用VS Code的语言）。",
   "config_enable_telemetry_description": "启用本地生产力指标收集（调试、测试、任务、终端等）。数据不会离开机器。",
   "config_pomodoro_test_mode_description": "启用番茄钟测试模式（每个周期1分钟而不是25分钟）。",
-  "config_telemetry_diagnostics_interval_description": "采样文件诊断（错误/警告）的秒数间隔。"
+  "config_telemetry_diagnostics_interval_description": "采样文件诊断（错误/警告）的秒数间隔。",
+  "config_enable_ai_tracking_description": "跟踪 AI 辅助编辑、终端命令和内联补全（需要启用遥测）。"
 }

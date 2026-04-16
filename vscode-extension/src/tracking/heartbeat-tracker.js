@@ -11,6 +11,7 @@ class HeartbeatTracker {
     this.queue = options.queue;
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
+    this.onEditEvent = options.onEditEvent || null;
     this.lastSentByEntity = new Map();
     this.MAX_CACHE_SIZE = 500; // VSCODE-003: Limit cache size
     this.windowFocused = true;
@@ -48,7 +49,16 @@ class HeartbeatTracker {
         vscode.workspace.onDidChangeTextDocument((event) => {
           try {
             this.resetIdleTimer();
-            this.sendDocumentHeartbeat(event.document, true, getLineDelta(event));
+            const delta = getLineDelta(event);
+            this.sendDocumentHeartbeat(event.document, true, delta);
+            if (this.onEditEvent && (delta.linesAdded > 0 || delta.linesRemoved > 0)) {
+              this.onEditEvent({
+                timestamp: Date.now(),
+                reason: event.reason,
+                delta,
+                documentUri: event.document.uri.toString()
+              });
+            }
           } catch (error) {
             console.error('[Saul Heartbeat] Text change error:', error);
           }

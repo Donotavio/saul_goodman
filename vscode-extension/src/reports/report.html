@@ -274,6 +274,49 @@
               <div id="refactoringStats" class="stats-grid-mini"></div>
             </div>
           </section>
+
+          <section id="aiActivitySection" class="ai-activity-section hidden">
+            <div class="section-header">
+              <h2>{i18n_report_ai_activity_title}</h2>
+              <p class="section-subtitle">{i18n_report_ai_activity_subtitle}</p>
+            </div>
+            <section class="telemetry-kpis">
+              <div class="kpi-card kpi-card--ai">
+                <span class="kpi-icon kpi-icon--ai" data-label="AI" aria-hidden="true"></span>
+                <span class="kpi-label">{i18n_report_ai_lines_by_ai}</span>
+                <span class="kpi-value" id="aiLinesAdded">--</span>
+                <span class="kpi-detail" id="aiEditsDetail">--</span>
+              </div>
+              <div class="kpi-card kpi-card--ai">
+                <span class="kpi-icon kpi-icon--human" data-label="DEV" aria-hidden="true"></span>
+                <span class="kpi-label">{i18n_report_ai_lines_by_you}</span>
+                <span class="kpi-value" id="humanLinesAdded">--</span>
+                <span class="kpi-detail" id="humanEditsDetail">--</span>
+              </div>
+              <div class="kpi-card kpi-card--ai">
+                <span class="kpi-icon kpi-icon--completions" data-label="CMP" aria-hidden="true"></span>
+                <span class="kpi-label">{i18n_report_ai_completions}</span>
+                <span class="kpi-value" id="aiInlineCompletions">--</span>
+              </div>
+              <div class="kpi-card kpi-card--ai">
+                <span class="kpi-icon kpi-icon--terminal" data-label="CMD" aria-hidden="true"></span>
+                <span class="kpi-label">{i18n_report_ai_terminal_cmds}</span>
+                <span class="kpi-value" id="aiTerminalCommands">--</span>
+              </div>
+            </section>
+            <section class="grid-two">
+              <div class="card chart-section">
+                <h3>{i18n_report_ai_contribution_chart}</h3>
+                <div class="chart-container chart-container--small">
+                  <canvas id="aiContributionChart"></canvas>
+                </div>
+              </div>
+              <div class="card">
+                <h3>{i18n_report_ai_tools_active}</h3>
+                <ul id="aiToolsList" class="data-list"></ul>
+              </div>
+            </section>
+          </section>
         </section>
       </section>
     </main>

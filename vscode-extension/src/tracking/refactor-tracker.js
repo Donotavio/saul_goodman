@@ -8,6 +8,7 @@ class RefactorTracker {
     this.queue = options.queue;
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
+    this.onApplyEditCallback = options.onApplyEdit || null;
     this.disposables = [];
   }
 
@@ -80,9 +81,29 @@ class RefactorTracker {
         try {
           const config = this.getConfig();
           if (config.enableTelemetry) {
-            const entryCount = edit.entries().length;
+            const entries = edit.entries ? edit.entries() : [];
+            const entryCount = entries.length;
 
             if (entryCount > 0) {
+              let linesAdded = 0;
+              let linesRemoved = 0;
+              const filesAffected = new Set();
+
+              for (const [uri, edits] of entries) {
+                filesAffected.add(uri.toString());
+                for (const textEdit of edits) {
+                  if (textEdit.newText) {
+                    linesAdded += textEdit.newText.split(/\r\n|\r|\n/).length - 1;
+                  }
+                  if (textEdit.range) {
+                    linesRemoved += textEdit.range.end.line - textEdit.range.start.line;
+                  }
+                }
+              }
+
+              const isMultiFile = filesAffected.size > 1;
+              const isBulkEdit = linesAdded + linesRemoved > 20;
+
               const heartbeat = this.buildHeartbeat({
                 entityType: 'refactor',
                 entity: 'apply_edit',
@@ -91,12 +112,21 @@ class RefactorTracker {
                 isWrite: false,
                 metadata: {
                   entryCount,
+                  linesAdded,
+                  linesRemoved,
+                  filesAffected: filesAffected.size,
+                  isMultiFile,
+                  isBulkEdit,
                   label: metadata?.label || 'unknown'
                 }
               });
 
               this.queue.enqueue(heartbeat);
-              console.log(`[Saul Refactor] Edit applied: ${entryCount} entries`);
+              console.log(`[Saul Refactor] Edit applied: ${entryCount} entries, +${linesAdded}/-${linesRemoved} lines`);
+
+              if (this.onApplyEditCallback) {
+                this.onApplyEditCallback(Date.now());
+              }
             }
           }
         } catch (error) {

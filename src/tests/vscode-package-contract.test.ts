@@ -12,7 +12,7 @@ test('vscode extension package exposes required activation event and command', (
   };
 
   assert.ok(Array.isArray(pkg.activationEvents));
-  assert.ok(pkg.activationEvents?.includes('onCommand:saulGoodman.startDaemon'));
+  assert.ok(pkg.activationEvents?.includes('onStartupFinished'));
 
   const commands = pkg.contributes?.commands?.map((item) => item.command) ?? [];
   assert.ok(commands.includes('saulGoodman.startDaemon'));

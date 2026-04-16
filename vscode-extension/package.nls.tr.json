@@ -20,5 +20,6 @@
   "config_language_description": "VS Code uzantısının dili (oto, VS Code'un dilini kullanır).",
   "config_enable_telemetry_description": "Yerel verimlilik ölçümlerinin toplanmasını etkinleştirir (hata ayıklama, testler, görevler, terminal, vb.). Veriler asla makineden çıkmaz.",
   "config_pomodoro_test_mode_description": "Pomodoro için test modunu etkinleştirir (her döngüde 1 dakika yerine 25 dakika).",
-  "config_telemetry_diagnostics_interval_description": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden)."
+  "config_telemetry_diagnostics_interval_description": "Dosyalardan tanılama (hata/uyarı) örnekleme aralığı (saniye cinsinden).",
+  "config_enable_ai_tracking_description": "Yapay zeka destekli düzenlemeleri, terminal komutlarını ve satır içi tamamlamaları izleyin (telemetri etkinleştirilmiş olmalıdır)."
 }

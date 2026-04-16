@@ -1,6 +1,20 @@
 const vscode = require('vscode');
 const { getCurrentProjectName } = require('../utils/workspace-helper').default;
 
+const AI_EXTENSION_PATTERNS = [
+  'github.copilot', 'github.copilot-chat',
+  'saoudrizwan.claude-dev',
+  'continue.continue', 'codeium.codeium',
+  'sourcegraph.cody-ai', 'amazonwebservices.amazon-q-vscode',
+  'supermaven.supermaven'
+];
+
+const INLINE_COMPLETION_COMMANDS = [
+  'editor.action.inlineSuggest.commit',
+  'editor.action.inlineSuggest.acceptNextLine',
+  'editor.action.inlineSuggest.acceptNextWord'
+];
+
 class ExtensionTracker {
   constructor(options) {
     this.context = options.context;
@@ -11,6 +25,8 @@ class ExtensionTracker {
     this.lastActiveExtensions = new Set();
     this.commandExecutions = new Map();
     this.commandToExtensionMap = new Map();
+    this.aiCommandExecutions = 0;
+    this.inlineCompletionAccepts = 0;
   }
 
   start() {
@@ -183,7 +199,14 @@ class ExtensionTracker {
           console.log(`[Saul Extension] 🔍 Saul command executed: "${command}" → Extension: "${extensionId}"`);
         }
         
+        if (INLINE_COMPLETION_COMMANDS.includes(command)) {
+          this.inlineCompletionAccepts++;
+        }
+
         if (extensionId) {
+          if (AI_EXTENSION_PATTERNS.some(p => extensionId.includes(p))) {
+            this.aiCommandExecutions++;
+          }
           if (!this.commandExecutions.has(extensionId)) {
             this.commandExecutions.set(extensionId, new Map());
           }
@@ -312,6 +335,31 @@ class ExtensionTracker {
     });
 
     this.commandExecutions.clear();
+
+    const activeAiExtensions = AI_EXTENSION_PATTERNS.filter(pattern =>
+      vscode.extensions.all.some(ext => ext.isActive && ext.id.includes(pattern))
+    );
+
+    if (this.aiCommandExecutions > 0 || this.inlineCompletionAccepts > 0 || activeAiExtensions.length > 0) {
+      const aiHeartbeat = this.buildHeartbeat({
+        entityType: 'ai_activity',
+        entity: 'ai_extension_usage',
+        project: getCurrentProjectName(),
+        category: 'ai_tracking',
+        isWrite: false,
+        metadata: {
+          totalAiCommands: this.aiCommandExecutions,
+          activeAiExtensions,
+          topAiExtension: activeAiExtensions[0] || 'none',
+          inlineCompletionAccepts: this.inlineCompletionAccepts
+        }
+      });
+      this.queue.enqueue(aiHeartbeat);
+      console.log(`[Saul Extension] AI usage: ${this.aiCommandExecutions} AI cmds, ${this.inlineCompletionAccepts} completions, extensions: ${activeAiExtensions.join(', ')}`);
+    }
+
+    this.aiCommandExecutions = 0;
+    this.inlineCompletionAccepts = 0;
   }
 
   dispose() {
@@ -325,6 +373,8 @@ class ExtensionTracker {
     this.disposables = [];
     this.lastActiveExtensions.clear();
     this.commandExecutions.clear();
+    this.aiCommandExecutions = 0;
+    this.inlineCompletionAccepts = 0;
   }
 }
 

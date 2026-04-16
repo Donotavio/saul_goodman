@@ -43,7 +43,10 @@ function categorizeCommand(command) {
   if (cmd.startsWith('go ') || cmd === 'go') return 'go';
   if (cmd.startsWith('cargo ') || cmd === 'cargo') return 'cargo';
   if (cmd.startsWith('make ') || cmd === 'make') return 'make';
-  
+  if (cmd.startsWith('claude ') || cmd === 'claude') return 'ai_claude';
+  if (cmd.startsWith('gh copilot ')) return 'ai_copilot';
+  if (cmd.startsWith('aider ') || cmd === 'aider') return 'ai_aider';
+
   return 'other';
 }
 

@@ -62,10 +62,20 @@ export interface DailyMetrics {
    */
   vscodeSwitches?: number;
 
-  /** 
+  /**
    * Trocas de contexto do VS Code por hora.
    */
   vscodeSwitchHourly?: number[];
+
+  vscodeAiLikelyEdits?: number;
+  vscodeAiLikelyLinesAdded?: number;
+  vscodeAiLikelyLinesRemoved?: number;
+  vscodeHumanLikelyEdits?: number;
+  vscodeHumanLikelyLinesAdded?: number;
+  vscodeHumanLikelyLinesRemoved?: number;
+  vscodeInlineCompletionAccepts?: number;
+  vscodeAiTerminalCommands?: number;
+  vscodeActiveAiExtensions?: string[];
 
   /**
    * Duração acumulada por contexto (ms) para o dia corrente.

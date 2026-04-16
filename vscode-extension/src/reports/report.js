@@ -8,6 +8,7 @@
   let terminalChart = null;
   let focusChart = null;
   let comboTimelineChart = null;
+  let aiContributionChart = null;
 
   const filterProject = document.getElementById('filterProject');
   const filterLanguage = document.getElementById('filterLanguage');
@@ -828,6 +829,9 @@
     renderTopDebuggedFiles(tel.debugging?.topFiles || []);
     renderTopErrorFiles(tel.diagnostics?.topErrorFiles || []);
     renderRefactoringStats(tel.refactoring || {});
+    if (tel.aiActivity) {
+      renderAiActivity(tel.aiActivity);
+    }
   }
 
   function renderTerminalCommandsChart(terminal) {
@@ -1063,6 +1067,84 @@
       row.appendChild(valueEl);
       div.appendChild(row);
     });
+  }
+
+  function renderAiActivity(ai) {
+    const section = document.getElementById('aiActivitySection');
+    if (!section) return;
+
+    const aiLines = ai.aiLikelyLinesAdded || 0;
+    const humanLines = ai.humanLikelyLinesAdded || 0;
+    const aiEdits = ai.aiLikelyEdits || 0;
+    const humanEdits = ai.humanLikelyEdits || 0;
+    const completions = ai.inlineCompletionAccepts || 0;
+    const terminalCmds = ai.aiTerminalCommands || 0;
+    const extensions = ai.activeAiExtensions || [];
+
+    if (aiLines === 0 && aiEdits === 0 && completions === 0 && terminalCmds === 0) return;
+
+    section.classList.remove('hidden');
+
+    const el = (id) => document.getElementById(id);
+    if (el('aiLinesAdded')) el('aiLinesAdded').textContent = String(aiLines);
+    if (el('aiEditsDetail')) el('aiEditsDetail').textContent = aiEdits > 0 ? (aiEdits + ' edits') : '--';
+    if (el('humanLinesAdded')) el('humanLinesAdded').textContent = String(humanLines);
+    if (el('humanEditsDetail')) el('humanEditsDetail').textContent = humanEdits > 0 ? (humanEdits + ' edits') : '--';
+    if (el('aiInlineCompletions')) el('aiInlineCompletions').textContent = String(completions);
+    if (el('aiTerminalCommands')) el('aiTerminalCommands').textContent = String(terminalCmds);
+
+    const canvas = el('aiContributionChart');
+    if (canvas && (aiLines > 0 || humanLines > 0)) {
+      if (aiContributionChart && typeof aiContributionChart.destroy === 'function') {
+        aiContributionChart.destroy();
+      }
+      const totalLines = aiLines + humanLines;
+      const aiPct = totalLines > 0 ? ((aiLines / totalLines) * 100).toFixed(1) : '0';
+      const humanPct = totalLines > 0 ? ((humanLines / totalLines) * 100).toFixed(1) : '0';
+      const ctx = canvas.getContext('2d');
+      aiContributionChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [i18n.report_ai_chart_ai_label || 'AI', i18n.report_ai_chart_human_label || 'You'],
+          datasets: [{
+            data: [aiLines, humanLines],
+            backgroundColor: ['#8b5cf6', '#10b981'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#ccc', font: { size: 11 }, usePointStyle: true, padding: 10 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const lbl = ctx.label || '';
+                  const val = ctx.raw || 0;
+                  const pct = lbl === (i18n.report_ai_chart_ai_label || 'AI') ? aiPct : humanPct;
+                  return lbl + ': ' + val + ' lines (' + pct + '%)';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    const toolsList = el('aiToolsList');
+    if (toolsList) {
+      toolsList.innerHTML = '';
+      extensions.forEach((ext) => {
+        const li = document.createElement('li');
+        li.textContent = ext;
+        toolsList.appendChild(li);
+      });
+    }
   }
 
   function formatDurationMs(ms) {

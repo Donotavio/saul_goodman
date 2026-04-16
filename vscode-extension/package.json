@@ -120,6 +120,11 @@
           "default": false,
           "description": "%config_enable_telemetry_description%"
         },
+        "saulGoodman.enableAiTracking": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config_enable_ai_tracking_description%"
+        },
         "saulGoodman.pomodoroTestMode": {
           "type": "boolean",
           "default": false,

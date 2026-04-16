@@ -109,6 +109,8 @@ const topProcrastinationDomainEl = document.getElementById(
 const topProcrastinationTimeEl = document.getElementById(
   'topProcrastinationTime'
 ) as HTMLElement;
+const aiAssistBadgeEl = document.getElementById('aiAssistBadge') as HTMLElement | null;
+const aiAssistPctEl = document.getElementById('aiAssistPct') as HTMLElement | null;
 const criticalOverlayEl = document.getElementById('criticalOverlay') as HTMLDivElement | null;
 const criticalMessageEl = document.getElementById('criticalMessage') as HTMLParagraphElement | null;
 const criticalCountdownEl = document.getElementById('criticalCountdown') as HTMLSpanElement | null;
@@ -752,6 +754,18 @@ function renderKpis(metrics: DailyMetrics): void {
   } else {
     topProcrastinationDomainEl.textContent = '--';
     topProcrastinationTimeEl.textContent = noDataLabel;
+  }
+
+  const aiLines = metrics.vscodeAiLikelyLinesAdded ?? 0;
+  const humanLines = metrics.vscodeHumanLikelyLinesAdded ?? 0;
+  if (aiAssistBadgeEl && aiAssistPctEl && aiLines > 0) {
+    const totalLines = aiLines + humanLines;
+    const aiPct = totalLines > 0 ? Math.round((aiLines / totalLines) * 100) : 0;
+    aiAssistPctEl.textContent = `${aiPct}% AI`;
+    aiAssistBadgeEl.title = `${aiLines} lines by AI, ${humanLines} lines by you`;
+    aiAssistBadgeEl.classList.remove('hidden');
+  } else if (aiAssistBadgeEl) {
+    aiAssistBadgeEl.classList.add('hidden');
   }
 }
 

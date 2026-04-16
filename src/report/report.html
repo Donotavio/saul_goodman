@@ -749,6 +749,32 @@
                 <h3 data-i18n="report_vscode_tel_refactoring">Atividade de Refatoração</h3>
                 <div id="vscodeRefactoringStats" class="vscode-stats-grid-mini"></div>
               </div>
+
+              <div id="vscodeAiSection" class="vscode-ai-section hidden">
+                <h3 data-i18n="report_ai_pair_programming">AI Pair Programming</h3>
+                <div class="vscode-ai-kpi-grid">
+                  <div class="vscode-ai-kpi">
+                    <span class="vscode-ai-kpi-value" id="chromeAiLinesAdded">--</span>
+                    <span class="vscode-ai-kpi-label" data-i18n="report_ai_lines_by_ai">Lines by AI</span>
+                  </div>
+                  <div class="vscode-ai-kpi">
+                    <span class="vscode-ai-kpi-value" id="chromeHumanLinesAdded">--</span>
+                    <span class="vscode-ai-kpi-label" data-i18n="report_ai_lines_by_you">Lines by You</span>
+                  </div>
+                  <div class="vscode-ai-kpi">
+                    <span class="vscode-ai-kpi-value" id="chromeInlineCompletions">--</span>
+                    <span class="vscode-ai-kpi-label" data-i18n="report_ai_completions">Completions</span>
+                  </div>
+                  <div class="vscode-ai-kpi">
+                    <span class="vscode-ai-kpi-value" id="chromeAiTerminalCmds">--</span>
+                    <span class="vscode-ai-kpi-label" data-i18n="report_ai_terminal_cmds">AI Terminal</span>
+                  </div>
+                </div>
+                <div class="chart-container chart-container-small">
+                  <canvas id="chromeAiContributionChart"></canvas>
+                </div>
+                <div id="chromeAiToolsList" class="vscode-ai-tools-list"></div>
+              </div>
             </div>
           </div>
         </div>

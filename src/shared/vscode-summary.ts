@@ -1,5 +1,20 @@
 import type { TimelineEntry } from './types.js';
 
+export interface VscodeAiMetrics {
+  aiLikelyEdits?: number;
+  aiLikelyLinesAdded?: number;
+  aiLikelyLinesRemoved?: number;
+  humanLikelyEdits?: number;
+  humanLikelyLinesAdded?: number;
+  humanLikelyLinesRemoved?: number;
+  inlineCompletionAccepts?: number;
+  aiTerminalCommands?: number;
+  totalAiCommands?: number;
+  activeAiExtensions?: string[];
+  multiFileEditBursts?: number;
+  applyEditCorrelations?: number;
+}
+
 export interface VscodeTrackingSummaryPayload {
   totalActiveMs?: number;
   sessions?: number;
@@ -10,6 +25,7 @@ export interface VscodeTrackingSummaryPayload {
     endTime?: number;
     durationMs?: number;
   }>;
+  aiMetrics?: VscodeAiMetrics;
 }
 
 export interface NormalizedVscodeTrackingSummary {
@@ -18,6 +34,7 @@ export interface NormalizedVscodeTrackingSummary {
   switches: number;
   switchHourly: number[];
   timeline: TimelineEntry[];
+  aiMetrics?: VscodeAiMetrics;
 }
 
 export interface VscodeSummaryNormalizeOptions {
@@ -97,11 +114,32 @@ export function normalizeVscodeTrackingSummary(
       ? payload.switchHourly.map((value) => (Number.isFinite(value) ? Number(value) : 0))
       : DEFAULT_SWITCH_HOURLY();
 
+  const aiMetrics: VscodeAiMetrics | undefined =
+    payload.aiMetrics && typeof payload.aiMetrics === 'object'
+      ? {
+          aiLikelyEdits: Number(payload.aiMetrics.aiLikelyEdits) || 0,
+          aiLikelyLinesAdded: Number(payload.aiMetrics.aiLikelyLinesAdded) || 0,
+          aiLikelyLinesRemoved: Number(payload.aiMetrics.aiLikelyLinesRemoved) || 0,
+          humanLikelyEdits: Number(payload.aiMetrics.humanLikelyEdits) || 0,
+          humanLikelyLinesAdded: Number(payload.aiMetrics.humanLikelyLinesAdded) || 0,
+          humanLikelyLinesRemoved: Number(payload.aiMetrics.humanLikelyLinesRemoved) || 0,
+          inlineCompletionAccepts: Number(payload.aiMetrics.inlineCompletionAccepts) || 0,
+          aiTerminalCommands: Number(payload.aiMetrics.aiTerminalCommands) || 0,
+          totalAiCommands: Number(payload.aiMetrics.totalAiCommands) || 0,
+          activeAiExtensions: Array.isArray(payload.aiMetrics.activeAiExtensions)
+            ? payload.aiMetrics.activeAiExtensions
+            : [],
+          multiFileEditBursts: Number(payload.aiMetrics.multiFileEditBursts) || 0,
+          applyEditCorrelations: Number(payload.aiMetrics.applyEditCorrelations) || 0
+        }
+      : undefined;
+
   return {
     totalActiveMs,
     sessions,
     switches,
     switchHourly,
-    timeline: mergedTimeline
+    timeline: mergedTimeline,
+    aiMetrics
   };
 }

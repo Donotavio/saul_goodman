@@ -164,6 +164,13 @@ const vscodeTopExtensionsListEl = document.getElementById('vscodeTopExtensionsLi
 const vscodeTopDebuggedFilesListEl = document.getElementById('vscodeTopDebuggedFilesList') as HTMLUListElement | null;
 const vscodeTopErrorFilesListEl = document.getElementById('vscodeTopErrorFilesList') as HTMLUListElement | null;
 const vscodeRefactoringStatsEl = document.getElementById('vscodeRefactoringStats') as HTMLElement | null;
+const vscodeAiSectionEl = document.getElementById('vscodeAiSection') as HTMLElement | null;
+const chromeAiLinesAddedEl = document.getElementById('chromeAiLinesAdded') as HTMLElement | null;
+const chromeHumanLinesAddedEl = document.getElementById('chromeHumanLinesAdded') as HTMLElement | null;
+const chromeInlineCompletionsEl = document.getElementById('chromeInlineCompletions') as HTMLElement | null;
+const chromeAiTerminalCmdsEl = document.getElementById('chromeAiTerminalCmds') as HTMLElement | null;
+const chromeAiContributionChartCanvas = document.getElementById('chromeAiContributionChart') as HTMLCanvasElement | null;
+const chromeAiToolsListEl = document.getElementById('chromeAiToolsList') as HTMLElement | null;
 
 const HERO_MESSAGE_KEY_BY_BAND: Record<ScoreMessageBand, string> = {
   excellent: 'report_hero_message_excellent',
@@ -242,6 +249,7 @@ let vscodeCrossReferenceChart: ChartInstance = null;
 let vscodeTerminalChart: ChartInstance = null;
 let vscodeFocusChart: ChartInstance = null;
 let vscodeComboTimelineChart: ChartInstance = null;
+let chromeAiContributionChart: ChartInstance = null;
 let latestMetrics: DailyMetrics | null = null;
 let latestVscodeDashboard: any = null;
 let locale = 'pt-BR';
@@ -1136,6 +1144,10 @@ function renderVscodeTelemetry(telemetry: any): void {
   renderVscodeTopDebuggedFiles(telemetry.debugging?.topFiles || []);
   renderVscodeTopErrorFiles(telemetry.diagnostics?.topErrorFiles || []);
   renderVscodeRefactoringStats(telemetry.refactoring || {});
+
+  if (latestMetrics) {
+    renderVscodeAiSection(latestMetrics);
+  }
 }
 
 function renderVscodeTerminalCommandsChart(terminal: any): void {
@@ -1487,6 +1499,95 @@ function renderVscodeRefactoringStats(refactoring: any): void {
     row.appendChild(valueEl);
     vscodeRefactoringStatsEl.appendChild(row);
   });
+}
+
+function renderVscodeAiSection(metrics: DailyMetrics): void {
+  if (!vscodeAiSectionEl) return;
+
+  const aiLines = metrics.vscodeAiLikelyLinesAdded ?? 0;
+  const humanLines = metrics.vscodeHumanLikelyLinesAdded ?? 0;
+  const inlineCompletions = metrics.vscodeInlineCompletionAccepts ?? 0;
+  const aiTerminal = metrics.vscodeAiTerminalCommands ?? 0;
+  const aiEdits = metrics.vscodeAiLikelyEdits ?? 0;
+  const humanEdits = metrics.vscodeHumanLikelyEdits ?? 0;
+  const aiExtensions = metrics.vscodeActiveAiExtensions ?? [];
+
+  if (aiLines === 0 && aiEdits === 0 && inlineCompletions === 0 && aiTerminal === 0) {
+    return;
+  }
+
+  vscodeAiSectionEl.classList.remove('hidden');
+
+  if (chromeAiLinesAddedEl) {
+    chromeAiLinesAddedEl.textContent = String(aiLines);
+  }
+  if (chromeHumanLinesAddedEl) {
+    chromeHumanLinesAddedEl.textContent = String(humanLines);
+  }
+  if (chromeInlineCompletionsEl) {
+    chromeInlineCompletionsEl.textContent = String(inlineCompletions);
+  }
+  if (chromeAiTerminalCmdsEl) {
+    chromeAiTerminalCmdsEl.textContent = String(aiTerminal);
+  }
+
+  if (chromeAiContributionChartCanvas && (aiLines > 0 || humanLines > 0)) {
+    if (chromeAiContributionChart) {
+      chromeAiContributionChart.destroy();
+    }
+    const totalLines = aiLines + humanLines;
+    const aiPct = totalLines > 0 ? ((aiLines / totalLines) * 100).toFixed(1) : '0';
+    const humanPct = totalLines > 0 ? ((humanLines / totalLines) * 100).toFixed(1) : '0';
+    const ctx = chromeAiContributionChartCanvas.getContext('2d');
+    chromeAiContributionChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          i18n?.t('report_ai_chart_ai_label') ?? 'AI',
+          i18n?.t('report_ai_chart_human_label') ?? 'You'
+        ],
+        datasets: [{
+          data: [aiLines, humanLines],
+          backgroundColor: ['#8b5cf6', '#10b981'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        cutout: '65%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { color: '#1f2937', font: { size: 11 }, usePointStyle: true, padding: 10 }
+          },
+          tooltip: {
+            callbacks: {
+              label: (context: any) => {
+                const label = context.label || '';
+                const value = context.raw || 0;
+                const pct = label === 'AI' || label === (i18n?.t('report_ai_chart_ai_label') ?? 'AI')
+                  ? aiPct : humanPct;
+                return `${label}: ${value} lines (${pct}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (chromeAiToolsListEl) {
+    chromeAiToolsListEl.innerHTML = '';
+    if (aiExtensions.length > 0) {
+      aiExtensions.forEach((ext: string) => {
+        const item = document.createElement('div');
+        item.className = 'vscode-ai-tool-item';
+        item.textContent = ext;
+        chromeAiToolsListEl.appendChild(item);
+      });
+    }
+  }
 }
 
 function formatDurationMs(ms: number): string {

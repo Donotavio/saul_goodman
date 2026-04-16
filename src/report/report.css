@@ -1448,6 +1448,59 @@ main {
   margin-top: 8px;
 }
 
+.vscode-ai-section {
+  border-top: 2px dashed #8b5cf6;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+.vscode-ai-section h3 {
+  color: #8b5cf6;
+  margin-bottom: 12px;
+}
+.vscode-ai-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.vscode-ai-kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 10px;
+}
+.vscode-ai-kpi-value {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #8b5cf6;
+}
+.vscode-ai-kpi-label {
+  font-size: 0.75rem;
+  color: #6b5b8a;
+  margin-top: 4px;
+  text-align: center;
+}
+.vscode-ai-tools-list {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #4b3a21;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vscode-ai-tool-item {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  color: #6d28d9;
+}
+
 .vscode-report-card .stat-item,
 .stat-item {
   display: flex;

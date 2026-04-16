@@ -1642,6 +1642,19 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       metrics.vscodeSwitchHourly = normalized.switchHourly;
       metrics.vscodeTimeline = normalized.timeline;
 
+      if (normalized.aiMetrics) {
+        const ai = normalized.aiMetrics;
+        metrics.vscodeAiLikelyEdits = ai.aiLikelyEdits;
+        metrics.vscodeAiLikelyLinesAdded = ai.aiLikelyLinesAdded;
+        metrics.vscodeAiLikelyLinesRemoved = ai.aiLikelyLinesRemoved;
+        metrics.vscodeHumanLikelyEdits = ai.humanLikelyEdits;
+        metrics.vscodeHumanLikelyLinesAdded = ai.humanLikelyLinesAdded;
+        metrics.vscodeHumanLikelyLinesRemoved = ai.humanLikelyLinesRemoved;
+        metrics.vscodeInlineCompletionAccepts = ai.inlineCompletionAccepts;
+        metrics.vscodeAiTerminalCommands = ai.aiTerminalCommands;
+        metrics.vscodeActiveAiExtensions = ai.activeAiExtensions;
+      }
+
       await persistMetrics();
       lastVscodeSyncAt = now;
       return;

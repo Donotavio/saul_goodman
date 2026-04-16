@@ -3604,5 +3604,35 @@
   },
   "vscodeTitle": {
     "message": "Transforme seu editor em ativo de produtividade."
+  },
+  "report_ai_activity_title": {
+    "message": "Programação em Par com IA"
+  },
+  "report_ai_activity_subtitle": {
+    "message": "Edições assistidas por IA e atividade de terminal detectadas durante a sessão."
+  },
+  "report_ai_lines_by_ai": {
+    "message": "Linhas por IA"
+  },
+  "report_ai_lines_by_you": {
+    "message": "Linhas por Você"
+  },
+  "report_ai_completions": {
+    "message": "Completions"
+  },
+  "report_ai_terminal_cmds": {
+    "message": "Terminal IA"
+  },
+  "report_ai_contribution_chart": {
+    "message": "Divisão de Contribuição"
+  },
+  "report_ai_tools_active": {
+    "message": "Ferramentas IA Ativas"
+  },
+  "report_ai_chart_ai_label": {
+    "message": "IA"
+  },
+  "report_ai_chart_human_label": {
+    "message": "Você"
   }
 }

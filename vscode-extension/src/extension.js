@@ -7,7 +7,7 @@ let child_process, fetchWithTimeout, parsePort, apiClient;
 let BufferedEventQueue, HeartbeatTracker, registerExtraEventCollectors, createHeartbeatFactory;
 let GitTracker, EditorMetadataTracker, WorkspaceTracker;
 let DebugTracker, TestTracker, TaskTracker, ExtensionTracker, TerminalTracker;
-let FocusTracker, DiagnosticTracker, RefactorTracker, showReports;
+let FocusTracker, DiagnosticTracker, RefactorTracker, AiActivityTracker, showReports;
 let ComboTracker, ComboToast;
 
 let statusBarItem = null;
@@ -168,6 +168,7 @@ function activate(context) {
         FocusTracker = require('./tracking/focus-tracker').FocusTracker;
         DiagnosticTracker = require('./tracking/diagnostic-tracker').DiagnosticTracker;
         RefactorTracker = require('./tracking/refactor-tracker').RefactorTracker;
+        AiActivityTracker = require('./tracking/ai-activity-tracker').AiActivityTracker;
         showReports = require('./reports/report-view').showReports;
         ComboTracker = require('./tracking/combo-tracker').ComboTracker;
         ComboToast = require('./ui/combo-toast').ComboToast;
@@ -306,11 +307,17 @@ class TrackingController {
       }
     });
     
+    this.aiActivityTracker = new AiActivityTracker({
+      queue: this.queue,
+      getConfig: () => this.config,
+      buildHeartbeat: this.buildHeartbeat
+    });
     this.heartbeatTracker = new HeartbeatTracker({
       context,
       queue: this.queue,
       getConfig: () => this.config,
-      buildHeartbeat: this.buildHeartbeat
+      buildHeartbeat: this.buildHeartbeat,
+      onEditEvent: (event) => this.aiActivityTracker.onEditEvent(event)
     });
     this.gitTracker = new GitTracker({
       context,
@@ -380,6 +387,7 @@ class TrackingController {
       buildHeartbeat: this.buildHeartbeat
     });
     this.refactorTracker = new RefactorTracker({
+      onApplyEdit: (timestamp) => this.aiActivityTracker.onApplyEdit(timestamp),
       context,
       queue: this.queue,
       getConfig: () => this.config,
@@ -562,6 +570,7 @@ class TrackingController {
     this.focusTracker.dispose();
     this.diagnosticTracker.dispose();
     this.refactorTracker.dispose();
+    this.aiActivityTracker.dispose();
     this.comboTracker.dispose();
     this.comboToast.dispose();
   }
@@ -648,6 +657,7 @@ class TrackingController {
       this.focusTracker.start();
       this.diagnosticTracker.start();
       this.refactorTracker.start();
+      this.aiActivityTracker.start();
     } else {
       this.debugTracker.dispose();
       this.testTracker.dispose();
@@ -657,6 +667,7 @@ class TrackingController {
       this.focusTracker.dispose();
       this.diagnosticTracker.dispose();
       this.refactorTracker.dispose();
+      this.aiActivityTracker.dispose();
     }
   }
 
@@ -826,6 +837,7 @@ function readConfig() {
     enableReportsInVscode: config.get('enableReportsInVscode', true),
     enableSensitiveTelemetry: config.get('enableSensitiveTelemetry', false),
     enableTelemetry: config.get('enableTelemetry', false),
+    enableAiTracking: config.get('enableAiTracking', true),
     pomodoroTestMode: config.get('pomodoroTestMode', false),
     telemetrySampleDiagnosticsIntervalSec: config.get('telemetrySampleDiagnosticsIntervalSec', 60)
   };

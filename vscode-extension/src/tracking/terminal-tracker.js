@@ -10,6 +10,7 @@ class TerminalTracker {
     this.buildHeartbeat = options.buildHeartbeat;
     this.disposables = [];
     this.activeTerminals = new Map();
+    this.recentCommands = [];
   }
 
   start() {
@@ -23,9 +24,11 @@ class TerminalTracker {
             const config = this.getConfig();
             if (!config.enableTelemetry) return;
 
+            const terminalSource = this.detectTerminalSource(terminal);
             this.activeTerminals.set(terminal, {
               openTime: Date.now(),
-              shellType: this.getShellType(terminal)
+              shellType: this.getShellType(terminal),
+              terminalSource
             });
 
             const heartbeat = this.buildHeartbeat({
@@ -35,7 +38,8 @@ class TerminalTracker {
               category: 'terminal',
               isWrite: false,
               metadata: {
-                shellType: this.getShellType(terminal)
+                shellType: this.getShellType(terminal),
+                terminalSource
               }
             });
 
@@ -62,6 +66,7 @@ class TerminalTracker {
               isWrite: false,
               metadata: {
                 shellType: termData?.shellType || 'unknown',
+                terminalSource: termData?.terminalSource || 'user',
                 durationMs
               }
             });
@@ -88,9 +93,14 @@ class TerminalTracker {
               const category = categorizeCommand(commandLine);
               
               // Filter sensitive data if not authorized
+              const terminalSource = this.detectTerminalSource(event.terminal);
+              const terminalKey = event.terminal?.name || 'unknown';
+              const aiCommandBurst = this.detectCommandBurst(terminalKey);
               const metadata = {
                 commandCategory: category,
-                shellType: this.getShellType(event.terminal)
+                shellType: this.getShellType(event.terminal),
+                terminalSource,
+                aiCommandBurst
               };
               
               if (config.enableSensitiveTelemetry) {
@@ -127,11 +137,13 @@ class TerminalTracker {
               const durationMs = Date.now() - (event.execution?.startTime || Date.now());
               
               // Filter sensitive data if not authorized
+              const terminalSource = this.detectTerminalSource(event.terminal);
               const metadata = {
                 commandCategory: category,
                 exitCode: event.exitCode,
                 durationMs,
-                shellType: this.getShellType(event.terminal)
+                shellType: this.getShellType(event.terminal),
+                terminalSource
               };
               
               if (config.enableSensitiveTelemetry) {
@@ -160,6 +172,27 @@ class TerminalTracker {
     }
   }
 
+
+  detectTerminalSource(terminal) {
+    if (!terminal) return 'user';
+    const name = (terminal.name || '').toLowerCase();
+    if (name.includes('claude')) return 'claude_code';
+    if (name.includes('copilot')) return 'copilot';
+    if (name.includes('cursor') || name.includes('agent')) return 'cursor';
+    if (name.includes('cline')) return 'cline';
+    if (name.includes('aider')) return 'aider';
+    if (name.includes('continue')) return 'continue';
+    return 'user';
+  }
+
+  detectCommandBurst(terminalKey) {
+    const now = Date.now();
+    this.recentCommands.push({ terminalKey, timestamp: now });
+    this.recentCommands = this.recentCommands.filter(c => now - c.timestamp < 10000);
+    const sameTerminal = this.recentCommands.filter(c => c.terminalKey === terminalKey);
+    return sameTerminal.length >= 3;
+  }
+
   getShellType(terminal) {
     if (!terminal) return 'unknown';
     
@@ -179,6 +212,7 @@ class TerminalTracker {
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
     this.activeTerminals.clear();
+    this.recentCommands = [];
   }
 }
 

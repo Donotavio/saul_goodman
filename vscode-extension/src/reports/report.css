@@ -706,6 +706,42 @@ p {
   margin-top: 4px;
 }
 
+/* AI Activity Section */
+.ai-activity-section {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 3px dashed #8b5cf6;
+}
+
+.ai-activity-section .section-header h2 {
+  color: #8b5cf6;
+}
+
+.kpi-card--ai {
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.kpi-card--ai .kpi-value {
+  color: #8b5cf6;
+}
+
+.kpi-icon--ai {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.kpi-icon--human {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.kpi-icon--completions {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.kpi-icon--terminal {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+
 .kpi-card--telemetry .kpi-value {
   font-size: 2rem;
   font-weight: 800;
