@@ -21,5 +21,5 @@
   "config_enable_telemetry_description": "Aktiviert die Erfassung lokaler Produktivitätsmetriken (Debugging, Tests, Aufgaben, Terminal usw.). Daten verlassen niemals die Maschine.",
   "config_pomodoro_test_mode_description": "Aktiviert den Testmodus für Pomodoro (1 Minute pro Zyklus anstelle von 25).",
   "config_telemetry_diagnostics_interval_description": "Intervall in Sekunden zur Abtastung von Diagnosen (Fehler/Warnungen) der Dateien.",
-  "config_enable_ai_tracking_description": "KI-gestützte Bearbeitungen, Terminalbefehle und Inline-Vervollständigungen verfolgen (erfordert aktivierte Telemetrie)."
+  "config_enable_ai_tracking_description": "Verfolgt KI-unterstützte Bearbeitungen, Terminalbefehle und Inline-Vervollständigungen, um menschliche von KI-Beiträgen zu unterscheiden."
 }

@@ -3625,5 +3625,8 @@
   },
   "report_ai_chart_human_label": {
     "message": "Você"
+  },
+  "config_enable_ai_tracking_description": {
+    "message": "Rastreia edições assistidas por IA, comandos de terminal e inline completions para distinguir contribuições humanas de IA."
   }
 }

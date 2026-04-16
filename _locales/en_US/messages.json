@@ -3661,5 +3661,8 @@
   },
   "report_ai_chart_human_label": {
     "message": "You"
+  },
+  "config_enable_ai_tracking_description": {
+    "message": "Tracks AI-assisted edits, terminal commands, and inline completions to distinguish human vs AI contributions."
   }
 }

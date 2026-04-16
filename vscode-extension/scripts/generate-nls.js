@@ -27,7 +27,8 @@ const VSCODE_KEYS = [
   'config_language_description',
   'config_enable_telemetry_description',
   'config_pomodoro_test_mode_description',
-  'config_telemetry_diagnostics_interval_description'
+  'config_telemetry_diagnostics_interval_description',
+  'config_enable_ai_tracking_description'
 ];
 
 const LOCALE_MAP = {

@@ -21,5 +21,5 @@
   "config_enable_telemetry_description": "Enables collection of local productivity metrics (debugging, tests, tasks, terminal, etc). Data never leaves your machine.",
   "config_pomodoro_test_mode_description": "Enables test mode for Pomodoro (1 minute per cycle instead of 25).",
   "config_telemetry_diagnostics_interval_description": "Interval in seconds to sample diagnostics (errors/warnings) from files.",
-  "config_enable_ai_tracking_description": "Track AI-assisted edits, terminal commands, and inline completions (requires telemetry enabled)."
+  "config_enable_ai_tracking_description": "Tracks AI-assisted edits, terminal commands, and inline completions to distinguish human vs AI contributions."
 }

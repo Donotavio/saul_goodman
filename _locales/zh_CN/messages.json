@@ -3625,5 +3625,8 @@
   },
   "report_ai_chart_human_label": {
     "message": "You"
+  },
+  "config_enable_ai_tracking_description": {
+    "message": "跟踪AI辅助编辑、终端命令和内联补全，以区分人类和AI的贡献。"
   }
 }

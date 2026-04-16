@@ -3625,5 +3625,8 @@
   },
   "report_ai_chart_human_label": {
     "message": "You"
+  },
+  "config_enable_ai_tracking_description": {
+    "message": "AI معاون ترامیم، ٹرمینل کمانڈز اور ان لائن تکمیلات کو ٹریک کرتا ہے تاکہ انسانی اور AI شراکت میں فرق کیا جا سکے۔"
   }
 }
