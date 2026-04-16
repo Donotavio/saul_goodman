@@ -1,7 +1,5 @@
 const { window } = require('vscode');
 const { getCurrentProjectName } = require('../utils/workspace-helper').default;
-const { getOrCreateHashSalt } = require('../utils/privacy');
-
 class TestTracker {
   constructor(options) {
     this.context = options.context;
@@ -9,7 +7,6 @@ class TestTracker {
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
     this.disposables = [];
-    this.activeRuns = new Map();
   }
 
   start() {
@@ -72,34 +69,7 @@ class TestTracker {
            cmd.includes('go test');
   }
 
-  flushActiveRuns() {
-    const salt = getOrCreateHashSalt(this.context);
-    
-    this.activeRuns.forEach((runData, runId) => {
-      const durationMs = Date.now() - runData.startTime;
-
-      const heartbeat = this.buildHeartbeat({
-        entityType: 'test_run',
-        entity: 'complete',
-        project: getCurrentProjectName(),
-        category: 'testing',
-        isWrite: false,
-        metadata: {
-          passed: runData.passed,
-          failed: runData.failed,
-          skipped: runData.skipped,
-          durationMs
-        }
-      });
-
-      this.queue.enqueue(heartbeat);
-    });
-
-    this.activeRuns.clear();
-  }
-
   dispose() {
-    this.flushActiveRuns();
     this.disposables.forEach((d) => d.dispose());
     this.disposables = [];
   }

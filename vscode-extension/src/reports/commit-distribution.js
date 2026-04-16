@@ -10,16 +10,16 @@
     if (!Number.isFinite(totalCommits) || totalCommits <= 0) {
       return commitsByHour;
     }
-    commitsByHour[9] = Math.ceil(totalCommits * 0.2);
-    commitsByHour[11] = Math.ceil(totalCommits * 0.3);
-    commitsByHour[14] = Math.ceil(totalCommits * 0.25);
-    commitsByHour[16] = Math.ceil(totalCommits * 0.15);
-    commitsByHour[19] = totalCommits - (
+    commitsByHour[9] = Math.round(totalCommits * 0.2);
+    commitsByHour[11] = Math.round(totalCommits * 0.3);
+    commitsByHour[14] = Math.round(totalCommits * 0.25);
+    commitsByHour[16] = Math.round(totalCommits * 0.15);
+    commitsByHour[19] = Math.max(0, totalCommits - (
       commitsByHour[9] +
       commitsByHour[11] +
       commitsByHour[14] +
       commitsByHour[16]
-    );
+    ));
     return commitsByHour;
   }
 

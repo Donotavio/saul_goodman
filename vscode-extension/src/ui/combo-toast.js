@@ -313,14 +313,6 @@ class ComboToast {
 </html>`;
   }
 
-  dispose() {
-    if (this.currentTimeout) {
-      clearTimeout(this.currentTimeout);
-    }
-    if (this.panel) {
-      this.panel.dispose();
-    }
-  }
 }
 
 module.exports = { ComboToast };

@@ -14,7 +14,6 @@ class ComboTracker {
     this.currentLevel = 0;
     this.consecutivePomodoros = 0;
     this.lastPomodoroTime = null;
-    this.breakStartTime = null;
     this.totalCombosToday = 0;
     this.maxComboToday = 0;
     this.lifetimeMaxCombo = 0;
@@ -31,10 +30,12 @@ class ComboTracker {
     ];
     
     // Thresholds de break (em ms)
+    // ≤ short  → mantém combo
+    // ≤ medium → reduz 1 nível
+    // > medium → reset completo
     this.breakThresholds = {
       short: 15 * 60 * 1000,   // 15min - mantém combo
-      medium: 30 * 60 * 1000,  // 30min - reduz 1 nível
-      long: 30 * 60 * 1000     // >30min - reset completo
+      medium: 30 * 60 * 1000   // 30min - reduz 1 nível; acima disso reseta
     };
   }
 
@@ -61,19 +62,19 @@ class ComboTracker {
     // Incrementar combo
     this.consecutivePomodoros++;
     this.lastPomodoroTime = now;
-    this.breakStartTime = null;
-    
-    // Registrar evento na timeline
+
+    // Calcular nível atual
+    const previousLevel = this.currentLevel;
+    this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
+
+    // Registrar evento na timeline (após recalcular nível)
     this.comboTimeline.push({
       timestamp: Date.now(),
       type: 'combo_increase',
       level: this.currentLevel,
+      previousLevel,
       pomodoros: this.consecutivePomodoros
     });
-    
-    // Calcular nível atual
-    const previousLevel = this.currentLevel;
-    this.currentLevel = this.calculateComboLevel(this.consecutivePomodoros);
     
     // Atualizar máximos
     if (this.consecutivePomodoros > this.maxComboToday) {
@@ -242,7 +243,6 @@ class ComboTracker {
       this.currentLevel = state.currentLevel || 0;
       this.consecutivePomodoros = state.consecutivePomodoros || 0;
       this.lastPomodoroTime = state.lastPomodoroTime || null;
-      this.breakStartTime = state.breakStartTime || null;
       this.totalCombosToday = state.totalCombosToday || 0;
       this.maxComboToday = state.maxComboToday || 0;
       this.lifetimeMaxCombo = state.lifetimeMaxCombo || 0;
@@ -310,7 +310,6 @@ class ComboTracker {
     this.consecutivePomodoros = 0;
     this.currentLevel = 0;
     this.lastPomodoroTime = null;
-    this.breakStartTime = null;
     await this.saveState();
     await this.sendComboHeartbeat('combo_manual_reset');
     

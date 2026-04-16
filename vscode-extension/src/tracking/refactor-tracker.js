@@ -76,14 +76,12 @@ class RefactorTracker {
       }
 
       vscode.workspace.applyEdit = async (edit, metadata) => {
-        let result;
+        const result = await this.originalApplyEdit(edit, metadata);
         try {
-          result = await this.originalApplyEdit(edit, metadata);
-          
           const config = this.getConfig();
           if (config.enableTelemetry) {
             const entryCount = edit.entries().length;
-            
+
             if (entryCount > 0) {
               const heartbeat = this.buildHeartbeat({
                 entityType: 'refactor',
@@ -103,9 +101,8 @@ class RefactorTracker {
           }
         } catch (error) {
           console.error('[Saul Refactor] Apply edit tracking error:', error);
-          result = await this.originalApplyEdit(edit, metadata);
         }
-        
+
         return result;
       };
 

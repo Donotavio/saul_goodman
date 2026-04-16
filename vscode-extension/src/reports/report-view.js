@@ -78,9 +78,9 @@ function buildHtml(webview, extensionUri, config, i18n) {
   const logoDataUri = `data:image/png;base64,${logoBase64}`;
   const reportConfig = buildReportConfig(config);
 
-  // Replace all i18n placeholders in the template
+  // Replace all i18n placeholders in the template (with HTML escaping)
   template = template.replace(/{i18n_([a-zA-Z0-9_]+)}/g, (match, key) => {
-    return i18n[key] || key;
+    return escapeHtml(i18n[key] || key);
   });
 
   return template
@@ -96,6 +96,16 @@ function buildHtml(webview, extensionUri, config, i18n) {
     .replace('{logoUri}', logoDataUri)
     .replace('{config}', JSON.stringify(reportConfig))
     .replace('{i18n}', JSON.stringify(i18n || {}));
+}
+
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function getNonce() {

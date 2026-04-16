@@ -15,8 +15,7 @@
   },
   "main": "./src/extension.js",
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:saulGoodman.startDaemon"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
@@ -142,7 +141,8 @@
     "generate-nls": "node scripts/generate-nls.js",
     "copy-daemon": "rm -rf daemon && mkdir -p daemon/src && cp ../saul-daemon/index.cjs ../saul-daemon/package.json daemon/ && cp ../saul-daemon/src/vscode-aggregation.cjs daemon/src/",
     "prebuild:vsix": "npm run copy-daemon && npm run generate-nls && npm --prefix .. run i18n:copy-site",
-    "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix"
+    "build:vsix": "npm run prebuild:vsix && vsce package --out saul-goodman-vscode.vsix",
+    "publish:marketplace": "npm run build:vsix && vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.80.0",

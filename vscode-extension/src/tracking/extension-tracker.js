@@ -162,8 +162,11 @@ class ExtensionTracker {
   }
 
   interceptCommands() {
-    const originalExecuteCommand = vscode.commands.executeCommand;
-    
+    if (!this.originalExecuteCommand) {
+      this.originalExecuteCommand = vscode.commands.executeCommand;
+    }
+    const originalExecuteCommand = this.originalExecuteCommand;
+
     vscode.commands.executeCommand = async (command, ...rest) => {
       // Log ALL Saul commands unconditionally for debugging
       if (typeof command === 'string' && command.startsWith('saulGoodman.')) {

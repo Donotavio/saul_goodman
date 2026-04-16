@@ -27,7 +27,7 @@ async function getHealthWithKey(apiBase, key) {
 }
 
 async function postHeartbeats(apiBase, key, heartbeats) {
-  const url = buildUrl(apiBase, '/v1/vscode/heartbeats', { key });
+  const url = buildUrl(apiBase, '/v1/vscode/heartbeats');
   const res = await fetchWithTimeout(url, 5000, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

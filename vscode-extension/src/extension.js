@@ -241,7 +241,7 @@ function activate(context) {
       vscode.workspace.onDidChangeConfiguration((event) => {
         if (event.affectsConfiguration('saulGoodman')) {
           trackingController?.reloadConfig();
-          void updateStatusBar('unknown');
+          startStatusPolling(); // Force immediate re-poll after config change
         }
       })
     );
@@ -412,23 +412,8 @@ class TrackingController {
       // Notify user if telemetry is disabled (pomodoro won't work)
       this.checkPomodoroSetup();
       
-      // Start core trackers with staggered delays to prevent blocking
-      setTimeout(() => this.safeStart(() => this.gitTracker.start()), 100);
-      setTimeout(() => this.safeStart(() => this.editorMetadataTracker.start()), 200);
-      setTimeout(() => this.safeStart(() => this.workspaceTracker.start()), 300);
-      
-      // Start telemetry trackers with additional delays
-      if (this.config.enableTelemetry) {
-        setTimeout(() => this.safeStart(() => this.debugTracker.start()), 500);
-        setTimeout(() => this.safeStart(() => this.testTracker.start()), 600);
-        setTimeout(() => this.safeStart(() => this.taskTracker.start()), 700);
-        setTimeout(() => this.safeStart(() => this.extensionTracker.start()), 800);
-        setTimeout(() => this.safeStart(() => this.terminalTracker.start()), 900);
-        setTimeout(() => this.safeStart(() => this.focusTracker.start()), 1000);
-        setTimeout(() => this.safeStart(() => this.diagnosticTracker.start()), 1100);
-        setTimeout(() => this.safeStart(() => this.refactorTracker.start()), 1200);
-      }
-      
+      // applyConfig() starts/stops all trackers based on current config
+      // (no staggered setTimeout — each tracker's start() calls dispose() first)
       this.applyConfig();
     } catch (error) {
       console.error('[Saul] Failed to initialize tracking controller:', error);
@@ -471,12 +456,18 @@ class TrackingController {
 
   checkPomodoroSetup() {
     if (!this.config.enableTelemetry) {
+      // Only show once per installation — respect opt-in default
+      const dismissedKey = 'sg:pomodoro:setup:dismissed';
+      if (this.context.globalState.get(dismissedKey)) {
+        return;
+      }
       setTimeout(() => {
         vscode.window.showWarningMessage(
           localize('vscode_pomodoro_disabled_warning'),
           localize('vscode_pomodoro_enable_now'),
           localize('vscode_pomodoro_enable_later')
         ).then(choice => {
+          void this.context.globalState.update(dismissedKey, true);
           if (choice === localize('vscode_pomodoro_enable_now')) {
             vscode.commands.executeCommand('saulGoodman.setupPomodoro');
           }
@@ -951,6 +942,10 @@ async function prepareDaemonCommand(context) {
       stdoutFd = fs.openSync(logFile, 'a');
       stderrFd = fs.openSync(logFile, 'a');
     } catch {
+      // Close stdoutFd if it was opened before stderrFd failed
+      if (stdoutFd !== null) {
+        try { fs.closeSync(stdoutFd); } catch { /* ignore */ }
+      }
       stdoutFd = null;
       stderrFd = null;
     }
@@ -1063,7 +1058,7 @@ async function isDaemonHealthy(apiBase, timeoutMs) {
 
 async function waitForDaemonHealthy(apiBase, attempts, delayMs) {
   if (!fetchWithTimeout) {
-    return true;
+    return false;
   }
   for (let i = 0; i < attempts; i += 1) {
     if (await isDaemonHealthy(apiBase, 1200)) {
@@ -1229,11 +1224,13 @@ async function pollStatus() {
     const totalSeconds = summary?.data?.days?.[0]?.total_seconds ?? 0;
     const index = indexData?.index ?? null;
 
-    // Obter combo atual do tracker
-    if (!currentComboSuffix && trackingController) {
+    // Obter combo atual do tracker (sempre consultar para refletir resets)
+    if (trackingController) {
       const comboStats = await trackingController.getComboStats();
       if (comboStats && comboStats.currentLevel > 0) {
         currentComboSuffix = ` | ${localize('combo_status_bar_suffix', { level: comboStats.currentLevel })}`;
+      } else {
+        currentComboSuffix = '';
       }
     }
 

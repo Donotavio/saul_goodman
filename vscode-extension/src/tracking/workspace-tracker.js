@@ -111,7 +111,6 @@ class WorkspaceTracker {
         metadata: {
           workspaceName: folder.name,
           totalFiles: stats.totalFiles,
-          totalDirectories: stats.totalDirectories,
           totalSizeBytes: stats.totalSizeBytes,
           largestFiles: stats.largestFiles.slice(0, 5),
           topExtensions: stats.topExtensions.slice(0, 10)
@@ -130,7 +129,6 @@ class WorkspaceTracker {
     
     const stats = {
       totalFiles: 0,
-      totalDirectories: 0,
       totalSizeBytes: 0,
       largestFiles: [],
       filesByExtension: {},
