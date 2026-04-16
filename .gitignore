@@ -15,3 +15,7 @@ saul-daemon/data/
 
 saul-daemon/daemon.log
 saul-daemon/**/*.tmp
+
+# Claude Code local (not shared)
+CLAUDE.local.md
+.claude/settings.local.json
