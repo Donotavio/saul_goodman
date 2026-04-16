@@ -562,7 +562,67 @@ function normalizeMetadata(metadata) {
   if (Array.isArray(metadata.comboTimeline)) {
     normalized.comboTimeline = metadata.comboTimeline;
   }
-  
+  if (typeof metadata.terminalSource === 'string') {
+    normalized.terminalSource = metadata.terminalSource;
+  }
+  if (typeof metadata.aiCommandBurst === 'boolean') {
+    normalized.aiCommandBurst = metadata.aiCommandBurst;
+  }
+  if (typeof metadata.eventType === 'string') {
+    normalized.eventType = metadata.eventType;
+  }
+  if (Number.isFinite(Number(metadata.totalEdits))) {
+    normalized.totalEdits = Number(metadata.totalEdits);
+  }
+  if (Number.isFinite(Number(metadata.humanLikelyEdits))) {
+    normalized.humanLikelyEdits = Number(metadata.humanLikelyEdits);
+  }
+  if (Number.isFinite(Number(metadata.aiLikelyEdits))) {
+    normalized.aiLikelyEdits = Number(metadata.aiLikelyEdits);
+  }
+  if (Number.isFinite(Number(metadata.aiLikelyLinesAdded))) {
+    normalized.aiLikelyLinesAdded = Number(metadata.aiLikelyLinesAdded);
+  }
+  if (Number.isFinite(Number(metadata.aiLikelyLinesRemoved))) {
+    normalized.aiLikelyLinesRemoved = Number(metadata.aiLikelyLinesRemoved);
+  }
+  if (Number.isFinite(Number(metadata.humanLikelyLinesAdded))) {
+    normalized.humanLikelyLinesAdded = Number(metadata.humanLikelyLinesAdded);
+  }
+  if (Number.isFinite(Number(metadata.humanLikelyLinesRemoved))) {
+    normalized.humanLikelyLinesRemoved = Number(metadata.humanLikelyLinesRemoved);
+  }
+  if (Number.isFinite(Number(metadata.multiFileEditBursts))) {
+    normalized.multiFileEditBursts = Number(metadata.multiFileEditBursts);
+  }
+  if (Number.isFinite(Number(metadata.applyEditCorrelations))) {
+    normalized.applyEditCorrelations = Number(metadata.applyEditCorrelations);
+  }
+  if (Number.isFinite(Number(metadata.distinctFilesEdited))) {
+    normalized.distinctFilesEdited = Number(metadata.distinctFilesEdited);
+  }
+  if (Number.isFinite(Number(metadata.inlineCompletionAccepts))) {
+    normalized.inlineCompletionAccepts = Number(metadata.inlineCompletionAccepts);
+  }
+  if (Number.isFinite(Number(metadata.totalAiCommands))) {
+    normalized.totalAiCommands = Number(metadata.totalAiCommands);
+  }
+  if (Array.isArray(metadata.activeAiExtensions)) {
+    normalized.activeAiExtensions = metadata.activeAiExtensions;
+  }
+  if (typeof metadata.topAiExtension === 'string') {
+    normalized.topAiExtension = metadata.topAiExtension;
+  }
+  if (Number.isFinite(Number(metadata.filesAffected))) {
+    normalized.filesAffected = Number(metadata.filesAffected);
+  }
+  if (typeof metadata.isMultiFile === 'boolean') {
+    normalized.isMultiFile = metadata.isMultiFile;
+  }
+  if (typeof metadata.isBulkEdit === 'boolean') {
+    normalized.isBulkEdit = metadata.isBulkEdit;
+  }
+
   return normalized;
 }
 
@@ -748,6 +808,49 @@ async function handleHeartbeat(req, res, url) {
   }
 }
 
+function aggregateAiMetrics(heartbeats, startMs, endMs) {
+  const metrics = {
+    aiLikelyEdits: 0, aiLikelyLinesAdded: 0, aiLikelyLinesRemoved: 0,
+    humanLikelyEdits: 0, humanLikelyLinesAdded: 0, humanLikelyLinesRemoved: 0,
+    multiFileEditBursts: 0, applyEditCorrelations: 0,
+    inlineCompletionAccepts: 0, totalAiCommands: 0,
+    aiTerminalCommands: 0, activeAiExtensions: []
+  };
+  if (!Array.isArray(heartbeats)) return metrics;
+  const extensionSet = new Set();
+  for (const hb of heartbeats) {
+    const t = hb.time ?? hb.timestamp ?? 0;
+    if (t < startMs || t >= endMs) continue;
+    const m = hb.metadata || {};
+    if (hb.entity_type === 'ai_activity' || hb.entityType === 'ai_activity') {
+      if (m.eventType === 'ai_edit_summary') {
+        metrics.aiLikelyEdits += m.aiLikelyEdits || 0;
+        metrics.aiLikelyLinesAdded += m.aiLikelyLinesAdded || 0;
+        metrics.aiLikelyLinesRemoved += m.aiLikelyLinesRemoved || 0;
+        metrics.humanLikelyEdits += m.humanLikelyEdits || 0;
+        metrics.humanLikelyLinesAdded += m.humanLikelyLinesAdded || 0;
+        metrics.humanLikelyLinesRemoved += m.humanLikelyLinesRemoved || 0;
+        metrics.multiFileEditBursts += m.multiFileEditBursts || 0;
+        metrics.applyEditCorrelations += m.applyEditCorrelations || 0;
+      }
+      if (m.inlineCompletionAccepts) {
+        metrics.inlineCompletionAccepts += m.inlineCompletionAccepts;
+      }
+      if (m.totalAiCommands) {
+        metrics.totalAiCommands += m.totalAiCommands;
+      }
+      if (Array.isArray(m.activeAiExtensions)) {
+        m.activeAiExtensions.forEach(e => extensionSet.add(e));
+      }
+    }
+    if ((hb.entity_type === 'terminal' || hb.entityType === 'terminal') && m.terminalSource && m.terminalSource !== 'user') {
+      metrics.aiTerminalCommands++;
+    }
+  }
+  metrics.activeAiExtensions = Array.from(extensionSet);
+  return metrics;
+}
+
 function handleSummary(req, res, url) {
   const dateKey = parseDateKey(url.searchParams.get('date'));
   const key = url.searchParams.get('key') ?? '';
@@ -814,6 +917,10 @@ function handleSummary(req, res, url) {
       sessions = MAX_SESSIONS_PER_DAY;
     }
     
+    const aiMetrics = aggregateAiMetrics(
+      vscodeEntry.heartbeats || [],
+      startMs, endMs
+    );
     sendJson(req, res, 200, {
       totalActiveMs,
       sessions,
@@ -821,7 +928,8 @@ function handleSummary(req, res, url) {
       switchHourly,
       timeline,
       index: null,
-      indexUpdatedAt: null
+      indexUpdatedAt: null,
+      aiMetrics
     });
     return;
   }
@@ -1725,6 +1833,8 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
   telemetry.combo.comboTimeline.sort((a, b) => a.timestamp - b.timestamp);
   telemetry.combo.comboTimeline = telemetry.combo.comboTimeline.slice(-100);
 
+  telemetry.aiActivity = aggregateAiMetrics(heartbeats, startMs, endMs);
+
   return telemetry;
 }
 
@@ -1886,7 +1996,8 @@ function handleVscodeDashboard(req, res, url) {
       activity: {
         totalTabSwitches,
         totalCommandExecutions
-      }
+      },
+      aiMetrics: aggregateAiMetrics(entry.heartbeats || [], startMs, endMs)
     }
   });
   } catch (error) {
