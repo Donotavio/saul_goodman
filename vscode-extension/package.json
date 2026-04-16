@@ -2,7 +2,7 @@
   "name": "saul-goodman-vscode",
   "displayName": "%vscode_ext_display_name%",
   "description": "%vscode_ext_description%",
-  "version": "1.22.3",
+  "version": "1.22.4",
   "publisher": "donotavio",
   "license": "MIT",
   "repository": {
