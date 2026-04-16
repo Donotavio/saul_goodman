@@ -59,7 +59,7 @@
       "resources": [
         "src/img/*",
         "src/block/block.html",
-        "src/block/block.js",
+        "dist/block/block.js",
         "store-assets/audio/*",
         "CHANGELOG.md"
       ],

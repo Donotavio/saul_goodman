@@ -178,6 +178,14 @@ export class MlSuggestionEngine {
     }, MlSuggestionEngine.PERSIST_DEBOUNCE_MS);
   }
 
+  async flushPendingPersist(): Promise<void> {
+    if (this.persistTimer && this.context) {
+      clearTimeout(this.persistTimer);
+      this.persistTimer = null;
+      await this.persistContext(this.context);
+    }
+  }
+
   async buildSuggestion(
     metadata: DomainMetadata,
     settings: ExtensionSettings,

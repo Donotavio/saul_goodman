@@ -1,14 +1,17 @@
-import { resolveLocale, localeToDir } from '../../dist/shared/i18n.js';
+import type { LocalePreference, SupportedLocale } from '../shared/types.js';
+import { resolveLocale, localeToDir } from '../shared/i18n.js';
 
-const DEFAULT_LOCALE = 'en-US';
+const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 const SETTINGS_KEY = 'sg:settings';
+
+type TranslateFn = (key: string, fallback?: string) => string;
 
 document.addEventListener('DOMContentLoaded', () => {
   void initialize();
 });
 
-async function initialize() {
-  let t = (key, fallback) => fallback ?? key;
+async function initialize(): Promise<void> {
+  let t: TranslateFn = (key, fallback) => fallback ?? key;
   try {
     const i18n = await createBlockI18n();
     t = i18n.t;
@@ -22,7 +25,7 @@ async function initialize() {
   attachActions(t);
 }
 
-function applyTranslations(t) {
+function applyTranslations(t: TranslateFn): void {
   document.title = t('block_page_title', document.title);
 
   const headingEl = document.getElementById('blockHeading');
@@ -40,13 +43,13 @@ function applyTranslations(t) {
     localNoteEl.textContent = t('block_page_local_note', localNoteEl.textContent ?? '');
   }
 
-  const imageEl = document.getElementById('blockImage');
+  const imageEl = document.getElementById('blockImage') as HTMLImageElement | null;
   if (imageEl) {
     imageEl.alt = t('block_page_image_alt', imageEl.alt ?? '');
   }
 }
 
-function attachActions(t) {
+function attachActions(t: TranslateFn): void {
   const optionsBtn = document.getElementById('optionsButton');
   const backBtn = document.getElementById('backButton');
 
@@ -90,13 +93,13 @@ function attachActions(t) {
   });
 }
 
-async function createBlockI18n() {
+async function createBlockI18n(): Promise<{ locale: SupportedLocale; t: TranslateFn }> {
   const { preference } = await loadLocalePreference();
   const locale = resolveLocale(preference);
   const messages = await loadMessages(locale);
   const fallback = locale === DEFAULT_LOCALE ? messages : await loadMessages(DEFAULT_LOCALE);
 
-  const translate = (key, fallbackText) =>
+  const translate: TranslateFn = (key, fallbackText) =>
     messages[key] ?? fallback[key] ?? fallbackText ?? key;
 
   return {
@@ -105,7 +108,7 @@ async function createBlockI18n() {
   };
 }
 
-async function loadLocalePreference() {
+async function loadLocalePreference(): Promise<{ preference: LocalePreference }> {
   try {
     const stored = (await chrome.storage.local.get(SETTINGS_KEY))[SETTINGS_KEY];
     return {
@@ -116,15 +119,15 @@ async function loadLocalePreference() {
   }
 }
 
-async function loadMessages(locale) {
+async function loadMessages(locale: SupportedLocale): Promise<Record<string, string>> {
   const dir = localeToDir(locale);
   try {
     const response = await fetch(chrome.runtime.getURL(`_locales/${dir}/messages.json`));
     if (!response.ok) {
       throw new Error('Failed to load locale file');
     }
-    const raw = await response.json();
-    const messages = {};
+    const raw: Record<string, { message?: string }> = await response.json();
+    const messages: Record<string, string> = {};
     for (const [key, value] of Object.entries(raw)) {
       messages[key] = value?.message ?? '';
     }

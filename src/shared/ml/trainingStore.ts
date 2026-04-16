@@ -503,7 +503,7 @@ async function deleteByIndexRange(
   });
 }
 
-function determineSplit(example: Omit<StoredTrainingExample, 'id' | 'split'>): TrainingSplit {
+export function determineSplit(example: Omit<StoredTrainingExample, 'id' | 'split'>): TrainingSplit {
   if (example.source === 'implicit') {
     return 'train';
   }

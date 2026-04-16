@@ -84,6 +84,8 @@ const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
 const ML_RECLASSIFICATION_COOLDOWN_MS = 4 * 60 * 60 * 1000; // 4h
 const DEFAULT_REVIEW_PRODUCTIVE_THRESHOLD = 0.78;
 const DEFAULT_REVIEW_PROCRASTINATION_THRESHOLD = 0.28;
+const SESSION_TRACKING_KEY = 'sg:sw-tracking-state';
+const SESSION_CRITICAL_KEY = 'sg:sw-critical-state';
 
 console.info('[Saul] Background worker started', { at: new Date().toISOString() });
 
@@ -736,6 +738,27 @@ chrome.runtime.onStartup.addListener(() => {
   void initialize();
 });
 
+chrome.runtime.onSuspend?.addListener(() => {
+  void (async () => {
+    try {
+      await mlEngine.flushPendingPersist();
+    } catch { /* best-effort */ }
+    try {
+      await chrome.storage.session?.set?.({
+        [SESSION_TRACKING_KEY]: {
+          currentDomain: trackingState.currentDomain,
+          currentTabId: trackingState.currentTabId,
+          lastTimestamp: trackingState.lastTimestamp,
+          lastActivity: trackingState.lastActivity,
+          isIdle: trackingState.isIdle,
+          browserFocused: trackingState.browserFocused
+        },
+        [SESSION_CRITICAL_KEY]: globalCriticalState
+      });
+    } catch { /* storage.session may not be available */ }
+  })();
+});
+
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResponse) => {
   if (_sender?.id && _sender.id !== chrome.runtime.id) {
     sendResponse({ ok: false, error: 'Unauthorized sender' });
@@ -895,12 +918,46 @@ async function initialize(): Promise<void> {
     await scheduleTrackingAlarm();
     await scheduleMidnightAlarm();
     await hydrateActiveTab();
+    await restoreSessionState();
     await syncVscodeMetrics(true);
     await notifyReleaseNotesIfNeeded();
 
     console.info('[Saul] Background initialize:complete', { at: new Date().toISOString() });
   } finally {
     initializing = false;
+  }
+}
+
+async function restoreSessionState(): Promise<void> {
+  try {
+    const stored = await chrome.storage.session?.get?.([SESSION_TRACKING_KEY, SESSION_CRITICAL_KEY]);
+    if (!stored) return;
+    const saved = stored[SESSION_TRACKING_KEY];
+    if (saved && typeof saved === 'object') {
+      if (!trackingState.currentDomain && saved.currentDomain) {
+        trackingState.currentDomain = saved.currentDomain;
+      }
+      if (trackingState.currentTabId === null && typeof saved.currentTabId === 'number') {
+        trackingState.currentTabId = saved.currentTabId;
+      }
+      if (typeof saved.lastTimestamp === 'number') {
+        trackingState.lastTimestamp = saved.lastTimestamp;
+      }
+      if (typeof saved.lastActivity === 'number') {
+        trackingState.lastActivity = saved.lastActivity;
+      }
+      if (typeof saved.isIdle === 'boolean') {
+        trackingState.isIdle = saved.isIdle;
+      }
+      if (typeof saved.browserFocused === 'boolean') {
+        trackingState.browserFocused = saved.browserFocused;
+      }
+    }
+    if (typeof stored[SESSION_CRITICAL_KEY] === 'boolean') {
+      globalCriticalState = stored[SESSION_CRITICAL_KEY];
+    }
+  } catch {
+    // storage.session may not be available in all environments
   }
 }
 
