@@ -1194,10 +1194,10 @@
     "message": "شعار Saul Goodman"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "سول يعطي الأولوية للمجالات غير المؤكدة أو القريبة من العتبة لتصنيفها أولاً."
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "طابور مراجعة ML"
   },
   "options_openai_hint": {
     "message": "مخزن محليا لتوليد سرد في التقرير."
@@ -1752,25 +1752,25 @@
     "message": "تحيز"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ECE المعايرة"
   },
   "popup_ml_delta_macro_f1_label": {
-    "message": "Delta macro-F1"
+    "message": "دلتا ماكرو-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "تنبيه الانجراف"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "معدل الإنتاج الزائف"
   },
   "popup_ml_features_label": {
     "message": "الميزات النشطة"
   },
   "popup_ml_guardrail_label": {
-    "message": "Guardrail"
+    "message": "حاجز الأمان"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "ECE عالية الثقة"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1791,10 +1791,10 @@
     "message": "أبداً"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "دقة الإنتاج"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "قبول التسمية الزائفة"
   },
   "popup_ml_status_cold_start": {
     "message": "يتم التسخين"
@@ -1818,7 +1818,7 @@
     "message": "نموذج ML"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "تغطية المفاهيم الرئيسية"
   },
   "popup_ml_updates_label": {
     "message": "التحديثات"
@@ -2250,7 +2250,7 @@
     "message": "لا مقاييس لتروي قصة اليوم"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "البرمجة الثنائية بالذكاء الاصطناعي"
   },
   "report_ai_retry": {
     "message": "حاول مرة أخرى"

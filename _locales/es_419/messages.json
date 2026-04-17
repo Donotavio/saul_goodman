@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Logotipo Saul Goodman"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul prioriza dominios inciertos o cercanos al umbral para que los clasifiques primero."
+  },
+  "options_ml_review_queue_title": {
+    "message": "Cola de revisión ML"
+  },
   "options_openai_hint": {
     "message": "Se guarda localmente para generar narrativas en el informe."
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "Sesgo"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "ECE de calibración"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "Delta macro-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "Alerta de drift"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "Tasa de falso productivo"
+  },
   "popup_ml_features_label": {
     "message": "Características activas"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "Guardrail"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "ECE alta confianza"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "Tasa de aprendizaje"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "Frecuencia mínima"
   },
   "popup_ml_never": {
     "message": "Nunca"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "Precisión productivo"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "Aceptación de pseudo-etiqueta"
   },
   "popup_ml_status_cold_start": {
     "message": "Calentando"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "Modelo ML"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "Cobertura de los conceptos principales"
   },
   "popup_ml_updates_label": {
     "message": "Actualizaciones"
@@ -2214,7 +2250,7 @@
     "message": "No hay métricas para contar una historia hoy."
   },
   "report_ai_pair_programming": {
-    "message": "Programación en Par con IA"
+    "message": "Programación en pares con IA"
   },
   "report_ai_retry": {
     "message": "Intentar de nuevo"

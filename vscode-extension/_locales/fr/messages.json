@@ -1194,10 +1194,10 @@
     "message": "Logo Saul Goodman"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "Saul priorise les domaines incertains ou proches du seuil pour que vous les classiez en premier."
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "File d'attente de révision ML"
   },
   "options_openai_hint": {
     "message": "Stocké localement pour générer des récits dans le rapport."
@@ -1752,25 +1752,25 @@
     "message": "Biais"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ECE de calibration"
   },
   "popup_ml_delta_macro_f1_label": {
     "message": "Delta macro-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "Alerte de dérive"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "Taux de faux productif"
   },
   "popup_ml_features_label": {
     "message": "Fonctionnalités actives"
   },
   "popup_ml_guardrail_label": {
-    "message": "Guardrail"
+    "message": "Garde-fou"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "ECE haute confiance"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1791,10 +1791,10 @@
     "message": "Jamais"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "Précision productive"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "Acceptation de pseudo-étiquette"
   },
   "popup_ml_status_cold_start": {
     "message": "Chauffage"
@@ -1818,7 +1818,7 @@
     "message": "Modèle ML"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "Couverture des concepts principaux"
   },
   "popup_ml_updates_label": {
     "message": "Mises à jour"
@@ -2250,7 +2250,7 @@
     "message": "Pas de mesures pour raconter une histoire aujourd'hui."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "Programmation en binôme IA"
   },
   "report_ai_retry": {
     "message": "Essaie encore"

@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "شعار Saul Goodman"
   },
+  "options_ml_review_queue_hint": {
+    "message": "سول يعطي الأولوية للمجالات غير المؤكدة أو القريبة من العتبة لتصنيفها أولاً."
+  },
+  "options_ml_review_queue_title": {
+    "message": "طابور مراجعة ML"
+  },
   "options_openai_hint": {
     "message": "مخزن محليا لتوليد سرد في التقرير."
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "تحيز"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "ECE المعايرة"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "دلتا ماكرو-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "تنبيه الانجراف"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "معدل الإنتاج الزائف"
+  },
   "popup_ml_features_label": {
     "message": "الميزات النشطة"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "حاجز الأمان"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "ECE عالية الثقة"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "معدل التعلم"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "التردد الأدنى"
   },
   "popup_ml_never": {
     "message": "أبداً"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "دقة الإنتاج"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "قبول التسمية الزائفة"
   },
   "popup_ml_status_cold_start": {
     "message": "يتم التسخين"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "نموذج ML"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "تغطية المفاهيم الرئيسية"
   },
   "popup_ml_updates_label": {
     "message": "التحديثات"
@@ -2214,7 +2250,7 @@
     "message": "لا مقاييس لتروي قصة اليوم"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "البرمجة الثنائية بالذكاء الاصطناعي"
   },
   "report_ai_retry": {
     "message": "حاول مرة أخرى"

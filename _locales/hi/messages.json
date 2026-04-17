@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Saul Goodman का लोगो"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul पहले उन क्षेत्रों को प्राथमिकता देता है जो अनिश्चित या सीमा के करीब हैं ताकि आप पहले वर्गीकृत कर सकें।"
+  },
+  "options_ml_review_queue_title": {
+    "message": "ML समीक्षा कतार"
+  },
   "options_openai_hint": {
     "message": "रिपोर्ट में कथाओं को उत्पन्न करने के लिए स्थानीय रूप से संग्रहीत किया गया।"
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "पूर्वाग्रह"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "कालिब्रेशन ECE"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "डेल्टा मैक्रो-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "ड्रिफ्ट अलर्ट"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "झूठी उत्पादकता दर"
+  },
   "popup_ml_features_label": {
     "message": "सक्रिय विशेषताएँ"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "गार्डरेल"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "उच्च विश्वास ECE"
   },
   "popup_ml_l2_label": {
     "message": "एल2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "सीखने की दर"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "न्यूनतम आवृत्ति"
   },
   "popup_ml_never": {
     "message": "कभी नहीं"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "उत्पादकता सटीकता"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "छद्म-लेबल स्वीकृति"
   },
   "popup_ml_status_cold_start": {
     "message": "गर्म करना"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "एमएल मॉडल"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "शीर्ष अवधारणाओं की कवरेज"
   },
   "popup_ml_updates_label": {
     "message": "अद्यतन"
@@ -2214,7 +2250,7 @@
     "message": "आज एक कहानी बताने के लिए कोई मेट्रिक्स नहीं।"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "AI पेयर प्रोग्रामिंग"
   },
   "report_ai_retry": {
     "message": "फिर से कोशिश करो"

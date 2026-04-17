@@ -1194,10 +1194,10 @@
     "message": "Saul Goodman লোগো"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "Saul আপনার জন্য প্রথমে শ্রেণীবদ্ধ করার জন্য অনিশ্চিত বা সীমার কাছাকাছি ডোমেইনগুলিকে অগ্রাধিকার দেয়।"
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "এমএল পর্যালোচনা কিউ"
   },
   "options_openai_hint": {
     "message": "রিপোর্টটিতে স্থানীয় ভাষায় বর্ণনা তৈরি করার জন্যে সংরক্ষিত।"
@@ -1752,25 +1752,25 @@
     "message": "বায়াস"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ক্যালিব্রেশন ECE"
   },
   "popup_ml_delta_macro_f1_label": {
-    "message": "Delta macro-F1"
+    "message": "ডেল্টা ম্যাক্রো-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "ড্রিফট সতর্কতা"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "মিথ্যা উৎপাদনশীলতার হার"
   },
   "popup_ml_features_label": {
     "message": "সক্রিয় বৈশিষ্ট্য"
   },
   "popup_ml_guardrail_label": {
-    "message": "Guardrail"
+    "message": "গার্ডরেইল"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "উচ্চ আত্মবিশ্বাস ECE"
   },
   "popup_ml_l2_label": {
     "message": "এল২"
@@ -1782,7 +1782,7 @@
     "message": "শিক্ষার হার"
   },
   "popup_ml_mcnemar_p_label": {
-    "message": "McNemar p"
+    "message": "ম্যাকনেমার p"
   },
   "popup_ml_min_feature_label": {
     "message": "ন্যূনতম ফ্রিকোয়েন্সি"
@@ -1791,10 +1791,10 @@
     "message": "কখনোই না"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "উৎপাদনশীলতা সঠিকতা"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "ছদ্ম-লেবেল গ্রহণ"
   },
   "popup_ml_status_cold_start": {
     "message": "গরম হচ্ছে"
@@ -1818,7 +1818,7 @@
     "message": "এমএল মডেল"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "শীর্ষ ধারণার কভারেজ"
   },
   "popup_ml_updates_label": {
     "message": "আপডেট"
@@ -2250,7 +2250,7 @@
     "message": "আজকের গল্প বলতে কোন মেট্রিক নেই।"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "এআই পেয়ার প্রোগ্রামিং"
   },
   "report_ai_retry": {
     "message": "পুনরায় প্রচেষ্টা করুন"

@@ -1194,10 +1194,10 @@
     "message": "Логотип Сауля Гудмана"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "Saul приоритизирует неопределенные или близкие к порогу области для вас, чтобы классифицировать в первую очередь."
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "Очередь обзора ML"
   },
   "options_openai_hint": {
     "message": "Хранится локально, чтобы генерировать повествования в отчете."
@@ -1752,25 +1752,25 @@
     "message": "Предвзятость"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ECE калибровки"
   },
   "popup_ml_delta_macro_f1_label": {
-    "message": "Delta macro-F1"
+    "message": "Дельта макро-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "Предупреждение о дрейфе"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "Уровень ложной продуктивности"
   },
   "popup_ml_features_label": {
     "message": "Активные функции"
   },
   "popup_ml_guardrail_label": {
-    "message": "Guardrail"
+    "message": "Ограничитель"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "ECE высокой уверенности"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1782,7 +1782,7 @@
     "message": "Скорость обучения"
   },
   "popup_ml_mcnemar_p_label": {
-    "message": "McNemar p"
+    "message": "p МакНемара"
   },
   "popup_ml_min_feature_label": {
     "message": "Минимальная частота"
@@ -1791,10 +1791,10 @@
     "message": "Никогда"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "Продуктивная точность"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "Принятие псевдоназвания"
   },
   "popup_ml_status_cold_start": {
     "message": "Разогрев"
@@ -1818,7 +1818,7 @@
     "message": "Модель ML"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "Покрытие основных концепций"
   },
   "popup_ml_updates_label": {
     "message": "Обновления"
@@ -2250,7 +2250,7 @@
     "message": "Нет метрик, чтобы рассказать историю сегодня."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "Парное программирование с ИИ"
   },
   "report_ai_retry": {
     "message": "Попробуйте еще раз"

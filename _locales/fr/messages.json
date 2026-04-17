@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Logo Saul Goodman"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul priorise les domaines incertains ou proches du seuil pour que vous les classiez en premier."
+  },
+  "options_ml_review_queue_title": {
+    "message": "File d'attente de révision ML"
+  },
   "options_openai_hint": {
     "message": "Stocké localement pour générer des récits dans le rapport."
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "Biais"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "ECE de calibration"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "Delta macro-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "Alerte de dérive"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "Taux de faux productif"
+  },
   "popup_ml_features_label": {
     "message": "Fonctionnalités actives"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "Garde-fou"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "ECE haute confiance"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "Taux d'apprentissage"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "Fréquence minimale"
   },
   "popup_ml_never": {
     "message": "Jamais"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "Précision productive"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "Acceptation de pseudo-étiquette"
   },
   "popup_ml_status_cold_start": {
     "message": "Chauffage"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "Modèle ML"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "Couverture des concepts principaux"
   },
   "popup_ml_updates_label": {
     "message": "Mises à jour"
@@ -2214,7 +2250,7 @@
     "message": "Pas de mesures pour raconter une histoire aujourd'hui."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "Programmation en binôme IA"
   },
   "report_ai_retry": {
     "message": "Essaie encore"

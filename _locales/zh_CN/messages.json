@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Saul Goodman 标志"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul 优先处理不确定或接近阈值的域，以便您首先进行分类。"
+  },
+  "options_ml_review_queue_title": {
+    "message": "ML 审核队列"
+  },
   "options_openai_hint": {
     "message": "在当地储存,以便在报告中产生叙述。"
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "偏差"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "校准 ECE"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "Delta 宏 F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "漂移警报"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "虚假生产率"
+  },
   "popup_ml_features_label": {
     "message": "活跃特征"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "护栏"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "高置信度 ECE"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "学习率"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "最小频率"
   },
   "popup_ml_never": {
     "message": "从不"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "生产精度"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "伪标签接受"
   },
   "popup_ml_status_cold_start": {
     "message": "预热中"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "机器学习模型"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "主要概念覆盖率"
   },
   "popup_ml_updates_label": {
     "message": "更新"
@@ -2214,7 +2250,7 @@
     "message": "今天没有衡量标准可以讲故事"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "AI 结对编程"
   },
   "report_ai_retry": {
     "message": "再试一次"

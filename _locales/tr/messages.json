@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Saul Goodman Logosu"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul, sizin için öncelikle sınırlara yakın veya belirsiz alanları önceliklendiriyor."
+  },
+  "options_ml_review_queue_title": {
+    "message": "ML inceleme kuyruğu"
+  },
   "options_openai_hint": {
     "message": "Raporda anlatılar oluşturmak için yerel olarak mağaza açtı."
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "Önyargı"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "Kalibrasyon ECE"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "Delta makro-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "Drift uyarısı"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "Yanlış üretken oran"
+  },
   "popup_ml_features_label": {
     "message": "Aktif özellikler"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "Guardrail"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "Yüksek güven ECE"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "Öğrenme hızı"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "Minimum frekans"
   },
   "popup_ml_never": {
     "message": "Asla"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "Üretken hassasiyet"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "Pseudo etiket kabulü"
   },
   "popup_ml_status_cold_start": {
     "message": "Isınıyor"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "ML Modeli"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "Ana kavramların kapsamı"
   },
   "popup_ml_updates_label": {
     "message": "Güncellemeler"
@@ -2214,7 +2250,7 @@
     "message": "Bugün bir hikaye anlatmak için ölçüm yok."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "Yapay Zeka Eşli Programlama"
   },
   "report_ai_retry": {
     "message": "Tekrar tekrar deneyin"

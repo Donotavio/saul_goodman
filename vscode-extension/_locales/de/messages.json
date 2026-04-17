@@ -303,7 +303,7 @@
     "message": "2x COMBO! Die Jury beginnt, dich mit Respekt anzusehen."
   },
   "combo_msg_2_3": {
-    "message": "Zwei in Folge. Das ist es, was einen soliden Fall aufbaut!"
+    "message": "Zwei hintereinander. Das ist es, was einen soliden Fall aufbaut!"
   },
   "combo_msg_3_1": {
     "message": "🔥 3x COMBO! EINWAND AKZEPTIERT! Der Richter steht auf deiner Seite!"
@@ -345,7 +345,7 @@
     "message": "Eröffnungsstatement"
   },
   "combo_reduced": {
-    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist es, was wir am besten können!"
+    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist, was wir am besten können!"
   },
   "combo_status_bar_suffix": {
     "message": "{level}x KOMBO"
@@ -1194,10 +1194,10 @@
     "message": "Saul Goodman Logo"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "Saul priorisiert unsichere oder nahe am Schwellenwert liegende Domains, die Sie zuerst bewerten."
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "ML Überprüfungswarteschlange"
   },
   "options_openai_hint": {
     "message": "lokal gespeichert, um Erzählungen im Bericht zu erzeugen."
@@ -1752,25 +1752,25 @@
     "message": "Voreingenommenheit"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ECE Kalibrierung"
   },
   "popup_ml_delta_macro_f1_label": {
-    "message": "Delta macro-F1"
+    "message": "Delta Makro-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "Drift-Alarm"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "Falsche Produktivitätsrate"
   },
   "popup_ml_features_label": {
     "message": "Aktive Funktionen"
   },
   "popup_ml_guardrail_label": {
-    "message": "Guardrail"
+    "message": "Leitplanke"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "ECE hohe Zuversicht"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1791,10 +1791,10 @@
     "message": "Nie"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "Produktivitätsgenauigkeit"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "Pseudo-Label-Akzeptanz"
   },
   "popup_ml_status_cold_start": {
     "message": "Wärmt auf"
@@ -1818,7 +1818,7 @@
     "message": "ML-Modell"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "Abdeckung der Hauptkonzepte"
   },
   "popup_ml_updates_label": {
     "message": "Aktualisierungen"
@@ -2037,7 +2037,7 @@
     "message": "Datenschutz"
   },
   "process1Body": {
-    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob Sie lernen, arbeiten oder im endlosen Feed versinken."
+    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob Sie lernen, arbeiten oder im ewigen Feed versinken."
   },
   "process1Title": {
     "message": "Verfolgen Sie Ihre aktiven Tabs"
@@ -2250,7 +2250,7 @@
     "message": "Keine Metriken, um heute eine Geschichte zu erzählen."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "KI-Paarprogrammierung"
   },
   "report_ai_retry": {
     "message": "Versuchen Sie es wieder"
@@ -2613,7 +2613,7 @@
     "message": "Einspruch! Highlights der Fallstudie"
   },
   "report_share_hint_instagram": {
-    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie das, was wir kopiert haben, in das Beitragsfeld ein."
+    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie ein, was wir in das Postfeld kopiert haben."
   },
   "report_share_hint_linkedin": {
     "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."

@@ -1194,10 +1194,10 @@
     "message": "Logotipo Saul Goodman"
   },
   "options_ml_review_queue_hint": {
-    "message": "Saul prioritizes uncertain domains or those near the threshold for you to label first."
+    "message": "Saul prioriza domínios incertos ou próximos do limiar para você classificar primeiro."
   },
   "options_ml_review_queue_title": {
-    "message": "ML review queue"
+    "message": "Fila de revisão ML"
   },
   "options_openai_hint": {
     "message": "Armazenada localmente para gerar narrativas no relatório."
@@ -1752,16 +1752,16 @@
     "message": "Viés"
   },
   "popup_ml_calibration_ece_label": {
-    "message": "Calibration ECE"
+    "message": "ECE de calibração"
   },
   "popup_ml_delta_macro_f1_label": {
     "message": "Delta macro-F1"
   },
   "popup_ml_drift_alert_label": {
-    "message": "Drift alert"
+    "message": "Alerta de drift"
   },
   "popup_ml_false_productive_rate_label": {
-    "message": "False productive rate"
+    "message": "Taxa de falso produtivo"
   },
   "popup_ml_features_label": {
     "message": "Features ativas"
@@ -1770,7 +1770,7 @@
     "message": "Guardrail"
   },
   "popup_ml_high_confidence_ece_label": {
-    "message": "High-conf ECE"
+    "message": "ECE alta confiança"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1791,10 +1791,10 @@
     "message": "Nunca"
   },
   "popup_ml_precision_productive_label": {
-    "message": "Precision productive"
+    "message": "Precisão produtivo"
   },
   "popup_ml_pseudo_acceptance_label": {
-    "message": "Pseudo-label acceptance"
+    "message": "Aceitação de pseudo-rótulo"
   },
   "popup_ml_status_cold_start": {
     "message": "Aquecendo"
@@ -1818,7 +1818,7 @@
     "message": "Modelo ML"
   },
   "popup_ml_top_concepts_coverage_label": {
-    "message": "Top concepts coverage"
+    "message": "Cobertura dos conceitos principais"
   },
   "popup_ml_updates_label": {
     "message": "Atualizações"

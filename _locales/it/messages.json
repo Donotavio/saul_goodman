@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Logo Saul Goodman"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul prioritizza domini incerti o vicini alla soglia per te da classificare per primi."
+  },
+  "options_ml_review_queue_title": {
+    "message": "Coda di revisione ML"
+  },
   "options_openai_hint": {
     "message": "Archiviato localmente per generare narrazioni nel rapporto."
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "Bias"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "ECE di calibrazione"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "Delta macro-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "Avviso di drift"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "Tasso di falso produttivo"
+  },
   "popup_ml_features_label": {
     "message": "Caratteristiche attive"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "Guardrail"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "ECE alta fiducia"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "Tasso di apprendimento"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "McNemar p"
+  },
   "popup_ml_min_feature_label": {
     "message": "Frequenza minima"
   },
   "popup_ml_never": {
     "message": "Mai"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "Precisione produttivo"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "Accettazione di pseudo-etichetta"
   },
   "popup_ml_status_cold_start": {
     "message": "Riscaldamento"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "Modello ML"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "Copertura dei concetti principali"
   },
   "popup_ml_updates_label": {
     "message": "Aggiornamenti"
@@ -2214,7 +2250,7 @@
     "message": "Niente metriche per raccontare una storia oggi."
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "Programmazione in coppia con IA"
   },
   "report_ai_retry": {
     "message": "Prova ancora"

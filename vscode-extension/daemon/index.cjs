@@ -7,15 +7,46 @@ const {
   mergeOverlappingSlices
 } = require('./src/vscode-aggregation.cjs');
 
+const { version: DAEMON_VERSION } = require('./package.json');
+
 const BIND_HOST = process.env.BIND_HOST || '127.0.0.1';
 const PORT = normalizePort(process.env.PORT);
-const PAIRING_KEY = (process.env.PAIRING_KEY ?? '').trim();
+let PAIRING_KEY = (process.env.PAIRING_KEY ?? '').trim();
 
-// BUG-021: Ensure PAIRING_KEY is configured
-if (!PAIRING_KEY) {
-  console.error('[FATAL] PAIRING_KEY environment variable is required');
-  console.error('[FATAL] Set PAIRING_KEY=<your-key> before starting the daemon');
-  process.exit(1);
+function readPairingKeyFromStdin() {
+  return new Promise((resolve) => {
+    if (!process.stdin.readable || process.stdin.isTTY) {
+      resolve('');
+      return;
+    }
+    const chunks = [];
+    const timeout = setTimeout(() => {
+      process.stdin.removeAllListeners('data');
+      process.stdin.removeAllListeners('end');
+      resolve('');
+    }, 2000);
+    process.stdin.on('data', (chunk) => chunks.push(chunk));
+    process.stdin.on('end', () => {
+      clearTimeout(timeout);
+      try {
+        const parsed = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+        resolve((parsed.pairingKey ?? '').trim());
+      } catch {
+        resolve('');
+      }
+    });
+    process.stdin.resume();
+  });
+}
+
+async function ensurePairingKey() {
+  if (!PAIRING_KEY) {
+    PAIRING_KEY = await readPairingKeyFromStdin();
+  }
+  if (!PAIRING_KEY) {
+    console.error('[FATAL] PAIRING_KEY is required (via env var or stdin)');
+    process.exit(1);
+  }
 }
 
 const LEGACY_DATA_DIR = path.join(__dirname, 'data');
@@ -150,10 +181,12 @@ async function persistVscodeState() {
 function sendJson(req, res, status, payload) {
   const origin = getAllowedOrigin(req);
   const headers = {
-    'content-type': 'application/json; charset=utf-8'
+    'content-type': 'application/json; charset=utf-8',
+    'x-saul-version': DAEMON_VERSION
   };
   if (origin) {
     headers['access-control-allow-origin'] = origin;
+    headers['access-control-expose-headers'] = 'x-saul-version';
   }
   res.writeHead(status, headers);
   res.end(JSON.stringify(payload));
@@ -161,7 +194,11 @@ function sendJson(req, res, status, payload) {
 
 function sendNoContent(req, res) {
   const origin = getAllowedOrigin(req);
-  const headers = origin ? { 'access-control-allow-origin': origin } : undefined;
+  const headers = { 'x-saul-version': DAEMON_VERSION };
+  if (origin) {
+    headers['access-control-allow-origin'] = origin;
+    headers['access-control-expose-headers'] = 'x-saul-version';
+  }
   res.writeHead(204, headers);
   res.end();
 }
@@ -169,10 +206,12 @@ function sendNoContent(req, res) {
 function sendError(req, res, status, message) {
   const origin = getAllowedOrigin(req);
   const headers = {
-    'content-type': 'application/json; charset=utf-8'
+    'content-type': 'application/json; charset=utf-8',
+    'x-saul-version': DAEMON_VERSION
   };
   if (origin) {
     headers['access-control-allow-origin'] = origin;
+    headers['access-control-expose-headers'] = 'x-saul-version';
   }
   res.writeHead(status, headers);
   res.end(JSON.stringify({ error: message }));
@@ -701,11 +740,16 @@ function hashString(value) {
 function createHeartbeatId(seed) {
   const value = typeof seed === 'string' ? seed : String(seed ?? '');
   if (!value) {
-    return `hb-${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 8)}`;
+    const uuid = typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 10)}${Math.random().toString(16).slice(2, 10)}`;
+    return `hb-${uuid}`;
   }
   return `hb-${hashString(value)}`;
 }
 
+// Canonical heartbeat schema: see vscode-extension/src/tracking/heartbeat-factory.js
+// Fingerprint fields must match the schema's required fields.
 function getHeartbeatFingerprint(heartbeat) {
   if (!heartbeat || !Number.isFinite(heartbeat.time)) {
     return null;
@@ -741,6 +785,22 @@ function addHeartbeatToIndex(idSet, heartbeat) {
   }
 }
 
+const MAX_JSON_DEPTH = 20;
+
+function checkJsonDepth(value, depth) {
+  if (depth > MAX_JSON_DEPTH) return false;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      if (!checkJsonDepth(item, depth + 1)) return false;
+    }
+  } else if (value !== null && typeof value === 'object') {
+    for (const key in value) {
+      if (!checkJsonDepth(value[key], depth + 1)) return false;
+    }
+  }
+  return true;
+}
+
 async function readJsonBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -761,9 +821,13 @@ async function readJsonBody(req) {
       }
       try {
         const payload = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+        if (!checkJsonDepth(payload, 0)) {
+          reject(new Error('JSON nesting too deep'));
+          return;
+        }
         resolve(payload);
-      } catch {
-        reject(new Error('Invalid JSON'));
+      } catch (err) {
+        reject(err.message === 'JSON nesting too deep' ? err : new Error('Invalid JSON'));
       }
     });
   });
@@ -772,14 +836,16 @@ async function readJsonBody(req) {
 function handleOptions(req, res) {
   const origin = getAllowedOrigin(req);
   if (!origin) {
-    res.writeHead(204);
+    res.writeHead(204, { 'x-saul-version': DAEMON_VERSION });
     res.end();
     return;
   }
   res.writeHead(204, {
+    'x-saul-version': DAEMON_VERSION,
     'access-control-allow-origin': origin,
     'access-control-allow-methods': 'GET,POST,OPTIONS',
-    'access-control-allow-headers': 'content-type'
+    'access-control-allow-headers': 'content-type',
+    'access-control-expose-headers': 'x-saul-version'
   });
   res.end();
 }
@@ -942,9 +1008,11 @@ function handleSummary(req, res, url) {
     const MAX_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
     const MAX_SESSIONS_PER_DAY = 5000; // Reasonable upper limit (increased from 500 - normal workday generates 600-1000)
     
+    let clamped = false;
     if (totalActiveMs > MAX_DAY_MS) {
       console.warn(`[saul-daemon] WARNING: totalActiveMs (${totalActiveMs}ms = ${(totalActiveMs / 3600000).toFixed(1)}h) exceeds 24h for ${dateKey}, clamping to 24h`);
       totalActiveMs = MAX_DAY_MS;
+      clamped = true;
     }
     
     if (sessions > MAX_SESSIONS_PER_DAY) {
@@ -964,7 +1032,8 @@ function handleSummary(req, res, url) {
       timeline,
       index: null,
       indexUpdatedAt: null,
-      aiMetrics
+      aiMetrics,
+      clamped
     });
     return;
   }
@@ -1040,8 +1109,14 @@ async function handleIndex(req, res, url) {
         return;
       }
       const entry = ensureEntry(key, dateKey);
+      const incomingTs = Number.isFinite(timestamp) ? timestamp : null;
+      const CLOCK_SKEW_TOLERANCE_MS = 5000;
+      if (incomingTs !== null && entry.indexUpdatedAt != null && entry.indexUpdatedAt >= incomingTs + CLOCK_SKEW_TOLERANCE_MS) {
+        sendJson(req, res, 409, { error: 'stale', serverUpdatedAt: entry.indexUpdatedAt });
+        return;
+      }
       entry.index = indexValue;
-      entry.indexUpdatedAt = Number.isFinite(timestamp) ? timestamp : Date.now();
+      entry.indexUpdatedAt = incomingTs ?? Date.now();
       try {
         await persistState();
       } catch (persistError) {
@@ -2408,10 +2483,7 @@ function formatDurationMs(ms) {
 
 
 async function start() {
-  if (!PAIRING_KEY) {
-    console.error('[saul-daemon] PAIRING_KEY is required. Set the environment variable and retry.');
-    process.exit(1);
-  }
+  await ensurePairingKey();
 
   await loadState();
   await loadVscodeState();

@@ -1193,6 +1193,12 @@
   "options_logo_alt": {
     "message": "Saul Goodman کا لوگو"
   },
+  "options_ml_review_queue_hint": {
+    "message": "Saul آپ کے لئے پہلے درجہ بندی کرنے کے لئے غیر یقینی یا حد کے قریب کے ڈومینز کو ترجیح دیتا ہے۔"
+  },
+  "options_ml_review_queue_title": {
+    "message": "ایم ایل جائزہ کی قطار"
+  },
   "options_openai_hint": {
     "message": "اس رپورٹ میں معلومات پیدا کرنے کے لیے مقامی طور پر ذخیرہ کیا گیا۔"
   },
@@ -1745,8 +1751,26 @@
   "popup_ml_bias_label": {
     "message": "تعصب"
   },
+  "popup_ml_calibration_ece_label": {
+    "message": "کیلیبریشن ای سی ای"
+  },
+  "popup_ml_delta_macro_f1_label": {
+    "message": "ڈیلٹا میکرو-F1"
+  },
+  "popup_ml_drift_alert_label": {
+    "message": "ڈرفٹ کا انتباہ"
+  },
+  "popup_ml_false_productive_rate_label": {
+    "message": "جعلی پیداواری شرح"
+  },
   "popup_ml_features_label": {
     "message": "فعال خصوصیات"
+  },
+  "popup_ml_guardrail_label": {
+    "message": "گارڈریل"
+  },
+  "popup_ml_high_confidence_ece_label": {
+    "message": "اعتماد کی اعلی ای سی ای"
   },
   "popup_ml_l2_label": {
     "message": "L2"
@@ -1757,11 +1781,20 @@
   "popup_ml_learning_rate_label": {
     "message": "سیکھنے کی شرح"
   },
+  "popup_ml_mcnemar_p_label": {
+    "message": "مکنیمر p"
+  },
   "popup_ml_min_feature_label": {
     "message": "کم از کم تعدد"
   },
   "popup_ml_never": {
     "message": "کبھی نہیں"
+  },
+  "popup_ml_precision_productive_label": {
+    "message": "پیداواری درستگی"
+  },
+  "popup_ml_pseudo_acceptance_label": {
+    "message": "جعلی لیبل کی قبولیت"
   },
   "popup_ml_status_cold_start": {
     "message": "گرم کرنا"
@@ -1783,6 +1816,9 @@
   },
   "popup_ml_title": {
     "message": "ایم ایل ماڈل"
+  },
+  "popup_ml_top_concepts_coverage_label": {
+    "message": "اہم تصورات کی کوریج"
   },
   "popup_ml_updates_label": {
     "message": "اپ ڈیٹس"
@@ -2214,7 +2250,7 @@
     "message": "کوئی میٹرک آج کہانی سنانے کے لیے نہیں۔"
   },
   "report_ai_pair_programming": {
-    "message": "AI Pair Programming"
+    "message": "اے آئی پیئر پروگرامنگ"
   },
   "report_ai_retry": {
     "message": "دوبارہ کوشش"
@@ -2970,7 +3006,7 @@
     "message": "سب سے زیادہ ڈیبگ کردہ فائلیں"
   },
   "report_vscode_top_debugged_files_bps": {
-    "message": "{count} BPs"
+    "message": "{count} بی پی"
   },
   "report_vscode_top_debugged_files_empty": {
     "message": "کوئی ڈیبگ کی گئی فائل نہیں۔"
