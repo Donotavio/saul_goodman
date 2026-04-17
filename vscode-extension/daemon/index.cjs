@@ -414,8 +414,17 @@ function pruneVscodeEntries(key) {
     const dateKey = formatDateKey(new Date(ts));
     return isDateWithinWindowWithRetention(dateKey, VSCODE_RETENTION_DAYS);
   };
+  // Use a 1-day wider window for heartbeats so sessions crossing midnight
+  // at the retention boundary are not partially truncated.
+  const isKeptHeartbeat = (ts) => {
+    if (!Number.isFinite(ts)) {
+      return false;
+    }
+    const dateKey = formatDateKey(new Date(ts));
+    return isDateWithinWindowWithRetention(dateKey, VSCODE_RETENTION_DAYS + 1);
+  };
   entry.heartbeats = entry.heartbeats.filter((heartbeat) => {
-    return isKept(heartbeat?.time);
+    return isKeptHeartbeat(heartbeat?.time);
   });
   const removed = dedupeVscodeHeartbeats(entry);
   entry.durations = entry.durations.filter((duration) => {
@@ -988,6 +997,8 @@ function handleSummary(req, res, url) {
     const timelineSlices = [];
     const switchHourly = Array.from({ length: 24 }, () => 0);
     let sessions = 0;
+    let switches = 0;
+    let prevProject = null;
     for (const duration of vscodeEntry.durations) {
       if (duration.endTime <= startMs || duration.startTime >= endMs) {
         continue;
@@ -997,10 +1008,15 @@ function handleSummary(req, res, url) {
       }
 
       sessions += 1;
-      const hour = new Date(duration.startTime).getHours();
-      if (switchHourly[hour] !== undefined) {
-        switchHourly[hour] += 1;
+      const curProject = duration.project || duration.entity || null;
+      if (prevProject !== null && curProject !== prevProject) {
+        switches += 1;
+        const hour = new Date(duration.startTime).getHours();
+        if (switchHourly[hour] !== undefined) {
+          switchHourly[hour] += 1;
+        }
       }
+      prevProject = curProject;
       const slices = splitDurationByDay(duration, startMs, endMs);
       for (const slice of slices) {
         timelineSlices.push({
@@ -1036,7 +1052,7 @@ function handleSummary(req, res, url) {
     sendJson(req, res, 200, {
       totalActiveMs,
       sessions,
-      switches: sessions,
+      switches,
       switchHourly,
       timeline,
       index: null,
@@ -2506,8 +2522,39 @@ function formatDurationMs(ms) {
 }
 
 
+const LOCK_PATH = path.join(DATA_DIR, '.lock');
+
+async function acquireLockFile() {
+  await mkdir(DATA_DIR, { recursive: true });
+  try {
+    await writeFile(LOCK_PATH, String(process.pid), { flag: 'wx' });
+  } catch (err) {
+    if (err.code === 'EEXIST') {
+      let stalePid;
+      try { stalePid = parseInt(await readFile(LOCK_PATH, 'utf8'), 10); } catch { stalePid = null; }
+      let alive = false;
+      if (stalePid) {
+        try { process.kill(stalePid, 0); alive = true; } catch { alive = false; }
+      }
+      if (alive) {
+        console.error(`[saul-daemon] Another instance is running (PID ${stalePid}). Exiting.`);
+        process.exit(1);
+      }
+      await writeFile(LOCK_PATH, String(process.pid), 'utf8');
+      console.warn('[saul-daemon] Removed stale lock file from PID', stalePid);
+    } else {
+      throw err;
+    }
+  }
+  const cleanupLock = () => { try { require('fs').unlinkSync(LOCK_PATH); } catch {} };
+  process.on('exit', cleanupLock);
+  process.on('SIGINT', () => { cleanupLock(); process.exit(0); });
+  process.on('SIGTERM', () => { cleanupLock(); process.exit(0); });
+}
+
 async function start() {
   await ensurePairingKey();
+  await acquireLockFile();
 
   await loadState();
   await loadVscodeState();
@@ -2517,6 +2564,7 @@ async function start() {
     try { await unlink(tmpPath); } catch {}
   }
   const server = http.createServer(async (req, res) => {
+    try {
     if (!req.url || !req.method) {
       sendError(req, res, 400, 'Invalid request');
       return;
@@ -2535,7 +2583,7 @@ async function start() {
     }
 
     if (req.method === 'GET' && (parsedUrl.pathname === '/health' || parsedUrl.pathname === '/v1/health')) {
-      sendJson(req, res, 200, { ok: true, version: DAEMON_VERSION });
+      sendJson(req, res, 200, { ok: true });
       return;
     }
 
@@ -2647,6 +2695,12 @@ async function start() {
     }
 
     sendError(req, res, 404, 'Not found');
+    } catch (err) {
+      console.error('[saul-daemon] Unhandled request error:', err?.message || String(err));
+      if (!res.headersSent) {
+        sendError(req, res, 500, 'Internal server error');
+      }
+    }
   });
 
   server.listen(PORT, BIND_HOST, () => {
