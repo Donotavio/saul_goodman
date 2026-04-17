@@ -56,7 +56,7 @@ O diretório default segue esta ordem:
 
 ### Chrome (tracking)
 
-- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=...` (resumo agregado usado pelo background)
+- `GET /v1/tracking/vscode/summary?date=YYYY-MM-DD&key=...` — resumo agregado usado pelo background da extensão Chrome. Este endpoint é **dual-source**: primeiro tenta construir o resumo a partir dos heartbeats detalhados (`vscodeState`); se não houver dados, faz fallback para o arquivo legado `vscode-usage.json` (`state`). Isso significa que o response pode vir de dados com granularidades diferentes dependendo da fonte.
 - `POST /v1/tracking/vscode/heartbeat`
 - `GET/POST /v1/tracking/index`
 

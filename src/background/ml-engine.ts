@@ -501,6 +501,7 @@ export class MlSuggestionEngine {
     return this.contextPromise;
   }
 
+  // Dual-write: IndexedDB (model) + chrome.storage.local (metadata). Not atomic — reconcileStoreConsistency() heals on startup.
   private async persistContext(context: MlContext): Promise<void> {
     const modelState = context.model.getState();
     const calibrationState = context.calibration.getState();
@@ -543,6 +544,7 @@ export class MlSuggestionEngine {
       });
     } catch (error) {
       console.warn('Falha ao atualizar metadados do modelo v4', error);
+      void this.reconcileStoreConsistency(state).catch(() => {});
     }
   }
 
@@ -877,6 +879,8 @@ export class MlSuggestionEngine {
   ): Promise<void> {
     await this.withModelLock(async () => {
       context.pseudoLabelAttempts += 1;
+
+      await this.maybeRecalibrate(context);
 
       const candidateLabel = resolvePseudoLabel(prediction.probability);
       if (candidateLabel === null) {

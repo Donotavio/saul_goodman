@@ -93,7 +93,7 @@ export function isWithinWorkSchedule(date: Date, schedule?: WorkInterval[]): boo
     }
 
     if (startMinutes === endMinutes) {
-      return true;
+      return false;
     }
 
     if (startMinutes < endMinutes) {

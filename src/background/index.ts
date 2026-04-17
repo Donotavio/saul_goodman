@@ -67,6 +67,7 @@ const TRACKING_ALARM = 'sg:tracking-tick';
 const MIDNIGHT_ALARM = 'sg:midnight-reset';
 const TRACKING_PERIOD_MINUTES = 1; // 1 minute (alarms are clamped to >= 1 minute)
 const MAX_TIMELINE_SEGMENTS = 2000;
+const MAX_DOMAIN_ENTRIES = 500;
 const INACTIVE_LABEL = 'Sem atividade detectada';
 const CRITICAL_MESSAGE = 'sg:critical-state';
 const VSCODE_SYNC_MIN_INTERVAL_MS = 5 * 60 * 1000; // 5 minutos
@@ -82,6 +83,7 @@ const METADATA_REQUEST_MESSAGE = 'sg:collect-domain-metadata';
 const MAX_SUGGESTIONS = 10;
 const MAX_RECENTLY_CLOSED_RESULTS = 25; // Chrome API limit for sessions.getRecentlyClosed
 const LOW_CONFIDENCE_COOLDOWN_MS = 15 * 60 * 1000;
+const SUGGESTION_CACHE_TTL_MS = 60 * 60 * 1000; // 1h
 const ML_RECLASSIFICATION_COOLDOWN_MS = 4 * 60 * 60 * 1000; // 4h
 const DEFAULT_REVIEW_PRODUCTIVE_THRESHOLD = 0.78;
 const DEFAULT_REVIEW_PROCRASTINATION_THRESHOLD = 0.28;
@@ -232,6 +234,7 @@ let vscodeSyncInProgress = false;
 let vscodeSyncStartedAt = 0;
 let initializing = false;
 let globalCriticalState = false;
+let persistChain: Promise<void> = Promise.resolve();
 let lastCriticalSoundPref = false;
 let lastCriticalScore = -Infinity;
 let releaseNotesClickRegistered = false;
@@ -572,15 +575,23 @@ async function maybeHandleSuggestion(domain: string, tab: chrome.tabs.Tab): Prom
 
   const cached = suggestionCache.get(normalizedDomain);
   if (cached) {
-    if (tab.id) {
-      sendSuggestionToast(tab.id, cached.suggestion);
+    if (Date.now() - cached.suggestion.timestamp > SUGGESTION_CACHE_TTL_MS) {
+      suggestionCache.delete(normalizedDomain);
+    } else {
+      if (tab.id) {
+        sendSuggestionToast(tab.id, cached.suggestion);
+      }
+      return;
     }
-    return;
   }
 
-  const metadata = await collectDomainMetadata(tab, normalizedDomain);
+  let metadata = await collectDomainMetadata(tab, normalizedDomain);
   if (!metadata) {
-    return;
+    await new Promise<void>((r) => setTimeout(r, 3000));
+    metadata = await collectDomainMetadata(tab, normalizedDomain);
+    if (!metadata) {
+      return;
+    }
   }
 
   let cachedSuggestion: CachedSuggestion;
@@ -747,6 +758,11 @@ chrome.runtime.onStartup.addListener(() => {
 chrome.runtime.onSuspend?.addListener(() => {
   void (async () => {
     try {
+      if (metricsCache) {
+        await saveDailyMetrics(metricsCache);
+      }
+    } catch { /* best-effort */ }
+    try {
       await mlEngine.flushPendingPersist();
     } catch { /* best-effort */ }
     try {
@@ -861,8 +877,8 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     const oldSettings = changes[StorageKeys.SETTINGS].oldValue as ExtensionSettings | undefined;
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
-    syncBlockingRules(settingsCache).catch((e) => console.warn('[Saul] Sync blocking rules failed:', e));
     (async () => {
+      await syncBlockingRules(settingsCache);
       await refreshHolidayNeutralState();
       await refreshScore();
     })().catch((e) => console.warn('[Saul] Settings change handler failed:', e));
@@ -1270,7 +1286,13 @@ function classifyWithVsCode(domain: string, settings: ExtensionSettings): Domain
   return classifyDomain(domain, settings);
 }
 
-async function persistMetrics(): Promise<void> {
+function persistMetrics(): Promise<void> {
+  const task = persistChain.then(persistMetricsCore, persistMetricsCore);
+  persistChain = task.catch(() => {});
+  return task;
+}
+
+async function persistMetricsCore(): Promise<void> {
   if (!metricsCache) {
     return;
   }
@@ -1280,9 +1302,14 @@ async function persistMetrics(): Promise<void> {
   metricsCache.currentIndex = scoreResult.score;
   metricsCache.lastUpdated = Date.now();
   updateFairnessSummary(scoreResult);
-  applyContextBreakdown(metricsCache);
+  if (!scoreResult.manualOverrideActive) {
+    applyContextBreakdown(metricsCache);
+  }
 
-  await saveDailyMetrics(metricsCache);
+  const saved = await saveDailyMetrics(metricsCache);
+  if (!saved) {
+    console.error('[Saul] Failed to persist metrics — storage quota may be exceeded');
+  }
   void publishIndexToDaemon(metricsCache, settings);
   await updateBadgeText(metricsCache.currentIndex);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
@@ -1297,9 +1324,14 @@ async function refreshScore(): Promise<void> {
   const scoreResult = calculateProcrastinationIndex(metricsCache, settings, getScoreGuards());
   metricsCache.currentIndex = scoreResult.score;
   updateFairnessSummary(scoreResult);
-  applyContextBreakdown(metricsCache);
+  if (!scoreResult.manualOverrideActive) {
+    applyContextBreakdown(metricsCache);
+  }
 
-  await saveDailyMetrics(metricsCache);
+  const saved = await saveDailyMetrics(metricsCache);
+  if (!saved) {
+    console.error('[Saul] Failed to persist metrics — storage quota may be exceeded');
+  }
   void publishIndexToDaemon(metricsCache, settings);
   await updateBadgeText(metricsCache.currentIndex);
   await ensureCriticalBroadcast(metricsCache.currentIndex, settings);
@@ -1411,7 +1443,7 @@ async function publishIndexToDaemon(
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 4000);
     try {
-      await fetch(endpoint.toString(), {
+      const resp = await fetch(endpoint.toString(), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -1424,6 +1456,9 @@ async function publishIndexToDaemon(
         }),
         signal: controller.signal
       });
+      if (resp.status === 409) {
+        console.info('Index POST rejected (409 stale) — daemon has newer data');
+      }
     } catch (error) {
       console.warn('Falha ao publicar índice para o SaulDaemon', error);
     } finally {
@@ -1767,7 +1802,9 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       metrics.vscodeSessions = sessions;
       metrics.vscodeSwitches = sessions;
       metrics.vscodeSwitchHourly = switchHourly;
-      metrics.vscodeTimeline = filteredTimeline;
+      metrics.vscodeTimeline = filteredTimeline.length > MAX_TIMELINE_SEGMENTS
+        ? filteredTimeline.slice(-MAX_TIMELINE_SEGMENTS)
+        : filteredTimeline;
       metrics.vscodeSyncSucceeded = true;
 
       await persistMetrics();
@@ -2089,6 +2126,17 @@ function recordTimelineSegment(
     metrics.timeline.splice(0, dropped);
     metrics.droppedTimelineSegments = (metrics.droppedTimelineSegments ?? 0) + dropped;
     console.debug('[Saul] Timeline overflow: dropped', dropped, 'segments, total dropped:', metrics.droppedTimelineSegments);
+  }
+
+  const domainKeys = Object.keys(metrics.domains);
+  if (domainKeys.length > MAX_DOMAIN_ENTRIES) {
+    const sorted = domainKeys.sort(
+      (a, b) => (metrics.domains[b]?.milliseconds ?? 0) - (metrics.domains[a]?.milliseconds ?? 0)
+    );
+    const toRemove = sorted.slice(MAX_DOMAIN_ENTRIES);
+    for (const key of toRemove) {
+      delete metrics.domains[key];
+    }
   }
 }
 

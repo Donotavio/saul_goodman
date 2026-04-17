@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "SaulDaemon responded at {origin}"
   },
+  "test_health_version_mismatch": {
+    "message": "Daemon version {daemonVersion} differs from extension version {extensionVersion}. Consider updating for compatibility."
+  },
   "testimonial1Cite": {
     "message": "— Anonymous client"
   },

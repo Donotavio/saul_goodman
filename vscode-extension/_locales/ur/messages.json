@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "سول ڈیمون نے {origin} پر جواب دیا"
   },
+  "test_health_version_mismatch": {
+    "message": "ڈیمون ورژن {daemonVersion} ایکسٹینشن ورژن {extensionVersion} سے مختلف ہے۔ مطابقت کے لیے اپ ڈیٹ کریں۔"
+  },
   "testimonial1Cite": {
     "message": "— شناخت کنندہ"
   },

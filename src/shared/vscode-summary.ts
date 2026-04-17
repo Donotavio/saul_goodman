@@ -28,6 +28,7 @@ export interface VscodeTrackingSummaryPayload {
   aiMetrics?: VscodeAiMetrics;
   index?: number | null;
   indexUpdatedAt?: number | null;
+  clamped?: boolean;
 }
 
 export interface NormalizedVscodeTrackingSummary {
@@ -39,6 +40,7 @@ export interface NormalizedVscodeTrackingSummary {
   aiMetrics?: VscodeAiMetrics;
   index?: number | null;
   indexUpdatedAt?: number | null;
+  clamped?: boolean;
 }
 
 export interface VscodeSummaryNormalizeOptions {
@@ -144,6 +146,7 @@ export function normalizeVscodeTrackingSummary(
     switches,
     switchHourly,
     timeline: mergedTimeline,
-    aiMetrics
+    aiMetrics,
+    ...(payload.clamped != null && { clamped: payload.clamped })
   };
 }

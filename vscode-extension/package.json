@@ -111,7 +111,17 @@
             "auto",
             "en-US",
             "pt-BR",
-            "es-419"
+            "es-419",
+            "ar",
+            "bn",
+            "de",
+            "fr",
+            "hi",
+            "it",
+            "ru",
+            "tr",
+            "ur",
+            "zh-CN"
           ],
           "description": "%config_language_description%"
         },

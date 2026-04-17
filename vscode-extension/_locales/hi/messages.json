@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "सॉलडेमन ने {origin} पर प्रतिक्रिया दी"
   },
+  "test_health_version_mismatch": {
+    "message": "डेमन संस्करण {daemonVersion} एक्सटेंशन संस्करण {extensionVersion} से भिन्न है। संगतता के लिए अपडेट करें।"
+  },
   "testimonial1Cite": {
     "message": "गुमनाम ग्राहक"
   },

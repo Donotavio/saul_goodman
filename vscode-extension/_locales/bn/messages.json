@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "সৌলডেমন {origin} এ প্রতিক্রিয়া জানিয়েছে"
   },
+  "test_health_version_mismatch": {
+    "message": "ডেমন সংস্করণ {daemonVersion} এক্সটেনশন সংস্করণ {extensionVersion} থেকে আলাদা। সামঞ্জস্যের জন্য আপডেট করুন।"
+  },
   "testimonial1Cite": {
     "message": "— নামবিহীন ক্লায়েন্ট"
   },

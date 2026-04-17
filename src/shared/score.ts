@@ -66,9 +66,10 @@ export function calculateProcrastinationIndex(
     };
   }
 
-  const overtimeBonus = metrics.overtimeProductiveMs ?? 0;
-  const vscodeMs = metrics.vscodeActiveMs ?? 0;
-  const productiveBase = metrics.productiveMs + vscodeMs + overtimeBonus;
+  const vscodeMs = metrics.vscodeSyncSucceeded === false ? 0 : (metrics.vscodeActiveMs ?? 0);
+  // productiveMs already includes overtimeProductiveMs (accumulated in accumulateSlice),
+  // so we must NOT add it again. Only vscodeMs is external additive time.
+  const productiveBase = metrics.productiveMs + vscodeMs;
   const procrastinationBase = metrics.procrastinationMs;
   const effectiveProductive = productiveBase * contextImpact.productiveMultiplier;
   const effectiveProcrastination = procrastinationBase * contextImpact.procrastinationMultiplier;
@@ -89,8 +90,6 @@ export function calculateProcrastinationIndex(
     tabSwitchRatio * normalizedTabSwitch +
     inactivityRatio * normalizedInactivity;
 
-  const finalScore = Math.min(Math.round(weightedScore * 100), 100);
-
   if (holidayNeutral) {
     return {
       score: 0,
@@ -100,6 +99,8 @@ export function calculateProcrastinationIndex(
       holidayNeutral: true
     };
   }
+
+  const finalScore = Math.max(0, Math.min(Math.round(weightedScore * 100), 100));
 
   return {
     score: finalScore,

@@ -84,7 +84,8 @@ function shouldHashEntity(entityType, config) {
     entityType === 'file' ||
     entityType === 'workspace' ||
     entityType === 'repository' ||
-    entityType === 'commit'
+    entityType === 'commit' ||
+    entityType === 'tab_switch'
   );
 }
 

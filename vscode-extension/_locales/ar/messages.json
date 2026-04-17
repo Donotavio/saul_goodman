@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "سول دايمون استجاب في {origin}"
   },
+  "test_health_version_mismatch": {
+    "message": "إصدار الخادم {daemonVersion} يختلف عن إصدار الإضافة {extensionVersion}. يُرجى التحديث للتوافق."
+  },
   "testimonial1Cite": {
     "message": "- زبون مجهول"
   },

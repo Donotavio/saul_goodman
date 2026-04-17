@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "SaulDaemon ответил на {origin}"
   },
+  "test_health_version_mismatch": {
+    "message": "Версия демона {daemonVersion} отличается от версии расширения {extensionVersion}. Обновите для совместимости."
+  },
   "testimonial1Cite": {
     "message": "Анонимный клиент"
   },

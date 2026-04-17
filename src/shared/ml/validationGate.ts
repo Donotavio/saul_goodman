@@ -122,9 +122,7 @@ export async function evaluateValidationGate(
     || falseProductiveImprovement >= 0.01 || relativeFprImprovement >= 0.10;
   const precisionGate = precisionDrop >= -0.01;
   const macroF1Gate = bootstrap.lower >= 0;
-  const mcnemarGate = mcnemarPValue === 1 && falseProductiveImprovement >= 0
-    ? true
-    : mcnemarPValue < 0.05 && falseProductiveImprovement > 0;
+  const mcnemarGate = mcnemarPValue >= 0.05 || (mcnemarPValue < 0.05 && falseProductiveImprovement > 0);
 
   return {
     baseline,

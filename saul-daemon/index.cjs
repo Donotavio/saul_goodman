@@ -63,6 +63,7 @@ const VSCODE_RETENTION_DAYS = Math.max(1, parseEnvNumber(
 const VSCODE_GAP_MS = parseEnvNumber('SAUL_VSCODE_GAP_MINUTES', 5) * 60 * 1000;
 const VSCODE_GRACE_MS = parseEnvNumber('SAUL_VSCODE_GRACE_MINUTES', 2) * 60 * 1000;
 const MAX_FUTURE_DAYS = 1;
+const MAX_HEARTBEATS_PER_KEY = 10000;
 
 const state = {
   byKey: Object.create(null)
@@ -73,6 +74,7 @@ const vscodeState = {
 const vscodeIdIndex = new Map();
 
 const heartbeatLocks = new Map();
+let tzDivergenceWarned = false;
 
 function withHeartbeatLock(key, fn) {
   const prev = heartbeatLocks.get(key) ?? Promise.resolve();
@@ -104,12 +106,28 @@ async function atomicWriteJson(targetPath, snapshot) {
   await rename(tmpPath, targetPath);
 }
 
-async function loadJsonWithFallback(filePath) {
+async function backupCorruptFile(filePath) {
   try {
-    const raw = await readFile(filePath, 'utf8');
-    return JSON.parse(raw);
+    const corruptPath = `${filePath}.corrupt`;
+    await rename(filePath, corruptPath);
+    console.warn(`[saul-daemon] Backed up corrupt file to ${path.basename(corruptPath)}`);
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      console.error(`[saul-daemon] Failed to backup corrupt file:`, err.message);
+    }
+  }
+}
+
+async function loadJsonWithFallback(filePath) {
+  let primaryRaw = null;
+  try {
+    primaryRaw = await readFile(filePath, 'utf8');
+    return JSON.parse(primaryRaw);
   } catch (primaryError) {
     console.error(`[saul-daemon] Failed to load ${path.basename(filePath)}:`, primaryError.message);
+    if (primaryRaw !== null) {
+      await backupCorruptFile(filePath);
+    }
   }
   const tmpPath = `${filePath}.tmp`;
   try {
@@ -181,12 +199,10 @@ async function persistVscodeState() {
 function sendJson(req, res, status, payload) {
   const origin = getAllowedOrigin(req);
   const headers = {
-    'content-type': 'application/json; charset=utf-8',
-    'x-saul-version': DAEMON_VERSION
+    'content-type': 'application/json; charset=utf-8'
   };
   if (origin) {
     headers['access-control-allow-origin'] = origin;
-    headers['access-control-expose-headers'] = 'x-saul-version';
   }
   res.writeHead(status, headers);
   res.end(JSON.stringify(payload));
@@ -194,10 +210,9 @@ function sendJson(req, res, status, payload) {
 
 function sendNoContent(req, res) {
   const origin = getAllowedOrigin(req);
-  const headers = { 'x-saul-version': DAEMON_VERSION };
+  const headers = {};
   if (origin) {
     headers['access-control-allow-origin'] = origin;
-    headers['access-control-expose-headers'] = 'x-saul-version';
   }
   res.writeHead(204, headers);
   res.end();
@@ -206,12 +221,10 @@ function sendNoContent(req, res) {
 function sendError(req, res, status, message) {
   const origin = getAllowedOrigin(req);
   const headers = {
-    'content-type': 'application/json; charset=utf-8',
-    'x-saul-version': DAEMON_VERSION
+    'content-type': 'application/json; charset=utf-8'
   };
   if (origin) {
     headers['access-control-allow-origin'] = origin;
-    headers['access-control-expose-headers'] = 'x-saul-version';
   }
   res.writeHead(status, headers);
   res.end(JSON.stringify({ error: message }));
@@ -401,8 +414,17 @@ function pruneVscodeEntries(key) {
     const dateKey = formatDateKey(new Date(ts));
     return isDateWithinWindowWithRetention(dateKey, VSCODE_RETENTION_DAYS);
   };
+  // Use a 1-day wider window for heartbeats so sessions crossing midnight
+  // at the retention boundary are not partially truncated.
+  const isKeptHeartbeat = (ts) => {
+    if (!Number.isFinite(ts)) {
+      return false;
+    }
+    const dateKey = formatDateKey(new Date(ts));
+    return isDateWithinWindowWithRetention(dateKey, VSCODE_RETENTION_DAYS + 1);
+  };
   entry.heartbeats = entry.heartbeats.filter((heartbeat) => {
-    return isKept(heartbeat?.time);
+    return isKeptHeartbeat(heartbeat?.time);
   });
   const removed = dedupeVscodeHeartbeats(entry);
   entry.durations = entry.durations.filter((duration) => {
@@ -576,12 +598,6 @@ function normalizeMetadata(metadata) {
   if (typeof metadata.workspaceType === 'string') {
     normalized.workspaceType = metadata.workspaceType;
   }
-  if (Number.isFinite(Number(metadata.linesAdded))) {
-    normalized.linesAdded = Number(metadata.linesAdded);
-  }
-  if (Number.isFinite(Number(metadata.linesDeleted))) {
-    normalized.linesDeleted = Number(metadata.linesDeleted);
-  }
   if (typeof metadata.branch === 'string') {
     normalized.branch = metadata.branch;
   }
@@ -614,6 +630,9 @@ function normalizeMetadata(metadata) {
   }
   if (Array.isArray(metadata.largestFiles)) {
     normalized.largestFiles = metadata.largestFiles;
+  }
+  if (Array.isArray(metadata.topExtensions)) {
+    normalized.topExtensions = metadata.topExtensions;
   }
   if (Number.isFinite(Number(metadata.currentLevel))) {
     normalized.currentLevel = Number(metadata.currentLevel);
@@ -763,6 +782,7 @@ function getHeartbeatFingerprint(heartbeat) {
     heartbeat.entity || '',
     heartbeat.language || '',
     heartbeat.category || '',
+    heartbeat.isWrite ? '1' : '0',
     heartbeat.editor || '',
     metadata.sessionId || '',
     metadata.workspaceId || ''
@@ -836,16 +856,14 @@ async function readJsonBody(req) {
 function handleOptions(req, res) {
   const origin = getAllowedOrigin(req);
   if (!origin) {
-    res.writeHead(204, { 'x-saul-version': DAEMON_VERSION });
+    res.writeHead(204);
     res.end();
     return;
   }
   res.writeHead(204, {
-    'x-saul-version': DAEMON_VERSION,
     'access-control-allow-origin': origin,
     'access-control-allow-methods': 'GET,POST,OPTIONS',
-    'access-control-allow-headers': 'content-type',
-    'access-control-expose-headers': 'x-saul-version'
+    'access-control-allow-headers': 'content-type'
   });
   res.end();
 }
@@ -979,6 +997,8 @@ function handleSummary(req, res, url) {
     const timelineSlices = [];
     const switchHourly = Array.from({ length: 24 }, () => 0);
     let sessions = 0;
+    let switches = 0;
+    let prevProject = null;
     for (const duration of vscodeEntry.durations) {
       if (duration.endTime <= startMs || duration.startTime >= endMs) {
         continue;
@@ -988,10 +1008,15 @@ function handleSummary(req, res, url) {
       }
 
       sessions += 1;
-      const hour = new Date(duration.startTime).getHours();
-      if (switchHourly[hour] !== undefined) {
-        switchHourly[hour] += 1;
+      const curProject = duration.project || duration.entity || null;
+      if (prevProject !== null && curProject !== prevProject) {
+        switches += 1;
+        const hour = new Date(duration.startTime).getHours();
+        if (switchHourly[hour] !== undefined) {
+          switchHourly[hour] += 1;
+        }
       }
+      prevProject = curProject;
       const slices = splitDurationByDay(duration, startMs, endMs);
       for (const slice of slices) {
         timelineSlices.push({
@@ -1027,7 +1052,7 @@ function handleSummary(req, res, url) {
     sendJson(req, res, 200, {
       totalActiveMs,
       sessions,
-      switches: sessions,
+      switches,
       switchHourly,
       timeline,
       index: null,
@@ -1109,8 +1134,10 @@ async function handleIndex(req, res, url) {
         return;
       }
       const entry = ensureEntry(key, dateKey);
-      const incomingTs = Number.isFinite(timestamp) ? timestamp : null;
       const CLOCK_SKEW_TOLERANCE_MS = 5000;
+      const maxAllowedTs = Date.now() + CLOCK_SKEW_TOLERANCE_MS;
+      const rawTs = Number.isFinite(timestamp) ? timestamp : null;
+      const incomingTs = rawTs !== null ? Math.min(rawTs, maxAllowedTs) : null;
       if (incomingTs !== null && entry.indexUpdatedAt != null && entry.indexUpdatedAt >= incomingTs + CLOCK_SKEW_TOLERANCE_MS) {
         sendJson(req, res, 409, { error: 'stale', serverUpdatedAt: entry.indexUpdatedAt });
         return;
@@ -1176,12 +1203,25 @@ async function handleVscodeHeartbeats(req, res, url) {
       }
       if (accepted.length) {
         entry.heartbeats.push(...accepted);
+        if (entry.heartbeats.length > MAX_HEARTBEATS_PER_KEY) {
+          const excess = entry.heartbeats.length - MAX_HEARTBEATS_PER_KEY;
+          entry.heartbeats.splice(0, excess);
+          console.warn(`[saul-daemon] heartbeat cap: trimmed ${excess} oldest entries for key ${key}`);
+        }
         pruneVscodeEntries(key);
         entry.durations = buildDurations(entry.heartbeats, {
           gapMs: VSCODE_GAP_MS,
           graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
         });
         await persistVscodeState();
+      }
+      if (!tzDivergenceWarned && accepted.length) {
+        const daemonDay = getTodayKey();
+        const hbDay = formatDateKey(new Date(accepted[0].time));
+        if (hbDay !== daemonDay) {
+          tzDivergenceWarned = true;
+          console.warn(`[saul-daemon] timezone divergence: heartbeat dateKey=${hbDay}, daemon dateKey=${daemonDay}`);
+        }
       }
       return { accepted: accepted.length, total: entry.heartbeats.length };
     });
@@ -2482,8 +2522,39 @@ function formatDurationMs(ms) {
 }
 
 
+const LOCK_PATH = path.join(DATA_DIR, '.lock');
+
+async function acquireLockFile() {
+  await mkdir(DATA_DIR, { recursive: true });
+  try {
+    await writeFile(LOCK_PATH, String(process.pid), { flag: 'wx' });
+  } catch (err) {
+    if (err.code === 'EEXIST') {
+      let stalePid;
+      try { stalePid = parseInt(await readFile(LOCK_PATH, 'utf8'), 10); } catch { stalePid = null; }
+      let alive = false;
+      if (stalePid) {
+        try { process.kill(stalePid, 0); alive = true; } catch { alive = false; }
+      }
+      if (alive) {
+        console.error(`[saul-daemon] Another instance is running (PID ${stalePid}). Exiting.`);
+        process.exit(1);
+      }
+      await writeFile(LOCK_PATH, String(process.pid), 'utf8');
+      console.warn('[saul-daemon] Removed stale lock file from PID', stalePid);
+    } else {
+      throw err;
+    }
+  }
+  const cleanupLock = () => { try { require('fs').unlinkSync(LOCK_PATH); } catch {} };
+  process.on('exit', cleanupLock);
+  process.on('SIGINT', () => { cleanupLock(); process.exit(0); });
+  process.on('SIGTERM', () => { cleanupLock(); process.exit(0); });
+}
+
 async function start() {
   await ensurePairingKey();
+  await acquireLockFile();
 
   await loadState();
   await loadVscodeState();
@@ -2493,6 +2564,7 @@ async function start() {
     try { await unlink(tmpPath); } catch {}
   }
   const server = http.createServer(async (req, res) => {
+    try {
     if (!req.url || !req.method) {
       sendError(req, res, 400, 'Invalid request');
       return;
@@ -2623,11 +2695,38 @@ async function start() {
     }
 
     sendError(req, res, 404, 'Not found');
+    } catch (err) {
+      console.error('[saul-daemon] Unhandled request error:', err?.message || String(err));
+      if (!res.headersSent) {
+        sendError(req, res, 500, 'Internal server error');
+      }
+    }
   });
 
   server.listen(PORT, BIND_HOST, () => {
     console.log(`[saul-daemon] listening on http://${BIND_HOST}:${PORT}`);
+    const tzOffset = new Date().getTimezoneOffset();
+    const tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
+    console.log(`[saul-daemon] timezone: ${tzName} (UTC offset: ${-tzOffset / 60}h)`);
+    if (tzOffset === 0 && tzName !== 'UTC') {
+      console.warn('[saul-daemon] WARNING: timezone offset is 0 but zone is not UTC — dateKey may diverge from browser');
+    }
   });
+
+  setInterval(async () => {
+    try {
+      for (const key of Object.keys(vscodeState.byKey)) {
+        pruneVscodeEntries(key);
+        if (!vscodeState.byKey[key]?.heartbeats?.length) {
+          delete vscodeState.byKey[key];
+          vscodeIdIndex.delete(key);
+        }
+      }
+      await persistVscodeState();
+    } catch (err) {
+      console.error('[saul-daemon] periodic prune error:', err?.message || String(err));
+    }
+  }, 60 * 60 * 1000);
 }
 
 start().catch((error) => {

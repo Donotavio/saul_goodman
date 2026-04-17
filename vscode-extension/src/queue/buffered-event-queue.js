@@ -12,10 +12,14 @@ class BufferedEventQueue {
     this.storagePath = path.join(this.storageDir, 'vscode-heartbeat-queue.json');
     this.buffer = [];
     this.droppedEvents = 0;
+    this.lastOverflowNotifiedAt = 0;
+    this.onOverflow = options.onOverflow || null;
     this.timer = null;
     this.flushing = false;
     this.backoffMs = 0;
     this.nextFlushAt = 0;
+    this._persistChain = Promise.resolve();
+    this._persistDebounceTimer = null;
     this.config = {
       apiBase: options.apiBase,
       pairingKey: options.pairingKey,
@@ -31,7 +35,6 @@ class BufferedEventQueue {
       const raw = await readFile(this.storagePath, 'utf8');
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.events)) {
-        // BUG-FIX: Filter events to only keep current day
         const todayKey = this.getTodayKey();
         this.buffer = parsed.events.filter(event => {
           if (!event || !event.time) return false;
@@ -41,6 +44,9 @@ class BufferedEventQueue {
         });
         if (this.buffer.length < parsed.events.length) {
           console.log(`[Saul Queue] Filtered ${parsed.events.length - this.buffer.length} old events from previous days`);
+        }
+        if (typeof parsed.droppedEvents === 'number' && parsed.droppedEvents > 0) {
+          this.droppedEvents = parsed.droppedEvents;
         }
         loaded = true;
       }
@@ -58,6 +64,9 @@ class BufferedEventQueue {
             const eventKey = this.formatDateKey(eventDate);
             return eventKey === todayKey;
           });
+          if (typeof parsed.droppedEvents === 'number' && parsed.droppedEvents > 0) {
+            this.droppedEvents = parsed.droppedEvents;
+          }
           loaded = true;
           this.logger.warn('[saul-goodman-vscode] queue file corrupted, recovered from .tmp fallback');
         }
@@ -97,13 +106,27 @@ class BufferedEventQueue {
     }
     console.log('[Saul Queue] Enqueued:', event.entityType, '| Buffer size:', this.buffer.length + 1);
     this.buffer.push(event);
+    const warningThreshold = Math.floor(this.maxBufferSize * 0.8);
+    if (this.buffer.length === warningThreshold && this.onOverflow) {
+      this.logger.warn(`[saul-goodman-vscode] buffer at 80% capacity (${warningThreshold}/${this.maxBufferSize}) — daemon may be offline`);
+      const now = Date.now();
+      if (now - this.lastOverflowNotifiedAt > 5 * 60 * 1000) {
+        this.lastOverflowNotifiedAt = now;
+        this.onOverflow(-1);
+      }
+    }
     if (this.buffer.length > this.maxBufferSize) {
       const dropped = this.buffer.length - this.maxBufferSize;
       this.droppedEvents += dropped;
       this.logger.warn(`[saul-goodman-vscode] buffer overflow: ${dropped} heartbeats discarded (total: ${this.droppedEvents})`);
       this.buffer.splice(0, dropped);
+      const now = Date.now();
+      if (this.onOverflow && now - this.lastOverflowNotifiedAt > 5 * 60 * 1000) {
+        this.lastOverflowNotifiedAt = now;
+        this.onOverflow(this.droppedEvents);
+      }
     }
-    void this.persist();
+    this.persistDebounced();
     if (this.buffer.length >= this.maxBatchSize) {
       console.log('[Saul Queue] Buffer full, flushing', this.buffer.length, 'events');
       void this.flush();
@@ -146,7 +169,11 @@ class BufferedEventQueue {
       }
       this.backoffMs = 0;
       this.nextFlushAt = 0;
-      await this.persist();
+      const persisted = await this.persist();
+      if (!persisted) {
+        console.warn('[Saul Queue] Post-flush persist failed — scheduling immediate retry');
+        void this.persist();
+      }
     } catch (error) {
       console.error('[Saul Queue] ✗ Flush failed:', error.message);
       this.logger.warn('[saul-goodman-vscode] failed to flush heartbeats', error);
@@ -161,16 +188,41 @@ class BufferedEventQueue {
     return this.droppedEvents;
   }
 
-  async persist() {
-    try {
-      await mkdir(this.storageDir, { recursive: true });
-      const payload = { version: 1, events: this.buffer };
-      const tmpPath = `${this.storagePath}.tmp`;
-      await writeFile(tmpPath, JSON.stringify(payload, null, 2), 'utf8');
-      await rename(tmpPath, this.storagePath);
-    } catch (error) {
-      this.logger.warn('[saul-goodman-vscode] failed to persist queue', error);
+  persistDebounced() {
+    if (this._persistDebounceTimer) {
+      clearTimeout(this._persistDebounceTimer);
     }
+    this._persistDebounceTimer = setTimeout(() => {
+      this._persistDebounceTimer = null;
+      void this.persist();
+    }, 500);
+  }
+
+  async persist() {
+    let ok = false;
+    const op = async () => {
+      try {
+        await mkdir(this.storageDir, { recursive: true });
+        const payload = { version: 1, events: this.buffer, droppedEvents: this.droppedEvents };
+        const tmpPath = `${this.storagePath}.tmp`;
+        await writeFile(tmpPath, JSON.stringify(payload, null, 2), 'utf8');
+        await rename(tmpPath, this.storagePath);
+        ok = true;
+      } catch (error) {
+        this.logger.warn('[saul-goodman-vscode] failed to persist queue', error);
+      }
+    };
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('persist timeout')), 10000)
+    );
+    const work = this._persistChain.then(op, op);
+    this._persistChain = work.catch(() => {});
+    try {
+      await Promise.race([work, timeout]);
+    } catch (error) {
+      this.logger.warn('[saul-goodman-vscode] persist timed out or failed', error);
+    }
+    return ok;
   }
 
   getTodayKey() {

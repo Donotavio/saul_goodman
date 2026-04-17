@@ -17,7 +17,9 @@ let localesRootDir = null;
 let currentComboSuffix = '';
 let authErrorNotified = false;
 
-const SUPPORTED_LOCALES = ['en_US', 'pt_BR', 'es_419'];
+const SUPPORTED_LOCALES = [
+  'en_US', 'pt_BR', 'es_419', 'ar', 'bn', 'de', 'fr', 'hi', 'it', 'ru', 'tr', 'ur', 'zh_CN'
+];
 const DEFAULT_LOCALE = 'en_US';
 const LANGUAGE_ALIASES = {
   'en': 'en_US',
@@ -25,12 +27,33 @@ const LANGUAGE_ALIASES = {
   'pt': 'pt_BR',
   'pt-br': 'pt_BR',
   'es': 'es_419',
-  'es-419': 'es_419'
+  'es-419': 'es_419',
+  'ar': 'ar',
+  'bn': 'bn',
+  'de': 'de',
+  'fr': 'fr',
+  'hi': 'hi',
+  'it': 'it',
+  'ru': 'ru',
+  'tr': 'tr',
+  'ur': 'ur',
+  'zh': 'zh_CN',
+  'zh-cn': 'zh_CN'
 };
 const CONFIG_LOCALE_MAP = {
   'en-US': 'en_US',
   'pt-BR': 'pt_BR',
-  'es-419': 'es_419'
+  'es-419': 'es_419',
+  'ar': 'ar',
+  'bn': 'bn',
+  'de': 'de',
+  'fr': 'fr',
+  'hi': 'hi',
+  'it': 'it',
+  'ru': 'ru',
+  'tr': 'tr',
+  'ur': 'ur',
+  'zh-CN': 'zh_CN'
 };
 const messagesCache = new Map();
 
@@ -284,7 +307,12 @@ class TrackingController {
       storageDir: context.globalStorageUri.fsPath,
       apiBase: this.config.apiBase,
       pairingKey: this.config.pairingKey,
-      enabled: this.config.enableTracking
+      enabled: this.config.enableTracking,
+      onOverflow: (totalDropped) => {
+        vscode.window.showWarningMessage(
+          localize('queueOverflowWarning', `Saul Goodman: ${totalDropped} heartbeats were discarded due to queue overflow. Check if the daemon is running.`)
+        );
+      }
     });
     this.buildHeartbeat = createHeartbeatFactory(context, () => this.config);
     this.resetIdleTimer = this.resetIdleTimer.bind(this);
@@ -557,6 +585,17 @@ class TrackingController {
   }
 
   async dispose() {
+    try {
+      const hb = this.buildHeartbeat({
+        entityType: 'app',
+        entity: 'extension_deactivate',
+        project: '',
+        category: 'lifecycle',
+        isWrite: false,
+        metadata: {}
+      });
+      this.queue.enqueue(hb);
+    } catch { /* best-effort */ }
     await this.queue.stop();
     this.heartbeatTracker.dispose();
     this.gitTracker.dispose();
@@ -881,6 +920,20 @@ async function prepareDaemonCommand(context) {
       .update('apiBase', normalizedApiBase, vscode.ConfigurationTarget.Global);
   }
   if (await isDaemonHealthy(normalizedApiBase, 1200)) {
+    const daemonVersion = await checkDaemonVersion(normalizedApiBase);
+    const extVersion = context.extension?.packageJSON?.version;
+    if (daemonVersion && extVersion) {
+      const dv = parseMajorMinor(daemonVersion);
+      const ev = parseMajorMinor(extVersion);
+      if (dv && ev && (dv.major !== ev.major || dv.minor !== ev.minor)) {
+        vscode.window.showWarningMessage(
+          localize('test_health_version_mismatch', {
+            daemonVersion,
+            extensionVersion: extVersion
+          })
+        );
+      }
+    }
     vscode.window.showInformationMessage(
       localize('prepare_already_running', { origin: normalizedApiBase })
     );
@@ -1097,6 +1150,38 @@ async function isDaemonHealthy(apiBase, timeoutMs) {
   }
 }
 
+async function checkDaemonVersion(apiBase, timeoutMs = 2000) {
+  if (!fetchWithTimeout) {
+    return null;
+  }
+  try {
+    const res = await fetchWithTimeout(getHealthUrl(apiBase), timeoutMs);
+    if (!res?.ok) {
+      return null;
+    }
+    const body = await res.json();
+    return body?.version || null;
+  } catch {
+    return null;
+  }
+}
+
+function parseMajorMinor(version) {
+  if (!version || typeof version !== 'string') {
+    return null;
+  }
+  const parts = version.split('.');
+  if (parts.length < 2) {
+    return null;
+  }
+  const major = parseInt(parts[0], 10);
+  const minor = parseInt(parts[1], 10);
+  if (isNaN(major) || isNaN(minor)) {
+    return null;
+  }
+  return { major, minor };
+}
+
 async function waitForDaemonHealthy(apiBase, attempts, delayMs) {
   if (!fetchWithTimeout) {
     return false;
@@ -1144,6 +1229,21 @@ async function testDaemonHealth() {
         }
       } catch {
         // Older daemon without key support on /health -- fall through to OK
+      }
+    }
+    const daemonVersion = await checkDaemonVersion(apiBase);
+    const ext = vscode.extensions.getExtension('donotavio.saul-goodman-vscode');
+    const extVersion = ext?.packageJSON?.version;
+    if (daemonVersion && extVersion) {
+      const dv = parseMajorMinor(daemonVersion);
+      const ev = parseMajorMinor(extVersion);
+      if (dv && ev && (dv.major !== ev.major || dv.minor !== ev.minor)) {
+        vscode.window.showWarningMessage(
+          localize('test_health_version_mismatch', {
+            daemonVersion,
+            extensionVersion: extVersion
+          })
+        );
       }
     }
     vscode.window.showInformationMessage(localize('test_health_success', { origin: url.origin }));

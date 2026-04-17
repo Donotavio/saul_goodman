@@ -19,6 +19,41 @@ export async function safeStorageSet(data: Record<string, unknown>): Promise<boo
   }
 }
 
+const MAX_SUGGESTIONS_HISTORY = 500;
+const MAX_VSCODE_TIMELINE = 2000;
+
+/**
+ * Trims metrics fields that can grow without bound to stay within
+ * chrome.storage.local quota. Returns true if anything was pruned.
+ */
+export function pruneMetricsForQuota(metrics: Record<string, unknown>): boolean {
+  let pruned = false;
+
+  const history = metrics.suggestionsHistory;
+  if (history && typeof history === 'object' && !Array.isArray(history)) {
+    const keys = Object.keys(history as Record<string, unknown>);
+    if (keys.length > MAX_SUGGESTIONS_HISTORY) {
+      const entries = Object.entries(history as Record<string, unknown>);
+      entries.sort((a, b) => {
+        const tsA = (a[1] as { timestamp?: number })?.timestamp ?? 0;
+        const tsB = (b[1] as { timestamp?: number })?.timestamp ?? 0;
+        return tsB - tsA;
+      });
+      const trimmed = Object.fromEntries(entries.slice(0, MAX_SUGGESTIONS_HISTORY));
+      (metrics as Record<string, unknown>).suggestionsHistory = trimmed;
+      pruned = true;
+    }
+  }
+
+  const vscodeTimeline = metrics.vscodeTimeline;
+  if (Array.isArray(vscodeTimeline) && vscodeTimeline.length > MAX_VSCODE_TIMELINE) {
+    (metrics as Record<string, unknown>).vscodeTimeline = vscodeTimeline.slice(-MAX_VSCODE_TIMELINE);
+    pruned = true;
+  }
+
+  return pruned;
+}
+
 export async function readLocalStorage<T>(key: LocalStorageKey): Promise<T | undefined> {
   const stored = await chrome.storage.local.get(key);
   return (stored?.[key] as T | undefined) ?? undefined;

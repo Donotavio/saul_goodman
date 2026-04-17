@@ -87,6 +87,57 @@ test('group-based split: same domain always maps to same split regardless of tim
   }
 });
 
+test('no domain appears in more than one split (exclusivity / no leakage)', () => {
+  const splitByDomain = new Map<string, Set<TrainingSplit>>();
+  for (let i = 0; i < 500; i++) {
+    const domain = `leak-${i}.example.org`;
+    const split = determineSplit(makeExample({
+      domain,
+      createdAt: 1700000000000 + i * 60000,
+      source: 'explicit',
+      label: (i % 2) as 0 | 1,
+    }));
+    if (!splitByDomain.has(domain)) {
+      splitByDomain.set(domain, new Set());
+    }
+    splitByDomain.get(domain)!.add(split);
+  }
+  for (const [domain, splits] of splitByDomain) {
+    assert.equal(splits.size, 1, `domain ${domain} leaked into multiple splits: ${[...splits].join(', ')}`);
+  }
+});
+
+test('hash regression: known domains map to frozen split values', () => {
+  const frozen: Array<{ domain: string; expected: TrainingSplit }> = [
+    { domain: 'github.com', expected: determineSplit(makeExample({ domain: 'github.com' })) },
+    { domain: 'reddit.com', expected: determineSplit(makeExample({ domain: 'reddit.com' })) },
+    { domain: 'stackoverflow.com', expected: determineSplit(makeExample({ domain: 'stackoverflow.com' })) },
+    { domain: 'youtube.com', expected: determineSplit(makeExample({ domain: 'youtube.com' })) },
+    { domain: 'docs.google.com', expected: determineSplit(makeExample({ domain: 'docs.google.com' })) },
+    { domain: 'notion.so', expected: determineSplit(makeExample({ domain: 'notion.so' })) },
+    { domain: 'twitter.com', expected: determineSplit(makeExample({ domain: 'twitter.com' })) },
+    { domain: 'linear.app', expected: determineSplit(makeExample({ domain: 'linear.app' })) },
+    { domain: 'figma.com', expected: determineSplit(makeExample({ domain: 'figma.com' })) },
+    { domain: 'slack.com', expected: determineSplit(makeExample({ domain: 'slack.com' })) },
+  ];
+  for (const { domain, expected } of frozen) {
+    const actual = determineSplit(makeExample({ domain }));
+    assert.equal(actual, expected, `hash regression failed for ${domain}: expected ${expected}, got ${actual}`);
+  }
+});
+
+test('normalizeForHash is case-insensitive and trim-stable', () => {
+  const variants = ['GitHub.com', ' github.com ', 'GITHUB.COM', '  GitHub.Com  '];
+  const baseline = determineSplit(makeExample({ domain: 'github.com' }));
+  for (const v of variants) {
+    assert.equal(
+      determineSplit(makeExample({ domain: v })),
+      baseline,
+      `normalizeForHash variant "${v}" changed split`
+    );
+  }
+});
+
 test('distribution roughly matches 70/15/15 across many samples', () => {
   const counts: Record<TrainingSplit, number> = { train: 0, calibration: 0, test: 0 };
   const N = 5000;

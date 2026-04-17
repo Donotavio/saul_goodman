@@ -301,20 +301,24 @@ class GitTracker {
       console.warn('[Saul Git] Commit diff stats not found; using zeros');
     }
 
+    const commitMetadata = {
+      branch,
+      remote,
+      eventType: 'commit_created',
+      filesChanged: diffStats.filesChanged,
+      linesAdded: diffStats.linesAdded,
+      linesDeleted: diffStats.linesDeleted
+    };
+    if (config.enableSensitiveTelemetry) {
+      commitMetadata.commitMessage = message?.substring(0, 100) || '';
+    }
+
     const heartbeat = this.buildHeartbeat({
       entityType: 'commit',
       entity: repoPath,
       category: 'coding',
       isWrite: true,
-      metadata: {
-        branch,
-        remote,
-        commitMessage: message?.substring(0, 100) || '',
-        eventType: 'commit_created',
-        filesChanged: diffStats.filesChanged,
-        linesAdded: diffStats.linesAdded,
-        linesDeleted: diffStats.linesDeleted
-      }
+      metadata: commitMetadata
     });
 
     gitDebug('Commit heartbeat metadata', {

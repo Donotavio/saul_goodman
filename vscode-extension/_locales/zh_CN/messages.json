@@ -3365,6 +3365,9 @@
   "test_health_success": {
     "message": "索尔守护进程在 {origin} 响应"
   },
+  "test_health_version_mismatch": {
+    "message": "守护进程版本 {daemonVersion} 与扩展版本 {extensionVersion} 不同。请更新以确保兼容性。"
+  },
   "testimonial1Cite": {
     "message": "—匿名客户端."
   },

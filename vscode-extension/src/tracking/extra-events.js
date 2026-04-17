@@ -1,5 +1,6 @@
 const vscode = require('vscode');
 const path = require('path');
+const { anonymizePath, getOrCreateHashSalt } = require('../utils/privacy');
 
 function registerExtraEventCollectors(options) {
   const { queue, getConfig, buildHeartbeat, context, resetIdleTimer } = options;
@@ -27,7 +28,9 @@ function registerExtraEventCollectors(options) {
         tabSwitchCount++;
         lastActiveTab = activeTab;
 
-        const tabLabel = activeTab.label || 'untitled';
+        const rawLabel = activeTab.label || 'untitled';
+        const salt = getOrCreateHashSalt(context);
+        const tabLabel = getConfig().hashFilePaths !== false ? anonymizePath(rawLabel, salt) : rawLabel;
         const tabKind = activeTab.input?.constructor?.name || 'unknown';
 
         enqueue({
@@ -55,14 +58,18 @@ function registerExtraEventCollectors(options) {
       const count = commandFrequency.get(commandId) || 0;
       commandFrequency.set(commandId, count + 1);
 
+      const safeCommandId = commandId.includes('.') && !commandId.startsWith('vscode.')
+        ? commandId.split('.')[0] + '.*'
+        : commandId;
+
       enqueue({
         entityType: 'command',
-        entity: commandId,
+        entity: safeCommandId,
         category: 'command',
         isWrite: false,
         metadata: {
           eventType: 'command_executed',
-          commandId,
+          commandId: safeCommandId,
           executionCount: count + 1,
           totalCommandExecutions: commandExecutionCount,
           windowFocused: vscode.window.state.focused
@@ -71,7 +78,11 @@ function registerExtraEventCollectors(options) {
     })
   );
 
+  let quickOpenReentrant = false;
   const commandInterceptor = vscode.commands.registerCommand('workbench.action.quickOpen', async () => {
+    if (quickOpenReentrant) {
+      return;
+    }
     if (resetIdleTimer) resetIdleTimer();
     enqueue({
       entityType: 'command_palette',
@@ -83,7 +94,12 @@ function registerExtraEventCollectors(options) {
         windowFocused: vscode.window.state.focused
       }
     });
-    return vscode.commands.executeCommand('workbench.action.quickOpen');
+    quickOpenReentrant = true;
+    try {
+      await vscode.commands.executeCommand('workbench.action.quickOpen');
+    } finally {
+      quickOpenReentrant = false;
+    }
   });
   disposables.push(commandInterceptor);
 

@@ -101,29 +101,29 @@ test('health endpoint never exposes key validation oracle', async () => {
 
   const base = `http://127.0.0.1:${port}`;
 
-  // /health without key returns ok
+  // /health without key returns ok (version field is allowed but stable)
   const noKeyRes = await fetch(`${base}/health`);
   assert.equal(noKeyRes.status, 200);
   const noKeyBody = await noKeyRes.json();
-  assert.deepEqual(noKeyBody, { ok: true });
+  assert.equal(noKeyBody.ok, true);
 
-  // /health with correct key still returns only { ok: true } — no authenticated field
+  // /health with correct key returns identical response — no authenticated field
   const goodKeyRes = await fetch(`${base}/health?key=health-test-key`);
   assert.equal(goodKeyRes.status, 200);
   const goodKeyBody = await goodKeyRes.json();
-  assert.deepEqual(goodKeyBody, { ok: true });
+  assert.deepEqual(goodKeyBody, noKeyBody);
 
-  // /health with wrong key still returns only { ok: true } — no oracle
+  // /health with wrong key returns identical response — no oracle
   const badKeyRes = await fetch(`${base}/health?key=wrong-key`);
   assert.equal(badKeyRes.status, 200);
   const badKeyBody = await badKeyRes.json();
-  assert.deepEqual(badKeyBody, { ok: true });
+  assert.deepEqual(badKeyBody, noKeyBody);
 
   // /v1/health behaves identically
   const v1Res = await fetch(`${base}/v1/health?key=health-test-key`);
   assert.equal(v1Res.status, 200);
   const v1Body = await v1Res.json();
-  assert.deepEqual(v1Body, { ok: true });
+  assert.deepEqual(v1Body, noKeyBody);
 
   child.kill('SIGTERM');
   rmSync(tmpDir, { recursive: true, force: true });

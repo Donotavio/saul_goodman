@@ -2,6 +2,7 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
 const { getCurrentProjectName } = require('../utils/workspace-helper').default;
+const { getOrCreateHashSalt, hashValue } = require('../utils/identity');
 const WORKSPACE_DEBUG = process.env.SAUL_DEBUG_WORKSPACE === '1';
 
 function workspaceDebug(message, payload) {
@@ -21,6 +22,7 @@ class WorkspaceTracker {
     this.queue = options.queue;
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
+    this.hashSalt = getOrCreateHashSalt(options.context);
     this.disposables = [];
     this.workspaceSizes = new Map();
     this.SCAN_INTERVAL_MS = 30 * 60 * 1000;
@@ -178,11 +180,13 @@ class WorkspaceTracker {
 
       workspaceDebug('Workspace files processed', { processed: processedCount, discovered: files.length });
 
+      const config = this.getConfig();
+      const shouldHash = config.hashFilePaths !== false;
       stats.largestFiles = fileSizes
         .sort((a, b) => b.size - a.size)
         .slice(0, 10)
         .map((f) => ({
-          path: f.path,
+          path: shouldHash ? hashValue(f.path, this.hashSalt) : f.path,
           sizeBytes: f.size,
           sizeMB: (f.size / (1024 * 1024)).toFixed(2)
         }));

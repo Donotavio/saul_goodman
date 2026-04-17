@@ -3,6 +3,77 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.8] - 2026-04-17
+
+Auditoria sistêmica Round 3: hardening de integridade de dados, privacidade, robustez do daemon/VS Code e suporte completo a 14 locales na extensão VS Code.
+
+### Bugs corrigidos
+
+- Cálculo do score não soma mais `overtimeProductiveMs` em dobro — `productiveMs` já inclui overtime desde `accumulateSlice` (`score.ts`).
+- Score agora é clampado para `[0, 100]` com `Math.max(0, ...)` (`score.ts`).
+- `isWithinWorkSchedule` com intervalo `start==end` agora retorna `false` ao invés de cobrir 24h (`time.ts`).
+- McNemar gate: p-value não-significativo (>=0.05) agora passa o gate ao invés de bloquear promoção (`validationGate.ts`).
+- `vscodeActiveMs` zerado no cálculo do score quando `vscodeSyncSucceeded === false` (`score.ts`).
+- Switches do resumo VS Code agora contam trocas reais de projeto/contexto ao invés de igualar ao número de sessões (`saul-daemon/index.cjs`).
+- Context breakdown não é mais aplicado quando manual override está ativo (`background/index.ts`).
+
+### Segurança e privacidade
+
+- Tab switches agora hasheados por padrão na extensão VS Code (`heartbeat-factory.js`).
+- Command IDs com namespace customizado anonimizados para `prefix.*` (`extra-events.js`).
+- Commit messages só incluídos nos heartbeats quando `enableSensitiveTelemetry` está habilitado (`git-tracker.js`).
+- `linesAdded`/`linesDeleted` removidos da normalização de metadata do daemon (minimização de dados).
+- Header `x-saul-version` removido de todas as respostas do daemon (previne fingerprinting).
+- Workspace tracker hasheia file paths em `largestFiles` (`workspace-tracker.js`).
+
+### Robustez daemon
+
+- Lock file previne múltiplas instâncias do daemon rodando simultaneamente.
+- Arquivos JSON corrompidos são backupeados para `.corrupt` antes do fallback.
+- Cap de heartbeats por chave (10.000) com trim dos mais antigos.
+- Prune periódico (1h) de dados VS Code expirados.
+- Warning de divergência de timezone entre daemon e heartbeats do VS Code.
+- Try/catch global no request handler com resposta 500.
+- Logging de timezone no startup do daemon.
+- Janela de retenção de heartbeats ampliada em +1 dia para evitar truncamento parcial de sessões na meia-noite.
+
+### Robustez VS Code
+
+- Persist da fila agora usa debounce (500ms) para reduzir I/O.
+- Persist usa promise chain com timeout de 10s.
+- Falha de persist pós-flush dispara retry imediato.
+- Contador `droppedEvents` persistido em disco e restaurado no startup.
+- Notificação de overflow do buffer a 80% da capacidade (throttled a cada 5 min).
+- Heartbeat de lifecycle emitido no `deactivate` da extensão.
+- Terminal tracker marca `backgroundActivity` quando janela sem foco.
+- Comandos de terminal resetam idle timer.
+- Guard de reentrância no comando Quick Open.
+
+### Robustez ML
+
+- `maybeRecalibrate()` chamado antes da resolução de pseudo-labels (`ml-engine.ts`).
+- Reconciliação disparada em falha de persist de metadados.
+
+### Robustez geral
+
+- `saveDailyMetrics` retorna boolean; retry com poda de quota em caso de falha (`storage.ts`).
+- `pruneMetricsForQuota` limita `suggestionsHistory` (>500) e `vscodeTimeline` (>2000) (`utils/storage.ts`).
+- `persistMetrics` usa promise chain para serializar chamadas concorrentes (`background/index.ts`).
+- Entradas de domínio limitadas a 500 por dia (`background/index.ts`).
+- Cache de sugestões com TTL de 1h e evicção de stale (`background/index.ts`).
+- Retry de metadata (3s) quando content script não responde inicialmente.
+- Service worker `onSuspend` persiste metrics cache.
+- Index sync clampa timestamps futuros no daemon.
+- Flag `clamped` propagada no resumo VS Code (`vscode-summary.ts`).
+- Fingerprint de heartbeat inclui flag `isWrite` (`saul-daemon/index.cjs`).
+
+### Melhorias
+
+- Extensão VS Code agora suporta todos os 14 locales (antes eram 3).
+- Version check compara `major.minor` ao invés de apenas `major` (`extension.js`).
+- Campo `topExtensions` aceito na normalização de metadata do daemon.
+- Documentação de guardrails atualizada com 5 novos comportamentos documentados (`behavior-guardrails.md`).
+
 ## [1.24.7] - 2026-04-17
 
 Auditoria sistêmica Round 2: 32 achados corrigidos em 5 fases cobrindo integridade de dados, corretude ML, privacidade, robustez e melhorias gerais.
@@ -349,6 +420,77 @@ Auditoria sistêmica Round 2: 32 achados corrigidos em 5 fases cobrindo integrid
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.24.8] - 2026-04-17
+
+Systemic audit Round 3: data integrity hardening, privacy improvements, daemon/VS Code robustness, and full 14-locale support in the VS Code extension.
+
+### Bug fixes
+
+- Score calculation no longer double-counts `overtimeProductiveMs` — `productiveMs` already includes overtime from `accumulateSlice` (`score.ts`).
+- Score now clamped to `[0, 100]` with `Math.max(0, ...)` (`score.ts`).
+- `isWithinWorkSchedule` with `start==end` interval now returns `false` instead of covering 24h (`time.ts`).
+- McNemar gate: non-significant p-value (>=0.05) now passes the gate instead of blocking promotion (`validationGate.ts`).
+- `vscodeActiveMs` zeroed in score calculation when `vscodeSyncSucceeded === false` (`score.ts`).
+- VS Code summary switches now count actual project/context switches instead of equaling session count (`saul-daemon/index.cjs`).
+- Context breakdown no longer applied when manual override is active (`background/index.ts`).
+
+### Security and privacy
+
+- Tab switches now hashed by default in the VS Code extension (`heartbeat-factory.js`).
+- Custom-namespace command IDs anonymized to `prefix.*` (`extra-events.js`).
+- Commit messages only included in heartbeat metadata when `enableSensitiveTelemetry` is enabled (`git-tracker.js`).
+- `linesAdded`/`linesDeleted` removed from daemon metadata normalization (data minimization).
+- `x-saul-version` header removed from all daemon responses (prevents fingerprinting).
+- Workspace tracker hashes file paths in `largestFiles` (`workspace-tracker.js`).
+
+### Daemon robustness
+
+- Lock file prevents multiple daemon instances from running simultaneously.
+- Corrupt JSON files backed up to `.corrupt` before fallback.
+- Per-key heartbeat cap (10,000) with oldest-first trimming.
+- Periodic hourly prune of expired VS Code data.
+- Timezone divergence warning between daemon and VS Code heartbeats.
+- Global try/catch in request handler with 500 response.
+- Timezone logging at daemon startup.
+- Heartbeat retention window widened by +1 day to avoid partial session truncation at midnight.
+
+### VS Code robustness
+
+- Queue persist now debounced (500ms) to reduce I/O.
+- Persist uses promise chain with 10s timeout.
+- Post-flush persist failure triggers immediate retry.
+- `droppedEvents` counter persisted to disk and restored on startup.
+- Buffer overflow notification at 80% capacity (throttled every 5 min).
+- Lifecycle heartbeat emitted on extension `deactivate`.
+- Terminal tracker marks `backgroundActivity` when window is unfocused.
+- Terminal commands reset the idle timer.
+- Reentrancy guard on Quick Open command.
+
+### ML robustness
+
+- `maybeRecalibrate()` called before pseudo-label resolution (`ml-engine.ts`).
+- Reconciliation triggered on metadata persist failure.
+
+### General robustness
+
+- `saveDailyMetrics` returns boolean; retries with quota pruning on failure (`storage.ts`).
+- `pruneMetricsForQuota` trims `suggestionsHistory` (>500) and `vscodeTimeline` (>2000) (`utils/storage.ts`).
+- `persistMetrics` uses promise chain to serialize concurrent calls (`background/index.ts`).
+- Domain entries capped at 500 per day (`background/index.ts`).
+- Suggestion cache with 1h TTL and stale eviction (`background/index.ts`).
+- Metadata retry (3s) when content script doesn't respond initially.
+- Service worker `onSuspend` persists metrics cache.
+- Index sync clamps future timestamps in the daemon.
+- `clamped` flag propagated in VS Code summary (`vscode-summary.ts`).
+- Heartbeat fingerprint includes `isWrite` flag (`saul-daemon/index.cjs`).
+
+### Improvements
+
+- VS Code extension now supports all 14 locales (previously 3).
+- Version check compares `major.minor` instead of just `major` (`extension.js`).
+- `topExtensions` field accepted in daemon metadata normalization.
+- Guardrails documentation updated with 5 new documented behaviors (`behavior-guardrails.md`).
+
 ## [1.24.7] - 2026-04-17
 
 Systemic audit Round 2: 32 findings fixed across 5 phases covering data integrity, ML correctness, privacy, robustness, and general improvements.
@@ -694,6 +836,77 @@ Systemic audit Round 2: 32 findings fixed across 5 phases covering data integrit
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.24.8] - 2026-04-17
+
+Auditoría sistémica Round 3: hardening de integridad de datos, privacidad, robustez del daemon/VS Code y soporte completo de 14 locales en la extensión VS Code.
+
+### Bugs corregidos
+
+- El cálculo del score ya no suma `overtimeProductiveMs` en doble — `productiveMs` ya incluye overtime desde `accumulateSlice` (`score.ts`).
+- Score ahora clampado a `[0, 100]` con `Math.max(0, ...)` (`score.ts`).
+- `isWithinWorkSchedule` con intervalo `start==end` ahora retorna `false` en vez de cubrir 24h (`time.ts`).
+- McNemar gate: p-value no significativo (>=0.05) ahora pasa el gate en vez de bloquear promoción (`validationGate.ts`).
+- `vscodeActiveMs` anulado en el cálculo del score cuando `vscodeSyncSucceeded === false` (`score.ts`).
+- Switches del resumen VS Code ahora cuentan cambios reales de proyecto/contexto en vez de igualar al número de sesiones (`saul-daemon/index.cjs`).
+- Context breakdown ya no se aplica cuando manual override está activo (`background/index.ts`).
+
+### Seguridad y privacidad
+
+- Tab switches ahora hasheados por defecto en la extensión VS Code (`heartbeat-factory.js`).
+- Command IDs con namespace custom anonimizados a `prefix.*` (`extra-events.js`).
+- Commit messages solo incluidos en metadata de heartbeats cuando `enableSensitiveTelemetry` está habilitado (`git-tracker.js`).
+- `linesAdded`/`linesDeleted` removidos de la normalización de metadata del daemon (minimización de datos).
+- Header `x-saul-version` removido de todas las respuestas del daemon (previene fingerprinting).
+- Workspace tracker hashea file paths en `largestFiles` (`workspace-tracker.js`).
+
+### Robustez daemon
+
+- Lock file previene múltiples instancias del daemon corriendo simultáneamente.
+- Archivos JSON corruptos respaldados a `.corrupt` antes del fallback.
+- Cap de heartbeats por clave (10.000) con trim de los más antiguos.
+- Prune periódico (1h) de datos VS Code expirados.
+- Warning de divergencia de timezone entre daemon y heartbeats de VS Code.
+- Try/catch global en request handler con respuesta 500.
+- Logging de timezone en el startup del daemon.
+- Ventana de retención de heartbeats ampliada en +1 día para evitar truncamiento parcial de sesiones a medianoche.
+
+### Robustez VS Code
+
+- Persist de la cola ahora usa debounce (500ms) para reducir I/O.
+- Persist usa promise chain con timeout de 10s.
+- Fallo de persist post-flush dispara retry inmediato.
+- Contador `droppedEvents` persistido en disco y restaurado en startup.
+- Notificación de overflow del buffer a 80% de capacidad (throttled cada 5 min).
+- Heartbeat de lifecycle emitido en `deactivate` de la extensión.
+- Terminal tracker marca `backgroundActivity` cuando la ventana pierde foco.
+- Comandos de terminal resetean idle timer.
+- Guard de reentrancia en comando Quick Open.
+
+### Robustez ML
+
+- `maybeRecalibrate()` llamado antes de la resolución de pseudo-labels (`ml-engine.ts`).
+- Reconciliación disparada en fallo de persist de metadatos.
+
+### Robustez general
+
+- `saveDailyMetrics` retorna boolean; retry con poda de quota en caso de fallo (`storage.ts`).
+- `pruneMetricsForQuota` limita `suggestionsHistory` (>500) y `vscodeTimeline` (>2000) (`utils/storage.ts`).
+- `persistMetrics` usa promise chain para serializar llamadas concurrentes (`background/index.ts`).
+- Entradas de dominio limitadas a 500 por día (`background/index.ts`).
+- Cache de sugestiones con TTL de 1h y evicción de stale (`background/index.ts`).
+- Retry de metadata (3s) cuando content script no responde inicialmente.
+- Service worker `onSuspend` persiste metrics cache.
+- Index sync clampa timestamps futuros en el daemon.
+- Flag `clamped` propagada en el resumen VS Code (`vscode-summary.ts`).
+- Fingerprint de heartbeat incluye flag `isWrite` (`saul-daemon/index.cjs`).
+
+### Mejoras
+
+- Extensión VS Code ahora soporta los 14 locales (antes eran 3).
+- Version check compara `major.minor` en vez de solo `major` (`extension.js`).
+- Campo `topExtensions` aceptado en la normalización de metadata del daemon.
+- Documentación de guardrails actualizada con 5 nuevos comportamientos documentados (`behavior-guardrails.md`).
 
 ## [1.24.7] - 2026-04-17
 

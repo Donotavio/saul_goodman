@@ -10,7 +10,7 @@ import {
   WorkInterval
 } from './types.js';
 import { getTodayKey } from './utils/time.js';
-import { safeStorageSet } from './utils/storage.js';
+import { safeStorageSet, pruneMetricsForQuota } from './utils/storage.js';
 import { resolveLocale } from './i18n.js';
 
 export enum StorageKeys {
@@ -242,9 +242,19 @@ export async function getDailyMetrics(): Promise<DailyMetrics> {
 
 /**
  * Stores the current metrics snapshot.
+ * On quota failure, prunes unbounded fields and retries once.
+ * Returns false only if both attempts fail.
  */
-export async function saveDailyMetrics(metrics: DailyMetrics): Promise<void> {
-  await safeStorageSet({ [StorageKeys.METRICS]: metrics });
+export async function saveDailyMetrics(metrics: DailyMetrics): Promise<boolean> {
+  const ok = await safeStorageSet({ [StorageKeys.METRICS]: metrics });
+  if (ok) {
+    return true;
+  }
+  const pruned = pruneMetricsForQuota(metrics as unknown as Record<string, unknown>);
+  if (!pruned) {
+    return false;
+  }
+  return safeStorageSet({ [StorageKeys.METRICS]: metrics });
 }
 
 /**

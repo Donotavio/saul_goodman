@@ -8,9 +8,11 @@ class TerminalTracker {
     this.queue = options.queue;
     this.getConfig = options.getConfig;
     this.buildHeartbeat = options.buildHeartbeat;
+    this.resetIdleTimer = options.resetIdleTimer || (() => {});
     this.disposables = [];
     this.activeTerminals = new Map();
     this.recentCommands = [];
+    this.windowFocused = window.state?.focused !== false;
   }
 
   start() {
@@ -19,6 +21,9 @@ class TerminalTracker {
       this.dispose();
 
       this.disposables.push(
+        window.onDidChangeWindowState((state) => {
+          this.windowFocused = state.focused;
+        }),
         window.onDidOpenTerminal((terminal) => {
           try {
             const config = this.getConfig();
@@ -37,10 +42,10 @@ class TerminalTracker {
               project: getCurrentProjectName(),
               category: 'terminal',
               isWrite: false,
-              metadata: {
+              metadata: this.addBackgroundFlag({
                 shellType: this.getShellType(terminal),
                 terminalSource
-              }
+              })
             });
 
             this.queue.enqueue(heartbeat);
@@ -64,11 +69,11 @@ class TerminalTracker {
               project: getCurrentProjectName(),
               category: 'terminal',
               isWrite: false,
-              metadata: {
+              metadata: this.addBackgroundFlag({
                 shellType: termData?.shellType || 'unknown',
                 terminalSource: termData?.terminalSource || 'user',
                 durationMs
-              }
+              })
             });
 
             this.queue.enqueue(heartbeat);
@@ -96,13 +101,13 @@ class TerminalTracker {
               const terminalSource = this.detectTerminalSource(event.terminal);
               const terminalKey = event.terminal?.name || 'unknown';
               const aiCommandBurst = this.detectCommandBurst(terminalKey);
-              const metadata = {
+              const metadata = this.addBackgroundFlag({
                 commandCategory: category,
                 shellType: this.getShellType(event.terminal),
                 terminalSource,
                 aiCommandBurst
-              };
-              
+              });
+
               if (config.enableSensitiveTelemetry) {
                 metadata.commandLine = commandLine;
               }
@@ -117,6 +122,7 @@ class TerminalTracker {
               });
 
               this.queue.enqueue(heartbeat);
+              this.resetIdleTimer();
               console.log(`[Saul Terminal] Command started: ${category}`);
             } catch (error) {
               console.error('[Saul Terminal] Command start error:', error);
@@ -138,14 +144,14 @@ class TerminalTracker {
               
               // Filter sensitive data if not authorized
               const terminalSource = this.detectTerminalSource(event.terminal);
-              const metadata = {
+              const metadata = this.addBackgroundFlag({
                 commandCategory: category,
                 exitCode: event.exitCode,
                 durationMs,
                 shellType: this.getShellType(event.terminal),
                 terminalSource
-              };
-              
+              });
+
               if (config.enableSensitiveTelemetry) {
                 metadata.commandLine = commandLine;
               }
@@ -160,6 +166,7 @@ class TerminalTracker {
               });
 
               this.queue.enqueue(heartbeat);
+              this.resetIdleTimer();
               console.log(`[Saul Terminal] Command ended: ${category}, exitCode=${event.exitCode}, duration=${durationMs}ms`);
             } catch (error) {
               console.error('[Saul Terminal] Command end error:', error);
@@ -172,6 +179,13 @@ class TerminalTracker {
     }
   }
 
+
+  addBackgroundFlag(metadata) {
+    if (!this.windowFocused) {
+      metadata.backgroundActivity = true;
+    }
+    return metadata;
+  }
 
   detectTerminalSource(terminal) {
     if (!terminal) return 'user';

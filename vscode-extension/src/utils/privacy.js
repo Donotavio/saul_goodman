@@ -11,18 +11,20 @@ function getOrCreateHashSalt(context) {
   return salt;
 }
 
+const { hashValue } = require('./identity');
+
 function hashWithSalt(value, salt) {
   if (!value || typeof value !== 'string') {
     return 'unknown';
   }
-  return crypto.createHash('sha256').update(salt + value).digest('hex').substring(0, 16);
+  return hashValue(value, salt);
 }
 
 function anonymizePath(filePath, salt) {
   if (!filePath) {
     return 'unknown';
   }
-  return hashWithSalt(filePath, salt);
+  return hashValue(filePath, salt);
 }
 
 function categorizeCommand(command) {
