@@ -34,14 +34,21 @@ test('resolveStoredSplit maps legacy holdout rows to calibration', () => {
   assert.equal(resolveStoredSplit(legacy), 'calibration');
 });
 
-test('resolveStoredSplit keeps non-holdout legacy rows in train', () => {
-  const legacy = makeExample({
+test('resolveStoredSplit routes non-holdout legacy rows by domain hash', () => {
+  const legacyCalib = makeExample({
+    domain: 'example.com',
     split: undefined as unknown as 'train',
     isHoldout: false,
     v1Prediction: 1,
     v2Prediction: 1,
     v2Score: 0.84
   });
+  assert.equal(resolveStoredSplit(legacyCalib), 'calibration', 'example.com hashes to calibration bucket');
 
-  assert.equal(resolveStoredSplit(legacy), 'train');
+  const legacyTrain = makeExample({
+    domain: 'foo.com',
+    split: undefined as unknown as 'train',
+    isHoldout: false,
+  });
+  assert.equal(resolveStoredSplit(legacyTrain), 'train', 'foo.com hashes to train bucket');
 });

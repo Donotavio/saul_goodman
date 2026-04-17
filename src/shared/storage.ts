@@ -10,6 +10,7 @@ import {
   WorkInterval
 } from './types.js';
 import { getTodayKey } from './utils/time.js';
+import { safeStorageSet } from './utils/storage.js';
 import { resolveLocale } from './i18n.js';
 
 export enum StorageKeys {
@@ -198,7 +199,7 @@ export async function getSettings(): Promise<ExtensionSettings> {
   const preference = defaults.localePreference ?? 'auto';
   const locale = resolveLocale(preference);
   const normalizedDefaults = { ...defaults, locale, localePreference: preference };
-  await chrome.storage.local.set({ [StorageKeys.SETTINGS]: normalizedDefaults });
+  await safeStorageSet({ [StorageKeys.SETTINGS]: normalizedDefaults });
   return normalizedDefaults;
 }
 
@@ -206,7 +207,7 @@ export async function getSettings(): Promise<ExtensionSettings> {
  * Persists extension settings in `chrome.storage.local`.
  */
 export async function saveSettings(settings: ExtensionSettings): Promise<void> {
-  await chrome.storage.local.set({ [StorageKeys.SETTINGS]: settings });
+  await safeStorageSet({ [StorageKeys.SETTINGS]: settings });
 }
 
 function normalizePreference(
@@ -235,7 +236,7 @@ export async function getDailyMetrics(): Promise<DailyMetrics> {
   }
 
   const defaults = createDefaultMetrics();
-  await chrome.storage.local.set({ [StorageKeys.METRICS]: defaults });
+  await safeStorageSet({ [StorageKeys.METRICS]: defaults });
   return defaults;
 }
 
@@ -243,7 +244,7 @@ export async function getDailyMetrics(): Promise<DailyMetrics> {
  * Stores the current metrics snapshot.
  */
 export async function saveDailyMetrics(metrics: DailyMetrics): Promise<void> {
-  await chrome.storage.local.set({ [StorageKeys.METRICS]: metrics });
+  await safeStorageSet({ [StorageKeys.METRICS]: metrics });
 }
 
 /**

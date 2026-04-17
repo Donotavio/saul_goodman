@@ -32,6 +32,11 @@ export function clearVscodeMetrics(metrics: DailyMetrics): boolean {
     changed = true;
   }
 
+  if (metrics.vscodeSyncSucceeded !== undefined) {
+    metrics.vscodeSyncSucceeded = undefined;
+    changed = true;
+  }
+
   return changed;
 }
 

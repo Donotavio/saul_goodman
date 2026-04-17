@@ -229,14 +229,18 @@ class HeartbeatTracker {
 }
 
 function resolveEntity(document, workspaceFolder, config) {
+  let entity;
   if (config.hashFilePaths === false) {
     if (workspaceFolder) {
       const relative = path.relative(workspaceFolder.uri.fsPath, document.uri.fsPath);
-      return relative || path.basename(document.uri.fsPath);
+      entity = relative || path.basename(document.uri.fsPath);
+    } else {
+      entity = path.basename(document.uri.fsPath);
     }
-    return path.basename(document.uri.fsPath);
+  } else {
+    entity = document.uri.fsPath;
   }
-  return document.uri.fsPath;
+  return entity.replace(/\\/g, '/');
 }
 
 function normalizeLanguageId(languageId) {

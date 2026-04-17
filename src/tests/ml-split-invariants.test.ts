@@ -64,6 +64,29 @@ test('same domain with identical params always gets same split', () => {
   }
 });
 
+test('group-based split: same domain always maps to same split regardless of timestamp, label or source', () => {
+  const domains = ['github.com', 'reddit.com', 'docs.google.com', 'notion.so', 'stackoverflow.com'];
+  for (const domain of domains) {
+    const baseline = determineSplit(makeExample({ domain, createdAt: 1700000000000, label: 1, source: 'explicit' }));
+    // different timestamps
+    for (const ts of [1700100000000, 1700200000000, 1800000000000]) {
+      assert.equal(
+        determineSplit(makeExample({ domain, createdAt: ts, label: 1, source: 'explicit' })),
+        baseline,
+        `${domain} split changed with different timestamp ${ts}`
+      );
+    }
+    // different labels
+    for (const label of [0, 1] as const) {
+      assert.equal(
+        determineSplit(makeExample({ domain, createdAt: 1700000000000, label, source: 'explicit' })),
+        baseline,
+        `${domain} split changed with different label ${label}`
+      );
+    }
+  }
+});
+
 test('distribution roughly matches 70/15/15 across many samples', () => {
   const counts: Record<TrainingSplit, number> = { train: 0, calibration: 0, test: 0 };
   const N = 5000;

@@ -290,6 +290,29 @@ export class MlTrainingStore {
     await deleteByIndexRange(db, this.examplesStore, 'createdAt', IDBKeyRange.upperBound(beforeTimestamp));
   }
 
+  async removeImplicitExamplesByDomain(domain: string): Promise<number> {
+    const normalizedDomain = (domain ?? '').trim().toLowerCase();
+    if (!normalizedDomain) return 0;
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.examplesStore, 'readwrite');
+      const store = tx.objectStore(this.examplesStore);
+      const request = store.openCursor();
+      let removed = 0;
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (!cursor) { resolve(removed); return; }
+        const row = cursor.value as StoredTrainingExample;
+        if (row.domain === normalizedDomain && row.source === 'implicit') {
+          cursor.delete();
+          removed += 1;
+        }
+        cursor.continue();
+      };
+    });
+  }
+
   async getMeta<T>(key: string): Promise<T | undefined> {
     const db = await this.open();
     return new Promise((resolve, reject) => {
@@ -388,24 +411,34 @@ export class MlTrainingStore {
 
   private async replaceRandomExample(example: StoredTrainingExample): Promise<void> {
     const db = await this.open();
-    const keys = await new Promise<IDBValidKey[]>((resolve, reject) => {
+    const allEntries = await new Promise<StoredTrainingExample[]>((resolve, reject) => {
       const tx = db.transaction(this.examplesStore, 'readonly');
       const store = tx.objectStore(this.examplesStore);
-      const request = store.getAllKeys();
+      const request = store.getAll();
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve((request.result as IDBValidKey[]) ?? []);
+      request.onsuccess = () => resolve((request.result as StoredTrainingExample[]) ?? []);
     });
 
-    if (!keys.length) {
+    if (!allEntries.length) {
       await this.addExample(example);
       return;
     }
 
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const sameDomainConflict = allEntries.find(
+      (entry) => entry.domain === example.domain && entry.label !== example.label
+    );
+    const targetKey = sameDomainConflict?.id
+      ?? allEntries[Math.floor(Math.random() * allEntries.length)].id;
+
+    if (targetKey == null) {
+      await this.addExample(example);
+      return;
+    }
+
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction(this.examplesStore, 'readwrite');
       const store = tx.objectStore(this.examplesStore);
-      const deleteRequest = store.delete(randomKey);
+      const deleteRequest = store.delete(targetKey);
       deleteRequest.onerror = () => reject(deleteRequest.error);
       deleteRequest.onsuccess = () => {
         const addRequest = store.add(example);
@@ -507,12 +540,7 @@ export function determineSplit(example: Omit<StoredTrainingExample, 'id' | 'spli
   if (example.source === 'implicit') {
     return 'train';
   }
-  const bucket = hashToPercent([
-    normalizeForHash(example.domain),
-    String(Math.max(0, Math.floor(example.createdAt))),
-    String(example.label),
-    example.source
-  ].join('|'));
+  const bucket = hashToPercent(normalizeForHash(example.domain));
   if (bucket < TRAIN_SPLIT_THRESHOLD) {
     return 'train';
   }
@@ -543,7 +571,13 @@ export function resolveStoredSplit(entry: StoredTrainingExample | null | undefin
   if (entry?.split === 'train' || entry?.split === 'calibration' || entry?.split === 'test') {
     return entry.split;
   }
-  return isHoldoutEntry(entry) ? 'calibration' : 'train';
+  if (isHoldoutEntry(entry)) {
+    return 'calibration';
+  }
+  if (entry?.domain) {
+    return determineSplit(entry as Omit<StoredTrainingExample, 'id' | 'split'>);
+  }
+  return 'train';
 }
 
 function migrateLegacyExamples(store: IDBObjectStore): void {

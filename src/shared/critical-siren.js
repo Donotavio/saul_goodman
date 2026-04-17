@@ -71,5 +71,10 @@
   }
 
   const target = typeof window !== 'undefined' ? window : globalThis;
-  target.CriticalSirenPlayer = CriticalSirenPlayer;
+  Object.defineProperty(target, 'CriticalSirenPlayer', {
+    value: CriticalSirenPlayer,
+    writable: false,
+    enumerable: false,
+    configurable: true
+  });
 })();

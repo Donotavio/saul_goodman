@@ -66,3 +66,61 @@ test('documents_current_behavior_gap_exceeds_splits_into_min_duration_sessions',
     Date.now = realNow;
   }
 });
+
+test('out_of_order_heartbeats_are_sorted_before_aggregation', () => {
+  const realNow = Date.now;
+  Date.now = () => 1_000_000;
+  try {
+    const hb1 = makeHeartbeat(50_000);
+    const hb2 = makeHeartbeat(10_000);
+    const hb3 = makeHeartbeat(30_000);
+    const durations = buildDurations([hb1, hb2, hb3], { gapMs: 600_000, graceMs: 120_000 });
+    assert.equal(durations.length, 1);
+    assert.equal(durations[0].startTime, 10_000);
+    assert.ok(durations[0].endTime >= 50_000);
+  } finally {
+    Date.now = realNow;
+  }
+});
+
+test('gap_exactly_at_gapMs_boundary_does_not_split_session', () => {
+  const gapMs = 5 * 60 * 1000;
+  const realNow = Date.now;
+  Date.now = () => 1_000_000;
+  try {
+    const hb1 = makeHeartbeat(1_000);
+    const hb2 = makeHeartbeat(1_000 + gapMs);
+    const durations = buildDurations([hb1, hb2], { gapMs, graceMs: 120_000 });
+    assert.equal(durations.length, 1, 'delta === gapMs should NOT split (uses > not >=)');
+  } finally {
+    Date.now = realNow;
+  }
+});
+
+test('gap_one_ms_over_gapMs_splits_session', () => {
+  const gapMs = 5 * 60 * 1000;
+  const realNow = Date.now;
+  Date.now = () => 1_000_000;
+  try {
+    const hb1 = makeHeartbeat(1_000);
+    const hb2 = makeHeartbeat(1_000 + gapMs + 1);
+    const durations = buildDurations([hb1, hb2], { gapMs, graceMs: 120_000 });
+    assert.equal(durations.length, 2, 'delta > gapMs should split into separate sessions');
+  } finally {
+    Date.now = realNow;
+  }
+});
+
+test('single_heartbeat_recent_is_clamped_by_date_now', () => {
+  const realNow = Date.now;
+  const now = 10_000;
+  Date.now = () => now;
+  try {
+    const durations = buildDurations([makeHeartbeat(now - 5_000)], { graceMs: 30_000, gapMs: 600_000 });
+    assert.equal(durations.length, 1);
+    assert.ok(durations[0].endTime <= now, 'endTime must not exceed Date.now()');
+    assert.equal(durations[0].durationMs, 5_000, 'duration clamped to now - startTime');
+  } finally {
+    Date.now = realNow;
+  }
+});

@@ -266,12 +266,12 @@ function activate(context) {
   }
 }
 
-function deactivate() {
+async function deactivate() {
   if (statusPollTimer) {
     clearInterval(statusPollTimer);
     statusPollTimer = null;
   }
-  trackingController?.dispose();
+  await trackingController?.dispose();
   trackingController = null;
 }
 
@@ -556,8 +556,8 @@ class TrackingController {
     }
   }
 
-  dispose() {
-    this.queue.stop();
+  async dispose() {
+    await this.queue.stop();
     this.heartbeatTracker.dispose();
     this.gitTracker.dispose();
     this.editorMetadataTracker.dispose();
@@ -946,6 +946,28 @@ async function prepareDaemonCommand(context) {
     return;
   }
 
+  // Port conflict detection: check if something is already listening on the
+  // target port right before spawning.  The earlier isDaemonHealthy check
+  // (line ~883) may have passed seconds ago; another process could have
+  // grabbed the port in the meantime, leading to an EADDRINUSE error.
+  if (fetchWithTimeout) {
+    try {
+      const healthUrl = getHealthUrl(normalizedApiBase);
+      const resp = await fetchWithTimeout(healthUrl, 2000);
+      if (resp && resp.ok) {
+        console.log('[Saul] Port conflict detected: another process is already listening on ' + normalizedApiBase + ', skipping embedded daemon start');
+        vscode.window.showInformationMessage(
+          localize('prepare_already_running', { origin: normalizedApiBase })
+        );
+        void updateStatusBar('ok', port);
+        trackingController?.reloadConfig?.();
+        return;
+      }
+    } catch {
+      // Connection refused or timeout — port is free, safe to proceed
+    }
+  }
+
   try {
     const logFile = path.join(daemonDir ?? workspace, 'daemon.log');
     let stdoutFd = null;
@@ -964,10 +986,14 @@ async function prepareDaemonCommand(context) {
 
     const child = child_process.spawn('node', ['index.cjs'], {
       cwd: daemonDir ?? workspace,
-      env: { ...process.env, PAIRING_KEY: key, PORT: port },
+      env: { ...process.env, PORT: port },
       detached: true,
-      stdio: ['ignore', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
+      stdio: ['pipe', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
     });
+    if (child.stdin) {
+      child.stdin.write(JSON.stringify({ pairingKey: key }) + '\n');
+      child.stdin.end();
+    }
     const spawnError = await new Promise((resolve) => {
       let settled = false;
       child.once('error', (error) => {
@@ -987,7 +1013,10 @@ async function prepareDaemonCommand(context) {
       if (stderrFd) {
         fs.closeSync(stderrFd);
       }
-      throw spawnError;
+      const errMsg = spawnError.code === 'EADDRINUSE'
+        ? `Port ${port} is already in use. Another daemon or process may be running on this port.`
+        : spawnError.message;
+      throw new Error(errMsg);
     }
     child.unref();
     if (stdoutFd) {

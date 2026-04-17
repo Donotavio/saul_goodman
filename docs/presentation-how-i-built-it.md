@@ -1,15 +1,17 @@
 # Como Construi um Modelo Neural do Zero no Browser
+
 ## TypeScript puro, zero dependencias, privacidade total
 
 ---
 
 ## 1. O Desafio (2 min)
 
-**Slide: "Classificar dominios sem servidor"**
+### **Slide: "Classificar dominios sem servidor"**
 
 **Objetivo:** classificar automaticamente sites como produtivo/procrastinacao dentro de uma Chrome Extension.
 
 **O que eu NAO podia usar:**
+
 - TensorFlow.js (bundle ~500KB+, WebGL flaky em Service Workers MV3)
 - ONNX Runtime Web (~2MB, precisa de WASM)
 - API externa (viola privacidade — compromisso central do produto)
@@ -17,6 +19,7 @@
 - WebGPU (nao disponivel em Service Workers MV3)
 
 **O que eu TINHA:**
+
 - TypeScript puro com Float32Array
 - IndexedDB para persistencia
 - ~50ms de budget por classificacao (Service Worker lifecycle)
@@ -28,9 +31,9 @@
 
 ## 2. Arquitetura Geral (2 min)
 
-**Slide: "Do DOM ao aprendizado — tudo no browser"**
+### **Slide: "Do DOM ao aprendizado — tudo no browser"**
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                    Chrome Extension                      │
 │                                                         │
@@ -69,7 +72,7 @@ Tudo roda em **uma unica chamada sincrona** no Service Worker. Zero network. Zer
 
 ## 3. O Modelo — WideDeepLiteBinary (5 min)
 
-**Slide: "482 linhas de TypeScript que substituem um framework"**
+### **Slide: "482 linhas de TypeScript que substituem um framework"**
 
 ### Por que Wide & Deep?
 
@@ -80,7 +83,7 @@ Tudo roda em **uma unica chamada sincrona** no Service Worker. Zero network. Zer
 
 ### Arquitetura
 
-```
+```text
 Entrada: SparseVector (indices[], values[])
     │
     ├─── Wide Branch (memorizacao)
@@ -163,6 +166,7 @@ function applyAdaGradToArray(values, accum, index, gradient, lr) {
 ```
 
 **Por que AdaGrad e nao Adam?**
+
 - Adam precisa de 3 arrays auxiliares (m, v, v_hat) por parametro → triplicaria ~9MB → ~27MB
 - AdaGrad precisa de 1 array (accum) → ~9MB total e viavel
 - Para features esparsas, AdaGrad e ideal: features raras mantem lr alto, features frequentes desaceleram naturalmente
@@ -183,7 +187,7 @@ Viavel no browser. Service Worker nao morre por OOM.
 
 ## 4. Feature Engineering — 3 Camadas (5 min)
 
-**Slide: "Do DOM cru ao vetor esparso — 3 niveis de sinais"**
+### **Slide: "Do DOM cru ao vetor esparso — 3 niveis de sinais"**
 
 ### Camada 1: Conteudo da Pagina (`featureExtractor.ts`)
 
@@ -222,6 +226,7 @@ Cada visita grava um evento no IndexedDB. Agrego sobre 14 dias:
 | `beh:overtime_ratio` | % acessos fora do horario |
 
 **Labels implicitos derivados (peso 0.25):**
+
 ```typescript
 // Produtivo implicito: sessoes longas + muita interacao + pouca distracao
 if (medianActive >= 3min && interaction >= 1.5/min && distraction < 50%)
@@ -254,6 +259,7 @@ Construi 6 prototipos de conceito com seed words multilingues:
 **Engagement (4):** dwell time (log), interaction rate, scroll depth, audio ratio 14d
 
 **Attention (4) ← Mark et al. CHI 2008:**
+
 - `switch_rate_10m` — trocas de aba por minuto (ultimos 10 min)
 - `focus_continuity_10m` — 1 - switch_rate (foco sustentado)
 - `return_latency_7d` — log da latencia de retorno (habito vs impulso)
@@ -266,6 +272,7 @@ Construi 6 prototipos de conceito com seed words multilingues:
 **Reliability (2):** metadata quality (12 checks), signal stability 7d
 
 **Normalizacao — z-score com winsorization:**
+
 ```typescript
 function zScoreWithWinsorization(value, samples) {
   if (samples.length < 20) return clamp(value / 5, -2, 2); // Fallback
@@ -283,7 +290,7 @@ Cada sinal mantem historico de 256 amostras no IndexedDB para media/std movel.
 
 ## 5. Feature Hashing — FNV-1a (2 min)
 
-**Slide: "Sem vocabulario, sem out-of-vocabulary"**
+### **Slide: "Sem vocabulario, sem out-of-vocabulary"**
 
 **Problema:** features sao strings arbitrarias. Modelo precisa de indices numericos.
 **Solucao classica:** dicionario `{feature → index}` → cresce infinitamente.
@@ -313,7 +320,7 @@ sign  = (hash & 1) === 0 ? +1 : -1;   // Signed hashing
 
 ## 6. Calibracao — Temperature Scaling (3 min)
 
-**Slide: "Guo et al. 2017 — 1 parametro escalar que corrige a confianca"**
+### **Slide: "Guo et al. 2017 — 1 parametro escalar que corrige a confianca"**
 
 ### O problema
 
@@ -321,9 +328,10 @@ O modelo produz `sigmoid(score)` — mas essa probabilidade e mal calibrada. Red
 
 ### A solucao do paper
 
-```
+```typescript
 P_calibrada = sigmoid(score / T)
 ```
+
 - T > 1 → "esfria" (mais incerto)
 - T < 1 → "esquenta" (mais confiante)
 - 1 unico parametro escalar → preserva ranking, so corrige confianca
@@ -353,6 +361,7 @@ fit(samples) {
 ```
 
 **Decisoes-chave:**
+
 - Otimizo em `log(T)` → garante T > 0 sem constraints
 - Regularizacao `1e-4 × logT` → puxa T para 1 quando dados escassos
 - Treino APENAS no calibration split (15%) — fiel ao paper
@@ -365,11 +374,11 @@ fit(samples) {
 
 ## 7. Validation Gate (3 min)
 
-**Slide: "O modelo so relaxa thresholds com prova estatistica"**
+### **Slide: "O modelo so relaxa thresholds com prova estatistica"**
 
 ### O sistema de guardrails
 
-```
+```text
 GUARDED (inicio)                 NORMAL (apos gate)
 Threshold produtivo:   0.78      Threshold produtivo:   0.70
 Threshold procrastinacao: 0.28   Threshold procrastinacao: 0.30
@@ -415,7 +424,7 @@ Escolhi McNemar porque compara os MESMOS exemplos com 2 classificadores (pareado
 
 ## 8. Active Learning + Auto-Training (3 min)
 
-**Slide: "Cada clique do usuario vale ouro"**
+### **Slide: "Cada clique do usuario vale ouro"**
 
 ### Review Queue (Settles 2009)
 
@@ -433,7 +442,7 @@ Fila de revisao (max 20 candidatos)
 
 Quando a confianca e extrema, gero label automatico — mas com 7 camadas de protecao:
 
-```
+```text
 1. prob >= 0.93 ou prob <= 0.07        ← Threshold de confianca
 2. Quarentena 14 dias se contradisse   ← Usuario corrigiu → para
 3. Cooldown 12h por dominio            ← Nao repete muito rapido
@@ -449,7 +458,7 @@ Peso: `0.1` (vs `1.0` explicito) — modelo aprende 10x mais devagar com auto-ge
 
 ## 9. Training Pipeline + Persistencia (3 min)
 
-**Slide: "Online learning com split deterministico no IndexedDB"**
+### **Slide: "Online learning com split deterministico no IndexedDB"**
 
 ### Split sem shuffle
 
@@ -464,7 +473,7 @@ else              → test split
 
 ### Fluxo de treinamento
 
-```
+```text
 Feedback explicito ("github.com e produtivo")
     ↓
 vectorizer.incrementCounts(vector.indices)
@@ -478,7 +487,7 @@ persistContext() → salva modelo inteiro no IndexedDB
 
 ### Storage
 
-```
+```text
 IndexedDB: "sg-ml-training"
 ├── examples     → training examples (vector + label + weight + metadata)
 ├── behavior     → eventos comportamentais por dominio (14 dias)
@@ -494,7 +503,7 @@ Limites: 25,000 train + 2,000 calibration + 2,000 test. Retencao 30 dias. Reserv
 
 ## 10. Explicabilidade (2 min)
 
-**Slide: "Cada sugestao explica por que"**
+### **Slide: "Cada sugestao explica por que"**
 
 ### Como gero razoes
 
@@ -512,7 +521,7 @@ pickBySource('content', 2);    // Ate 2 de conteudo
 
 ### O que o usuario ve
 
-```
+```text
 "Este dominio parece produtivo"
 ✓ Continuidade de foco no periodo recente
 ✓ Taxa de interacao consistente
@@ -526,9 +535,9 @@ Nao e LLM gerando texto — cada sinal tem um template fixo mapeado por feature 
 
 ## 11. O Pipeline Completo (2 min)
 
-**Slide: "Uma requisicao, ponta a ponta"**
+### **Slide: "Uma requisicao, ponta a ponta"**
 
-```
+```text
 Usuario visita github.com/pulls
     │
     ▼
@@ -563,7 +572,7 @@ Usuario visita github.com/pulls
 
 ## 12. O Que Aprendi (2 min)
 
-**Slide: "Licoes de ML from scratch no browser"**
+### **Slide: "Licoes de ML from scratch no browser"**
 
 1. **Float32 nao e Float64.** Gradient clipping e `Number.isFinite()` em todo lugar — sem isso, NaN em 48h de uso real.
 

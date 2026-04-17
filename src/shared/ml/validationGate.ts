@@ -118,10 +118,13 @@ export async function evaluateValidationGate(
   const precisionDrop = currentMetrics.precisionProductive - baseline.precisionProductive;
 
   const enoughSamples = usable.length >= options.minSamples;
-  const fprGate = falseProductiveImprovement >= 0.01 || relativeFprImprovement >= 0.10;
+  const fprGate = (baseline.falseProductiveRate === 0 && currentMetrics.falseProductiveRate === 0)
+    || falseProductiveImprovement >= 0.01 || relativeFprImprovement >= 0.10;
   const precisionGate = precisionDrop >= -0.01;
   const macroF1Gate = bootstrap.lower >= 0;
-  const mcnemarGate = mcnemarPValue < 0.05 && falseProductiveImprovement > 0;
+  const mcnemarGate = mcnemarPValue === 1 && falseProductiveImprovement >= 0
+    ? true
+    : mcnemarPValue < 0.05 && falseProductiveImprovement > 0;
 
   return {
     baseline,
@@ -222,7 +225,7 @@ async function bootstrapDeltaMacroF1(
 
   deltas.sort((a, b) => a - b);
   const lowerIndex = Math.max(0, Math.floor(0.025 * (deltas.length - 1)));
-  const upperIndex = Math.max(0, Math.floor(0.975 * (deltas.length - 1)));
+  const upperIndex = Math.min(deltas.length - 1, Math.ceil(0.975 * (deltas.length - 1)));
   return {
     lower: deltas[lowerIndex] ?? 0,
     upper: deltas[upperIndex] ?? 0
@@ -263,6 +266,9 @@ function computeMcNemarPValue(samples: Array<Required<ValidationSample>>): numbe
 
   const total = b + c;
   if (total <= 0) {
+    return 1;
+  }
+  if (total < 5) {
     return 1;
   }
 

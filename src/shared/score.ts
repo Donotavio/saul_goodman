@@ -79,11 +79,15 @@ export function calculateProcrastinationIndex(
   const inactivityRatio = Math.min(metrics.inactiveMs / MAX_INACTIVE_MS, 1);
 
   const { procrastinationWeight, tabSwitchWeight, inactivityWeight } = settings.weights;
+  const weightSum = procrastinationWeight + tabSwitchWeight + inactivityWeight;
+  const normalizedProcrastination = weightSum > 0 ? procrastinationWeight / weightSum : 1 / 3;
+  const normalizedTabSwitch = weightSum > 0 ? tabSwitchWeight / weightSum : 1 / 3;
+  const normalizedInactivity = weightSum > 0 ? inactivityWeight / weightSum : 1 / 3;
 
   const weightedScore =
-    procrastinationRatio * procrastinationWeight +
-    tabSwitchRatio * tabSwitchWeight +
-    inactivityRatio * inactivityWeight;
+    procrastinationRatio * normalizedProcrastination +
+    tabSwitchRatio * normalizedTabSwitch +
+    inactivityRatio * normalizedInactivity;
 
   const finalScore = Math.min(Math.round(weightedScore * 100), 100);
 

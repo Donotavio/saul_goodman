@@ -3147,6 +3147,34 @@ function getTopEntries(
     .map((entry) => ({ domain: entry.domain, duration: formatDuration(entry.milliseconds) }));
 }
 
+function anonymizeAiPayload(payload: AiPromptPayload): AiPromptPayload {
+  let prodCounter = 0;
+  let procCounter = 0;
+  const domainMap = new Map<string, string>();
+  const anon = (domain: string, category: 'productive' | 'procrastination'): string => {
+    const existing = domainMap.get(domain);
+    if (existing) return existing;
+    const label = category === 'productive'
+      ? `productive-site-${++prodCounter}`
+      : `procrastination-site-${++procCounter}`;
+    domainMap.set(domain, label);
+    return label;
+  };
+  return {
+    ...payload,
+    topProductive: payload.topProductive.map((entry) => ({
+      ...entry, domain: anon(entry.domain, 'productive')
+    })),
+    topProcrastination: payload.topProcrastination.map((entry) => ({
+      ...entry, domain: anon(entry.domain, 'procrastination')
+    })),
+    timeline: payload.timeline.map((entry) => ({
+      ...entry,
+      domain: anon(entry.domain, entry.category === 'procrastination' ? 'procrastination' : 'productive')
+    }))
+  };
+}
+
 async function requestAiNarrative(
   payload: AiPromptPayload,
   languageLabel: string
@@ -3187,7 +3215,7 @@ async function requestAiNarrative(
             role: 'user',
             content:
               `Write a short narrative (2 paragraphs) using these data points. Highlight the active context (${payload.contextMode}) and how contexts impacted the index: ${contextSummary}\n` +
-              `${JSON.stringify(payload)}`
+              `${JSON.stringify(anonymizeAiPayload(payload))}`
           }
         ]
       }),

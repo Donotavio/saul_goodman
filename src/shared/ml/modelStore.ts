@@ -206,20 +206,33 @@ export class ModelStore {
       throw new Error('IndexedDB indisponível neste contexto.');
     }
 
-    this.dbPromise = new Promise((resolve, reject) => {
-      const request = indexedDB.open(this.dbName, this.version);
-      request.onerror = () => reject(request.error);
-      request.onupgradeneeded = () => {
-        const db = request.result;
-        if (!db.objectStoreNames.contains(this.storeName)) {
-          db.createObjectStore(this.storeName);
-        }
-      };
-      request.onsuccess = () => resolve(request.result);
-    });
+    this.dbPromise = this.openWithRetry(3);
     this.dbPromise.catch(() => { this.dbPromise = null; });
 
     return this.dbPromise;
+  }
+
+  private async openWithRetry(maxRetries: number): Promise<IDBDatabase> {
+    for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+      try {
+        return await new Promise<IDBDatabase>((resolve, reject) => {
+          const request = indexedDB.open(this.dbName, this.version);
+          request.onerror = () => reject(request.error);
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(this.storeName)) {
+              db.createObjectStore(this.storeName);
+            }
+          };
+          request.onsuccess = () => resolve(request.result);
+        });
+      } catch (err) {
+        if (attempt >= maxRetries) throw err;
+        const delay = Math.min(2 ** attempt * 100, 5000);
+        await new Promise<void>((r) => setTimeout(r, delay));
+      }
+    }
+    throw new Error('IDB open failed after retries');
   }
 }
 

@@ -3,6 +3,61 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.7] - 2026-04-17
+
+Auditoria sistêmica Round 2: 32 achados corrigidos em 5 fases cobrindo integridade de dados, corretude ML, privacidade, robustez e melhorias gerais.
+
+### Bugs corrigidos
+
+- Fila do VS Code agora faz flush ao parar, prevenindo perda de heartbeats (`buffered-event-queue.js`).
+- Guard contra NaN/Infinity no temperature scaling do modelo ML (`temperatureScaler.ts`).
+- McNemar com zero pares discordantes (b=0, c=0) não bloqueia mais a promoção do modelo; fallback quando <5 pares (`validationGate.ts`).
+- Guard contra reset duplo de métricas em noite de DST fall-back (`background/index.ts`).
+- Flag `vscodeSyncInProgress` agora usa timeout de 30s para prevenir lockout permanente após suspensão do service worker.
+
+### Segurança e privacidade
+
+- Payload da narrativa OpenAI agora substitui nomes de domínio por labels anônimos ("site produtivo 1") antes do envio (`report.ts`).
+- PAIRING_KEY passada via stdin ao daemon ao invés de variável de ambiente visível em `/proc/environ` (`extension.js`).
+- Sirene crítica protegida contra fingerprinting por websites (`critical-siren.js`).
+- Revogação de permissões localhost ao desabilitar integração VS Code.
+
+### Robustez ML
+
+- Mutex baseado em promise serializa operações concorrentes no modelo ML, prevenindo corrupção de pesos (`ml-engine.ts`).
+- Quarentena de pseudo-labels agora purga exemplos implícitos existentes ao detectar contradição explícita.
+- Deduplicação de labels no training store: substituição por domínio ao invés de aleatória (`trainingStore.ts`).
+- Reconciliação IDB/storage.local contínua via listener `chrome.storage.onChanged`.
+- Pseudo-stability threshold aumentado para 5 predições em pelo menos 3 dias calendários distintos.
+- FPR gate passa quando ambos os modelos já têm FPR=0 (sem melhoria possível).
+- Bootstrap CI upper index corrigido para `Math.ceil`.
+- Split de treino determinístico por hash de domínio para entradas legadas sem split explícito.
+
+### Robustez geral
+
+- Limite de profundidade JSON no body parser do daemon (previne DoS local).
+- Tratamento de `EADDRINUSE` com mensagem clara no spawn do daemon.
+- Normalização de backslash em paths Windows no heartbeat tracker.
+- UUID fallback robusto via `crypto.randomUUID()`.
+- Clamping de `totalActiveMs` sinalizado com flag `clamped: true` no response.
+- Tolerância de 5s para clock skew na atualização do índice.
+- Null-guards verificados em command handlers do VS Code.
+
+### Melhorias
+
+- Timeouts HTTP configuráveis no apiClient do VS Code com backward compatibility.
+- `safeJson()` wrapper com URL/status no erro para diagnóstico de falhas de parse.
+- IDB retry com backoff exponencial (`min(2^attempt * 100, 5000)`).
+- `innerHTML` substituído por `createElement`/`appendChild` no locale select (defense-in-depth XSS).
+- Promise rejections não-tratadas agora logadas com `.catch(console.warn)`.
+- Nota de privacidade sobre holiday API documentada em `holidays.ts`.
+- Alarm drift logging quando elapsed > 115% do período esperado.
+- Contador `droppedTimelineSegments` em `DailyMetrics` para observabilidade de overflow de timeline.
+- Context history init protegido contra race condition via singleton promise.
+- Warning quando domínios de bloqueio excedem limite de regras `declarativeNetRequest`.
+- Logging em toasts de auto-classificação e modo crítico (anteriormente erros engolidos).
+- Documentação de taxa de colisão de hash (~15%) no `auto-classification.md`.
+
 ## [1.24.5] - 2026-04-16
 
 - Correção do pipeline NLS da extensão VS Code: chave `config_enable_ai_tracking_description` adicionada ao `generate-nls.js` e a todos os `package.nls.*.json`.
@@ -294,6 +349,61 @@ Todas as versões são publicadas pelo CI/CD; a versão é atualizada automatica
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.24.7] - 2026-04-17
+
+Systemic audit Round 2: 32 findings fixed across 5 phases covering data integrity, ML correctness, privacy, robustness, and general improvements.
+
+### Bug fixes
+
+- VS Code queue now flushes on stop, preventing heartbeat loss (`buffered-event-queue.js`).
+- Guard against NaN/Infinity in ML model temperature scaling (`temperatureScaler.ts`).
+- McNemar with zero discordant pairs (b=0, c=0) no longer blocks model promotion; fallback when <5 pairs (`validationGate.ts`).
+- Guard against double metric reset on DST fall-back night (`background/index.ts`).
+- `vscodeSyncInProgress` flag now uses 30s timeout to prevent permanent lockout after service worker suspension.
+
+### Security and privacy
+
+- OpenAI narrative payload now replaces domain names with anonymous labels ("productive site 1") before sending (`report.ts`).
+- PAIRING_KEY passed via stdin to daemon instead of env var visible in `/proc/environ` (`extension.js`).
+- Critical siren protected against website fingerprinting (`critical-siren.js`).
+- Localhost permissions revoked when disabling VS Code integration.
+
+### ML robustness
+
+- Promise-based mutex serializes concurrent ML model operations, preventing weight corruption (`ml-engine.ts`).
+- Pseudo-label quarantine now purges existing implicit examples upon explicit contradiction.
+- Training store label deduplication: per-domain replacement instead of random (`trainingStore.ts`).
+- Continuous IDB/storage.local reconciliation via `chrome.storage.onChanged` listener.
+- Pseudo-stability threshold increased to 5 predictions across at least 3 distinct calendar days.
+- FPR gate passes when both models already have FPR=0 (no improvement possible).
+- Bootstrap CI upper index fixed to use `Math.ceil`.
+- Deterministic training split via domain hash for legacy entries without explicit split.
+
+### General robustness
+
+- JSON depth limit in daemon body parser (prevents local DoS).
+- `EADDRINUSE` handling with clear error message in daemon spawn.
+- Backslash path normalization for Windows in heartbeat tracker.
+- Robust UUID fallback via `crypto.randomUUID()`.
+- `totalActiveMs` clamping signaled with `clamped: true` flag in response.
+- 5s clock skew tolerance for index updates.
+- Null-guards verified in VS Code command handlers.
+
+### Improvements
+
+- Configurable HTTP timeouts in VS Code apiClient with backward compatibility.
+- `safeJson()` wrapper with URL/status in error for parse failure diagnostics.
+- IDB retry with exponential backoff (`min(2^attempt * 100, 5000)`).
+- `innerHTML` replaced with `createElement`/`appendChild` in locale select (defense-in-depth XSS).
+- Unhandled promise rejections now logged with `.catch(console.warn)`.
+- Privacy note about holiday API documented in `holidays.ts`.
+- Alarm drift logging when elapsed > 115% of expected period.
+- `droppedTimelineSegments` counter in `DailyMetrics` for timeline overflow observability.
+- Context history init protected against race condition via singleton promise.
+- Warning when block domains exceed `declarativeNetRequest` rule limit.
+- Logging in auto-classification and critical mode toasts (previously swallowed errors).
+- Hash collision rate (~15%) documented in `auto-classification.md`.
+
 ## [1.24.5] - 2026-04-16
 
 - Fixed VS Code NLS pipeline: added `config_enable_ai_tracking_description` key to `generate-nls.js` and all `package.nls.*.json` files.
@@ -584,6 +694,61 @@ All releases are published via CI/CD; the version is bumped automatically during
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.24.7] - 2026-04-17
+
+Auditoría sistémica Round 2: 32 hallazgos corregidos en 5 fases cubriendo integridad de datos, corrección ML, privacidad, robustez y mejoras generales.
+
+### Bugs corregidos
+
+- La cola de VS Code ahora hace flush al detenerse, previniendo pérdida de heartbeats (`buffered-event-queue.js`).
+- Guard contra NaN/Infinity en temperature scaling del modelo ML (`temperatureScaler.ts`).
+- McNemar con cero pares discordantes (b=0, c=0) ya no bloquea la promoción del modelo; fallback cuando <5 pares (`validationGate.ts`).
+- Guard contra doble reset de métricas en noche de DST fall-back (`background/index.ts`).
+- Flag `vscodeSyncInProgress` ahora usa timeout de 30s para prevenir bloqueo permanente tras suspensión del service worker.
+
+### Seguridad y privacidad
+
+- Payload de narrativa OpenAI ahora reemplaza nombres de dominio por etiquetas anónimas ("sitio productivo 1") antes del envío (`report.ts`).
+- PAIRING_KEY enviada via stdin al daemon en vez de variable de entorno visible en `/proc/environ` (`extension.js`).
+- Sirena crítica protegida contra fingerprinting por sitios web (`critical-siren.js`).
+- Revocación de permisos localhost al deshabilitar integración VS Code.
+
+### Robustez ML
+
+- Mutex basado en promise serializa operaciones concurrentes en el modelo ML, previniendo corrupción de pesos (`ml-engine.ts`).
+- Cuarentena de pseudo-labels ahora purga ejemplos implícitos existentes al detectar contradicción explícita.
+- Deduplicación de labels en training store: reemplazo por dominio en vez de aleatorio (`trainingStore.ts`).
+- Reconciliación IDB/storage.local continua via listener `chrome.storage.onChanged`.
+- Pseudo-stability threshold aumentado a 5 predicciones en al menos 3 días calendario distintos.
+- FPR gate pasa cuando ambos modelos ya tienen FPR=0 (sin mejora posible).
+- Bootstrap CI upper index corregido a `Math.ceil`.
+- Split de entrenamiento determinístico por hash de dominio para entradas legadas sin split explícito.
+
+### Robustez general
+
+- Límite de profundidad JSON en body parser del daemon (previene DoS local).
+- Manejo de `EADDRINUSE` con mensaje claro en spawn del daemon.
+- Normalización de backslash en paths Windows en heartbeat tracker.
+- UUID fallback robusto via `crypto.randomUUID()`.
+- Clamping de `totalActiveMs` señalizado con flag `clamped: true` en response.
+- Tolerancia de 5s para clock skew en actualización del índice.
+- Null-guards verificados en command handlers de VS Code.
+
+### Mejoras
+
+- Timeouts HTTP configurables en apiClient de VS Code con backward compatibility.
+- Wrapper `safeJson()` con URL/status en error para diagnóstico de fallos de parse.
+- IDB retry con backoff exponencial (`min(2^attempt * 100, 5000)`).
+- `innerHTML` reemplazado por `createElement`/`appendChild` en locale select (defense-in-depth XSS).
+- Promise rejections no manejadas ahora logueadas con `.catch(console.warn)`.
+- Nota de privacidad sobre holiday API documentada en `holidays.ts`.
+- Alarm drift logging cuando elapsed > 115% del período esperado.
+- Contador `droppedTimelineSegments` en `DailyMetrics` para observabilidad de overflow de timeline.
+- Context history init protegido contra race condition via singleton promise.
+- Warning cuando dominios de bloqueo exceden límite de reglas `declarativeNetRequest`.
+- Logging en toasts de auto-clasificación y modo crítico (anteriormente errores tragados).
+- Tasa de colisión de hash (~15%) documentada en `auto-classification.md`.
 
 ## [1.24.5] - 2026-04-16
 

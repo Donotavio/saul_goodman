@@ -82,7 +82,7 @@ test('daemon enforces pairing key and date window', async () => {
   rmSync(tmpDir, { recursive: true, force: true });
 });
 
-test('health endpoint validates pairing key when provided', async () => {
+test('health endpoint never exposes key validation oracle', async () => {
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), 'saul-daemon-test-'));
   const port = 4124;
   const env = {
@@ -101,33 +101,29 @@ test('health endpoint validates pairing key when provided', async () => {
 
   const base = `http://127.0.0.1:${port}`;
 
-  // /health without key returns ok (backward compatible)
+  // /health without key returns ok
   const noKeyRes = await fetch(`${base}/health`);
   assert.equal(noKeyRes.status, 200);
   const noKeyBody = await noKeyRes.json();
-  assert.equal(noKeyBody.ok, true);
-  assert.equal(noKeyBody.authenticated, undefined);
+  assert.deepEqual(noKeyBody, { ok: true });
 
-  // /health with correct key returns authenticated: true
+  // /health with correct key still returns only { ok: true } — no authenticated field
   const goodKeyRes = await fetch(`${base}/health?key=health-test-key`);
   assert.equal(goodKeyRes.status, 200);
   const goodKeyBody = await goodKeyRes.json();
-  assert.equal(goodKeyBody.ok, true);
-  assert.equal(goodKeyBody.authenticated, true);
+  assert.deepEqual(goodKeyBody, { ok: true });
 
-  // /health with wrong key returns authenticated: false
+  // /health with wrong key still returns only { ok: true } — no oracle
   const badKeyRes = await fetch(`${base}/health?key=wrong-key`);
   assert.equal(badKeyRes.status, 200);
   const badKeyBody = await badKeyRes.json();
-  assert.equal(badKeyBody.ok, true);
-  assert.equal(badKeyBody.authenticated, false);
+  assert.deepEqual(badKeyBody, { ok: true });
 
-  // /v1/health also works the same way
+  // /v1/health behaves identically
   const v1Res = await fetch(`${base}/v1/health?key=health-test-key`);
   assert.equal(v1Res.status, 200);
   const v1Body = await v1Res.json();
-  assert.equal(v1Body.ok, true);
-  assert.equal(v1Body.authenticated, true);
+  assert.deepEqual(v1Body, { ok: true });
 
   child.kill('SIGTERM');
   rmSync(tmpDir, { recursive: true, force: true });

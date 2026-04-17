@@ -78,6 +78,13 @@ export interface DailyMetrics {
   vscodeActiveAiExtensions?: string[];
 
   /**
+   * Indica se a última sincronização com o daemon VS Code foi bem-sucedida.
+   * `true` = daemon respondeu com dados válidos; `false` = falha de rede/timeout/resposta inválida.
+   * `undefined` = integração VS Code desabilitada (flag não definida).
+   */
+  vscodeSyncSucceeded?: boolean;
+
+  /**
    * Duração acumulada por contexto (ms) para o dia corrente.
    */
   contextDurations?: Record<ContextModeValue, number>;
@@ -86,6 +93,7 @@ export interface DailyMetrics {
    * Último índice registrado por contexto (congelado ao trocar de contexto).
    */
   contextIndices?: Record<ContextModeValue, number | undefined>;
+  droppedTimelineSegments?: number;
 }
 
 export interface TabSwitchBreakdown {

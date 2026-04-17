@@ -64,7 +64,7 @@ Hosts opcionais (opt‑in):
 
 ## Contato
 
-- Suporte: ribeitemp@gmail.com
+- Suporte: <ribeitemp@gmail.com>
 
 <!--lang:en-->
 # Privacy Policy — Saul Goodman Extension
@@ -132,7 +132,7 @@ Optional host permissions:
 
 ## Contact
 
-- Support: ribeitemp@gmail.com
+- Support: <ribeitemp@gmail.com>
 
 <!--lang:es-->
 # Política de Privacidad — Saul Goodman Extension
@@ -200,4 +200,4 @@ Hosts opcionales:
 
 ## Contacto
 
-- Soporte: ribeitemp@gmail.com
+- Soporte: <ribeitemp@gmail.com>

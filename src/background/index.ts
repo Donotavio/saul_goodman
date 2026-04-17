@@ -47,6 +47,7 @@ import { getContextMode } from '../shared/utils/context.js';
 import {
   LocalStorageKey,
   readLocalStorage,
+  safeStorageSet,
   writeLocalStorage
 } from '../shared/utils/storage.js';
 import {
@@ -97,7 +98,9 @@ function sendSuggestionToast(tabId: number, suggestion: DomainSuggestion): void 
       payload: { suggestion }
     },
     () => {
-      void chrome.runtime.lastError;
+      if (chrome.runtime.lastError) {
+        console.debug('[Saul] Auto-classification toast failed:', chrome.runtime.lastError.message);
+      }
     }
   );
 }
@@ -225,7 +228,8 @@ let settingsCache: ExtensionSettings | null = null;
 let metricsCache: DailyMetrics | null = null;
 let lastVscodeSyncAt = 0;
 let lastVscodeSummaryFallbackAt = 0;
-let vscodeSyncInProgress = false; // BUG-003: Prevent race condition
+let vscodeSyncInProgress = false;
+let vscodeSyncStartedAt = 0;
 let initializing = false;
 let globalCriticalState = false;
 let lastCriticalSoundPref = false;
@@ -236,6 +240,7 @@ let contextModeState: ContextModeState | null = null;
 let contextHistory: ContextHistory = [];
 let holidaysCache: HolidaysCache = {};
 let holidayNeutralToday = false;
+let lastResetDateKey = '';
 let fairnessSnapshot: FairnessSummary | null = null;
 let lastScoreComputation: ScoreComputation | null = null;
 const suggestionCache: Map<string, CachedSuggestion> = new Map();
@@ -701,6 +706,7 @@ async function collectDomainMetadata(
         });
       });
     } catch (error) {
+      console.debug('[Saul] Metadata collection failed for tab', tab.id, error);
       if (!settled) {
         settled = true;
         clearTimeout(timer);
@@ -838,11 +844,11 @@ chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === TRACKING_ALARM) {
-    void handleTrackingTick();
+    handleTrackingTick().catch((e) => console.warn('[Saul] Tracking tick failed:', e));
   }
 
   if (alarm.name === MIDNIGHT_ALARM) {
-    void handleMidnightReset();
+    handleMidnightReset().catch((e) => console.warn('[Saul] Midnight reset failed:', e));
   }
 });
 
@@ -852,13 +858,20 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   }
 
   if (changes[StorageKeys.SETTINGS]) {
+    const oldSettings = changes[StorageKeys.SETTINGS].oldValue as ExtensionSettings | undefined;
     settingsCache = changes[StorageKeys.SETTINGS].newValue as ExtensionSettings;
     applyIdleDetectionInterval(settingsCache);
-    void syncBlockingRules(settingsCache);
-    void (async () => {
+    syncBlockingRules(settingsCache).catch((e) => console.warn('[Saul] Sync blocking rules failed:', e));
+    (async () => {
       await refreshHolidayNeutralState();
       await refreshScore();
-    })();
+    })().catch((e) => console.warn('[Saul] Settings change handler failed:', e));
+    if (oldSettings?.vscodeIntegrationEnabled && !settingsCache.vscodeIntegrationEnabled) {
+      chrome.permissions.remove({ origins: ['http://127.0.0.1/*', 'http://localhost/*'] }, () => {
+        void chrome.runtime.lastError;
+        console.info('[Saul] Localhost permissions revoked (VS Code integration disabled)');
+      });
+    }
   }
 
   if (changes[StorageKeys.METRICS]) {
@@ -868,15 +881,15 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes[LocalStorageKey.MANUAL_OVERRIDE]) {
     manualOverrideState = changes[LocalStorageKey.MANUAL_OVERRIDE].newValue as ManualOverrideState;
     updateFairnessSummary();
-    void refreshScore();
+    refreshScore().catch((e) => console.warn('[Saul] Refresh score failed:', e));
   }
 
   if (changes[LocalStorageKey.CONTEXT_MODE]) {
     const change = changes[LocalStorageKey.CONTEXT_MODE];
     contextModeState = change.newValue as ContextModeState;
-    void handleContextModeHistoryChange(change.oldValue as ContextModeState | undefined, contextModeState);
+    handleContextModeHistoryChange(change.oldValue as ContextModeState | undefined, contextModeState).catch((e) => console.warn('[Saul] Context mode change failed:', e));
     updateFairnessSummary();
-    void refreshScore();
+    refreshScore().catch((e) => console.warn('[Saul] Refresh score failed:', e));
   }
 
   if (changes[LocalStorageKey.HOLIDAYS_CACHE]) {
@@ -971,6 +984,12 @@ async function handleTrackingTick(): Promise<void> {
 }
 
 async function handleMidnightReset(): Promise<void> {
+  const todayKey = getTodayKey();
+  if (lastResetDateKey === todayKey) {
+    await scheduleMidnightAlarm();
+    return;
+  }
+  lastResetDateKey = todayKey;
   await finalizeContextHistoryForDay();
   metricsCache = await clearDailyMetrics();
   await resetContextHistoryForNewDay();
@@ -1069,6 +1088,10 @@ async function accumulateSlice(): Promise<void> {
   const sliceStart = trackingState.lastTimestamp ?? now;
   // BUG-005: Ensure elapsed is never negative (clock adjustment)
   const elapsed = Math.max(0, now - sliceStart);
+  const expectedMs = TRACKING_PERIOD_MINUTES * 60_000;
+  if (elapsed > expectedMs * 1.15) {
+    console.debug('[Saul] Alarm drift detected:', Math.round(elapsed / 1000), 's elapsed vs', expectedMs / 1000, 's expected');
+  }
 
   if (elapsed <= 0) {
     return;
@@ -1465,7 +1488,7 @@ async function notifyReleaseNotesIfNeeded(forceOpen = false): Promise<void> {
     await openTab();
   }
 
-  await chrome.storage.local.set({ [LAST_NOTIFIED_VERSION_KEY]: version });
+  await safeStorageSet({ [LAST_NOTIFIED_VERSION_KEY]: version });
 }
 
 function getDayStartMs(dateKey: string): number {
@@ -1586,11 +1609,11 @@ async function fetchVscodeDurations(
  * Endpoint esperado: GET {base}/v1/tracking/vscode/summary?date=YYYY-MM-DD&key=PAIRING_KEY
  */
 async function syncVscodeMetrics(force = false): Promise<void> {
-  // BUG-003: Prevent race condition with parallel calls
-  if (vscodeSyncInProgress) {
+  if (vscodeSyncInProgress && Date.now() - vscodeSyncStartedAt < 30_000) {
     return;
   }
   vscodeSyncInProgress = true;
+  vscodeSyncStartedAt = Date.now();
 
   try {
     const settings = await getSettingsCache();
@@ -1641,6 +1664,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       metrics.vscodeSwitches = normalized.switches;
       metrics.vscodeSwitchHourly = normalized.switchHourly;
       metrics.vscodeTimeline = normalized.timeline;
+      metrics.vscodeSyncSucceeded = true;
 
       if (normalized.aiMetrics) {
         const ai = normalized.aiMetrics;
@@ -1744,6 +1768,7 @@ async function syncVscodeMetrics(force = false): Promise<void> {
       metrics.vscodeSwitches = sessions;
       metrics.vscodeSwitchHourly = switchHourly;
       metrics.vscodeTimeline = filteredTimeline;
+      metrics.vscodeSyncSucceeded = true;
 
       await persistMetrics();
 
@@ -1885,11 +1910,15 @@ async function syncBlockingRules(settings: ExtensionSettings): Promise<void> {
       .filter((rule) => rule.id >= BLOCK_RULE_ID_BASE && rule.id <= BLOCK_RULE_MAX)
       .map((rule) => rule.id);
 
-    const normalizedDomains = (settings.procrastinationDomains ?? [])
+    const maxBlockRules = BLOCK_RULE_MAX - BLOCK_RULE_ID_BASE + 1;
+    const allDomains = (settings.procrastinationDomains ?? [])
       .map((domain) => extractDomain(domain) ?? normalizeDomain(domain))
       .map((domain) => normalizeDomain(domain ?? ''))
-      .filter((domain) => Boolean(domain))
-      .slice(0, BLOCK_RULE_MAX - BLOCK_RULE_ID_BASE + 1);
+      .filter((domain) => Boolean(domain));
+    if (allDomains.length > maxBlockRules) {
+      console.warn(`[Saul] Block rules truncated: ${allDomains.length} domains exceed limit of ${maxBlockRules}`);
+    }
+    const normalizedDomains = allDomains.slice(0, maxBlockRules);
 
     const addRules: chrome.declarativeNetRequest.Rule[] = settings.blockProcrastination
       ? normalizedDomains.map((domain, index) => ({
@@ -2056,7 +2085,10 @@ function recordTimelineSegment(
   });
 
   if (metrics.timeline.length > MAX_TIMELINE_SEGMENTS) {
-    metrics.timeline.splice(0, metrics.timeline.length - MAX_TIMELINE_SEGMENTS);
+    const dropped = metrics.timeline.length - MAX_TIMELINE_SEGMENTS;
+    metrics.timeline.splice(0, dropped);
+    metrics.droppedTimelineSegments = (metrics.droppedTimelineSegments ?? 0) + dropped;
+    console.debug('[Saul] Timeline overflow: dropped', dropped, 'segments, total dropped:', metrics.droppedTimelineSegments);
   }
 }
 
@@ -2075,10 +2107,18 @@ function applyContextBreakdown(metrics: DailyMetrics): void {
   metrics.contextIndices = breakdown.indices;
 }
 
+let contextHistoryInitPromise: Promise<void> | null = null;
+
 /**
  * Restaura o histórico de contexto armazenado localmente ou cria um segmento inicial.
  */
 async function hydrateContextHistoryState(): Promise<void> {
+  if (contextHistoryInitPromise) return contextHistoryInitPromise;
+  contextHistoryInitPromise = hydrateContextHistoryStateInner();
+  return contextHistoryInitPromise;
+}
+
+async function hydrateContextHistoryStateInner(): Promise<void> {
   const now = Date.now();
   const activeContext =
     contextModeState ?? ({ value: 'work', updatedAt: now } as ContextModeState);
@@ -2289,7 +2329,9 @@ function sendCriticalMessageToTab(
 
   return new Promise((resolve) => {
     chrome.tabs.sendMessage(tab.id, payload, () => {
-      void chrome.runtime.lastError;
+      if (chrome.runtime.lastError) {
+        console.debug('[Saul] Critical toast delivery failed:', chrome.runtime.lastError.message);
+      }
       resolve();
     });
   });
@@ -2349,9 +2391,8 @@ async function bumpRestoredItems(delta: number): Promise<void> {
 }
 
 async function handleVscodeSyncFailure(metrics: DailyMetrics): Promise<void> {
-  const cleared = clearVscodeMetrics(metrics);
-  if (cleared) {
-    await persistMetrics();
-  }
+  metrics.vscodeSyncSucceeded = false;
+  clearVscodeMetrics(metrics);
+  await persistMetrics();
   lastVscodeSyncAt = 0;
 }

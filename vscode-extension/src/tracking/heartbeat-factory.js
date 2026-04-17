@@ -1,3 +1,28 @@
+/**
+ * Canonical heartbeat schema — contract between VS Code Extension and Saul Daemon.
+ * Any field change here MUST be mirrored in saul-daemon/index.cjs (heartbeat ingestion).
+ *
+ * @typedef {Object} SaulHeartbeat
+ * @property {string} id - Unique heartbeat ID (UUID). Daemon generates a fallback if absent.
+ * @property {string} time - ISO 8601 timestamp. Daemon coerces to epoch ms internally.
+ * @property {string} entityType - Type of entity (e.g. 'file', 'app'). Default: 'file'.
+ * @property {string} entity - Entity path (hashed if hashFilePaths=true). Default: 'unknown'.
+ * @property {string} project - Project name (hashed if hashProjectNames=true).
+ * @property {string} language - Programming language.
+ * @property {string} category - Activity category. Default: 'coding'.
+ * @property {boolean} isWrite - Whether this is a write operation.
+ * @property {string} editor - Editor identifier (always 'vscode').
+ * @property {string} pluginVersion - Extension version.
+ * @property {string} machineId - Machine identifier (UUID).
+ * @property {Object} metadata - Additional metadata (daemon normalizes each field individually).
+ * @property {string} [metadata.sessionId] - VS Code session ID. Used in fingerprint.
+ * @property {string} [metadata.workspaceId] - Workspace identifier. Used in fingerprint.
+ * @property {string} [metadata.vscodeVersion] - VS Code version string.
+ * @property {string} [metadata.uiKind] - 'desktop' or 'web'.
+ * @property {string} [metadata.remoteName] - Remote environment name.
+ * @property {string} [metadata.shell] - User's default shell.
+ */
+
 const vscode = require('vscode');
 const { getOrCreateHashSalt, getOrCreateMachineId, hashValue, createUuid } = require('../utils/identity');
 

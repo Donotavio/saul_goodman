@@ -58,6 +58,13 @@ import { safeDivide } from '../shared/ml/utils.js';
 
 const MODEL_META_KEY = 'sg:ml-model-meta';
 
+interface MlModelMeta {
+  version: number;
+  stage: 'guarded' | 'normal';
+  lastUpdated: number;
+  totalUpdates: number;
+}
+
 const MODEL_DIMENSIONS = 1 << 17;
 const MODEL_EMBEDDING_DIM = 8;
 const MODEL_HIDDEN_DIM = 16;
@@ -80,7 +87,7 @@ const EXPLICIT_SAMPLE_WEIGHT = 1.0;
 const PSEUDO_SAMPLE_WEIGHT = 0.1;
 const PSEUDO_POSITIVE_THRESHOLD = 0.93;
 const PSEUDO_NEGATIVE_THRESHOLD = 0.07;
-const PSEUDO_STABILITY_MIN = 3;
+const PSEUDO_STABILITY_MIN = 5;
 const PSEUDO_DOMAIN_COOLDOWN_MS = 12 * 60 * 60 * 1000;
 const PSEUDO_DAILY_LIMIT = 20;
 const PSEUDO_CONTRADICTION_QUARANTINE_MS = 14 * 24 * 60 * 60 * 1000;
@@ -169,6 +176,20 @@ export class MlSuggestionEngine {
   private contextPromise: Promise<MlContext> | null = null;
   private persistTimer: ReturnType<typeof setTimeout> | null = null;
   private static readonly PERSIST_DEBOUNCE_MS = 2000;
+  private modelMutex: Promise<void> = Promise.resolve();
+
+  private async withModelLock<T>(fn: () => Promise<T>): Promise<T> {
+    let release: () => void;
+    const next = new Promise<void>((resolve) => { release = resolve; });
+    const prev = this.modelMutex;
+    this.modelMutex = next;
+    await prev;
+    try {
+      return await fn();
+    } finally {
+      release!();
+    }
+  }
 
   private schedulePersist(context: MlContext): void {
     if (this.persistTimer) clearTimeout(this.persistTimer);
@@ -247,49 +268,51 @@ export class MlSuggestionEngine {
     if (classification !== 'productive' && classification !== 'procrastination') {
       return;
     }
-    const context = await this.getContext();
-    const label: 0 | 1 = classification === 'productive' ? 1 : 0;
+    await this.withModelLock(async () => {
+      const context = await this.getContext();
+      const label: 0 | 1 = classification === 'productive' ? 1 : 0;
 
-    const fallbackFeatures = context.extractor.extract({ hostname: domain });
-    const fallbackPrediction = this.predict(context, fallbackFeatures, {}, false);
-    const fallbackTrainingExampleContext = this.buildTrainingExampleContext(
-      context,
-      fallbackFeatures,
-      fallbackPrediction.vector
-    );
-    const prediction = cached?.prediction ?? fallbackPrediction;
-    const trainingExampleContext = cached?.trainingExampleContext ?? fallbackTrainingExampleContext;
+      const fallbackFeatures = context.extractor.extract({ hostname: domain });
+      const fallbackPrediction = this.predict(context, fallbackFeatures, {}, false);
+      const fallbackTrainingExampleContext = this.buildTrainingExampleContext(
+        context,
+        fallbackFeatures,
+        fallbackPrediction.vector
+      );
+      const prediction = cached?.prediction ?? fallbackPrediction;
+      const trainingExampleContext = cached?.trainingExampleContext ?? fallbackTrainingExampleContext;
 
-    context.vectorizer.incrementCounts(prediction.vector.indices);
-    const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
-    context.model.update(trainVector, label, EXPLICIT_SAMPLE_WEIGHT);
+      context.vectorizer.incrementCounts(prediction.vector.indices);
+      const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
+      context.model.update(trainVector, label, EXPLICIT_SAMPLE_WEIGHT);
 
-    context.totalUpdates += 1;
-    context.explicitUpdates += 1;
-    context.explicitSinceCalibration += 1;
-    context.lastUpdated = Date.now();
+      context.totalUpdates += 1;
+      context.explicitUpdates += 1;
+      context.explicitSinceCalibration += 1;
+      context.lastUpdated = Date.now();
 
-    await context.trainingStore.addTrainingExample(
-      this.toStoredExample(
-        domain,
-        'explicit',
-        label,
-        EXPLICIT_SAMPLE_WEIGHT,
-        prediction.vector,
-        this.classToBinary(prediction.classification, prediction.probability),
-        prediction.rawScore,
-        trainingExampleContext
-      ),
-      {
-        maxExamples: TRAIN_MAX_EXAMPLES,
-        retentionMs: TRAIN_RETENTION_MS
-      }
-    );
+      await context.trainingStore.addTrainingExample(
+        this.toStoredExample(
+          domain,
+          'explicit',
+          label,
+          EXPLICIT_SAMPLE_WEIGHT,
+          prediction.vector,
+          this.classToBinary(prediction.classification, prediction.probability),
+          prediction.rawScore,
+          trainingExampleContext
+        ),
+        {
+          maxExamples: TRAIN_MAX_EXAMPLES,
+          retentionMs: TRAIN_RETENTION_MS
+        }
+      );
 
-    await this.maybeActivatePseudoQuarantine(context, normalizeDomain(domain), label, Date.now());
-    await this.maybeRecalibrate(context);
-    await this.maybeEvaluateValidation(context);
-    this.schedulePersist(context);
+      await this.maybeActivatePseudoQuarantine(context, normalizeDomain(domain), label, Date.now());
+      await this.maybeRecalibrate(context);
+      await this.maybeEvaluateValidation(context);
+      this.schedulePersist(context);
+    });
   }
 
   async getStatus(): Promise<MlModelStatus | null> {
@@ -401,6 +424,8 @@ export class MlSuggestionEngine {
         console.warn('Falha ao carregar estado ML v4', error);
       }
 
+      await this.reconcileStoreConsistency(stored);
+
       const storedV4 = extractV4State(stored);
       const storedV3 = extractV3State(stored);
       const storedV2 = extractV2State(stored);
@@ -464,6 +489,7 @@ export class MlSuggestionEngine {
       await this.maybeEvaluateValidation(context);
 
       this.context = context;
+      this.setupStorageListener();
 
       if (stored && !storedV4) {
         await this.persistContext(context);
@@ -517,6 +543,82 @@ export class MlSuggestionEngine {
       });
     } catch (error) {
       console.warn('Falha ao atualizar metadados do modelo v4', error);
+    }
+  }
+
+  /**
+   * Checks consistency between IndexedDB (source of truth) and chrome.storage.local metadata.
+   * Runs once on startup. If IDB has a newer state than metadata, rebuilds metadata from IDB.
+   * If IDB has no state but metadata exists, clears stale metadata.
+   */
+  private setupStorageListener(): void {
+    try {
+      chrome.storage.onChanged.addListener((changes, areaName) => {
+        if (areaName !== 'local') return;
+        if (MODEL_META_KEY in changes && !changes[MODEL_META_KEY].newValue && this.context) {
+          void this.reconcileStoreConsistency(null).catch(() => {});
+        }
+      });
+    } catch {
+      // chrome.storage may not be available in test environments
+    }
+  }
+
+  private async reconcileStoreConsistency(stored: StoredModelState | null): Promise<void> {
+    let meta: MlModelMeta | undefined;
+    try {
+      const result = await chrome.storage.local.get(MODEL_META_KEY);
+      meta = result[MODEL_META_KEY] as MlModelMeta | undefined;
+    } catch {
+      // storage.local unavailable — nothing to reconcile
+      return;
+    }
+
+    // Case 1: IDB has no model state
+    if (!stored) {
+      if (meta) {
+        console.warn('[saul-goodman] ML store inconsistency detected, rebuilding metadata from model state');
+        try {
+          await chrome.storage.local.remove(MODEL_META_KEY);
+        } catch {
+          // best-effort cleanup
+        }
+      }
+      return;
+    }
+
+    // Case 2: IDB has state — derive canonical values
+    const idbLastUpdated = ('lastUpdated' in stored && typeof stored.lastUpdated === 'number')
+      ? stored.lastUpdated
+      : 0;
+    const idbTotalUpdates = ('totalUpdates' in stored && typeof stored.totalUpdates === 'number')
+      ? stored.totalUpdates
+      : 0;
+    const idbVersion = stored.version ?? 0;
+    const idbStage: 'guarded' | 'normal' =
+      ('guardrailStage' in stored && (stored as StoredModelStateV4).guardrailStage === 'normal')
+        ? 'normal'
+        : 'guarded';
+
+    // Case 3: metadata missing or stale
+    if (
+      !meta ||
+      meta.lastUpdated !== idbLastUpdated ||
+      meta.totalUpdates !== idbTotalUpdates
+    ) {
+      console.warn('[saul-goodman] ML store inconsistency detected, rebuilding metadata from model state');
+      try {
+        await chrome.storage.local.set({
+          [MODEL_META_KEY]: {
+            version: idbVersion,
+            stage: idbStage,
+            lastUpdated: idbLastUpdated,
+            totalUpdates: idbTotalUpdates
+          } satisfies MlModelMeta
+        });
+      } catch {
+        // best-effort rebuild
+      }
     }
   }
 
@@ -773,79 +875,81 @@ export class MlSuggestionEngine {
     trainingExampleContext: TrainingExampleContext,
     now: number
   ): Promise<void> {
-    context.pseudoLabelAttempts += 1;
+    await this.withModelLock(async () => {
+      context.pseudoLabelAttempts += 1;
 
-    const candidateLabel = resolvePseudoLabel(prediction.probability);
-    if (candidateLabel === null) {
-      return;
-    }
-
-    const quarantineKey = `pseudo:quarantine:${domain}`;
-    const quarantineUntil = await context.trainingStore.getMeta<number>(quarantineKey);
-    if (quarantineUntil && quarantineUntil > now) {
-      return;
-    }
-
-    const cooldownKey = `pseudo:last:${domain}`;
-    const lastPseudo = await context.trainingStore.getMeta<number>(cooldownKey);
-    if (lastPseudo && now - lastPseudo < PSEUDO_DOMAIN_COOLDOWN_MS) {
-      return;
-    }
-
-    if (await this.isPseudoDailyLimitReached(context.trainingStore, now)) {
-      return;
-    }
-
-    const stabilityCount = await this.countStablePredictions(context.trainingStore, domain, candidateLabel, now);
-    if (stabilityCount < PSEUDO_STABILITY_MIN) {
-      return;
-    }
-
-    const explicitConflicts = await context.trainingStore.getRecentExplicitExamplesByDomain(
-      domain,
-      now - PSEUDO_EXPLICIT_CONFLICT_LOOKBACK_MS,
-      100
-    );
-    if (explicitConflicts.some((entry) => entry.label !== candidateLabel)) {
-      return;
-    }
-
-    if (!this.isRiskWindowHealthy(context, candidateLabel, behaviorStats)) {
-      return;
-    }
-
-    context.vectorizer.incrementCounts(prediction.vector.indices);
-    const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
-    context.model.update(trainVector, candidateLabel, PSEUDO_SAMPLE_WEIGHT);
-
-    context.totalUpdates += 1;
-    context.implicitUpdates += 1;
-    context.pseudoLabelAccepted += 1;
-    context.lastUpdated = now;
-
-    await context.trainingStore.addTrainingExample(
-      this.toStoredExample(
-        domain,
-        'implicit',
-        candidateLabel,
-        PSEUDO_SAMPLE_WEIGHT,
-        prediction.vector,
-        this.classToBinary(prediction.classification, prediction.probability),
-        prediction.rawScore,
-        trainingExampleContext
-      ),
-      {
-        maxExamples: TRAIN_MAX_EXAMPLES,
-        retentionMs: TRAIN_RETENTION_MS
+      const candidateLabel = resolvePseudoLabel(prediction.probability);
+      if (candidateLabel === null) {
+        return;
       }
-    );
 
-    await context.trainingStore.setMeta(`pseudo:lastLabel:${domain}`, candidateLabel);
-    await context.trainingStore.setMeta(cooldownKey, now);
-    await this.incrementPseudoDailyCounter(context.trainingStore, now);
-    await this.maybeRecalibrate(context);
-    await this.maybeEvaluateValidation(context);
-    this.schedulePersist(context);
+      const quarantineKey = `pseudo:quarantine:${domain}`;
+      const quarantineUntil = await context.trainingStore.getMeta<number>(quarantineKey);
+      if (quarantineUntil && quarantineUntil > now) {
+        return;
+      }
+
+      const cooldownKey = `pseudo:last:${domain}`;
+      const lastPseudo = await context.trainingStore.getMeta<number>(cooldownKey);
+      if (lastPseudo && now - lastPseudo < PSEUDO_DOMAIN_COOLDOWN_MS) {
+        return;
+      }
+
+      if (await this.isPseudoDailyLimitReached(context.trainingStore, now)) {
+        return;
+      }
+
+      const stabilityCount = await this.countStablePredictions(context.trainingStore, domain, candidateLabel, now);
+      if (stabilityCount < PSEUDO_STABILITY_MIN) {
+        return;
+      }
+
+      const explicitConflicts = await context.trainingStore.getRecentExplicitExamplesByDomain(
+        domain,
+        now - PSEUDO_EXPLICIT_CONFLICT_LOOKBACK_MS,
+        100
+      );
+      if (explicitConflicts.some((entry) => entry.label !== candidateLabel)) {
+        return;
+      }
+
+      if (!this.isRiskWindowHealthy(context, candidateLabel, behaviorStats)) {
+        return;
+      }
+
+      context.vectorizer.incrementCounts(prediction.vector.indices);
+      const trainVector = this.applyMinFeatureThreshold(prediction.vector, context.vectorizer);
+      context.model.update(trainVector, candidateLabel, PSEUDO_SAMPLE_WEIGHT);
+
+      context.totalUpdates += 1;
+      context.implicitUpdates += 1;
+      context.pseudoLabelAccepted += 1;
+      context.lastUpdated = now;
+
+      await context.trainingStore.addTrainingExample(
+        this.toStoredExample(
+          domain,
+          'implicit',
+          candidateLabel,
+          PSEUDO_SAMPLE_WEIGHT,
+          prediction.vector,
+          this.classToBinary(prediction.classification, prediction.probability),
+          prediction.rawScore,
+          trainingExampleContext
+        ),
+        {
+          maxExamples: TRAIN_MAX_EXAMPLES,
+          retentionMs: TRAIN_RETENTION_MS
+        }
+      );
+
+      await context.trainingStore.setMeta(`pseudo:lastLabel:${domain}`, candidateLabel);
+      await context.trainingStore.setMeta(cooldownKey, now);
+      await this.incrementPseudoDailyCounter(context.trainingStore, now);
+      await this.maybeRecalibrate(context);
+      await this.maybeEvaluateValidation(context);
+      this.schedulePersist(context);
+    });
   }
 
   private async appendPseudoHistory(
@@ -893,6 +997,12 @@ export class MlSuggestionEngine {
       }
       return entry.probability <= 0.1;
     });
+    const distinctDays = new Set(
+      recent.map((e) => new Date(e.timestamp).toISOString().slice(0, 10))
+    );
+    if (distinctDays.size < 3) {
+      return 0;
+    }
     return recent.length;
   }
 
@@ -916,6 +1026,7 @@ export class MlSuggestionEngine {
       `pseudo:quarantine:${domain}`,
       now + PSEUDO_CONTRADICTION_QUARANTINE_MS
     );
+    await context.trainingStore.removeImplicitExamplesByDomain(domain);
   }
 
   private isRiskWindowHealthy(

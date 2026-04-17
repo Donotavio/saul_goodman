@@ -108,18 +108,18 @@ function populateLocaleSelect(): void {
   const shouldRefresh =
     desired.length !== current.length || desired.some((value, index) => current[index] !== value);
   if (!shouldRefresh) return;
-  localeSelectEl.innerHTML = desired
-    .map((value) => {
-      if (value === 'auto') {
-        return `<option value="auto" data-i18n="options_language_auto">${translateOrFallback(
-          'options_language_auto',
-          'Automático (navegador)'
-        )}</option>`;
-      }
-      const label = LOCALE_LABELS[value as SupportedLocale] ?? value;
-      return `<option value="${value}">${label}</option>`;
-    })
-    .join('');
+  localeSelectEl.textContent = '';
+  for (const value of desired) {
+    const opt = document.createElement('option');
+    opt.value = value;
+    if (value === 'auto') {
+      opt.setAttribute('data-i18n', 'options_language_auto');
+      opt.textContent = translateOrFallback('options_language_auto', 'Automático (navegador)');
+    } else {
+      opt.textContent = LOCALE_LABELS[value as SupportedLocale] ?? value;
+    }
+    localeSelectEl.appendChild(opt);
+  }
 }
 
 function attachListeners(): void {

@@ -26,6 +26,8 @@ export interface VscodeTrackingSummaryPayload {
     durationMs?: number;
   }>;
   aiMetrics?: VscodeAiMetrics;
+  index?: number | null;
+  indexUpdatedAt?: number | null;
 }
 
 export interface NormalizedVscodeTrackingSummary {
@@ -35,6 +37,8 @@ export interface NormalizedVscodeTrackingSummary {
   switchHourly: number[];
   timeline: TimelineEntry[];
   aiMetrics?: VscodeAiMetrics;
+  index?: number | null;
+  indexUpdatedAt?: number | null;
 }
 
 export interface VscodeSummaryNormalizeOptions {

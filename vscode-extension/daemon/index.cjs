@@ -1,6 +1,6 @@
 const http = require('http');
 const path = require('path');
-const { mkdir, readFile, writeFile, rename, stat } = require('fs/promises');
+const { mkdir, readFile, writeFile, rename, stat, unlink } = require('fs/promises');
 const {
   buildDurations,
   splitDurationByDay,
@@ -24,11 +24,11 @@ const DATA_DIR = path.join(DATA_ROOT, 'data');
 const STATE_PATH = path.join(DATA_DIR, 'vscode-usage.json');
 const VSCODE_STATE_PATH = path.join(DATA_DIR, 'vscode-tracking.json');
 const MAX_BODY_BYTES = parseEnvNumber('SAUL_DAEMON_MAX_BODY_KB', 256) * 1024;
-const RETENTION_DAYS = parseEnvNumber('SAUL_DAEMON_RETENTION_DAYS', 1);
-const VSCODE_RETENTION_DAYS = parseEnvNumber(
+const RETENTION_DAYS = Math.max(1, parseEnvNumber('SAUL_DAEMON_RETENTION_DAYS', 1));
+const VSCODE_RETENTION_DAYS = Math.max(1, parseEnvNumber(
   'SAUL_DAEMON_VSCODE_RETENTION_DAYS',
   RETENTION_DAYS
-);
+));
 const VSCODE_GAP_MS = parseEnvNumber('SAUL_VSCODE_GAP_MINUTES', 5) * 60 * 1000;
 const VSCODE_GRACE_MS = parseEnvNumber('SAUL_VSCODE_GRACE_MINUTES', 2) * 60 * 1000;
 const MAX_FUTURE_DAYS = 1;
@@ -41,13 +41,29 @@ const vscodeState = {
 };
 const vscodeIdIndex = new Map();
 
+const heartbeatLocks = new Map();
+
+function withHeartbeatLock(key, fn) {
+  const prev = heartbeatLocks.get(key) ?? Promise.resolve();
+  const next = prev.then(fn, fn);
+  const guarded = next.catch(() => {});
+  heartbeatLocks.set(key, guarded);
+  guarded.then(() => {
+    if (heartbeatLocks.get(key) === guarded) {
+      heartbeatLocks.delete(key);
+    }
+  });
+  return next;
+}
+
 let persistChain = Promise.resolve();
 
 function enqueuePersist(task) {
-  persistChain = persistChain.then(task).catch((error) => {
+  const p = persistChain.then(task);
+  persistChain = p.catch((error) => {
     console.warn('[saul-daemon] Persist failed', error);
   });
-  return persistChain;
+  return p;
 }
 
 async function atomicWriteJson(targetPath, snapshot) {
@@ -57,15 +73,33 @@ async function atomicWriteJson(targetPath, snapshot) {
   await rename(tmpPath, targetPath);
 }
 
+async function loadJsonWithFallback(filePath) {
+  try {
+    const raw = await readFile(filePath, 'utf8');
+    return JSON.parse(raw);
+  } catch (primaryError) {
+    console.error(`[saul-daemon] Failed to load ${path.basename(filePath)}:`, primaryError.message);
+  }
+  const tmpPath = `${filePath}.tmp`;
+  try {
+    const raw = await readFile(tmpPath, 'utf8');
+    const parsed = JSON.parse(raw);
+    console.warn(`[saul-daemon] Recovered ${path.basename(filePath)} from .tmp fallback`);
+    return parsed;
+  } catch (tmpError) {
+    if (tmpError.code !== 'ENOENT') {
+      console.error(`[saul-daemon] .tmp fallback also failed for ${path.basename(filePath)}:`, tmpError.message);
+    }
+  }
+  return null;
+}
+
 async function loadState() {
   await ensureDataDir();
-  try {
-    const raw = await readFile(STATE_PATH, 'utf8');
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object' && parsed.byKey) {
-      state.byKey = parsed.byKey;
-    }
-  } catch {
+  const loaded = await loadJsonWithFallback(STATE_PATH);
+  if (loaded && typeof loaded === 'object' && loaded.byKey) {
+    state.byKey = loaded.byKey;
+  } else {
     state.byKey = Object.create(null);
   }
 }
@@ -78,34 +112,31 @@ async function persistState() {
 
 async function loadVscodeState() {
   await ensureDataDir();
-  try {
-    const raw = await readFile(VSCODE_STATE_PATH, 'utf8');
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object' && parsed.byKey) {
-      vscodeState.byKey = parsed.byKey;
-      for (const key of Object.keys(vscodeState.byKey)) {
-        const entry = vscodeState.byKey[key];
-        if (!entry.heartbeats || !Array.isArray(entry.heartbeats)) {
-          entry.heartbeats = [];
-        }
-        if (!entry.durations || !Array.isArray(entry.durations)) {
-          entry.durations = [];
-        }
-        const removed = dedupeVscodeHeartbeats(entry);
-        if (removed) {
-          entry.durations = buildDurations(entry.heartbeats, {
-            gapMs: VSCODE_GAP_MS,
-            graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
-          });
-        }
-        const idSet = new Set();
-        for (const heartbeat of entry.heartbeats) {
-          addHeartbeatToIndex(idSet, heartbeat);
-        }
-        vscodeIdIndex.set(key, idSet);
+  const loaded = await loadJsonWithFallback(VSCODE_STATE_PATH);
+  if (loaded && typeof loaded === 'object' && loaded.byKey) {
+    vscodeState.byKey = loaded.byKey;
+    for (const key of Object.keys(vscodeState.byKey)) {
+      const entry = vscodeState.byKey[key];
+      if (!entry.heartbeats || !Array.isArray(entry.heartbeats)) {
+        entry.heartbeats = [];
       }
+      if (!entry.durations || !Array.isArray(entry.durations)) {
+        entry.durations = [];
+      }
+      const removed = dedupeVscodeHeartbeats(entry);
+      if (removed) {
+        entry.durations = buildDurations(entry.heartbeats, {
+          gapMs: VSCODE_GAP_MS,
+          graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
+        });
+      }
+      const idSet = new Set();
+      for (const heartbeat of entry.heartbeats) {
+        addHeartbeatToIndex(idSet, heartbeat);
+      }
+      vscodeIdIndex.set(key, idSet);
     }
-  } catch {
+  } else {
     vscodeState.byKey = Object.create(null);
   }
 }
@@ -345,11 +376,12 @@ function pruneVscodeEntries(key) {
       graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
     });
   }
-  const idSet = getVscodeIdSet(key);
-  idSet.clear();
+  const oldSet = getVscodeIdSet(key);
+  const newSet = new Set();
   for (const heartbeat of entry.heartbeats) {
-    addHeartbeatToIndex(idSet, heartbeat);
+    addHeartbeatToIndex(newSet, heartbeat);
   }
+  vscodeIdIndex.set(key, newSet);
 }
 
 function validateKey(receivedKey) {
@@ -365,6 +397,9 @@ function normalizeHeartbeat(raw) {
     return null;
   }
   const time = coerceTimestamp(raw.time ?? raw.timestamp);
+  if (time === null) {
+    return null;
+  }
   if (!isDateWithinWindowWithRetention(formatDateKey(new Date(time)), VSCODE_RETENTION_DAYS)) {
     return null;
   }
@@ -640,7 +675,7 @@ function coerceTimestamp(value) {
       return numeric;
     }
   }
-  return Date.now();
+  return null;
 }
 
 function coerceString(value, fallback) {
@@ -801,7 +836,13 @@ async function handleHeartbeat(req, res, url) {
     }
 
     pruneOldEntries();
-    await persistState();
+    try {
+      await persistState();
+    } catch (persistError) {
+      console.error('[saul-daemon] Failed to persist state', persistError);
+      sendError(req, res, 500, 'Failed to persist state');
+      return;
+    }
     sendNoContent(req, res);
   } catch (error) {
     sendError(req, res, 400, error.message);
@@ -876,16 +917,10 @@ function handleSummary(req, res, url) {
       if (duration.endTime <= startMs || duration.startTime >= endMs) {
         continue;
       }
-      
-      // BUG-FIX: Filter out focus/blur events without valid project/language
-      // Must match the filtering logic used in summarizeDurationsByDay/summarizeDurations
-      const project = (duration.project ?? '').trim();
-      const language = (duration.language ?? '').trim();
-      
-      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
+      if (!isDurationRelevant(duration)) {
         continue;
       }
-      
+
       sessions += 1;
       const hour = new Date(duration.startTime).getHours();
       if (switchHourly[hour] !== undefined) {
@@ -1007,7 +1042,13 @@ async function handleIndex(req, res, url) {
       const entry = ensureEntry(key, dateKey);
       entry.index = indexValue;
       entry.indexUpdatedAt = Number.isFinite(timestamp) ? timestamp : Date.now();
-      await persistState();
+      try {
+        await persistState();
+      } catch (persistError) {
+        console.error('[saul-daemon] Failed to persist state', persistError);
+        sendError(req, res, 500, 'Failed to persist state');
+        return;
+      }
       sendNoContent(req, res);
     } catch (error) {
       sendError(req, res, 400, error.message ?? 'Invalid payload');
@@ -1039,37 +1080,44 @@ async function handleVscodeHeartbeats(req, res, url) {
       sendError(req, res, 400, 'heartbeats array is required');
       return;
     }
-    const entry = ensureVscodeEntry(key);
-    const idSet = getVscodeIdSet(key);
     const normalized = payload
       .map((heartbeat) => normalizeHeartbeat(heartbeat))
       .filter(Boolean);
-    const accepted = [];
-    for (const heartbeat of normalized) {
-      const fingerprintKey = getHeartbeatFingerprintKey(heartbeat);
-      if (idSet.has(heartbeat.id) || (fingerprintKey && idSet.has(fingerprintKey))) {
-        continue;
+
+    const result = await withHeartbeatLock(key, async () => {
+      const entry = ensureVscodeEntry(key);
+      const idSet = getVscodeIdSet(key);
+      const accepted = [];
+      for (const heartbeat of normalized) {
+        const fingerprintKey = getHeartbeatFingerprintKey(heartbeat);
+        if (idSet.has(heartbeat.id) || (fingerprintKey && idSet.has(fingerprintKey))) {
+          continue;
+        }
+        idSet.add(heartbeat.id);
+        if (fingerprintKey) {
+          idSet.add(fingerprintKey);
+        }
+        accepted.push(heartbeat);
       }
-      idSet.add(heartbeat.id);
-      if (fingerprintKey) {
-        idSet.add(fingerprintKey);
+      if (accepted.length) {
+        entry.heartbeats.push(...accepted);
+        pruneVscodeEntries(key);
+        entry.durations = buildDurations(entry.heartbeats, {
+          gapMs: VSCODE_GAP_MS,
+          graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
+        });
+        await persistVscodeState();
       }
-      accepted.push(heartbeat);
-    }
-    if (accepted.length) {
-      entry.heartbeats.push(...accepted);
-      pruneVscodeEntries(key);
-      entry.durations = buildDurations(entry.heartbeats, {
-        gapMs: VSCODE_GAP_MS,
-        graceMs: Math.min(VSCODE_GRACE_MS, VSCODE_GAP_MS)
-      });
-      await persistVscodeState();
-    }
-    sendJson(req, res, 200, {
-      accepted: accepted.length,
-      total: entry.heartbeats.length
+      return { accepted: accepted.length, total: entry.heartbeats.length };
     });
+
+    sendJson(req, res, 200, result);
   } catch (error) {
+    if (error.message?.includes('persist')) {
+      console.error('[saul-daemon] Failed to persist vscode state', error);
+      sendError(req, res, 500, 'Failed to persist state');
+      return;
+    }
     sendError(req, res, 400, error.message ?? 'Invalid payload');
   }
 }
@@ -1312,18 +1360,11 @@ function handleVscodeBranches(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const project = (dur.project ?? '').trim();
-      const language = (dur.language ?? '').trim();
-      
-      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
-        return;
-      }
-      
       const branch = (dur.metadata?.branch ?? '').trim();
       if (!branch || branch.toLowerCase() === 'unknown') {
         return;
       }
-      
+
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
@@ -1902,18 +1943,11 @@ function handleVscodeDashboard(req, res, url) {
   entry.durations
     .filter((dur) => matchesDurationFilters(dur, filters, startMs, endMs))
     .forEach((dur) => {
-      const project = (dur.project ?? '').trim();
-      const language = (dur.language ?? '').trim();
-      
-      if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
-        return;
-      }
-      
       const branch = (dur.metadata?.branch ?? '').trim();
       if (!branch || branch.toLowerCase() === 'unknown') {
         return;
       }
-      
+
       const overlapStart = Math.max(dur.startTime, startMs);
       const overlapEnd = Math.min(dur.endTime, endMs);
       const overlapMs = Math.max(0, overlapEnd - overlapStart);
@@ -2007,7 +2041,12 @@ function handleVscodeDashboard(req, res, url) {
 }
 
 
-function handleVscodeMeta(req, res) {
+function handleVscodeMeta(req, res, url) {
+  const key = url.searchParams.get('key') ?? '';
+  if (!validateKey(key)) {
+    sendError(req, res, 401, 'Invalid key');
+    return;
+  }
   sendJson(req, res, 200, {
     version: 1,
     data: {
@@ -2122,11 +2161,21 @@ function matchesFilters(record, filters) {
   return true;
 }
 
+function isDurationRelevant(duration) {
+  const project = (duration.project ?? '').trim();
+  const language = (duration.language ?? '').trim();
+  return (project && project.toLowerCase() !== 'unknown' &&
+          language && language.toLowerCase() !== 'unknown');
+}
+
 function matchesDurationFilters(duration, filters, startMs, endMs) {
   if (!duration || !Number.isFinite(duration.startTime)) {
     return false;
   }
   if (duration.endTime <= startMs || duration.startTime >= endMs) {
+    return false;
+  }
+  if (!isDurationRelevant(duration)) {
     return false;
   }
   return matchesFilters(duration, filters);
@@ -2144,14 +2193,9 @@ function summarizeDurationsByDay(durations, startMs, endMs, filters) {
     if (!matchesDurationFilters(duration, filters, startMs, endMs)) {
       continue;
     }
-    
+
     const project = (duration.project ?? '').trim();
     const language = (duration.language ?? '').trim();
-    
-    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
-      continue;
-    }
-    
     const slices = splitDurationByDay(duration, startMs, endMs);
     for (const slice of slices) {
       const dateKey = slice.dateKey;
@@ -2197,17 +2241,10 @@ function summarizeDurations(durations, startMs, endMs, filters) {
     if (overlapMs <= 0) {
       continue;
     }
-    
-    const project = (duration.project ?? '').trim();
-    const language = (duration.language ?? '').trim();
-    
-    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
-      continue;
-    }
-    
+
     summary.totalMs += overlapMs;
-    incrementMap(summary.projects, project, overlapMs);
-    incrementMap(summary.languages, language, overlapMs);
+    incrementMap(summary.projects, duration.project ?? '', overlapMs);
+    incrementMap(summary.languages, duration.language ?? '', overlapMs);
     incrementMap(summary.editors, duration.editor ?? 'vscode', overlapMs);
     incrementMap(summary.categories, duration.category ?? 'coding', overlapMs);
     incrementMap(summary.machines, duration.machineId ?? 'unknown', overlapMs);
@@ -2231,15 +2268,11 @@ function summarizeLanguagesByProject(durations, startMs, endMs, filters) {
 
     const project = (duration.project ?? '').trim();
     const language = (duration.language ?? '').trim();
-    
-    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
-      continue;
-    }
 
     if (!projectMap.has(project)) {
       projectMap.set(project, new Map());
     }
-    
+
     const langMap = projectMap.get(project);
     langMap.set(language, (langMap.get(language) || 0) + overlapMs);
   }
@@ -2289,13 +2322,6 @@ function summarizeDurationsByHour(durations, startMs, endMs, filters) {
     const overlapEnd = Math.min(duration.endTime, endMs);
     const overlapMs = Math.max(0, overlapEnd - overlapStart);
     if (overlapMs <= 0) {
-      continue;
-    }
-
-    const project = (duration.project ?? '').trim();
-    const language = (duration.language ?? '').trim();
-    
-    if (!project || project.toLowerCase() === 'unknown' || !language || language.toLowerCase() === 'unknown') {
       continue;
     }
 
@@ -2389,6 +2415,11 @@ async function start() {
 
   await loadState();
   await loadVscodeState();
+  await persistState();
+  await persistVscodeState();
+  for (const tmpPath of [`${STATE_PATH}.tmp`, `${VSCODE_STATE_PATH}.tmp`]) {
+    try { await unlink(tmpPath); } catch {}
+  }
   const server = http.createServer(async (req, res) => {
     if (!req.url || !req.method) {
       sendError(req, res, 400, 'Invalid request');
@@ -2408,12 +2439,7 @@ async function start() {
     }
 
     if (req.method === 'GET' && (parsedUrl.pathname === '/health' || parsedUrl.pathname === '/v1/health')) {
-      const keyParam = parsedUrl.searchParams.get('key');
-      if (keyParam !== null) {
-        sendJson(req, res, 200, { ok: true, authenticated: validateKey(keyParam) });
-      } else {
-        sendJson(req, res, 200, { ok: true });
-      }
+      sendJson(req, res, 200, { ok: true });
       return;
     }
 

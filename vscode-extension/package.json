@@ -143,6 +143,7 @@
   ],
   "scripts": {
     "test": "node --test src/tests/**/*.test.js",
+    "i18n:sync": "node scripts/sync-locales.js",
     "generate-nls": "node scripts/generate-nls.js",
     "copy-daemon": "rm -rf daemon && mkdir -p daemon/src && cp ../saul-daemon/index.cjs ../saul-daemon/package.json daemon/ && cp ../saul-daemon/src/vscode-aggregation.cjs daemon/src/",
     "prebuild:vsix": "npm run copy-daemon && npm run generate-nls && npm --prefix .. run i18n:copy-site",

@@ -67,6 +67,7 @@ export function listCachedDates(cache: HolidaysCache, key: string): string[] {
 /**
  * Fetches the Nager.Date public holidays list for a `(year, country)` pair.
  * Errors are swallowed to keep the fairness feature best-effort.
+ * Privacy note: the user's country code is sent to date.nager.at (opt-in via holidayAutoEnabled).
  * @returns Array of ISO date strings.
  */
 export async function fetchPublicHolidays(

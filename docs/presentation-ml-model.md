@@ -6,7 +6,7 @@
 
 ## 1. O Problema (2 min)
 
-**Slide: "O paradoxo da atencao digital"**
+### ### **Slide: "O paradoxo da atencao digital"**
 
 - Trabalhadores do conhecimento alternam entre ~400 tarefas/dia (Mark et al., CHI 2008)
 - Apos cada interrupcao, leva ~23 min para retomar o foco original
@@ -20,7 +20,7 @@
 
 ## 2. Visao do Usuario (3 min)
 
-**Slide: "O que o usuario ve"**
+### **Slide: "O que o usuario ve"**
 
 O modelo roda dentro de uma Chrome Extension (Manifest V3). O fluxo visivel:
 
@@ -37,6 +37,7 @@ Feedback explicito do usuario treina o modelo localmente
 ```
 
 **Pontos-chave para audiencia:**
+
 - Zero configuracao inicial — o modelo aprende do zero
 - Explicabilidade: cada sugestao mostra *por que* (top features, conceitos semanticos)
 - Review Queue: dominos incertos sao priorizados para revisao humana (active learning visivel)
@@ -46,7 +47,7 @@ Feedback explicito do usuario treina o modelo localmente
 
 ## 3. Restricoes de Design (2 min)
 
-**Slide: "Constraints que definiram a arquitetura"**
+### **Slide: "Constraints que definiram a arquitetura"**
 
 | Restricao | Impacto na arquitetura |
 |-----------|----------------------|
@@ -61,7 +62,7 @@ Feedback explicito do usuario treina o modelo localmente
 
 ## 4. Arquitetura do Modelo (5 min)
 
-**Slide: "Wide & Deep adaptado para browser"**
+### **Slide: "Wide & Deep adaptado para browser"**
 
 Inspirado em Cheng et al. 2016 (Wide & Deep Learning), adaptado para TypeScript puro:
 
@@ -99,12 +100,14 @@ Entrada: SparseVector (indices[], values[])
 | minFeatureCount | 5 | Ignora features vistas < 5 vezes (reduz ruido) |
 
 **Otimizador: AdaGrad**
+
 - Acumuladores por parametro: `accum += grad^2`
 - Update: `w -= lr * grad / (sqrt(accum) + 1e-8)`
 - Adaptativo: features frequentes recebem lr decrescente, features raras mantem lr alto
 - Inicializacao: He initialization (`sqrt(2/fan_in)`) para deep branch, seed deterministico (LCG)
 
 **Tamanho em memoria:**
+
 - Wide: 131,072 × 4 bytes × 2 (weights + accum) = ~1 MB
 - Embeddings: 131,072 × 8 × 4 × 2 = ~8 MB
 - Hidden: 16 × 8 × 4 × 2 = ~1 KB
@@ -114,7 +117,7 @@ Entrada: SparseVector (indices[], values[])
 
 ## 5. Pipeline de Features (4 min)
 
-**Slide: "3 camadas de sinais — do conteudo ao comportamento"**
+### **Slide: "3 camadas de sinais — do conteudo ao comportamento"**
 
 ### Camada 1: Feature Extractor (conteudo da pagina)
 
@@ -154,12 +157,13 @@ Tokenizacao: lowercase, Unicode-aware (`\p{L}\p{N}`), stopwords bilingues (EN + 
 | `beh:overtime_ratio` | Acessos fora do horario de trabalho |
 
 Labels implicitos derivados (peso 0.25):
+
 - **Produtivo implicito**: mediana >= 3 min, interacao >= 1.5/min, distraction < 50%
 - **Procrastinacao implicita**: mediana >= 2 min, distraction >= 60% ou audio >= 30%
 
 ### Camada 3: Natural Signals (semantica + atencao)
 
-**Paper: Mark et al. CHI 2008 — "The Cost of Interrupted Work"**
+### **Paper: Mark et al. CHI 2008 — "The Cost of Interrupted Work"**
 
 6 Concept Prototypes com cosine similarity em vetores hasheados (256-dim):
 
@@ -175,46 +179,53 @@ Labels implicitos derivados (peso 0.25):
 16 sinais continuos com z-score + winsorization (p1/p99):
 
 **Engagement (4 sinais):**
+
 - `dwell_log`: log(1 + activeMs/1000) — tempo de permanencia
 - `interaction_rate`: cliques / minutos ativos
 - `scroll_completion`: profundidade de leitura [0, 1]
 - `audible_ratio_14d`: historico de audio em 14 dias
 
 **Attention (4 sinais) ← Mark et al. CHI 2008:**
+
 - `switch_rate_10m`: trocas de aba / minutos ativos nos ultimos 10 min
 - `focus_continuity_10m`: 1 - switch_rate (quanto mais alto, mais focado)
 - `return_latency_7d`: log(1 + latencia de retorno ao dominio / 60k) — dominio habitual ou impulso?
 - `fragmentation_index`: trocas / (revisitas + 1) — atencao fragmentada
 
 **Task Progress (3 sinais):**
+
 - `edit_density`: interacoes/min em paginas com editor rico
 - `form_progress_proxy`: progresso em formularios
 - `completion_proxy`: (scroll + dwell) / 2 — completude da tarefa
 
 **Context (4 sinais):**
+
 - `schedule_fit`: acesso dentro do horario configurado
 - `out_of_schedule_ratio_14d`: historico de acessos fora de horario
 - `vscode_active_15m`: VS Code ativo nos ultimos 15 min (proxy de trabalho)
 - `vscode_share_15m`: VS Code share no foco recente
 
 **Reliability (2 sinais):**
+
 - `metadata_quality_score`: qualidade dos metadados (12 checks)
 - `signal_stability_7d`: estabilidade dos sinais na semana
 
 **Normalizacao:**
-```
+
+```typescript
 z = (winsorized(x, p1, p99) - mean) / std
 feature_value = clamp(z / 3, -2, 2)
 ```
+
 Quando < 20 amostras: fallback `clamp(x / 5, -2, 2)`.
 
 ---
 
 ## 6. Vectorizacao: Feature Hashing (2 min)
 
-**Slide: "FNV-1a → Espaco esparso de 131K dimensoes"**
+### **Slide: "FNV-1a → Espaco esparso de 131K dimensoes"**
 
-```
+```typescript
 feature_string → FNV-1a hash → index = hash % 131,072
                               → sign  = (hash & 1) == 0 ? +1 : -1
 ```
@@ -230,13 +241,13 @@ Paper de referencia: Weinberger et al. 2009 — "Feature Hashing for Large Scale
 
 ## 7. Calibracao: Temperature Scaling (3 min)
 
-**Slide: "Guo et al. 2017 — On Calibration of Modern Neural Networks"**
+### **Slide: "Guo et al. 2017 — On Calibration of Modern Neural Networks"**
 
 **Problema:** redes neurais modernas sao overconfident — P(y|x) ≠ confianca real.
 
 **Solucao no paper:** Temperature Scaling — o metodo mais simples e eficaz.
 
-```
+```typescript
 P_calibrated = sigmoid(score / T)
 ```
 
@@ -253,6 +264,7 @@ P_calibrated = sigmoid(score / T)
 | Metrica | ECE (Expected Calibration Error) com 10 bins |
 
 **Fidelidade ao paper:**
+
 - Treina T apenas no **calibration split** (15% dos dados) — nunca no train set
 - 1 unico parametro escalar — preserva a ordenacao (accuracy nao muda)
 - Gradient: `∂L/∂logT = mean((sigmoid(s/T) - y) × (-s/T)) + λ × logT`
@@ -263,7 +275,7 @@ P_calibrated = sigmoid(score / T)
 
 ## 8. Validation Gate: Rigor Estatistico (3 min)
 
-**Slide: "O modelo so avanca se provar que melhorou"**
+### **Slide: "O modelo so avanca se provar que melhorou"**
 
 O modelo opera em 2 estagios:
 
@@ -274,7 +286,7 @@ O modelo opera em 2 estagios:
 
 **Criterios do Validation Gate (todos devem passar):**
 
-```
+```text
 1. enoughSamples: n >= 50
 2. fprGate: FPR_melhora >= 0.01 OR FPR_melhora_relativa >= 10%
 3. precisionGate: precision_drop >= -0.01
@@ -285,9 +297,11 @@ O modelo opera em 2 estagios:
 **Bootstrap CI:** 1000 iteracoes, resample com reposicao, IC 95% do delta macro-F1 (modelo - baseline).
 
 **McNemar test:** chi-square com correcao de Yates, foco em false productives (erros criticos):
-```
+
+```typescript
 chi2 = (|b - c| - 1)^2 / (b + c)
 ```
+
 onde `b` = baseline errou mas modelo acertou, `c` = modelo errou mas baseline acertou.
 
 **Weighted Brier Score** + **ECE** como metricas complementares.
@@ -296,13 +310,13 @@ onde `b` = baseline errou mas modelo acertou, `c` = modelo errou mas baseline ac
 
 ## 9. Active Learning: Review Queue (2 min)
 
-**Slide: "Settles — Active Learning (2009)"**
+### **Slide: "Settles — Active Learning (2009)"**
 
 **Problema:** feedback humano e caro (cada rotulagem exige atencao do usuario).
 
 **Estrategia:** priorizar dominios onde o modelo tem mais a aprender.
 
-```
+```text
 Fila de revisao (max 20 candidatos)
     │
     ├── Prioridade 1: BORDERLINE (distancia <= 0.05 do threshold)
@@ -331,11 +345,11 @@ Fila de revisao (max 20 candidatos)
 
 ## 10. Training Pipeline (3 min)
 
-**Slide: "Aprendizado online com split deterministico"**
+### **Slide: "Aprendizado online com split deterministico"**
 
 ### Split Deterministico (sem shuffle)
 
-```
+```text
 FNV-1a(domain) % 100 → bucket
   0-69:  train      (70%)
   70-84: calibration (15%)
@@ -348,7 +362,7 @@ FNV-1a(domain) % 100 → bucket
 
 ### Fluxo de Treinamento
 
-```
+```text
 Feedback explicito do usuario
     ↓
 TrainingStore.addExample(domain, features, label, weight=1.0)
@@ -370,7 +384,7 @@ Periodicamente:
 
 ### Warm Start (migracao entre versoes)
 
-```
+```text
 v1 (logistic regression) → wide weights copiados
 v2 (FTRL dual-model) → FTRL z,n → w = -(z - sign*l1) / ((beta+sqrt(n))/alpha + l2)
 v3 (neural + Platt) → wideWeights + wideBias copiados diretamente
@@ -381,7 +395,7 @@ v4 (neural + temperature) → wideWeights + wideBias copiados diretamente
 
 ## 11. Conexao Paper ↔ Codigo (2 min)
 
-**Slide: "Da teoria a implementacao"**
+### **Slide: "Da teoria a implementacao"**
 
 ### Guo et al. 2017 — Temperature Scaling
 
@@ -397,7 +411,7 @@ v4 (neural + temperature) → wideWeights + wideBias copiados diretamente
 
 | Paper | Implementacao |
 |-------|--------------|
-| "uncertainty sampling" | `uncertainty = 1 - |prob - 0.5| × 2` |
+| "uncertainty sampling" | uncertainty = 1 - | prob - 0.5 | × 2 |
 | "query-by-committee" | Nao usado — single model, adaptado para borderline priority |
 | "informative instances" | Review queue com priorizacao borderline > uncertainty |
 | "pool-based active learning" | Fila passiva — espera feedback do usuario, nao faz query ativa |
@@ -416,7 +430,7 @@ v4 (neural + temperature) → wideWeights + wideBias copiados diretamente
 
 ## 12. Diferenciais Tecnicos (2 min)
 
-**Slide: "O que torna isso unico"**
+### **Slide: "O que torna isso unico"**
 
 1. **Modelo neural completo em TypeScript puro** — sem ONNX, TensorFlow.js ou WebGL. Forward + backprop + AdaGrad em ~480 linhas.
 
@@ -440,7 +454,7 @@ v4 (neural + temperature) → wideWeights + wideBias copiados diretamente
 
 ## 13. Numeros do Sistema (1 min)
 
-**Slide: "Em numeros"**
+### **Slide: "Em numeros"**
 
 | Metrica | Valor |
 |---------|-------|
@@ -468,15 +482,17 @@ v4 (neural + temperature) → wideWeights + wideBias copiados diretamente
 
 ## 14. Limitacoes e Trabalho Futuro (1 min)
 
-**Slide: "Honestidade intelectual"**
+### **Slide: "Honestidade intelectual"**
 
 **Limitacoes atuais:**
+
 - Feature hashing tem colisoes — signed hashing mitiga mas nao elimina
 - Deep branch com 1 hidden layer — capacidade limitada para interacoes complexas
 - Pseudo-labels podem amplificar bias do modelo (confidence threshold alto mitiga)
 - Normalizacao z-score precisa de >= 20 amostras para estabilizar
 
 **Possibilidades futuras:**
+
 - Quantizacao INT8 dos embeddings (reducao de 4× na memoria)
 - Attention pooling no deep branch (substituir mean pooling)
 - Contrastive learning para concept vectors

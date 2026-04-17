@@ -1,5 +1,8 @@
 const { fetchWithTimeout } = require('../net-helpers');
 
+const DEFAULT_HEALTH_TIMEOUT = 4000;
+const DEFAULT_REQUEST_TIMEOUT = 5000;
+
 function buildUrl(apiBase, path, params = {}) {
   const url = new URL(path, apiBase);
   for (const [key, value] of Object.entries(params)) {
@@ -11,24 +14,38 @@ function buildUrl(apiBase, path, params = {}) {
   return url.toString();
 }
 
-async function getHealth(apiBase) {
+function resolveTimeout(config, fallback) {
+  const custom = config?.requestTimeoutMs;
+  return typeof custom === 'number' && custom > 0 ? custom : fallback;
+}
+
+async function safeJson(res, url) {
+  try {
+    return await (res.json?.() ?? {});
+  } catch (err) {
+    const status = res.status ?? 'unknown';
+    throw new Error(`JSON parse failed for ${url} (HTTP ${status}): ${err.message}`);
+  }
+}
+
+async function getHealth(apiBase, config) {
   const url = buildUrl(apiBase, '/health');
-  const res = await fetchWithTimeout(url, 4000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_HEALTH_TIMEOUT));
   return res;
 }
 
-async function getHealthWithKey(apiBase, key) {
+async function getHealthWithKey(apiBase, key, config) {
   const url = buildUrl(apiBase, '/health', { key });
-  const res = await fetchWithTimeout(url, 4000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_HEALTH_TIMEOUT));
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json?.() ?? {};
+  return safeJson(res, url);
 }
 
-async function postHeartbeats(apiBase, key, heartbeats) {
+async function postHeartbeats(apiBase, key, heartbeats, config) {
   const url = buildUrl(apiBase, '/v1/vscode/heartbeats');
-  const res = await fetchWithTimeout(url, 5000, {
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_REQUEST_TIMEOUT), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ key, heartbeats })
@@ -36,43 +53,43 @@ async function postHeartbeats(apiBase, key, heartbeats) {
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json?.() ?? {};
+  return safeJson(res, url);
 }
 
-async function getSummaries(apiBase, key, params) {
+async function getSummaries(apiBase, key, params, config) {
   const url = buildUrl(apiBase, '/v1/vscode/summaries', { key, ...params });
-  const res = await fetchWithTimeout(url, 5000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_REQUEST_TIMEOUT));
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json();
+  return safeJson(res, url);
 }
 
-async function getStats(apiBase, key, path, params) {
+async function getStats(apiBase, key, path, params, config) {
   const url = buildUrl(apiBase, path, { key, ...params });
-  const res = await fetchWithTimeout(url, 5000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_REQUEST_TIMEOUT));
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json();
+  return safeJson(res, url);
 }
 
-async function getBreakdown(apiBase, key, path, params) {
+async function getBreakdown(apiBase, key, path, params, config) {
   const url = buildUrl(apiBase, path, { key, ...params });
-  const res = await fetchWithTimeout(url, 5000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_REQUEST_TIMEOUT));
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json();
+  return safeJson(res, url);
 }
 
-async function getIndex(apiBase, key, date) {
+async function getIndex(apiBase, key, date, config) {
   const url = buildUrl(apiBase, '/v1/tracking/index', { key, date });
-  const res = await fetchWithTimeout(url, 5000);
+  const res = await fetchWithTimeout(url, resolveTimeout(config, DEFAULT_REQUEST_TIMEOUT));
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return res.json();
+  return safeJson(res, url);
 }
 
 module.exports = {

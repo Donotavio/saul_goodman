@@ -43,6 +43,7 @@ export class TemperatureScaler {
   }
 
   transform(score: number): number {
+    if (!Number.isFinite(score)) return 0.5;
     return sigmoid(score / normalizeTemperature(this.temperature));
   }
 

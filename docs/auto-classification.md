@@ -43,7 +43,7 @@ Nada é enviado para a rede.
   - ramo **wide** linear sobre features hashed,
   - ramo **deep** com embeddings esparsos + camada oculta ReLU.
 - **Treino**: online por amostra (AdaGrad), com peso maior para feedback explícito e peso menor para rótulos implícitos.
-- **Vetorização**: `FeatureVectorizer` com 131.072 dimensões e `minFeatureCount=5`.
+- **Vetorização**: `FeatureVectorizer` com hashing trick. O vectorizer usa `DEFAULT_DIMENSIONS = 65.536` (2^16), enquanto o `MlSuggestionEngine` instancia o modelo com `MODEL_DIMENSIONS = 131.072` (2^17). Com ~200 features por domínio em 65K dimensões, a taxa de colisão esperada é ~15% (birthday paradox). O `minFeatureCount=5` mitiga parcialmente o impacto de colisões. Se a accuracy degradar com o crescimento do vocabulário, aumentar `dimensions` para 2^18 (262.144).
 - **Persistência**: IndexedDB `sg-ml-models` + metadados em `chrome.storage.local` (`sg:ml-model-meta`).
 - **Splits explícitos**: exemplos `explicit` são roteados de forma determinística para `train/calibration/test` (`70/15/15`); exemplos `implicit` entram apenas em `train`.
 - **Calibração**: `temperature scaling` sobre o score bruto do modelo, ajustado apenas no split `calibration`.
