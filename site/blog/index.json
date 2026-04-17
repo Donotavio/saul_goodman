@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Você ainda não ouviu falar de AEO? Acorda, meu amigo!",
+      "url": "./posts/2026/2026-04-17-voce-ainda-nao-ouviu-falar-de-aeo-acorda-meu-amigo/",
+      "markdown": "2026/2026-04-17-voce-ainda-nao-ouviu-falar-de-aeo-acorda-meu-amigo.md",
+      "date": "2026-04-17",
+      "category": "marketing",
+      "tags": [
+        "AEO",
+        "marketing",
+        "ROI",
+        "produtividade",
+        "sarcasmo"
+      ],
+      "excerpt": "A otimização de respostas chegou para salvar sua produtividade. Ou não. Vamos falar sobre isso.",
+      "title_en": "Haven't Heard of AEO Yet? Wake Up, My Friend!",
+      "title_es": "¿Aún no has oído hablar de AEO? ¡Despierta, amigo mío!",
+      "title_fr": "Vous n'avez toujours pas entendu parler de l'AEO ? Réveille-toi, mon ami !",
+      "title_de": "Hast du noch nichts von AEO gehört? Wach auf, mein Freund!",
+      "title_it": "Non hai ancora sentito parlare di AEO? Svegliati, amico mio!",
+      "title_tr": "Henüz AEO'dan haberiniz yok mu? Uyan, dostum!",
+      "title_zh": "你还没听说过AEO？醒醒，我的朋友！",
+      "title_hi": "क्या आपने AEO के बारे में नहीं सुना? जागो, मेरे दोस्त!",
+      "title_ar": "هل لم تسمع بعد عن AEO؟ استيقظ، صديقي!",
+      "title_bn": "আপনি এখনও AEO সম্পর্কে শুনেননি? জাগুন, আমার বন্ধু!",
+      "title_ru": "Вы все еще не слышали о AEO? Просыпайтесь, мой друг!",
+      "title_ur": "کیا آپ نے ابھی تک AEO کے بارے میں نہیں سنا؟ جاگیں، میرے دوست!",
+      "tone": "incredulo",
+      "tags_en": [
+        "AEO",
+        "marketing",
+        "ROI",
+        "productivity",
+        "sarcasm"
+      ],
+      "tags_es": [
+        "AEO",
+        "marketing",
+        "ROI",
+        "productividad",
+        "sarcasmo"
+      ],
+      "tags_fr": [
+        "AEO",
+        "marketing",
+        "ROI",
+        "productivité",
+        "sarcasme"
+      ],
+      "tags_de": [
+        "AEO",
+        "Marketing",
+        "ROI",
+        "Produktivität",
+        "Sarkasmus"
+      ],
+      "tags_it": [
+        "AEO",
+        "marketing",
+        "ROI",
+        "produttività",
+        "sarcasmo"
+      ],
+      "tags_tr": [
+        "AEO",
+        "pazarlama",
+        "Yatırım Getirisi",
+        "verimlilik",
+        "alay"
+      ],
+      "tags_zh": [
+        "AEO",
+        "营销",
+        "投资回报率",
+        "生产力",
+        "讽刺"
+      ],
+      "tags_hi": [
+        "AEO",
+        "मार्केटिंग",
+        "ROI",
+        "उत्पादकता",
+        "व्यंग्य"
+      ],
+      "tags_ar": [
+        "AEO",
+        "تسويق",
+        "عائد الاستثمار",
+        "إنتاجية",
+        "سخرية"
+      ],
+      "tags_bn": [
+        "AEO",
+        "মার্কেটিং",
+        "ROI",
+        "উৎপাদনশীলতা",
+        "সারকাজম"
+      ],
+      "tags_ru": [
+        "AEO",
+        "маркетинг",
+        "ROI",
+        "продуктивность",
+        "сарказм"
+      ],
+      "tags_ur": [
+        "AEO",
+        "مارکیٹنگ",
+        "ROI",
+        "پیداواریت",
+        "تہذیب"
+      ],
+      "source_title": "Answer engine optimization case studies that prove the ROI of AEO in 2026",
+      "source_url": "https://blog.hubspot.com/marketing/answer-engine-optimization-case-studies",
+      "source_published_at": "Tue, 14 Apr 2026 21:09:37 GMT",
+      "excerpt_en": "Response optimization has arrived to save your productivity. Or not. Let's talk about it.",
+      "excerpt_es": "La optimización de respuestas ha llegado para salvar tu productividad. O no. Hablemos de eso.",
+      "excerpt_fr": "L'optimisation des réponses est là pour sauver votre productivité. Ou pas. Parlons-en.",
+      "excerpt_de": "Die Optimierung von Antworten ist gekommen, um deine Produktivität zu retten. Oder auch nicht. Lass uns darüber reden.",
+      "excerpt_it": "L'ottimizzazione delle risposte è arrivata per salvare la tua produttività. O forse no. Parliamo di questo.",
+      "excerpt_tr": "Yanıt optimizasyonu, verimliliğinizi kurtarmak için geldi. Ya da gelmedi. Bunun hakkında konuşalım.",
+      "excerpt_zh": "响应优化来了，拯救你的生产力。或者没有。我们来聊聊这个。",
+      "excerpt_hi": "उत्तर अनुकूलन आपकी उत्पादकता को बचाने के लिए आया है। या नहीं। आइए इसके बारे में बात करते हैं।",
+      "excerpt_ar": "لقد وصلت تحسينات الردود لإنقاذ إنتاجيتك. أو لا. دعنا نتحدث عن ذلك.",
+      "excerpt_bn": "উত্তরগুলির অপ্টিমাইজেশন আপনার উৎপাদনশীলতা বাঁচাতে এসেছে। নাকি আসেনি। চলুন এ সম্পর্কে কথা বলি।",
+      "excerpt_ru": "Оптимизация ответов пришла, чтобы спасти вашу продуктивность. Или нет. Давайте поговорим об этом.",
+      "excerpt_ur": "جواب کی اصلاح آپ کی پیداواریت کو بچانے کے لیے آئی ہے۔ یا نہیں۔ آئیے اس کے بارے میں بات کرتے ہیں۔"
+    },
+    {
       "title": "Sua IA Deveria Dormir... Ou Não?",
       "url": "./posts/2026/2026-04-13-sua-ia-deveria-dormir-ou-nao/",
       "markdown": "2026/2026-04-13-sua-ia-deveria-dormir-ou-nao.md",
