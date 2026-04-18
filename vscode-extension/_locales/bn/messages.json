@@ -491,9 +491,6 @@
   "extDescription": {
     "message": "সারকাস্টিক ফোকাস ট্র্যাকার, যা ডোমেইনকে পরিচালনা করে... ...আর তাতে তোমার প্রবঞ্চনা সূচক রাখা যায়।"
   },
-  "extName": {
-    "message": "সাউল গুডম্যান"
-  },
   "extensionsChromeCta": {
     "message": "ক্রোম এক্সটেনশন"
   },
@@ -505,6 +502,9 @@
   },
   "extensionsVscodeCta": {
     "message": "VS কোড এক্সটেনশন"
+  },
+  "extName": {
+    "message": "সাউল গুডম্যান"
   },
   "faq1Answer": {
     "message": "পুরোপুরি। সা. কা."
@@ -638,6 +638,12 @@
   "featureCustomTitle": {
     "message": "স্বনির্বাচিত & গুরুত্বের তালিকা"
   },
+  "featuredEyebrow": {
+    "message": "বৈশিষ্ট্য"
+  },
+  "featuredTitle": {
+    "message": "সপ্তাহের কেস"
+  },
   "featureGaugeHint": {
     "message": "৭০% পার হয়ে গেলে শৌল ভূমিকম্পের প্রস্তুতি নেন।"
   },
@@ -701,20 +707,14 @@
   "featureSectionTitle": {
     "message": "সব কিছু চেক করতে হবে।"
   },
-  "featureSwipeHint": {
-    "message": "কা. পূ."
-  },
-  "featuredEyebrow": {
-    "message": "বৈশিষ্ট্য"
-  },
-  "featuredTitle": {
-    "message": "সপ্তাহের কেস"
-  },
   "featuresEyebrow": {
     "message": "বিস্তারিত বর্ণনা"
   },
   "featuresTitle": {
     "message": "সা. কা."
+  },
+  "featureSwipeHint": {
+    "message": "কা. পূ."
   },
   "feedbackLink": {
     "message": "সাড়া দাও"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "পড়ুন"
   },
-  "readTimeUnit": {
-    "message": "মিনিট পড়া"
-  },
   "readingTimeLabel": {
     "message": "সময় পড়া হচ্ছে"
+  },
+  "readTimeUnit": {
+    "message": "মিনিট পড়া"
   },
   "reason1Body": {
     "message": "পপ ইনডেক্স আপনার বর্তমান অবস্থা দেখায় তাই আপনি জানেন পরবর্তী কী সংশোধন করতে হবে।"
@@ -2213,14 +2213,29 @@
   "relatedTitle": {
     "message": "সম্পর্কিত পোস্ট"
   },
+  "report_ai_activity_subtitle": {
+    "message": "AI-assisted coding activity"
+  },
+  "report_ai_activity_title": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_chart_ai_label": {
     "message": "AI"
   },
   "report_ai_chart_human_label": {
     "message": "You"
   },
+  "report_ai_chart_tooltip": {
+    "message": "{label}: {value} lines ({pct}%)"
+  },
   "report_ai_completions": {
     "message": "সম্পূর্ণতা"
+  },
+  "report_ai_contribution_chart": {
+    "message": "Contribution"
+  },
+  "report_ai_edits_count": {
+    "message": "{count} edits"
   },
   "report_ai_error_generic": {
     "message": "( ১ শমূ. পরে চেষ্টা করো।"
@@ -2260,6 +2275,9 @@
   },
   "report_ai_terminal_cmds": {
     "message": "AI Terminal"
+  },
+  "report_ai_tools_active": {
+    "message": "Active AI Tools"
   },
   "report_alert_pdf_missing": {
     "message": "PDF লাইব্রেরি উপলব্ধ নয়।"
@@ -3500,81 +3518,6 @@
   "usersBadgeLabel": {
     "message": "ব্যবহারকারী"
   },
-  "vscodeCard1Body": {
-    "message": "স্থানীয় ডেমন এক্সটেনশনের সাথে কথা বলে এবং সম্পাদককে উৎপাদনশীল মিনিট হিসাবে সময় রেকর্ড করে। কিছুই লোকালহোস্ট থেকে বের হয় না, কিন্তু টাইমার কখনও ঘুমায় না।"
-  },
-  "vscodeCard1Kicker": {
-    "message": "ফোকাস ঘড়ি"
-  },
-  "vscodeCard1Title": {
-    "message": "প্রতিটি কমিট বিলযোগ্য ঘন্টা হিসাবে গণনা হয়।"
-  },
-  "vscodeCard2Body": {
-    "message": "সম্পাদক থেকে ফিডে স্যুইচ করেছেন? সাউল রিপোর্টে বিভ্রান্তি চিহ্নিত করে। কোডে ফিরে এসেছেন? তিনি নির্দোষতার প্রমাণ হিসাবে রেকর্ড করেন।"
-  },
-  "vscodeCard2Kicker": {
-    "message": "প্রেক্ষাপটের গোয়েন্দা"
-  },
-  "vscodeCard2Title": {
-    "message": "VS কোড এবং ক্রোম pistas বিনিময় করে।"
-  },
-  "vscodeCard3Body": {
-    "message": "রিপোর্টগুলি কোডের সময়, বিঘ্ন এবং ঘন ঘন সন্দেহভাজনদের নিয়ে আসে। ব্যবস্থাপককে দেখানোর জন্য নিখুঁত যে অলসতার কোন সুযোগ নেই।"
-  },
-  "vscodeCard3Kicker": {
-    "message": "শ্রবণের জন্য প্রস্তুত"
-  },
-  "vscodeCard3Title": {
-    "message": "মেট্রিক্স এবং স্ক্রিনশট সহ প্রতিরক্ষা রপ্তানি করে।"
-  },
-  "vscodeEyebrow": {
-    "message": "VS কোড আদালতে"
-  },
-  "vscodeLead": {
-    "message": "সাউল VS কোডকে মামলার সাথে সংযুক্ত করে: সম্পাদক থেকে মিনিটগুলি ফোকাসের প্রমাণে পরিণত হয়, বিঘ্নগুলি সন্দেহভাজনে পরিণত হয়, এবং রিপোর্টটি জুরি (আপনার দলের) বোঝানোর জন্য প্রস্তুত হয়ে আসে।"
-  },
-  "vscodeMetaBridge": {
-    "message": "ক্রোম + VS কোড ব্রিজ।"
-  },
-  "vscodeMetaLocal": {
-    "message": "১০০% লোকাল, কিছুই আপনার সম্পাদক থেকে বের হয় না।"
-  },
-  "vscodeMetaProof": {
-    "message": "প্রমাণপত্রগুলি স্ক্রীনশট এবং CSV সহ।"
-  },
-  "vscodePrimaryCta": {
-    "message": "VS কোডে ইনস্টল করুন"
-  },
-  "vscodeProofBody": {
-    "message": "একটি টাইমলাইন যা প্রমাণ করে কে কোডে ছিল এবং কে ফিডে পালিয়ে গিয়েছিল। পরবর্তী বৈঠকে Exhibit A হিসাবে ব্যবহার করুন।"
-  },
-  "vscodeProofChipAlert": {
-    "message": "সতর্কতা"
-  },
-  "vscodeProofChipDefense": {
-    "message": "রক্ষা"
-  },
-  "vscodeProofChipFocus": {
-    "message": "ফোকাস"
-  },
-  "vscodeProofEyebrow": {
-    "message": "সাউলের পছন্দের প্রমাণ"
-  },
-  "vscodeProofLine1": {
-    "message": "০৯:১২ — VS কোড সক্রিয় · ৩৮ মিনিট কোন ট্যাব পরিবর্তন না করে।"
-  },
-  "vscodeProofLine2": {
-    "message": "০৯:৫০ — ইউটিউবে চলে গেছে · সাউল বিভ্রান্তি হিসাবে চিহ্নিত করেছে।"
-  },
-  "vscodeProofLine3": {
-    "message": "১০:০৫ — VS কোডে ফিরে এসেছে · ২১ মিনিটের ফোকাস পুনরুদ্ধার হয়েছে।"
-  },
-  "vscodeSecondaryCta": {
-    "message": "দ্রুত গাইড দেখুন"
-  },
-  "vscodeTitle": {
-    "message": "সম্পাদককে উৎপাদনশীলতার সম্পদে রূপান্তর করুন।"
-  },
   "vscode_combo_reset_cancel": {
     "message": "বাতিল করুন"
   },
@@ -3697,5 +3640,80 @@
   },
   "vscode_reports_today": {
     "message": "আজ"
+  },
+  "vscodeCard1Body": {
+    "message": "স্থানীয় ডেমন এক্সটেনশনের সাথে কথা বলে এবং সম্পাদককে উৎপাদনশীল মিনিট হিসাবে সময় রেকর্ড করে। কিছুই লোকালহোস্ট থেকে বের হয় না, কিন্তু টাইমার কখনও ঘুমায় না।"
+  },
+  "vscodeCard1Kicker": {
+    "message": "ফোকাস ঘড়ি"
+  },
+  "vscodeCard1Title": {
+    "message": "প্রতিটি কমিট বিলযোগ্য ঘন্টা হিসাবে গণনা হয়।"
+  },
+  "vscodeCard2Body": {
+    "message": "সম্পাদক থেকে ফিডে স্যুইচ করেছেন? সাউল রিপোর্টে বিভ্রান্তি চিহ্নিত করে। কোডে ফিরে এসেছেন? তিনি নির্দোষতার প্রমাণ হিসাবে রেকর্ড করেন।"
+  },
+  "vscodeCard2Kicker": {
+    "message": "প্রেক্ষাপটের গোয়েন্দা"
+  },
+  "vscodeCard2Title": {
+    "message": "VS কোড এবং ক্রোম pistas বিনিময় করে।"
+  },
+  "vscodeCard3Body": {
+    "message": "রিপোর্টগুলি কোডের সময়, বিঘ্ন এবং ঘন ঘন সন্দেহভাজনদের নিয়ে আসে। ব্যবস্থাপককে দেখানোর জন্য নিখুঁত যে অলসতার কোন সুযোগ নেই।"
+  },
+  "vscodeCard3Kicker": {
+    "message": "শ্রবণের জন্য প্রস্তুত"
+  },
+  "vscodeCard3Title": {
+    "message": "মেট্রিক্স এবং স্ক্রিনশট সহ প্রতিরক্ষা রপ্তানি করে।"
+  },
+  "vscodeEyebrow": {
+    "message": "VS কোড আদালতে"
+  },
+  "vscodeLead": {
+    "message": "সাউল VS কোডকে মামলার সাথে সংযুক্ত করে: সম্পাদক থেকে মিনিটগুলি ফোকাসের প্রমাণে পরিণত হয়, বিঘ্নগুলি সন্দেহভাজনে পরিণত হয়, এবং রিপোর্টটি জুরি (আপনার দলের) বোঝানোর জন্য প্রস্তুত হয়ে আসে।"
+  },
+  "vscodeMetaBridge": {
+    "message": "ক্রোম + VS কোড ব্রিজ।"
+  },
+  "vscodeMetaLocal": {
+    "message": "১০০% লোকাল, কিছুই আপনার সম্পাদক থেকে বের হয় না।"
+  },
+  "vscodeMetaProof": {
+    "message": "প্রমাণপত্রগুলি স্ক্রীনশট এবং CSV সহ।"
+  },
+  "vscodePrimaryCta": {
+    "message": "VS কোডে ইনস্টল করুন"
+  },
+  "vscodeProofBody": {
+    "message": "একটি টাইমলাইন যা প্রমাণ করে কে কোডে ছিল এবং কে ফিডে পালিয়ে গিয়েছিল। পরবর্তী বৈঠকে Exhibit A হিসাবে ব্যবহার করুন।"
+  },
+  "vscodeProofChipAlert": {
+    "message": "সতর্কতা"
+  },
+  "vscodeProofChipDefense": {
+    "message": "রক্ষা"
+  },
+  "vscodeProofChipFocus": {
+    "message": "ফোকাস"
+  },
+  "vscodeProofEyebrow": {
+    "message": "সাউলের পছন্দের প্রমাণ"
+  },
+  "vscodeProofLine1": {
+    "message": "০৯:১২ — VS কোড সক্রিয় · ৩৮ মিনিট কোন ট্যাব পরিবর্তন না করে।"
+  },
+  "vscodeProofLine2": {
+    "message": "০৯:৫০ — ইউটিউবে চলে গেছে · সাউল বিভ্রান্তি হিসাবে চিহ্নিত করেছে।"
+  },
+  "vscodeProofLine3": {
+    "message": "১০:০৫ — VS কোডে ফিরে এসেছে · ২১ মিনিটের ফোকাস পুনরুদ্ধার হয়েছে।"
+  },
+  "vscodeSecondaryCta": {
+    "message": "দ্রুত গাইড দেখুন"
+  },
+  "vscodeTitle": {
+    "message": "সম্পাদককে উৎপাদনশীলতার সম্পদে রূপান্তর করুন।"
   }
 }

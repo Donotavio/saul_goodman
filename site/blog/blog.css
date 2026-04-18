@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #fffdf5;
+  background: var(--warm-bg);
 }
 
 .eyebrow {
@@ -1136,5 +1136,23 @@ body {
 
   .post-sidebar {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .blog-card,
+  .blog-hero,
+  .card {
+    border-width: 3px;
   }
 }

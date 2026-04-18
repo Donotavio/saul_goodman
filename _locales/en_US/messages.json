@@ -2291,6 +2291,42 @@
   "report_category_neutral": {
     "message": "Neutral"
   },
+  "report_chart_ai_contribution_label": {
+    "message": "AI contribution chart"
+  },
+  "report_chart_composition_label": {
+    "message": "Time composition chart"
+  },
+  "report_chart_domain_breakdown_label": {
+    "message": "Domain breakdown chart"
+  },
+  "report_chart_hourly_label": {
+    "message": "Hourly productivity chart"
+  },
+  "report_chart_tab_switch_label": {
+    "message": "Tab switch chart"
+  },
+  "report_chart_vscode_combo_label": {
+    "message": "VS Code combo timeline chart"
+  },
+  "report_chart_vscode_commits_label": {
+    "message": "VS Code commits chart"
+  },
+  "report_chart_vscode_cross_reference_label": {
+    "message": "VS Code cross-reference chart"
+  },
+  "report_chart_vscode_focus_label": {
+    "message": "VS Code focus patterns chart"
+  },
+  "report_chart_vscode_hourly_label": {
+    "message": "VS Code hourly activity chart"
+  },
+  "report_chart_vscode_projects_label": {
+    "message": "VS Code projects chart"
+  },
+  "report_chart_vscode_terminal_label": {
+    "message": "VS Code terminal commands chart"
+  },
   "report_composition_heading": {
     "message": "Day composition"
   },

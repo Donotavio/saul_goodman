@@ -128,7 +128,7 @@
           <h3>{i18n_report_vscode_hourly_breakdown}</h3>
           <p class="chart-subtitle">{i18n_report_vscode_hourly_subtitle}</p>
           <div class="chart-container">
-            <canvas id="hourlyChart" height="200"></canvas>
+            <canvas id="hourlyChart" height="200" aria-label="Hourly activity chart"></canvas>
             <p id="hourlyEmpty" class="empty-state hidden">{i18n_report_vscode_hourly_empty}</p>
           </div>
         </section>
@@ -138,7 +138,7 @@
             <h3>{i18n_report_vscode_time_by_project}</h3>
             <p class="chart-subtitle">{i18n_report_vscode_time_by_project_subtitle}</p>
             <div class="chart-container chart-container--small">
-              <canvas id="projectsChart"></canvas>
+              <canvas id="projectsChart" aria-label="Projects chart"></canvas>
               <p id="projectsEmpty" class="empty-state hidden">{i18n_report_vscode_projects_empty}</p>
             </div>
           </div>
@@ -146,7 +146,7 @@
             <h3>{i18n_report_vscode_commit_activity}</h3>
             <p class="chart-subtitle">{i18n_report_vscode_commit_subtitle}</p>
             <div class="chart-container chart-container--small">
-              <canvas id="commitsChart"></canvas>
+              <canvas id="commitsChart" aria-label="Commits chart"></canvas>
               <p id="commitsEmpty" class="empty-state hidden">{i18n_report_vscode_commits_empty}</p>
             </div>
           </div>
@@ -156,7 +156,7 @@
           <h3>{i18n_report_vscode_languages_projects}</h3>
           <p class="chart-subtitle">{i18n_report_vscode_languages_projects_subtitle}</p>
           <div class="chart-container chart-container--medium">
-            <canvas id="crossReferenceChart"></canvas>
+            <canvas id="crossReferenceChart" aria-label="Cross-reference chart"></canvas>
             <p id="crossReferenceEmpty" class="empty-state hidden">{i18n_report_vscode_cross_reference_empty}</p>
           </div>
         </section>
@@ -216,7 +216,7 @@
               <h3>{i18n_report_vscode_terminal_commands}</h3>
               <p class="chart-subtitle">{i18n_report_vscode_terminal_subtitle}</p>
               <div class="chart-container chart-container--small">
-                <canvas id="terminalCommandsChart"></canvas>
+                <canvas id="terminalCommandsChart" aria-label="Terminal commands chart"></canvas>
                 <p id="terminalEmpty" class="empty-state hidden">{i18n_report_vscode_terminal_empty}</p>
               </div>
             </div>
@@ -224,7 +224,7 @@
               <h3>{i18n_report_vscode_focus_patterns}</h3>
               <p class="chart-subtitle">{i18n_report_vscode_focus_patterns_subtitle}</p>
               <div class="chart-container chart-container--small">
-                <canvas id="focusPatternsChart"></canvas>
+                <canvas id="focusPatternsChart" aria-label="Focus patterns chart"></canvas>
                 <p id="focusEmpty" class="empty-state hidden">{i18n_report_vscode_focus_patterns_empty}</p>
               </div>
             </div>
@@ -235,7 +235,7 @@
               <h3>{i18n_report_vscode_combo_timeline}</h3>
               <p class="chart-subtitle">{i18n_report_vscode_combo_timeline_subtitle}</p>
               <div class="chart-container">
-                <canvas id="comboTimelineChart"></canvas>
+                <canvas id="comboTimelineChart" aria-label="Combo timeline chart"></canvas>
                 <p id="comboTimelineEmpty" class="empty-state hidden">{i18n_report_vscode_combo_timeline_empty}</p>
               </div>
             </div>
@@ -308,7 +308,7 @@
               <div class="card chart-section">
                 <h3>{i18n_report_ai_contribution_chart}</h3>
                 <div class="chart-container chart-container--small">
-                  <canvas id="aiContributionChart"></canvas>
+                  <canvas id="aiContributionChart" aria-label="AI contribution chart"></canvas>
                 </div>
               </div>
               <div class="card">

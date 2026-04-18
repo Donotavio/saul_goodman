@@ -491,9 +491,6 @@
   "extDescription": {
     "message": "Monitor di messa a fuoco sarcastico che misura i domini e mantiene il vostro indice di procrastinazione in controllo."
   },
-  "extName": {
-    "message": "Saul Goodman"
-  },
   "extensionsChromeCta": {
     "message": "Estensione Chrome"
   },
@@ -505,6 +502,9 @@
   },
   "extensionsVscodeCta": {
     "message": "VS Codice estensione"
+  },
+  "extName": {
+    "message": "Saul Goodman"
   },
   "faq1Answer": {
     "message": "Assolutamente. Saul accusa solo l'attenzione e l'umorismo."
@@ -638,6 +638,12 @@
   "featureCustomTitle": {
     "message": "Liste e pesi personalizzati"
   },
+  "featuredEyebrow": {
+    "message": "Caratteristica"
+  },
+  "featuredTitle": {
+    "message": "Caso della settimana"
+  },
   "featureGaugeHint": {
     "message": "Quando attraversa il 70%, Saul prepara il terremoto."
   },
@@ -701,20 +707,14 @@
   "featureSectionTitle": {
     "message": "Tutto quello che ti serve per tenere sotto controllo."
   },
-  "featureSwipeHint": {
-    "message": "Nuotare lateralmente per rivedere ogni caratteristica Saul maniglie."
-  },
-  "featuredEyebrow": {
-    "message": "Caratteristica"
-  },
-  "featuredTitle": {
-    "message": "Caso della settimana"
-  },
   "featuresEyebrow": {
     "message": "Caratteristiche dettagliate"
   },
   "featuresTitle": {
     "message": "L'arsenale dell'estensione Saul Goodman."
+  },
+  "featureSwipeHint": {
+    "message": "Nuotare lateralmente per rivedere ogni caratteristica Saul maniglie."
   },
   "feedbackLink": {
     "message": "Dai un feedback"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "Leggi articolo"
   },
-  "readTimeUnit": {
-    "message": "lettura min"
-  },
   "readingTimeLabel": {
     "message": "Tempo di lettura"
+  },
+  "readTimeUnit": {
+    "message": "lettura min"
   },
   "reason1Body": {
     "message": "L'indice popup mostra il tuo stato attuale in modo da sapere cosa fissare dopo."
@@ -2213,14 +2213,29 @@
   "relatedTitle": {
     "message": "Messaggi correlati"
   },
+  "report_ai_activity_subtitle": {
+    "message": "AI-assisted coding activity"
+  },
+  "report_ai_activity_title": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_chart_ai_label": {
     "message": "AI"
   },
   "report_ai_chart_human_label": {
     "message": "You"
   },
+  "report_ai_chart_tooltip": {
+    "message": "{label}: {value} lines ({pct}%)"
+  },
   "report_ai_completions": {
     "message": "Completions"
+  },
+  "report_ai_contribution_chart": {
+    "message": "Contribution"
+  },
+  "report_ai_edits_count": {
+    "message": "{count} edits"
   },
   "report_ai_error_generic": {
     "message": "Saul non poteva convincere il giudice digitale. Riprova più tardi."
@@ -2260,6 +2275,9 @@
   },
   "report_ai_terminal_cmds": {
     "message": "AI Terminal"
+  },
+  "report_ai_tools_active": {
+    "message": "Active AI Tools"
   },
   "report_alert_pdf_missing": {
     "message": "Biblioteca PDF non disponibile."
@@ -3500,81 +3518,6 @@
   "usersBadgeLabel": {
     "message": "Utenti"
   },
-  "vscodeCard1Body": {
-    "message": "Il daemon locale comunica con l'estensione e registra il tempo nell'editor come minuti produttivi. Nulla esce dal localhost, ma il cronometro non si ferma mai."
-  },
-  "vscodeCard1Kicker": {
-    "message": "Orologio di concentrazione"
-  },
-  "vscodeCard1Title": {
-    "message": "Ogni commit conta come ora fatturabile."
-  },
-  "vscodeCard2Body": {
-    "message": "Hai cambiato dall'editor al feed? Saul segna la distrazione nel rapporto. Sei tornato al codice? Registra come prova di innocenza."
-  },
-  "vscodeCard2Kicker": {
-    "message": "Detective del contesto"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code e Chrome scambiano indizi."
-  },
-  "vscodeCard3Body": {
-    "message": "I rapporti mostrano il tempo di codice, le interruzioni e i sospetti frequenti. Perfetto per dimostrare al manager che la procrastinazione non ha possibilità."
-  },
-  "vscodeCard3Kicker": {
-    "message": "Pronto per l'udienza"
-  },
-  "vscodeCard3Title": {
-    "message": "Esporta difesa con metriche e screenshot."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code in tribunale"
-  },
-  "vscodeLead": {
-    "message": "Saul collega VS Code al caso: i minuti dell'editor diventano prova di concentrazione, le interruzioni diventano sospetti, e il rapporto arriva pronto per convincere la giuria (il tuo team)."
-  },
-  "vscodeMetaBridge": {
-    "message": "Ponte Chrome + VS Code."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% locale, nulla esce dal tuo editor."
-  },
-  "vscodeMetaProof": {
-    "message": "Rapporti con screenshot e CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "Installa su VS Code"
-  },
-  "vscodeProofBody": {
-    "message": "Una linea temporale che prova chi è rimasto nel codice e chi è scappato nel feed. Usa come Exhibit A nella prossima riunione."
-  },
-  "vscodeProofChipAlert": {
-    "message": "Allerta"
-  },
-  "vscodeProofChipDefense": {
-    "message": "Difesa"
-  },
-  "vscodeProofChipFocus": {
-    "message": "Concentrazione"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Prove preferite di Saul"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code attivo · 38 min senza cambiare scheda."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — Saltato su YouTube · Saul ha segnato come distrazione."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — Ritorno a VS Code · 21 min di concentrazione recuperata."
-  },
-  "vscodeSecondaryCta": {
-    "message": "Vedi guida rapida"
-  },
-  "vscodeTitle": {
-    "message": "Trasforma l'editor in un attivo di produttività."
-  },
   "vscode_combo_reset_cancel": {
     "message": "Annulla"
   },
@@ -3697,5 +3640,80 @@
   },
   "vscode_reports_today": {
     "message": "Oggi"
+  },
+  "vscodeCard1Body": {
+    "message": "Il daemon locale comunica con l'estensione e registra il tempo nell'editor come minuti produttivi. Nulla esce dal localhost, ma il cronometro non si ferma mai."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Orologio di concentrazione"
+  },
+  "vscodeCard1Title": {
+    "message": "Ogni commit conta come ora fatturabile."
+  },
+  "vscodeCard2Body": {
+    "message": "Hai cambiato dall'editor al feed? Saul segna la distrazione nel rapporto. Sei tornato al codice? Registra come prova di innocenza."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Detective del contesto"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code e Chrome scambiano indizi."
+  },
+  "vscodeCard3Body": {
+    "message": "I rapporti mostrano il tempo di codice, le interruzioni e i sospetti frequenti. Perfetto per dimostrare al manager che la procrastinazione non ha possibilità."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Pronto per l'udienza"
+  },
+  "vscodeCard3Title": {
+    "message": "Esporta difesa con metriche e screenshot."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code in tribunale"
+  },
+  "vscodeLead": {
+    "message": "Saul collega VS Code al caso: i minuti dell'editor diventano prova di concentrazione, le interruzioni diventano sospetti, e il rapporto arriva pronto per convincere la giuria (il tuo team)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Ponte Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% locale, nulla esce dal tuo editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Rapporti con screenshot e CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Installa su VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Una linea temporale che prova chi è rimasto nel codice e chi è scappato nel feed. Usa come Exhibit A nella prossima riunione."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Allerta"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Difesa"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Concentrazione"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Prove preferite di Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code attivo · 38 min senza cambiare scheda."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Saltato su YouTube · Saul ha segnato come distrazione."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Ritorno a VS Code · 21 min di concentrazione recuperata."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Vedi guida rapida"
+  },
+  "vscodeTitle": {
+    "message": "Trasforma l'editor in un attivo di produttività."
   }
 }

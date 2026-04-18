@@ -1,0 +1,118 @@
+:root {
+  color-scheme: light;
+  --block-bg: #111;
+  --block-card-bg: #1a1a1a;
+  --block-accent: #ffe434;
+  --block-text-muted: #f8e7a1;
+  --block-text-subtle: #d2c57b;
+  --block-btn-secondary-bg: #2a2a2a;
+  --block-img-bg: #000;
+  --block-shadow: rgba(0, 0, 0, 0.45);
+  --block-shadow-hover: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--block-bg);
+  color: var(--block-accent);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  padding: 24px;
+}
+
+.card {
+  max-width: 720px;
+  width: 100%;
+  background: var(--block-card-bg);
+  border: 2px solid var(--block-accent);
+  border-radius: 16px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  box-shadow: 0 16px 40px var(--block-shadow);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid var(--block-accent);
+  background: var(--block-img-bg);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+}
+
+p {
+  margin: 0 0 14px;
+  color: var(--block-text-muted);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--block-accent);
+  color: var(--block-bg);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+button.secondary {
+  background: var(--block-btn-secondary-bg);
+  color: var(--block-accent);
+  border: 1px solid var(--block-accent);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--block-shadow-hover);
+}
+
+small {
+  display: block;
+  color: var(--block-text-subtle);
+}
+
+:focus-visible {
+  outline: 3px solid var(--block-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .actions {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

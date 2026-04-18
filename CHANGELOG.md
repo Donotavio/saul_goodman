@@ -3,6 +3,17 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.12] - 2026-04-18
+
+Auditoria de cobertura de testes frontend: 58 novos testes estáticos em 4 arquivos, cobrindo todas as superfícies UI de prioridade alta que estavam sem cobertura.
+
+### Testes adicionados
+
+- `popup-ui.test.ts` (15 testes): estrutura HTML (badge, KPIs, suggestion card, fairness, blog, export, critical overlay), validação de i18n keys (`data-i18n`, `data-i18n-aria-label`, `data-i18n-tooltip`), CSS design system (`.badge`, `.suggestion-card`, `.kpi-grid`, `.critical-card`, `:root` tokens).
+- `options-ui.test.ts` (12 testes): estrutura HTML (weights, domínios, VS Code panel, schedule, ML review queue, locale selector), validação de i18n keys (`data-i18n`, `data-i18n-placeholder`), CSS design system (`.panel`, `.hero`, `:root` tokens).
+- `report-structure.test.ts` (14 testes): estrutura HTML (hero KPIs, charts, VS Code sub-section, telemetry, ML summary, context breakdown, fairness/critical banners, export/navigation), validação de i18n keys, CSS design system (`.report-hero`, `.panel`, `.kpi-panel article`, `.vscode-kpi-card`, `:root` tokens).
+- `vscode-report-structure.test.ts` (17 testes): estrutura HTML (filtros, today card, KPIs, listas de dados, charts, telemetry, disabled state), validação de i18n placeholders `{i18n_*}`, CSS design system (`.kpi-card`, `.card`, `.kpi-card--telemetry`, `:root` tokens), integridade de data flow JS (`renderKpis`, `renderTelemetry`, chart instances, `cssVar` usage, utility functions).
+
 ## [1.24.11] - 2026-04-18
 
 Internacionalização completa: eliminação de todas as strings hardcoded, arquitetura de merge para keys exclusivas do VS Code, e tooling de i18n (agent + skill).
@@ -440,6 +451,37 @@ Auditoria sistêmica Round 2: 32 achados corrigidos em 5 fases cobrindo integrid
 
 All releases are published via CI/CD; the version is bumped automatically during the build.
 
+## [1.24.12] - 2026-04-18
+
+Frontend test coverage audit: 58 new static tests across 4 files, covering all high-priority UI surfaces that had zero test coverage.
+
+### Tests added
+
+- `popup-ui.test.ts` (15 tests): HTML structure (badge, KPIs, suggestion card, fairness, blog, export, critical overlay), i18n key validation (`data-i18n`, `data-i18n-aria-label`, `data-i18n-tooltip`), CSS design system (`.badge`, `.suggestion-card`, `.kpi-grid`, `.critical-card`, `:root` tokens).
+- `options-ui.test.ts` (12 tests): HTML structure (weights, domains, VS Code panel, schedule, ML review queue, locale selector), i18n key validation (`data-i18n`, `data-i18n-placeholder`), CSS design system (`.panel`, `.hero`, `:root` tokens).
+- `report-structure.test.ts` (14 tests): HTML structure (hero KPIs, charts, VS Code sub-section, telemetry, ML summary, context breakdown, fairness/critical banners, export/navigation), i18n key validation, CSS design system (`.report-hero`, `.panel`, `.kpi-panel article`, `.vscode-kpi-card`, `:root` tokens).
+- `vscode-report-structure.test.ts` (17 tests): HTML structure (filters, today card, KPIs, data lists, charts, telemetry, disabled state), i18n placeholder `{i18n_*}` validation, CSS design system (`.kpi-card`, `.card`, `.kpi-card--telemetry`, `:root` tokens), JS data flow integrity (`renderKpis`, `renderTelemetry`, chart instances, `cssVar` usage, utility functions).
+
+## [1.24.11] - 2026-04-18
+
+Complete internationalization: elimination of all hardcoded strings, merge architecture for VS Code-exclusive keys, and i18n tooling (agent + skill).
+
+### Bug fixes
+
+- Block page (`block.html`) used `lang="pt-BR"` and hardcoded Portuguese text — now uses `lang="en"` with `data-i18n` and en-US fallback.
+- VS Code hourly chart displayed hardcoded English labels ("Coding", "Debugging", "Building", "Testing", "Minutes") — now uses `window.__SAUL_I18N__`.
+- Combo timeline chart used hardcoded `'pt-BR'` locale for time formatting and English strings ("Time of Day", "Combo Level") — now uses `document.documentElement.lang` and i18n.
+- Combo timeline tooltip used hardcoded English template — now uses key `report_vscode_combo_tooltip`.
+- VS Code report displayed hardcoded "Minutes" and "{minutes} min streak" — now uses i18n keys.
+- Combo toast displayed hardcoded "min" in notification and legacy webview — now uses key `report_vscode_combo_notification_min`.
+
+### Improvements
+
+- 11 new i18n keys for VS Code charts and combos, translated across all 13 locales.
+- `copy-locales-to-site.js` now **merges** (not overwrites) for `vscode-extension/_locales/`, preserving VS Code-exclusive keys during the `i18n:full-lang-update` pipeline.
+- New `i18n-manager` agent for string auditing, key addition, and pipeline execution.
+- `i18n-workflow` skill updated with full 3-layer architecture documentation, `window.__SAUL_I18N__` pattern, and troubleshooting.
+
 ## [1.24.8] - 2026-04-17
 
 Systemic audit Round 3: data integrity hardening, privacy improvements, daemon/VS Code robustness, and full 14-locale support in the VS Code extension.
@@ -856,6 +898,37 @@ Systemic audit Round 2: 32 findings fixed across 5 phases covering data integrit
 # Changelog
 
 Todas las versiones se publican mediante CI/CD; el número se actualiza automáticamente durante el build.
+
+## [1.24.12] - 2026-04-18
+
+Auditoría de cobertura de tests frontend: 58 nuevos tests estáticos en 4 archivos, cubriendo todas las superficies UI de alta prioridad que no tenían cobertura.
+
+### Tests añadidos
+
+- `popup-ui.test.ts` (15 tests): estructura HTML (badge, KPIs, suggestion card, fairness, blog, export, critical overlay), validación de keys i18n (`data-i18n`, `data-i18n-aria-label`, `data-i18n-tooltip`), CSS design system (`.badge`, `.suggestion-card`, `.kpi-grid`, `.critical-card`, `:root` tokens).
+- `options-ui.test.ts` (12 tests): estructura HTML (weights, dominios, panel VS Code, schedule, ML review queue, selector de locale), validación de keys i18n (`data-i18n`, `data-i18n-placeholder`), CSS design system (`.panel`, `.hero`, `:root` tokens).
+- `report-structure.test.ts` (14 tests): estructura HTML (hero KPIs, charts, sub-sección VS Code, telemetría, ML summary, context breakdown, banners fairness/critical, export/navegación), validación de keys i18n, CSS design system (`.report-hero`, `.panel`, `.kpi-panel article`, `.vscode-kpi-card`, `:root` tokens).
+- `vscode-report-structure.test.ts` (17 tests): estructura HTML (filtros, today card, KPIs, listas de datos, charts, telemetría, estado disabled), validación de placeholders i18n `{i18n_*}`, CSS design system (`.kpi-card`, `.card`, `.kpi-card--telemetry`, `:root` tokens), integridad de data flow JS (`renderKpis`, `renderTelemetry`, chart instances, uso de `cssVar`, funciones utilitarias).
+
+## [1.24.11] - 2026-04-18
+
+Internacionalización completa: eliminación de todas las strings hardcoded, arquitectura de merge para keys exclusivas de VS Code, y tooling de i18n (agent + skill).
+
+### Bugs corregidos
+
+- Block page (`block.html`) usaba `lang="pt-BR"` y texto hardcoded en portugués — ahora usa `lang="en"` con `data-i18n` y fallback en-US.
+- Gráfico hourly de VS Code mostraba labels en inglés hardcoded ("Coding", "Debugging", "Building", "Testing", "Minutes") — ahora usa `window.__SAUL_I18N__`.
+- Gráfico combo timeline usaba locale `'pt-BR'` hardcoded para formato de hora y strings en inglés ("Time of Day", "Combo Level") — ahora usa `document.documentElement.lang` e i18n.
+- Tooltip del combo timeline usaba template hardcoded en inglés — ahora usa key `report_vscode_combo_tooltip`.
+- Reporte VS Code mostraba "Minutes" y "{minutes} min streak" hardcoded — ahora usa keys i18n.
+- Combo toast mostraba "min" hardcoded en la notificación y en el webview legado — ahora usa key `report_vscode_combo_notification_min`.
+
+### Mejoras
+
+- 11 nuevas keys de i18n para gráficos y combos de VS Code, traducidas en los 13 locales.
+- `copy-locales-to-site.js` ahora hace **merge** (no overwrite) para `vscode-extension/_locales/`, preservando keys exclusivas de VS Code durante el pipeline `i18n:full-lang-update`.
+- Nuevo agent `i18n-manager` para auditoría de strings, adición de keys y ejecución del pipeline.
+- Skill `i18n-workflow` actualizada con documentación completa de la arquitectura de 3 capas, patrón `window.__SAUL_I18N__`, y troubleshooting.
 
 ## [1.24.8] - 2026-04-17
 

@@ -1,4 +1,8 @@
 (function () {
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
   const config = window.__SAUL_CONFIG__ || {};
   const i18n = window.__SAUL_I18N__ || {};
   const statusEl = document.getElementById('reportStatus');
@@ -288,13 +292,13 @@
         key: 'report_vscode_activity_lines_added',
         fallback: 'Lines Added',
         value: git.totalLinesAdded || 0,
-        color: '#22c55e'
+        color: cssVar('--saul-lines-added')
       },
       {
         key: 'report_vscode_activity_lines_deleted',
         fallback: 'Lines Deleted',
         value: git.totalLinesDeleted || 0,
-        color: '#ef4444'
+        color: cssVar('--saul-lines-deleted')
       }
     ];
 
@@ -424,8 +428,14 @@
       window.projectsChartInstance.destroy();
     }
 
-    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ffc857', '#ffb347'];
-    
+    const colors = [
+      cssVar('--saul-blue'),
+      cssVar('--saul-emerald'),
+      cssVar('--saul-amber'),
+      cssVar('--combo-color'),
+      cssVar('--saul-orange')
+    ];
+
     try {
       const ctx = canvas.getContext('2d');
       window.projectsChartInstance = new Chart(ctx, {
@@ -435,7 +445,7 @@
           datasets: [{
             data: topProjects.map(p => Math.round((p.total_seconds || 0) / 60)),
             backgroundColor: colors,
-            borderColor: '#fff',
+            borderColor: cssVar('--saul-white'),
             borderWidth: 2
           }]
         },
@@ -447,7 +457,7 @@
               display: true,
               position: 'bottom',
               labels: {
-                color: '#1f2937',
+                color: cssVar('--saul-chart-label'),
                 font: { size: 11, weight: '500' },
                 padding: 10,
                 boxWidth: 15
@@ -455,8 +465,8 @@
             },
             tooltip: {
               backgroundColor: 'rgba(17, 24, 39, 0.95)',
-              titleColor: '#fff',
-              bodyColor: '#fff',
+              titleColor: cssVar('--saul-white'),
+              bodyColor: cssVar('--saul-white'),
               padding: 10,
               callbacks: {
                 label: function(context) {
@@ -520,14 +530,14 @@
           datasets: [{
             label: i18n.report_vscode_activity_commits || 'Commits',
             data: commitsByHour,
-            borderColor: '#10b981',
+            borderColor: cssVar('--saul-emerald'),
             backgroundColor: 'rgba(16, 185, 129, 0.1)',
             borderWidth: 2,
             tension: 0.4,
             fill: true,
             pointRadius: 4,
-            pointBackgroundColor: '#10b981',
-            pointBorderColor: '#fff',
+            pointBackgroundColor: cssVar('--saul-emerald'),
+            pointBorderColor: cssVar('--saul-white'),
             pointBorderWidth: 2,
             pointHoverRadius: 6
           }]
@@ -538,17 +548,17 @@
           scales: {
             x: {
               grid: { display: false },
-              ticks: { 
-                color: '#1f2937', 
+              ticks: {
+                color: cssVar('--saul-chart-label'),
                 font: { size: 9 },
                 maxRotation: 0
               }
             },
             y: {
               beginAtZero: true,
-              grid: { color: '#e5e7eb' },
-              ticks: { 
-                color: '#1f2937', 
+              grid: { color: cssVar('--saul-chart-grid') },
+              ticks: {
+                color: cssVar('--saul-chart-label'),
                 font: { size: 10 },
                 stepSize: 1
               }
@@ -558,8 +568,8 @@
             legend: { display: false },
             tooltip: {
               backgroundColor: 'rgba(17, 24, 39, 0.95)',
-              titleColor: '#fff',
-              bodyColor: '#fff',
+              titleColor: cssVar('--saul-white'),
+              bodyColor: cssVar('--saul-white'),
               padding: 10,
               callbacks: {
                 label: function(context) {
@@ -711,7 +721,7 @@
         label: language,
         data: data,
         backgroundColor: color,
-        borderColor: '#fff',
+        borderColor: cssVar('--saul-white'),
         borderWidth: 1
       };
     });
@@ -731,15 +741,15 @@
           scales: {
             x: {
               stacked: true,
-              grid: { color: '#e5e7eb' },
+              grid: { color: cssVar('--saul-chart-grid') },
               ticks: {
-                color: '#1f2937',
+                color: cssVar('--saul-chart-label'),
                 font: { size: 10 }
               },
               title: {
                 display: true,
                 text: i18n.report_vscode_chart_axis_minutes || 'Minutes',
-                color: '#374151',
+                color: cssVar('--saul-chart-text'),
                 font: { size: 11, weight: 'bold' }
               }
             },
@@ -747,7 +757,7 @@
               stacked: true,
               grid: { display: false },
               ticks: {
-                color: '#1f2937',
+                color: cssVar('--saul-chart-label'),
                 font: { size: 11, weight: '500' }
               }
             }
@@ -757,7 +767,7 @@
               display: true,
               position: 'top',
               labels: {
-                color: '#1f2937',
+                color: cssVar('--saul-chart-label'),
                 font: { size: 11, weight: '500' },
                 padding: 10,
                 usePointStyle: true,
@@ -766,8 +776,8 @@
             },
             tooltip: {
               backgroundColor: 'rgba(17, 24, 39, 0.95)',
-              titleColor: '#fff',
-              bodyColor: '#fff',
+              titleColor: cssVar('--saul-white'),
+              bodyColor: cssVar('--saul-white'),
               padding: 10,
               callbacks: {
                 label: function(context) {
@@ -866,7 +876,7 @@
         datasets: [{
           label: 'Comandos',
           data,
-          backgroundColor: '#ffc857'
+          backgroundColor: cssVar('--combo-color')
         }]
       },
       options: {
@@ -916,7 +926,7 @@
         datasets: [{
           label: i18n.report_vscode_focus_intensity || 'Intensidade de Foco',
           data: hourData,
-          backgroundColor: '#10b981'
+          backgroundColor: cssVar('--saul-emerald')
         }]
       },
       options: {
@@ -1089,9 +1099,10 @@
 
     const el = (id) => document.getElementById(id);
     if (el('aiLinesAdded')) el('aiLinesAdded').textContent = String(aiLines);
-    if (el('aiEditsDetail')) el('aiEditsDetail').textContent = aiEdits > 0 ? (aiEdits + ' edits') : '--';
+    const editsLabel = i18n.report_ai_edits_count || '{count} edits';
+    if (el('aiEditsDetail')) el('aiEditsDetail').textContent = aiEdits > 0 ? editsLabel.replace('{count}', aiEdits) : '--';
     if (el('humanLinesAdded')) el('humanLinesAdded').textContent = String(humanLines);
-    if (el('humanEditsDetail')) el('humanEditsDetail').textContent = humanEdits > 0 ? (humanEdits + ' edits') : '--';
+    if (el('humanEditsDetail')) el('humanEditsDetail').textContent = humanEdits > 0 ? editsLabel.replace('{count}', humanEdits) : '--';
     if (el('aiInlineCompletions')) el('aiInlineCompletions').textContent = String(completions);
     if (el('aiTerminalCommands')) el('aiTerminalCommands').textContent = String(terminalCmds);
 
@@ -1110,7 +1121,7 @@
           labels: [i18n.report_ai_chart_ai_label || 'AI', i18n.report_ai_chart_human_label || 'You'],
           datasets: [{
             data: [aiLines, humanLines],
-            backgroundColor: ['#8b5cf6', '#10b981'],
+            backgroundColor: [cssVar('--saul-ai-purple'), cssVar('--saul-emerald')],
             borderWidth: 0
           }]
         },
@@ -1121,7 +1132,7 @@
           plugins: {
             legend: {
               position: 'bottom',
-              labels: { color: '#ccc', font: { size: 11 }, usePointStyle: true, padding: 10 }
+              labels: { color: cssVar('--saul-text-light'), font: { size: 11 }, usePointStyle: true, padding: 10 }
             },
             tooltip: {
               callbacks: {
@@ -1129,7 +1140,8 @@
                   const lbl = ctx.label || '';
                   const val = ctx.raw || 0;
                   const pct = lbl === (i18n.report_ai_chart_ai_label || 'AI') ? aiPct : humanPct;
-                  return lbl + ': ' + val + ' lines (' + pct + '%)';
+                  return (i18n.report_ai_chart_tooltip || '{label}: {value} lines ({pct}%)')
+                    .replace('{label}', lbl).replace('{value}', val).replace('{pct}', pct);
                 }
               }
             }

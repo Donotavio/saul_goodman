@@ -26,6 +26,10 @@ declare const jspdf: { jsPDF: new (...args: any[]) => any };
 
 type ChartInstance = any;
 
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 const OPENAI_HOST_PERMISSION = 'https://api.openai.com/*';
 const reportDateEl = document.getElementById('reportDate') as HTMLElement;
 const heroMessageEl = document.getElementById('heroMessage') as HTMLElement;
@@ -818,29 +822,29 @@ function renderVscodeHourlyChart(hourlyData: any[]): void {
         {
           label: 'Coding',
           data: codingMinutes,
-          backgroundColor: '#ffc857',
-          borderColor: '#ffb347',
+          backgroundColor: cssVar('--saul-chart-vscode-coding'),
+          borderColor: cssVar('--saul-chart-vscode-coding-border'),
           borderWidth: 1
         },
         {
           label: 'Debugging',
           data: debuggingMinutes,
-          backgroundColor: '#f59e0b',
-          borderColor: '#d97706',
+          backgroundColor: cssVar('--saul-chart-vscode-debug'),
+          borderColor: cssVar('--saul-chart-vscode-debug-border'),
           borderWidth: 1
         },
         {
           label: 'Building',
           data: buildingMinutes,
-          backgroundColor: '#10b981',
-          borderColor: '#059669',
+          backgroundColor: cssVar('--saul-chart-vscode-testing'),
+          borderColor: cssVar('--saul-chart-vscode-testing-border'),
           borderWidth: 1
         },
         {
           label: 'Testing',
           data: testingMinutes,
-          backgroundColor: '#0a7e07',
-          borderColor: '#085d05',
+          backgroundColor: cssVar('--saul-success-dark'),
+          borderColor: cssVar('--saul-chart-vscode-productive-border'),
           borderWidth: 1
         }
       ]
@@ -852,21 +856,21 @@ function renderVscodeHourlyChart(hourlyData: any[]): void {
         x: {
           stacked: true,
           grid: { display: false },
-          ticks: { color: '#6b7280', font: { size: 10 } }
+          ticks: { color: cssVar('--saul-chart-text-muted'), font: { size: 10 } }
         },
         y: {
           stacked: true,
           beginAtZero: true,
-          grid: { color: '#e5e7eb' },
-          ticks: { color: '#6b7280', font: { size: 10 } },
-          title: { display: true, text: 'Minutes', color: '#374151', font: { size: 11, weight: 'bold' } }
+          grid: { color: cssVar('--saul-chart-grid') },
+          ticks: { color: cssVar('--saul-chart-text-muted'), font: { size: 10 } },
+          title: { display: true, text: 'Minutes', color: cssVar('--saul-chart-text'), font: { size: 11, weight: 'bold' } }
         }
       },
       plugins: {
         legend: {
           display: true,
           position: 'top',
-          labels: { color: '#374151', font: { size: 11 }, padding: 12, usePointStyle: true }
+          labels: { color: cssVar('--saul-chart-text'), font: { size: 11 }, padding: 12, usePointStyle: true }
         }
       }
     }
@@ -904,7 +908,7 @@ function renderVscodeProjectsChart(projects: any[]): void {
     vscodeProjectsChart.destroy();
   }
 
-  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ffc857', '#ffb347'];
+  const colors = [cssVar('--saul-chart-vscode-composition'), cssVar('--saul-chart-vscode-testing'), cssVar('--saul-chart-vscode-debug'), cssVar('--saul-chart-vscode-coding'), cssVar('--saul-chart-vscode-coding-border')];
   const ctx = vscodeProjectsChartCanvas.getContext('2d');
   vscodeProjectsChart = new Chart(ctx, {
     type: 'doughnut',
@@ -913,7 +917,7 @@ function renderVscodeProjectsChart(projects: any[]): void {
       datasets: [{
         data: topProjects.map(p => Math.round((p.total_seconds || 0) / 60)),
         backgroundColor: colors,
-        borderColor: '#fff',
+        borderColor: cssVar('--saul-white'),
         borderWidth: 2
       }]
     },
@@ -924,7 +928,7 @@ function renderVscodeProjectsChart(projects: any[]): void {
         legend: {
           display: true,
           position: 'bottom',
-          labels: { color: '#1f2937', font: { size: 11 }, padding: 10, boxWidth: 15 }
+          labels: { color: cssVar('--saul-chart-text-dark'), font: { size: 11 }, padding: 10, boxWidth: 15 }
         }
       }
     }
@@ -971,14 +975,14 @@ function renderVscodeCommitsChart(gitData: any): void {
       datasets: [{
         label: i18n?.t('report_vscode_activity_commits') ?? 'Commits',
         data: commitsByHour,
-        borderColor: '#10b981',
+        borderColor: cssVar('--saul-chart-trend-line'),
         backgroundColor: 'rgba(16, 185, 129, 0.1)',
         borderWidth: 2,
         tension: 0.4,
         fill: true,
         pointRadius: 4,
-        pointBackgroundColor: '#10b981',
-        pointBorderColor: '#fff',
+        pointBackgroundColor: cssVar('--saul-chart-trend-line'),
+        pointBorderColor: cssVar('--saul-chart-trend-point-border'),
         pointBorderWidth: 2
       }]
     },
@@ -986,8 +990,8 @@ function renderVscodeCommitsChart(gitData: any): void {
       responsive: true,
       maintainAspectRatio: true,
       scales: {
-        x: { grid: { display: false }, ticks: { color: '#1f2937', font: { size: 9 } } },
-        y: { beginAtZero: true, grid: { color: '#e5e7eb' }, ticks: { color: '#1f2937', font: { size: 10 }, stepSize: 1 } }
+        x: { grid: { display: false }, ticks: { color: cssVar('--saul-chart-text-dark'), font: { size: 9 } } },
+        y: { beginAtZero: true, grid: { color: cssVar('--saul-chart-grid') }, ticks: { color: cssVar('--saul-chart-text-dark'), font: { size: 10 }, stepSize: 1 } }
       },
       plugins: {
         legend: { display: false }
@@ -1022,15 +1026,15 @@ function renderVscodeCrossReferenceChart(languagesByProject: any[]): void {
   });
 
   const languageColors: Record<string, string> = {
-    'javascript': '#f7df1e',
-    'typescript': '#3178c6',
-    'python': '#3776ab',
-    'java': '#007396',
-    'go': '#00add8',
-    'rust': '#ce422b',
-    'html': '#e34c26',
-    'css': '#563d7c',
-    'json': '#292929'
+    'javascript': cssVar('--saul-lang-javascript'),
+    'typescript': cssVar('--saul-lang-typescript'),
+    'python': cssVar('--saul-lang-python'),
+    'java': cssVar('--saul-lang-java'),
+    'go': cssVar('--saul-lang-go'),
+    'rust': cssVar('--saul-lang-rust'),
+    'html': cssVar('--saul-lang-html'),
+    'css': cssVar('--saul-lang-css'),
+    'json': cssVar('--saul-lang-json')
   };
 
   const datasets = Array.from(allLanguages).map(language => {
@@ -1042,8 +1046,8 @@ function renderVscodeCrossReferenceChart(languagesByProject: any[]): void {
     return {
       label: language,
       data: data,
-      backgroundColor: languageColors[language] || '#94a3b8',
-      borderColor: '#fff',
+      backgroundColor: languageColors[language] || cssVar('--saul-chart-language-default'),
+      borderColor: cssVar('--saul-white'),
       borderWidth: 1
     };
   });
@@ -1067,21 +1071,21 @@ function renderVscodeCrossReferenceChart(languagesByProject: any[]): void {
       scales: {
         x: {
           stacked: true,
-          grid: { color: '#e5e7eb' },
-          ticks: { color: '#1f2937', font: { size: 10 } },
-          title: { display: true, text: 'Minutes', color: '#374151', font: { size: 11, weight: 'bold' } }
+          grid: { color: cssVar('--saul-chart-grid') },
+          ticks: { color: cssVar('--saul-chart-text-dark'), font: { size: 10 } },
+          title: { display: true, text: 'Minutes', color: cssVar('--saul-chart-text'), font: { size: 11, weight: 'bold' } }
         },
         y: {
           stacked: true,
           grid: { display: false },
-          ticks: { color: '#1f2937', font: { size: 11, weight: '500' } }
+          ticks: { color: cssVar('--saul-chart-text-dark'), font: { size: 11, weight: '500' } }
         }
       },
       plugins: {
         legend: {
           display: true,
           position: 'top',
-          labels: { color: '#1f2937', font: { size: 11 }, padding: 10, usePointStyle: true }
+          labels: { color: cssVar('--saul-chart-text-dark'), font: { size: 11 }, padding: 10, usePointStyle: true }
         }
       }
     }
@@ -1184,7 +1188,7 @@ function renderVscodeTerminalCommandsChart(terminal: any): void {
       datasets: [{
         label: 'Comandos',
         data,
-        backgroundColor: '#ffc857'
+        backgroundColor: cssVar('--saul-chart-combo-bg')
       }]
     },
     options: {
@@ -1234,7 +1238,7 @@ function renderVscodeFocusPatternsChart(focus: any): void {
       datasets: [{
         label: 'Intensidade de Foco',
         data: hourData,
-        backgroundColor: '#10b981'
+        backgroundColor: cssVar('--saul-chart-combo-productive')
       }]
     },
     options: {
@@ -1291,20 +1295,20 @@ function renderVscodeComboTimelineChart(comboData: any): void {
   }
 
   const levelColors: Record<number, string> = {
-    0: '#6B7280',
-    1: '#FFC857',
-    2: '#F59E0B',
-    3: '#EF4444',
-    4: '#A855F7',
-    5: '#FFD700'
+    0: cssVar('--saul-chart-tier-0'),
+    1: cssVar('--saul-chart-tier-1'),
+    2: cssVar('--saul-chart-tier-2'),
+    3: cssVar('--saul-chart-tier-3'),
+    4: cssVar('--saul-chart-tier-4'),
+    5: cssVar('--saul-chart-tier-5')
   };
 
   const dataset = {
     data: dataPoints,
-    borderColor: '#FFD700',
-    backgroundColor: '#FFD700',
+    borderColor: cssVar('--saul-chart-streak-line'),
+    backgroundColor: cssVar('--saul-chart-streak-line'),
     pointBackgroundColor: dataPoints.map((p: any) => levelColors[p.level] || levelColors[0]),
-    pointBorderColor: '#fff',
+    pointBorderColor: cssVar('--saul-chart-streak-point-border'),
     pointRadius: dataPoints.map((p: any) => p.type === 'combo_reset' ? 8 : 5),
     pointStyle: dataPoints.map((p: any) => p.type === 'combo_reset' ? 'crossRot' : 'circle'),
     fill: false,
@@ -1548,7 +1552,7 @@ function renderVscodeAiSection(metrics: DailyMetrics): void {
         ],
         datasets: [{
           data: [aiLines, humanLines],
-          backgroundColor: ['#8b5cf6', '#10b981'],
+          backgroundColor: [cssVar('--saul-chart-ai-coding'), cssVar('--saul-chart-ai-other')],
           borderWidth: 0
         }]
       },
@@ -1559,7 +1563,7 @@ function renderVscodeAiSection(metrics: DailyMetrics): void {
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { color: '#1f2937', font: { size: 11 }, usePointStyle: true, padding: 10 }
+            labels: { color: cssVar('--saul-chart-text-dark'), font: { size: 11 }, usePointStyle: true, padding: 10 }
           },
           tooltip: {
             callbacks: {
@@ -2033,22 +2037,22 @@ function renderHourlyChart(metrics: DailyMetrics): void {
       {
         label: productiveLabel,
         data: metrics.hourly.map((bucket) => toMinutes(bucket.productiveMs)),
-        backgroundColor: '#0a7e07'
+        backgroundColor: cssVar('--saul-success-dark')
       },
       {
         label: procrastinationLabel,
         data: metrics.hourly.map((bucket) => toMinutes(bucket.procrastinationMs)),
-        backgroundColor: '#d00000'
+        backgroundColor: cssVar('--saul-danger-dark')
       },
       {
         label: inactiveLabel,
         data: metrics.hourly.map((bucket) => toMinutes(bucket.inactiveMs)),
-        backgroundColor: '#c1c1c1'
+        backgroundColor: cssVar('--saul-chart-inactive')
       },
       {
         label: neutralLabel,
         data: metrics.hourly.map((bucket) => toMinutes(bucket.neutralMs)),
-        backgroundColor: '#f4c95d'
+        backgroundColor: cssVar('--saul-chart-neutral-warm')
       }
     ]
   };
@@ -2100,18 +2104,29 @@ function renderTabSwitchChart(metrics: DailyMetrics): void {
   tabSwitchCanvas.style.display = 'block';
   tabSwitchEmptyEl?.classList.add('hidden');
 
+  const tabSwitchCssColors: Record<string, string> = {
+    productiveToProductive: cssVar('--saul-tab-prod-prod'),
+    productiveToProcrastination: cssVar('--saul-tab-prod-proc'),
+    productiveToNeutral: cssVar('--saul-tab-prod-neutral'),
+    procrastinationToProductive: cssVar('--saul-tab-proc-prod'),
+    procrastinationToProcrastination: cssVar('--saul-tab-proc-proc'),
+    procrastinationToNeutral: cssVar('--saul-tab-proc-neutral'),
+    neutralToProductive: cssVar('--saul-tab-neutral-prod'),
+    neutralToProcrastination: cssVar('--saul-tab-neutral-proc'),
+    neutralToNeutral: cssVar('--saul-tab-neutral-neutral')
+  };
   const labels = buckets.map((bucket) => `${bucket.hour.toString().padStart(2, '0')}h`);
   const datasets = TAB_SWITCH_SERIES.map((series) => ({
     label: series.label,
     data: buckets.map((bucket) => bucket[series.key] ?? 0),
-    backgroundColor: series.color,
+    backgroundColor: tabSwitchCssColors[series.key] || series.color,
     stack: 'tabSwitches'
   }));
   if (vscodeHourly.length === 24) {
     datasets.push({
       label: i18n?.t('label_vscode') ?? 'VS Code (IDE)',
       data: vscodeHourly,
-      backgroundColor: '#005bd1',
+      backgroundColor: cssVar('--saul-chart-vscode-info'),
       stack: 'tabSwitches'
     });
   }
@@ -2175,9 +2190,9 @@ function renderCompositionChart(metrics: DailyMetrics): void {
           Math.round(metrics.inactiveMs / 60000),
           Math.round(neutralTotal / 60000)
         ],
-        backgroundColor: ['#0a7e07', '#d00000', '#c1c1c1', '#f4c95d'],
+        backgroundColor: [cssVar('--saul-success-dark'), cssVar('--saul-danger-dark'), cssVar('--saul-chart-inactive'), cssVar('--saul-chart-neutral-warm')],
         borderWidth: 1,
-        borderColor: '#111'
+        borderColor: cssVar('--saul-black')
       }
     ]
   };
@@ -3474,10 +3489,10 @@ function renderDomainBreakdownChart(domains: Record<string, DomainStats>): void 
         data: topEntries.map((entry) => Math.round(entry.milliseconds / 60000)),
         backgroundColor: topEntries.map((entry) =>
           entry.category === 'productive'
-            ? '#0a7e07'
+            ? cssVar('--saul-success-dark')
             : entry.category === 'procrastination'
-              ? '#d00000'
-              : '#6d5945'
+              ? cssVar('--saul-danger-dark')
+              : cssVar('--saul-chart-domain-neutral')
         )
       }
     ]
@@ -3724,7 +3739,7 @@ function triggerHeroConfetti(): void {
 
   const container = document.createElement('div');
   container.className = 'hero-confetti';
-  const colors = ['#29c56d', '#17a589', '#ffe434', '#ff9f1c', '#ff1a1a'];
+  const colors = [cssVar('--saul-chart-health-1'), cssVar('--saul-chart-health-2'), cssVar('--saul-chart-health-3'), cssVar('--saul-chart-health-4'), cssVar('--saul-chart-health-5')];
   const pieces = 16;
 
   for (let i = 0; i < pieces; i += 1) {

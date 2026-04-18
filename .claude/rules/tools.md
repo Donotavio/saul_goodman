@@ -21,12 +21,6 @@ globs: tools/**
 - `npm run i18n:full-lang-update` — pipeline completo
 - `npm run i18n:copy-site` — copia para site/_locales/
 
-## mcp_quality/
-- Suite QA visual e performance
-- Requer Chrome/Chromium com DevTools protocol
-- Artefatos em `tools/mcp_quality/artifacts/` (gitignored)
-- Testa: popup, options, report, site, blog, daemon, vscode
-
 ## ml_replay/
 - Avaliacao offline do modelo ML
 - Export de perfil Chrome para dataset

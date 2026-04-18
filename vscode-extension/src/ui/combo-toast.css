@@ -2,6 +2,11 @@
 
 :root {
   --combo-color: #FFC857;
+  --ultra-gold: #FFD700;
+  --ultra-orange: #FFA500;
+  --ultra-deep-orange: #FF8C00;
+  --saul-white: #fff;
+  --saul-toast-message: #E5E7EB;
   --toast-width: 320px;
   --toast-padding: 16px;
 }
@@ -92,22 +97,22 @@ body {
     slideInBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
     ultraGlow 1s ease-in-out infinite 0.5s,
     shake 0.3s ease-in-out 0.2s;
-  border-image: linear-gradient(135deg, #FFD700, #FFA500, #FFD700) 1;
+  border-image: linear-gradient(135deg, var(--ultra-gold), var(--ultra-orange), var(--ultra-gold)) 1;
 }
 
 @keyframes ultraGlow {
   0%, 100% {
-    box-shadow: 
+    box-shadow:
       0 10px 50px rgba(255, 215, 0, 0.6),
-      0 0 30px #FFD700,
-      0 0 60px #FFA500,
+      0 0 30px var(--ultra-gold),
+      0 0 60px var(--ultra-orange),
       inset 0 0 20px rgba(255, 215, 0, 0.3);
   }
   50% {
-    box-shadow: 
+    box-shadow:
       0 10px 70px rgba(255, 215, 0, 0.8),
-      0 0 50px #FFD700,
-      0 0 100px #FFA500,
+      0 0 50px var(--ultra-gold),
+      0 0 100px var(--ultra-orange),
       inset 0 0 30px rgba(255, 215, 0, 0.5);
   }
 }
@@ -217,7 +222,7 @@ body {
 .toast-message {
   font-size: 13px;
   line-height: 1.5;
-  color: #E5E7EB;
+  color: var(--saul-toast-message);
   margin-bottom: 10px;
   animation: messageFade 0.6s ease-out 0.4s backwards;
 }
@@ -291,25 +296,25 @@ body {
 }
 
 @keyframes rainbowText {
-  0% { 
-    color: #FFD700;
-    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+  0% {
+    color: var(--ultra-gold);
+    text-shadow: 0 0 10px var(--ultra-gold), 0 0 20px var(--ultra-orange);
   }
-  25% { 
-    color: #FFA500;
-    text-shadow: 0 0 10px #FFA500, 0 0 20px #FFD700;
+  25% {
+    color: var(--ultra-orange);
+    text-shadow: 0 0 10px var(--ultra-orange), 0 0 20px var(--ultra-gold);
   }
-  50% { 
-    color: #FFD700;
-    text-shadow: 0 0 10px #FFD700, 0 0 20px #FF8C00;
+  50% {
+    color: var(--ultra-gold);
+    text-shadow: 0 0 10px var(--ultra-gold), 0 0 20px var(--ultra-deep-orange);
   }
-  75% { 
-    color: #FF8C00;
-    text-shadow: 0 0 10px #FF8C00, 0 0 20px #FFD700;
+  75% {
+    color: var(--ultra-deep-orange);
+    text-shadow: 0 0 10px var(--ultra-deep-orange), 0 0 20px var(--ultra-gold);
   }
-  100% { 
-    color: #FFD700;
-    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+  100% {
+    color: var(--ultra-gold);
+    text-shadow: 0 0 10px var(--ultra-gold), 0 0 20px var(--ultra-orange);
   }
 }
 
@@ -359,7 +364,7 @@ body {
   }
 
   .toast-message {
-    color: #FFFFFF;
+    color: var(--saul-white);
   }
 }
 

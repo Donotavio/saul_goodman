@@ -491,9 +491,6 @@
   "extDescription": {
     "message": "متتبع التركيز الساحق الذي يقيس المجالات ويبقي الرقم القياسي الخاص بك في التحقق."
   },
-  "extName": {
-    "message": "سول غودمان"
-  },
   "extensionsChromeCta": {
     "message": "تمديد الفترة"
   },
@@ -505,6 +502,9 @@
   },
   "extensionsVscodeCta": {
     "message": "إضافة VS Code"
+  },
+  "extName": {
+    "message": "سول غودمان"
   },
   "faq1Answer": {
     "message": "تماماً (سول) يتهم فقط الإنتباه و الدعابة"
@@ -638,6 +638,12 @@
   "featureCustomTitle": {
     "message": "قوائم العملاء"
   },
+  "featuredEyebrow": {
+    "message": "المرشح"
+  },
+  "featuredTitle": {
+    "message": "حالة الأسبوع"
+  },
   "featureGaugeHint": {
     "message": "عندما يعبر 70٪، سول يستعدّ الشجار."
   },
@@ -701,20 +707,14 @@
   "featureSectionTitle": {
     "message": "كل شيء تحتاجه لتقوم بفحصه"
   },
-  "featureSwipeHint": {
-    "message": "(سلوب) يتجه نحو إعادة النظر في كل مقبض لـ(سول)"
-  },
-  "featuredEyebrow": {
-    "message": "المرشح"
-  },
-  "featuredTitle": {
-    "message": "حالة الأسبوع"
-  },
   "featuresEyebrow": {
     "message": "الخصائص التفصيلية"
   },
   "featuresTitle": {
     "message": "ترسانة تمديد سول غودمان"
+  },
+  "featureSwipeHint": {
+    "message": "(سلوب) يتجه نحو إعادة النظر في كل مقبض لـ(سول)"
   },
   "feedbackLink": {
     "message": "التغذية"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "قراءة المادة"
   },
-  "readTimeUnit": {
-    "message": "يقرأ"
-  },
   "readingTimeLabel": {
     "message": "وقت القراءة"
+  },
+  "readTimeUnit": {
+    "message": "يقرأ"
   },
   "reason1Body": {
     "message": "فهرس البوب يظهر وضعك الحالي حتى تعرف ما ستصلحه بعد ذلك"
@@ -2213,14 +2213,29 @@
   "relatedTitle": {
     "message": "الوظائف ذات الصلة"
   },
+  "report_ai_activity_subtitle": {
+    "message": "AI-assisted coding activity"
+  },
+  "report_ai_activity_title": {
+    "message": "AI Pair Programming"
+  },
   "report_ai_chart_ai_label": {
     "message": "AI"
   },
   "report_ai_chart_human_label": {
     "message": "You"
   },
+  "report_ai_chart_tooltip": {
+    "message": "{label}: {value} lines ({pct}%)"
+  },
   "report_ai_completions": {
     "message": "الإكمالات"
+  },
+  "report_ai_contribution_chart": {
+    "message": "Contribution"
+  },
+  "report_ai_edits_count": {
+    "message": "{count} edits"
   },
   "report_ai_error_generic": {
     "message": "(سول) لم يستطع إقناع القاضي الرقمي حاول مرة أخرى لاحقا."
@@ -2260,6 +2275,9 @@
   },
   "report_ai_terminal_cmds": {
     "message": "AI Terminal"
+  },
+  "report_ai_tools_active": {
+    "message": "Active AI Tools"
   },
   "report_alert_pdf_missing": {
     "message": "مكتبة PDF غير متاحة."
@@ -3500,81 +3518,6 @@
   "usersBadgeLabel": {
     "message": "المستخدمون"
   },
-  "vscodeCard1Body": {
-    "message": "يعمل الخادم المحلي مع الإضافة ويسجل الوقت في المحرر كدقائق منتجة. لا شيء يخرج من localhost، لكن المؤقت لا ينام أبداً."
-  },
-  "vscodeCard1Kicker": {
-    "message": "ساعة التركيز"
-  },
-  "vscodeCard1Title": {
-    "message": "كل التزام يُحتسب كساعة قابلة للفوترة."
-  },
-  "vscodeCard2Body": {
-    "message": "هل انتقلت من المحرر إلى الخلاصة؟ ساول يسجل التشتت في التقرير. عدت إلى الكود؟ يسجل كدليل على البراءة."
-  },
-  "vscodeCard2Kicker": {
-    "message": "محقق السياق"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code و Chrome يتبادلان الأدلة."
-  },
-  "vscodeCard3Body": {
-    "message": "التقارير تقدم وقت الكود، والانقطاعات، والمشتبه بهم المتكررين. مثالي لإظهار للمدير أن التسويف ليس له فرصة."
-  },
-  "vscodeCard3Kicker": {
-    "message": "جاهز للجمهور"
-  },
-  "vscodeCard3Title": {
-    "message": "يصدر الدفاع مع المقاييس واللقطات."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code في المحكمة"
-  },
-  "vscodeLead": {
-    "message": "ساول يربط VS Code بالقضية: دقائق المحرر تتحول إلى دليل على التركيز، والانقطاعات تصبح مشتبه بهم، والتقرير يصل جاهزاً لإقناع هيئة المحلفين (فريقك)."
-  },
-  "vscodeMetaBridge": {
-    "message": "جسر كروم + VS كود."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% محلي، لا شيء يخرج من محررك."
-  },
-  "vscodeMetaProof": {
-    "message": "تقارير مع لقطات و CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "تثبيت في VS Code"
-  },
-  "vscodeProofBody": {
-    "message": "خط زمني يثبت من بقي في الكود ومن هرب إلى الخلاصة. استخدمه كدليل A في الاجتماع القادم."
-  },
-  "vscodeProofChipAlert": {
-    "message": "تنبيه"
-  },
-  "vscodeProofChipDefense": {
-    "message": "دفاع"
-  },
-  "vscodeProofChipFocus": {
-    "message": "تركيز"
-  },
-  "vscodeProofEyebrow": {
-    "message": "الأدلة المفضلة لسول"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS كود نشط · 38 دقيقة بدون تغيير التبويب."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — انتقل إلى يوتيوب · سول وضع علامة كإلهاء."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — العودة إلى VS كود · 21 دقيقة من التركيز المستعاد."
-  },
-  "vscodeSecondaryCta": {
-    "message": "عرض الدليل السريع"
-  },
-  "vscodeTitle": {
-    "message": "حوّل المحرر إلى أصل إنتاجية."
-  },
   "vscode_combo_reset_cancel": {
     "message": "إلغاء"
   },
@@ -3697,5 +3640,80 @@
   },
   "vscode_reports_today": {
     "message": "اليوم"
+  },
+  "vscodeCard1Body": {
+    "message": "يعمل الخادم المحلي مع الإضافة ويسجل الوقت في المحرر كدقائق منتجة. لا شيء يخرج من localhost، لكن المؤقت لا ينام أبداً."
+  },
+  "vscodeCard1Kicker": {
+    "message": "ساعة التركيز"
+  },
+  "vscodeCard1Title": {
+    "message": "كل التزام يُحتسب كساعة قابلة للفوترة."
+  },
+  "vscodeCard2Body": {
+    "message": "هل انتقلت من المحرر إلى الخلاصة؟ ساول يسجل التشتت في التقرير. عدت إلى الكود؟ يسجل كدليل على البراءة."
+  },
+  "vscodeCard2Kicker": {
+    "message": "محقق السياق"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code و Chrome يتبادلان الأدلة."
+  },
+  "vscodeCard3Body": {
+    "message": "التقارير تقدم وقت الكود، والانقطاعات، والمشتبه بهم المتكررين. مثالي لإظهار للمدير أن التسويف ليس له فرصة."
+  },
+  "vscodeCard3Kicker": {
+    "message": "جاهز للجمهور"
+  },
+  "vscodeCard3Title": {
+    "message": "يصدر الدفاع مع المقاييس واللقطات."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code في المحكمة"
+  },
+  "vscodeLead": {
+    "message": "ساول يربط VS Code بالقضية: دقائق المحرر تتحول إلى دليل على التركيز، والانقطاعات تصبح مشتبه بهم، والتقرير يصل جاهزاً لإقناع هيئة المحلفين (فريقك)."
+  },
+  "vscodeMetaBridge": {
+    "message": "جسر كروم + VS كود."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% محلي، لا شيء يخرج من محررك."
+  },
+  "vscodeMetaProof": {
+    "message": "تقارير مع لقطات و CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "تثبيت في VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "خط زمني يثبت من بقي في الكود ومن هرب إلى الخلاصة. استخدمه كدليل A في الاجتماع القادم."
+  },
+  "vscodeProofChipAlert": {
+    "message": "تنبيه"
+  },
+  "vscodeProofChipDefense": {
+    "message": "دفاع"
+  },
+  "vscodeProofChipFocus": {
+    "message": "تركيز"
+  },
+  "vscodeProofEyebrow": {
+    "message": "الأدلة المفضلة لسول"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS كود نشط · 38 دقيقة بدون تغيير التبويب."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — انتقل إلى يوتيوب · سول وضع علامة كإلهاء."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — العودة إلى VS كود · 21 دقيقة من التركيز المستعاد."
+  },
+  "vscodeSecondaryCta": {
+    "message": "عرض الدليل السريع"
+  },
+  "vscodeTitle": {
+    "message": "حوّل المحرر إلى أصل إنتاجية."
   }
 }

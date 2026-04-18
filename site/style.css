@@ -9,6 +9,7 @@
   --bulb-warm: #fff6ce;
   --bulb-hot: #ffb347;
   --bulb-off: rgba(255, 118, 37, 0.35);
+  --warm-bg: #fffdf5;
 }
 
 * {
@@ -19,7 +20,7 @@
 html,
 body {
   margin: 0;
-  background: #fffdf5;
+  background: var(--warm-bg);
   color: var(--brown);
   overflow-x: hidden;
   max-width: 100vw;
@@ -122,7 +123,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 64px 8vw 56px;
-  background: linear-gradient(120deg, var(--yellow), #fff3c4, #fffdf5);
+  background: linear-gradient(120deg, var(--yellow), #fff3c4, var(--warm-bg));
   border-bottom: 4px solid var(--black);
   position: relative;
   overflow: visible;
@@ -1227,7 +1228,7 @@ body {
 }
 
 .index-explainer {
-  background: linear-gradient(160deg, #fff7d6 0%, #fffdf5 40%, #fff7d6 100%);
+  background: linear-gradient(160deg, #fff7d6 0%, var(--warm-bg) 40%, #fff7d6 100%);
 }
 
 .index-layout {
@@ -1800,7 +1801,7 @@ body {
   padding: 10px 16px;
   border: 2px solid var(--black);
   border-radius: 999px;
-  background: #fffdf5;
+  background: var(--warm-bg);
   color: var(--brown);
   text-decoration: none;
   display: inline-flex;
@@ -1934,7 +1935,7 @@ body {
 }
 
 .feature-icon-report {
-  background: linear-gradient(135deg, #fffdf5, #ffe2bd);
+  background: linear-gradient(135deg, var(--warm-bg), #ffe2bd);
   position: relative;
 }
 
@@ -2086,7 +2087,7 @@ body {
 .vscode-section {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #fff7d9, #e8f3ff, #fffdf5);
+  background: linear-gradient(135deg, #fff7d9, #e8f3ff, var(--warm-bg));
   border-top: 3px solid var(--black);
   border-bottom: 3px solid var(--black);
   box-shadow:
@@ -2187,7 +2188,7 @@ body {
   padding: 8px 10px;
   border: 1px dashed rgba(0, 0, 0, 0.12);
   border-radius: 12px;
-  background: #fffdf5;
+  background: var(--warm-bg);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   font-weight: 600;
 }
@@ -2269,7 +2270,7 @@ body {
 }
 
 .codecon-section {
-  background: linear-gradient(135deg, #fff9e2, #ffe6b8, #fffdf5);
+  background: linear-gradient(135deg, #fff9e2, #ffe6b8, var(--warm-bg));
   border-top: 3px solid var(--black);
   border-bottom: 3px solid var(--black);
   box-shadow:
@@ -2785,7 +2786,7 @@ blockquote p {
 }
 
 .quake-card {
-  background: #fffdf5;
+  background: var(--warm-bg);
   border: 3px solid var(--black);
   border-radius: 16px;
   padding: 18px;
@@ -3024,7 +3025,7 @@ blockquote p {
     overflow: hidden;
     flex-direction: column;
     gap: 16px;
-    background: #fffdf5;
+    background: var(--warm-bg);
     padding: 0 6vw;
     transform-origin: top;
     transition: max-height 0.3s ease;
@@ -3440,7 +3441,7 @@ blockquote p {
 }
 
 .quake-highlight {
-  background: linear-gradient(135deg, #fffdf5, #fff1cf);
+  background: linear-gradient(135deg, var(--warm-bg), #fff1cf);
   position: relative;
   overflow: hidden;
 }
@@ -3608,7 +3609,7 @@ blockquote p {
 .changelog-content {
   padding: 96px 8vw 64px;
   min-height: 70vh;
-  background: #fffdf5;
+  background: var(--warm-bg);
 }
 
 .privacy-hero,

@@ -4,7 +4,6 @@ import {
   DomainSuggestion,
   FairnessSummary,
   LocalePreference,
-  MlModelStatus,
   PopupData,
   RuntimeMessageType,
   SupportedLocale,
@@ -81,22 +80,6 @@ const suggestionIgnoreButton = document.getElementById(
 const suggestionManualButton = document.getElementById(
   'suggestionManualButton'
 ) as HTMLButtonElement | null;
-const mlCardEl = document.getElementById('mlCard') as HTMLDivElement | null;
-const mlStatusBadgeEl = document.getElementById('mlStatusBadge') as HTMLSpanElement | null;
-const mlUpdatesEl = document.getElementById('mlUpdates') as HTMLElement | null;
-const mlActiveFeaturesEl = document.getElementById('mlActiveFeatures') as HTMLElement | null;
-const mlLastUpdatedEl = document.getElementById('mlLastUpdated') as HTMLElement | null;
-const mlBiasEl = document.getElementById('mlBias') as HTMLElement | null;
-const mlGuardrailStageEl = document.getElementById('mlGuardrailStage') as HTMLElement | null;
-const mlFalseProductiveRateEl = document.getElementById('mlFalseProductiveRate') as HTMLElement | null;
-const mlPrecisionProductiveEl = document.getElementById('mlPrecisionProductive') as HTMLElement | null;
-const mlDeltaMacroF1El = document.getElementById('mlDeltaMacroF1') as HTMLElement | null;
-const mlMcnemarPEl = document.getElementById('mlMcnemarP') as HTMLElement | null;
-const mlCalibrationEceEl = document.getElementById('mlCalibrationEce') as HTMLElement | null;
-const mlTopConceptsCoverageEl = document.getElementById('mlTopConceptsCoverage') as HTMLElement | null;
-const mlPseudoAcceptanceEl = document.getElementById('mlPseudoAcceptance') as HTMLElement | null;
-const mlDriftAlertEl = document.getElementById('mlDriftAlert') as HTMLElement | null;
-const mlHighConfidenceEceEl = document.getElementById('mlHighConfidenceEce') as HTMLElement | null;
 const focusRateEl = document.getElementById('focusRateValue') as HTMLElement;
 const tabSwitchRateEl = document.getElementById('tabSwitchRateValue') as HTMLElement;
 const inactivePercentEl = document.getElementById('inactivePercentValue') as HTMLElement;
@@ -398,7 +381,6 @@ async function hydrate(): Promise<void> {
     renderChart(data.metrics);
     renderFairness(latestFairness);
     renderSuggestionCard(currentSuggestion, data.settings, suggestionList.length, suggestionIndex);
-    renderMlStatus(data.mlModel ?? null, data.settings?.locale ?? 'en-US');
     void loadBlogSuggestion(data.metrics);
     const formattedTime = new Date(data.metrics.lastUpdated).toLocaleTimeString(
       data.settings?.locale ?? 'en-US'
@@ -519,111 +501,6 @@ function renderSuggestionCard(
     li.textContent = translateSuggestionReason(reason, i18n);
     suggestionReasonsEl.appendChild(li);
   });
-}
-
-function renderMlStatus(status: MlModelStatus | null, locale: SupportedLocale): void {
-  if (!mlCardEl || !mlStatusBadgeEl || !mlUpdatesEl || !mlActiveFeaturesEl || !mlLastUpdatedEl || !mlBiasEl) {
-    return;
-  }
-
-  const formatNumber = (value: number): string => value.toLocaleString(locale ?? 'en-US');
-  mlStatusBadgeEl.classList.remove('training', 'cold', 'unavailable');
-
-  if (!status) {
-    mlStatusBadgeEl.textContent = i18n?.t('popup_ml_status_unavailable') ?? 'Unavailable';
-    mlStatusBadgeEl.classList.add('unavailable');
-    mlUpdatesEl.textContent = '--';
-    mlActiveFeaturesEl.textContent = '--';
-    mlLastUpdatedEl.textContent = '--';
-    mlBiasEl.textContent = '--';
-    if (mlGuardrailStageEl) mlGuardrailStageEl.textContent = '--';
-    if (mlFalseProductiveRateEl) mlFalseProductiveRateEl.textContent = '--';
-    if (mlPrecisionProductiveEl) mlPrecisionProductiveEl.textContent = '--';
-    if (mlDeltaMacroF1El) mlDeltaMacroF1El.textContent = '--';
-    if (mlMcnemarPEl) mlMcnemarPEl.textContent = '--';
-    if (mlCalibrationEceEl) mlCalibrationEceEl.textContent = '--';
-    if (mlTopConceptsCoverageEl) mlTopConceptsCoverageEl.textContent = '--';
-    if (mlPseudoAcceptanceEl) mlPseudoAcceptanceEl.textContent = '--';
-    if (mlDriftAlertEl) mlDriftAlertEl.textContent = '--';
-    if (mlHighConfidenceEceEl) mlHighConfidenceEceEl.textContent = '--';
-    return;
-  }
-
-  const maturity = resolveModelMaturity(status.totalUpdates, status.activeFeatures);
-  const stage = (status.guardrailStage ?? 'guarded').toUpperCase();
-  mlStatusBadgeEl.textContent = `${maturity.label} · ${stage}`;
-  mlStatusBadgeEl.classList.add(maturity.className);
-
-  mlUpdatesEl.textContent = formatNumber(status.totalUpdates);
-  mlActiveFeaturesEl.textContent = formatNumber(status.activeFeatures);
-  mlBiasEl.textContent = status.bias.toFixed(3);
-  if (status.lastUpdated > 0) {
-    mlLastUpdatedEl.textContent = new Date(status.lastUpdated).toLocaleString(locale ?? 'en-US');
-  } else {
-    mlLastUpdatedEl.textContent = i18n?.t('popup_ml_never') ?? 'Never';
-  }
-  if (mlGuardrailStageEl) {
-    mlGuardrailStageEl.textContent = (status.guardrailStage ?? 'guarded').toUpperCase();
-  }
-  if (mlFalseProductiveRateEl) {
-    const value = status.falseProductiveRate;
-    mlFalseProductiveRateEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
-  }
-  if (mlPrecisionProductiveEl) {
-    const value = status.precisionProductive;
-    mlPrecisionProductiveEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
-  }
-  if (mlDeltaMacroF1El) {
-    const delta = status.deltaMacroF1;
-    mlDeltaMacroF1El.textContent = Number.isFinite(delta)
-      ? `${(delta as number) >= 0 ? '+' : ''}${(delta as number).toFixed(3)}`
-      : '--';
-  }
-  if (mlMcnemarPEl) {
-    const value = status.mcnemarPValue;
-    mlMcnemarPEl.textContent = Number.isFinite(value) ? (value as number).toFixed(4) : '--';
-  }
-  if (mlCalibrationEceEl) {
-    const ece = status.ece ?? status.calibration?.ece;
-    mlCalibrationEceEl.textContent = Number.isFinite(ece) ? (ece as number).toFixed(3) : '--';
-  }
-  if (mlTopConceptsCoverageEl) {
-    const value = status.signalHealth?.topConceptsCoverage;
-    mlTopConceptsCoverageEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
-  }
-  if (mlPseudoAcceptanceEl) {
-    const value = status.signalHealth?.pseudoLabelAcceptedRate;
-    mlPseudoAcceptanceEl.textContent = Number.isFinite(value) ? `${((value as number) * 100).toFixed(1)}%` : '--';
-  }
-  if (mlDriftAlertEl) {
-    mlDriftAlertEl.textContent = status.signalHealth?.driftAlert ? 'YES' : 'NO';
-  }
-  if (mlHighConfidenceEceEl) {
-    const value = status.signalHealth?.highConfidenceEce ?? status.validation?.highConfidenceEce;
-    mlHighConfidenceEceEl.textContent = Number.isFinite(value) ? (value as number).toFixed(3) : '--';
-  }
-}
-
-function resolveModelMaturity(
-  totalUpdates: number,
-  activeFeatures: number
-): { label: string; className: string } {
-  if (totalUpdates < 5 || activeFeatures < 20) {
-    return {
-      label: i18n?.t('popup_ml_status_cold_start') ?? 'Cold start',
-      className: 'cold'
-    };
-  }
-  if (totalUpdates < 30 || activeFeatures < 100) {
-    return {
-      label: i18n?.t('popup_ml_status_warming') ?? 'Warming',
-      className: 'training'
-    };
-  }
-  return {
-    label: i18n?.t('popup_ml_status_ready') ?? 'Ready',
-    className: 'training'
-  };
 }
 
 async function handleSuggestionDecision(target: 'productive' | 'procrastination'): Promise<void> {

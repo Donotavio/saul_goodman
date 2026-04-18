@@ -16,7 +16,6 @@ TypeScript (ES2021, strict), sem bundler, Node built-in test runner.
 - `npm run build` — compilar TypeScript
 - `npm test` — build + todos os testes (Node --test)
 - `npm --prefix vscode-extension test` — testes VS Code extension
-- `npm run mcp:quality` — suite QA visual/performance
 
 ## Comandos-chave
 
@@ -54,7 +53,7 @@ TypeScript (ES2021, strict), sem bundler, Node built-in test runner.
 | VS Code extension | vscode-extension/ |
 | Site/blog | site/, site/blog/ |
 | ML engine | src/shared/ml/, src/background/ml-engine.ts |
-| Tools | tools/content_engine/, tools/i18n/, tools/mcp_quality/, tools/ml_replay/ |
+| Tools | tools/content_engine/, tools/i18n/, tools/ml_replay/ |
 
 ## Documentacao
 

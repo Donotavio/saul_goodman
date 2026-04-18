@@ -80,74 +80,6 @@
         </div>
       </section>
 
-      <section id="mlCard" class="ml-card" aria-live="polite">
-        <div class="ml-header">
-          <div>
-            <h2 data-i18n="popup_ml_title">Modelo ML</h2>
-            <p class="ml-subtitle" data-i18n="popup_ml_subtitle">Aprendizado local</p>
-          </div>
-          <span id="mlStatusBadge" class="ml-status">--</span>
-        </div>
-        <div class="ml-grid">
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_updates_label">Atualizações</span>
-            <strong id="mlUpdates">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_features_label">Features ativas</span>
-            <strong id="mlActiveFeatures">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_last_updated_label">Último treino</span>
-            <strong id="mlLastUpdated">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_bias_label">Bias</span>
-            <strong id="mlBias">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_guardrail_label">Guardrail</span>
-            <strong id="mlGuardrailStage">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_false_productive_rate_label">False productive rate</span>
-            <strong id="mlFalseProductiveRate">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_precision_productive_label">Precision productive</span>
-            <strong id="mlPrecisionProductive">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_delta_macro_f1_label">Delta macro-F1</span>
-            <strong id="mlDeltaMacroF1">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_mcnemar_p_label">McNemar p</span>
-            <strong id="mlMcnemarP">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_calibration_ece_label">Calibration ECE</span>
-            <strong id="mlCalibrationEce">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_top_concepts_coverage_label">Top concepts coverage</span>
-            <strong id="mlTopConceptsCoverage">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_pseudo_acceptance_label">Pseudo-label acceptance</span>
-            <strong id="mlPseudoAcceptance">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_drift_alert_label">Drift alert</span>
-            <strong id="mlDriftAlert">--</strong>
-          </article>
-          <article>
-            <span class="ml-label" data-i18n="popup_ml_high_confidence_ece_label">High-conf ECE</span>
-            <strong id="mlHighConfidenceEce">--</strong>
-          </article>
-        </div>
-      </section>
-
       <section class="fairness-card">
         <div class="fairness-header">
           <div>
@@ -197,6 +129,8 @@
           <span data-i18n="popup_fairness_note_label">Como funciona?</span>
           <span
             class="info-icon"
+            role="img"
+            tabindex="0"
             aria-label="Explicação"
             data-i18n-aria-label="popup_tooltip_aria"
             data-i18n-tooltip="popup_fairness_note"
@@ -213,6 +147,8 @@
             Produtivo
             <span
               class="info-icon"
+            role="img"
+            tabindex="0"
               aria-label="Explicação"
               data-i18n-aria-label="popup_tooltip_aria"
               data-i18n-tooltip="popup_summary_productive_tooltip"
@@ -227,6 +163,8 @@
             Procrast
             <span
               class="info-icon"
+            role="img"
+            tabindex="0"
               aria-label="Explicação"
               data-i18n-aria-label="popup_tooltip_aria"
               data-i18n-tooltip="popup_summary_procrastination_tooltip"
@@ -241,6 +179,8 @@
             Inativ
             <span
               class="info-icon"
+            role="img"
+            tabindex="0"
               aria-label="Explicação"
               data-i18n-aria-label="popup_tooltip_aria"
               data-i18n-tooltip="popup_summary_inactive_tooltip"
@@ -281,6 +221,8 @@
               Foco ativo
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_focus_tooltip"
@@ -296,6 +238,8 @@
               Trocas por hora
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_switch_tooltip"
@@ -312,6 +256,8 @@
               Tempo ocioso
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_idle_tooltip"
@@ -327,6 +273,8 @@
               Prod x Proc
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_ratio_tooltip"
@@ -343,6 +291,8 @@
               Imersão campeã
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_focus_domain_tooltip"
@@ -358,6 +308,8 @@
               Vilão do dia
               <span
                 class="info-icon"
+            role="img"
+            tabindex="0"
                 aria-label="Explicação"
                 data-i18n-aria-label="popup_tooltip_aria"
                 data-i18n-tooltip="popup_kpi_villain_tooltip"

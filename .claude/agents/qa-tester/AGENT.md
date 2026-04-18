@@ -28,7 +28,6 @@ Voce executa e reporta suites de teste para o monorepo Saul Goodman. Seu objetiv
 |-------|---------|--------|
 | Chrome extension | `npm test` | TS compile + Node --test (44+ testes) |
 | VS Code extension | `npm --prefix vscode-extension test` | Testes da extensao VS Code |
-| MCP Quality | `npm run mcp:quality` | QA visual (requer Chrome) |
 | ML Replay | `npm run ml:replay -- --input <dataset>` | Avaliacao ML offline |
 
 ## Workflow
