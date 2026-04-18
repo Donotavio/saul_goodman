@@ -359,11 +359,19 @@
   "command_reset_combo": {
     "message": "Saul Goodman: reset combo"
   },
+  "command_restart_daemon": {
+    "message": "Restart SaulDaemon",
+    "description": "Command title: restart the SaulDaemon process"
+  },
   "command_setup_pomodoro": {
     "message": "Saul Goodman: configure Pomodoro system"
   },
   "command_start_daemon": {
     "message": "Saul Goodman: prepare SaulDaemon command"
+  },
+  "command_stop_daemon": {
+    "message": "Stop SaulDaemon",
+    "description": "Command title: stop the SaulDaemon process"
   },
   "command_test_daemon": {
     "message": "Saul Goodman: test connection with SaulDaemon"
@@ -491,6 +499,9 @@
   "extDescription": {
     "message": "Sarcastic focus tracker that measures domains and keeps your procrastination index in check."
   },
+  "extName": {
+    "message": "Saul Goodman"
+  },
   "extensionsChromeCta": {
     "message": "Chrome extension"
   },
@@ -502,9 +513,6 @@
   },
   "extensionsVscodeCta": {
     "message": "VS Code extension"
-  },
-  "extName": {
-    "message": "Saul Goodman"
   },
   "faq1Answer": {
     "message": "Totally. Saul only charges attention and humor."
@@ -638,12 +646,6 @@
   "featureCustomTitle": {
     "message": "Custom lists & weights"
   },
-  "featuredEyebrow": {
-    "message": "Featured"
-  },
-  "featuredTitle": {
-    "message": "Case of the week"
-  },
   "featureGaugeHint": {
     "message": "When it crosses 70%, Saul prepares the quake."
   },
@@ -707,14 +709,20 @@
   "featureSectionTitle": {
     "message": "Everything you need to keep tabs in check."
   },
+  "featureSwipeHint": {
+    "message": "Swipe sideways to review every feature Saul handles."
+  },
+  "featuredEyebrow": {
+    "message": "Featured"
+  },
+  "featuredTitle": {
+    "message": "Case of the week"
+  },
   "featuresEyebrow": {
     "message": "Detailed features"
   },
   "featuresTitle": {
     "message": "The arsenal of the Saul Goodman extension."
-  },
-  "featureSwipeHint": {
-    "message": "Swipe sideways to review every feature Saul handles."
   },
   "feedbackLink": {
     "message": "Give feedback"
@@ -2171,11 +2179,11 @@
   "readArticle": {
     "message": "Read article"
   },
-  "readingTimeLabel": {
-    "message": "Reading time"
-  },
   "readTimeUnit": {
     "message": "min read"
+  },
+  "readingTimeLabel": {
+    "message": "Reading time"
   },
   "reason1Body": {
     "message": "The popup index shows your current status so you know what to fix next."
@@ -2308,6 +2316,42 @@
   },
   "report_category_neutral": {
     "message": "Neutral"
+  },
+  "report_chart_ai_contribution_label": {
+    "message": "AI contribution chart"
+  },
+  "report_chart_composition_label": {
+    "message": "Time composition chart"
+  },
+  "report_chart_domain_breakdown_label": {
+    "message": "Domain breakdown chart"
+  },
+  "report_chart_hourly_label": {
+    "message": "Hourly productivity chart"
+  },
+  "report_chart_tab_switch_label": {
+    "message": "Tab switch chart"
+  },
+  "report_chart_vscode_combo_label": {
+    "message": "VS Code combo timeline chart"
+  },
+  "report_chart_vscode_commits_label": {
+    "message": "VS Code commits chart"
+  },
+  "report_chart_vscode_cross_reference_label": {
+    "message": "VS Code cross-reference chart"
+  },
+  "report_chart_vscode_focus_label": {
+    "message": "VS Code focus patterns chart"
+  },
+  "report_chart_vscode_hourly_label": {
+    "message": "VS Code hourly activity chart"
+  },
+  "report_chart_vscode_projects_label": {
+    "message": "VS Code projects chart"
+  },
+  "report_chart_vscode_terminal_label": {
+    "message": "VS Code terminal commands chart"
   },
   "report_composition_heading": {
     "message": "Day composition"
@@ -3518,6 +3562,81 @@
   "usersBadgeLabel": {
     "message": "Users"
   },
+  "vscodeCard1Body": {
+    "message": "The local daemon talks to the extension and logs editor time as productive minutes. Nothing leaves localhost, but the stopwatch never sleeps."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Focus clock"
+  },
+  "vscodeCard1Title": {
+    "message": "Every commit counts as billable time."
+  },
+  "vscodeCard2Body": {
+    "message": "Jumped from editor to the feed? Saul stamps the distraction in the report. Back to code? He records it as proof of innocence."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Context detective"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code and Chrome swap clues."
+  },
+  "vscodeCard3Body": {
+    "message": "Reports bring coding time, interruptions, and usual suspects. Perfect to show your manager procrastination never stood a chance."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Ready for court"
+  },
+  "vscodeCard3Title": {
+    "message": "Export the defense with metrics and receipts."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code on the stand"
+  },
+  "vscodeLead": {
+    "message": "Saul plugs VS Code into the case: editor minutes become focus evidence, distractions become suspects, and the report arrives ready to convince the jury (your team)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome + VS Code bridge."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nothing leaves your editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Reports with screenshots and CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Install on VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "A timeline that proves who stayed in code and who ran to the feed. Bring it as Exhibit A to your next meeting."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alert"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defense"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Focus"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Saul's favorite evidence"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code active · 38 min without tab hopping."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Jumped to YouTube · Saul flagged it as distraction."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Back to VS Code · 21 min of focus recovered."
+  },
+  "vscodeSecondaryCta": {
+    "message": "View quick guide"
+  },
+  "vscodeTitle": {
+    "message": "Turn your editor into a productivity asset."
+  },
   "vscode_combo_reset_cancel": {
     "message": "Cancel"
   },
@@ -3640,80 +3759,5 @@
   },
   "vscode_reports_today": {
     "message": "Today"
-  },
-  "vscodeCard1Body": {
-    "message": "The local daemon talks to the extension and logs editor time as productive minutes. Nothing leaves localhost, but the stopwatch never sleeps."
-  },
-  "vscodeCard1Kicker": {
-    "message": "Focus clock"
-  },
-  "vscodeCard1Title": {
-    "message": "Every commit counts as billable time."
-  },
-  "vscodeCard2Body": {
-    "message": "Jumped from editor to the feed? Saul stamps the distraction in the report. Back to code? He records it as proof of innocence."
-  },
-  "vscodeCard2Kicker": {
-    "message": "Context detective"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code and Chrome swap clues."
-  },
-  "vscodeCard3Body": {
-    "message": "Reports bring coding time, interruptions, and usual suspects. Perfect to show your manager procrastination never stood a chance."
-  },
-  "vscodeCard3Kicker": {
-    "message": "Ready for court"
-  },
-  "vscodeCard3Title": {
-    "message": "Export the defense with metrics and receipts."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code on the stand"
-  },
-  "vscodeLead": {
-    "message": "Saul plugs VS Code into the case: editor minutes become focus evidence, distractions become suspects, and the report arrives ready to convince the jury (your team)."
-  },
-  "vscodeMetaBridge": {
-    "message": "Chrome + VS Code bridge."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% local, nothing leaves your editor."
-  },
-  "vscodeMetaProof": {
-    "message": "Reports with screenshots and CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "Install on VS Code"
-  },
-  "vscodeProofBody": {
-    "message": "A timeline that proves who stayed in code and who ran to the feed. Bring it as Exhibit A to your next meeting."
-  },
-  "vscodeProofChipAlert": {
-    "message": "Alert"
-  },
-  "vscodeProofChipDefense": {
-    "message": "Defense"
-  },
-  "vscodeProofChipFocus": {
-    "message": "Focus"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Saul's favorite evidence"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code active · 38 min without tab hopping."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — Jumped to YouTube · Saul flagged it as distraction."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — Back to VS Code · 21 min of focus recovered."
-  },
-  "vscodeSecondaryCta": {
-    "message": "View quick guide"
-  },
-  "vscodeTitle": {
-    "message": "Turn your editor into a productivity asset."
   }
 }

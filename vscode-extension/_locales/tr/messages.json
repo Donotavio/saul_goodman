@@ -359,11 +359,19 @@
   "command_reset_combo": {
     "message": "Saul Goodman: kombinasyonu sıfırla"
   },
+  "command_restart_daemon": {
+    "message": "SaulDaemon'ı yeniden başlat",
+    "description": "Command title: restart the SaulDaemon process"
+  },
   "command_setup_pomodoro": {
     "message": "Saul Goodman: Pomodoro sistemini ayarla"
   },
   "command_start_daemon": {
     "message": "Saul Goodman: SaulDaemon komutunu hazırlayın"
+  },
+  "command_stop_daemon": {
+    "message": "SaulDaemon'ı durdur",
+    "description": "Command title: stop the SaulDaemon process"
   },
   "command_test_daemon": {
     "message": "Saul Goodman: SaulDaemon ile bağlantıyı test et"
@@ -491,6 +499,9 @@
   "extDescription": {
     "message": "Sarcastic bu önlemler alanlarını takip eder ve kontrolde procrastinasyon indeksini tutar."
   },
+  "extName": {
+    "message": "Saul Goodman"
+  },
   "extensionsChromeCta": {
     "message": "Chrome uzantısı"
   },
@@ -502,9 +513,6 @@
   },
   "extensionsVscodeCta": {
     "message": "VS Kodu uzatma"
-  },
-  "extName": {
-    "message": "Saul Goodman"
   },
   "faq1Answer": {
     "message": "Tamamen. Saul sadece dikkat ve mizah iddia ediyor."
@@ -638,12 +646,6 @@
   "featureCustomTitle": {
     "message": "Özel listeler ve ağırlıklar"
   },
-  "featuredEyebrow": {
-    "message": "Featured"
-  },
-  "featuredTitle": {
-    "message": "Haftanın durumu"
-  },
   "featureGaugeHint": {
     "message": "%70'i geçtiğinde, Saul kuke'yi hazırlar."
   },
@@ -707,14 +709,20 @@
   "featureSectionTitle": {
     "message": "sekmeleri kontrol altında tutmanız gereken her şey."
   },
+  "featureSwipeHint": {
+    "message": "Saul'un çalıştığı her özelliği gözden geçirmek için Swipe yan yolları."
+  },
+  "featuredEyebrow": {
+    "message": "Featured"
+  },
+  "featuredTitle": {
+    "message": "Haftanın durumu"
+  },
   "featuresEyebrow": {
     "message": "Detaylı özellikler"
   },
   "featuresTitle": {
     "message": "Saul Goodman'ın cephaneliği uzatıldı."
-  },
-  "featureSwipeHint": {
-    "message": "Saul'un çalıştığı her özelliği gözden geçirmek için Swipe yan yolları."
   },
   "feedbackLink": {
     "message": "Geri bildirim"
@@ -2171,11 +2179,11 @@
   "readArticle": {
     "message": "Makale oku"
   },
-  "readingTimeLabel": {
-    "message": "Okuma zamanı"
-  },
   "readTimeUnit": {
     "message": "min oku"
+  },
+  "readingTimeLabel": {
+    "message": "Okuma zamanı"
   },
   "reason1Body": {
     "message": "Popup indeksi mevcut durumunuzu gösteriyor, böylece bir sonraki düzeltmeyi biliyorsunuz."
@@ -3518,6 +3526,81 @@
   "usersBadgeLabel": {
     "message": "Kullanıcılar"
   },
+  "vscodeCard1Body": {
+    "message": "O daemon yerel olarak uzantıyla iletişim kurar ve editördeki zamanı üretken dakikalar olarak kaydeder. Hiçbir şey localhost'tan çıkmaz, ama zamanlayıcı asla uyumaz."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Odak saati"
+  },
+  "vscodeCard1Title": {
+    "message": "Her commit faturalanabilir saat olarak sayılır."
+  },
+  "vscodeCard2Body": {
+    "message": "Editörden besleme geçişi mi yaptınız? Saul, raporda dikkati kaydeder. Koda geri döndünüz mü? Masumiyet kanıtı olarak kaydeder."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Bağlam dedektifi"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code ve Chrome ipuçlarını değiş tokuş eder."
+  },
+  "vscodeCard3Body": {
+    "message": "Raporlar, kod zamanı, kesintiler ve sık görülen şüphelileri getirir. Prokrastinasyonun şansı olmadığını yöneticinize göstermek için mükemmel."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Dinlemeye hazır"
+  },
+  "vscodeCard3Title": {
+    "message": "Metrikler ve ekran görüntüleri ile savunmayı dışa aktarır."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code mahkemede"
+  },
+  "vscodeLead": {
+    "message": "Saul, VS Code'u davaya bağlar: editör dakikaları odak kanıtına dönüşür, kesintiler şüpheli olur ve rapor, jüriyi (ekibinizi) ikna etmek için hazır gelir."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome + VS Code Köprüsü."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% yerel, hiçbir şey editörünüzden çıkmaz."
+  },
+  "vscodeMetaProof": {
+    "message": "Ekran görüntüleri ve CSV ile raporlar."
+  },
+  "vscodePrimaryCta": {
+    "message": "VS Code'da yükle"
+  },
+  "vscodeProofBody": {
+    "message": "Kimin kodda kaldığını ve kimin besleme için kaçtığını kanıtlayan bir zaman çizelgesi. Bir sonraki toplantıda Exhibit A olarak kullanın."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Uyarı"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Savunma"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Odak"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Saul'un tercih ettiği kanıtlar"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code aktif · 38 dk sekme değiştirmeden."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — YouTube'a atladı · Saul dikkat dağıtıcı olarak işaretledi."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — VS Code'a dönüş · 21 dk odak geri kazanıldı."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Hızlı kılavuza bak"
+  },
+  "vscodeTitle": {
+    "message": "Editörü verimlilik varlığına dönüştürün."
+  },
   "vscode_combo_reset_cancel": {
     "message": "İptal"
   },
@@ -3640,80 +3723,5 @@
   },
   "vscode_reports_today": {
     "message": "Bugün"
-  },
-  "vscodeCard1Body": {
-    "message": "O daemon yerel olarak uzantıyla iletişim kurar ve editördeki zamanı üretken dakikalar olarak kaydeder. Hiçbir şey localhost'tan çıkmaz, ama zamanlayıcı asla uyumaz."
-  },
-  "vscodeCard1Kicker": {
-    "message": "Odak saati"
-  },
-  "vscodeCard1Title": {
-    "message": "Her commit faturalanabilir saat olarak sayılır."
-  },
-  "vscodeCard2Body": {
-    "message": "Editörden besleme geçişi mi yaptınız? Saul, raporda dikkati kaydeder. Koda geri döndünüz mü? Masumiyet kanıtı olarak kaydeder."
-  },
-  "vscodeCard2Kicker": {
-    "message": "Bağlam dedektifi"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code ve Chrome ipuçlarını değiş tokuş eder."
-  },
-  "vscodeCard3Body": {
-    "message": "Raporlar, kod zamanı, kesintiler ve sık görülen şüphelileri getirir. Prokrastinasyonun şansı olmadığını yöneticinize göstermek için mükemmel."
-  },
-  "vscodeCard3Kicker": {
-    "message": "Dinlemeye hazır"
-  },
-  "vscodeCard3Title": {
-    "message": "Metrikler ve ekran görüntüleri ile savunmayı dışa aktarır."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code mahkemede"
-  },
-  "vscodeLead": {
-    "message": "Saul, VS Code'u davaya bağlar: editör dakikaları odak kanıtına dönüşür, kesintiler şüpheli olur ve rapor, jüriyi (ekibinizi) ikna etmek için hazır gelir."
-  },
-  "vscodeMetaBridge": {
-    "message": "Chrome + VS Code Köprüsü."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% yerel, hiçbir şey editörünüzden çıkmaz."
-  },
-  "vscodeMetaProof": {
-    "message": "Ekran görüntüleri ve CSV ile raporlar."
-  },
-  "vscodePrimaryCta": {
-    "message": "VS Code'da yükle"
-  },
-  "vscodeProofBody": {
-    "message": "Kimin kodda kaldığını ve kimin besleme için kaçtığını kanıtlayan bir zaman çizelgesi. Bir sonraki toplantıda Exhibit A olarak kullanın."
-  },
-  "vscodeProofChipAlert": {
-    "message": "Uyarı"
-  },
-  "vscodeProofChipDefense": {
-    "message": "Savunma"
-  },
-  "vscodeProofChipFocus": {
-    "message": "Odak"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Saul'un tercih ettiği kanıtlar"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code aktif · 38 dk sekme değiştirmeden."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — YouTube'a atladı · Saul dikkat dağıtıcı olarak işaretledi."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — VS Code'a dönüş · 21 dk odak geri kazanıldı."
-  },
-  "vscodeSecondaryCta": {
-    "message": "Hızlı kılavuza bak"
-  },
-  "vscodeTitle": {
-    "message": "Editörü verimlilik varlığına dönüştürün."
   }
 }

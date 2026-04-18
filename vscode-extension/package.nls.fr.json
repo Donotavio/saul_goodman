@@ -6,6 +6,8 @@
   "command_open_reports": "Saul Goodman: ouvrir les rapports",
   "command_setup_pomodoro": "Saul Goodman : configurer le système Pomodoro",
   "command_reset_combo": "Saul Goodman : réinitialiser le combo",
+  "command_stop_daemon": "Arrêter SaulDaemon",
+  "command_restart_daemon": "Redémarrer SaulDaemon",
   "config_enabled_description": "Active l'envoi de temps actif au SaulDaemon local.",
   "config_enable_tracking_description": "Contrôle la collecte et l'envoi de signaux de vie au SaulDaemon.",
   "config_enable_reports_description": "Affiche le rapport de Saul dans VS Code.",

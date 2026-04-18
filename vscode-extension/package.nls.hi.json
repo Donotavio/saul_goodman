@@ -6,6 +6,8 @@
   "command_open_reports": "सॉल गुडमैन: रिपोर्ट खोलें",
   "command_setup_pomodoro": "सौल गुडमैन: पोमोडोरो सिस्टम सेट करें",
   "command_reset_combo": "सौल गुडमैन: कॉम्बो रीसेट करें",
+  "command_stop_daemon": "SaulDaemon बंद करें",
+  "command_restart_daemon": "SaulDaemon पुनः प्रारंभ करें",
   "config_enabled_description": "स्थानीय सॉलडेमन के लिए सक्रिय समय भेजने को सक्षम करता है।",
   "config_enable_tracking_description": "सॉलडेमन के लिए हार्टबीट संग्रह और भेजने को नियंत्रित करता है।",
   "config_enable_reports_description": "VS कोड के भीतर सॉल की रिपोर्ट दिखाता है।",

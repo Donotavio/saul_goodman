@@ -13,6 +13,8 @@ const VSCODE_KEYS = [
   'command_open_reports',
   'command_setup_pomodoro',
   'command_reset_combo',
+  'command_stop_daemon',
+  'command_restart_daemon',
   'config_enabled_description',
   'config_enable_tracking_description',
   'config_enable_reports_description',

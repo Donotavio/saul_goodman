@@ -6,6 +6,8 @@
   "command_open_reports": "Saul Goodman: Berichte öffnen",
   "command_setup_pomodoro": "Saul Goodman: Pomodoro-System einrichten",
   "command_reset_combo": "Saul Goodman: Combo zurücksetzen",
+  "command_stop_daemon": "SaulDaemon stoppen",
+  "command_restart_daemon": "SaulDaemon neu starten",
   "config_enabled_description": "Aktiviert den Versand aktiver Zeit an den lokalen SaulDaemon.",
   "config_enable_tracking_description": "Steuert die Erfassung und den Versand von Heartbeats an den SaulDaemon.",
   "config_enable_reports_description": "Zeigt den Bericht von Saul innerhalb von VS Code an.",

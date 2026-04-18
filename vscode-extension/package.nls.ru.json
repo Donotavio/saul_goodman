@@ -6,6 +6,8 @@
   "command_open_reports": "Саул Гудман: открыть отчеты",
   "command_setup_pomodoro": "Сол Гудман: настроить систему Помодоро",
   "command_reset_combo": "Сол Гудман: сбросить комбо",
+  "command_stop_daemon": "Остановить SaulDaemon",
+  "command_restart_daemon": "Перезапустить SaulDaemon",
   "config_enabled_description": "Включает отправку активного времени в локальный SaulDaemon.",
   "config_enable_tracking_description": "Контролирует сбор и отправку heartbeats в SaulDaemon.",
   "config_enable_reports_description": "Отображает отчет о Сауле внутри VS Code.",

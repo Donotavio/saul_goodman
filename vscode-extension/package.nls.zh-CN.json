@@ -6,6 +6,8 @@
   "command_open_reports": "索尔·古德曼：打开报告",
   "command_setup_pomodoro": "索尔·古德曼：设置番茄钟系统",
   "command_reset_combo": "索尔·古德曼：重置组合",
+  "command_stop_daemon": "停止 SaulDaemon",
+  "command_restart_daemon": "重启 SaulDaemon",
   "config_enabled_description": "启用向本地索尔守护进程发送活动时间。",
   "config_enable_tracking_description": "控制向索尔守护进程收集和发送心跳。",
   "config_enable_reports_description": "在VS Code中显示索尔的报告。",

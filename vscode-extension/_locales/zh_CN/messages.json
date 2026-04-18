@@ -359,11 +359,19 @@
   "command_reset_combo": {
     "message": "索尔·古德曼：重置组合"
   },
+  "command_restart_daemon": {
+    "message": "重启 SaulDaemon",
+    "description": "Command title: restart the SaulDaemon process"
+  },
   "command_setup_pomodoro": {
     "message": "索尔·古德曼：设置番茄钟系统"
   },
   "command_start_daemon": {
     "message": "索尔·古德曼：准备索尔守护进程命令"
+  },
+  "command_stop_daemon": {
+    "message": "停止 SaulDaemon",
+    "description": "Command title: stop the SaulDaemon process"
   },
   "command_test_daemon": {
     "message": "索尔·古德曼：测试与索尔守护进程的连接"
@@ -491,6 +499,9 @@
   "extDescription": {
     "message": "用于测量域并保持您延迟索引的 Sarcastic 焦点跟踪器 。"
   },
+  "extName": {
+    "message": "索尔·古德曼"
+  },
   "extensionsChromeCta": {
     "message": "色调扩展"
   },
@@ -502,9 +513,6 @@
   },
   "extensionsVscodeCta": {
     "message": "VS 代码扩展"
-  },
-  "extName": {
-    "message": "索尔·古德曼"
   },
   "faq1Answer": {
     "message": "当然 索尔只收取注意和幽默."
@@ -638,12 +646,6 @@
   "featureCustomTitle": {
     "message": "自定义列表权重( E)"
   },
-  "featuredEyebrow": {
-    "message": "特性"
-  },
-  "featuredTitle": {
-    "message": "本周的情况"
-  },
   "featureGaugeHint": {
     "message": "当它跨越70%,索尔准备地震."
   },
@@ -707,14 +709,20 @@
   "featureSectionTitle": {
     "message": "所有你需要检查的"
   },
+  "featureSwipeHint": {
+    "message": "擦肩而过 检查每一个功能索尔手柄。"
+  },
+  "featuredEyebrow": {
+    "message": "特性"
+  },
+  "featuredTitle": {
+    "message": "本周的情况"
+  },
   "featuresEyebrow": {
     "message": "详细特征"
   },
   "featuresTitle": {
     "message": "索尔·古德曼扩展的军火库."
-  },
-  "featureSwipeHint": {
-    "message": "擦肩而过 检查每一个功能索尔手柄。"
   },
   "feedbackLink": {
     "message": "反馈"
@@ -2171,11 +2179,11 @@
   "readArticle": {
     "message": "阅读文章"
   },
-  "readingTimeLabel": {
-    "message": "阅读时间"
-  },
   "readTimeUnit": {
     "message": "分钟读取"
+  },
+  "readingTimeLabel": {
+    "message": "阅读时间"
   },
   "reason1Body": {
     "message": "弹出指数显示您的当前状态, 以便您知道下一步要修正什么 。"
@@ -3518,6 +3526,81 @@
   "usersBadgeLabel": {
     "message": "用户"
   },
+  "vscodeCard1Body": {
+    "message": "本地守护进程与扩展进行通信，并将时间记录为编辑器中的有效分钟。没有任何数据离开本地主机，但计时器从不休眠。"
+  },
+  "vscodeCard1Kicker": {
+    "message": "专注时钟"
+  },
+  "vscodeCard1Title": {
+    "message": "每次提交都算作可计费小时。"
+  },
+  "vscodeCard2Body": {
+    "message": "从编辑器切换到信息流了吗？Saul 在报告中标记了干扰。回到代码了吗？他将其记录为无罪的证据。"
+  },
+  "vscodeCard2Kicker": {
+    "message": "上下文侦探"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code 和 Chrome 交换线索。"
+  },
+  "vscodeCard3Body": {
+    "message": "报告提供代码时间、中断和常见嫌疑人。完美展示给管理者，表明拖延没有机会。"
+  },
+  "vscodeCard3Kicker": {
+    "message": "准备好出庭"
+  },
+  "vscodeCard3Title": {
+    "message": "导出带有指标和截图的辩护。"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code 在法庭上"
+  },
+  "vscodeLead": {
+    "message": "Saul 将 VS Code 连接到案件：编辑器的分钟变成专注的证据，中断变成嫌疑人，报告准备好说服陪审团（你的团队）。"
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome + VS Code 桥接。"
+  },
+  "vscodeMetaLocal": {
+    "message": "100% 本地，所有内容都在您的编辑器中。"
+  },
+  "vscodeMetaProof": {
+    "message": "带有截图和 CSV 的报告。"
+  },
+  "vscodePrimaryCta": {
+    "message": "在 VS Code 中安装"
+  },
+  "vscodeProofBody": {
+    "message": "一条时间线证明谁留在代码中，谁逃到信息流。下次会议上用作证据 A。"
+  },
+  "vscodeProofChipAlert": {
+    "message": "警报"
+  },
+  "vscodeProofChipDefense": {
+    "message": "辩护"
+  },
+  "vscodeProofChipFocus": {
+    "message": "专注"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Saul 的首选证据"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code 活动 · 38 分钟未切换标签。"
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — 跳到 YouTube · Saul 标记为分心。"
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — 返回 VS Code · 恢复 21 分钟的专注。"
+  },
+  "vscodeSecondaryCta": {
+    "message": "查看快速指南"
+  },
+  "vscodeTitle": {
+    "message": "将编辑器转变为生产力资产。"
+  },
   "vscode_combo_reset_cancel": {
     "message": "取消"
   },
@@ -3640,80 +3723,5 @@
   },
   "vscode_reports_today": {
     "message": "今天"
-  },
-  "vscodeCard1Body": {
-    "message": "本地守护进程与扩展进行通信，并将时间记录为编辑器中的有效分钟。没有任何数据离开本地主机，但计时器从不休眠。"
-  },
-  "vscodeCard1Kicker": {
-    "message": "专注时钟"
-  },
-  "vscodeCard1Title": {
-    "message": "每次提交都算作可计费小时。"
-  },
-  "vscodeCard2Body": {
-    "message": "从编辑器切换到信息流了吗？Saul 在报告中标记了干扰。回到代码了吗？他将其记录为无罪的证据。"
-  },
-  "vscodeCard2Kicker": {
-    "message": "上下文侦探"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code 和 Chrome 交换线索。"
-  },
-  "vscodeCard3Body": {
-    "message": "报告提供代码时间、中断和常见嫌疑人。完美展示给管理者，表明拖延没有机会。"
-  },
-  "vscodeCard3Kicker": {
-    "message": "准备好出庭"
-  },
-  "vscodeCard3Title": {
-    "message": "导出带有指标和截图的辩护。"
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code 在法庭上"
-  },
-  "vscodeLead": {
-    "message": "Saul 将 VS Code 连接到案件：编辑器的分钟变成专注的证据，中断变成嫌疑人，报告准备好说服陪审团（你的团队）。"
-  },
-  "vscodeMetaBridge": {
-    "message": "Chrome + VS Code 桥接。"
-  },
-  "vscodeMetaLocal": {
-    "message": "100% 本地，所有内容都在您的编辑器中。"
-  },
-  "vscodeMetaProof": {
-    "message": "带有截图和 CSV 的报告。"
-  },
-  "vscodePrimaryCta": {
-    "message": "在 VS Code 中安装"
-  },
-  "vscodeProofBody": {
-    "message": "一条时间线证明谁留在代码中，谁逃到信息流。下次会议上用作证据 A。"
-  },
-  "vscodeProofChipAlert": {
-    "message": "警报"
-  },
-  "vscodeProofChipDefense": {
-    "message": "辩护"
-  },
-  "vscodeProofChipFocus": {
-    "message": "专注"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Saul 的首选证据"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code 活动 · 38 分钟未切换标签。"
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — 跳到 YouTube · Saul 标记为分心。"
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — 返回 VS Code · 恢复 21 分钟的专注。"
-  },
-  "vscodeSecondaryCta": {
-    "message": "查看快速指南"
-  },
-  "vscodeTitle": {
-    "message": "将编辑器转变为生产力资产。"
   }
 }

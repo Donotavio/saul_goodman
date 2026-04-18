@@ -6,6 +6,8 @@
   "command_open_reports": "Saul Goodman: raporları aç",
   "command_setup_pomodoro": "Saul Goodman: Pomodoro sistemini ayarla",
   "command_reset_combo": "Saul Goodman: kombinasyonu sıfırla",
+  "command_stop_daemon": "SaulDaemon'ı durdur",
+  "command_restart_daemon": "SaulDaemon'ı yeniden başlat",
   "config_enabled_description": "Yerel SaulDaemon'a aktif zaman göndermeyi etkinleştirir.",
   "config_enable_tracking_description": "SaulDaemon'a kalp atışlarını toplama ve gönderme kontrol eder.",
   "config_enable_reports_description": "VS Code içinde Saul raporunu gösterir.",

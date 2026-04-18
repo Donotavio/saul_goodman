@@ -6,6 +6,8 @@
   "command_open_reports": "সৌল গুডম্যান: রিপোর্ট খুলুন",
   "command_setup_pomodoro": "সৌল গুডম্যান: পোমোডোরো সিস্টেম সেট আপ করুন",
   "command_reset_combo": "সৌল গুডম্যান: কম্বো রিসেট করুন",
+  "command_stop_daemon": "SaulDaemon বন্ধ করুন",
+  "command_restart_daemon": "SaulDaemon পুনরায় চালু করুন",
   "config_enabled_description": "স্থানীয় সৌলডেমন এর জন্য সক্রিয় সময় প্রেরণ সক্ষম করে।",
   "config_enable_tracking_description": "সৌলডেমন এর জন্য হার্টবিট সংগ্রহ এবং প্রেরণ নিয়ন্ত্রণ করে।",
   "config_enable_reports_description": "VS কোডের মধ্যে সৌল এর রিপোর্ট প্রদর্শন করে।",

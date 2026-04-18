@@ -6,6 +6,8 @@
   "command_open_reports": "سول گڈمین: رپورٹس کھولیں",
   "command_setup_pomodoro": "سول گڈمین: پومودورو سسٹم ترتیب دیں",
   "command_reset_combo": "سول گڈمین: کمبو کو ری سیٹ کریں",
+  "command_stop_daemon": "SaulDaemon بند کریں",
+  "command_restart_daemon": "SaulDaemon دوبارہ شروع کریں",
   "config_enabled_description": "سول ڈیمون کے لئے فعال وقت بھیجنے کی اجازت دیتا ہے.",
   "config_enable_tracking_description": "سول ڈیمون کے لئے ہارٹ بیٹس جمع کرنے اور بھیجنے کو کنٹرول کرتا ہے.",
   "config_enable_reports_description": "VS Code میں سول کی رپورٹ دکھاتا ہے.",

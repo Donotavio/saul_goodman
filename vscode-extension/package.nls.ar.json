@@ -6,6 +6,8 @@
   "command_open_reports": "سول غودمان: فتح التقارير",
   "command_setup_pomodoro": "سول غودمان: إعداد نظام بومودورو",
   "command_reset_combo": "سول غودمان: إعادة تعيين المجموعة",
+  "command_stop_daemon": "إيقاف SaulDaemon",
+  "command_restart_daemon": "إعادة تشغيل SaulDaemon",
   "config_enabled_description": "يتيح إرسال الوقت النشط إلى سول دايمون المحلي.",
   "config_enable_tracking_description": "يتحكم في جمع وإرسال نبضات القلب إلى سول دايمون.",
   "config_enable_reports_description": "يعرض تقرير سول داخل VS Code.",
