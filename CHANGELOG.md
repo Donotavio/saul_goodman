@@ -3,6 +3,26 @@
 
 Todas as versões são publicadas pelo CI/CD; a versão é atualizada automaticamente no build.
 
+## [1.24.11] - 2026-04-18
+
+Internacionalização completa: eliminação de todas as strings hardcoded, arquitetura de merge para keys exclusivas do VS Code, e tooling de i18n (agent + skill).
+
+### Bugs corrigidos
+
+- Block page (`block.html`) usava `lang="pt-BR"` e texto hardcoded em português — agora usa `lang="en"` com `data-i18n` e fallback en-US.
+- Gráfico hourly do VS Code exibia labels em inglês hardcoded ("Coding", "Debugging", "Building", "Testing", "Minutes") — agora usa `window.__SAUL_I18N__`.
+- Gráfico combo timeline usava locale `'pt-BR'` hardcoded para formatação de hora e strings em inglês ("Time of Day", "Combo Level") — agora usa `document.documentElement.lang` e i18n.
+- Tooltip do combo timeline usava template hardcoded em inglês — agora usa key `report_vscode_combo_tooltip`.
+- Relatório VS Code exibia "Minutes" e "{minutes} min streak" hardcoded — agora usa keys i18n.
+- Combo toast exibia "min" hardcoded na notificação e no webview legado — agora usa key `report_vscode_combo_notification_min`.
+
+### Melhorias
+
+- 11 novas keys de i18n para gráficos e combos do VS Code, traduzidas nos 13 locales.
+- `copy-locales-to-site.js` agora faz **merge** (não overwrite) para `vscode-extension/_locales/`, preservando keys exclusivas do VS Code durante o pipeline `i18n:full-lang-update`.
+- Novo agent `i18n-manager` para auditoria de strings, adição de keys e execução do pipeline.
+- Skill `i18n-workflow` atualizada com documentação completa da arquitetura de 3 camadas, padrão `window.__SAUL_I18N__`, e troubleshooting.
+
 ## [1.24.8] - 2026-04-17
 
 Auditoria sistêmica Round 3: hardening de integridade de dados, privacidade, robustez do daemon/VS Code e suporte completo a 14 locales na extensão VS Code.

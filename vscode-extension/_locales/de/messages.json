@@ -345,7 +345,7 @@
     "message": "Eröffnungsstatement"
   },
   "combo_reduced": {
-    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist, was wir am besten können!"
+    "message": "🔄 Reduziertes Combo. Lass uns neu aufbauen, das ist es, was wir am besten können!"
   },
   "combo_status_bar_suffix": {
     "message": "{level}x KOMBO"
@@ -491,6 +491,9 @@
   "extDescription": {
     "message": "Sarcastic-Fokustracker, der Domains misst und Ihren Procrastination-Index in Schach hält."
   },
+  "extName": {
+    "message": "Saul Goodman"
+  },
   "extensionsChromeCta": {
     "message": "Chrome Erweiterung"
   },
@@ -502,9 +505,6 @@
   },
   "extensionsVscodeCta": {
     "message": "VS Code Erweiterung"
-  },
-  "extName": {
-    "message": "Saul Goodman"
   },
   "faq1Answer": {
     "message": "Total. Saul beschuldigt nur Aufmerksamkeit und Humor."
@@ -638,12 +638,6 @@
   "featureCustomTitle": {
     "message": "Individuelle Listen & Gewichte"
   },
-  "featuredEyebrow": {
-    "message": "Vorgestellt"
-  },
-  "featuredTitle": {
-    "message": "Fall der Woche"
-  },
   "featureGaugeHint": {
     "message": "Wenn es 70 % überschreitet, bereitet Saul den Erdbeben vor."
   },
@@ -707,14 +701,20 @@
   "featureSectionTitle": {
     "message": "Das komplette Anti-Prokrastinations-Paket."
   },
+  "featureSwipeHint": {
+    "message": "Swipe seitwärts, um jedes Feature zu überprüfen Saul Griffe."
+  },
+  "featuredEyebrow": {
+    "message": "Vorgestellt"
+  },
+  "featuredTitle": {
+    "message": "Fall der Woche"
+  },
   "featuresEyebrow": {
     "message": "Detailansicht"
   },
   "featuresTitle": {
     "message": "Der Arsenal der Saul Goodman Erweiterung."
-  },
-  "featureSwipeHint": {
-    "message": "Swipe seitwärts, um jedes Feature zu überprüfen Saul Griffe."
   },
   "feedbackLink": {
     "message": "Feedback geben"
@@ -2037,7 +2037,7 @@
     "message": "Datenschutz"
   },
   "process1Body": {
-    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob Sie lernen, arbeiten oder im ewigen Feed versinken."
+    "message": "Das Symbol verfolgt, was geöffnet ist, und versteht sofort, ob Sie lernen, arbeiten oder im endlosen Feed versinken."
   },
   "process1Title": {
     "message": "Verfolgen Sie Ihre aktiven Tabs"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "Artikel lesen"
   },
-  "readingTimeLabel": {
-    "message": "Lesezeit"
-  },
   "readTimeUnit": {
     "message": "min lesen"
+  },
+  "readingTimeLabel": {
+    "message": "Lesezeit"
   },
   "reason1Body": {
     "message": "Der Index im Popup zeigt deinen Status in Echtzeit, damit du den nächsten Schritt entscheiden kannst."
@@ -2613,7 +2613,7 @@
     "message": "Einspruch! Highlights der Fallstudie"
   },
   "report_share_hint_instagram": {
-    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie ein, was wir in das Postfeld kopiert haben."
+    "message": "Instagram Web akzeptiert keinen vorab ausgefüllten Text: Fügen Sie das ein, was wir in das Beitragsfeld kopiert haben."
   },
   "report_share_hint_linkedin": {
     "message": "Linked In nicht vorfüllen Text; fügen Sie den kopierten Inhalt auf der Website."
@@ -2753,8 +2753,38 @@
   "report_vscode_branches": {
     "message": "Git-Zweige"
   },
+  "report_vscode_chart_axis_combo_level": {
+    "message": "Combo-Stufe"
+  },
+  "report_vscode_chart_axis_minutes": {
+    "message": "Minuten"
+  },
+  "report_vscode_chart_axis_time_of_day": {
+    "message": "Tageszeit"
+  },
+  "report_vscode_chart_label_building": {
+    "message": "Erstellen"
+  },
+  "report_vscode_chart_label_coding": {
+    "message": "Programmierung"
+  },
+  "report_vscode_chart_label_debugging": {
+    "message": "Fehlersuche"
+  },
+  "report_vscode_chart_label_testing": {
+    "message": "Tests"
+  },
+  "report_vscode_chart_tooltip_min": {
+    "message": "{value} Min."
+  },
   "report_vscode_combo_level_label": {
     "message": "Combo-Level"
+  },
+  "report_vscode_combo_notification_min": {
+    "message": "Min."
+  },
+  "report_vscode_combo_streak": {
+    "message": "{minutes} Min. am Stück"
   },
   "report_vscode_combo_timeline": {
     "message": "Kombinationszeitlinie"
@@ -2764,6 +2794,9 @@
   },
   "report_vscode_combo_timeline_subtitle": {
     "message": "Fortschritt der Pomodoros im Laufe des Tages"
+  },
+  "report_vscode_combo_tooltip": {
+    "message": "{count}x Combo ({minutes} Min.)"
   },
   "report_vscode_commit_activity": {
     "message": "Commit-Aktivität"
@@ -3365,9 +3398,6 @@
   "test_health_success": {
     "message": "SaulDaemon hat in {origin} geantwortet"
   },
-  "test_health_version_mismatch": {
-    "message": "Daemon-Version {daemonVersion} unterscheidet sich von der Erweiterungs-Version {extensionVersion}. Aktualisieren Sie für Kompatibilität."
-  },
   "testimonial1Cite": {
     "message": "— Anonymer Client"
   },
@@ -3469,6 +3499,81 @@
   },
   "usersBadgeLabel": {
     "message": "Nutzer"
+  },
+  "vscodeCard1Body": {
+    "message": "Der lokale Daemon kommuniziert mit der Erweiterung und registriert Zeit im Editor als produktive Minuten. Nichts verlässt den localhost, aber der Timer schläft nie."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Fokus-Uhr"
+  },
+  "vscodeCard1Title": {
+    "message": "Jeder Commit zählt als abrechenbare Stunde."
+  },
+  "vscodeCard2Body": {
+    "message": "Wechselte vom Editor zum Feed? Saul stempelt die Ablenkung im Bericht. Zurück zum Code? Er registriert es als Beweis der Unschuld."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Kontextdetektiv"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code und Chrome tauschen Hinweise aus."
+  },
+  "vscodeCard3Body": {
+    "message": "Berichte bringen Codezeit, Unterbrechungen und häufige Verdächtige. Perfekt, um dem Manager zu zeigen, dass Prokrastination keine Chance hat."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Bereit für die Anhörung"
+  },
+  "vscodeCard3Title": {
+    "message": "Exportiert Verteidigung mit Metriken und Screenshots."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code vor Gericht"
+  },
+  "vscodeLead": {
+    "message": "Saul verbindet VS Code mit dem Fall: Minuten im Editor werden zu Beweisen für Fokus, Unterbrechungen werden zu Verdächtigen, und der Bericht kommt bereit, um die Jury (dein Team) zu überzeugen."
+  },
+  "vscodeMetaBridge": {
+    "message": "Chrome-Brücke + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% lokal, nichts verlässt deinen Editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Berichte mit Screenshots und CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Im VS Code installieren"
+  },
+  "vscodeProofBody": {
+    "message": "Eine Zeitleiste, die beweist, wer im Code geblieben ist und wer ins Feed geflüchtet ist. Verwende es als Beweisstück A in der nächsten Besprechung."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alarm"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Verteidigung"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Fokus"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Bevorzugte Beweise von Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code aktiv · 38 min ohne Tabwechsel."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Auf YouTube gewechselt · Saul als Ablenkung markiert."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Rückkehr zu VS Code · 21 min wiederhergestellter Fokus."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Schnellleitfaden ansehen"
+  },
+  "vscodeTitle": {
+    "message": "Verwandle den Editor in ein Produktivitäts-Asset."
   },
   "vscode_combo_reset_cancel": {
     "message": "Abbrechen"
@@ -3592,80 +3697,5 @@
   },
   "vscode_reports_today": {
     "message": "Heute"
-  },
-  "vscodeCard1Body": {
-    "message": "Der lokale Daemon kommuniziert mit der Erweiterung und registriert Zeit im Editor als produktive Minuten. Nichts verlässt den localhost, aber der Timer schläft nie."
-  },
-  "vscodeCard1Kicker": {
-    "message": "Fokus-Uhr"
-  },
-  "vscodeCard1Title": {
-    "message": "Jeder Commit zählt als abrechenbare Stunde."
-  },
-  "vscodeCard2Body": {
-    "message": "Wechselte vom Editor zum Feed? Saul stempelt die Ablenkung im Bericht. Zurück zum Code? Er registriert es als Beweis der Unschuld."
-  },
-  "vscodeCard2Kicker": {
-    "message": "Kontextdetektiv"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code und Chrome tauschen Hinweise aus."
-  },
-  "vscodeCard3Body": {
-    "message": "Berichte bringen Codezeit, Unterbrechungen und häufige Verdächtige. Perfekt, um dem Manager zu zeigen, dass Prokrastination keine Chance hat."
-  },
-  "vscodeCard3Kicker": {
-    "message": "Bereit für die Anhörung"
-  },
-  "vscodeCard3Title": {
-    "message": "Exportiert Verteidigung mit Metriken und Screenshots."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code vor Gericht"
-  },
-  "vscodeLead": {
-    "message": "Saul verbindet VS Code mit dem Fall: Minuten im Editor werden zu Beweisen für Fokus, Unterbrechungen werden zu Verdächtigen, und der Bericht kommt bereit, um die Jury (dein Team) zu überzeugen."
-  },
-  "vscodeMetaBridge": {
-    "message": "Chrome-Brücke + VS Code."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% lokal, nichts verlässt deinen Editor."
-  },
-  "vscodeMetaProof": {
-    "message": "Berichte mit Screenshots und CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "Im VS Code installieren"
-  },
-  "vscodeProofBody": {
-    "message": "Eine Zeitleiste, die beweist, wer im Code geblieben ist und wer ins Feed geflüchtet ist. Verwende es als Beweisstück A in der nächsten Besprechung."
-  },
-  "vscodeProofChipAlert": {
-    "message": "Alarm"
-  },
-  "vscodeProofChipDefense": {
-    "message": "Verteidigung"
-  },
-  "vscodeProofChipFocus": {
-    "message": "Fokus"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Bevorzugte Beweise von Saul"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code aktiv · 38 min ohne Tabwechsel."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — Auf YouTube gewechselt · Saul als Ablenkung markiert."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — Rückkehr zu VS Code · 21 min wiederhergestellter Fokus."
-  },
-  "vscodeSecondaryCta": {
-    "message": "Schnellleitfaden ansehen"
-  },
-  "vscodeTitle": {
-    "message": "Verwandle den Editor in ein Produktivitäts-Asset."
   }
 }

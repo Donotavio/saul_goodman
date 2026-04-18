@@ -128,3 +128,85 @@ test('health endpoint never exposes key validation oracle', async () => {
   child.kill('SIGTERM');
   rmSync(tmpDir, { recursive: true, force: true });
 });
+
+test('CORS rejects vscode-webview with non-UUID host', async () => {
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), 'saul-daemon-test-'));
+  const port = 4125;
+  const env = {
+    ...process.env,
+    PORT: String(port),
+    PAIRING_KEY: 'cors-test-key',
+    SAUL_DAEMON_DATA_DIR: tmpDir,
+    BIND_HOST: '127.0.0.1'
+  };
+  const child = spawn(process.execPath, [DAEMON_PATH], {
+    env,
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+
+  await waitForHealth(port);
+
+  const base = `http://127.0.0.1:${port}`;
+
+  const maliciousRes = await fetch(`${base}/health`, {
+    headers: { origin: 'vscode-webview://malicious.example.com' }
+  });
+  assert.equal(maliciousRes.status, 200);
+  assert.equal(maliciousRes.headers.get('access-control-allow-origin'), null);
+
+  const validRes = await fetch(`${base}/health`, {
+    headers: { origin: 'vscode-webview://abc123-def456-7890' }
+  });
+  assert.equal(validRes.status, 200);
+  assert.equal(validRes.headers.get('access-control-allow-origin'), 'vscode-webview://abc123-def456-7890');
+
+  const chromeRes = await fetch(`${base}/health`, {
+    headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop' }
+  });
+  assert.equal(chromeRes.status, 200);
+  assert.equal(
+    chromeRes.headers.get('access-control-allow-origin'),
+    'chrome-extension://abcdefghijklmnopabcdefghijklmnop'
+  );
+
+  child.kill('SIGTERM');
+  rmSync(tmpDir, { recursive: true, force: true });
+});
+
+test('almost-correct pairing key is rejected', async () => {
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), 'saul-daemon-test-'));
+  const port = 4126;
+  const env = {
+    ...process.env,
+    PORT: String(port),
+    PAIRING_KEY: 'my-secret-key-123',
+    SAUL_DAEMON_DATA_DIR: tmpDir,
+    BIND_HOST: '127.0.0.1'
+  };
+  const child = spawn(process.execPath, [DAEMON_PATH], {
+    env,
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+
+  await waitForHealth(port);
+
+  const base = `http://127.0.0.1:${port}`;
+
+  const almostRight = await fetch(
+    `${base}/v1/tracking/vscode/summary?key=my-secret-key-124&date=2026-04-18`
+  );
+  assert.equal(almostRight.status, 401);
+
+  const prefixMatch = await fetch(
+    `${base}/v1/tracking/vscode/summary?key=my-secret-key-12&date=2026-04-18`
+  );
+  assert.equal(prefixMatch.status, 401);
+
+  const correctKey = await fetch(
+    `${base}/v1/tracking/vscode/summary?key=my-secret-key-123&date=2026-04-18`
+  );
+  assert.equal(correctKey.status, 200);
+
+  child.kill('SIGTERM');
+  rmSync(tmpDir, { recursive: true, force: true });
+});

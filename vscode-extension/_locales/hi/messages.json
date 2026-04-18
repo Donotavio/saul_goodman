@@ -491,6 +491,9 @@
   "extDescription": {
     "message": "Sarcastic फोकस ट्रैकर जो डोमेन को मापता है और चेक में आपकी प्रक्रिया अनुक्रमित रखता है।"
   },
+  "extName": {
+    "message": "साउल गुडमैन"
+  },
   "extensionsChromeCta": {
     "message": "क्रोम एक्सटेंशन"
   },
@@ -502,9 +505,6 @@
   },
   "extensionsVscodeCta": {
     "message": "VS कोड एक्सटेंशन"
-  },
-  "extName": {
-    "message": "साउल गुडमैन"
   },
   "faq1Answer": {
     "message": "कुल मिलाकर। Saul केवल ध्यान और हास्य आरोप लगाता है।"
@@ -638,12 +638,6 @@
   "featureCustomTitle": {
     "message": "कस्टम सूची और वजन"
   },
-  "featuredEyebrow": {
-    "message": "फ़ीचर"
-  },
-  "featuredTitle": {
-    "message": "सप्ताह का मामला"
-  },
   "featureGaugeHint": {
     "message": "जब यह 70% पार हो जाता है, तो शाऊल भूकंप को तैयार करता है।"
   },
@@ -707,14 +701,20 @@
   "featureSectionTitle": {
     "message": "सब कुछ जो आपको चेक में टैब रखने की आवश्यकता है।"
   },
+  "featureSwipeHint": {
+    "message": "प्रत्येक सुविधा Saul संभाल की समीक्षा करने के लिए Swipe sideways।"
+  },
+  "featuredEyebrow": {
+    "message": "फ़ीचर"
+  },
+  "featuredTitle": {
+    "message": "सप्ताह का मामला"
+  },
   "featuresEyebrow": {
     "message": "विस्तृत सुविधाएँ"
   },
   "featuresTitle": {
     "message": "साउल गुडमैन एक्सटेंशन का शस्त्रागार।"
-  },
-  "featureSwipeHint": {
-    "message": "प्रत्येक सुविधा Saul संभाल की समीक्षा करने के लिए Swipe sideways।"
   },
   "feedbackLink": {
     "message": "प्रतिक्रिया दें"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "लेख पढ़ें"
   },
-  "readingTimeLabel": {
-    "message": "समय पढ़ना"
-  },
   "readTimeUnit": {
     "message": "पढ़ना"
+  },
+  "readingTimeLabel": {
+    "message": "समय पढ़ना"
   },
   "reason1Body": {
     "message": "पॉपअप इंडेक्स आपकी वर्तमान स्थिति को दर्शाता है, इसलिए आपको पता है कि आगे क्या तय करना है।"
@@ -2753,8 +2753,38 @@
   "report_vscode_branches": {
     "message": "गिट शाखाएँ"
   },
+  "report_vscode_chart_axis_combo_level": {
+    "message": "कॉम्बो स्तर"
+  },
+  "report_vscode_chart_axis_minutes": {
+    "message": "मिनट"
+  },
+  "report_vscode_chart_axis_time_of_day": {
+    "message": "दिन का समय"
+  },
+  "report_vscode_chart_label_building": {
+    "message": "बिल्ड"
+  },
+  "report_vscode_chart_label_coding": {
+    "message": "कोडिंग"
+  },
+  "report_vscode_chart_label_debugging": {
+    "message": "डीबगिंग"
+  },
+  "report_vscode_chart_label_testing": {
+    "message": "टेस्टिंग"
+  },
+  "report_vscode_chart_tooltip_min": {
+    "message": "{value} मिनट"
+  },
   "report_vscode_combo_level_label": {
     "message": "कॉम्बो स्तर"
+  },
+  "report_vscode_combo_notification_min": {
+    "message": "मिनट"
+  },
+  "report_vscode_combo_streak": {
+    "message": "{minutes} मिनट लगातार"
   },
   "report_vscode_combo_timeline": {
     "message": "कॉम्बो टाइमलाइन"
@@ -2764,6 +2794,9 @@
   },
   "report_vscode_combo_timeline_subtitle": {
     "message": "दिन भर में पमोडोरो की प्रगति"
+  },
+  "report_vscode_combo_tooltip": {
+    "message": "{count}x कॉम्बो ({minutes} मिनट)"
   },
   "report_vscode_commit_activity": {
     "message": "कमिट गतिविधि"
@@ -3365,9 +3398,6 @@
   "test_health_success": {
     "message": "सॉलडेमन ने {origin} पर प्रतिक्रिया दी"
   },
-  "test_health_version_mismatch": {
-    "message": "डेमन संस्करण {daemonVersion} एक्सटेंशन संस्करण {extensionVersion} से भिन्न है। संगतता के लिए अपडेट करें।"
-  },
   "testimonial1Cite": {
     "message": "गुमनाम ग्राहक"
   },
@@ -3469,6 +3499,81 @@
   },
   "usersBadgeLabel": {
     "message": "उपयोगकर्ता"
+  },
+  "vscodeCard1Body": {
+    "message": "स्थानीय डेमॉन एक्सटेंशन के साथ बातचीत करता है और संपादक में उत्पादक मिनटों के रूप में समय दर्ज करता है। कुछ भी लोकलहोस्ट से बाहर नहीं जाता, लेकिन टाइमर कभी नहीं सोता।"
+  },
+  "vscodeCard1Kicker": {
+    "message": "फोकस घड़ी"
+  },
+  "vscodeCard1Title": {
+    "message": "हर कमिट एक बिल योग्य घंटे के रूप में गिना जाता है।"
+  },
+  "vscodeCard2Body": {
+    "message": "क्या आप संपादक से फीड में स्विच कर गए? सॉउल रिपोर्ट में व्याकुलता को चिह्नित करता है। क्या आप कोड में वापस आए? वह इसे निर्दोषता के सबूत के रूप में दर्ज करता है।"
+  },
+  "vscodeCard2Kicker": {
+    "message": "संदर्भ जासूस"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code और Chrome सुरागों का आदान-प्रदान करते हैं।"
+  },
+  "vscodeCard3Body": {
+    "message": "रिपोर्ट में कोड का समय, व्यवधान और अक्सर संदिग्ध शामिल होते हैं। प्रबंधक को दिखाने के लिए बिल्कुल सही कि आलस्य का कोई मौका नहीं है।"
+  },
+  "vscodeCard3Kicker": {
+    "message": "सुनवाई के लिए तैयार"
+  },
+  "vscodeCard3Title": {
+    "message": "मेट्रिक्स और स्क्रीनशॉट के साथ बचाव का निर्यात करें।"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code अदालत में"
+  },
+  "vscodeLead": {
+    "message": "सॉउल VS Code को मामले से जोड़ता है: संपादक के मिनट फोकस के सबूत में बदल जाते हैं, व्यवधान संदिग्ध बन जाते हैं, और रिपोर्ट जूरी (आपकी टीम) को मनाने के लिए तैयार आती है।"
+  },
+  "vscodeMetaBridge": {
+    "message": "क्रोम + वीएस कोड ब्रिज।"
+  },
+  "vscodeMetaLocal": {
+    "message": "100% स्थानीय, कुछ भी आपके संपादक से बाहर नहीं जाता।"
+  },
+  "vscodeMetaProof": {
+    "message": "प्रिंट और CSV के साथ रिपोर्ट।"
+  },
+  "vscodePrimaryCta": {
+    "message": "VS Code में इंस्टॉल करें"
+  },
+  "vscodeProofBody": {
+    "message": "एक समयरेखा जो दिखाती है कि कौन कोड में रहा और कौन फीड में भाग गया। अगली बैठक में Exhibit A के रूप में उपयोग करें।"
+  },
+  "vscodeProofChipAlert": {
+    "message": "चेतावनी"
+  },
+  "vscodeProofChipDefense": {
+    "message": "रक्षा"
+  },
+  "vscodeProofChipFocus": {
+    "message": "फोकस"
+  },
+  "vscodeProofEyebrow": {
+    "message": "सौल के पसंदीदा सबूत"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — वीएस कोड सक्रिय · 38 मिनट बिना टैब बदले।"
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — यूट्यूब पर कूद गया · सौल ने इसे व्याकुलता के रूप में चिह्नित किया।"
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — वीएस कोड पर वापसी · 21 मिनट का ध्यान पुनः प्राप्त किया।"
+  },
+  "vscodeSecondaryCta": {
+    "message": "त्वरित गाइड देखें"
+  },
+  "vscodeTitle": {
+    "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
   },
   "vscode_combo_reset_cancel": {
     "message": "रद्द करें"
@@ -3592,80 +3697,5 @@
   },
   "vscode_reports_today": {
     "message": "आज"
-  },
-  "vscodeCard1Body": {
-    "message": "स्थानीय डेमॉन एक्सटेंशन के साथ बातचीत करता है और संपादक में उत्पादक मिनटों के रूप में समय दर्ज करता है। कुछ भी लोकलहोस्ट से बाहर नहीं जाता, लेकिन टाइमर कभी नहीं सोता।"
-  },
-  "vscodeCard1Kicker": {
-    "message": "फोकस घड़ी"
-  },
-  "vscodeCard1Title": {
-    "message": "हर कमिट एक बिल योग्य घंटे के रूप में गिना जाता है।"
-  },
-  "vscodeCard2Body": {
-    "message": "क्या आप संपादक से फीड में स्विच कर गए? सॉउल रिपोर्ट में व्याकुलता को चिह्नित करता है। क्या आप कोड में वापस आए? वह इसे निर्दोषता के सबूत के रूप में दर्ज करता है।"
-  },
-  "vscodeCard2Kicker": {
-    "message": "संदर्भ जासूस"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code और Chrome सुरागों का आदान-प्रदान करते हैं।"
-  },
-  "vscodeCard3Body": {
-    "message": "रिपोर्ट में कोड का समय, व्यवधान और अक्सर संदिग्ध शामिल होते हैं। प्रबंधक को दिखाने के लिए बिल्कुल सही कि आलस्य का कोई मौका नहीं है।"
-  },
-  "vscodeCard3Kicker": {
-    "message": "सुनवाई के लिए तैयार"
-  },
-  "vscodeCard3Title": {
-    "message": "मेट्रिक्स और स्क्रीनशॉट के साथ बचाव का निर्यात करें।"
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code अदालत में"
-  },
-  "vscodeLead": {
-    "message": "सॉउल VS Code को मामले से जोड़ता है: संपादक के मिनट फोकस के सबूत में बदल जाते हैं, व्यवधान संदिग्ध बन जाते हैं, और रिपोर्ट जूरी (आपकी टीम) को मनाने के लिए तैयार आती है।"
-  },
-  "vscodeMetaBridge": {
-    "message": "क्रोम + वीएस कोड ब्रिज।"
-  },
-  "vscodeMetaLocal": {
-    "message": "100% स्थानीय, कुछ भी आपके संपादक से बाहर नहीं जाता।"
-  },
-  "vscodeMetaProof": {
-    "message": "प्रिंट और CSV के साथ रिपोर्ट।"
-  },
-  "vscodePrimaryCta": {
-    "message": "VS Code में इंस्टॉल करें"
-  },
-  "vscodeProofBody": {
-    "message": "एक समयरेखा जो दिखाती है कि कौन कोड में रहा और कौन फीड में भाग गया। अगली बैठक में Exhibit A के रूप में उपयोग करें।"
-  },
-  "vscodeProofChipAlert": {
-    "message": "चेतावनी"
-  },
-  "vscodeProofChipDefense": {
-    "message": "रक्षा"
-  },
-  "vscodeProofChipFocus": {
-    "message": "फोकस"
-  },
-  "vscodeProofEyebrow": {
-    "message": "सौल के पसंदीदा सबूत"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — वीएस कोड सक्रिय · 38 मिनट बिना टैब बदले।"
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — यूट्यूब पर कूद गया · सौल ने इसे व्याकुलता के रूप में चिह्नित किया।"
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — वीएस कोड पर वापसी · 21 मिनट का ध्यान पुनः प्राप्त किया।"
-  },
-  "vscodeSecondaryCta": {
-    "message": "त्वरित गाइड देखें"
-  },
-  "vscodeTitle": {
-    "message": "संपादक को उत्पादकता के संपत्ति में बदलें।"
   }
 }

@@ -491,6 +491,9 @@
   "extDescription": {
     "message": "سرکامک مرکزہ (Sarcastic pointer) جس میں ڈومینوں کی پیمائش کی جاتی ہے اور چیک میں اپنے انڈیکس کو برقرار رکھتا ہے۔"
   },
+  "extName": {
+    "message": "ساؤل نیک آدمی"
+  },
   "extensionsChromeCta": {
     "message": "جِلد کی فضا"
   },
@@ -502,9 +505,6 @@
   },
   "extensionsVscodeCta": {
     "message": "وی ایس کوڈ توسیع"
-  },
-  "extName": {
-    "message": "ساؤل نیک آدمی"
   },
   "faq1Answer": {
     "message": "بالکل. ساؤل صرف توجہ اور تمسخر کا ذمہ‌دار ہوتا ہے ۔"
@@ -638,12 +638,6 @@
   "featureCustomTitle": {
     "message": "فہرستیں اور وزن"
   },
-  "featuredEyebrow": {
-    "message": "محفوظ کردہ"
-  },
-  "featuredTitle": {
-    "message": "ہفتے کی تصویر"
-  },
   "featureGaugeHint": {
     "message": "جب یہ 70% آگے بڑھا تو ساؤل زلزلے کو تیار کرتا ہے۔"
   },
@@ -707,14 +701,20 @@
   "featureSectionTitle": {
     "message": "آپ کو ہر چیز میں تبتی رکھنے کی ضرورت ہے"
   },
+  "featureSwipeHint": {
+    "message": "ساؤل کی ہر خصوصیت کا جائزہ لینے کی کوشش کریں ۔"
+  },
+  "featuredEyebrow": {
+    "message": "محفوظ کردہ"
+  },
+  "featuredTitle": {
+    "message": "ہفتے کی تصویر"
+  },
   "featuresEyebrow": {
     "message": "طےشدہ"
   },
   "featuresTitle": {
     "message": "ساؤل نیک‌وبد میں امتیاز کرنے والا تھا ۔"
-  },
-  "featureSwipeHint": {
-    "message": "ساؤل کی ہر خصوصیت کا جائزہ لینے کی کوشش کریں ۔"
   },
   "feedbackLink": {
     "message": "جواب دیں"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "مضمون کو پڑھیں ۔"
   },
-  "readingTimeLabel": {
-    "message": "پڑھنا"
-  },
   "readTimeUnit": {
     "message": "منٹ"
+  },
+  "readingTimeLabel": {
+    "message": "پڑھنا"
   },
   "reason1Body": {
     "message": "پاپ اپ انڈیکس آپ کی موجودہ حیثیت کو ظاہر کرتا ہے تاکہ آپ کو معلوم ہو کہ اس کے بعد کیا کرنے کے لئے."
@@ -2753,8 +2753,38 @@
   "report_vscode_branches": {
     "message": "گٹ شاخیں"
   },
+  "report_vscode_chart_axis_combo_level": {
+    "message": "کومبو لیول"
+  },
+  "report_vscode_chart_axis_minutes": {
+    "message": "منٹ"
+  },
+  "report_vscode_chart_axis_time_of_day": {
+    "message": "دن کا وقت"
+  },
+  "report_vscode_chart_label_building": {
+    "message": "بلڈ"
+  },
+  "report_vscode_chart_label_coding": {
+    "message": "کوڈنگ"
+  },
+  "report_vscode_chart_label_debugging": {
+    "message": "ڈیبگنگ"
+  },
+  "report_vscode_chart_label_testing": {
+    "message": "ٹیسٹنگ"
+  },
+  "report_vscode_chart_tooltip_min": {
+    "message": "{value} منٹ"
+  },
   "report_vscode_combo_level_label": {
     "message": "کمبو کی سطح"
+  },
+  "report_vscode_combo_notification_min": {
+    "message": "منٹ"
+  },
+  "report_vscode_combo_streak": {
+    "message": "{minutes} منٹ مسلسل"
   },
   "report_vscode_combo_timeline": {
     "message": "کمبو کی ٹائم لائن"
@@ -2764,6 +2794,9 @@
   },
   "report_vscode_combo_timeline_subtitle": {
     "message": "دن بھر میں پومودورو کی ترقی"
+  },
+  "report_vscode_combo_tooltip": {
+    "message": "{count}x کومبو ({minutes} منٹ)"
   },
   "report_vscode_commit_activity": {
     "message": "کمٹ کی سرگرمی"
@@ -3365,9 +3398,6 @@
   "test_health_success": {
     "message": "سول ڈیمون نے {origin} پر جواب دیا"
   },
-  "test_health_version_mismatch": {
-    "message": "ڈیمون ورژن {daemonVersion} ایکسٹینشن ورژن {extensionVersion} سے مختلف ہے۔ مطابقت کے لیے اپ ڈیٹ کریں۔"
-  },
   "testimonial1Cite": {
     "message": "— شناخت کنندہ"
   },
@@ -3469,6 +3499,81 @@
   },
   "usersBadgeLabel": {
     "message": "صارفین"
+  },
+  "vscodeCard1Body": {
+    "message": "مقامی ڈیمون توسیع کے ساتھ بات چیت کرتا ہے اور ایڈیٹر میں وقت کو پیداواری منٹ کے طور پر ریکارڈ کرتا ہے۔ کچھ بھی لوکل ہوسٹ سے باہر نہیں جاتا، لیکن ٹائمر کبھی نہیں سوتا۔"
+  },
+  "vscodeCard1Kicker": {
+    "message": "فوکس کا گھڑی"
+  },
+  "vscodeCard1Title": {
+    "message": "ہر کمیٹ ایک بلable گھنٹے کے طور پر شمار ہوتا ہے۔"
+  },
+  "vscodeCard2Body": {
+    "message": "کیا آپ ایڈیٹر سے فیڈ میں منتقل ہو گئے؟ ساؤل رپورٹ میں توجہ کی خرابی کو نشان زد کرتا ہے۔ کیا آپ نے کوڈ میں واپس آ گئے؟ وہ بے گناہی کے ثبوت کے طور پر ریکارڈ کرتا ہے۔"
+  },
+  "vscodeCard2Kicker": {
+    "message": "سیاق و سباق کا تفتیشی"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code اور Chrome سراغوں کا تبادلہ کرتے ہیں۔"
+  },
+  "vscodeCard3Body": {
+    "message": "رپورٹس کوڈ کا وقت، مداخلتیں اور بار بار کے مشتبہ افراد لاتی ہیں۔ مینیجر کو دکھانے کے لیے بہترین کہ سست روی کا کوئی موقع نہیں ہے۔"
+  },
+  "vscodeCard3Kicker": {
+    "message": "آڈینس کے لیے تیار"
+  },
+  "vscodeCard3Title": {
+    "message": "میٹرکس اور اسکرین شاٹس کے ساتھ دفاع برآمد کرتا ہے۔"
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code عدالت میں"
+  },
+  "vscodeLead": {
+    "message": "ساؤل VS Code کو کیس سے جوڑتا ہے: ایڈیٹر کے منٹ توجہ کے ثبوت میں تبدیل ہوتے ہیں، مداخلتیں مشتبہ افراد بن جاتی ہیں، اور رپورٹ جوری (آپ کی ٹیم) کو قائل کرنے کے لیے تیار آتی ہے۔"
+  },
+  "vscodeMetaBridge": {
+    "message": "کروم + VS کوڈ پل."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% مقامی، کچھ بھی آپ کے ایڈیٹر سے باہر نہیں جاتا."
+  },
+  "vscodeMetaProof": {
+    "message": "رپورٹس کے ساتھ اسکرین شاٹس اور CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "VS Code میں انسٹال کریں"
+  },
+  "vscodeProofBody": {
+    "message": "ایک ٹائم لائن جو ثابت کرتی ہے کہ کون کوڈ میں رہا اور کون فیڈ میں بھاگ گیا. اگلی میٹنگ میں نمونہ A کے طور پر استعمال کریں."
+  },
+  "vscodeProofChipAlert": {
+    "message": "خبردار"
+  },
+  "vscodeProofChipDefense": {
+    "message": "دفاع"
+  },
+  "vscodeProofChipFocus": {
+    "message": "توجہ"
+  },
+  "vscodeProofEyebrow": {
+    "message": "ساؤل کی پسندیدہ شواہد"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS کوڈ فعال · 38 منٹ بغیر ٹیب تبدیل کیے."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — یوٹیوب پر چھلانگ لگائی · ساؤل نے اسے توجہ ہٹانے کے طور پر نشان زد کیا."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — VS کوڈ پر واپسی · 21 منٹ کی توجہ بحال ہوئی."
+  },
+  "vscodeSecondaryCta": {
+    "message": "جلدی گائیڈ دیکھیں"
+  },
+  "vscodeTitle": {
+    "message": "ایڈیٹر کو پیداواری اثاثے میں تبدیل کریں۔"
   },
   "vscode_combo_reset_cancel": {
     "message": "منسوخ کریں"
@@ -3592,80 +3697,5 @@
   },
   "vscode_reports_today": {
     "message": "آج"
-  },
-  "vscodeCard1Body": {
-    "message": "مقامی ڈیمون توسیع کے ساتھ بات چیت کرتا ہے اور ایڈیٹر میں وقت کو پیداواری منٹ کے طور پر ریکارڈ کرتا ہے۔ کچھ بھی لوکل ہوسٹ سے باہر نہیں جاتا، لیکن ٹائمر کبھی نہیں سوتا۔"
-  },
-  "vscodeCard1Kicker": {
-    "message": "فوکس کا گھڑی"
-  },
-  "vscodeCard1Title": {
-    "message": "ہر کمیٹ ایک بلable گھنٹے کے طور پر شمار ہوتا ہے۔"
-  },
-  "vscodeCard2Body": {
-    "message": "کیا آپ ایڈیٹر سے فیڈ میں منتقل ہو گئے؟ ساؤل رپورٹ میں توجہ کی خرابی کو نشان زد کرتا ہے۔ کیا آپ نے کوڈ میں واپس آ گئے؟ وہ بے گناہی کے ثبوت کے طور پر ریکارڈ کرتا ہے۔"
-  },
-  "vscodeCard2Kicker": {
-    "message": "سیاق و سباق کا تفتیشی"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code اور Chrome سراغوں کا تبادلہ کرتے ہیں۔"
-  },
-  "vscodeCard3Body": {
-    "message": "رپورٹس کوڈ کا وقت، مداخلتیں اور بار بار کے مشتبہ افراد لاتی ہیں۔ مینیجر کو دکھانے کے لیے بہترین کہ سست روی کا کوئی موقع نہیں ہے۔"
-  },
-  "vscodeCard3Kicker": {
-    "message": "آڈینس کے لیے تیار"
-  },
-  "vscodeCard3Title": {
-    "message": "میٹرکس اور اسکرین شاٹس کے ساتھ دفاع برآمد کرتا ہے۔"
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code عدالت میں"
-  },
-  "vscodeLead": {
-    "message": "ساؤل VS Code کو کیس سے جوڑتا ہے: ایڈیٹر کے منٹ توجہ کے ثبوت میں تبدیل ہوتے ہیں، مداخلتیں مشتبہ افراد بن جاتی ہیں، اور رپورٹ جوری (آپ کی ٹیم) کو قائل کرنے کے لیے تیار آتی ہے۔"
-  },
-  "vscodeMetaBridge": {
-    "message": "کروم + VS کوڈ پل."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% مقامی، کچھ بھی آپ کے ایڈیٹر سے باہر نہیں جاتا."
-  },
-  "vscodeMetaProof": {
-    "message": "رپورٹس کے ساتھ اسکرین شاٹس اور CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "VS Code میں انسٹال کریں"
-  },
-  "vscodeProofBody": {
-    "message": "ایک ٹائم لائن جو ثابت کرتی ہے کہ کون کوڈ میں رہا اور کون فیڈ میں بھاگ گیا. اگلی میٹنگ میں نمونہ A کے طور پر استعمال کریں."
-  },
-  "vscodeProofChipAlert": {
-    "message": "خبردار"
-  },
-  "vscodeProofChipDefense": {
-    "message": "دفاع"
-  },
-  "vscodeProofChipFocus": {
-    "message": "توجہ"
-  },
-  "vscodeProofEyebrow": {
-    "message": "ساؤل کی پسندیدہ شواہد"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS کوڈ فعال · 38 منٹ بغیر ٹیب تبدیل کیے."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — یوٹیوب پر چھلانگ لگائی · ساؤل نے اسے توجہ ہٹانے کے طور پر نشان زد کیا."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — VS کوڈ پر واپسی · 21 منٹ کی توجہ بحال ہوئی."
-  },
-  "vscodeSecondaryCta": {
-    "message": "جلدی گائیڈ دیکھیں"
-  },
-  "vscodeTitle": {
-    "message": "ایڈیٹر کو پیداواری اثاثے میں تبدیل کریں۔"
   }
 }

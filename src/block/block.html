@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="block_page_title">Saul bloqueou este domínio</title>
+    <title data-i18n="block_page_title">Saul blocked this domain</title>
     <style>
       :root {
         color-scheme: light;
@@ -91,15 +91,15 @@
   </head>
   <body>
     <main class="card">
-      <img id="blockImage" src="../img/saul_nao_corte.png" alt="Saul Goodman desapontado" />
+      <img id="blockImage" src="../img/saul_nao_corte.png" alt="Saul Goodman disappointed" />
       <div>
-        <h1 id="blockHeading">Saul bloqueou este domínio</h1>
-        <p id="blockBody">Você marcou este site como procrastinação. Feche a aba ou ajuste a lista se mudar de ideia.</p>
+        <h1 id="blockHeading" data-i18n="block_page_heading">Saul blocked this domain</h1>
+        <p id="blockBody" data-i18n="block_page_body">You marked this site as procrastination. Close the tab or adjust the list if you change your mind.</p>
         <div class="actions">
-          <button id="backButton">Voltar</button>
-          <button id="optionsButton" class="secondary">Abrir configurações</button>
+          <button id="backButton" data-i18n="block_page_back">Go back</button>
+          <button id="optionsButton" class="secondary" data-i18n="block_page_options">Open settings</button>
         </div>
-        <small id="blockLocalNote">Bloqueio local — nada sai do seu navegador.</small>
+        <small id="blockLocalNote" data-i18n="block_page_local_note">Local block — nothing leaves your browser.</small>
       </div>
     </main>
     <script type="module" src="../../dist/block/block.js"></script>

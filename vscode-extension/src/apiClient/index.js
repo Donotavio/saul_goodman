@@ -92,11 +92,20 @@ async function getIndex(apiBase, key, date, config) {
   return safeJson(res, url);
 }
 
+async function postShutdown(apiBase, key, config) {
+  const url = buildUrl(apiBase, '/v1/shutdown', { key });
+  const res = await fetchWithTimeout(url, resolveTimeout(config, 3000), {
+    method: 'POST'
+  });
+  return res.ok;
+}
+
 module.exports = {
   buildUrl,
   getHealth,
   getHealthWithKey,
   postHeartbeats,
+  postShutdown,
   getSummaries,
   getStats,
   getBreakdown,

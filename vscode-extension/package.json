@@ -43,6 +43,16 @@
         "command": "saulGoodman.resetCombo",
         "title": "%command_reset_combo%",
         "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.stopDaemon",
+        "title": "%command_stop_daemon%",
+        "category": "Saul Goodman"
+      },
+      {
+        "command": "saulGoodman.restartDaemon",
+        "title": "%command_restart_daemon%",
+        "category": "Saul Goodman"
       }
     ],
     "configuration": {

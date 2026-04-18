@@ -491,6 +491,9 @@
   "extDescription": {
     "message": "Rastreador de enfoque sarcástico que mide los dominios y mantiene tu índice de procrastinación bajo control."
   },
+  "extName": {
+    "message": "Saul Goodman"
+  },
   "extensionsChromeCta": {
     "message": "Extensión de Chrome"
   },
@@ -502,9 +505,6 @@
   },
   "extensionsVscodeCta": {
     "message": "Extensión de VS Code"
-  },
-  "extName": {
-    "message": "Saul Goodman"
   },
   "faq1Answer": {
     "message": "Totalmente. Saul solo cobra atención y sentido del humor."
@@ -638,12 +638,6 @@
   "featureCustomTitle": {
     "message": "Listas y pesos a tu medida"
   },
-  "featuredEyebrow": {
-    "message": "Destacado"
-  },
-  "featuredTitle": {
-    "message": "Caso caliente de la semana"
-  },
   "featureGaugeHint": {
     "message": "Si pasa del 70%, Saul prepara el temblor."
   },
@@ -707,14 +701,20 @@
   "featureSectionTitle": {
     "message": "El paquete completo anti-procrastinación."
   },
+  "featureSwipeHint": {
+    "message": "Desliza hacia los lados para ver todas las funciones de Saul."
+  },
+  "featuredEyebrow": {
+    "message": "Destacado"
+  },
+  "featuredTitle": {
+    "message": "Caso caliente de la semana"
+  },
   "featuresEyebrow": {
     "message": "Funciones detalladas"
   },
   "featuresTitle": {
     "message": "El arsenal de la extensión Saul Goodman."
-  },
-  "featureSwipeHint": {
-    "message": "Desliza hacia los lados para ver todas las funciones de Saul."
   },
   "feedbackLink": {
     "message": "Enviar feedback"
@@ -2171,11 +2171,11 @@
   "readArticle": {
     "message": "Leer artículo"
   },
-  "readingTimeLabel": {
-    "message": "Tiempo de lectura"
-  },
   "readTimeUnit": {
     "message": "min de lectura"
+  },
+  "readingTimeLabel": {
+    "message": "Tiempo de lectura"
   },
   "reason1Body": {
     "message": "El índice en el popup muestra tu estado para saber qué ajustar."
@@ -2753,8 +2753,38 @@
   "report_vscode_branches": {
     "message": "Ramas de Git"
   },
+  "report_vscode_chart_axis_combo_level": {
+    "message": "Nivel de Combo"
+  },
+  "report_vscode_chart_axis_minutes": {
+    "message": "Minutos"
+  },
+  "report_vscode_chart_axis_time_of_day": {
+    "message": "Hora del Día"
+  },
+  "report_vscode_chart_label_building": {
+    "message": "Compilación"
+  },
+  "report_vscode_chart_label_coding": {
+    "message": "Codificación"
+  },
+  "report_vscode_chart_label_debugging": {
+    "message": "Depuración"
+  },
+  "report_vscode_chart_label_testing": {
+    "message": "Pruebas"
+  },
+  "report_vscode_chart_tooltip_min": {
+    "message": "{value} min"
+  },
   "report_vscode_combo_level_label": {
     "message": "Nivel del combo"
+  },
+  "report_vscode_combo_notification_min": {
+    "message": "min"
+  },
+  "report_vscode_combo_streak": {
+    "message": "{minutes} min seguidos"
   },
   "report_vscode_combo_timeline": {
     "message": "Línea de Tiempo de Combos"
@@ -2764,6 +2794,9 @@
   },
   "report_vscode_combo_timeline_subtitle": {
     "message": "Progresión de pomodoros a lo largo del día"
+  },
+  "report_vscode_combo_tooltip": {
+    "message": "{count}x combo ({minutes} min)"
   },
   "report_vscode_commit_activity": {
     "message": "Actividad de Commits"
@@ -3365,9 +3398,6 @@
   "test_health_success": {
     "message": "SaulDaemon respondio en {origin}"
   },
-  "test_health_version_mismatch": {
-    "message": "La versión del daemon {daemonVersion} difiere de la extensión {extensionVersion}. Considere actualizar para compatibilidad."
-  },
   "testimonial1Cite": {
     "message": "— Cliente anónimo"
   },
@@ -3469,6 +3499,81 @@
   },
   "usersBadgeLabel": {
     "message": "Usuarios"
+  },
+  "vscodeCard1Body": {
+    "message": "El daemon local se comunica con la extensión y registra tiempo en el editor como minutos productivos. Nada sale del localhost, pero el cronómetro nunca duerme."
+  },
+  "vscodeCard1Kicker": {
+    "message": "Reloj de foco"
+  },
+  "vscodeCard1Title": {
+    "message": "Cada commit cuenta como hora facturable."
+  },
+  "vscodeCard2Body": {
+    "message": "¿Cambiaste del editor al feed? Saul marca la distracción en el informe. ¿Volviste al código? Él registra como prueba de inocencia."
+  },
+  "vscodeCard2Kicker": {
+    "message": "Detective de contexto"
+  },
+  "vscodeCard2Title": {
+    "message": "VS Code y Chrome intercambian pistas."
+  },
+  "vscodeCard3Body": {
+    "message": "Los informes traen tiempo de código, interrupciones y sospechosos frecuentes. Perfecto para mostrar al gestor que la procrastinación no tiene oportunidad."
+  },
+  "vscodeCard3Kicker": {
+    "message": "Listo para la audiencia"
+  },
+  "vscodeCard3Title": {
+    "message": "Exporta defensa con métricas y capturas."
+  },
+  "vscodeEyebrow": {
+    "message": "VS Code en el tribunal"
+  },
+  "vscodeLead": {
+    "message": "Saul conecta el VS Code al caso: minutos de editor se convierten en prueba de foco, interrupciones se convierten en sospechosos, y el informe llega listo para convencer al jurado (tu equipo)."
+  },
+  "vscodeMetaBridge": {
+    "message": "Puente Chrome + VS Code."
+  },
+  "vscodeMetaLocal": {
+    "message": "100% local, nada sale de tu editor."
+  },
+  "vscodeMetaProof": {
+    "message": "Informes con capturas y CSV."
+  },
+  "vscodePrimaryCta": {
+    "message": "Instalar en VS Code"
+  },
+  "vscodeProofBody": {
+    "message": "Una línea de tiempo que prueba quién se quedó en el código y quién huyó al feed. Usa como Exhibit A en la próxima reunión."
+  },
+  "vscodeProofChipAlert": {
+    "message": "Alerta"
+  },
+  "vscodeProofChipDefense": {
+    "message": "Defensa"
+  },
+  "vscodeProofChipFocus": {
+    "message": "Foco"
+  },
+  "vscodeProofEyebrow": {
+    "message": "Evidencias preferidas de Saul"
+  },
+  "vscodeProofLine1": {
+    "message": "09:12 — VS Code activo · 38 min sin cambiar de pestaña."
+  },
+  "vscodeProofLine2": {
+    "message": "09:50 — Saltó a YouTube · Saul marcó como distracción."
+  },
+  "vscodeProofLine3": {
+    "message": "10:05 — Regreso a VS Code · 21 min de foco recuperado."
+  },
+  "vscodeSecondaryCta": {
+    "message": "Ver guía rápida"
+  },
+  "vscodeTitle": {
+    "message": "Convierte tu editor en un activo de productividad."
   },
   "vscode_combo_reset_cancel": {
     "message": "Cancelar"
@@ -3592,80 +3697,5 @@
   },
   "vscode_reports_today": {
     "message": "Hoy"
-  },
-  "vscodeCard1Body": {
-    "message": "El daemon local se comunica con la extensión y registra tiempo en el editor como minutos productivos. Nada sale del localhost, pero el cronómetro nunca duerme."
-  },
-  "vscodeCard1Kicker": {
-    "message": "Reloj de foco"
-  },
-  "vscodeCard1Title": {
-    "message": "Cada commit cuenta como hora facturable."
-  },
-  "vscodeCard2Body": {
-    "message": "¿Cambiaste del editor al feed? Saul marca la distracción en el informe. ¿Volviste al código? Él registra como prueba de inocencia."
-  },
-  "vscodeCard2Kicker": {
-    "message": "Detective de contexto"
-  },
-  "vscodeCard2Title": {
-    "message": "VS Code y Chrome intercambian pistas."
-  },
-  "vscodeCard3Body": {
-    "message": "Los informes traen tiempo de código, interrupciones y sospechosos frecuentes. Perfecto para mostrar al gestor que la procrastinación no tiene oportunidad."
-  },
-  "vscodeCard3Kicker": {
-    "message": "Listo para la audiencia"
-  },
-  "vscodeCard3Title": {
-    "message": "Exporta defensa con métricas y capturas."
-  },
-  "vscodeEyebrow": {
-    "message": "VS Code en el tribunal"
-  },
-  "vscodeLead": {
-    "message": "Saul conecta el VS Code al caso: minutos de editor se convierten en prueba de foco, interrupciones se convierten en sospechosos, y el informe llega listo para convencer al jurado (tu equipo)."
-  },
-  "vscodeMetaBridge": {
-    "message": "Puente Chrome + VS Code."
-  },
-  "vscodeMetaLocal": {
-    "message": "100% local, nada sale de tu editor."
-  },
-  "vscodeMetaProof": {
-    "message": "Informes con capturas y CSV."
-  },
-  "vscodePrimaryCta": {
-    "message": "Instalar en VS Code"
-  },
-  "vscodeProofBody": {
-    "message": "Una línea de tiempo que prueba quién se quedó en el código y quién huyó al feed. Usa como Exhibit A en la próxima reunión."
-  },
-  "vscodeProofChipAlert": {
-    "message": "Alerta"
-  },
-  "vscodeProofChipDefense": {
-    "message": "Defensa"
-  },
-  "vscodeProofChipFocus": {
-    "message": "Foco"
-  },
-  "vscodeProofEyebrow": {
-    "message": "Evidencias preferidas de Saul"
-  },
-  "vscodeProofLine1": {
-    "message": "09:12 — VS Code activo · 38 min sin cambiar de pestaña."
-  },
-  "vscodeProofLine2": {
-    "message": "09:50 — Saltó a YouTube · Saul marcó como distracción."
-  },
-  "vscodeProofLine3": {
-    "message": "10:05 — Regreso a VS Code · 21 min de foco recuperado."
-  },
-  "vscodeSecondaryCta": {
-    "message": "Ver guía rápida"
-  },
-  "vscodeTitle": {
-    "message": "Convierte tu editor en un activo de productividad."
   }
 }

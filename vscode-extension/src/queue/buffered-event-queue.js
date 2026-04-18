@@ -20,11 +20,18 @@ class BufferedEventQueue {
     this.nextFlushAt = 0;
     this._persistChain = Promise.resolve();
     this._persistDebounceTimer = null;
+    this._recentIds = new Set();
+    this._maxRecentIds = 5000;
     this.config = {
       apiBase: options.apiBase,
       pairingKey: options.pairingKey,
       enabled: options.enabled ?? true
     };
+  }
+
+  isWithinRecoveryWindow(eventDate) {
+    const RECOVERY_WINDOW_MS = 2 * 24 * 60 * 60 * 1000;
+    return Date.now() - eventDate.getTime() < RECOVERY_WINDOW_MS;
   }
 
   async init() {
@@ -35,15 +42,13 @@ class BufferedEventQueue {
       const raw = await readFile(this.storagePath, 'utf8');
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.events)) {
-        const todayKey = this.getTodayKey();
         this.buffer = parsed.events.filter(event => {
           if (!event || !event.time) return false;
           const eventDate = new Date(event.time);
-          const eventKey = this.formatDateKey(eventDate);
-          return eventKey === todayKey;
+          return this.isWithinRecoveryWindow(eventDate);
         });
         if (this.buffer.length < parsed.events.length) {
-          console.log(`[Saul Queue] Filtered ${parsed.events.length - this.buffer.length} old events from previous days`);
+          console.log(`[Saul Queue] Filtered ${parsed.events.length - this.buffer.length} old events outside recovery window`);
         }
         if (typeof parsed.droppedEvents === 'number' && parsed.droppedEvents > 0) {
           this.droppedEvents = parsed.droppedEvents;
@@ -57,12 +62,10 @@ class BufferedEventQueue {
         const raw = await readFile(tmpPath, 'utf8');
         const parsed = JSON.parse(raw);
         if (parsed && Array.isArray(parsed.events)) {
-          const todayKey = this.getTodayKey();
           this.buffer = parsed.events.filter(event => {
             if (!event || !event.time) return false;
             const eventDate = new Date(event.time);
-            const eventKey = this.formatDateKey(eventDate);
-            return eventKey === todayKey;
+            return this.isWithinRecoveryWindow(eventDate);
           });
           if (typeof parsed.droppedEvents === 'number' && parsed.droppedEvents > 0) {
             this.droppedEvents = parsed.droppedEvents;
@@ -104,7 +107,19 @@ class BufferedEventQueue {
     if (!event) {
       return;
     }
+    if (event.id && this._recentIds.has(event.id)) {
+      return;
+    }
     console.log('[Saul Queue] Enqueued:', event.entityType, '| Buffer size:', this.buffer.length + 1);
+    if (event.id) {
+      this._recentIds.add(event.id);
+      if (this._recentIds.size > this._maxRecentIds) {
+        const iter = this._recentIds.values();
+        for (let i = 0; i < this._maxRecentIds - 4000; i++) {
+          this._recentIds.delete(iter.next().value);
+        }
+      }
+    }
     this.buffer.push(event);
     const warningThreshold = Math.floor(this.maxBufferSize * 0.8);
     if (this.buffer.length === warningThreshold && this.onOverflow) {

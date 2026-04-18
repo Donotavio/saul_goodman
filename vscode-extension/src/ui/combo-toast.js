@@ -52,7 +52,8 @@ class ComboToast {
 
     // Notificação nativa apenas quando importante
     if (shouldNotify) {
-      const fullMessage = `${emoji} ${title} • ${message} (${totalMinutes || pomodoros * 25} min)`;
+      const minUnit = this.localize('report_vscode_combo_notification_min') || 'min';
+      const fullMessage = `${emoji} ${title} • ${message} (${totalMinutes || pomodoros * 25} ${minUnit})`;
       vscode.window.showInformationMessage(fullMessage);
     }
     
@@ -110,7 +111,8 @@ class ComboToast {
         level,
         pomodoros,
         totalMinutes,
-        isUltra
+        isUltra,
+        minSuffix: this.localize('report_vscode_combo_notification_min') || 'min'
       }
     });
 
@@ -246,7 +248,7 @@ class ComboToast {
         </div>
         <p class="toast-message" id="toast-message">Message here</p>
         <div class="toast-stats">
-          <span id="toast-minutes">0 min</span>
+          <span id="toast-minutes">--</span>
         </div>
       </div>
     </div>
@@ -274,13 +276,13 @@ class ComboToast {
       });
 
       function showToast(data) {
-        const { title, message, color, emoji, level, totalMinutes, isUltra } = data;
+        const { title, message, color, emoji, level, totalMinutes, isUltra, minSuffix } = data;
 
         // Atualizar conteúdo
         toastEmoji.textContent = emoji;
         toastTitle.textContent = title;
         toastMessage.textContent = message;
-        toastMinutes.textContent = totalMinutes + ' min';
+        toastMinutes.textContent = totalMinutes + ' ' + (minSuffix || 'min');
 
         // Atualizar cor
         toast.style.setProperty('--combo-color', color);

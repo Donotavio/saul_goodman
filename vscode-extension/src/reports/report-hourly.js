@@ -1,4 +1,5 @@
 function renderHourlyChart(hourlyData) {
+  const i18n = window.__SAUL_I18N__ || {};
   const canvas = document.getElementById('hourlyChart');
   const emptyEl = document.getElementById('hourlyEmpty');
   
@@ -37,28 +38,28 @@ function renderHourlyChart(hourlyData) {
       labels,
       datasets: [
         {
-          label: 'Coding',
+          label: i18n.report_vscode_chart_label_coding || 'Coding',
           data: codingMinutes,
           backgroundColor: '#ffc857',
           borderColor: '#ffb347',
           borderWidth: 1
         },
         {
-          label: 'Debugging',
+          label: i18n.report_vscode_chart_label_debugging || 'Debugging',
           data: debuggingMinutes,
           backgroundColor: '#f59e0b',
           borderColor: '#d97706',
           borderWidth: 1
         },
         {
-          label: 'Building',
+          label: i18n.report_vscode_chart_label_building || 'Building',
           data: buildingMinutes,
           backgroundColor: '#10b981',
           borderColor: '#059669',
           borderWidth: 1
         },
         {
-          label: 'Testing',
+          label: i18n.report_vscode_chart_label_testing || 'Testing',
           data: testingMinutes,
           backgroundColor: '#0a7e07',
           borderColor: '#085d05',
@@ -92,7 +93,7 @@ function renderHourlyChart(hourlyData) {
           },
           title: {
             display: true,
-            text: 'Minutes',
+            text: i18n.report_vscode_chart_axis_minutes || 'Minutes',
             color: '#374151',
             font: { size: 11, weight: 'bold' }
           }
@@ -122,7 +123,8 @@ function renderHourlyChart(hourlyData) {
           displayColors: true,
           callbacks: {
             label: function(context) {
-              return `${context.dataset.label}: ${context.parsed.y} min`;
+              const minLabel = (i18n.report_vscode_chart_tooltip_min || '{value} min').replace('{value}', context.parsed.y);
+              return `${context.dataset.label}: ${minLabel}`;
             }
           }
         }

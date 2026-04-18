@@ -738,7 +738,7 @@
               },
               title: {
                 display: true,
-                text: 'Minutes',
+                text: i18n.report_vscode_chart_axis_minutes || 'Minutes',
                 color: '#374151',
                 font: { size: 11, weight: 'bold' }
               }
@@ -820,7 +820,9 @@
     const comboMinutes = maxCombo * 25;
     
     document.getElementById('telMaxCombo').textContent = maxCombo > 0 ? `${maxCombo}x` : '--';
-    document.getElementById('telComboMinutes').textContent = maxCombo > 0 ? `${comboMinutes} min streak` : '--';
+    document.getElementById('telComboMinutes').textContent = maxCombo > 0
+      ? (i18n.report_vscode_combo_streak || '{minutes} min streak').replace('{minutes}', comboMinutes)
+      : '--';
 
     renderTerminalCommandsChart(tel.terminal || {});
     renderFocusPatternsChart(tel.focus || {});

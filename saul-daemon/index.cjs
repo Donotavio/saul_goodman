@@ -1,5 +1,6 @@
 const http = require('http');
 const path = require('path');
+const crypto = require('node:crypto');
 const { mkdir, readFile, writeFile, rename, stat, unlink } = require('fs/promises');
 const {
   buildDurations,
@@ -90,11 +91,13 @@ function withHeartbeatLock(key, fn) {
 }
 
 let persistChain = Promise.resolve();
+let persistFailureCount = 0;
 
 function enqueuePersist(task) {
   const p = persistChain.then(task);
   persistChain = p.catch((error) => {
-    console.warn('[saul-daemon] Persist failed', error);
+    persistFailureCount += 1;
+    console.error(`[saul-daemon] Persist failed (total: ${persistFailureCount})`, error);
   });
   return p;
 }
@@ -447,10 +450,27 @@ function pruneVscodeEntries(key) {
 
 function validateKey(receivedKey) {
   const cleaned = (receivedKey ?? '').trim();
-  if (!cleaned) {
+  if (!cleaned || !PAIRING_KEY) {
     return false;
   }
-  return cleaned === PAIRING_KEY;
+  const a = Buffer.from(cleaned, 'utf8');
+  const b = Buffer.from(PAIRING_KEY, 'utf8');
+  if (a.length !== b.length) {
+    crypto.timingSafeEqual(b, b);
+    return false;
+  }
+  return crypto.timingSafeEqual(a, b);
+}
+
+function withAuth(handler) {
+  return function(req, res, url) {
+    const key = url.searchParams.get('key') ?? '';
+    if (!validateKey(key)) {
+      sendError(req, res, 401, 'Invalid key');
+      return;
+    }
+    return handler(req, res, url);
+  };
 }
 
 function normalizeHeartbeat(raw) {
@@ -748,12 +768,7 @@ function coerceString(value, fallback) {
 
 function hashString(value) {
   const input = typeof value === 'string' ? value : String(value ?? '');
-  let hash = 2166136261;
-  for (let i = 0; i < input.length; i += 1) {
-    hash ^= input.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return (hash >>> 0).toString(16);
+  return crypto.createHash('sha256').update(input, 'utf8').digest('hex').slice(0, 16);
 }
 
 function createHeartbeatId(seed) {
@@ -980,11 +995,6 @@ function handleSummary(req, res, url) {
   const dateKey = parseDateKey(url.searchParams.get('date'));
   const key = url.searchParams.get('key') ?? '';
 
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
-
   if (!isDateWithinWindow(dateKey)) {
     sendError(req, res, 400, 'date out of allowed window');
     return;
@@ -1063,6 +1073,7 @@ function handleSummary(req, res, url) {
     return;
   }
 
+  // Legacy path: no aiMetrics (data predates AI tracking). Chrome handles undefined gracefully.
   const hasEntry = Boolean(state.byKey[key]?.[dateKey]);
   const entry = hasEntry
     ? ensureEntry(key, dateKey)
@@ -1239,10 +1250,6 @@ async function handleVscodeHeartbeats(req, res, url) {
 
 function handleVscodeHeartbeatsGet(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1287,10 +1294,6 @@ function handleVscodeHeartbeatsGet(req, res, url) {
 
 function handleVscodeDurations(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1328,10 +1331,6 @@ function handleVscodeDurations(req, res, url) {
 
 function handleVscodeSummaries(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1363,10 +1362,6 @@ function handleVscodeSummaries(req, res, url) {
 
 function handleVscodeStatsToday(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1400,10 +1395,6 @@ function handleVscodeLanguages(req, res, url) {
 
 function handleVscodeBreakdown(req, res, url, type) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1430,10 +1421,6 @@ function handleVscodeMachines(req, res, url) {
 
 function handleVscodeCommits(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1459,10 +1446,6 @@ function handleVscodeCommits(req, res, url) {
 
 function handleVscodeBranches(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1493,10 +1476,6 @@ function handleVscodeBranches(req, res, url) {
 
 function handleVscodeRepositories(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1538,10 +1517,6 @@ function handleVscodeRepositories(req, res, url) {
 
 function handleVscodeEditorMetadata(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1580,10 +1555,6 @@ function handleVscodeEditorMetadata(req, res, url) {
 
 function handleVscodeWorkspaces(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1631,10 +1602,6 @@ function handleVscodeWorkspaces(req, res, url) {
 
 function handleVscodeActivityInsights(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -1996,11 +1963,6 @@ function aggregateTelemetry(heartbeats, startMs, endMs) {
 
 function handleVscodeTelemetry(req, res, url) {
   const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
-
   const range = getDateRangeOrError(req, res, url);
   if (!range) {
     return;
@@ -2020,10 +1982,6 @@ function handleVscodeTelemetry(req, res, url) {
 function handleVscodeDashboard(req, res, url) {
   try {
     const key = url.searchParams.get('key') ?? '';
-    if (!validateKey(key)) {
-      sendError(req, res, 401, 'Invalid key');
-      return;
-    }
     const range = getDateRangeOrError(req, res, url);
     if (!range) {
       return;
@@ -2157,11 +2115,6 @@ function handleVscodeDashboard(req, res, url) {
 
 
 function handleVscodeMeta(req, res, url) {
-  const key = url.searchParams.get('key') ?? '';
-  if (!validateKey(key)) {
-    sendError(req, res, 401, 'Invalid key');
-    return;
-  }
   sendJson(req, res, 200, {
     version: 1,
     data: {
@@ -2552,6 +2505,12 @@ async function acquireLockFile() {
   process.on('SIGTERM', () => { cleanupLock(); process.exit(0); });
 }
 
+function handleShutdown(req, res) {
+  console.log('[saul-daemon] shutdown requested via API');
+  sendJson(req, res, 200, { ok: true });
+  setTimeout(() => process.exit(0), 150);
+}
+
 async function start() {
   await ensurePairingKey();
   await acquireLockFile();
@@ -2588,7 +2547,7 @@ async function start() {
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/tracking/vscode/summary') {
-      handleSummary(req, res, parsedUrl);
+      withAuth(handleSummary)(req, res, parsedUrl);
       return;
     }
 
@@ -2604,7 +2563,7 @@ async function start() {
 
     if (parsedUrl.pathname === '/v1/vscode/heartbeats') {
       if (req.method === 'GET') {
-        handleVscodeHeartbeatsGet(req, res, parsedUrl);
+        withAuth(handleVscodeHeartbeatsGet)(req, res, parsedUrl);
         return;
       }
       if (req.method === 'POST') {
@@ -2614,83 +2573,87 @@ async function start() {
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/durations') {
-      handleVscodeDurations(req, res, parsedUrl);
+      withAuth(handleVscodeDurations)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/summaries') {
-      handleVscodeSummaries(req, res, parsedUrl);
+      withAuth(handleVscodeSummaries)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/stats/today') {
-      handleVscodeStatsToday(req, res, parsedUrl);
+      withAuth(handleVscodeStatsToday)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/projects') {
-      handleVscodeProjects(req, res, parsedUrl);
+      withAuth(handleVscodeProjects)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/languages') {
-      handleVscodeLanguages(req, res, parsedUrl);
+      withAuth(handleVscodeLanguages)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/editors') {
-      handleVscodeEditors(req, res, parsedUrl);
+      withAuth(handleVscodeEditors)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/machines') {
-      handleVscodeMachines(req, res, parsedUrl);
+      withAuth(handleVscodeMachines)(req, res, parsedUrl);
       return;
     }
 
-
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/meta') {
-      handleVscodeMeta(req, res, parsedUrl);
+      withAuth(handleVscodeMeta)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/commits') {
-      handleVscodeCommits(req, res, parsedUrl);
+      withAuth(handleVscodeCommits)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/branches') {
-      handleVscodeBranches(req, res, parsedUrl);
+      withAuth(handleVscodeBranches)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/repositories') {
-      handleVscodeRepositories(req, res, parsedUrl);
+      withAuth(handleVscodeRepositories)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/editor-metadata') {
-      handleVscodeEditorMetadata(req, res, parsedUrl);
+      withAuth(handleVscodeEditorMetadata)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/workspaces') {
-      handleVscodeWorkspaces(req, res, parsedUrl);
+      withAuth(handleVscodeWorkspaces)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/activity-insights') {
-      handleVscodeActivityInsights(req, res, parsedUrl);
+      withAuth(handleVscodeActivityInsights)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/telemetry') {
-      handleVscodeTelemetry(req, res, parsedUrl);
+      withAuth(handleVscodeTelemetry)(req, res, parsedUrl);
       return;
     }
 
     if (req.method === 'GET' && parsedUrl.pathname === '/v1/vscode/dashboard') {
-      handleVscodeDashboard(req, res, parsedUrl);
+      withAuth(handleVscodeDashboard)(req, res, parsedUrl);
+      return;
+    }
+
+    if (req.method === 'POST' && parsedUrl.pathname === '/v1/shutdown') {
+      withAuth(handleShutdown)(req, res, parsedUrl);
       return;
     }
 
@@ -2745,7 +2708,7 @@ function getAllowedOrigin(req) {
   if (/^chrome-extension:\/\/[a-p]{32}$/i.test(origin)) {
     return origin;
   }
-  if (/^vscode-webview:\/\/.+/i.test(origin)) {
+  if (/^vscode-webview:\/\/[0-9a-f-]+/i.test(origin)) {
     return origin;
   }
   return null;

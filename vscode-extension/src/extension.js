@@ -258,6 +258,22 @@ function activate(context) {
             console.log('[Saul Combo] Manual reset completed');
           }
         }
+      }),
+      vscode.commands.registerCommand('saulGoodman.stopDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.stopDaemon');
+        if (!apiClient) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        void stopDaemonCommand();
+      }),
+      vscode.commands.registerCommand('saulGoodman.restartDaemon', () => {
+        trackingController?.trackOwnCommand('saulGoodman.restartDaemon');
+        if (!apiClient || !child_process) {
+          vscode.window.showWarningMessage(localize('vscode_loading_message'));
+          return;
+        }
+        void restartDaemonCommand(context);
       })
     );
 
@@ -845,7 +861,17 @@ function getReportI18n() {
     report_vscode_refactor_edits_applied: localize('report_vscode_refactor_edits_applied'),
     report_vscode_refactor_code_actions: localize('report_vscode_refactor_code_actions'),
     report_vscode_refresh_button: localize('report_vscode_refresh_button'),
-    
+    report_vscode_chart_label_coding: localize('report_vscode_chart_label_coding'),
+    report_vscode_chart_label_debugging: localize('report_vscode_chart_label_debugging'),
+    report_vscode_chart_label_building: localize('report_vscode_chart_label_building'),
+    report_vscode_chart_label_testing: localize('report_vscode_chart_label_testing'),
+    report_vscode_chart_axis_minutes: localize('report_vscode_chart_axis_minutes'),
+    report_vscode_chart_tooltip_min: localize('report_vscode_chart_tooltip_min'),
+    report_vscode_chart_axis_time_of_day: localize('report_vscode_chart_axis_time_of_day'),
+    report_vscode_chart_axis_combo_level: localize('report_vscode_chart_axis_combo_level'),
+    report_vscode_combo_streak: localize('report_vscode_combo_streak'),
+    report_vscode_combo_tooltip: localize('report_vscode_combo_tooltip'),
+
     vscode_reports_disabled: localize('vscode_reports_disabled'),
     vscode_reports_disabled_detail: localize('vscode_reports_disabled_detail'),
     vscode_reports_filter_project: localize('vscode_reports_filter_project'),
@@ -1193,6 +1219,180 @@ async function waitForDaemonHealthy(apiBase, attempts, delayMs) {
     await new Promise((resolve) => setTimeout(resolve, delayMs));
   }
   return false;
+}
+
+async function waitForDaemonDown(apiBase, attempts, delayMs) {
+  for (let i = 0; i < attempts; i += 1) {
+    if (!(await isDaemonHealthy(apiBase, 1200))) {
+      return true;
+    }
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+  return false;
+}
+
+async function stopDaemonCommand() {
+  const config = readConfig();
+  const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
+  const key = config.pairingKey?.trim();
+
+  if (!(await isDaemonHealthy(apiBase, 2000))) {
+    vscode.window.showInformationMessage(localize('stop_daemon_not_running'));
+    return false;
+  }
+
+  const answer = await vscode.window.showWarningMessage(
+    localize('stop_daemon_confirm'),
+    { modal: true },
+    localize('stop_daemon_yes'),
+    localize('stop_daemon_cancel')
+  );
+  if (answer !== localize('stop_daemon_yes')) {
+    return false;
+  }
+
+  try {
+    await apiClient.postShutdown(apiBase, key);
+  } catch {
+    // Connection reset is expected when daemon exits
+  }
+
+  const down = await waitForDaemonDown(apiBase, 8, 300);
+  if (!down) {
+    vscode.window.showWarningMessage(localize('stop_daemon_failed'));
+    return false;
+  }
+  vscode.window.showInformationMessage(localize('stop_daemon_success'));
+  void updateStatusBar('error');
+  return true;
+}
+
+async function spawnDaemonSilent(context) {
+  const config = readConfig();
+  const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
+  const key = config.pairingKey?.trim() || 'sua-chave';
+  const port = inferPortFromApiBase(apiBase) || '3123';
+
+  const extensionPath = context.extensionPath;
+  const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const configuredPath = config.daemonPath?.trim();
+
+  let daemonDir = null;
+  let daemonIndex = null;
+
+  const bundledDaemonDir = path.join(extensionPath, 'daemon');
+  const bundledDaemonIndex = path.join(bundledDaemonDir, 'index.cjs');
+  if (fs.existsSync(bundledDaemonIndex)) {
+    daemonDir = bundledDaemonDir;
+    daemonIndex = bundledDaemonIndex;
+  }
+  if (configuredPath) {
+    const customDir = path.resolve(configuredPath);
+    const customIndex = path.join(customDir, 'index.cjs');
+    if (fs.existsSync(customIndex)) {
+      daemonDir = customDir;
+      daemonIndex = customIndex;
+    }
+  }
+  if (!daemonIndex && workspace) {
+    const workspaceDir = path.join(workspace, 'saul-daemon');
+    const workspaceIndex = path.join(workspaceDir, 'index.cjs');
+    if (fs.existsSync(workspaceIndex)) {
+      daemonDir = workspaceDir;
+      daemonIndex = workspaceIndex;
+    }
+  }
+  if (!daemonIndex) {
+    vscode.window.showErrorMessage(localize('prepare_missing_daemon_improved'));
+    return false;
+  }
+
+  try {
+    const logFile = path.join(daemonDir, 'daemon.log');
+    let stdoutFd = null;
+    let stderrFd = null;
+    try {
+      stdoutFd = fs.openSync(logFile, 'a');
+      stderrFd = fs.openSync(logFile, 'a');
+    } catch {
+      if (stdoutFd !== null) {
+        try { fs.closeSync(stdoutFd); } catch { /* ignore */ }
+      }
+      stdoutFd = null;
+      stderrFd = null;
+    }
+
+    const child = child_process.spawn('node', ['index.cjs'], {
+      cwd: daemonDir,
+      env: { ...process.env, PORT: port },
+      detached: true,
+      stdio: ['pipe', stdoutFd ?? 'ignore', stderrFd ?? 'ignore']
+    });
+    if (child.stdin) {
+      child.stdin.write(JSON.stringify({ pairingKey: key }) + '\n');
+      child.stdin.end();
+    }
+    const spawnError = await new Promise((resolve) => {
+      let settled = false;
+      child.once('error', (error) => {
+        settled = true;
+        resolve(error);
+      });
+      setTimeout(() => {
+        if (!settled) {
+          resolve(null);
+        }
+      }, 250);
+    });
+    if (spawnError) {
+      if (stdoutFd) fs.closeSync(stdoutFd);
+      if (stderrFd) fs.closeSync(stderrFd);
+      throw spawnError;
+    }
+    child.unref();
+    if (stdoutFd) fs.closeSync(stdoutFd);
+    if (stderrFd) fs.closeSync(stderrFd);
+
+    const healthy = await waitForDaemonHealthy(apiBase, 8, 300);
+    if (!healthy) {
+      vscode.window.showErrorMessage(localize('prepare_start_failed', {
+        error: localize('prepare_start_failed_health', { origin: apiBase, logFile })
+      }));
+      void updateStatusBar('error');
+      return false;
+    }
+    void updateStatusBar('ok', port);
+    trackingController?.reloadConfig?.();
+    return true;
+  } catch (error) {
+    vscode.window.showErrorMessage(localize('prepare_start_failed', { error: error.message }));
+    void updateStatusBar('error');
+    return false;
+  }
+}
+
+async function restartDaemonCommand(context) {
+  const config = readConfig();
+  const apiBase = config.apiBase?.trim() || 'http://127.0.0.1:3123';
+  const key = config.pairingKey?.trim();
+
+  if (await isDaemonHealthy(apiBase, 2000)) {
+    try {
+      await apiClient.postShutdown(apiBase, key);
+    } catch {
+      // Connection reset is expected
+    }
+    const down = await waitForDaemonDown(apiBase, 8, 300);
+    if (!down) {
+      vscode.window.showWarningMessage(localize('restart_daemon_stop_failed'));
+      return;
+    }
+  }
+
+  const started = await spawnDaemonSilent(context);
+  if (started) {
+    vscode.window.showInformationMessage(localize('restart_daemon_success'));
+  }
 }
 
 async function testDaemonHealth() {

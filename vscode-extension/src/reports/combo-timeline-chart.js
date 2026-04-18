@@ -1,5 +1,6 @@
 // Função auxiliar para renderizar gráfico de combo timeline
 function renderComboTimelineChart(comboData) {
+  const i18n = window.__SAUL_I18N__ || {};
   const canvas = document.getElementById('comboTimelineChart');
   const emptyEl = document.getElementById('comboTimelineEmpty');
   if (!canvas) return;
@@ -109,12 +110,14 @@ function renderComboTimelineChart(comboData) {
             title: (context) => {
               if (!context || context.length === 0) return '';
               const date = new Date(context[0].parsed.x);
-              return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+              return date.toLocaleTimeString(document.documentElement.lang || undefined, { hour: '2-digit', minute: '2-digit' });
             },
             label: (context) => {
               const pomodoros = context.parsed.y;
               const minutes = pomodoros * 25;
-              return `${pomodoros}x combo (${minutes} min)`;
+              return (i18n.report_vscode_combo_tooltip || '{count}x combo ({minutes} min)')
+                .replace('{count}', pomodoros)
+                .replace('{minutes}', minutes);
             }
           }
         }
@@ -130,7 +133,7 @@ function renderComboTimelineChart(comboData) {
           },
           title: {
             display: true,
-            text: 'Hora do Dia'
+            text: i18n.report_vscode_chart_axis_time_of_day || 'Time of Day'
           }
         },
         y: {
@@ -141,7 +144,7 @@ function renderComboTimelineChart(comboData) {
           },
           title: {
             display: true,
-            text: 'Combo Level'
+            text: i18n.report_vscode_chart_axis_combo_level || 'Combo Level'
           }
         }
       }

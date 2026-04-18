@@ -74,3 +74,26 @@ Ele não define decisões de produto; apenas descreve o que o sistema faz hoje e
 - **Comportamento**: o check de compatibilidade daemon/extensão compara `major.minor` (antes comparava apenas `major`).
 - **Risco residual**: breaking changes em patch não são detectadas, mas o semver assume patches como backwards-compatible.
 - **Referências**: `vscode-extension/src/extension.js` (duas ocorrências: startup e testDaemon).
+
+## Retention usa buffer de +1 dia para heartbeats
+
+- **Comportamento**: `pruneVscodeEntries` mantém heartbeats por `VSCODE_RETENTION_DAYS + 1` dias, enquanto durações usam exatamente `VSCODE_RETENTION_DAYS`. O buffer extra protege sessões que cruzam meia-noite.
+- **Risco residual**: sessões contínuas com mais de 24h no boundary de retenção ainda perdem a parte mais antiga. Este cenário é raro (sessões >24h ininterruptas).
+- **Referências**: `saul-daemon/index.cjs` (`pruneVscodeEntries`).
+
+## VS Code queue: sem protocolo de acknowledgment (risco residual aceito)
+
+- **Comportamento**: após flush bem-sucedido (HTTP 200/204), heartbeats são removidos do buffer in-memory. Se o daemon aceitou o request mas falhou ao persistir internamente (crash entre accept e persist), os dados são perdidos.
+- **Mitigação**: atomic writes no daemon (tmp + rename), persist chain serializada, e dedup por fingerprint cobrem retransmissões. O custo de um protocolo ACK completo supera o benefício para um serviço localhost.
+- **Referências**: `vscode-extension/src/queue/buffered-event-queue.js` (`flush`), `saul-daemon/index.cjs` (`handleVscodeHeartbeats`).
+
+## Summary legado omite aiMetrics (intencional)
+
+- **Comportamento**: o path primário do `/v1/tracking/vscode/summary` (via `vscodeState`) retorna `aiMetrics` agregadas dos heartbeats. O path legado (via `state`/`vscode-usage.json`) não retorna `aiMetrics` pois os dados legados não contêm essa informação.
+- **Impacto**: a extensão Chrome trata `aiMetrics` como opcional e usa defaults (0). O comportamento é silenciosamente diferente entre paths, mas correto — o legado simplesmente não tem os dados.
+- **Referências**: `saul-daemon/index.cjs` (`handleSummary`), `src/background/index.ts` (consumo do summary).
+
+## Filtro isValidVscodeDuration só existe no path legado do Chrome
+
+- **Comportamento**: `isValidVscodeDuration` rejeita durações com `project='unknown'` e `language='unknown'` — mas apenas no path legado da extensão Chrome. O path primário não aplica esse filtro porque o daemon já agrega e a normalização (`normalizeVscodeTrackingSummary`) valida as entradas.
+- **Referências**: `src/background/index.ts` (`isValidVscodeDuration`), `saul-daemon/index.cjs` (`isDurationRelevant`).

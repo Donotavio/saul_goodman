@@ -9,9 +9,12 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '../..');
 const SOURCE = path.join(ROOT, '_locales');
 
-const TARGETS = [
+const OVERWRITE_TARGETS = [
   path.join(ROOT, 'site', '_locales'),
-  path.join(ROOT, 'site', 'blog', '_locales'),
+  path.join(ROOT, 'site', 'blog', '_locales')
+];
+
+const MERGE_TARGETS = [
   path.join(ROOT, 'vscode-extension', '_locales')
 ];
 
@@ -38,15 +41,57 @@ async function copyDirRecursive(src, dest) {
   }
 }
 
+async function mergeLocalesInto(src, dest) {
+  await fs.mkdir(dest, { recursive: true });
+  const locales = await fs.readdir(src, { withFileTypes: true });
+
+  for (const entry of locales) {
+    if (!entry.isDirectory()) continue;
+
+    const srcDir = path.join(src, entry.name);
+    const destDir = path.join(dest, entry.name);
+    await fs.mkdir(destDir, { recursive: true });
+
+    const srcFile = path.join(srcDir, 'messages.json');
+    const destFile = path.join(destDir, 'messages.json');
+
+    if (!(await exists(srcFile))) continue;
+
+    const srcData = JSON.parse(await fs.readFile(srcFile, 'utf8'));
+
+    let destData = {};
+    if (await exists(destFile)) {
+      try {
+        destData = JSON.parse(await fs.readFile(destFile, 'utf8'));
+      } catch {
+        destData = {};
+      }
+    }
+
+    const merged = {};
+    const allKeys = new Set([...Object.keys(srcData), ...Object.keys(destData)]);
+    for (const key of [...allKeys].sort()) {
+      merged[key] = srcData[key] ?? destData[key];
+    }
+
+    await fs.writeFile(destFile, JSON.stringify(merged, null, 2) + '\n', 'utf8');
+  }
+}
+
 async function main() {
   if (!(await exists(SOURCE))) {
     throw new Error(`Diretório de origem não encontrado: ${SOURCE}`);
   }
 
-  for (const target of TARGETS) {
+  for (const target of OVERWRITE_TARGETS) {
     await fs.rm(target, { recursive: true, force: true });
     await copyDirRecursive(SOURCE, target);
     console.log(`[i18n] Copiado _locales -> ${target}`);
+  }
+
+  for (const target of MERGE_TARGETS) {
+    await mergeLocalesInto(SOURCE, target);
+    console.log(`[i18n] Merge _locales -> ${target} (keys exclusivas preservadas)`);
   }
 }
 
