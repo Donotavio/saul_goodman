@@ -55,6 +55,4 @@ jobs:
               }
             }
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
+          github_token: ${{ secrets.AGENT_GH_TOKEN }}

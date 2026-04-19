@@ -15,6 +15,15 @@ POLL_INTERVAL="${POLL_INTERVAL:-60}"
 TRIGGER_LABEL="claude"
 RUN_ONCE=false
 
+# Carrega token do agente (developerdonclaudio-ai)
+ENV_FILE="${PROJECT_DIR}/.env"
+if [ -f "$ENV_FILE" ]; then
+  AGENT_TOKEN=$(grep -E '^AGENT_GH_TOKEN=' "$ENV_FILE" | cut -d'=' -f2- | tr -d ' "'"'"'')
+  if [ -n "$AGENT_TOKEN" ]; then
+    export GH_TOKEN="$AGENT_TOKEN"
+  fi
+fi
+
 # Parse args
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -57,6 +66,12 @@ process_issue() {
 
   # Garante que estamos na main atualizada
   cd "$PROJECT_DIR"
+
+  # Configura git para usar o token do agente nos pushes
+  if [ -n "${GH_TOKEN:-}" ]; then
+    git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+  fi
+
   git checkout main 2>/dev/null
   git pull --rebase origin main 2>/dev/null
 
@@ -148,6 +163,7 @@ log "Claude Code Agent Local iniciado"
 log "Repo: ${REPO}"
 log "Intervalo: ${POLL_INTERVAL}s"
 log "Label trigger: ${TRIGGER_LABEL}"
+log "Auth: $([ -n "${GH_TOKEN:-}" ] && echo 'token do agente (AGENT_GH_TOKEN)' || echo 'auth local (gh cli)')"
 log "Mode: $([ "$RUN_ONCE" = true ] && echo 'single-run' || echo 'continuous')"
 log "========================================="
 
