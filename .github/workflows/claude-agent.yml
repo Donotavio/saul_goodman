@@ -12,9 +12,11 @@ jobs:
   claude-agent:
     runs-on: ubuntu-latest
     if: >
-      (github.event_name == 'issues') ||
-      (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/claude')) ||
-      (github.event_name == 'pull_request_review_comment' && startsWith(github.event.comment.body, '/claude'))
+      (github.event_name == 'issues' && github.event.issue.user.login == github.repository_owner) ||
+      (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/claude') &&
+        github.event.comment.user.login == github.repository_owner) ||
+      (github.event_name == 'pull_request_review_comment' && startsWith(github.event.comment.body, '/claude') &&
+        github.event.comment.user.login == github.repository_owner)
 
     permissions:
       contents: write
@@ -41,20 +43,22 @@ jobs:
             7. Siga as convencoes do projeto definidas em CLAUDE.md.
 
             Tarefa solicitada:
-            ${{ github.event.comment.body }}
+            ${{ github.event.issue.body || github.event.comment.body }}
           settings: |
             {
               "permissions": {
                 "deny": [
                   "Bash(git push origin main:*)",
+                  "Bash(git push * main:*)",
                   "Bash(git push -f:*)",
                   "Bash(git push --force:*)",
+                  "Bash(git push --force-with-lease:*)",
                   "Bash(git checkout main && git merge:*)",
+                  "Bash(git switch main:*)",
+                  "Bash(git merge * main:*)",
                   "mcp__github__merge_pull_request"
                 ]
               }
             }
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
