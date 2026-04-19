@@ -1,0 +1,3 @@
+# Agent runtime state
+.agent-state.json
+logs/
