@@ -67,7 +67,9 @@ process_issue() {
   # Garante que estamos na main atualizada
   cd "$PROJECT_DIR"
 
-  # Configura git para usar o token do agente nos pushes
+  # Salva remote original e configura token do agente para pushes
+  local original_remote
+  original_remote=$(git remote get-url origin)
   if [ -n "${GH_TOKEN:-}" ]; then
     git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
   fi
@@ -111,8 +113,9 @@ ${issue_body}"
       2>/dev/null || true
   fi
 
-  # Volta para main
+  # Volta para main e restaura remote original
   git checkout main 2>/dev/null || true
+  git remote set-url origin "$original_remote" 2>/dev/null || true
 
   mark_processed "$issue_number"
 }
