@@ -23,11 +23,32 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run Claude Code Agent
         uses: anthropics/claude-code-action@v1
         with:
-          prompt: ${{ github.event.comment.body }}
+          prompt: |
+            REGRAS OBRIGATORIAS:
+            1. NUNCA faca commit diretamente na branch main.
+            2. SEMPRE crie uma nova branch com nome descritivo (ex: claude/fix-issue-123, claude/feat-nova-funcionalidade).
+            3. SEMPRE abra um Pull Request com descricao clara do que foi feito.
+            4. NUNCA faca merge automatico. O PR deve aguardar revisao e aprovacao humana.
+            5. Ao terminar, comente na issue/PR original informando que o PR foi criado e precisa de revisao.
+            6. Siga as convencoes do projeto definidas em CLAUDE.md.
+
+            Tarefa solicitada:
+            ${{ github.event.comment.body }}
+          allowed_tools: |
+            Bash
+            Read
+            Write
+            Edit
+            Glob
+            Grep
+          disallowed_tools: |
+            mcp__github__merge_pull_request
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
