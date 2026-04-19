@@ -77,13 +77,13 @@ Issue #${issue_number}: ${issue_title}
 
 ${issue_body}"
 
-  # Executa Claude Code em modo não-interativo
-  claude --print \
+  # Executa Claude Code em modo não-interativo (prompt via stdin para evitar problemas com caracteres especiais)
+  set +e
+  echo "$prompt" | claude --print \
     --allowedTools 'Bash,Read,Write,Edit,Glob,Grep,mcp__github__create_pull_request,mcp__github__add_issue_comment' \
-    "$prompt" \
     > "$log_file" 2>&1
-
   local exit_code=$?
+  set -e
 
   if [ $exit_code -eq 0 ]; then
     log "Issue #${issue_number} processada com sucesso"
