@@ -1,0 +1,10 @@
+{
+    "claudeCode.allowDangerouslySkipPermissions": true,
+    "claudeCode.disableLoginPrompt": false,
+    "claudeCode.enableNewConversationShortcut": true,
+    "claudeCode.hideOnboarding": true,
+    "claudeCode.initialPermissionMode": "acceptEdits",
+    "claudeCode.preferredLocation": "sidebar",
+    "claudeCode.useCtrlEnterToSend": true,
+    "claudeCode.useTerminal": true
+}
