@@ -29,27 +29,32 @@ jobs:
       - name: Run Claude Code Agent
         uses: anthropics/claude-code-action@v1
         with:
+          trigger_phrase: "/claude"
           prompt: |
             REGRAS OBRIGATORIAS:
             1. NUNCA faca commit diretamente na branch main.
             2. SEMPRE crie uma nova branch com nome descritivo (ex: claude/fix-issue-123, claude/feat-nova-funcionalidade).
             3. SEMPRE abra um Pull Request com descricao clara do que foi feito.
             4. NUNCA faca merge automatico. O PR deve aguardar revisao e aprovacao humana.
-            5. Ao terminar, comente na issue/PR original informando que o PR foi criado e precisa de revisao.
-            6. Siga as convencoes do projeto definidas em CLAUDE.md.
+            5. NUNCA use a tool merge_pull_request ou git push para main.
+            6. Ao terminar, comente na issue/PR original informando que o PR foi criado e precisa de revisao.
+            7. Siga as convencoes do projeto definidas em CLAUDE.md.
 
             Tarefa solicitada:
             ${{ github.event.comment.body }}
-          allowed_tools: |
-            Bash
-            Read
-            Write
-            Edit
-            Glob
-            Grep
-          disallowed_tools: |
-            mcp__github__merge_pull_request
+          settings: |
+            {
+              "permissions": {
+                "deny": [
+                  "Bash(git push origin main:*)",
+                  "Bash(git push -f:*)",
+                  "Bash(git push --force:*)",
+                  "Bash(git checkout main && git merge:*)",
+                  "mcp__github__merge_pull_request"
+                ]
+              }
+            }
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
