@@ -255,6 +255,120 @@
       "excerpt_ur": "جب آپ کی AI یہ فیصلہ کرتی ہے کہ نیند کمزوروں کے لیے ہے تو کیا ہوتا ہے؟ اسپوئلر: کچھ بھی پیداواری نہیں۔"
     },
     {
+      "title": "A Revolução do Frontend: Onde Está Meu Contrato?",
+      "url": "./posts/2026/2026-04-20-a-revolucao-do-frontend-onde-esta-meu-contrato/",
+      "markdown": "2026/2026-04-20-a-revolucao-do-frontend-onde-esta-meu-contrato.md",
+      "date": "2026-04-20",
+      "category": "ux-design",
+      "tags": [
+        "frontend",
+        "remoto",
+        "carreira",
+        "produtividade"
+      ],
+      "excerpt": "Contratos são o novo preto, e o frontend é o novo preto também. Vamos discutir isso!",
+      "title_en": "The Frontend Revolution: Where's My Contract?",
+      "title_es": "La Revolución del Frontend: ¿Dónde Está Mi Contrato?",
+      "title_fr": "La Révolution du Frontend : Où est mon Contrat ?",
+      "title_de": "Die Revolution des Frontends: Wo ist mein Vertrag?",
+      "title_it": "La Rivoluzione del Frontend: Dov'è il Mio Contratto?",
+      "title_tr": "Frontend Devrimi: Sözleşmem Nerede?",
+      "title_zh": "前端革命：我的合同在哪里？",
+      "title_hi": "फ्रंटएंड क्रांति: मेरा अनुबंध कहाँ है?",
+      "title_ar": "ثورة الواجهة الأمامية: أين عقدي؟",
+      "title_bn": "ফ্রন্টএন্ডের বিপ্লব: আমার চুক্তি কোথায়?",
+      "title_ru": "Революция фронтенда: Где мой контракт?",
+      "title_ur": "فرنٹ اینڈ کی انقلاب: میرا معاہدہ کہاں ہے؟",
+      "tone": "like",
+      "tags_en": [
+        "frontend",
+        "remote",
+        "career",
+        "productivity"
+      ],
+      "tags_es": [
+        "frontend",
+        "remoto",
+        "carrera",
+        "productividad"
+      ],
+      "tags_fr": [
+        "frontend",
+        "télétravail",
+        "carrière",
+        "productivité"
+      ],
+      "tags_de": [
+        "Frontend",
+        "remote",
+        "Karriere",
+        "Produktivität"
+      ],
+      "tags_it": [
+        "frontend",
+        "remoto",
+        "carriera",
+        "produttività"
+      ],
+      "tags_tr": [
+        "frontend",
+        "uzaktan",
+        "kariyer",
+        "verimlilik"
+      ],
+      "tags_zh": [
+        "前端",
+        "远程",
+        "职业",
+        "生产力"
+      ],
+      "tags_hi": [
+        "फ्रंटएंड",
+        "दूरस्थ",
+        "करियर",
+        "उत्पादकता"
+      ],
+      "tags_ar": [
+        "واجهة أمامية",
+        "عن بُعد",
+        "مهنة",
+        "إنتاجية"
+      ],
+      "tags_bn": [
+        "ফ্রন্টএন্ড",
+        "রিমোট",
+        "ক্যারিয়ার",
+        "উৎপাদনশীলতা"
+      ],
+      "tags_ru": [
+        "фронтенд",
+        "удаленная работа",
+        "карьера",
+        "продуктивность"
+      ],
+      "tags_ur": [
+        "فرنٹ اینڈ",
+        "دور دراز",
+        "کیریئر",
+        "پیداواری"
+      ],
+      "source_title": "Senior Frontend Developer",
+      "source_url": "https://remotive.com/remote-jobs/software-development/senior-frontend-developer-2088707",
+      "source_published_at": "Wed, 08 Apr 2026 16:15:21 GMT",
+      "excerpt_en": "Contracts are the new black, and frontend is the new black too. Let's discuss that!",
+      "excerpt_es": "Los contratos son el nuevo negro, y el frontend también es el nuevo negro. ¡Hablemos de eso!",
+      "excerpt_fr": "Les contrats sont le nouveau noir, et le frontend est aussi le nouveau noir. Discutons-en !",
+      "excerpt_de": "Verträge sind das neue Schwarz, und das Frontend ist auch das neue Schwarz. Lass uns darüber reden!",
+      "excerpt_it": "I contratti sono il nuovo nero, e il frontend è il nuovo nero anche. Parliamone!",
+      "excerpt_tr": "Sözleşmeler yeni siyah, frontend de yeni siyah. Bunu tartışalım!",
+      "excerpt_zh": "合同是新的黑色，而前端也是新的黑色。让我们来讨论一下吧！",
+      "excerpt_hi": "अनुबंध नए काले हैं, और फ्रंटएंड भी नया काला है। आइए इस पर चर्चा करें!",
+      "excerpt_ar": "العقود هي الأسود الجديد، والواجهة الأمامية هي الأسود الجديد أيضًا. دعونا نناقش هذا!",
+      "excerpt_bn": "চুক্তি নতুন কালো, এবং ফ্রন্টএন্ডও নতুন কালো। আসুন এটি নিয়ে আলোচনা করি!",
+      "excerpt_ru": "Контракты — это новый черный цвет, а фронтенд тоже новый черный цвет. Давайте обсудим это!",
+      "excerpt_ur": "معاہدے نئے سیاہ ہیں، اور فرنٹ اینڈ بھی نئے سیاہ ہیں۔ آئیے اس پر بات کرتے ہیں!"
+    },
+    {
       "title": "Esperando o que? O Futuro da IA Não Vai Esperar por Você!",
       "url": "./posts/2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce/",
       "markdown": "2026/2026-04-08-esperando-o-que-o-futuro-da-ia-nao-vai-esperar-por-voce.md",
