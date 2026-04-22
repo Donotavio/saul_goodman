@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "Sobrevivi ao corte de funcionários! E agora?",
+      "url": "./posts/2026/2026-04-22-sobrevivi-ao-corte-de-funcionarios-e-agora/",
+      "markdown": "2026/2026-04-22-sobrevivi-ao-corte-de-funcionarios-e-agora.md",
+      "date": "2026-04-22",
+      "category": "negocios",
+      "tags": [
+        "produtividade",
+        "carreira",
+        "marketing",
+        "procrastinação",
+        "UX"
+      ],
+      "excerpt": "Sobreviver a uma demissão em massa é como ganhar na loteria e descobrir que o prêmio é uma assinatura de revista.",
+      "title_en": "I Survived the Layoffs! Now What?",
+      "title_es": "¡Sobreviví a la reducción de personal! ¿Y ahora?",
+      "title_fr": "J'ai survécu à la réduction d'effectifs ! Et maintenant ?",
+      "title_de": "Ich habe die Entlassungswelle überlebt! Und jetzt?",
+      "title_it": "Sono sopravvissuto al taglio del personale! E adesso?",
+      "title_tr": "Çalışan Kesintisinden Kurtuldum! Şimdi Ne Yapmalıyım?",
+      "title_zh": "我幸存于裁员！现在该怎么办？",
+      "title_hi": "मैंने कर्मचारियों की छंटनी से बच निकला! अब क्या?",
+      "title_ar": "نجوت من تخفيضات الموظفين! وماذا الآن؟",
+      "title_bn": "আমি কর্মী ছাঁটাইয়ের হাত থেকে বেঁচে গেছি! এখন কি?",
+      "title_ru": "Я выжил после сокращения! И что теперь?",
+      "title_ur": "میں ملازمین کی کٹوتی سے بچ گیا! اب کیا؟",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "career",
+        "marketing",
+        "procrastination",
+        "UX"
+      ],
+      "tags_es": [
+        "productividad",
+        "carrera",
+        "marketing",
+        "procrastinación",
+        "UX"
+      ],
+      "tags_fr": [
+        "productivité",
+        "carrière",
+        "marketing",
+        "procrastination",
+        "UX"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Karriere",
+        "Marketing",
+        "Prokrastination",
+        "UX"
+      ],
+      "tags_it": [
+        "produttività",
+        "carriera",
+        "marketing",
+        "procrastinazione",
+        "UX"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "kariyer",
+        "pazarlama",
+        "erteleme",
+        "UX"
+      ],
+      "tags_zh": [
+        "生产力",
+        "职业",
+        "市场营销",
+        "拖延症",
+        "用户体验"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "करियर",
+        "मार्केटिंग",
+        "टालमटोल",
+        "यूएक्स"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "المهنة",
+        "التسويق",
+        "التسويف",
+        "تجربة المستخدم"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "ক্যারিয়ার",
+        "মার্কেটিং",
+        "প্রোক্রাস্টিনেশন",
+        "ইউএক্স"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "карьера",
+        "маркетинг",
+        "прокрастинация",
+        "UX"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "کیریئر",
+        "مارکیٹنگ",
+        "ٹالنا",
+        "UX"
+      ],
+      "source_title": "You survived a layoff. Now what?",
+      "source_url": "https://www.fastcompany.com/91526432/you-survived-a-layoff-now-what",
+      "source_published_at": "2026-04-22T05:00:00",
+      "excerpt_en": "Surviving a mass layoff is like winning the lottery only to find out the prize is a magazine subscription.",
+      "excerpt_es": "Sobrevivir a un despido masivo es como ganar la lotería y descubrir que el premio es una suscripción a una revista.",
+      "excerpt_fr": "Survivre à un licenciement collectif, c'est comme gagner à la loterie et découvrir que le prix est un abonnement à un magazine.",
+      "excerpt_de": "Überleben in einer Massenentlassung ist wie im Lotto zu gewinnen und herauszufinden, dass der Preis ein Zeitschriftenabonnement ist.",
+      "excerpt_it": "Sopravvivere a un licenziamento di massa è come vincere alla lotteria e scoprire che il premio è un abbonamento a una rivista.",
+      "excerpt_tr": "Toplu işten çıkarmalardan kurtulmak, piyangoyu kazanmak gibi ama ödülün bir dergi aboneliği olduğunu öğrenmek gibidir.",
+      "excerpt_zh": "在大规模裁员中幸存就像中彩票，结果发现奖品是一份杂志订阅。",
+      "excerpt_hi": "एक सामूहिक छंटनी से बचना ऐसा है जैसे लॉटरी जीतना और पता चलता है कि पुरस्कार एक पत्रिका की सदस्यता है।",
+      "excerpt_ar": "البقاء على قيد الحياة بعد تسريح جماعي يشبه الفوز في اليانصيب واكتشاف أن الجائزة هي اشتراك في مجلة.",
+      "excerpt_bn": "একটি গণছাঁটাই থেকে বেঁচে থাকা লটারিতে জেতার মতো, এবং পুরস্কার হল একটি ম্যাগাজিনের সাবস্ক্রিপশন।",
+      "excerpt_ru": "Выжить после массового увольнения — это как выиграть в лотерею и узнать, что призом является подписка на журнал.",
+      "excerpt_ur": "ملازمین کی بڑی تعداد کی برطرفی سے بچنا ایسا ہے جیسے لاٹری جیتنا اور پتہ چلتا ہے کہ انعام ایک میگزین کی سبسکرپشن ہے۔"
+    },
+    {
       "title": "Você ainda não ouviu falar de AEO? Acorda, meu amigo!",
       "url": "./posts/2026/2026-04-17-voce-ainda-nao-ouviu-falar-de-aeo-acorda-meu-amigo/",
       "markdown": "2026/2026-04-17-voce-ainda-nao-ouviu-falar-de-aeo-acorda-meu-amigo.md",
