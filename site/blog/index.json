@@ -1,6 +1,133 @@
 {
   "posts": [
     {
+      "title": "O Colosseu: Um Toque de Maquiagem na Ruína",
+      "url": "./posts/2026/2026-04-27-o-colosseu-um-toque-de-maquiagem-na-ruina/",
+      "markdown": "2026/2026-04-27-o-colosseu-um-toque-de-maquiagem-na-ruina.md",
+      "date": "2026-04-27",
+      "category": "dev-performance",
+      "tags": [
+        "produtividade",
+        "marketing",
+        "UX",
+        "negócios",
+        "procrastinação"
+      ],
+      "excerpt": "O Colosseu ganhou uma repaginada e, quem diria, revelaram um pouco da história que estava escondida; quase como fazer um facelift no seu projeto de trabalho.",
+      "title_en": "The Colosseum: A Touch of Makeup on Ruin",
+      "title_es": "El Coliseo: Un Toque de Maquillaje en la Ruina",
+      "title_fr": "Le Colisée : Une Touche de Maquillage sur la Ruine",
+      "title_de": "Das Kolosseum: Ein Hauch von Make-up auf der Ruine",
+      "title_it": "Il Colosseo: Un Tocco di Trucco sulla Rovina",
+      "title_tr": "Kolezyum: Harabeye Makyaj Dokunuşu",
+      "title_zh": "罗马斗兽场：废墟上的一抹妆容",
+      "title_hi": "कोलोसियम: खंडहर पर मेकअप का एक स्पर्श",
+      "title_ar": "الكولوسيوم: لمسة تجميل على الخراب",
+      "title_bn": "কলসিয়াম: ধ্বংসাবশেষে একটি মেকআপ স্পর্শ",
+      "title_ru": "Колизей: Немного макияжа на руинах",
+      "title_ur": "کولوسیم: کھنڈرات پر میک اپ کا ایک چھوٹی سی ٹچ",
+      "tone": "incredulo",
+      "tags_en": [
+        "productivity",
+        "marketing",
+        "UX",
+        "business",
+        "procrastination"
+      ],
+      "tags_es": [
+        "productividad",
+        "marketing",
+        "UX",
+        "negocios",
+        "procrastinación"
+      ],
+      "tags_fr": [
+        "productivité",
+        "marketing",
+        "UX",
+        "affaires",
+        "procrastination"
+      ],
+      "tags_de": [
+        "Produktivität",
+        "Marketing",
+        "UX",
+        "Geschäft",
+        "Prokrastination"
+      ],
+      "tags_it": [
+        "produttività",
+        "marketing",
+        "UX",
+        "affari",
+        "procrastinazione"
+      ],
+      "tags_tr": [
+        "verimlilik",
+        "pazarlama",
+        "UX",
+        "iş",
+        "ertelemek"
+      ],
+      "tags_zh": [
+        "生产力",
+        "营销",
+        "用户体验",
+        "商业",
+        "拖延"
+      ],
+      "tags_hi": [
+        "उत्पादकता",
+        "मार्केटिंग",
+        "यूएक्स",
+        "व्यवसाय",
+        "टालमटोल"
+      ],
+      "tags_ar": [
+        "الإنتاجية",
+        "التسويق",
+        "تجربة المستخدم",
+        "الأعمال",
+        "التسويف"
+      ],
+      "tags_bn": [
+        "উৎপাদনশীলতা",
+        "মার্কেটিং",
+        "UX",
+        "ব্যবসা",
+        "প্রোক্রাস্টিনেশন"
+      ],
+      "tags_ru": [
+        "продуктивность",
+        "маркетинг",
+        "UX",
+        "бизнес",
+        "прокрастинация"
+      ],
+      "tags_ur": [
+        "پیداواری",
+        "مارکیٹنگ",
+        "UX",
+        "کاروبار",
+        "ٹالنا"
+      ],
+      "source_title": "Rome’s Colosseum got a revamp to reveal a long-hidden history",
+      "source_url": "https://www.fastcompany.com/91530983/romes-colosseum-got-a-revamp-to-reveal-a-long-hidden-history",
+      "source_published_at": "2026-04-27T10:00:00",
+      "excerpt_en": "The Colosseum got a makeover and, who would have thought, revealed a bit of history that was hidden; almost like giving your work project a facelift.",
+      "excerpt_es": "El Coliseo se ha renovado y, quién lo diría, revelaron un poco de la historia que estaba escondida; casi como hacer un facelift en tu proyecto de trabajo.",
+      "excerpt_fr": "Le Colisée a reçu un petit coup de jeune et, qui l'aurait cru, ils ont révélé un peu de l'histoire qui était cachée ; presque comme faire un lifting à votre projet de travail.",
+      "excerpt_de": "Das Kolosseum hat ein Facelifting bekommen und, wer hätte das gedacht, ein wenig Geschichte wurde enthüllt; fast so, als würde man ein Facelifting für sein Arbeitsprojekt machen.",
+      "excerpt_it": "Il Colosseo ha ricevuto un restyling e, chi l'avrebbe mai detto, hanno rivelato un po' della storia che era nascosta; quasi come fare un lifting al tuo progetto di lavoro.",
+      "excerpt_tr": "Kolezyum bir makyaj tazeledi ve kim bilebilirdi, biraz gizli kalmış tarihi ortaya çıkardılar; neredeyse iş projenize bir facelift yapmak gibi.",
+      "excerpt_zh": "罗马斗兽场进行了翻新，谁能想到，揭示了一些隐藏的历史；就像给你的工作项目做个拉皮。",
+      "excerpt_hi": "कोलोसियम ने एक नया रूप लिया है और, कौन जानता था, उन्होंने थोड़ी छिपी हुई कहानी को उजागर किया; लगभग ऐसा जैसे आपके काम के प्रोजेक्ट पर एक फेसलिफ्ट करना।",
+      "excerpt_ar": "حصل الكولوسيوم على تجديد، ومن كان ليصدق، كشفوا عن جزء من التاريخ الذي كان مخفياً؛ تقريباً مثل إجراء عملية تجميل على مشروع عملك.",
+      "excerpt_bn": "কলসিয়াম একটি নতুন রূপ পেয়েছে এবং, কে জানত, কিছু ইতিহাস প্রকাশিত হয়েছে; প্রায় যেন আপনার কাজের প্রকল্পে একটি ফেসলিফট করা।",
+      "excerpt_ru": "Колизей получил обновление, и кто бы мог подумать, что они раскрыли немного истории, которая была скрыта; почти как сделать фейслифтинг для вашего рабочего проекта.",
+      "excerpt_ur": "کولوسیم نے ایک نئی شکل اختیار کی ہے اور، کون جانتا تھا، انہوں نے کچھ تاریخ کو بھی ظاہر کیا جو چھپی ہوئی تھی؛ تقریباً جیسے آپ کے کام کے منصوبے پر ایک فیس لفٹ کرنا۔"
+    },
+    {
       "title": "Sobrevivi ao corte de funcionários! E agora?",
       "url": "./posts/2026/2026-04-22-sobrevivi-ao-corte-de-funcionarios-e-agora/",
       "markdown": "2026/2026-04-22-sobrevivi-ao-corte-de-funcionarios-e-agora.md",
